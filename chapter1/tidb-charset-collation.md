@@ -4,7 +4,10 @@
 
 目前`tidb`中一共有`binCollator`、`binPaddingCollator`和`generalCICollator`这`3`种排序规则。
 
-`binCollator`的代码名是`binary`，规则是：
+
+### `binCollator`
+
+代码名是`binary`，规则是：
 
 ```golang
 func (bc *binCollator) Compare(a, b string, opt CollatorOption) int {
@@ -14,7 +17,10 @@ func (bc *binCollator) Compare(a, b string, opt CollatorOption) int {
 
 即规则同`golang`中任意两个`string`的大小判定规则。
 
-`binPaddingCollator`的的代码名有`utf8mb4_bin`和`utf8_bin`，规则是：
+### `binPaddingCollator`
+
+代码名有`utf8mb4_bin`和`utf8_bin`，规则是：
+
 ```golang
 func (bpc *binPaddingCollator) Compare(a, b string, opt CollatorOption) int {
 	return strings.Compare(truncateTailingSpace(a), truncateTailingSpace(b))
@@ -23,7 +29,9 @@ func (bpc *binPaddingCollator) Compare(a, b string, opt CollatorOption) int {
 
 即会首先将尾部的空格截掉，然后再做比较。
 
-`generalCICollator`的代码名有`utf8mb4_general_ci`和`utf8_general_ci`,主要是做大小写无关（`CI=Case Insensitive`）的处理：
+### `generalCICollator`
+
+代码名有`utf8mb4_general_ci`和`utf8_general_ci`,主要是做大小写无关（`CI=Case Insensitive`）的处理：
 
 ```golang
 func (gc *generalCICollator) Compare(a, b string, opt CollatorOption) int {
