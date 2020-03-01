@@ -36,19 +36,23 @@
             * [2.5.1.1 CDC 解决什么问题](chapter2/why-cdc.md)
             * [2.5.1.2 CDC 工作原理](chapter2/cdc-internal.md)
             * [2.5.1.3 CDC 实操指南](chapter2/cdc-in-action.md)
-                ;CDC 的部署
-                ;下游连接 TiDB
-                ;下游连接 Kafka
-                ;订阅 Open CDC protocol 定制业务
+                <!--
+                CDC 的部署
+                下游连接 TiDB
+                下游连接 Kafka
+                订阅 Open CDC protocol 定制业务
+                -->
         * [2.5.2 TiDB 数据导入工具 Lightning](chapter2/lightning-intro.md)
             * [2.5.2.1 Lightning 工作原理](chapter2/lightning-internal.md)
             * [2.5.2.2 Lightning 实操指南](chapter2/lightning-in-action.md)
         * [2.5.3 4.0 分布式备份恢复工具 BR](chapter2/br.md)
             * [2.5.3.1 BR 工作原理](chapter2/br-internal.md)
             * [2.5.3.2 BR 实操指南](chapter2/br-in-action.md)
-                ;使用 BR 进行备份
-                ;使用 BR 进行恢复
-                ;使用 BR 进行增量备份和恢复
+                <!--
+                使用 BR 进行备份
+                使用 BR 进行恢复
+                使用 BR 进行增量备份和恢复
+                -->
         * [2.5.4 4.0 分布式导出工具 Dumpling](chapter2/dumpling-intro.md)
             * [2.5.4.1 Dumpling 工作原理](chapter2/dumpling-internal.md)
             * [2.5.4.2 Dumpling 实操指南](chapter2/dumpling-in-action.md)
@@ -63,8 +67,10 @@
 
 * [3 TiDB 的使用最佳实践](chapter3/tidb-best-practices.md)
     * [3.1 TiDB 和 MySQL 的区别](chapter3/mysql-compatibility.md)
-        ;与 MySQL 兼容性对比
-        ;TiDB 与 MySQL 的语句兼容性说明
+        <!--
+        与 MySQL 兼容性对比
+        TiDB 与 MySQL 的语句兼容性说明
+        -->
     * [3.2 TiDB 事务模型](chapter3/tidb-transaction-mode.md)
         * [3.2.1 乐观事务](chapter3/optimistic-txn.md)
         * [3.2.2 悲观事务](chapter3/pessimistic-txn.md)
