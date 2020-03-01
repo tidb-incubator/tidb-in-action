@@ -1,6 +1,6 @@
 # Summary
 
-* [推荐序](README.md)
+* [推荐序](PREFACE.md)
 
 ## TiDB 入门与指南
 
