@@ -56,10 +56,14 @@
         * [2.5.4 4.0 分布式导出工具 Dumpling](chapter2/dumpling-intro.md)
             * [2.5.4.1 Dumpling 工作原理](chapter2/dumpling-internal.md)
             * [2.5.4.2 Dumpling 实操指南](chapter2/dumpling-in-action.md)
+                <!--
                 ;使用 Dumpling 导出数据
+                -->
         * [2.5.5 灾难快速恢复](chapter2/disaster-recovery.md)
             * [2.5.5.1 利用 GC 快照读恢复数据](chapter2/recover-data-gc.md)
+                <!--
                 ;GC 机制简介
+                -->
             * [2.5.5.2 利用 Recover 命令秒恢复误删表](chapter2/recover-statements.md)
             * [2.5.5.3 多数副本丢失数据恢复指南](chapter2/recover-quorum.md)
 
