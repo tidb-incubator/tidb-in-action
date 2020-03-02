@@ -1,3 +1,7 @@
+# Gitbook
+
+Read it:[TiDB In Action: based on 4.0](https://winkyao.gitbook.io/tidb-in-action/)
+
 # How to contribute
 
 You can find the chapters you want to contribute in the [table of contents](SUMMARY.md). If the chapter has not been claimed by others, you can declare that you want to complete it by [creating an Issue](https://github.com/pingcap-incubator/tidb-in-action/issues/new).
