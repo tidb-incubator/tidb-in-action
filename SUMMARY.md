@@ -4,8 +4,8 @@
 
 ## TiDB 入门与指南
 
-* [1 TiDB 简介](chapter1/tidb-intro.md)
-    * [1.1 TiDB 整体架构](chapter1/tidb-architecture.md)
+* [1 TiDB 简介](chapter1/tidb-intro.md) 
+    * [1.1 TiDB 整体架构](chapter1/tidb-architecture.md) @[dongxu](https://github.com/c4pt0r)
     * [1.2 说存储](chapter1/tidb-storage.md)
     * [1.3 说计算](chapter1/tidb-computing.md)
         * [1.3.1 统计信息](chapter1/tidb-statistics.md)
