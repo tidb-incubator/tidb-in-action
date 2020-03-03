@@ -156,10 +156,9 @@
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
     * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md)
     * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md)
-    * [8.3 常见读写热点问题调优](session4/chapter8/hotspot-resolved.md)
-    * [8.4 添加索引调优加速](session4/chapter8/add-index-optimization.md)
-        * [8.4.1 TiDB 增加索引原理](session4/chapter8/add-index-internal.md)
-        * [8.4.2 动态调整新增索引速度](session4/chapter8/speedup-add-index.md)
+    * [8.3 添加索引调优加速](session4/chapter8/add-index-optimization.md)
+        * [8.3.1 TiDB 增加索引原理](session4/chapter8/add-index-internal.md)
+        * [8.3.2 动态调整新增索引速度](session4/chapter8/speedup-add-index.md)
 
 ## 第五部分 如何参与 TiDB 社区及周边生态
 * [1 TiDB 开源社区治理架构介绍](session5/chapter1/open-source-governance.md)
