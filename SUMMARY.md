@@ -132,8 +132,8 @@
         -->
 * [5 数据迁移方案](session4/chapter5/data-migration.md)
     * [5.1 从 MySQL 到 TiDB （DM）](session4/chapter5/from-mysql-to-tidb.md)
-        * [5.1.1 DM 原理及介绍](session4/chapter5/dm-internal.md)
-        * [5.1.2 从 MySQL 分库分表迁移到 TiDB](session4/chapter5/from-sharding-to-tidb.md)
+        * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-to-tidb.md) @张雯-B站
+        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈钧-壹米滴答 
     * [5.2 从 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md)
     * [5.3 从 SqlServer 到 TiDB（OGG）](session4/chapter5/from-sqlserver-to-tidb.md)
     * [5.4 从 DB2 到 TiDB （CDC）](session4/chapter5/from-db2-to-tidb.md)
@@ -211,3 +211,4 @@
 
 
         
+
