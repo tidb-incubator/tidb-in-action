@@ -73,7 +73,7 @@
             下游连接 Kafka
             订阅 Open CDC protocol 定制业务
             -->
-    * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md)
+    * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md) @刘春雷-58
         * [2.2.1 Lightning 工作原理](session2/chapter2/lightning-internal.md)
         * [2.2.2 Lightning 实操指南](session2/chapter2/lightning-in-action.md)
     * [2.3 4.0 分布式备份恢复工具 BR](session2/chapter2/br.md)
@@ -214,3 +214,4 @@
 
 
         
+
