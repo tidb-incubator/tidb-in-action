@@ -29,8 +29,8 @@
     * [7.4 Auto Random](session1/chapter7/autorandom.md)
     * [7.5 Expression index](session1/chapter7/expression-index.md)
 * [8 Titan 简介与实战](session1/chapter8/titan-intro.md)
-    * [8.1 Titan 原理介绍](session1/chapter8/titan-internal.md)
-    * [8.2 在 TiDB 集群中开启 Titan](session1/chapter8/titan-in-action.md)
+    * [8.1 Titan 原理介绍](session1/chapter8/titan-internal.md) @孙晓光
+    * [8.2 在 TiDB 集群中开启 Titan](session1/chapter8/titan-in-action.md) @孙晓光
 * [9 TiFlash 简介与 HTAP 实战](session1/chapter9/tiflash-intro.md)
     * [9.1 TiDB HTAP 的特点](session1/chapter9/tidb-htap.md) @彭鑫
     * [9.2 TiFlash 架构与原理](session1/chapter9/tiflash-architecture.md) @徐嘉埥
