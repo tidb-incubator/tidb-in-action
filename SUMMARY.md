@@ -143,7 +143,7 @@
     * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md)
     * [5.5 DB2 到 TiDB （CDC）](session4/chapter5/from-db2-to-tidb.md)
     * [5.6 TiDB 到 TiDB（DATAX）](session4/chapter5/from-tidb-to-tidb-using-datax.md)
-    * [5.7 Mongodb 迁移到 TiDB](session4/chapter5/from-mongodb-to-tidb.md)
+    * [5.7 Mongodb 迁移到 TiDB](session4/chapter5/from-mongodb-to-tidb.md) @胡国青-马蜂窝
 * [6 业务适配最佳实践](session4/chapter6/workload-adaptation-best-practices.md)
     * [6.1 业务开发最佳实践](session4/chapter6/application-dev-best-practices.md)
         * [6.1.1 如何避免乐观锁模式下事务冲突](session4/chapter6/avoid-optimistic-lock-conflicts.md)
@@ -214,3 +214,4 @@
 
 
         
+
