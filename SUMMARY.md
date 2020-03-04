@@ -13,7 +13,7 @@
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
     * [4.3 弹性调度](session1/chapter4/elastic-scheduling.md)
-* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md)
+* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮
         <!--
         与 MySQL 兼容性对比
         TiDB 与 MySQL 的语句兼容性说明
@@ -25,18 +25,17 @@
 * [7 TiDB DDL](session1/chapter7/tidb-ddl-intro.md)
     * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md)
     * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md)
-    * [7.3 Sequence](session1/chapter7/sequence.md)
+    * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
     * [7.4 Auto Random](session1/chapter7/autorandom.md)
     * [7.5 Expression index](session1/chapter7/expression-index.md)
 * [8 Titan 简介与实战](session1/chapter8/titan-intro.md)
     * [8.1 Titan 原理介绍](session1/chapter8/titan-internal.md)
     * [8.2 在 TiDB 集群中开启 Titan](session1/chapter8/titan-in-action.md)
 * [9 TiFlash 简介与 HTAP 实战](session1/chapter9/tiflash-intro.md)
-    * [9.1 TiDB HTAP 的特点](session1/chapter9/tidb-htap.md)
-    * [9.2 TiFlash 架构](session1/chapter9/tiflash-architecture.md)
-    * [9.3 TiFlash 原理](session1/chapter9/tiflash-internal.md)
-    * [9.4 TiFlash 的部署和使用](session1/chapter9/tiflash-in-action.md)
-    * [9.5 TiSpark on TiFlash](session1/chapter9/tispark-on-tiflash.md)
+    * [9.1 TiDB HTAP 的特点](session1/chapter9/tidb-htap.md) @彭鑫
+    * [9.2 TiFlash 架构与原理](session1/chapter9/tiflash-architecture.md) @徐嘉埥
+    * [9.3 TiFlash 的使用](session1/chapter9/tiflash-in-action.md) @刘筠松 @王文安
+    * [9.4 TiSpark on TiFlash](session1/chapter9/tispark-on-tiflash.md) @李振环
 * [10 TiDB 安全](session1/chapter10/tidb-security.md)
     * [10.1 权限管理](session1/chapter10/privilege-management.md)
     * [10.2 RBAC](session1/chapter10/rbac.md)
@@ -64,7 +63,7 @@
 
 * [2 TiDB 备份恢复和导入导出工具](session2/chapter2/tidb-backup-restore-tools.md)
     * [2.1 4.0 增量数据订阅 CDC](session2/chapter2/cdc-intro.md)
-        * [2.1.1 CDC 解决什么问题](session2/chapter2/why-cdc.md)
+        * [2.1.1 CDC 解决什么问题](session2/chapter2/why-cdc.md) @刘宇
         * [2.1.2 CDC 工作原理](session2/chapter2/cdc-internal.md) @刘春晖-shopee
         * [2.1.3 CDC 实操指南](session2/chapter2/cdc-in-action.md) @刘春晖-shopee(部署 + 下游链接TiDB)
             <!--
@@ -73,9 +72,9 @@
             下游连接 Kafka
             订阅 Open CDC protocol 定制业务
             -->
-    * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md) @刘春雷-58
-        * [2.2.1 Lightning 工作原理](session2/chapter2/lightning-internal.md)
-        * [2.2.2 Lightning 实操指南](session2/chapter2/lightning-in-action.md)
+    * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md) 
+        * [2.2.1 Lightning 工作原理](session2/chapter2/lightning-internal.md) @刘春雷-58
+        * [2.2.2 Lightning 实操指南](session2/chapter2/lightning-in-action.md) @李红
     * [2.3 4.0 分布式备份恢复工具 BR](session2/chapter2/br.md)
         * [2.3.1 BR 工作原理](session2/chapter2/br-internal.md)
         * [2.3.2 BR 实操指南](session2/chapter2/br-in-action.md)
@@ -110,7 +109,7 @@
 * [4 TiDB 集群监控与报警](session3/chapter4/tidb-monitor-alert.md)
     * [4.1 性能调优地图](session3/chapter4/performance-map.md)
     * [4.2 TiDB 读写流程相关监控原理解析](session3/chapter4/read-write-metrics.md)
-    * [4.4 Prometheus 使用指南](session3/chapter4/prometheus-guide.md)
+    * [4.4 Prometheus 使用指南](session3/chapter4/prometheus-guide.md) @谭清如
 * [5 灾难快速恢复](session3/chapter5/disaster-recovery.md)
     * [5.1 利用 GC 快照读恢复数据](session3/chapter5/recover-data-gc.md)
         <!--
@@ -122,48 +121,46 @@
 ## 第四部分 TiDB 最佳实践
 
 * [1 适用场景介绍](session4/chapter1/scenarios.md)
-* [2 硬件选型规划](session4/chapter2/hardware-selection.md)
+* [2 硬件选型规划](session4/chapter2/hardware-selection.md) @George Li
 * [3 常见性能压测](session4/chapter3/common-benchmarks.md)
-    * [3.1 Sysbench 基准性能测试](session4/chapter3/sysbench.md)
-    * [3.2 TPC-C 基准性能测试](session4/chapter3/tpc-c.md)
+    * [3.1 Sysbench 基准性能测试](session4/chapter3/sysbench.md) @唐希元
+    * [3.2 TPC-C 基准性能测试](session4/chapter3/tpc-c.md) @樊一蒙
 * [4 跨数据中心方案](session4/chapter4/multi-data-center-solution.md)
-    * [4.1 两地三中心](session4/chapter4/3-dc.md)
-    * [4.2 两数据中心](session4/chapter4/two-dc.md)
-        <!--
-        通过 CDC 构建两套集群异步复制的实战文档
-        通过 Binlog 构建两套集群异步复制的实战文档
-        -->
-    * [4.3 AWS 跨 AZ 部署 TiDB](session4/chapter4/cross-az-in-aws.md)
+    * [4.1 两中心异步复制方案（binlog 复制）](session4/chapter4/two-dc-binlog.md) @王新宇
+    * [4.2 两中心同步复制方案（三副本 Raft）](session4/chapter4/two-dc-raft.md) @王君怡
+    * [4.3 两地三中心](session4/chapter4/3-dc.md) @杜蓉 @刘浩然
+    * [4.4 AWS 跨 AZ 部署 TiDB](session4/chapter4/cross-az-in-aws.md) @George Li
 * [5 数据迁移方案](session4/chapter5/data-migration.md)
     * [5.1 MySQL 到 TiDB （DM）](session4/chapter5/from-mysql-to-tidb.md)
         * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @张雯-B站
-        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈钧-壹米滴答
-    * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md)
+        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈钧-壹米滴答 @George Li
+    * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md) @王英杰
     * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @汽车之家
-    * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md)
-    * [5.5 DB2 到 TiDB （CDC）](session4/chapter5/from-db2-to-tidb.md)
-    * [5.6 TiDB 到 TiDB（DATAX）](session4/chapter5/from-tidb-to-tidb-using-datax.md)
+    * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md) @Allen
+    * [5.5 DB2 到 TiDB （CDC）](session4/chapter5/from-db2-to-tidb.md) @王新宇
+    * [5.6 TiDB 到 TiDB（DATAX）](session4/chapter5/from-tidb-to-tidb-using-datax.md) @Jason
     * [5.7 Mongodb 迁移到 TiDB](session4/chapter5/from-mongodb-to-tidb.md) @胡国青-马蜂窝
 * [6 业务适配最佳实践](session4/chapter6/workload-adaptation-best-practices.md)
     * [6.1 业务开发最佳实践](session4/chapter6/application-dev-best-practices.md)
-        * [6.1.1 如何避免乐观锁模式下事务冲突](session4/chapter6/avoid-optimistic-lock-conflicts.md)
-        * [6.1.2 自增主键在 TiDB 中的最佳实践](session4/chapter6/auto-incr-id-best-proctices.md)
-        * [6.1.3 TiDB 中事务限制及应对方案](session4/chapter6/transaction-statement-count-limit.md)
-        * [6.1.4 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md)
-    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯
-    * [6.3 跑批业务在 TiDB 最佳实践](session4/chapter6/batch-tasks-best-practices.md)
+        * [6.1.1 如何避免乐观锁模式下事务冲突](session4/chapter6/avoid-optimistic-lock-conflicts.md) @George Li
+        * [6.1.2 TiDB 中事务限制及应对方案](session4/chapter6/transaction-statement-count-limit.md) @谭仁刚
+        * [6.1.3 高并发的唯一序列号生成方案](session4/chapter6/serial-number.md) @魏巍  @George Li
+        * [6.1.4 一种高效分页批处理方案](session4/chapter6/page-inaction.md) @魏巍
+        * [6.1.5 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md) @George Li
+    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰
+    * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
     * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md) @贺磊&代晓磊-360
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇-美团
-    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇-美团
-    * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东-装转
-    * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊-美团
+    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇-美团 @谭仁刚
+    * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东-装转 @谭仁刚
+    * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊-美团 @谭仁刚
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
-    * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md)
-    * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md)
+    * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md) @胡盼盼
+    * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md) @黄蔚
     * [8.3 添加索引调优加速](session4/chapter8/add-index-optimization.md)
-        * [8.3.1 TiDB 增加索引原理](session4/chapter8/add-index-internal.md)
-        * [8.3.2 动态调整新增索引速度](session4/chapter8/speedup-add-index.md)
+        * [8.3.1 TiDB 增加索引原理](session4/chapter8/add-index-internal.md) @郑俊博
+        * [8.3.2 动态调整新增索引速度](session4/chapter8/speedup-add-index.md) @郑俊博
 
 ## 第五部分 如何参与 TiDB 社区及周边生态
 * [1 TiDB 开源社区治理架构介绍](session5/chapter1/open-source-governance.md)
