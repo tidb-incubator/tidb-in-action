@@ -139,7 +139,7 @@
         * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md)
         * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md)
     * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md)
-    * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md)
+    * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @汽车之家
     * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md)
     * [5.5 DB2 到 TiDB （CDC）](session4/chapter5/from-db2-to-tidb.md)
     * [5.6 TiDB 到 TiDB（DATAX）](session4/chapter5/from-tidb-to-tidb-using-datax.md)
@@ -214,3 +214,4 @@
 
 
         
+
