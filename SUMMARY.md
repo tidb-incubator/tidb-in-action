@@ -153,10 +153,10 @@
     * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md)
     * [6.3 跑批业务在 TiDB 最佳实践](session4/chapter6/batch-tasks-best-practices.md)
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
-    * [7.1 Oncall 地图](session4/chapter7/oncall-map.md)
-    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md)
-    * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md)
-    * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md)
+    * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇-美团
+    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇-美团
+    * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东-装转
+    * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊-美团
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
     * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md)
     * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md)
@@ -214,3 +214,4 @@
 
 
         
+
