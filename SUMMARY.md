@@ -152,6 +152,7 @@
         * [6.1.4 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md)
     * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md)
     * [6.3 跑批业务在 TiDB 最佳实践](session4/chapter6/batch-tasks-best-practices.md)
+    * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md) @贺磊&代晓磊-360
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md)
     * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md)
@@ -214,3 +215,4 @@
 
 
         
+
