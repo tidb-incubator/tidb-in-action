@@ -8,7 +8,7 @@
 * [2 说存储](session1/chapter2/tidb-storage.md)
 * [3 说计算](session1/chapter3/tidb-computing.md)
     * [3.1 统计信息](session1/chapter3/tidb-statistics.md)
-    * [3.2 字符集和排序规则](session1/chapter3/tidb-charset-collation.md)
+    * [3.2 字符集和排序规则](session1/chapter3/tidb-charset-collation.md) @zhiqiangxu
 * [4 说调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
