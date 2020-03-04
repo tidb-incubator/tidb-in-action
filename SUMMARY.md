@@ -136,8 +136,8 @@
     * [4.3 AWS 跨 AZ 部署 TiDB](session4/chapter4/cross-az-in-aws.md)
 * [5 数据迁移方案](session4/chapter5/data-migration.md)
     * [5.1 MySQL 到 TiDB （DM）](session4/chapter5/from-mysql-to-tidb.md)
-        * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md)
-        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md)
+        * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @王雯-B站
+        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈钧-壹米滴答
     * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md)
     * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md)
     * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md)
@@ -214,3 +214,4 @@
 
 
         
+
