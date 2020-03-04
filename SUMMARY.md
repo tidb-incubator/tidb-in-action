@@ -65,8 +65,8 @@
 * [2 TiDB 备份恢复和导入导出工具](session2/chapter2/tidb-backup-restore-tools.md)
     * [2.1 4.0 增量数据订阅 CDC](session2/chapter2/cdc-intro.md)
         * [2.1.1 CDC 解决什么问题](session2/chapter2/why-cdc.md)
-        * [2.1.2 CDC 工作原理](session2/chapter2/cdc-internal.md)
-        * [2.1.3 CDC 实操指南](session2/chapter2/cdc-in-action.md)
+        * [2.1.2 CDC 工作原理](session2/chapter2/cdc-internal.md) @刘春晖-shopee
+        * [2.1.3 CDC 实操指南](session2/chapter2/cdc-in-action.md) @刘春晖-shopee(部署 + 下游链接TiDB)
             <!--
             CDC 的部署
             下游连接 TiDB
@@ -214,3 +214,4 @@
 
 
         
+
