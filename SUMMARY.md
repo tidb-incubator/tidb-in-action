@@ -120,7 +120,7 @@
 
 ## 第四部分 TiDB 最佳实践
 
-* [1 适用场景介绍](session4/chapter1/scenarios.md)
+* [1 适用场景介绍](session4/chapter1/scenarios.md) @贾世闻
 * [2 硬件选型规划](session4/chapter2/hardware-selection.md) @George Li
 * [3 常见性能压测](session4/chapter3/common-benchmarks.md)
     * [3.1 Sysbench 基准性能测试](session4/chapter3/sysbench.md) @唐希元
