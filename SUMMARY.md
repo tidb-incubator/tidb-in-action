@@ -4,8 +4,8 @@
 
 ## 第一部分 TiDB 原理和特性
 
-* [1 TiDB 整体架构](session1/chapter1/tidb-architecture.md)
-* [2 说存储](session1/chapter2/tidb-storage.md)
+* [1 TiDB 整体架构](session1/chapter1/tidb-architecture.md) @黄东旭
+* [2 说存储](session1/chapter2/tidb-storage.md)  @黄东旭
 * [3 说计算](session1/chapter3/tidb-computing.md)
     * [3.1 统计信息](session1/chapter3/tidb-statistics.md)
     * [3.2 字符集和排序规则](session1/chapter3/tidb-charset-collation.md)
@@ -19,7 +19,7 @@
         TiDB 与 MySQL 的语句兼容性说明
         -->
 * [6 TiDB 事务模型](session1/chapter6/tidb-transaction-mode.md)
-    * [6.1 乐观事务](session1/chapter6/optimistic-txn.md)
+    * [6.1 乐观事务](session1/chapter6/optimistic-txn.md) 
     * [6.2 悲观事务](session1/chapter6/pessimistic-txn.md)
     * [6.3 4.0 的大事务支持](session1/chapter6/big-txn-in-4.0.md) @薛超
 * [7 TiDB DDL](session1/chapter7/tidb-ddl-intro.md)
