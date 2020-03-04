@@ -150,7 +150,7 @@
         * [6.1.2 自增主键在 TiDB 中的最佳实践](session4/chapter6/auto-incr-id-best-proctices.md)
         * [6.1.3 TiDB 中事务限制及应对方案](session4/chapter6/transaction-statement-count-limit.md)
         * [6.1.4 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md)
-    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md)
+    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯
     * [6.3 跑批业务在 TiDB 最佳实践](session4/chapter6/batch-tasks-best-practices.md)
     * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md) @贺磊&代晓磊-360
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
