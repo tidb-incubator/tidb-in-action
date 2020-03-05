@@ -96,9 +96,9 @@ TiKV 的事务采用的是 Google 在 BigTable 中使用的事务模型：[Perco
 
 ```
 tx = tikv.Begin()
-	tx.Set(Key1, Value1)
-	tx.Set(Key2, Value2)
-	tx.Set(Key3, Value3)
+    tx.Set(Key1, Value1)
+    tx.Set(Key2, Value2)
+    tx.Set(Key3, Value3)
 tx.Commit()
 ```
 
