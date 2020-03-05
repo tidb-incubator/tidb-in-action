@@ -54,6 +54,7 @@
         * [1.2.1 TiDB-Operator 简介](session2/chapter1/tidb-operator-intro.md) @宋歌
         * [1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）](session2/chapter1/tidb-oprator-local-deployment.md) @李银龙
         * [1.2.3 用 TiDB-Operator 部署生产环境集群](session2/chapter1/tidb-operator-deployment.md) @李银龙
+        * [1.2.4 TiDB-Operator trouble shooting](session2/chapter1/tidb-operator-trouble-shooting.md) @朱博帅
     * [1.3 集群扩容缩容](session2/chapter1/tidb-scale.md)
         * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @黄靓
         * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
