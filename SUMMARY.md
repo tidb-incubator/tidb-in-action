@@ -7,8 +7,9 @@
 * [1 TiDB 整体架构](session1/chapter1/tidb-architecture.md) @黄东旭
 * [2 说存储](session1/chapter2/tidb-storage.md)  @黄东旭
 * [3 说计算](session1/chapter3/tidb-computing.md)
-    * [3.1 统计信息](session1/chapter3/tidb-statistics.md)
-    * [3.2 字符集和排序规则](session1/chapter3/tidb-charset-collation.md) @zhiqiangxu
+    * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md)
+    * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md)
+    * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @zhiqiangxu
 * [4 说调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
@@ -19,7 +20,7 @@
         TiDB 与 MySQL 的语句兼容性说明
         -->
 * [6 TiDB 事务模型](session1/chapter6/tidb-transaction-mode.md)
-    * [6.1 乐观事务](session1/chapter6/optimistic-txn.md) 
+    * [6.1 乐观事务](session1/chapter6/optimistic-txn.md)
     * [6.2 悲观事务](session1/chapter6/pessimistic-txn.md)
     * [6.3 4.0 的大事务支持](session1/chapter6/big-txn-in-4.0.md) @薛超
 * [7 TiDB DDL](session1/chapter7/tidb-ddl-intro.md)
@@ -72,7 +73,7 @@
             下游连接 Kafka
             订阅 Open CDC protocol 定制业务
             -->
-    * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md) 
+    * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md)
         * [2.2.1 Lightning 工作原理](session2/chapter2/lightning-internal.md) @刘春雷
         * [2.2.2 Lightning 实操指南](session2/chapter2/lightning-in-action.md) @李红
     * [2.3 4.0 分布式备份恢复工具 BR](session2/chapter2/br.md)
@@ -192,27 +193,3 @@
 ## 附录
 
 * [专用术语解释](appendix/tidb-term.md)
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-            
-
-
-
-
-
-
-
-        
-
