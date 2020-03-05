@@ -21,7 +21,7 @@
         -->
 * [6 TiDB 事务模型](session1/chapter6/tidb-transaction-mode.md)
     * [6.1 乐观事务](session1/chapter6/optimistic-txn.md)
-    * [6.2 悲观事务](session1/chapter6/pessimistic-txn.md)
+    * [6.2 悲观事务](session1/chapter6/pessimistic-txn.md)@王传义
     * [6.3 4.0 的大事务支持](session1/chapter6/big-txn-in-4.0.md) @薛超
 * [7 TiDB DDL](session1/chapter7/tidb-ddl-intro.md)
     * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md) @杜振强
