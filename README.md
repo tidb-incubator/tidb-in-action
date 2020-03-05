@@ -10,7 +10,7 @@ Format of the articles uses [markdown](https://daringfireball.net/projects/markd
 
 ## Image directory
 
- Please put images in the `res/img/chapterX` directory. For example, the images in the article `chapter1/tidb-intro.md` should be placed in the `res/img/chapter1/tidb-intro/` directory.
+ Please put images in the `res/sessionX/chapterY/` directory. For example, the images in the article `session1/chapter1/tidb-intro.md` should be placed in the `res/session1/chapter1/tidb-intro/` directory.
 
  ## TiDB in Action 写作规则
 
