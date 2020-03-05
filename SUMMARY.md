@@ -111,7 +111,7 @@
     * [4.2 TiDB 读写流程相关监控原理解析](session3/chapter4/read-write-metrics.md)
     * [4.4 Prometheus 使用指南](session3/chapter4/prometheus-guide.md) @谭清如
 * [5 灾难快速恢复](session3/chapter5/disaster-recovery.md)
-    * [5.1 利用 GC 快照读恢复数据](session3/chapter5/recover-data-gc.md)
+    * [5.1 利用 GC 快照读恢复数据](session3/chapter5/recover-data-gc.md) @王志广
         <!--
         ;GC 机制简介
         -->
