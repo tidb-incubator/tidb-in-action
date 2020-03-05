@@ -149,7 +149,10 @@
         * [6.1.5 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md) @George Li
     * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰
     * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
-    * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md) @贺磊&代晓磊
+    * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md)
+        * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
+        * [6.4.2 TiDB分区使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
+        * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
     * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
