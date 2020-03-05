@@ -95,7 +95,7 @@
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
 * [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
-    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md)
+    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md) @[石壹笑](https://github.com/aierui)
     * [1.2 SQL Plan Management](session3/chapter1/sql-plan-management.md)
     * [1.3 限制 SQL 的内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
