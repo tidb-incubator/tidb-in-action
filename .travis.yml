@@ -1,0 +1,18 @@
+sudo: false
+dist: trusty
+language: node_js
+
+before_script:
+  - npm install gitbook-cli -g
+
+script:
+  - gitbook build .
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: true
+  local_dir: _book
+  on:
+    branch: master
