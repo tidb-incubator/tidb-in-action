@@ -7,8 +7,9 @@
 * [1 TiDB 整体架构](session1/chapter1/tidb-architecture.md) @黄东旭
 * [2 说存储](session1/chapter2/tidb-storage.md)  @黄东旭
 * [3 说计算](session1/chapter3/tidb-computing.md)
-    * [3.1 统计信息](session1/chapter3/tidb-statistics.md)
-    * [3.2 字符集和排序规则](session1/chapter3/tidb-charset-collation.md) @zhiqiangxu
+    * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md) @[Qiannan](https://github.com/hsqlu)
+    * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md)
+    * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @zhiqiangxu
 * [4 说调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
@@ -19,11 +20,12 @@
         TiDB 与 MySQL 的语句兼容性说明
         -->
 * [6 TiDB 事务模型](session1/chapter6/tidb-transaction-mode.md)
-    * [6.1 乐观事务](session1/chapter6/optimistic-txn.md)  @郑智辉
+    * [6.1 乐观事务](session1/chapter6/optimistic-txn.md) @白雪郑智辉
+>>>>>>> 9b3055433c74c94e170f76647897828845afdd3d
     * [6.2 悲观事务](session1/chapter6/pessimistic-txn.md)
     * [6.3 4.0 的大事务支持](session1/chapter6/big-txn-in-4.0.md) @薛超
 * [7 TiDB DDL](session1/chapter7/tidb-ddl-intro.md)
-    * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md)
+    * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md) @杜振强
     * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md) @高海涛
     * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
     * [7.4 Auto Random](session1/chapter7/autorandom.md)
@@ -44,40 +46,42 @@
 ## 第二部分 系统安装部署与管理
 * [1 部署安装 & 常规运维](session2/chapter1/deployment-management.md)
     * [1.1 TiUP & TiOps](session2/chapter1/tiup-tiops.md)
-        * [1.1.1 TiUP 简介](session2/chapter1/tiup-intro.md) @罗瑞兴
-        * [1.1.2 用 TiUP 部署本地测试环境](session2/chapter1/tiup-playground.md) @罗瑞兴
-        * [1.1.3 用 TiUP 部署生产环境集群](session2/chapter1/tiup-deployment.md) @罗瑞兴
+        * [1.1.1 TiUP 简介](session2/chapter1/tiup-intro.md) @罗瑞星
+        * [1.1.2 用 TiUP 部署本地测试环境](session2/chapter1/tiup-playground.md) @罗瑞星
+        * [1.1.3 用 TiUP 部署生产环境集群](session2/chapter1/tiup-deployment.md) @罗瑞星
         * [1.1.4 TiOps 简介](session2/chapter1/tiops-intro.md) @杨文
         * [1.1.5 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md) @杨文
     * [1.2 TiDB on Kubernetes](session2/chapter1/tidb-on-k8s.md)
         * [1.2.1 TiDB-Operator 简介](session2/chapter1/tidb-operator-intro.md) @宋歌
         * [1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）](session2/chapter1/tidb-oprator-local-deployment.md) @李银龙
         * [1.2.3 用 TiDB-Operator 部署生产环境集群](session2/chapter1/tidb-operator-deployment.md) @李银龙
+        * [1.2.4 TiDB-Operator trouble shooting](session2/chapter1/tidb-operator-trouble-shooting.md) @朱博帅
     * [1.3 集群扩容缩容](session2/chapter1/tidb-scale.md)
-        * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md)
+        * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @黄靓
         * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
     * [1.4 集群版本升级](session2/chapter1/tidb-upgrade.md)
         * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md)
-        * [1.4.2 基于 TiDB-Operator 的集群滚动更新](session2/chapter1/tidb-operator-rolling-upgrade.md)
+        * [1.4.2 基于 TiDB-Operator 的集群滚动更新](session2/chapter1/tidb-operator-rolling-upgrade.md) @[宋歌](https://github.com/shonge)
     * [1.5 如何做动态配置修改](session2/chapter1/online-changing-config.md)
+        * [1.5.1 基于 TiDB-Operator 的动态配置修改](session2/chapter1/tidb-operator-online-changing-config.md) @[宋歌](https://github.com/shonge)
 
 * [2 TiDB 备份恢复和导入导出工具](session2/chapter2/tidb-backup-restore-tools.md)
     * [2.1 4.0 增量数据订阅 CDC](session2/chapter2/cdc-intro.md)
         * [2.1.1 CDC 解决什么问题](session2/chapter2/why-cdc.md) @刘宇
-        * [2.1.2 CDC 工作原理](session2/chapter2/cdc-internal.md) @刘春晖
-        * [2.1.3 CDC 实操指南](session2/chapter2/cdc-in-action.md) @刘春晖(部署 + 下游链接TiDB)
+        * [2.1.2 CDC 工作原理](session2/chapter2/cdc-internal.md) @刘春辉
+        * [2.1.3 CDC 实操指南](session2/chapter2/cdc-in-action.md) @刘春辉(部署 + 下游链接TiDB)
             <!--
             CDC 的部署
             下游连接 TiDB
             下游连接 Kafka
             订阅 Open CDC protocol 定制业务
             -->
-    * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md) 
+    * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md)
         * [2.2.1 Lightning 工作原理](session2/chapter2/lightning-internal.md) @刘春雷
         * [2.2.2 Lightning 实操指南](session2/chapter2/lightning-in-action.md) @李红
     * [2.3 4.0 分布式备份恢复工具 BR](session2/chapter2/br.md)
         * [2.3.1 BR 工作原理](session2/chapter2/br-internal.md)
-        * [2.3.2 BR 实操指南](session2/chapter2/br-in-action.md)
+        * [2.3.2 BR 实操指南](session2/chapter2/br-in-action.md)  @刘伟
             <!--
             使用 BR 进行备份
             使用 BR 进行恢复
@@ -93,25 +97,29 @@
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
 * [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
-    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md)
+    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md) @[石壹笑](https://github.com/aierui)
     * [1.2 SQL Plan Management](session3/chapter1/sql-plan-management.md)
     * [1.3 限制 SQL 的内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 通过 KeyVis 来识别业务的模式](session3/chapter2/key-vis.md)
-    * [2.2 快速定位慢 SQL](session3/chapter2/located-slow-sql.md)
+    * [2.2 快速定位慢 SQL](session3/chapter2/located-slow-sql.md)@李迅
     * [2.3 如何获取性能 Profile](session3/chapter2/get-profile.md)
     * [2.4 集群诊断报告](session3/chapter2/diagnosis-report.md)
     * [2.5 可视化 Statements](session3/chapter2/statements-ui.md)
 * [3 诊断系统表](session3/chapter3/sql-diagnosis.md)
-    * [3.1 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
-    * [3.2 Processlist](session3/chapter3/processlist.md)
-    * [3.3 Statements](session3/chapter3/statements.md)
+    * [3.1 集群信息表](session3/chapter3/cluster-info-tables.md)
+    * [3.2 监控表](session3/chapter3/metrics-schema.md)
+    * [3.3 诊断结果表](session3/chapter3/inspection-tables.md)
+    * [3.4 监控汇总表](session3/chapter3/metrics-summary.md)
+    * [3.5 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
+    * [3.6 Processlist](session3/chapter3/processlist.md)
+    * [3.7 Statements](session3/chapter3/statements.md)
 * [4 TiDB 集群监控与报警](session3/chapter4/tidb-monitor-alert.md)
     * [4.1 性能调优地图](session3/chapter4/performance-map.md)
     * [4.2 TiDB 读写流程相关监控原理解析](session3/chapter4/read-write-metrics.md)
     * [4.4 Prometheus 使用指南](session3/chapter4/prometheus-guide.md) @谭清如
 * [5 灾难快速恢复](session3/chapter5/disaster-recovery.md)
-    * [5.1 利用 GC 快照读恢复数据](session3/chapter5/recover-data-gc.md)
+    * [5.1 利用 GC 快照读恢复数据](session3/chapter5/recover-data-gc.md) @王志广
         <!--
         ;GC 机制简介
         -->
@@ -133,7 +141,7 @@
 * [5 数据迁移方案](session4/chapter5/data-migration.md)
     * [5.1 MySQL 到 TiDB （DM）](session4/chapter5/from-mysql-to-tidb.md)
         * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @张雯-B站
-        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈钧-壹米滴答
+        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈均-壹米滴答
     * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md) @王英杰
     * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @汽车之家
     * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md) @Allen
@@ -147,7 +155,7 @@
         * [6.1.3 高并发的唯一序列号生成方案](session4/chapter6/serial-number.md) @魏巍  @George Li
         * [6.1.4 一种高效分页批处理方案](session4/chapter6/page-inaction.md) @魏巍
         * [6.1.5 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md) @George Li
-    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰
+    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰 @[朱博帅](https://github.com/zhuboshuai)
     * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
     * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md)
         * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
@@ -192,27 +200,3 @@
 ## 附录
 
 * [专用术语解释](appendix/tidb-term.md)
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-            
-
-
-
-
-
-
-
-        
-

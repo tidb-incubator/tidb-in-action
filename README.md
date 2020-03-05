@@ -2,15 +2,15 @@
 
 Read it:[TiDB In Action: based on 4.0](https://winkyao.gitbook.io/tidb-in-action/)
 
-# How to contribute
+# 如何贡献
 
-You can find the chapters you want to contribute in the [table of contents](SUMMARY.md). If the chapter has not been claimed by others, you can declare that you want to complete it like this [PR/3](https://github.com/pingcap-incubator/tidb-in-action/pull/3)
+从 [目录](SUMMARY.md) 找到还没有被认领的章节。参考 [PR/3](https://github.com/pingcap-incubator/tidb-in-action/pull/3) 提交一个 Pull Request 请求认领，当请求被合并之后就算认领成功。
 
-Format of the articles uses [markdown](https://daringfireball.net/projects/markdown/syntax). After you finish the article, you can submit the content through [Create PR](https://github.com/pingcap-incubator/tidb-in-action/compare). For the details, please refer to the Github documentation [Creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
+文章内容格式采用 [markdown](https://daringfireball.net/projects/markdown/syntax). Github 简易入门[指南](https://docs.google.com/document/d/1IiCrX3tFg6yvTrmlEXnsHoWUdyeCLkvJo31AjbjDWBs/edit)
 
-## Image directory
+## 图片目录
 
- Please put images in the `res/img/chapterX` directory. For example, the images in the article `chapter1/tidb-intro.md` should be placed in the `res/img/chapter1/tidb-intro/` directory.
+ 请把图片放在 `res/sessionX/chapterY/` 目录。举个例子, 文章 `session1/chapter1/tidb-intro.md` 中的图片应该放在 `/res/session1/chapter1/tidb-intro/` 目录下，对应到 markdown 中的格式是 `![1.png](/res/session1/chapter1/tidb-intro/1.png)`
 
  ## TiDB in Action 写作规则
 
