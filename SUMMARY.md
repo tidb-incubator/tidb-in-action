@@ -149,7 +149,7 @@
         * [6.1.3 高并发的唯一序列号生成方案](session4/chapter6/serial-number.md) @魏巍  @George Li
         * [6.1.4 一种高效分页批处理方案](session4/chapter6/page-inaction.md) @魏巍
         * [6.1.5 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md) @George Li
-    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰
+    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰 @[朱博帅](https://github.com/zhuboshuai)
     * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
     * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md)
         * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
