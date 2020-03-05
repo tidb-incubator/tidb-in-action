@@ -61,6 +61,7 @@
         * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md)
         * [1.4.2 基于 TiDB-Operator 的集群滚动更新](session2/chapter1/tidb-operator-rolling-upgrade.md)
     * [1.5 如何做动态配置修改](session2/chapter1/online-changing-config.md)
+        * [1.5.1 基于 TiDB-Operator 的动态配置修改](session2/chapter1/tidb-operator-online-changing-config.md) @[宋歌](https://github.com/shonge)
 
 * [2 TiDB 备份恢复和导入导出工具](session2/chapter2/tidb-backup-restore-tools.md)
     * [2.1 4.0 增量数据订阅 CDC](session2/chapter2/cdc-intro.md)
