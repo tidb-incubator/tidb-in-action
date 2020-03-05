@@ -6,11 +6,11 @@
 
 * [1 TiDB 整体架构](session1/chapter1/tidb-architecture.md) @黄东旭
 * [2 说存储](session1/chapter2/tidb-storage.md)  @黄东旭
-* [3 说计算](session1/chapter3/tidb-computing.md)
+* [3 谈计算](session1/chapter3/tidb-computing.md)
     * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md) @[Qiannan](https://github.com/hsqlu)
     * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md)
     * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @zhiqiangxu
-* [4 说调度](session1/chapter4/tidb-scheduling.md)
+* [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
     * [4.3 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
@@ -54,6 +54,7 @@
         * [1.2.1 TiDB-Operator 简介](session2/chapter1/tidb-operator-intro.md) @宋歌
         * [1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）](session2/chapter1/tidb-oprator-local-deployment.md) @李银龙
         * [1.2.3 用 TiDB-Operator 部署生产环境集群](session2/chapter1/tidb-operator-deployment.md) @李银龙
+        * [1.2.4 TiDB-Operator trouble shooting](session2/chapter1/tidb-operator-trouble-shooting.md) @朱博帅
     * [1.3 集群扩容缩容](session2/chapter1/tidb-scale.md)
         * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @黄靓
         * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
@@ -153,7 +154,7 @@
         * [6.1.3 高并发的唯一序列号生成方案](session4/chapter6/serial-number.md) @魏巍  @George Li
         * [6.1.4 一种高效分页批处理方案](session4/chapter6/page-inaction.md) @魏巍
         * [6.1.5 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md) @George Li
-    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰
+    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰 @[朱博帅](https://github.com/zhuboshuai)
     * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
     * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md)
         * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊

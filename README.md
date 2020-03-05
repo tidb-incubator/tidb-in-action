@@ -1,6 +1,6 @@
 # Gitbook
 
-Read it:[TiDB In Action: based on 4.0](https://winkyao.gitbook.io/tidb-in-action/)
+Read it:[TiDB In Action: based on 4.0](https://pingcap-incubator.github.io/tidb-in-action)
 
 # 如何贡献
 
