@@ -116,7 +116,7 @@
         ;GC 机制简介
         -->
     * [5.2 利用 Recover 命令秒恢复误删表](session3/chapter5/recover-statements.md) @薛超
-    * [5.3 多数副本丢失数据恢复指南](session3/chapter5/recover-quorum.md)
+    * [5.3 多数副本丢失数据恢复指南](session3/chapter5/recover-quorum.md) @陈付
 
 ## 第四部分 TiDB 最佳实践
 
