@@ -34,7 +34,7 @@ TiKV 利用 Raft 来做数据复制，每个数据变更都会落地为一条 Ra
 
 ![1.png](/res/session1/chapter2/tidb-storage/1.png)
 
-总结一下，通过单机的 RocksDB，我们可以将数据快速地存储在磁盘上；通过 Raft，将数据复制到多台机器上，以防单机失效。数据的写入是通过 Raft 这一层的接口写入，而不是直接写 RocksDB。通过实现 Raft，TiKV 变成了一个分布式的 Key-Value 存储，少数几台机器宕机也能通过原生的 Raft 协议自动把副本补全，继续让业务无感知的对外服务。
+总结一下，通过单机的 RocksDB，TiKV 可以将数据快速地存储在磁盘上；通过 Raft，将数据复制到多台机器上，以防单机失效。数据的写入是通过 Raft 这一层的接口写入，而不是直接写 RocksDB。通过实现 Raft，TiKV 变成了一个分布式的 Key-Value 存储，少数几台机器宕机也能通过原生的 Raft 协议自动把副本补全，继续让业务无感知的对外服务。
 
 ## Region
 
