@@ -23,7 +23,7 @@
     * [6.2 悲观事务](session1/chapter6/pessimistic-txn.md)
     * [6.3 4.0 的大事务支持](session1/chapter6/big-txn-in-4.0.md) @薛超
 * [7 TiDB DDL](session1/chapter7/tidb-ddl-intro.md)
-    * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md)
+    * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md) @杜振强
     * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md) @高海涛
     * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
     * [7.4 Auto Random](session1/chapter7/autorandom.md)
