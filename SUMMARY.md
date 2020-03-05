@@ -105,9 +105,13 @@
     * [2.4 集群诊断报告](session3/chapter2/diagnosis-report.md)
     * [2.5 可视化 Statements](session3/chapter2/statements-ui.md)
 * [3 诊断系统表](session3/chapter3/sql-diagnosis.md)
-    * [3.1 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
-    * [3.2 Processlist](session3/chapter3/processlist.md)
-    * [3.3 Statements](session3/chapter3/statements.md)
+    * [3.1 集群信息表](session3/chapter3/cluster-info-tables.md)
+    * [3.2 监控表](session3/chapter3/metrics-schema.md)
+    * [3.3 诊断结果表](session3/chapter3/inspection-tables.md)
+    * [3.4 监控汇总表](session3/chapter3/metrics-summary.md)
+    * [3.5 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
+    * [3.6 Processlist](session3/chapter3/processlist.md)
+    * [3.7 Statements](session3/chapter3/statements.md)
 * [4 TiDB 集群监控与报警](session3/chapter4/tidb-monitor-alert.md)
     * [4.1 性能调优地图](session3/chapter4/performance-map.md)
     * [4.2 TiDB 读写流程相关监控原理解析](session3/chapter4/read-write-metrics.md)
