@@ -45,7 +45,7 @@ TiKV 利用 Raft 来做数据复制，每个数据变更都会落地为一条 Ra
 ![2.png](/res/session1/chapter2/tidb-storage/2.png)
 
 注意，这里的 Region 还是和 SQL 中的表没什么关系！ 请各位继续忘记 SQL，只谈 KV。
-将数据划分成 Region 后，我们将会做两件重要的事情：
+将数据划分成 Region 后，TiKV 将会做两件重要的事情：
 
 * 以 Region 为单位，将数据分散在集群中所有的节点上，并且尽量保证每个节点上服务的 Region 数量差不多
 * 以 Region 为单位做 Raft 的复制和成员管理
