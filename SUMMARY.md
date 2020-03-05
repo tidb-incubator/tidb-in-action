@@ -78,7 +78,7 @@
         * [2.2.2 Lightning 实操指南](session2/chapter2/lightning-in-action.md) @李红
     * [2.3 4.0 分布式备份恢复工具 BR](session2/chapter2/br.md)
         * [2.3.1 BR 工作原理](session2/chapter2/br-internal.md)
-        * [2.3.2 BR 实操指南](session2/chapter2/br-in-action.md)
+        * [2.3.2 BR 实操指南](session2/chapter2/br-in-action.md)  @刘伟
             <!--
             使用 BR 进行备份
             使用 BR 进行恢复
