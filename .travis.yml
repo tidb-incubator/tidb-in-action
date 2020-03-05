@@ -3,10 +3,7 @@ dist: trusty
 language: node_js
 node_js:
   - 12
-
-branches:
-  only:
-  - master
+cache: npm
 
 before_script:
   - npm install gitbook-cli -g
