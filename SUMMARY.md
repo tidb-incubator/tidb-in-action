@@ -7,7 +7,7 @@
 * [1 TiDB 整体架构](session1/chapter1/tidb-architecture.md) @黄东旭
 * [2 说存储](session1/chapter2/tidb-storage.md)  @黄东旭
 * [3 说计算](session1/chapter3/tidb-computing.md)
-    * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md)
+    * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md) @[Qiannan](https://github.com/hsqlu)
     * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md)
     * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @zhiqiangxu
 * [4 说调度](session1/chapter4/tidb-scheduling.md)
