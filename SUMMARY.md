@@ -4,27 +4,27 @@
 
 ## 第一部分 TiDB 原理和特性
 
-* [1 TiDB 整体架构](session1/chapter1/tidb-architecture.md)
-* [2 说存储](session1/chapter2/tidb-storage.md)
+* [1 TiDB 整体架构](session1/chapter1/tidb-architecture.md) @黄东旭
+* [2 说存储](session1/chapter2/tidb-storage.md)  @黄东旭
 * [3 说计算](session1/chapter3/tidb-computing.md)
     * [3.1 统计信息](session1/chapter3/tidb-statistics.md)
-    * [3.2 字符集和排序规则](session1/chapter3/tidb-charset-collation.md)
+    * [3.2 字符集和排序规则](session1/chapter3/tidb-charset-collation.md) @zhiqiangxu
 * [4 说调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
-    * [4.3 弹性调度](session1/chapter4/elastic-scheduling.md)
+    * [4.3 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
 * [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮
         <!--
         与 MySQL 兼容性对比
         TiDB 与 MySQL 的语句兼容性说明
         -->
 * [6 TiDB 事务模型](session1/chapter6/tidb-transaction-mode.md)
-    * [6.1 乐观事务](session1/chapter6/optimistic-txn.md)
+    * [6.1 乐观事务](session1/chapter6/optimistic-txn.md) 
     * [6.2 悲观事务](session1/chapter6/pessimistic-txn.md)
     * [6.3 4.0 的大事务支持](session1/chapter6/big-txn-in-4.0.md) @薛超
 * [7 TiDB DDL](session1/chapter7/tidb-ddl-intro.md)
     * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md)
-    * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md)
+    * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md) @高海涛
     * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
     * [7.4 Auto Random](session1/chapter7/autorandom.md)
     * [7.5 Expression index](session1/chapter7/expression-index.md)
@@ -47,15 +47,15 @@
         * [1.1.1 TiUP 简介](session2/chapter1/tiup-intro.md) @罗瑞兴
         * [1.1.2 用 TiUP 部署本地测试环境](session2/chapter1/tiup-playground.md) @罗瑞兴
         * [1.1.3 用 TiUP 部署生产环境集群](session2/chapter1/tiup-deployment.md) @罗瑞兴
-        * [1.1.4 TiOps 简介](session2/chapter1/tiops-intro.md)
-        * [1.1.5 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md)
+        * [1.1.4 TiOps 简介](session2/chapter1/tiops-intro.md) @杨文
+        * [1.1.5 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md) @杨文
     * [1.2 TiDB on Kubernetes](session2/chapter1/tidb-on-k8s.md)
         * [1.2.1 TiDB-Operator 简介](session2/chapter1/tidb-operator-intro.md) @宋歌
         * [1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）](session2/chapter1/tidb-oprator-local-deployment.md) @李银龙
         * [1.2.3 用 TiDB-Operator 部署生产环境集群](session2/chapter1/tidb-operator-deployment.md) @李银龙
     * [1.3 集群扩容缩容](session2/chapter1/tidb-scale.md)
         * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @黄靓
-        * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md)
+        * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
     * [1.4 集群版本升级](session2/chapter1/tidb-upgrade.md)
         * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md)
         * [1.4.2 基于 TiDB-Operator 的集群滚动更新](session2/chapter1/tidb-operator-rolling-upgrade.md)
@@ -111,12 +111,12 @@
     * [4.2 TiDB 读写流程相关监控原理解析](session3/chapter4/read-write-metrics.md)
     * [4.4 Prometheus 使用指南](session3/chapter4/prometheus-guide.md) @谭清如
 * [5 灾难快速恢复](session3/chapter5/disaster-recovery.md)
-    * [5.1 利用 GC 快照读恢复数据](session3/chapter5/recover-data-gc.md)
+    * [5.1 利用 GC 快照读恢复数据](session3/chapter5/recover-data-gc.md) @王志广
         <!--
         ;GC 机制简介
         -->
     * [5.2 利用 Recover 命令秒恢复误删表](session3/chapter5/recover-statements.md) @薛超
-    * [5.3 多数副本丢失数据恢复指南](session3/chapter5/recover-quorum.md)
+    * [5.3 多数副本丢失数据恢复指南](session3/chapter5/recover-quorum.md) @陈付
 
 ## 第四部分 TiDB 最佳实践
 
@@ -149,7 +149,10 @@
         * [6.1.5 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md) @George Li
     * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰
     * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
-    * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md) @贺磊&代晓磊
+    * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md)
+        * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
+        * [6.4.2 TiDB分区表使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
+        * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
     * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
