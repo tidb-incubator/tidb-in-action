@@ -4,6 +4,10 @@ language: node_js
 node_js:
   - 12
 
+branches:
+  only:
+  - master
+
 before_script:
   - npm install gitbook-cli -g
 
