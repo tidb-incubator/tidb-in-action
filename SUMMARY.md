@@ -69,7 +69,7 @@
                 * [1.2.3.2.4 部署 TiDB 集群](session2/chapter1/tidb-operator-deployment-private-tidb.md)
                 * [1.2.3.2.5 节点维护](session2/chapter1/tidb-operator-deployment-private-node.md)
                 * [1.2.3.2.6 删除 TiDB 集群](session2/chapter1/tidb-operator-deployment-private-delete.md)
-        * [1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控](session2/chapter1/tidb-operator-access-monitoring.md)
+        * [1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控](session2/chapter1/tidb-operator-access-monitoring.md) @吴东原
         * [1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群](session2/chapter1/tidb-operator-br.md) @[宋歌](https://github.com/shonge)
         * [1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据](session2/chapter1/tidb-operator-lightning.md) @[宋歌](https://github.com/shonge)
         * [1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南](session2/chapter1/tidb-operator-tools.md)
