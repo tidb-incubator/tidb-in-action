@@ -41,8 +41,8 @@
     * [10.2 RBAC](session1/chapter10/rbac.md)
     * [10.3 证书管理与数据加密](session1/chapter10/cert-management-data-encryption.md)
 * [11 TiSpark 简介与实战](session1/chapter11/tispark-intro.md)
-    * [11.1 TiSpark 架构与原理](session1/chapter11/tispark-architecture.md)
-    * [11.2 TiSpark 的使用](session1/chapter11/tispark-in-action.md)
+    * [11.1 TiSpark 架构与原理](session1/chapter11/tispark-architecture.md) @李振环 @罗瑞星
+    * [11.2 TiSpark 的使用](session1/chapter11/tispark-in-action.md) @李振环 @罗瑞星
     * [11.3 TiSpark on TiFlash](session1/chapter11/tispark-on-tiflash.md) @李振环
     * [11.4 TiSpark 结合大数据体系](session1/chapter11/tispark-on-bigdata.md) @羊欢
 
@@ -91,7 +91,7 @@
             使用 BR 进行增量备份和恢复
             -->
     * [2.4 4.0 分布式导出工具 Dumpling](session2/chapter2/dumpling-intro.md)
-        * [2.4.1 Dumpling 工作原理](session2/chapter2/dumpling-internal.md) @张成远
+        * [2.4.1 Dumpling 工作原理](session2/chapter2/dumpling-internal.md) @张成远 @[我不叫大脸猫](https://github.com/qxhy123)
         * [2.4.2 Dumpling 实操指南](session2/chapter2/dumpling-in-action.md) @张成远
             <!--
             ;使用 Dumpling 导出数据
