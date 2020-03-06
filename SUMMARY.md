@@ -34,7 +34,7 @@
     * [8.2 在 TiDB 集群中开启 Titan](session1/chapter8/titan-in-action.md) @孙晓光
 * [9 TiFlash 简介与 HTAP 实战](session1/chapter9/tiflash-intro.md)
     * [9.1 TiDB HTAP 的特点](session1/chapter9/tidb-htap.md) @彭鑫
-    * [9.2 TiFlash 架构与原理](session1/chapter9/tiflash-architecture.md) @徐嘉埥
+    * [9.2 TiFlash 架构与原理](session1/chapter9/tiflash-architecture.md) @[童智高](https://github.com/solotzg) @徐嘉埥
     * [9.3 TiFlash 的使用](session1/chapter9/tiflash-in-action.md) @刘筠松 @王文安
     * [9.4 TiSpark on TiFlash](session1/chapter9/tispark-on-tiflash.md) @李振环
 * [10 TiDB 安全](session1/chapter10/tidb-security.md)
