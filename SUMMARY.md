@@ -38,7 +38,7 @@
     * [9.3 TiFlash 的使用](session1/chapter9/tiflash-in-action.md) @刘筠松 @王文安
 * [10 TiDB 安全](session1/chapter10/tidb-security.md)
     * [10.1 权限管理](session1/chapter10/privilege-management.md)
-    * [10.2 RBAC](session1/chapter10/rbac.md)
+    * [10.2 RBAC](session1/chapter10/rbac.md) @[张雯](https://github.com/sandy20140407)
     * [10.3 证书管理与数据加密](session1/chapter10/cert-management-data-encryption.md)
 * [11 TiSpark 简介与实战](session1/chapter11/tispark-intro.md)
     * [11.1 TiSpark 架构与原理](session1/chapter11/tispark-architecture.md) @李振环 @罗瑞星
@@ -143,7 +143,7 @@
     * [4.4 AWS 跨 AZ 部署 TiDB](session4/chapter4/cross-az-in-aws.md) @George Li
 * [5 数据迁移方案](session4/chapter5/data-migration.md)
     * [5.1 MySQL 到 TiDB （DM）](session4/chapter5/from-mysql-to-tidb.md)
-        * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @张雯-B站
+        * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @[张雯](https://github.com/sandy20140407)
         * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈均-壹米滴答
     * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md) @王英杰
     * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @汽车之家
