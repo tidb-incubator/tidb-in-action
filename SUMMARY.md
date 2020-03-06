@@ -166,7 +166,7 @@
         * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
     * [6.5 TiDB 在电力行业的实践]
     * [6.6 TiDB 在企业数据分级存储中的应用实践]
-    * [6.7 TiDB 与HBase、ES、Druid  的数据交互实战]
+    * [6.7 TiDB 与HBase、ES、Druid 的数据交互实战]
     * [6.8 TiDB 与可视化展现 Saiku、Grafana 的集成应用]
     * [6.9 流程调度工具与 TiSpark 的集成应用]
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
