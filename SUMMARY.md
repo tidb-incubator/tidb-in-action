@@ -144,7 +144,7 @@
         -->
     * [5.2 利用 Recover 命令秒恢复误删表](session3/chapter5/recover-statements.md) @薛超
     * [5.3 多数副本丢失数据恢复指南](session3/chapter5/recover-quorum.md) @陈付
-* [6 TiDB-Operator Troubleshooting](session3/chapter6/tidb-operator-trouble-shooting.md)
+* [6 TiDB-Operator Troubleshooting](session3/chapter6/tidb-operator-trouble-shooting.md) @[黄潇](https://github.com/benmaoer)@[陈子军](https://github.com/danche) @[罗霞](https://github.com/xialuo1990)
 
 ## 第四部分 TiDB 最佳实践
 
