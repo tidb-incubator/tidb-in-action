@@ -62,6 +62,7 @@
                 * [1.2.3.1.1 在 AWS EKS 上部署 TiDB 集群](session2/chapter1/tidb-operator-deployment-public-eks.md)
                 * [1.2.3.1.2 在 GCP GKE 上部署 TiDB 集群](session2/chapter1/tidb-operator-deployment-public-gke.md)
                 * [1.2.3.1.3 在阿里云上部署 TiDB 集群](session2/chapter1/tidb-operator-deployment-public-ali.md)
+                * [1.2.3.1.4 在京东云上部署 TiDB 集群](session2/chapter1/tidb-operator-deployment-public-jdcloud.md)@张成远 @张广超
             * [1.2.3.2 私有云部署](session2/chapter1/tidb-operator-deployment-private.md)
                 * [1.2.3.2.1 集群环境、资源需求](session2/chapter1/tidb-operator-deployment-private-env.md)
                 * [1.2.3.2.2 PV 配置](session2/chapter1/tidb-operator-deployment-private-pv.md)
