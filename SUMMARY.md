@@ -43,8 +43,8 @@
 * [11 TiSpark 简介与实战](session1/chapter11/tispark-intro.md)
     * [11.1 TiSpark 架构与原理](session1/chapter11/tispark-architecture.md)
     * [11.2 TiSpark 的使用](session1/chapter11/tispark-in-action.md)
-    * [11.3 TiSpark on TiFlash](session1/chapter11/tispark-on-tiflash.md)
-    * [11.4 TiSpark 结合大数据体系](session1/chapter11/tispark-on-bigdata.md)
+    * [11.3 TiSpark on TiFlash](session1/chapter11/tispark-on-tiflash.md) @李振环
+    * [11.4 TiSpark 结合大数据体系](session1/chapter11/tispark-on-bigdata.md) @羊欢
 
 ## 第二部分 系统安装部署与管理
 * [1 部署安装 & 常规运维](session2/chapter1/deployment-management.md)
