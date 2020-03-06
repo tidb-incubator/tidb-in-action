@@ -91,8 +91,9 @@
             使用 BR 进行增量备份和恢复
             -->
     * [2.4 4.0 分布式导出工具 Dumpling](session2/chapter2/dumpling-intro.md)
-        * [2.4.1 Dumpling 工作原理](session2/chapter2/dumpling-internal.md) @张成远 @[我不叫大脸猫](https://github.com/qxhy123)
-        * [2.4.2 Dumpling 实操指南](session2/chapter2/dumpling-in-action.md) @张成远
+        * [2.4.1 Dumpling 工作原理](session2/chapter2/dumpling-internal.md) @[我不叫大脸猫](https://github.com/qxhy123)
+        * [2.4.2 Dumpling 实操指南](session2/chapter2/dumpling-in-action.md) @[我不叫大脸猫](https://github.com/qxhy123)
+
             <!--
             ;使用 Dumpling 导出数据
             -->
