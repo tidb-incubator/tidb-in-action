@@ -36,11 +36,14 @@
     * [9.1 TiDB HTAP 的特点](session1/chapter9/tidb-htap.md) @彭鑫
     * [9.2 TiFlash 架构与原理](session1/chapter9/tiflash-architecture.md) @[童智高](https://github.com/solotzg) @徐嘉埥
     * [9.3 TiFlash 的使用](session1/chapter9/tiflash-in-action.md) @刘筠松 @王文安
-    * [9.4 TiSpark on TiFlash](session1/chapter9/tispark-on-tiflash.md) @李振环
 * [10 TiDB 安全](session1/chapter10/tidb-security.md)
     * [10.1 权限管理](session1/chapter10/privilege-management.md)
     * [10.2 RBAC](session1/chapter10/rbac.md)
     * [10.3 证书管理与数据加密](session1/chapter10/cert-management-data-encryption.md)
+* [11 TiSpark 简介与实战](session1/chapter11/tispark-intro.md)
+    * [11.1 TiSpark 架构与原理](session1/chapter9/tiflash-architecture.md)
+    * [11.2 TiSpark 的使用](session1/chapter9/tiflash-in-action.md)
+    * [11.3 TiSpark on TiFlash](session1/chapter9/tispark-on-tiflash.md)
 
 ## 第二部分 系统安装部署与管理
 * [1 部署安装 & 常规运维](session2/chapter1/deployment-management.md)
