@@ -105,7 +105,7 @@
     * [1.2 SQL Plan Management](session3/chapter1/sql-plan-management.md)
     * [1.3 限制 SQL 的内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
-    * [2.1 通过 KeyVis 来识别业务的模式](session3/chapter2/key-vis.md)
+    * [2.1 通过 KeyVis 来识别业务的模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 快速定位慢 SQL](session3/chapter2/located-slow-sql.md)@李迅
     * [2.3 如何获取性能 Profile](session3/chapter2/get-profile.md)
     * [2.4 集群诊断报告](session3/chapter2/diagnosis-report.md)
