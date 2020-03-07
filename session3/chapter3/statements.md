@@ -16,6 +16,7 @@ TiDB已经有很多性能排查工具了，但我们在应对各类场景时，�
 4. Explain analyze只能查可以复现的问题
 5. Profile只能查整个实例的瓶颈
 
+所以有了可视化Statement直接可以在页面观察SQL执行情况，也不需要到系统表中去查询了，方便运维人员。
 
 ### Statement参数配置
 
@@ -33,8 +34,15 @@ set global tidb_stmt_summary_refresh_interval = 1800;
 set global tidb_stmt_summary_history_size = 24;
 ```
 
+由于statement信息存储在是内存表中，为了防止内存问题，需要限制保存的SQL条数和SQL的最大显示长度。这两个参数都在 config.toml的[stmt-summary]类别下配置：
 
-### 查看 SQL 语句的整体情况
+* 通过max-stmt-count更改保存的SQL种类数量，默认200条。当SQL种类超过 max-stmt-count 时，会移除最近没有使用的 SQL。
+* 通过max-sql-length更改DIGEST_TEXT和QUERY_SAMPLE_TEXT的最大显示长度，默认是 4096。
+
+注:tidb_stmt_summary_history_size、max-stmt-count、max-sql-length 这些配置都影响内存占用，建议根据实际情况调整，不宜设置得过大。
+
+
+### 查看SQL语句的整体情况
 登录后，在左侧点击「SQL 语句分析」即可进入此功能页面。在时间区间选项框中选择要分析的时间段即可得到该时段所有数据库的SQL语句执行统计情况，如果只关心某些数据库， 
 则可以在第二个选项框中选择相应的数据库对结果进行过滤，支持多选。
 
@@ -53,8 +61,8 @@ set global tidb_stmt_summary_history_size = 24;
 2. 选择时间段时，只能从下拉框中选择固定的时间段，暂不支持自定义的任意时间段
 
 
-### 查看单个SQL语句的详情
-在SQL类别列点击某类 SQL 语句，可以进入该 SQL 语句的详情页查看更详细的信息，以及 该 SQL 语句在不同节点上执行的统计情况。
+### 查看SQL语句详情页
+在SQL类别列点击某类SQL语句，可以进入该SQL语句的详情页查看更详细的信息，以及该SQL语句在不同节点上执行的统计情况。
 单个Statements详情页关键信息：
 
 1. SQL执行总时长
