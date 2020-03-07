@@ -46,7 +46,7 @@ set global tidb_stmt_summary_history_size = 24;
 注:下面所称的 SQL 语句实际指的是某一类 SQL 语句。语法一致的 SQL 语句会规一划为一类相同的 SQL 语句。
 比如 “SELECT * FROM employee WHERE id IN (1, 2, 3)” 和 “select * from EMPLOYEE where ID in (4, 5)” 最后都会被规一划为 “select * from employee where id in (...)”。
 
-![1.png](/res/session3/chapter3/slow-query-table/1.jpg)
+![1.jpg(/res/session3/chapter3/slow-query-table/1.jpg)
 
 目前的已知问题:
 1. 对于TiDB内部SQL语句来说，数据库这一列内容为空
@@ -61,7 +61,7 @@ set global tidb_stmt_summary_history_size = 24;
 2. 平均影响行数（一般是写入）
 3. 平均扫描行数（一般是读）
 4. 各个节点执行指标，分析出某个节点性能瓶颈
-![2.png](/res/session3/chapter3/slow-query-table/2.jpg)
+![2.jpg](/res/session3/chapter3/slow-query-table/2.jpg)
 
 如果有耗时的SQL可以通过前面章节介绍的KeyVis来进行分析
 
