@@ -1,13 +1,9 @@
 ## 2.2 可视化 Statements
-
-
 在上一节介绍了怎样通过 KeyVis 来识别 TiDB 的业务的模式，本节主要带领读者体会写怎么样通过 dashboard 的信息来 Statements 分析执行 SQL 情况，
 从而达到帮助运维人员快速定位 SQL 性能问题。
-
 ### Statements 是什么
 针对 SQL 性能相关的问题，TiDB Dashboard 提供了 Statements 用来监控和统计 SQL 。例如页面上提供了丰富的列表信息，
 包括延迟、执行次数、扫描行数、全表扫描次数等，可以用来分析哪些类别的SQL语句耗时过长、消耗内存过多等情况，帮助用户定位性能问题。
-
 ### 为什么要用可视化 Statements
 TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，仍发现它们有一些不足，如下：
 1. Grafana 不能排查单条 SQL 的性能问题
@@ -18,7 +14,7 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 
 所以有了可视化 Statements 直接可以在页面观察 SQL 执行情况，也不需要到系统表中去查询了，方便运维人员。
 
-### 查看 SQL 语句的整体情况
+### 查看 Statements 整体情况
 登录后，在左侧点击「SQL 语句分析」即可进入此功能页面。在时间区间选项框中选择要分析的时间段即可得到该时段所有数据库的SQL语句执行统计情况，如果只关心某些数据库， 
 则可以在第二个选项框中选择相应的数据库对结果进行过滤，支持多选。
 结果以表格的形式展示，并支持按不同的列对结果进行排序，如下图。
@@ -35,11 +31,9 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 1. 对于 TiDB 内部 SQL 语句来说，数据库这一列内容为空
 2. 选择时间段时，只能从下拉框中选择固定的时间段，暂不支持自定义的任意时间段
 
-
-### 查看SQL语句详情页
+### 查看 Statements 详情页
 在 SQL 类别列点击某类 SQL 语句，可以进入该 SQL 语句的详情页查看更详细的信息，以及该 SQL 语句在不同节点上执行的统计情况。
 单个 Statements 详情页关键信息如下图。
-
 1. SQL 执行总时长
 2. 平均影响行数（一般是写入）
 3. 平均扫描行数（一般是读）
@@ -47,9 +41,7 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 
 ![add image](/res/session3/chapter3/slow-query-table/2.jpg)
 
-
 ### Statements 参数配置
-
 * tidb_enable_stmt_summary： Statements 功能默认开启，通过设置系统变量打开，例如：
 ```
 set global tidb_enable_stmt_summary = true;
@@ -63,9 +55,7 @@ set global tidb_stmt_summary_refresh_interval = 1800;
 ```
 set global tidb_stmt_summary_history_size = 24;
 ```
-
 由于 Statements 信息存储在是内存表中，为了防止内存问题，需要限制保存的 SQL 条数和 SQL 的最大显示长度。这两个参数都在 config.toml 的 [stmt-summary] 类别下配置：
-
 * 通过 max-stmt-count 更改保存的 SQL 种类数量，默认200条。当 SQL 种类超过 max-stmt-count 时，会移除最近没有使用的 SQL。
 * 通过 max-sql-length 更改 DIGEST_TEXT 和 QUERY_SAMPLE_TEXT 的最大显示长度，默认是4096。
 
