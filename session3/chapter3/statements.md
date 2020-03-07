@@ -37,7 +37,7 @@ set global tidb_stmt_summary_history_size = 24;
 由于Statements信息存储在是内存表中，为了防止内存问题，需要限制保存的 SQL 条数和 SQL 的最大显示长度。这两个参数都在 config.toml 的 [stmt-summary] 类别下配置：
 
 * 通过 max-stmt-count 更改保存的 SQL 种类数量，默认200条。当 SQL 种类超过 max-stmt-count 时，会移除最近没有使用的 SQL。
-* 通过 max-sql-length 更改 DIGEST_TEXT和QUERY_SAMPLE_TEXT 的最大显示长度，默认是 4096。
+* 通过 max-sql-length 更改 DIGEST_TEXT和QUERY_SAMPLE_TEXT 的最大显示长度，默认是4096。
 
 注: tidb_stmt_summary_history_size、max-stmt-count、max-sql-length 这些配置都影响内存占用，建议根据实际情况调整，不宜设置得过大。
 
