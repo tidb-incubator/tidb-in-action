@@ -35,7 +35,7 @@ kubectl exec -it <container_name>> sh -n <namespace>
     打开连接后，即可通过本地的对应端口访问 PD 服务和 TiKV 节点：
 
     ```shell
-    $ tikv-ctl --host 127.0.0.1:20160 <subcommands>
+    tikv-ctl --host 127.0.0.1:20160 <subcommands>
     ```
   
     ```shell
@@ -63,13 +63,13 @@ kubectl exec -it <container_name>> sh -n <namespace>
         ```shell
         tkctl debug <tikv-pod-name> -c tikv
         ```
-       
+
     4. 开始使用 `tikv-ctl` 的本地模式，需要注意的是 `tikv` 容器的根文件系统在 `/proc/1/root` 下，因此执行命令时也需要调整数据目录的路径：
 
         ```shell
         tikv-ctl --db /path/to/tikv/db size -r 2
         ```
-       
+
         Kubernetes 上 TiKV 实例在 debug 容器中的的默认 db 路径是 `/proc/1/root/var/lib/tikv/db size -r 2`
 
 ## 在 Kubernetes 上使用 TiDB Control
@@ -187,7 +187,6 @@ helm ls
 helm del --purge <release-name>
 ```
 
-
 Helm3 已经GA,经测试通过 Helm3 可以直接进行部署。更多 helm 的相关文档，请参考 [Helm 官方文档](https://helm.sh/docs/)。
 
 ## 使用 Terraform
@@ -195,4 +194,3 @@ Helm3 已经GA,经测试通过 Helm3 可以直接进行部署。更多 helm 的�
 [Terraform](https://www.terraform.io/) 是一个基础设施即代码（Infrastructure as Code）管理工具。它允许用户使用声明式的风格描述自己的基础设施，并针对描述生成执行计划来创建或调整真实世界的计算资源。Kubernetes 上的 TiDB 使用 Terraform 来在公有云上创建和管理 TiDB 集群。
 
 你可以参考 [Terraform 官方文档](https://www.terraform.io/downloads.html) 来安装 Terraform。
-
