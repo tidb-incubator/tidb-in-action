@@ -18,15 +18,15 @@ TiDB 是分布式数据库，包括 Tidb-server、 Pd-server、 Tikv-server 三�
 
 # lsblk
 NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-sda           8:0    0   20G  0 disk 
+sda           8:0    0   20G  0 disk
 ├─sda1        8:1    0    1G  0 part /boot
-└─sda2        8:2    0   19G  0 part 
+└─sda2        8:2    0   19G  0 part
   ├─cl-root 253:0    0   17G  0 lvm  /
-  └─cl-swap 253:1    0    2G  0 lvm  
-sdb           8:16   0    5G  0 disk 
-├─sdb1        8:17   0  1.5G  0 part 
-├─sdb2        8:18   0  1.5G  0 part 
-└─sdb3        8:19   0    2G  0 part 
+  └─cl-swap 253:1    0    2G  0 lvm
+sdb           8:16   0    5G  0 disk
+├─sdb1        8:17   0  1.5G  0 part
+├─sdb2        8:18   0  1.5G  0 part
+└─sdb3        8:19   0    2G  0 part
 
 ```
 
