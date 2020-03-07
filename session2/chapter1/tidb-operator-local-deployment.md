@@ -101,7 +101,7 @@ To start using your cluster, run:
 #### 一、下载 TiDB Cluster 的 helm chart 文件
 ```
     # mkdir -p /root/chart/
-    从https://github.com/pingcap/tidb-operator/releases下载tidb-cluster-chart-v1.0.6.tgz文件放到/root/chart/路径下
+    从 https://github.com/pingcap/tidb-operator/releases 下载 tidb-cluster-chart-v1.0.6.tgz 文件放到 /root/chart/ 路径下
 ```
 
 #### 二、安装 TiDB Cluster
