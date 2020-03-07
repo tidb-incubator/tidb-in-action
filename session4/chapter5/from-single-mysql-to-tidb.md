@@ -1,8 +1,3 @@
----
-title: 5.1.1 DM 同步单机 MySQL 到 TiDB 的实践
-category: DM
----
-
 ## 5.1.1 DM 同步单机 MySQL 到 TiDB 的实践
 
 Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB 集群的[开源产品](https://github.com/pingcap/dm)。
@@ -114,7 +109,7 @@ task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9
 		name: "taskname"     # 全局唯一的 task 名称
 		task-mode: all       # 同步模式，这里选全量
 		meta-schema: "dm_meta"   # checkpoint 信息存储在下游的数据库名
-		remove-meta: true    # 是否在任务同步开始前移除该任务名对应的 checkpoint 信息，删除会重新开始同步，不删除会从上次停止的位置开始同步
+		remove-meta: false    # 是否在任务同步开始前移除该任务名对应的 checkpoint 信息，删除会重新开始同步，不删除会从上次停止的位置开始同步
 		
 * target-database，下游 TiDB 集群地址用户密码，密码与 DM-Worker 配置里的密码相同
 * mysql-instances，上游 MySQL 实例 source-id 及同步规则模块名称
@@ -122,7 +117,7 @@ task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9
     	source-id: "mariadb-01"    # dm-worker 定义的 source-id 对应
     	route-rules: ["book-route-rules-schema", "book-route-rules"] # 需要同步的对应的库表配置名称
     	filter-rules: ["book-filter-1"]   # 需要过滤的 binlog event 配置名称
-    	black-white-list:  "instance"     # 需要过滤的库表配置名称
+    	black-white-list:  "bookblack"     # 需要过滤的库表配置名称
     	
     	mydumper-config-name: "global"    # mydumper 配置名称
     	mydumper-thread: 4
@@ -135,10 +130,10 @@ task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9
     	
 * routes，需要同步的库表信息
 		
-		 book-route-rules-schema:
+		book-route-rules-schema:  # mysql-instances 部分定义的配置名称
         	schema-pattern: "book"
         	target-schema: "book"
-    	order-route-rules:
+    	book-route-rules:
         	schema-pattern: "book"
         	table-pattern: "session"
         	target-schema: "book"
@@ -154,7 +149,7 @@ task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9
 
 * black-white-list，需要过滤的库表
 
-		instance:
+		bookblack:
     		do-dbs: ["~^book.*"]       
     		ignore-dbs: ["mysql", "performance_schema", "percona", "information_schema"]
     		ignore-tables: 
@@ -217,6 +212,7 @@ task 配置完成，通过 dmctl 工具检查执行同步
 * 查看详细任务状态，正常状态 result 为 true，worker 内的 binlog 位置一致，同步过程中也会展示同步百分比
 
 		query-status  taskname
+
 		
 * 如果发现启动任务异常，查看详细的错误信息
 
@@ -245,7 +241,7 @@ task 配置完成，通过 dmctl 工具检查执行同步
 			expire_time  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 			
 	- 查看下游列定义一致
-	- 查看下游 sql_mode，严格模式下，datetime 类型默认值不能为 0000-00-00 00:00:00 
+	- 查看下游 sql_mode，严格模式下，datetime 类型默认值不能为 '0000-00-00 00:00:00'
 			
 			STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
 	
