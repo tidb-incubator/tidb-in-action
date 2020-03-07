@@ -47,6 +47,7 @@
     * [11.4 TiSpark 结合大数据体系](session1/chapter11/tispark-on-bigdata.md) @羊欢
 
 ## 第二部分 系统安装部署与管理
+
 * [1 部署安装 & 常规运维](session2/chapter1/deployment-management.md)
     * [1.1 TiUP & TiOps](session2/chapter1/tiup-tiops.md)
         * [1.1.1 TiUP 简介](session2/chapter1/tiup-intro.md) @罗瑞星
@@ -206,6 +207,7 @@
         * [8.3.2 动态调整新增索引速度](session4/chapter8/speedup-add-index.md) @郑俊博
 
 ## 第五部分 如何参与 TiDB 社区及周边生态
+
 * [1 TiDB 开源社区治理架构介绍](session5/chapter1/open-source-governance.md)
     * [1.1 TiDB 产品发展简史](session5/chapter1/a-brief-history-of-tidb.md)
     * [1.2 TiKV 捐献到 CNCF](session5/chapter1/tikv-joined-cncf.md)
