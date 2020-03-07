@@ -123,8 +123,8 @@
     * [2.1 识别集群热点和业务模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 分析 SQL 执行性能](session3/chapter2/statements.md) @李迅
     * [2.3 生成集群诊断报告](session3/chapter2/diagnosis-report.md)
-    * [2.4 日志搜索和导出](session3/chapter2/log-export.md) @李迅
-    * [2.5 分析组件 CPU 消耗情况](session3/chapter2/profiling.md) @李迅
+    * [2.4 日志搜索和导出](session3/chapter2/log-export.md)
+    * [2.5 分析组件 CPU 消耗情况](session3/chapter2/profiling.md)
 * [3 诊断系统表](session3/chapter3/sql-diagnosis.md)
     * [3.1 集群信息表](session3/chapter3/cluster-info-tables.md)
     * [3.2 监控表](session3/chapter3/metrics-schema.md)
