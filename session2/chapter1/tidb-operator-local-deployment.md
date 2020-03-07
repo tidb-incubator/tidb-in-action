@@ -1,24 +1,28 @@
-## 背景介绍:
+
+## 背景介绍
+
 本小节介绍如何使用 kind 部署 TiDB Operator，将通过 kind 快速部署一套 Cloud TiDB 集群，为大家梳理三个关键环节：
 1. 基于 kind 部署一套 K8s 集群
 2. 基于 K8s 部署 TiDB Operator
 3. 基于 TiDB Operator 部署 TiDB 集群
 
-## 第一部分： 基于 kind 部署一套 K8s 集群
+## 第一部分 基于 kind 部署一套 K8s 集群
  
 要点提示: 这个小节的内容已基本做到全自动化。部署前请按以下要求准备环境：
 1. 内存 4GB+、CPU 2核心+
 2. Docker 17.03+
 3. net.ipv4.ip_forward 设置为1
 
-### 操作步骤如下:
+### 操作步骤如下
 
 #### 一、下载自动化部署程序
+
 ```
 # cd /root & git clone --depth=1 https://github.com/pingcap/tidb-operator && cd tidb-operator
 ```
 
 #### 二、通过程序创建集群
+
 ```
 # cd /root/tidb-operator && hack/kind-cluster-build.sh
 ```
@@ -30,10 +34,13 @@ To start using your cluster, run:
 ```
 
 #### 三、将 K8s 集群相关命令路径加入PATH路径
+
 ```
     # export PATH=$PATH:/root/tidb-operator/output/bin/
 ```
+
 #### 四、验证 K8s 环境是否符合要求
+
 ```
     # kubectl cluster-info
       Kubernetes master is running at https://127.0.0.1:32771
@@ -48,11 +55,12 @@ To start using your cluster, run:
 ```
 输出以上信息，则说明 Helm 客户端与服务端都符合要求
 
-## 第二部分： 基于 K8s 部署 TiDB Operator
+## 第二部分 基于 K8s 部署 TiDB Operator
 
-### 操作步骤如下:
+### 操作步骤如下
 
 #### 一、通过 helm 安装 TiDB Operator
+
 创建 TiDB CRD
 ```
     # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/crd.yaml && kubectl get crd tidbclusters.pingcap.com
@@ -85,7 +93,9 @@ To start using your cluster, run:
     STATUS: DEPLOYED
     ...
 ```
+
 #### 二、验证 Operator 运行状态
+
 ```
     # kubectl get pods -n tidb-admin
     NAME                                       READY   STATUS    RESTARTS   AGE
@@ -94,17 +104,19 @@ To start using your cluster, run:
 ```
 以上信息显示 Operator 运行正常
 
-## 第三部分： 基于 TiDB Operator 部署 TiDB 集群
+## 第三部分 基于 TiDB Operator 部署 TiDB 集群
 
-### 操作步骤:
+### 操作步骤
 
 #### 一、下载 TiDB Cluster 的 helm chart 文件
+
 ```
     # mkdir -p /root/chart/
     从 https://github.com/pingcap/tidb-operator/releases 下载 tidb-cluster-chart-v1.0.6.tgz 文件放到 /root/chart/ 路径下
 ```
 
 #### 二、安装 TiDB Cluster
+
 ```
     # cd /root/chart/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
     # helm install --namespace dba-test --name=test /root/charts/tidb-cluster -f /root/charts/tidb-cluster/values.yaml
@@ -116,6 +128,7 @@ To start using your cluster, run:
 以上信息显示 TiDB Cluster 部署正常
 
 ### 三、观察 TiDB 的 POD 状态
+
 ```
     # kubectl get pods -n dba-test
     NAME                              READY   STATUS    RESTARTS   AGE
@@ -134,6 +147,7 @@ To start using your cluster, run:
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
 #### 四、访问 TiDB 集群
+
 ```
     # nohup kubectl port-forward svc/test-tidb 4000:4000 --namespace=dba-test &
     # yum install -y mysql
@@ -146,4 +160,4 @@ To start using your cluster, run:
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     MySQL [(none)]>
 ```
-显示以上输出显示 TiDB 集群部署成功。
+显示以上输出显示 TiDB 集群部署成功

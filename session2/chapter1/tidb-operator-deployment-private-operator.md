@@ -1,6 +1,7 @@
-### 操作步骤如下:
+### 操作步骤如下
 
 #### 一、通过 helm 安装 TiDB Operator
+
 创建 TiDB CRD
 ```
     # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/crd.yaml && kubectl get crd tidbclusters.pingcap.com
@@ -34,7 +35,9 @@
     STATUS: DEPLOYED
     ...
 ```
+
 #### 二、验证 Operator 运行状态
+
 ```
     # kubectl get pods -n tidb-admin
     NAME                                       READY   STATUS    RESTARTS   AGE
