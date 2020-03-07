@@ -15,6 +15,7 @@ TiDB 是分布式数据库，包括 Tidb-server、 Pd-server、 Tikv-server 三�
 通过如下命令可知本服务器有 3 个独立分区可用于 Local PV 配置（真实生产环境每个 TiKV 需要独立的磁盘，此处只演示效果）
 
 ```
+
 # lsblk
 NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda           8:0    0   20G  0 disk 
@@ -32,17 +33,20 @@ sdb           8:16   0    5G  0 disk
 以 /dev/sdb1 为例进行磁盘挂载操作
 
 ```
+
 # mkfs.ext4 /dev/sdb1
 # DISK_UUID=$(blkid -s UUID -o value /dev/sdb1)
 # mkdir -p /mnt/disks/$DISK_UUID
 # echo UUID=$DISK_UUID /mnt/disks/$DISK_UUID ext4 defaults 0 2 | sudo tee -a /etc/fstab
 # mount -a
+
 ```
 将 sdb1 替换成 sdb2, sdb3，把 3 个分区都挂载上。重复对 3 台服务器进行磁盘挂载操作。
 
 ### 二、部署 local-volume-provisioner 程序
 
 ```
+
 # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/local-dind/local-volume-provisioner.yaml
 storageclass.storage.k8s.io/local-storage created
 configmap/local-provisioner-config created
@@ -51,11 +55,13 @@ serviceaccount/local-storage-admin created
 clusterrolebinding.rbac.authorization.k8s.io/local-storage-provisioner-pv-binding created
 clusterrole.rbac.authorization.k8s.io/local-storage-provisioner-node-clusterrole created
 clusterrolebinding.rbac.authorization.k8s.io/local-storage-provisioner-node-binding created
+
 ```
 
 ### 三、验证 Local PV 创建情况
 
 ```
+
 # kubectl get pv
 NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS    REASON   AGE
 local-pv-2c956bbd   1468Mi     RWO            Delete           Available           local-storage            2m57s

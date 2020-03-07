@@ -4,6 +4,7 @@
 ## 一、安装 TiDB Cluster
 
 ```
+
     # cd /root/chart/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
     # helm install --namespace dba-test --name=test /root/charts/tidb-cluster -f /root/charts/tidb-cluster/values.yaml
     NAME:   test
@@ -11,6 +12,7 @@
     NAMESPACE: dba-test
     STATUS: DEPLOYED
     ...
+
 ```
 
 以上信息显示 TiDB Cluster 部署正常
@@ -18,6 +20,7 @@
 ## 二、观察 TiDB 的 POD 状态
 
 ```
+
     # kubectl get pods -n dba-test
     NAME                              READY   STATUS    RESTARTS   AGE
     test-discovery-854fb5b46c-hbg4q   1/1     Running   0          4m41s
@@ -30,6 +33,7 @@
     test-tikv-0                       1/1     Running   0          2m45s
     test-tikv-1                       1/1     Running   0          2m45s
     test-tikv-2                       1/1     Running   0          2m45s
+
 ```
 
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常
@@ -37,6 +41,7 @@
 ## 三、访问 TiDB 集群
 
 ```
+
     # kubectl get svc -n dba-test
     NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                          AGE
     test-discovery          ClusterIP   10.102.244.238   <none>        10261/TCP                        3m58s
@@ -48,11 +53,13 @@
     test-tidb               NodePort    10.104.37.71     <none>        4000:30169/TCP,10080:30286/TCP   3m58s
     test-tidb-peer          ClusterIP   None             <none>        10080/TCP                        90s
     test-tikv-peer          ClusterIP   None             <none>        20160/TCP                        2m2s
+
 ```
 
 找到 test-tidb 这个 Service 的 CLUSTER-IP，通过其访问 TiDB 集群
 
 ```
+
     # mysql -h 10.104.37.71 -uroot -P4000
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 1
@@ -66,6 +73,7 @@
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
     mysql> 
+
 ```
 
 访问 TiDB 成功
