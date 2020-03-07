@@ -4,7 +4,7 @@
 
 TiCDC 的系统架构如上图所示：
 
-- **TiKV**：输出 KV 变更日志（KV Change Logs）。KV 变更日志是TiKV 提供的隐藏大部分内部实现细节的的 Row Changed Events。TiKV 负责拼装 KV 变更日志，并输出给 TiCDC 集群。
+- **TiKV**：输出 KV 变更日志（KV Change Logs）。KV 变更日志是TiKV 生成的 Row Changed Events，隐藏了大部分内部实现细节。TiKV 负责拼装 KV 变更日志，并输出到 TiCDC 集群。
 
 - **Capture**：TiCDC 的运行进程。一个 TiCDC 集群通常由多个 Capture 节点组成。每个 Capture 负责拉取一部分 KV 变更日志，排序后输出到下游组件。每个 TiCDC 集群都有两种 Capture 角色存在：Owner 和 Processor。
    - 集群内有且仅有一个 Owner，它负责集群内部调度。若 Owner 出现异常，则其它 Capture 节点会自动选举出新的 Owner。
