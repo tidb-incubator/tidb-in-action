@@ -12,7 +12,7 @@ Kubernetes 上的 TiDB 运维管理需要使用一些开源工具。同时，在
 kubectl exec -it <container_name>> sh -n <namespace>
 ```
 
-执行上述命令后，就可以通过 `127.0.0.1:2379` 访问到 PD 服务，从而直接使用 `pd-ctl` 命令的默认参数执行操作，如：
+执行上述命令进入容器后，就可以通过 `127.0.0.1:2379` 访问到 PD 服务，从而直接使用 `pd-ctl` 命令的默认参数执行操作，如：
 
 ```shell
 ./pd-ctl -d config show
