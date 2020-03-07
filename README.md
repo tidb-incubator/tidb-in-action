@@ -27,9 +27,9 @@ Read it:[TiDB In Action: based on 4.0](https://pingcap-incubator.github.io/tidb-
 #### 关于最佳实践
 
 * 力求用文字或图清晰按照时间轴描述整个过程
-  * 事前准备
-  * 事中操作流程
-  * 事后
+    * 事前准备
+    * 事中操作流程
+    * 事后
 * 轻原理，重实操
 
 ### 不好的例子
