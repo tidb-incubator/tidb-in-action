@@ -14,7 +14,7 @@ Talent Plan 是为社区提供的学习资料，也在社区的建议和反馈�
 
 ### 线上课程
 
-线上课程包括  4 个课程系列，分别是：Open Source Collaboration 课程系列、Programming Language 课程系列、Infrastructure Systems 课程系列、Deep Dive into TiDB Ecosystem 课程系列。
+线上课程包括 4 个课程系列，分别是：Open Source Collaboration 课程系列、Programming Language 课程系列、Infrastructure Systems 课程系列、Deep Dive into TiDB Ecosystem 课程系列。
 
 每个课程系列中会有相关的课程供大家选择，课程之间是相互解耦的，大家可以结合自己需求自由规划学习路径。
 
