@@ -1,8 +1,6 @@
-
 # 升级 TiDB Operator
 
 本文介绍如何升级 TiDB Operator。升级 TiDB Operator 和自定义 TiDB Operator 类似，修改 `values.yaml` 中的镜像版本，然后执行 `helm upgrade`：
-
 
 ```shell
 helm upgrade tidb-operator pingcap/tidb-operator --version=<chart-version> -f /home/tidb/tidb-operator/values-tidb-operator.yaml
@@ -13,6 +11,7 @@ helm upgrade tidb-operator pingcap/tidb-operator --version=<chart-version> -f /h
 TiDB Operator 是用来管理 TiDB 集群的，也就是说，如果 TiDB 集群已经启动并正常运行，你甚至可以停掉 TiDB Operator，而 TiDB 集群仍然能正常工作，直到你需要维护 TiDB 集群，比如伸缩、升级等等。
 
 生产环境 TiDB Operator 升级要慎重，选择业务流量低的时候升级最好。
+
 ## 升级 Kubernetes
 
 当你的 Kubernetes 集群有版本升级，请确保 `kubeSchedulerImageTag` 与之匹配。默认情况下，这个值是由 Helm 在安装或者升级过程中生成的，要修改它你需要执行 `helm upgrade`。
