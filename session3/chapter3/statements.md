@@ -24,11 +24,11 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 ```
 set global tidb_enable_stmt_summary = true;
 ```
-* tidb_stmt_summary_refresh_interval：performance_schema.events_statements_summary_by_digest 表的的清空周期，单位是秒 (s)，默认值是 1800。
+* tidb_stmt_summary_refresh_interval：performance_schema.events_statements_summary_by_digest 表的的清空周期，单位是秒 (s)，默认值是 1800，例如：
 ```
 set global tidb_stmt_summary_refresh_interval = 1800;
 ```
-* tidb_stmt_summary_history_size：performance_schema.events_statements_summary_by_digest_history 表保存每种 SQL 的历史的数量，默认值是 24
+* tidb_stmt_summary_history_size：performance_schema.events_statements_summary_by_digest_history 表保存每种 SQL 的历史的数量，默认值是 24，例如：
 
 ```
 set global tidb_stmt_summary_history_size = 24;
@@ -45,8 +45,7 @@ set global tidb_stmt_summary_history_size = 24;
 ### 查看 SQL 语句的整体情况
 登录后，在左侧点击「SQL 语句分析」即可进入此功能页面。在时间区间选项框中选择要分析的时间段即可得到该时段所有数据库的SQL语句执行统计情况，如果只关心某些数据库， 
 则可以在第二个选项框中选择相应的数据库对结果进行过滤，支持多选。
-
-结果以表格的形式展示，并支持按不同的列对结果进行排序。
+结果以表格的形式展示，并支持按不同的列对结果进行排序，如下图。
 1. 选择一份分析的时间段
 2. 支持按数据库过滤
 3. 支持按不同的指标排序
@@ -63,7 +62,7 @@ set global tidb_stmt_summary_history_size = 24;
 
 ### 查看SQL语句详情页
 在 SQL 类别列点击某类 SQL 语句，可以进入该 SQL 语句的详情页查看更详细的信息，以及该 SQL 语句在不同节点上执行的统计情况。
-单个 Statements 详情页关键信息：
+单个 Statements 详情页关键信息如下图。
 
 1. SQL 执行总时长
 2. 平均影响行数（一般是写入）
