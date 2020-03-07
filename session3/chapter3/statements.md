@@ -46,7 +46,7 @@ set global tidb_stmt_summary_history_size = 24;
 注:下面所称的 SQL 语句实际指的是某一类 SQL 语句。语法一致的 SQL 语句会规一划为一类相同的 SQL 语句。
 比如 “SELECT * FROM employee WHERE id IN (1, 2, 3)” 和 “select * from EMPLOYEE where ID in (4, 5)” 最后都会被规一划为 “select * from employee where id in (...)”。
 
-![1.jpg(/res/session3/chapter3/slow-query-table/1.jpg)
+![add image](/res/session3/chapter3/slow-query-table/1.jpg)
 
 目前的已知问题:
 1. 对于TiDB内部SQL语句来说，数据库这一列内容为空
