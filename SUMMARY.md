@@ -193,13 +193,8 @@
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
     * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md) @胡盼盼
-        * [8.1.1 限制 SQL 的内存使用和执行时间](session4/chapter8/memory-quota-execution-time-limit.md) @胡盼盼
-        * [8.1.2 事务重试设置](session4/chapter8/transaction-retry-config.md) @胡盼盼
-        * [8.1.3 提升请求并发度](session4/chapter8/speedup-query.md) @胡盼盼
-        * [8.1.4 与 MySQL 的常见兼容设置](session4/chapter8/compatible-with-mysql.md) @胡盼盼
-        * [8.1.5 其他常见优化配置](session4/chapter8/other-tidb-common-config-optimize.md) @胡盼盼
-    * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md) @黄蔚
-        * [8.2.1 TiKV 线程池优化](session4/chapter8/threadpool-optimize.md) @黄蔚
+    * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md)
+        * [8.2.1 TiKV 线程池优化](session4/chapter8/threadpool-optimize.md) @胡盼盼
         * [8.2.2 海量 Region 集群调优](session4/chapter8/massive-region-optimize.md) @黄蔚
         * [8.2.3 其他常见优化设置](session4/chapter8/other-tikv-common-config-optimize.md) @黄蔚
     * [8.3 添加索引调优加速](session4/chapter8/add-index-optimization.md)
