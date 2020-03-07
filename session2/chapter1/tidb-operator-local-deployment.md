@@ -19,7 +19,7 @@
 
 ### 操作步骤如下
 
-#### 一、下载自动化部署程序
+### 一、下载自动化部署程序
 
 ```
 
@@ -27,7 +27,7 @@
 
 ```
 
-#### 二、通过程序创建集群
+### 二、通过程序创建集群
 
 ```
 
@@ -39,13 +39,13 @@
 
 ```
 
-############# success create cluster:[kind] #############
+########## success create cluster:[kind] ##########
 To start using your cluster, run:  
     kubectl config use-context kind-kind
 
 ```
 
-#### 三、将 K8s 集群相关命令路径加入PATH路径
+### 三、将 K8s 集群相关命令路径加入PATH路径
 
 ```
 
@@ -53,7 +53,7 @@ To start using your cluster, run:
 
 ```
 
-#### 四、验证 K8s 环境是否符合要求
+### 四、验证 K8s 环境是否符合要求
 
 ```
 
@@ -77,9 +77,7 @@ To start using your cluster, run:
 
 ## 第二部分 基于 K8s 部署 TiDB Operator
 
-### 操作步骤如下
-
-#### 一、通过 helm 安装 TiDB Operator
+### 一、通过 helm 安装 TiDB Operator
 
 创建 TiDB CRD
 
@@ -122,7 +120,7 @@ To start using your cluster, run:
 
 ```
 
-#### 二、验证 Operator 运行状态
+### 二、验证 Operator 运行状态
 
 ```
 
@@ -139,7 +137,7 @@ To start using your cluster, run:
 
 ### 操作步骤
 
-#### 一、下载 TiDB Cluster 的 helm chart 文件
+### 一、下载 TiDB Cluster 的 helm chart 文件
 
 ```
 
@@ -148,7 +146,7 @@ To start using your cluster, run:
 
 ```
 
-#### 二、安装 TiDB Cluster
+### 二、安装 TiDB Cluster
 
 ```
 
@@ -184,7 +182,7 @@ To start using your cluster, run:
 
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常
 
-#### 四、访问 TiDB 集群
+### 四、访问 TiDB 集群
 
 ```
 
