@@ -113,6 +113,9 @@
             <!--
             ;使用 Dumpling 导出数据
             -->
+    * [2.5 一体化数据同步平台 DM](session2/chapter2/dm-intro.md)
+        * [2.5.1 DM 工作原理](session2/chapter2/dm-internal.md)
+        * [2.5.2 DM 实操指南](session2/chapter2/dm-in-action.md)
 
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
