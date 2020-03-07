@@ -1,16 +1,19 @@
 # Talent Plan: Made for Community, by Community
-## 项目简介
+
 [Talent Plan](https://github.com/pingcap/talent-plan) 是由 PingCAP 发起的、面向社区人才培养的开源项目，该项目在 GitHub 上已拥有 **3800+** Star。Talent Plan 旨在开发并整合一系列开源协作、编程语言、基础设施等课程资料并与 TiDB 生态系统实践经验相结合，帮助开源爱好者以及基础设施爱好者逐步获得基础知识沉淀和技能提升。
 
 自 2018 年 12 月份 Talent Plan 项目启动至今（北京时间 2020 年 3 月 7 日），线上课程共吸引国内外实名认证课程爱好者 **400** 余人，40 余人顺利通过线上课程的考核；线下实训项目成功举办 4 期，38 名同学顺利结业，15 名同学在通过 Talent Plan 课程考核后陆续加入 PingCAP，其他同学也持续在 TiDB Community 中发挥自己的光和热。
 
 <img src="https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-milestones.png" width="750px"/>
+
 ## 课程内容
+
 Talent Plan 是为社区提供的学习资料，也在社区的建议和反馈中不断优化成长。在社区小伙伴的共同努力下，Talent Plan 正在进行新一轮的升级，这是一个涵盖了开源协作、Rust 语言、分布式数据库、分布式系统、TiDB/TiKV 原理精讲等线上学习课程以及 TiDB 开源社区项目线下实训课程的更大的学习版图。课程框架见下图：
 
 <img src="https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-framework.png" width="750px"/>
 
 ### 线上课程
+
 线上课程包括  4 个课程系列，分别是：Open Source Collaboration 课程系列、Programming Language 课程系列、Infrastructure Systems 课程系列、Deep Dive into TiDB Ecosystem 课程系列。
 
 每个课程系列中会有相关的课程供大家选择，课程之间是相互解耦的，大家可以结合自己需求自由规划学习路径。
@@ -87,7 +90,7 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 
 截止目前，线下实训已成功举办 4 期，累计线下学员数 41 人，累计覆盖 10 所高校，38 名同学顺利结业。
 
-#### 学员们说
+**学员们说**
 
 > “我超级喜欢 PingCAP 的氛围还有培训的方式。这次培训从语言和数据库理论学习到跟进最新论文，再到动手实操小 Demo，了解 TiDB 各个部分实现原理以及最后阅读分析 TiDB 各个模块的代码，丰富的课程让我对数据库的理解又加深了一层。希望自己以后的研究东西能够贴近到具体的场景和系统去发现问题，并把自己的研究成果落地。我也非常期待 PingCAP Global Meetup 之旅和各路大牛交流。其实，现在内心还没平复下来，这次来北京收获太多了，现在话都组织不好了。” ——兰海（第一期优秀学员）
 
@@ -102,6 +105,7 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 <img src="https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-students.png" width="750px"/>
 
 ## 如何参与 Talent Plan？
+
 Talent Plan 规划了一个巨大的学习版图，我们期待着能与社区小伙伴一起逐步实现、不断优化，真正做到“Made for Community, by Community”。
 
 * 如果你已经迫不及待想要开始 Talent Plan 课程的学习，Talent Plan 官方网站 中有已经规划好的 TiDB 及 TiKV 两条路径供你学习。
