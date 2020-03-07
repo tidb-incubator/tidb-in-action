@@ -56,7 +56,7 @@
 
 如果我们把光标移动到金黄色的热点上还能看到更具体的提示，如下图所示，可以看到每分钟的流量为 165.25 兆/每秒, 访问的表名是 sbtest1， 访问的对象是表的一个索引，索引的名字是 k_1, 我们也能看到这个块在存储层对应的 key 范围，即图中展示的 start key 和 end key。
 
-   ![](/res/session3/chapter2/keyvis/tooltip.png)
+![](/res/session3/chapter2/keyvis/tooltip.png)
 
 - 均匀分布
 
@@ -70,4 +70,4 @@
 
   ![](/res/session3/chapter2/keyvis/periodic.png)
 
-如果大家用的 4.0 或者以上的版本，系统会自动根据负载情况来弹性伸缩，不再需要人工干预。
+如果大家用的 TiDB 4.0 或者以上的版本，系统会自动根据负载情况来弹性伸缩，不再需要人工干预。弹性伸缩相关的细节请参考弹性调度章节。
