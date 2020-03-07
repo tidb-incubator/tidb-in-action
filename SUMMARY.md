@@ -118,7 +118,6 @@
 * [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
     * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md) @[石壹笑](https://github.com/aierui)
     * [1.2 SQL Plan Management](session3/chapter1/sql-plan-management.md)
-    * [1.3 限制 SQL 的内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 通过 KeyVis 来识别业务的模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 快速定位慢 SQL](session3/chapter2/located-slow-sql.md)@李迅
@@ -193,7 +192,15 @@
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
     * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md) @胡盼盼
+        * [8.1.1 限制 SQL 的内存使用和执行时间](session4/chapter8/memory-quota-execution-time-limi.md) @胡盼盼
+        * [8.1.2 事务重试设置](session4/chapter8/transaction-retry-config.md) @胡盼盼
+        * [8.1.3 提升请求并发度](session4/chapter8/speedup-query.md) @胡盼盼
+        * [8.1.4 与 MySQL 的常见兼容设置](session4/chapter8/compatible-with-mysql.md) @胡盼盼
+        * [8.1.5 其他常见优化配置](session4/chapter8/other-tidb-common-config-optimize.md) @胡盼盼
     * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md) @黄蔚
+        * [8.2.1 TiKV 线程池优化](session4/chapter8/threadpool-optimize.md) @黄蔚
+        * [8.2.2 海量 Region 集群调优](session4/chapter8/massive-region-optimize.md) @黄蔚
+        * [8.2.3 其他常见优化设置](session4/chapter8/other-tikv-common-config-optimize.md) @黄蔚
     * [8.3 添加索引调优加速](session4/chapter8/add-index-optimization.md)
         * [8.3.1 TiDB 增加索引原理](session4/chapter8/add-index-internal.md) @郑俊博
         * [8.3.2 动态调整新增索引速度](session4/chapter8/speedup-add-index.md) @郑俊博
