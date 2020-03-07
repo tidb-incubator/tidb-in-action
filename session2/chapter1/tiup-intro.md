@@ -37,7 +37,7 @@ tiup install tidb:nightly
 ```
 tiup install <comp>:version
 ```
-例如，安装 3.0.9 版本的 tidb 可以使用如下命令：
+例如，安装 3.0.9 版本的 TiDB 可以使用如下命令：
 ```
 tiup install tidb:v3.0.9
 ```
@@ -46,7 +46,7 @@ tiup install tidb:v3.0.9
 ```
 tiup list --refresh
 ```
-同安装类似，同样支持获取某个组件的所有可选版本。例如，使用如下命令获取 tidb 的所有可选版本：
+同安装类似，同样支持获取某个组件的所有可选版本。例如，使用如下命令获取 TiDB 的所有可选版本：
 ```
 tiup list tidb --refresh
 ```
@@ -58,11 +58,11 @@ TiUP 组件运行的命令如下：
 ```
 tiup run <comp>:[version]
 ```
-如果组件未安装则会自动执行 install 命令进行对应组件的安装然后执行运行命令。例如，想要运行本地最新的 tidb，可以使用如下命令：
+如果组件未安装则会自动执行 install 命令进行对应组件的安装然后执行运行命令。例如，想要运行本地最新的 TiDB，可以使用如下命令：
 ```
 tiup run tidb
 ```
-如果想要运行指定版本的 tidb，可以使用如下命令：
+如果想要运行指定版本的 TiDB，可以使用如下命令：
 ```
 tiup run tidb:v3.0.9
 ```
@@ -84,11 +84,11 @@ tiup list --installed
 ```
 tiup uninstall <comp>:[version]
 ```
-例如，删除 tidb 的 3.0.9 版本命令如下：
+例如，删除 TiDB 的 3.0.9 版本命令如下：
 ```
 tiup uninstall tidb:v3.0.9
 ```
-想要删除 tidb 所有的版本，命令如下：
+想要删除 TiDB 所有的版本，命令如下：
 ```
 tiup uninstall tidb --all
 ```
