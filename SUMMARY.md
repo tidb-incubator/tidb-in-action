@@ -80,7 +80,7 @@
         * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @黄靓
         * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
     * [1.4 集群版本升级](session2/chapter1/tidb-upgrade.md)
-        * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md)
+        * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md) @[黄靓](https://github.com/vincent178)
         * [1.4.2 基于 TiDB-Operator 的集群滚动更新](session2/chapter1/tidb-operator-rolling-upgrade.md) @[宋歌](https://github.com/shonge)
     * [1.5 如何做动态配置修改](session2/chapter1/online-changing-config.md) @[宋歌](https://github.com/shonge)
 
