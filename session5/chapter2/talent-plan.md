@@ -30,7 +30,7 @@ Talent Plan 是为社区提供的学习资料，也在社区的建议和反馈�
 
 需要特别介绍的是由 Rust 核心作者 Brian Anderson 精心设计的 Rust 学习课程—— [Practical Networked Applications in Rust](https://github.com/pingcap/talent-plan/tree/master/rust)，通过这部分课程的学习，你将能够独立创建一个基于 Rust 语言的 Key-Value 数据库。
  
-**Infrastructure Systems 课程系列**
+#### Infrastructure Systems 课程系列
 
 这个课程系列专为基础设施爱好者设计，其中包括：
 
