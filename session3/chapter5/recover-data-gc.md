@@ -46,19 +46,11 @@ update mysql.tidb set VARIABLE_VALUE="24h" where VARIABLE_NAME="tikv_gc_life_tim
 
 > **注意：**
 >
-
-> mysql.tidb系统表中除了下文将要列出的GC的配置外，还包含一些TiDB用于储存部分集群状态（包括 GC 状态）的记录。请勿手动更改这些记录。
-
->其中，与 GC 有关的记录如下：
-
+> mysql.tidb系统表中除了下文将要列出的GC的配置外，还包含一些TiDB用于储存部分集群状态（包括 GC 状态）的记录。请勿手动更改这些记录。其中，与 GC 有关的记录如下：
 >. tikv_gc_leader_uuid，tikv_gc_leader_desc 和 tikv_gc_leader_lease 用于记录 GC leader 的状态
-
 >. tikv_gc_last_run_time：上次 GC 运行时间
-
 >. tikv_gc_safe_point：当前 GC 的 safe point
-
 >.tikv_gc_life_time 用于配置历史版本保留时间，可以手动修改
-
 >. tikv_gc_safe_point 记录了当前的 safePoint，用户可以安全地使用大于 safePoint 的时间戳创建 snapshot 读取历史版本。safePoint 在每次 GC 开始运行时自动更新。
 
 
