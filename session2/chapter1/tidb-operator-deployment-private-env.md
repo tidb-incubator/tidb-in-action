@@ -25,5 +25,5 @@ net.bridge.bridge-nf-call-arptables=1
 net.bridge.bridge-nf-call-ip6tables=1
 
 ### 其他Linux配置要求
-1. 将Linux swap关闭（永久关闭）
+1. 将 Linux swap 关闭（永久关闭）
 2. 启动irqbalance服务
