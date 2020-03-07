@@ -12,52 +12,65 @@
 
 1. 通过 <https://github.com/helm/helm/releases>  找到要下载的 helm 版本， TiDB Operator  要求 Helm 版本 < 3.0
 
-   `wget https://get.helm.sh/helm-v2.16.1-linux-amd64.tar.gz`
+   ```
+   wget https://get.helm.sh/helm-v2.16.1-linux-amd64.tar.gz
+   ```
 
 2. 解压缩
 
-   `tar -zxvf helm-v2.16.1-linux-amd64.tar.gz`
+   ```
+   tar -zxvf helm-v2.16.1-linux-amd64.tar.gz
+   ```
 
-3. 在解压后的目录中找到二进制文件，并将其移动到所需的位置
+3. 在解压后的目录中找到二进制文件，将其移动到所需的位置并添加执行权限
 
-   `mv linux-amd64/helm /usr/local/bin/helm`
+   ```
+   mv linux-amd64/helm /usr/local/bin/helm
+   chmod +x /usr/local/bin/helm
+   ```
 
 4. 运行以下命令
 
-   `helm help`
+   ```
+   helm help
+   ```
 
 5. 为 Tiller 添加权限，详见 [Role-based Access Control](https://docs.helm.sh/using_helm/#role-based-access-control)，新建 rbac-config.yaml ，内容如下：
 
 ```
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: tiller
-  namespace: kube-system
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: tiller
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-  - kind: ServiceAccount
-    name: tiller
-    namespace: kube-system
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: tiller
+      namespace: kube-system
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: ClusterRoleBinding
+    metadata:
+      name: tiller
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: cluster-admin
+    subjects:
+      - kind: ServiceAccount
+        name: tiller
+        namespace: kube-system
 ```
 
 6. 初始化 Helm 并安装 Tiller 服务
 
-```helm init --upgrade --service-account tiller```
+```
+helm init --upgrade --service-account tiller
+```
 
 如果无法下载镜像，可以用 `--tiller-image` 参数替换镜像地址
 
 7. 运行以下命令
 
-`helm version`
+```
+helm version
+```
 
 出现以下信息，确认安装成功
 
@@ -68,7 +81,9 @@ Server: &version.Version{SemVer:"v2.16.1", GitCommit:"bbdfe5e7803a12bbdf97e94cd8
 
 8. 配置 PingCAP 官方 chart 仓库 
 
-```helm repo add pingcap https://charts.pingcap.org/```
+```
+helm repo add pingcap https://charts.pingcap.org/
+```
 
 ## 安装 TiDB Operator
 
@@ -89,7 +104,7 @@ helm inspect values pingcap/tidb-operator --version=<chart-version> > /home/tidb
 
 > **注意：**
 >
-> ```<chart-version>``` 在后续文中代表 chart 版本，例如 `v1.0.0`，可以通过  ```helm search -l tidb-operator``` 查看当前支持的版本
+> `<chart-version>` 在后续文中代表 chart 版本，例如 `v1.0.0`，可以通过  `helm search -l tidb-operator` 查看当前支持的版本
 
 2. 配置 TiDB Operator
 
@@ -131,17 +146,18 @@ TiDB 默认会使用很多文件描述符，工作节点和上面的 Docker 进�
 
 - 设置工作节点的 `ulimit` 值，详情可以参考[如何设置 ulimit](https://access.redhat.com/solutions/61334) 
 
-`
+```bash
   sudo vim /etc/security/limits.conf
-`
+```
 
   设置 root 账号的 `soft` 和 `hard` 的 `nofile` 大于等于 `1048576` 。
 
 - 设置 Docker 服务的 `ulimit`
-  `
+  ```bash
   sudo vim /etc/systemd/system/docker.service
-  `
-设置 `LimitNOFILE` 大于等于 `1048576`
+  ``
+  设置 `LimitNOFILE` 大于等于 `1048576`
+  ```
 
 - 修改完后重启Node节点
 
@@ -231,7 +247,30 @@ Kubernetes 集群节点个数少于 3 个时，为了使 TiDB 集群能启动起
 > 
 > - 京东云硬盘支持创建的磁盘大小范围为 `[20-16000]GiB` ,步长  `10G` ,  `values.yaml` 里 `PD`、`TiKV`、`Monitor`、`Drainer` 默认的磁盘大小不满足京东云盘的最小磁盘要求，需要修改为磁盘范围内的大小才可以正确创建 PV 。
 >
-> - 如果要使用京东云的 `LoadBalance` 服务，修改 `values.yaml` 中的 `Service` 类型为 `LoadBalancer`，更多 `LoadBalance` 的配置参考官方文档 <https://docs.jdcloud.com/cn/jcs-for-kubernetes/deploy-service> 
+
+修改 Service 
+
+如果要使用京东云Kubernetes集成的负载均衡服务，需要修改 `values.yaml` 中 tidb 下的 Service 指定 annotations  service.beta.kubernetes.io/jdcloud-load-balancer-spec
+```
+tidb:
+  service:
+      type: LoadBalancer
+      exposeStatus: true
+      annotations:
+        service.beta.kubernetes.io/jdcloud-load-balancer-spec: |
+            version: "v1"								# 【版本号】只支持"v1"
+            loadBalancerType: nlb						# 【必填项】要创建的JD LB的类型,创建后不支持变更
+            internal: true								#  true 表示 LB 实例不会绑定公网 IP,只内部使用； false 表示为外部服务，会绑定公网 IP。修改可能会触发 IP的创建，绑定或者解绑，不会自动删除
+            listeners:									# 每个 port 对应的LB 的 listener 的配置,数量必须和 ports 的数量一致 
+              - protocol: "tcp"							# 修改可能触发删除重建，导致服务短暂中断，listener 的协议, alb:Tcp,Http,Https,Tls;nlb:Tcp;dnlb:Tcp
+                connectionIdleTimeSeconds: 1800			# 连接超时时间，alb/nlb 有效
+                backend:								# 关于 JD LB 的 backend 的通用配置
+                  connectionDrainingSeconds: 300		# 【nlb】移除 target 前，连接的最大保持时间，默认 300s，取值范围 [0-3600] (Optional)
+                  sessionStickyTimeout: 300				# 【nlb】会话保持超时时间， sessionStickiness开启时生效，默认 300s, 取值范围 [1-3600] (Optional)
+                  algorithm: "IpHash"					# 调度算法, 取值范围为 [ IpHash, RoundRobin,和 LeastConn ]（取值范围的含义分别为：源 Ip hash，加权轮询和加权最小连接），默认为 RoundRobin （加权轮询） (Optional)，nlb：；dnlb：；alb
+ 
+```
+关于LoadBalance的更多参数参考官方文档 <https://docs.jdcloud.com/cn/jcs-for-kubernetes/deploy-service-new> 
 
 创建 Secret
 
@@ -261,18 +300,17 @@ kubectl get po -n <namespace> -l app.kubernetes.io/instance=<release-name>
 TiDB 集群创建好后，通过下面的命令查看 TiDB Service 的 ClusterIP ：
 
 ```bash
-$kubectl -n jddb-tidb get svc -l app.kubernetes.io/instance=jddb-tidb
+$kubectl -n jddb get svc -l app.kubernetes.io/instance=jddb
 
-NAME                       TYPE           CLUSTER-IP        EXTERNAL-IP                    PORT(S)                          AGE
-jddb-tidb-discovery          ClusterIP      192.168.189.30    <none>                         10261/TCP                        13m
-jddb-tidb-grafana            NodePort       192.168.190.3     <none>                         3000:32444/TCP                   13m
-jddb-tidb-monitor-reloader   NodePort       192.168.186.142   <none>                         9089:31065/TCP                   13m
-jddb-tidb-pd                 ClusterIP      192.168.191.21    <none>                         2379/TCP                         13m
-jddb-tidb-pd-peer            ClusterIP      None              <none>                         2380/TCP                         13m
-jddb-tidb-prometheus         NodePort       192.168.184.144   <none>                         9090:31907/TCP                   13m
-jddb-tidb-tidb               LoadBalancer   192.168.186.9     116.196.66.243,192.168.176.4   4000:30859/TCP,10080:31266/TCP   13m
-jddb-tidb-tidb-peer          ClusterIP      None              <none>                         10080/TCP                        11m
-jddb-tidb-tikv-peer          ClusterIP      None              <none>                         20160/TCP                        12m
+NAME                       TYPE           CLUSTER-IP        EXTERNAL-IP   jddb-discovery          ClusterIP      192.168.184.41    <none>        10261/TCP                        62m
+jddb-grafana            NodePort       192.168.191.192   <none>        3000:32730/TCP                   62m
+jddb-monitor-reloader   NodePort       192.168.188.152   <none>        9089:31832/TCP                   62m
+jddb-pd                 ClusterIP      192.168.188.5     <none>        2379/TCP                         62m
+jddb-pd-peer            ClusterIP      None              <none>        2380/TCP                         62m
+jddb-prometheus         NodePort       192.168.185.100   <none>        9090:30759/TCP                   62m
+jddb-tidb               LoadBalancer   192.168.188.165   <pending>     4000:31399/TCP,10080:30987/TCP   62m
+jddb-tidb-peer          ClusterIP      None              <none>        10080/TCP                        59m
+jddb-tikv-peer          ClusterIP      None              <none>        20160/TCP                        60m
 ```
 
-其中 jddb-tidb-tidb 即是 TiDB 的 Svc ，在公网可以通过 EXTERNAL-IP 中的公网 IP 访问，同一 VPC 下的云主机可以通过EXTERNAL-IP 中的公网 IP 或内网 IP 访问 TiDB 服务。
+其中 jddb-tidb 即是 TiDB 的 Svc ，在公网可以通过 EXTERNAL-IP 中的公网 IP 访问，同一 VPC 下的云主机可以通过EXTERNAL-IP 中的公网 IP 或内网 IP 访问 TiDB 服务。
