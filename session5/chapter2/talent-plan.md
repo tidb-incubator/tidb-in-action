@@ -108,5 +108,5 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 
 Talent Plan 规划了一个巨大的学习版图，我们期待着能与社区小伙伴一起逐步实现、不断优化，真正做到“Made for Community, by Community”。
 
-* 如果你已经迫不及待想要开始 Talent Plan 课程的学习，Talent Plan 官方网站 中有已经规划好的 TiDB 及 TiKV 两条路径供你学习。
+* 如果你已经迫不及待想要开始 Talent Plan 课程的学习，[Talent Plan 官方网站](https://university.pingcap.com/talent-plan/) 中有已经规划好的 TiDB 及 TiKV 两条路径供你学习。
 * 如果你想要为 Talent Plan 升级版课程贡献自己的一份力量，我们在 [TiDB Community Slack Workspace](https://join.slack.com/t/tidbcommunity/shared_invite/enQtNzc0MzI4ODExMDc4LWYwYmIzMjZkYzJiNDUxMmZlN2FiMGJkZjAyMzQ5NGU0NGY0NzI3NTYwMjAyNGQ1N2I2ZjAxNzc1OGUwYWM0NzE) 中开通了channel: #wg-talent-plan-courses，欢迎感兴趣的小伙伴们加入进来，一起打造更加“酷炫”的 2.0 版本！
