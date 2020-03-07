@@ -119,10 +119,11 @@
     * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md) @[石壹笑](https://github.com/aierui)
     * [1.2 SQL Plan Management](session3/chapter1/sql-plan-management.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
-    * [2.1 通过 KeyVis 来识别业务的模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
-    * [2.2 如何获取性能 Profile](session3/chapter2/get-profile.md)
-    * [2.3 集群诊断报告](session3/chapter2/diagnosis-report.md)
-    * [2.4 可视化 Statements](session3/chapter2/statements-ui.md) @李迅
+    * [2.1 识别集群热点和业务模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
+    * [2.2 分析 SQL 执行性能](session3/chapter2/statements.md) @李迅
+    * [2.3 生成集群诊断报告](session3/chapter2/diagnosis-report.md)
+    * [2.4 日志搜索和导出](session3/chapter2/log-export.md)
+    * [2.5 分析组件 CPU 消耗情况](session3/chapter2/profiling.md)
 * [3 诊断系统表](session3/chapter3/sql-diagnosis.md)
     * [3.1 集群信息表](session3/chapter3/cluster-info-tables.md)
     * [3.2 监控表](session3/chapter3/metrics-schema.md)
