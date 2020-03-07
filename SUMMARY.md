@@ -99,10 +99,10 @@
     * [1.3 限制 SQL 的内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 通过 KeyVis 来识别业务的模式](session3/chapter2/key-vis.md)
-    * [2.2 快速定位慢 SQL](session3/chapter2/located-slow-sql.md)@李迅
+    * [2.2 快速定位慢 SQL](session3/chapter2/located-slow-sql.md)#移走该模块
     * [2.3 如何获取性能 Profile](session3/chapter2/get-profile.md)
     * [2.4 集群诊断报告](session3/chapter2/diagnosis-report.md)
-    * [2.5 可视化 Statements](session3/chapter2/statements-ui.md)
+    * [2.5 可视化 Statements](session3/chapter2/statements-ui.md)@李迅
 * [3 诊断系统表](session3/chapter3/sql-diagnosis.md)
     * [3.1 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
     * [3.2 Processlist](session3/chapter3/processlist.md)
