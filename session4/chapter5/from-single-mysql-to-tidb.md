@@ -31,6 +31,8 @@
 	- 5.5 < MySQL 版本 < 8.0
 	- MariaDB 版本 >= 10.1.2
 * 仅支持 TiDB parser 支持的 DDL 语法
+* 上下游 sql_model 检查
+* 上游开启 binlog，且 binlog_format=ROW
 * 关于分库分表合并场景的限制，参见 [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践]()
 * [如果 MySQL 实例通过 VIP 连接并且需要切换点这里](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/usage-scenarios/master-slave-switch/#%E8%99%9A%E6%8B%9F-ip-%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%88%87%E6%8D%A2-dm-worker-%E4%B8%8E-mysql-%E5%AE%9E%E4%BE%8B%E7%9A%84%E8%BF%9E%E6%8E%A5)
 
@@ -214,17 +216,17 @@ task 配置完成，通过 dmctl 工具检查执行同步
      		]
 		}
 
-* 查看任务状态，正常状态 result 为 true，worker 内的 binlog 位置一致，同步过程中也会展示同步百分比
+* 查看详细任务状态，正常状态 result 为 true，worker 内的 binlog 位置一致，同步过程中也会展示同步百分比
 
-		>> query-status  taskname
+		query-status  taskname
 		
 * 如果发现启动任务异常，查看详细的错误信息
 
-		» query-error taskname
+		query-error taskname
 		
 * 停止任务
 
-		>> start-task  taskname
+		start-task  taskname
 * [其他详细的任务管理内容](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/manage-tasks/)
 
 <h3 id="7">  7.同步过程中可能遇到的问题及如何解决 </h3>
@@ -233,6 +235,23 @@ task 配置完成，通过 dmctl 工具检查执行同步
 * 启动失败，根据提示信息解决后，resume-task
 * 同步过程中，因为 SQL 不兼容，或者异常问题导致复制中断，查看详细错误信息修复
 * [Data Migration 常见错误修复](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/troubleshoot/error-handling/)
+* 举一个🌰
+
+	- task 状态报错信息
+
+		
+			"msg": "[code=44003:class=schema-tracker:scope=downstream:level=high] current pos (mysql-bin.000010, 814332497): failed to create table for `db_1`.`tb_1` in schema tracker: [types:1067]Invalid default value for 'expire_time'
+			
+	- 查看上游 db\_1.tb\_1 报错字段定义
+
+			expire_time  datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+			
+	- 查看下游列定义一致
+	- 查看下游 sql_mode，严格模式下，datetime 类型默认值不能为 0000-00-00 00:00:00 
+			
+			STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
+	
+	- 修改下游 sql_mode，重启 task 同步继续
 
 <h3 id="8">  8.tips </h3>
 
