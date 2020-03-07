@@ -2776,7 +2776,54 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h3 id="&#x80CC;&#x666F;&#x4ECB;&#x7ECD;">&#x80CC;&#x666F;&#x4ECB;&#x7ECD;</h3>
+<p>TiDB &#x662F;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5305;&#x62EC; Tidb-server&#x3001; Pd-server&#x3001; Tikv-server &#x4E09;&#x4E2A;&#x7EC4;&#x4EF6;&#x3002;&#x5176;&#x4E2D; Pd-server&#x3001; Tikv-server &#x9700;&#x8981;&#x4F7F;&#x7528; PV&#xFF0C; &#x800C; Tidb-server &#x4E0D;&#x9700;&#x8981; PV&#x3002;
+&#x7531;&#x4E8E;&#x6700;&#x5C0F; TiDB &#x96C6;&#x7FA4;&#x9700;&#x8981;&#x81F3;&#x5C11; 3 &#x4E2A; Pd &#x8282;&#x70B9;&#x3001; 3 &#x4E2A; Tikv &#x8282;&#x70B9;&#xFF0C;&#x6240;&#x4EE5;&#x6574;&#x5957;&#x73AF;&#x5883;&#x81F3;&#x5C11;&#x9700;&#x8981; 6 &#x4E2A; PV&#x3002;</p>
+<p>&#x7531;&#x4E8E; TiDB &#x662F;&#x9762;&#x5411; HTAP &#x7684;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5BF9;&#x5B58;&#x50A8;&#x4ECB;&#x8D28;&#x6027;&#x80FD;&#x8981;&#x6C42;&#x6BD4;&#x8F83;&#x9AD8;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x53EA;&#x8003;&#x8651; Local PV &#x4F7F;&#x7528;&#x573A;&#x666F;&#x3002;</p>
+<h3 id="&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;">&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;</h3>
+<h4 id="&#x4E00;&#x3001;&#x914D;&#x7F6E;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x76F8;&#x5173;&#x4FE1;&#x606F;">&#x4E00;&#x3001;&#x914D;&#x7F6E;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x76F8;&#x5173;&#x4FE1;&#x606F;</h4>
+<p>&#x901A;&#x8FC7;&#x5982;&#x4E0B;&#x547D;&#x4EE4;&#x53EF;&#x77E5;&#x672C;&#x670D;&#x52A1;&#x5668;&#x6709; 3 &#x4E2A;&#x72EC;&#x7ACB;&#x5206;&#x533A;&#x53EF;&#x7528;&#x4E8E; Local PV &#x914D;&#x7F6E;&#xFF08;&#x771F;&#x5B9E;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x6BCF;&#x4E2A; TiKV &#x9700;&#x8981;&#x72EC;&#x7ACB;&#x7684;&#x78C1;&#x76D8;&#xFF0C;&#x6B64;&#x5904;&#x53EA;&#x6F14;&#x793A;&#x6548;&#x679C;&#xFF09;</p>
+<pre><code># lsblk
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda           8:0    0   20G  0 disk 
+&#x251C;&#x2500;sda1        8:1    0    1G  0 part /boot
+&#x2514;&#x2500;sda2        8:2    0   19G  0 part 
+  &#x251C;&#x2500;cl-root 253:0    0   17G  0 lvm  /
+  &#x2514;&#x2500;cl-swap 253:1    0    2G  0 lvm  
+sdb           8:16   0    5G  0 disk 
+&#x251C;&#x2500;sdb1        8:17   0  1.5G  0 part 
+&#x251C;&#x2500;sdb2        8:18   0  1.5G  0 part 
+&#x2514;&#x2500;sdb3        8:19   0    2G  0 part
+</code></pre><p>&#x4EE5; /dev/sdb1 &#x4E3A;&#x4F8B;&#x8FDB;&#x884C;&#x78C1;&#x76D8;&#x6302;&#x8F7D;&#x64CD;&#x4F5C;</p>
+<pre><code># mkfs.ext4 /dev/sdb1
+# DISK_UUID=$(blkid -s UUID -o value /dev/sdb1)
+# mkdir -p /mnt/disks/$DISK_UUID
+# echo UUID=$DISK_UUID /mnt/disks/$DISK_UUID ext4 defaults 0 2 | sudo tee -a /etc/fstab
+# mount -a
+</code></pre><p>&#x5C06; sdb1 &#x66FF;&#x6362;&#x6210; sdb2, sdb3&#xFF0C;&#x628A; 3 &#x4E2A;&#x5206;&#x533A;&#x90FD;&#x6302;&#x8F7D;&#x4E0A;&#x3002;&#x91CD;&#x590D;&#x5BF9; 3 &#x53F0;&#x670D;&#x52A1;&#x5668;&#x8FDB;&#x884C;&#x78C1;&#x76D8;&#x6302;&#x8F7D;&#x64CD;&#x4F5C;&#x3002;</p>
+<h4 id="&#x4E8C;&#x3001;&#x90E8;&#x7F72;-local-volume-provisioner-&#x7A0B;&#x5E8F;">&#x4E8C;&#x3001;&#x90E8;&#x7F72; local-volume-provisioner &#x7A0B;&#x5E8F;</h4>
+<pre><code># kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/local-dind/local-volume-provisioner.yaml
+storageclass.storage.k8s.io/local-storage created
+configmap/local-provisioner-config created
+daemonset.apps/local-volume-provisioner created
+serviceaccount/local-storage-admin created
+clusterrolebinding.rbac.authorization.k8s.io/local-storage-provisioner-pv-binding created
+clusterrole.rbac.authorization.k8s.io/local-storage-provisioner-node-clusterrole created
+clusterrolebinding.rbac.authorization.k8s.io/local-storage-provisioner-node-binding created
+</code></pre><h4 id="&#x4E09;&#x3001;&#x9A8C;&#x8BC1;-local-pv-&#x521B;&#x5EFA;&#x60C5;&#x51B5;">&#x4E09;&#x3001;&#x9A8C;&#x8BC1; Local PV &#x521B;&#x5EFA;&#x60C5;&#x51B5;</h4>
+<pre><code># kubectl get pv
+NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS    REASON   AGE
+local-pv-2c956bbd   1468Mi     RWO            Delete           Available           local-storage            2m57s
+local-pv-3a4dae53   1468Mi     RWO            Delete           Available           local-storage            2m56s
+local-pv-3c7e9ebb   1468Mi     RWO            Delete           Available           local-storage            2m57s
+local-pv-5cb252d7   1974Mi     RWO            Delete           Available           local-storage            2m57s
+local-pv-5ebe9899   1468Mi     RWO            Delete           Available           local-storage            2m56s
+local-pv-682d37c9   1468Mi     RWO            Delete           Available           local-storage            2m56s
+local-pv-af00e20c   1974Mi     RWO            Delete           Available           local-storage            2m56s
+local-pv-d4cf548e   1468Mi     RWO            Delete           Available           local-storage            2m56s
+local-pv-eb0e3c9f   1974Mi     RWO            Delete           Available           local-storage            2m56s
+</code></pre><p>&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x8BF4;&#x660E; Local PV &#x5DF2;&#x7ECF;&#x5728;&#x6B63;&#x5E38;&#x521B;&#x5EFA;&#x4E86;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2819,7 +2866,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"next":{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},"previous":{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-env.md","ref":"session2/chapter1/tidb-operator-deployment-private-env.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","mtime":"2020-03-07T12:40:08.706Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-07T12:40:44.981Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"next":{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},"previous":{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-env.md","ref":"session2/chapter1/tidb-operator-deployment-private-env.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","mtime":"2020-03-07T13:12:59.396Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-07T13:13:34.928Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

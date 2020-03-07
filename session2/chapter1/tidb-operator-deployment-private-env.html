@@ -2776,7 +2776,38 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h3 id="&#x8F6F;&#x4EF6;&#x7248;&#x672C;&#x8981;&#x6C42;&#x5982;&#x4E0B;&#xFF1A;">&#x8F6F;&#x4EF6;&#x7248;&#x672C;&#x8981;&#x6C42;&#x5982;&#x4E0B;&#xFF1A;</h3>
+<ol>
+<li>Docker CE 18.09.6</li>
+<li>Kubernetes v1.12.5+</li>
+<li>CentOS 7.6 &#x4EE5;&#x4E0A;&#xFF0C;&#x5185;&#x6838;&#x8981;&#x6C42;&#x4E3A; 3.10.0-957 &#x6216;&#x4E4B;&#x540E;&#x7248;&#x672C;</li>
+</ol>
+<h3 id="&#x90E8;&#x7F72;-cloud-tidb-&#x8D44;&#x6E90;&#x8981;&#x6C42;&#x5982;&#x4E0B;">&#x90E8;&#x7F72; Cloud TiDB &#x8D44;&#x6E90;&#x8981;&#x6C42;&#x5982;&#x4E0B;:</h3>
+<ol>
+<li>&#x81F3;&#x5C11; 3 &#x53F0;&#x670D;&#x52A1;&#x5668;&#x53EF;&#x4F9B;&#x4F7F;&#x7528;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x91C7;&#x7528;&#x4E07;&#x5146;&#x7F51;&#x5361;</li>
+<li>&#x81F3;&#x5C11; 6 &#x4E2A; PV &#x53EF;&#x4F9B;&#x4F7F;&#x7528;(3 PV &#x7528;&#x4E8E; TiKV &#x5B9E;&#x4F8B;&#xFF0C;&#x5206;&#x5E03;&#x4E8E;&#x4E0D;&#x540C;&#x670D;&#x52A1;&#x5668;&#xFF1B;3 PV&#x7528;&#x4E8E; PD &#x90E8;&#x7F72;&#xFF0C;&#x5206;&#x5E03;&#x4E8E;&#x4E0D;&#x540C;&#x670D;&#x52A1;&#x5668;)</li>
+</ol>
+<h3 id="linux-&#x5185;&#x6838;&#x53C2;&#x6570;&#x8981;&#x6C42;&#x5982;&#x4E0B;">Linux &#x5185;&#x6838;&#x53C2;&#x6570;&#x8981;&#x6C42;&#x5982;&#x4E0B;:</h3>
+<p>net.core.somaxconn=32768
+vm.swappiness=0
+net.ipv4.tcp_syncookies=0
+net.ipv4.ip_forward=1
+fs.file-max=1000000
+fs.inotify.max_user_watches=1048576
+fs.inotify.max_user_instances=1024
+net.ipv4.conf.all.rp_filter=1
+net.ipv4.neigh.default.gc_thresh1=80000
+net.ipv4.neigh.default.gc_thresh2=90000
+net.ipv4.neigh.default.gc_thresh3=100000
+net.bridge.bridge-nf-call-iptables=1
+net.bridge.bridge-nf-call-arptables=1
+net.bridge.bridge-nf-call-ip6tables=1</p>
+<h3 id="&#x5176;&#x4ED6;-linux-&#x914D;&#x7F6E;&#x8981;&#x6C42;">&#x5176;&#x4ED6; Linux &#x914D;&#x7F6E;&#x8981;&#x6C42;</h3>
+<ol>
+<li>&#x5C06; Linux swap &#x5173;&#x95ED;&#xFF08;&#x6C38;&#x4E45;&#x5173;&#x95ED;&#xFF09;</li>
+<li>&#x542F;&#x52A8; irqbalance &#x670D;&#x52A1;</li>
+</ol>
+
                                 
                                 </section>
                             
@@ -2819,7 +2850,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"next":{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},"previous":{"title":"1.2.3.2 私有云部署","level":"3.1.2.3.2","depth":4,"path":"session2/chapter1/tidb-operator-deployment-private.md","ref":"session2/chapter1/tidb-operator-deployment-private.md","articles":[{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-env.md","ref":"session2/chapter1/tidb-operator-deployment-private-env.md","articles":[]},{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]}]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-env.md","mtime":"2020-03-07T12:40:08.706Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-07T12:40:44.981Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"next":{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},"previous":{"title":"1.2.3.2 私有云部署","level":"3.1.2.3.2","depth":4,"path":"session2/chapter1/tidb-operator-deployment-private.md","ref":"session2/chapter1/tidb-operator-deployment-private.md","articles":[{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-env.md","ref":"session2/chapter1/tidb-operator-deployment-private-env.md","articles":[]},{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-env.md","mtime":"2020-03-07T13:12:59.396Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-07T13:13:34.928Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
