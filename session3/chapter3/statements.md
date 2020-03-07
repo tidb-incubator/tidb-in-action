@@ -62,7 +62,7 @@ set global tidb_stmt_summary_history_size = 24;
 
 
 ### 查看SQL语句详情页
-在 SQL 类别列点击某类 SQL 语句，可以进入该SQL语句的详情页查看更详细的信息，以及该 SQL 语句在不同节点上执行的统计情况。
+在 SQL 类别列点击某类 SQL 语句，可以进入该 SQL 语句的详情页查看更详细的信息，以及该 SQL 语句在不同节点上执行的统计情况。
 单个 Statements 详情页关键信息：
 
 1. SQL 执行总时长
