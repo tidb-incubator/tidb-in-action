@@ -1,4 +1,4 @@
-## 5.1.1 DM 同步单机 MySQL 到 TiDB 的实践
+# 5.1.1 DM 同步单机 MySQL 到 TiDB 的实践
 
 Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB 集群的[开源产品](https://github.com/pingcap/dm)。
 
@@ -15,14 +15,14 @@ Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB �
 - [同步过程中可能遇到的问题及如何解决](#同步过程中可能遇到的问题及如何解决)
 - [tips](#tips)
 
-#### DM 支持的场景
+## DM 支持的场景
 
 * 全量&增量同步数据
 * 不同维度的过滤规则设定：库表级别，SQL级别
 * 上游分库分表合并及变更聚合，具体示例参见下一章节
 * 同步延迟监控
 
-#### DM 使用要求
+## DM 使用要求
 
 * 数据库版本
 	- 5.5 < MySQL 版本 < 8.0
@@ -32,7 +32,8 @@ Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB �
 * 上游开启 binlog，且 binlog_format=ROW
 * 关于分库分表合并场景的限制，参见下一章节
 
-#### DM 同步原理
+## DM 同步原理
+
 DM 以一个集群为单位运行，包括以下5个组成部分：
 
 * DM-master，负责管理整个DM集群，以及调度同步任务
@@ -49,8 +50,7 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 * task文件，配置 DM-worker 要执行的同步规则，所有 DM-worker 生效
 * Prometheus，监控同步状态
 
-
-#### 同步前置条件
+## 同步前置条件
 
 * 确认同步上下游部署结构
 
@@ -99,8 +99,7 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 			
 			这个例子里选整库，过滤上游系统库，过滤上游删库删表操作
 	
-
-#### 制定同步规则的 task 文件配置
+## 制定同步规则的 task 文件配置
 
 task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9个区域：
 
@@ -176,9 +175,7 @@ task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9
         	worker-count: 8
         	batch: 100
 
-
-
-#### 同步状态检查
+## 同步状态检查
 
 task 配置完成，通过 dmctl 工具检查执行同步
 
@@ -212,8 +209,7 @@ task 配置完成，通过 dmctl 工具检查执行同步
 * 查看详细任务状态，正常状态 result 为 true，worker 内的 binlog 位置一致，同步过程中也会展示同步百分比
 
 		query-status  taskname
-
-		
+	
 * 如果发现启动任务异常，查看详细的错误信息
 
 		query-error taskname
@@ -223,7 +219,7 @@ task 配置完成，通过 dmctl 工具检查执行同步
 		start-task  taskname
 * [其他详细的任务管理内容](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/manage-tasks/)
 
-#### 同步过程中可能遇到的问题及如何解决 
+## 同步过程中可能遇到的问题及如何解决 
 
 * 检查 task 失败，根据提示检查对应配置行是否有语法错误
 * 启动失败，根据提示信息解决后，resume-task
@@ -247,7 +243,7 @@ task 配置完成，通过 dmctl 工具检查执行同步
 	
 	- 修改下游 sql_mode，重启 task 同步继续
 
-#### tips
+## tips
 
 * task 配置过滤规则与 MySQL 基本一致
 * task 是否需要保留 meta 信息，决定任务重新启动后的 binlog 起点位置
