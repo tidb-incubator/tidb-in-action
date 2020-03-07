@@ -1,11 +1,11 @@
 本节将介绍如何使用 TiCDC 在两个 TiDB 集群之间实现数据同步。
 
-![architecture.png](/res/session2/chapter2/cdc-in-action/1.png)
+<img src="/res/session2/chapter2/cdc-in-action/1.png" width="600" />
 
 
 部署结构如上图所示。这里我们假定：
-- 上游 TiDB 集群的 PD 节点是 10.1.1.10:2379。
-- 下游 TiDB 集群的 SQL 节点是 10.3.1.30:4000。
+- 上游 TiDB 集群的 PD 节点是 10.1.1.10:2379
+- 下游 TiDB 集群的 SQL 节点是 10.3.1.30:4000
 - TiCDC 集群由3个 Capture 节点构成，分别是：
   - 10.2.1.20:8300
   - 10.2.1.21:8300
@@ -98,7 +98,7 @@ $ cdc ctrl --cmd=query-sub-cf --changefeed-id=136a3bee-621c-42d5-80ec-4c1aaf6ddb
 ### HTTP接口
 TiCDC 也提供 HTTP 接口帮助我们实现一些基础的查询和运维功能。
 
-运行如下命令可以查询 TiCDC 服务状态查询：
+运行如下命令可以查询某个 TiCDC 节点的服务状态：
 ```
 $ curl http://10.2.1.20:8300/status
 {
@@ -124,13 +124,12 @@ $ curl -X POST http://10.2.1.20:8300/capture/owner/resign
 
 还可以停止、恢复或者删除指定的同步任务，命令如下：
 ```	
-$ curl -X POST -d "admin-job=X&cf-id=136a3bee-621c-42d5-80ec-4c1aaf6ddb53"
+$ curl -X POST -d "admin-job=X&cf-id=136a3bee-621c-42d5-80ec-4c1aaf6ddb53" http://10.2.1.20:8300/capture/owner/admin
 ```
 参数 admin-job 表示不同的任务类型：
 - admin-job=1，表示停止任务。停止任务后所有 Processor 会结束同步并退出。同步任务的配置和同步进度都会保留，可以从 CheckpointTs 恢复任务。
 - admin-job=2，表示恢复任务，同步任务从 CheckpointTs 继续同步
--admin-job=3，表示删除任务，请求后结束所有同步 processor，并清理 changefeed 同步配置。同步状态保留，只提供查询，没有其他实际功能
+- admin-job=3，表示删除任务，请求后结束所有同步 processor，并清理 changefeed 同步配置。同步状态保留，只提供查询，没有其他实际功能
 - cf-id=xxx，为需要操作的同步任务 ID。 
 
-
-
+上述命令也是需要向当前的 Owner 节点发出请求，对非 Owner 节点该请求会报错。
