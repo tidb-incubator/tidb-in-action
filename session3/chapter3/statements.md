@@ -61,7 +61,7 @@ set global tidb_stmt_summary_history_size = 24;
 2. 平均影响行数（一般是写入）
 3. 平均扫描行数（一般是读）
 4. 各个节点执行指标，分析出某个节点性能瓶颈
-![2.jpg](/res/session3/chapter3/slow-query-table/2.jpg)
+![add image](/res/session3/chapter3/slow-query-table/2.jpg)
 
 如果有耗时的SQL可以通过前面章节介绍的KeyVis来进行分析
 
