@@ -26,7 +26,6 @@ Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB �
 ## DM 使用要求
 
 - 数据库版本
-
   - 5.5 < MySQL 版本 < 8.0
   - MariaDB 版本 >= 10.1.2
 
@@ -41,7 +40,6 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 
 - DM-master，负责管理整个DM集群，以及调度同步任务
 - DM-woker，执行具体的同步任务
-
   - 一个 DM-worker 注册为一个上游 MySQL 或 MariaDB 实例的slave
   - 一个 DM 集群中可以包含多个 DM-worker，也就是说可以同步上游多个 MySQL 或 MariaDB 实例
   - DM-worker 的工作方式是
@@ -65,7 +63,6 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 |下游TiDB的计算节点|172.16.10.83|4000|
 
 - 确认同步目标
-
   - 将上游单机 MySQL 实例中的 book 库 session 表全量同步到下游 TiDB 中
   - 过滤系统库：mysql,information_schema,percona,performance_schema
   - 过滤删除操作：drop，truncate
@@ -73,7 +70,6 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 
 - [DM集群的部署启动文档](https://pingcap.com/docs-cn/stable/how-to/deploy/data-migration-with-ansible/)，部署过程与TiDB集群的部署启动高度相似，inventory.ini 需要注意以下几点
   - [dm\_worker\_servers] 部分
-
     - 1.server_id 在整个同步结构里唯一，范围包括上游 MySQL，下游 TiDB
     - 2.source_id 在 task 任务配置里标示上游实例
     - 3.mysql_password 需要通过 dmctl 工具加密，这个密码在task文件里也需要用到
@@ -86,7 +82,6 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
     dm-worker1 ansible_host=1.1.1.1 source_id="mariadb-01" server_id=101 mysql_host=172.16.10.81 mysql_user=tidbdm mysql_password="encryptpwd" mysql_port=3306
 
 - 同步用户需要上游 MySQL 实例访问授权
-  
   - 需要权限有
     - REPLICATION SLAVE
     - REPLICATION CLIENT
@@ -96,12 +91,10 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 - 下游[TiDB 集群部署](https://github.com/pingcap-incubator/tidb-in-action/blob/master/session2/chapter1/tiup-deployment.md)及读写访问授权
 
 - 同步需求分类，决定 task 文件的配置项复杂程度
-
   - 同步模式：全量，增量，仅备份
     - 这个例子里使用全量
     - 全量备份上游数据库，将数据全量导入到下游数据库
     - 全量数据备份时导出的位置信息 (binlog position) 开始通过 binlog 增量同步数据到下游数据库。
-
   - 同步粒度：整库，指定表，指定 Binlog
     - 这个例子里选book整库
     - 过滤上游系统库
@@ -157,10 +150,10 @@ book-route-rules:
 
 ```yaml
 book-filter-1:
-        schema-pattern: "book"
-        table-pattern: "session"
-        events: ["truncate table", "drop table"]
-        action: Ignore
+    schema-pattern: "book"
+    table-pattern: "session"
+    events: ["truncate table", "drop table"]
+    action: Ignore
 ```
 
 - black-white-list，需要过滤的库表
@@ -217,23 +210,23 @@ task 配置完成，通过 dmctl 工具检查执行同步
 {
  "result": true,
  "msg": "check pass!!!"
-  }
+}
 ```
 
 - 运行任务
 
-```bash	
+```bash
 » start-task  task-path
 {
  "result": true,
  "msg": "",
  "workers": [
     {
-               "result": true,
-               "worker": "172.16.10.72:8262",
-              "msg": ""
-           },
-       ]
+        "result": true,
+        "worker": "172.16.10.72:8262",
+        "msg": ""
+        },
+    ]
   }
 ```
 
@@ -269,7 +262,7 @@ start-task  taskname
 - task 状态报错信息
 
 ```bash
-   "msg": "[code=44003:class=schema-tracker:scope=downstream:level=high] current pos (mysql-bin.000010, 814332497): failed to create table for `db_1`.`tb_1` in schema tracker: [types:1067]Invalid default value for 'expire_time'
+"msg": "[code=44003:class=schema-tracker:scope=downstream:level=high] current pos (mysql-bin.000010, 814332497): failed to create table for `db_1`.`tb_1` in schema tracker: [types:1067]Invalid default value for 'expire_time'
 ```
 
 - 查看上游 db\_1.tb\_1 报错字段定义
