@@ -1,13 +1,13 @@
 
 ### 背景介绍
-TiDB 是分布式数据库，包括 Tidb-server、 Pd-server、 Tikv-server 三个组件。其中 Pd-server、 Tikv-server 需要使用 PV， 而Tidb-server不需要 PV。
-由于最小 TiDB 集群需要至少 3 个 Pd 节点、 3 个 Tikv 节点，所以整套环境至少需要 6 个PV。
+TiDB 是分布式数据库，包括 Tidb-server、 Pd-server、 Tikv-server 三个组件。其中 Pd-server、 Tikv-server 需要使用 PV， 而 Tidb-server 不需要 PV。
+由于最小 TiDB 集群需要至少 3 个 Pd 节点、 3 个 Tikv 节点，所以整套环境至少需要 6 个 PV。
 
-由于 TiDB 是面向 HTAP 的分布式数据库，对存储介质性能要求非常苛刻，所以，生产环境只考虑 Local PV使用场景。
+由于 TiDB 是面向 HTAP 的分布式数据库，对存储介质性能要求比较高，所以，生产环境只考虑 Local PV 使用场景。
 
 ### 操作步骤
 #### 一、配置本地磁盘相关信息
-通过如下命令可知本服务器有 3 个独立分区可用于 Local PV 配置（真实生产环境需要独立的磁盘）
+通过如下命令可知本服务器有 3 个独立分区可用于 Local PV 配置（真实生产环境每个 TiKV 需要独立的磁盘）
 ```
 # ls /dev/sdb*
 /dev/sdb  /dev/sdb1  /dev/sdb2  /dev/sdb3
@@ -17,8 +17,8 @@ TiDB 是分布式数据库，包括 Tidb-server、 Pd-server、 Tikv-server 三�
 ```
 # mkfs.ext4 /dev/sdb1
 # DISK_UUID=$(blkid -s UUID -o value /dev/sdb1)
-# mkdir /mnt/disks/$DISK_UUID
-# echo UUID=`sudo blkid -s UUID -o value /dev/sdb1` /mnt/disks/`sudo blkid -s UUID -o value /dev/sdb1` ext4 defaults 0 2 | sudo tee -a /etc/fstab
+# mkdir -p /mnt/disks/$DISK_UUID
+# echo UUID=$DISK_UUID /mnt/disks/$DISK_UUID ext4 defaults 0 2 | sudo tee -a /etc/fstab
 # mount -a
 ```
 将 sdb1 替换成 sdb2, sdb3，把 3 个分区都挂载上。重复对 3 台服务器进行磁盘挂载操作。
@@ -35,7 +35,7 @@ clusterrole.rbac.authorization.k8s.io/local-storage-provisioner-node-clusterrole
 clusterrolebinding.rbac.authorization.k8s.io/local-storage-provisioner-node-binding created
 ```
 
-#### 三、验证 Local PV 运行情况
+#### 三、验证 Local PV 创建情况
 ```
 # kubectl get pv
 NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS    REASON   AGE
@@ -50,4 +50,4 @@ local-pv-d4cf548e   1468Mi     RWO            Delete           Available        
 local-pv-eb0e3c9f   1974Mi     RWO            Delete           Available           local-storage            2m56s
 
 ```
-以上信息说明 Local PV 已经在正常运行了。
+以上信息说明 Local PV 已经在正常创建了。

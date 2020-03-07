@@ -46,7 +46,7 @@ To start using your cluster, run:
       Client: &version.Version{SemVer:"v2.9.1", GitCommit:"20adb27c7c5868466912eebdf6664e7390ebe710", GitTreeState:"clean"}
       Server: &version.Version{SemVer:"v2.9.1", GitCommit:"20adb27c7c5868466912eebdf6664e7390ebe710", GitTreeState:"clean"}
 ```
-输出以上信息，则说明helm客户端与服务端都符合要求
+输出以上信息，则说明 Helm 客户端与服务端都符合要求
 
 ## 第二部分： 基于 K8s 部署 TiDB Operator
 
@@ -70,12 +70,12 @@ To start using your cluster, run:
 ```
     # mkdir -p /root/chart/
 
-    从https://github.com/pingcap/tidb-operator/releases下载tidb-operator-chart-v1.0.6.tgz文件放到/root/chart/路径下
+    从 https://github.com/pingcap/tidb-operator/releases 下载 tidb-operator-chart-v1.0.6.tgz 文件放到 /root/chart/ 路径下
 
     # cd /root/chart/ && tar xvf tidb-operator-chart-v1.0.6.tgz
 
 ```
-    将/root/charts/tidb-operator/values.yaml文件内的scheduler.kubeSchedulerImageName值修改为registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler提升镜像拉取速度
+    将 /root/charts/tidb-operator/values.yaml 文件内的 scheduler.kubeSchedulerImageName 值修改为 registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler 以加快镜像拉取速度。
 安装 TiDB Operator
 ```
     # helm install --namespace=tidb-admin  --name=tidb-operator /root/charts/tidb-operator -f /root/charts/tidb-operator/values.yaml
@@ -131,7 +131,7 @@ To start using your cluster, run:
     test-tikv-2                       1/1     Running   0          6m58s
 ```
 
-以上信息显示 TiDB Cluster所有POD全部运行正常
+以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
 #### 四、访问 TiDB 集群
 ```
@@ -146,4 +146,4 @@ To start using your cluster, run:
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     MySQL [(none)]>
 ```
-显示以上输出显示 TiDB 集群部署成功
+显示以上输出显示 TiDB 集群部署成功。
