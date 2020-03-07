@@ -19,7 +19,7 @@ Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB �
 
 * 全量&增量同步数据
 * 不同维度的过滤规则设定：库表级别，SQL级别
-* 上游分库分表合并及变更聚合，具体示例参见 [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践]()
+* 上游分库分表合并及变更聚合，具体示例参见下一章节
 * 同步延迟监控
 
 #### DM 使用要求
@@ -30,7 +30,7 @@ Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB �
 * 仅支持 TiDB parser 支持的 DDL 语法
 * 上下游 sql_model 检查
 * 上游开启 binlog，且 binlog_format=ROW
-* 关于分库分表合并场景的限制，参见下一小节
+* 关于分库分表合并场景的限制，参见下一章节
 
 #### DM 同步原理
 DM 以一个集群为单位运行，包括以下5个组成部分：
@@ -106,18 +106,18 @@ task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9
 
 * 任务全局定义
 	
-		name: "taskname"     # 全局唯一的 task 名称
-		task-mode: all       # 同步模式，这里选全量
+		name: "taskname"     	# 全局唯一的 task 名称
+		task-mode: all       	# 同步模式，这里选全量
 		meta-schema: "dm_meta"   # checkpoint 信息存储在下游的数据库名
 		remove-meta: false    # 是否在任务同步开始前移除该任务名对应的 checkpoint 信息，删除会重新开始同步，不删除会从上次停止的位置开始同步
 		
 * target-database，下游 TiDB 集群地址用户密码，密码与 DM-Worker 配置里的密码相同
 * mysql-instances，上游 MySQL 实例 source-id 及同步规则模块名称
 
-    	source-id: "mariadb-01"    # dm-worker 定义的 source-id 对应
-    	route-rules: ["book-route-rules-schema", "book-route-rules"] # 需要同步的对应的库表配置名称
-    	filter-rules: ["book-filter-1"]   # 需要过滤的 binlog event 配置名称
-    	black-white-list:  "bookblack"     # 需要过滤的库表配置名称
+    	source-id: "mariadb-01"    	# dm-worker 定义的 source-id 对应
+    	route-rules: ["book-route-rules-schema", "book-route-rules"] 	# 需要同步的对应的库表配置名称
+    	filter-rules: ["book-filter-1"]   	# 需要过滤的 binlog event 配置名称
+    	black-white-list:  "bookblack"     	# 需要过滤的库表配置名称
     	
     	mydumper-config-name: "global"    # mydumper 配置名称
     	mydumper-thread: 4
@@ -130,7 +130,7 @@ task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9
     	
 * routes，需要同步的库表信息
 		
-		book-route-rules-schema:  # mysql-instances 部分定义的配置名称
+		book-route-rules-schema:  	# mysql-instances 部分定义的配置名称
         	schema-pattern: "book"
         	target-schema: "book"
     	book-route-rules:
@@ -188,7 +188,7 @@ task 配置完成，通过 dmctl 工具检查执行同步
 
 * 首先检查任务配置是否符合规范
 		
-		>> check-task  task-path
+		» check-task  task-path
 		{
     		"result": true,
     		"msg": "check pass!!!"
@@ -196,7 +196,7 @@ task 配置完成，通过 dmctl 工具检查执行同步
 		
 * 运行任务
 		
-		>> start-task  task-path
+		» start-task  task-path
 		{
      		"result": true,
      		"msg": "",
