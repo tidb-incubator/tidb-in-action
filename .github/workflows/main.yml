@@ -12,13 +12,14 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  lint:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: nosborn/github-action-markdown-cli@v1.1.1
+      - name: markdownlint-cli
+        uses: nosborn/github-action-markdown-cli@v1.1.1
         with:
           files: .
+          config_file: ".markdownlintrc"
