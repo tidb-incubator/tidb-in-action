@@ -143,7 +143,7 @@ $ curl -X POST -d "admin-job=X&cf-id=136a3bee-621c-42d5-80ec-4c1aaf6ddb53" http:
 
 请注意，上述命令也需要向当前的 Owner 节点发出请求。
 
-最后，可以运行一下命令，获取丰富的调试信息，例如 Owner 和 Processors 的状态以及 etcd 上存储的内容。
+最后，可以运行以下命令获取调试信息，例如 Owner 和 Processors 的状态以及 etcd 上存储的内容。
 
 ```
 $ curl http://10.2.1.20:8300/debug/info
