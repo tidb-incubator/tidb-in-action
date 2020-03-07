@@ -104,7 +104,7 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 
 <img src="https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-students.png" width="750px"/>
 
-## 如何参与 Talent Plan？
+## 如何参与 Talent Plan
 
 Talent Plan 规划了一个巨大的学习版图，我们期待着能与社区小伙伴一起逐步实现、不断优化，真正做到“Made for Community, by Community”。
 
