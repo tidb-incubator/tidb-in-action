@@ -1,31 +1,33 @@
+---
+title: 5.1.1 DM 同步单机 MySQL 到 TiDB 的实践
+category: DM
+---
+
 ## 5.1.1 DM 同步单机 MySQL 到 TiDB 的实践
 
-[Data Migration (DM)](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/overview/#dm-%e6%9e%b6%e6%9e%84) 是一款可以将 MySQL 实例数据实时同步到 TiDB 集群的 [开源产品](https://github.com/pingcap/dm)。
+Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB 集群的[开源产品](https://github.com/pingcap/dm)。
 
-这一小节的实践目标是将 单机 MySQL 实例数据同步到 TiDB 集群。
+本小节的实践目标是将 单机 MySQL 实例数据同步到 TiDB 集群。
 
 主要包括以下8个小节的内容，所有提到的参数配置及说明基于 DM 1.0.2版本
 
-* [1.DM 支持的场景](#1)
-* [2.DM 使用要求](#2)
-* [3.DM 同步原理](#3)
-* [4.同步前置条件](#4)
-* [5.制定同步规则的 task 文件配置](#5)
-* [6.同步状态检查](#6)
-* [7.同步过程中可能遇到的问题及如何解决](#7)
-* [8.tips](#8)
+- [DM 支持的场景](#dm-支持的场景)
+- [DM 使用要求](#dm-使用要求)
+- [DM 同步原理](#dm-同步原理)
+- [同步前置条件](#同步前置条件)
+- [制定同步规则的 task 文件配置](#制定同步规则的-task-文件配置)
+- [同步状态检查](#同步状态检查)
+- [同步过程中可能遇到的问题及如何解决](#同步过程中可能遇到的问题及如何解决)
+- [tips](#tips)
 
-<h3 id="1"> 1.DM 支持的场景 </h3>
+#### DM 支持的场景
 
 * 全量&增量同步数据
 * 不同维度的过滤规则设定：库表级别，SQL级别
 * 上游分库分表合并及变更聚合，具体示例参见 [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践]()
 * 同步延迟监控
 
-<h3 id="2"> 2.DM 使用要求</h3>
-
-[官方详细说明](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/overview/#%e4%bd%bf%e7%94%a8%e9%99%90%e5%88%b6)
-
+#### DM 使用要求
 
 * 数据库版本
 	- 5.5 < MySQL 版本 < 8.0
@@ -33,11 +35,9 @@
 * 仅支持 TiDB parser 支持的 DDL 语法
 * 上下游 sql_model 检查
 * 上游开启 binlog，且 binlog_format=ROW
-* 关于分库分表合并场景的限制，参见 [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践]()
-* [如果 MySQL 实例通过 VIP 连接并且需要切换点这里](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/usage-scenarios/master-slave-switch/#%E8%99%9A%E6%8B%9F-ip-%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%88%87%E6%8D%A2-dm-worker-%E4%B8%8E-mysql-%E5%AE%9E%E4%BE%8B%E7%9A%84%E8%BF%9E%E6%8E%A5)
+* 关于分库分表合并场景的限制，参见下一小节
 
-<h3 id="3"> 3.DM 同步原理</h3>
-
+#### DM 同步原理
 DM 以一个集群为单位运行，包括以下5个组成部分：
 
 * DM-master，负责管理整个DM集群，以及调度同步任务
@@ -55,12 +55,12 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 * Prometheus，监控同步状态
 
 
-<h3 id="4">  4.同步前置条件 </h3>
+#### 同步前置条件
 
 * 确认同步上下游部署结构
 
 |组件|主机|端口号|
-|:----:|:----:|:-----:|
+| :-- | --: | :--------- |
 |DM-Master|172.16.10.71|8261|
 |DM-worker|172.16.10.72|8262|
 |上游MariaDB|172.16.10.81|3306|
@@ -73,9 +73,7 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 	- 过滤删除操作：drop，truncate
 	- 不同步 book 库的 draft 表
 
-* [DM集群的部署启动文档](https://pingcap.com/docs-cn/stable/how-to/deploy/data-migration-with-ansible/)
-
-	部署过程与TiDB集群的部署启动高度相似，inventory.ini 需要注意以下几点
+* [DM集群的部署启动文档](https://pingcap.com/docs-cn/stable/how-to/deploy/data-migration-with-ansible/)，部署过程与TiDB集群的部署启动高度相似，inventory.ini 需要注意以下几点
 	- [dm\_worker\_servers] 部分
 
 			1.server_id 在整个同步结构里唯一，范围包括上游 MySQL，下游 TiDB
@@ -94,7 +92,7 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 			
 			REPLICATION SLAVE,REPLICATION CLIENT,RELOAD,SELECT
 		
-* 下游[TiDB集群部署](https://github.com/pingcap-incubator/tidb-in-action/blob/master/session2/chapter1/tiup-deployment.md)及读写访问授权
+* 下游[ TiDB 集群部署](https://github.com/pingcap-incubator/tidb-in-action/blob/master/session2/chapter1/tiup-deployment.md)及读写访问授权
 * 同步需求分类，决定 task 文件的配置项复杂程度
 
 	- 同步模式：全量，增量，仅备份
@@ -107,7 +105,7 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
 			这个例子里选整库，过滤上游系统库，过滤上游删库删表操作
 	
 
-<h3 id="5">  5.制定同步规则的 task 文件配置 </h3>
+#### 制定同步规则的 task 文件配置
 
 task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9个区域：
 
@@ -185,7 +183,7 @@ task 文件决定 DM-Worker 按照怎样的规格同步数据，主要有以下9
 
 
 
-<h3 id="6">  6.同步状态检查 </h3>
+#### 同步状态检查
 
 task 配置完成，通过 dmctl 工具检查执行同步
 
@@ -229,13 +227,13 @@ task 配置完成，通过 dmctl 工具检查执行同步
 		start-task  taskname
 * [其他详细的任务管理内容](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/manage-tasks/)
 
-<h3 id="7">  7.同步过程中可能遇到的问题及如何解决 </h3>
+#### 同步过程中可能遇到的问题及如何解决 
 
 * 检查 task 失败，根据提示检查对应配置行是否有语法错误
 * 启动失败，根据提示信息解决后，resume-task
 * 同步过程中，因为 SQL 不兼容，或者异常问题导致复制中断，查看详细错误信息修复
 * [Data Migration 常见错误修复](https://pingcap.com/docs-cn/stable/reference/tools/data-migration/troubleshoot/error-handling/)
-* 举一个🌰
+* 举个例子
 
 	- task 状态报错信息
 
@@ -253,7 +251,7 @@ task 配置完成，通过 dmctl 工具检查执行同步
 	
 	- 修改下游 sql_mode，重启 task 同步继续
 
-<h3 id="8">  8.tips </h3>
+#### tips
 
 * task 配置过滤规则与 MySQL 基本一致
 * task 是否需要保留 meta 信息，决定任务重新启动后的 binlog 起点位置

@@ -1,20 +1,24 @@
-# 10.2 RBAC
+---
+title: 10.2 RBAC
+category: TiDB安全
+---
 
-Role-based access control，[RBAC](https://zh.wikipedia.org/wiki/%E4%BB%A5%E8%A7%92%E8%89%B2%E7%82%BA%E5%9F%BA%E7%A4%8E%E7%9A%84%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6)  基于角色的权限访问控制。
+## 10.2 RBAC
 
-区别于 [强制访问控制 MAC](https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%88%B6%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6) 以及 [自由选定访问控制 DAC](https://zh.wikipedia.org/wiki/%E8%87%AA%E4%B8%BB%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6) ，RBAC 更为中性且更具灵活性。
+Role-based access control，RBAC 基于角色的权限访问控制。
+
+区别于 强制访问控制 MAC 以及 自由选定访问控制 DAC，RBAC 更为中性且更具灵活性。
 
 TiDB 的基于角色的访问控制 (RBAC) 系统的实现类似于 MySQL 8.0 的 RBAC 系统，兼容大部分 [MySQL RBAC 系统的语法](https://dev.mysql.com/doc/refman/8.0/en/roles.html)。
 
-本节内容包括 个小节，所有提到的参数配置及说明基于 TiDB 4.0 版本
+主要包括4个小节，所有提到的参数配置及说明基于 TiDB 4.0 版本
 
-* [1.RBAC 可以做什么](#1)
-* [2.RBAC 实现原理](#2)
-* [3.RBAC 操作示例](#3)
-* [4.其他](#4)
+- [RBAC 可以做什么](#rbac-可以做什么)
+- [RBAC 实现原理](#rbac-实现原理)
+- [RBAC 操作示例](#rbac-操作示例)
+- [其他](#其他)
 
-
-<h3 id="1"> 1.RBAC 可以做什么  </h3>
+#### RBAC 可以做什么
 
 * 根据业务场景设置角色，集合多个权限
 
@@ -26,7 +30,7 @@ TiDB 的基于角色的访问控制 (RBAC) 系统的实现类似于 MySQL 8.0 �
 
 * 一个用户可以同时拥有多个角色，可以同时使用这些角色拥有的权限
 
-<h3 id="2"> 2.RBAC 实现原理  </h3>
+#### RBAC 实现原理
 
 * TiDB 的权限管理器，构建出了一个邻接表来记录图结构。
 在鉴权时，从用户拥有的角色出发，进行深度优先搜索，找到所有与之相关的角色，将这些角色的权限汇总起来，就得到了用户的角色权限。
@@ -70,7 +74,7 @@ TiDB 的基于角色的访问控制 (RBAC) 系统的实现类似于 MySQL 8.0 �
 			| %    | test | %                 | r_1               | 
 			+------+------+-------------------+-------------------+
 
-<h3 id="3"> 3.RBAC 操作示例  </h3>
+#### RBAC 操作示例
 
 * 创建角色，可以一次创建多个
 
@@ -112,9 +116,10 @@ TiDB 的基于角色的访问控制 (RBAC) 系统的实现类似于 MySQL 8.0 �
 		REVOKE 'r_1' FROM 'test'@'%', 'root'@'%';
 		
 
-<h3 id="4"> 4.其他 </h3>
+#### 其他
 
 由于基于角色的访问控制模块和用户管理以及权限管理结合十分紧密，因此需要参考一些操作的细节：
 
 * [TiDB 权限管理](http://pingcap.com/docs-cn/stable/reference/security/privilege-system/)
+
 * [TiDB 用户账户管理](https://pingcap.com/docs-cn/stable/reference/security/user-account-management/)
