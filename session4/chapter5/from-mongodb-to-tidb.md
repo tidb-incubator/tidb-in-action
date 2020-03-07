@@ -35,7 +35,7 @@ MongoDB 有很多的优点，比如 MongoDB 对字段维护比较友好，自动
   
   - 业务侧可以考虑使用 `uuid` 或者 `snowflakes` 算法将主键值进行打散；
 
-  - 使用主键 非 `int` 类型的 `varchar` 类型主键，通过 TiDB 的 `shard_rowid_bit` 进行 `hash` 打散。当然在 v4.0 版本的 TiDB，提供了 `Autorandom key` 的特性，通过 `Autorandom key` 可以自动将 `int` 主键生成随机数来节点写入热点问题；
+  - 使用主键 非 `int` 类型的 `varchar` 类型主键，通过 TiDB 的 `shard_rowid_bit` 进行 `hash` 打散。当然在 v4.0 版本的 TiDB，提供了 `Auto Random Key` 的特性，通过 `Auto Random Key` 可以自动将 `int` 主键生成随机数来避免写入热点问题；
 
   - MongoDB 和 TiDB 的部分字段类型不一样，MongoDB 时间列写入基本都是时间戳，TiDB 提供多种时间的数据类型：Timestamp、date、datetime。
 
