@@ -24,7 +24,7 @@ Talent Plan 是为社区提供的学习资料，也在社区的建议和反馈�
 
 这个课程系列目前仍在小范围测试阶段，如果你对于这个课程感兴趣，欢迎通过 [tidbcommunity slack channel #wg-talent-plan-courses](https://join.slack.com/t/tidbcommunity/shared_invite/enQtNzc0MzI4ODExMDc4LWYwYmIzMjZkYzJiNDUxMmZlN2FiMGJkZjAyMzQ5NGU0NGY0NzI3NTYwMjAyNGQ1N2I2ZjAxNzc1OGUwYWM0NzE) 与我们取得联系。
 
-**Programming Language 课程系列**
+#### Programming Language 课程系列
 
 这个课程系列中将逐步对当下常用的编程语言学习课程进行整合，包括但不限于 Go 语言、Rust 语言、C++、Python 等。
 
