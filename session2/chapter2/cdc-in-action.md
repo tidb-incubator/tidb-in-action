@@ -19,7 +19,7 @@
 - 服务器之间内网互通。
 
 第2步：准备二进制文件。
-从 [Github](https://github.com/pingcap/ticdc) 下载源码，并运行以下命令执行编译。编译好的文件会出现在 bin 目录下。
+从 [Github](https://github.com/pingcap/ticdc) 下载源码，并运行以下命令执行编译。编译好的文件会出现在`bin`目录下。
 ```
 $ make
 $ make test
@@ -31,8 +31,8 @@ $ make test
 $ cdc server --pd-endpoints=http://10.1.1.10:2379 --status-addr=127.0.0.1:8300
 ```
 命令参数说明：
-- pd-endpoints: 上游TiDB集群的PD节点地址。
-- status-addr: 本地CDC地址。
+- pd-endpoints: 上游 TiDB 集群的PD节点地址。
+- status-addr: 本地 CDC 地址。
 
 至此，一个 TiCDC 集群就搭建成功了，它现在已经开始监听上游 TiKV 的变更日志了。运行以下命令可以查看 Capture 节点列表：
 ```
