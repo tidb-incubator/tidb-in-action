@@ -41,6 +41,7 @@ sdb           8:16   0    5G  0 disk
 # mount -a
 
 ```
+
 将 sdb1 替换成 sdb2, sdb3，把 3 个分区都挂载上。重复对 3 台服务器进行磁盘挂载操作。
 
 ### 二、部署 local-volume-provisioner 程序

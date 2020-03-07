@@ -4,13 +4,15 @@
 ## 背景介绍
 
 本小节介绍如何使用 kind 部署 TiDB Operator，将通过 kind 快速部署一套 Cloud TiDB 集群，为大家梳理三个关键环节：
+
 1. 基于 kind 部署一套 K8s 集群
 2. 基于 K8s 部署 TiDB Operator
 3. 基于 TiDB Operator 部署 TiDB 集群
 
 ## 第一部分 基于 kind 部署一套 K8s 集群
  
-要点提示: 这个小节的内容已基本做到全自动化。部署前请按以下要求准备环境：
+这个小节的内容已基本做到全自动化，部署前请按以下要求准备环境：
+
 1. 内存 4GB+、CPU 2核心+
 2. Docker 17.03+
 3. net.ipv4.ip_forward 设置为1
