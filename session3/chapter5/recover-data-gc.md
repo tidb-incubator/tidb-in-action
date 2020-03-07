@@ -47,26 +47,26 @@ update mysql.tidb set VARIABLE_VALUE="24h" where VARIABLE_NAME="tikv_gc_life_tim
 > **注意：**
 >
 > mysql.tidb系统表中除了下文将要列出的GC的配置外，还包含一些TiDB用于储存部分集群状态（包括 GC 状态）的记录。请勿手动更改这些记录。其中，与 GC 有关的记录如下：
->. tikv_gc_leader_uuid，tikv_gc_leader_desc 和 tikv_gc_leader_lease 用于记录 GC leader 的状态
->. tikv_gc_last_run_time：上次 GC 运行时间
->. tikv_gc_safe_point：当前 GC 的 safe point
->.tikv_gc_life_time 用于配置历史版本保留时间，可以手动修改
->. tikv_gc_safe_point 记录了当前的 safePoint，用户可以安全地使用大于 safePoint 的时间戳创建 snapshot 读取历史版本。safePoint 在每次 GC 开始运行时自动更新。
+>
+> . tikv_gc_leader_uuid，tikv_gc_leader_desc 和 tikv_gc_leader_lease 用于记录 GC leader 的状态
+>
+> . tikv_gc_last_run_time：上次 GC 运行时间
+>
+> . tikv_gc_safe_point：当前 GC 的 safe point
+>
+> .tikv_gc_life_time 用于配置历史版本保留时间，可以手动修改
+>
+> . tikv_gc_safe_point 记录了当前的 safePoint，用户可以安全地使用大于 safePoint 的时间戳创建 snapshot 读取历史版本。safePoint 在每次 GC 开始运行时自动更新。
 
 
 ## 查询历史数据
 
 读取历史版本数据前，需设定一个系统变量: tidb_snapshot ，这个变量是 Session 范围有效，可以通过标准的 Set 语句修改其值。其值为可以是TSO或日期时间。TSO是全局授时的时间戳，是从 PD 端获取的; 日期时间的格式可以为： “2016-10-08 16:45:26.999”，一般来说可以只写到秒，比如”2016-10-08 16:45:26”。 当这个变量被设置后，TiDB 会用这个时间戳建立 Snapshot（没有开销，只是创建数据结构），之后所有的查询操作都会在这个 Snapshot 上读取数据。
 
-### 注意：
-
-
-```
-
-TiDB 的事务是通过 PD 进行全局授时，所以存储的数据版本也是以 PD 所授时间戳作为版本号。在生成 Snapshot 时，是以 tidb_snapshot 变量的值作为版本号，如果 TiDB Server 所在机器和 PD Server 所在机器的本地时间相差较大，需要以 PD 的时间为准。
-
-```
-
+>  **注意:**
+>
+>TiDB 的事务是通过 PD 进行全局授时，所以存储的数据版本也是以 PD 所授时间戳作为版本号。在生成 Snapshot 时，是以 tidb_snapshot 变量的值作为版本号，如果 TiDB Server 所在机器和 PD Server 所在机器的本地时间相差较大，需要以 PD 的时间为准。
+>
 当读取历史版本数据操作结束后，可以结束当前 Session 或者是通过 Set 语句将 tidb_snapshot 变量的值设为 “"，即可读取最新版本的数据。
 
 
@@ -146,14 +146,9 @@ Query OK, 0 rows affected (0.00 sec)
 
 ```
 
-### 注意：
-
-```
-
-这里的时间设置的是 update 语句之前的那个时间。
-在 tidb_snapshot 前须使用 @@ 而非 @，因为 @@ 表示系统变量，@ 表示用户变量。
-
-```
+>  **注意：**
+>
+>这里的时间设置的是 update 语句之前的那个时间。在 tidb_snapshot 前须使用 @@ 而非 @，因为 @@ 表示系统变量，@ 表示用户变量。
 
 这里读取到的内容即为 update 之前的内容，也就是历史版本：
 
@@ -189,10 +184,7 @@ select * from t;
 3 rows in set (0.00 sec)
 
 ```
-### 注意：
+> **注意：**
+>
+>在 tidb_snapshot 前须使用 @@ 而非 @，因为 @@ 表示系统变量，@ 表示用户变量。
 
-```
-
-在 tidb_snapshot 前须使用 @@ 而非 @，因为 @@ 表示系统变量，@ 表示用户变量。
-
-```
