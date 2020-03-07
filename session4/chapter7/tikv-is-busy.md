@@ -1,6 +1,6 @@
 日常 TiDB 运维中，当你在 TiKV 监控 Trouble - Shooting - Server Is Busy 看到以下这样的监控时，
 
-![图片](https://uploader.shimo.im/f/ZzAcbzQZQfkOf3pw.png!thumbnail)
+![图片](/res/session4/chapter7/tikv-is-busy/1.png)
 
 可能此时的 TiDB 集群在该时间段内响应延时会大幅度增加，甚至会出现大量请求超时并且伴随大量告警出现。
 
@@ -27,7 +27,7 @@ TiKV 底层有 2 个 RocksDB 作为存储,  RocksDB 使用的 LSM Tree，LSM Tre
 * pending compaction bytes 太多导致 stall ， 服务器磁盘IO能力在写入高峰跟不上写入。
 * memtable 太多导致 stall 。
 
-![图片](https://uploader.shimo.im/f/xEO0Q9m2YzYuCO4W.png!thumbnail)
+![图片](/res/session4/chapter7/tikv-is-busy/2.png)
 
 >**处理建议：**
 >**1.  ****是否存在热点写入/写入倾斜，是否可以打散写入**
@@ -38,7 +38,7 @@ TiKV 底层有 2 个 RocksDB 作为存储,  RocksDB 使用的 LSM Tree，LSM Tre
 
  scheduler prewrite - latch wait duration  | scheduler commit latch wait duration
 
- ![图片](https://uploader.shimo.im/f/0qFKcYuxHWkbWg59.png!thumbnail)   ![图片](https://uploader.shimo.im/f/jg24BFJFSgwMTdIS.png!thumbnail)
+![图片](/res/session4/chapter7/tikv-is-busy/3.png)   ![图片](/res/session4/chapter7/tikv-is-busy/4.png)
 
 * 写入慢导致写入堆积，该 TiKV 正在写入的数据超过了 [storage] scheduler-pending-write-threshold = "100MB" 设置的阈值。
 >**处理建议：**
