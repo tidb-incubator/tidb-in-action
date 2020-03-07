@@ -1,14 +1,14 @@
-## 2.2 可视化Statement
+## 2.2 可视化Statements
 
 
-在上一节介绍了怎样通过Dashboard做TiDB集群诊断报告，本节主要带领读者体会写怎么样通过dashboard的信息来Statement分析执行SQL情况，
+在上一节介绍了怎样通过KeyVis来识别TiDB的业务的模式，本节主要带领读者体会写怎么样通过dashboard的信息来Statements分析执行SQL情况，
 从而达到帮助运维人员快速定位SQL性能问题。
 
-### Statement是什么
-针对SQL性能相关的问题，TiDB Dashboard提供了statement用来监控和统计SQL。例如页面上提供了丰富的列表信息，
-包括延迟、执行次数、扫描行数、全表扫描次数等，可以用来分析哪些类别的SQL 语句耗时过长，消耗内存过多等情况，帮助用户定位性能问题。
+### Statements是什么
+针对SQL性能相关的问题，TiDB Dashboard提供了Statements用来监控和统计SQL。例如页面上提供了丰富的列表信息，
+包括延迟、执行次数、扫描行数、全表扫描次数等，可以用来分析哪些类别的SQL语句耗时过长、消耗内存过多等情况，帮助用户定位性能问题。
 
-### 为什么要用可视化Statement
+### 为什么要用可视化Statements
 TiDB已经有很多性能排查工具了，但我们在应对各类场景时，仍发现它们有一些不足，如下：
 1. Grafana不能排查单条 SQL 的性能问题
 2. Slow log只能看到慢查询
@@ -16,11 +16,11 @@ TiDB已经有很多性能排查工具了，但我们在应对各类场景时，�
 4. Explain analyze只能查可以复现的问题
 5. Profile只能查整个实例的瓶颈
 
-所以有了可视化Statement直接可以在页面观察SQL执行情况，也不需要到系统表中去查询了，方便运维人员。
+所以有了可视化Statements直接可以在页面观察SQL执行情况，也不需要到系统表中去查询了，方便运维人员。
 
-### Statement参数配置
+### Statements参数配置
 
-* tidb_enable_stmt_summary: statement功能默认开启，通过设置系统变量打开，例如：
+* tidb_enable_stmt_summary: Statements功能默认开启，通过设置系统变量打开，例如：
 ```
 set global tidb_enable_stmt_summary = true;
 ```
@@ -34,7 +34,7 @@ set global tidb_stmt_summary_refresh_interval = 1800;
 set global tidb_stmt_summary_history_size = 24;
 ```
 
-由于statement信息存储在是内存表中，为了防止内存问题，需要限制保存的SQL条数和SQL的最大显示长度。这两个参数都在 config.toml的[stmt-summary]类别下配置：
+由于Statements信息存储在是内存表中，为了防止内存问题，需要限制保存的SQL条数和SQL的最大显示长度。这两个参数都在 config.toml的[stmt-summary]类别下配置：
 
 * 通过max-stmt-count更改保存的SQL种类数量，默认200条。当SQL种类超过 max-stmt-count 时，会移除最近没有使用的 SQL。
 * 通过max-sql-length更改DIGEST_TEXT和QUERY_SAMPLE_TEXT的最大显示长度，默认是 4096。
@@ -68,8 +68,8 @@ set global tidb_stmt_summary_history_size = 24;
 1. SQL执行总时长
 2. 平均影响行数（一般是写入）
 3. 平均扫描行数（一般是读）
-4. 各个节点执行指标，分析出某个节点性能瓶颈
+4. 各个节点执行指标（可以快速定位出某个节点性能瓶颈）
 ![add image](/res/session3/chapter3/slow-query-table/2.jpg)
 
-如果有耗时的SQL可以通过前面章节介绍的KeyVis来进行分析
+总之，有了可视化Statements就可以快速定位某个SQL性能问题，之后也可以可以通过前面章节介绍的KeyVis来进行分析。
 
