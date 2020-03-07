@@ -3,7 +3,7 @@
 * https://github.com/pingcap/tidb  
 
 一般来说我们提到 TiDB 是指整个分布式数据库，包括 tidb-server/pd-server/tikv-server 三大组件，
-此仓库为 tidb-server 组件的源码仓库，tidb-server 为整个分布式数据库的 SQL 层处理层。 
+此仓库为 tidb-server 组件的源码仓库，tidb-server 为整个分布式数据库的 SQL 处理层。 
 这一层最重要的工作是处理用户请求，执行 SQL 运算逻辑，用户的 SQL 请求会直接或者通过 Load Balancer 发送到 tidb-server，
 tidb-server 会解析 MySQL Protocol Packet，获取请求内容，然后做语法解析、查询计划制定和优化、执行查询计划获取和处理数据。
 tidb-server 是无状态节点，本身并不存储数据，数据全部存储在 TiKV 集群中，所以在这个过程中 tidb-server 需要和 tikv-server 交互，
@@ -31,8 +31,8 @@ tidb-ctl 是 tidb-server 的命令行工具，用于获取 TiDB 状态信息，�
 
 * https://github.com/pingcap/tipb 
 
-tipb 仓库主要用来存储 tidb-server [protobuf](https://developers.google.com/protocol-buffers) 文件。TiDB 使中用 [gRPC](https://grpc.io/) 作为通信协议，
-此仓库用来保存 tidb-server 组件中使用到的通信相关的 protobuf 文件。
+tipb 仓库主要用来存储 tidb-server [protobuf](https://developers.google.com/protocol-buffers) 文件。TiDB 中使用 [gRPC](https://grpc.io/) 作为通信协议，
+此仓库用来保存 tidb-server 组件中通信相关的 protobuf 文件。
 
 * https://github.com/pingcap/docs-cn
 
