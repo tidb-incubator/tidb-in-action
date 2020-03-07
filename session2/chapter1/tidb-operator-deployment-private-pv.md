@@ -1,4 +1,6 @@
 
+# PV 配置
+
 ### 背景介绍
 
 TiDB 是分布式数据库，包括 Tidb-server、 Pd-server、 Tikv-server 三个组件。其中 Pd-server、 Tikv-server 需要使用 PV， 而 Tidb-server 不需要 PV。

@@ -1,4 +1,6 @@
 
+# 部署 TiDB 集群
+
 #### 一、安装 TiDB Cluster
 
 ```
