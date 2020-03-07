@@ -1,4 +1,4 @@
-## 可视化Statement
+## 2.2 可视化Statement
 
 
 在上一节介绍了怎样通过Dashboard做TiDB集群诊断报告，本节主要带领读者体会写怎么样通过dashboard的信息来Statement分析执行SQL情况，
@@ -54,7 +54,7 @@ set global tidb_stmt_summary_history_size = 24;
 
 
 ### 查看单个SQL语句的详情
-在 SQL 类别列点击某类 SQL 语句，可以进入该 SQL 语句的详情页查看更详细的信息，以及 该 SQL 语句在不同节点上执行的统计情况。
+在SQL类别列点击某类 SQL 语句，可以进入该 SQL 语句的详情页查看更详细的信息，以及 该 SQL 语句在不同节点上执行的统计情况。
 单个Statements详情页关键信息：
 
 1. SQL执行总时长
