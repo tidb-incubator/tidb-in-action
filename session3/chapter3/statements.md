@@ -37,7 +37,7 @@ set global tidb_stmt_summary_history_size = 24;
 由于 Statements 信息存储在是内存表中，为了防止内存问题，需要限制保存的 SQL 条数和 SQL 的最大显示长度。这两个参数都在 config.toml 的 [stmt-summary] 类别下配置：
 
 * 通过 max-stmt-count 更改保存的 SQL 种类数量，默认200条。当 SQL 种类超过 max-stmt-count 时，会移除最近没有使用的 SQL。
-* 通过 max-sql-length 更改 DIGEST_TEXT和QUERY_SAMPLE_TEXT 的最大显示长度，默认是4096。
+* 通过 max-sql-length 更改 DIGEST_TEXT 和 QUERY_SAMPLE_TEXT 的最大显示长度，默认是4096。
 
 注: tidb_stmt_summary_history_size、max-stmt-count、max-sql-length 这些配置都影响内存占用，建议根据实际情况调整，不宜设置得过大。
 
@@ -69,6 +69,7 @@ set global tidb_stmt_summary_history_size = 24;
 2. 平均影响行数（一般是写入）
 3. 平均扫描行数（一般是读）
 4. 各个节点执行指标（可以快速定位出某个节点性能瓶颈）
+
 ![add image](/res/session3/chapter3/slow-query-table/2.jpg)
 
 总之，有了可视化 Statements 就可以快速定位某个 SQL 性能问题，之后也可以可以通过前面章节介绍的 KeyVis 来进行分析。
