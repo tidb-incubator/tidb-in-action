@@ -6,6 +6,7 @@
 #### 一、通过 helm 安装 TiDB Operator
 
 创建 TiDB CRD
+
 ```
     # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/crd.yaml && kubectl get crd tidbclusters.pingcap.com
     customresourcedefinition.apiextensions.k8s.io/tidbclusters.pingcap.com created
@@ -19,7 +20,9 @@
     NAME                       CREATED AT
     tidbclusters.pingcap.com   2020-03-07T09:58:09Z
 ```
+
 下载 TiDB Operator 的 helm chart 文件
+
 ```
     # mkdir -p /root/chart/
 
@@ -30,6 +33,7 @@
 ```
     将 /root/charts/tidb-operator/values.yaml 文件内的 scheduler.kubeSchedulerImageName 值修改为 registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler 以加快镜像拉取速度。
 安装 TiDB Operator
+
 ```
     # helm install --namespace=tidb-admin --name=tidb-operator /root/charts/tidb-operator -f /root/charts/tidb-operator/values.yaml
     NAME:   tidb-operator
@@ -47,5 +51,6 @@
     tidb-controller-manager-85d8d498bf-2n8km   1/1     Running   0          19s
     tidb-scheduler-7c67d6c77b-qd54r            2/2     Running   0          19s
 ```
+
 以上信息显示 Operator 运行正常
 

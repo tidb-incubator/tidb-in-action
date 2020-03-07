@@ -1,18 +1,19 @@
 
 # PV 配置
 
-### 背景介绍
+## 背景介绍
 
 TiDB 是分布式数据库，包括 Tidb-server、 Pd-server、 Tikv-server 三个组件。其中 Pd-server、 Tikv-server 需要使用 PV， 而 Tidb-server 不需要 PV。
 由于最小 TiDB 集群需要至少 3 个 Pd 节点、 3 个 Tikv 节点，所以整套环境至少需要 6 个 PV。
 
 由于 TiDB 是面向 HTAP 的分布式数据库，对存储介质性能要求比较高，所以，生产环境只考虑 Local PV 使用场景。
 
-### 操作步骤
+## 操作步骤
 
-#### 一、配置本地磁盘相关信息
+### 一、配置本地磁盘相关信息
 
 通过如下命令可知本服务器有 3 个独立分区可用于 Local PV 配置（真实生产环境每个 TiKV 需要独立的磁盘，此处只演示效果）
+
 ```
 # lsblk
 NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
@@ -27,7 +28,9 @@ sdb           8:16   0    5G  0 disk
 └─sdb3        8:19   0    2G  0 part 
 
 ```
+
 以 /dev/sdb1 为例进行磁盘挂载操作
+
 ```
 # mkfs.ext4 /dev/sdb1
 # DISK_UUID=$(blkid -s UUID -o value /dev/sdb1)
@@ -37,7 +40,7 @@ sdb           8:16   0    5G  0 disk
 ```
 将 sdb1 替换成 sdb2, sdb3，把 3 个分区都挂载上。重复对 3 台服务器进行磁盘挂载操作。
 
-#### 二、部署 local-volume-provisioner 程序
+### 二、部署 local-volume-provisioner 程序
 
 ```
 # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/local-dind/local-volume-provisioner.yaml
@@ -50,7 +53,7 @@ clusterrole.rbac.authorization.k8s.io/local-storage-provisioner-node-clusterrole
 clusterrolebinding.rbac.authorization.k8s.io/local-storage-provisioner-node-binding created
 ```
 
-#### 三、验证 Local PV 创建情况
+### 三、验证 Local PV 创建情况
 
 ```
 # kubectl get pv

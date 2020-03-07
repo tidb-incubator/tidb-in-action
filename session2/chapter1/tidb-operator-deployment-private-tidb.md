@@ -1,7 +1,7 @@
 
 # 部署 TiDB 集群
 
-#### 一、安装 TiDB Cluster
+## 一、安装 TiDB Cluster
 
 ```
     # cd /root/chart/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
@@ -15,7 +15,7 @@
 
 以上信息显示 TiDB Cluster 部署正常
 
-#### 二、观察 TiDB 的 POD 状态
+## 二、观察 TiDB 的 POD 状态
 
 ```
     # kubectl get pods -n dba-test
@@ -34,7 +34,7 @@
 
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常
 
-#### 三、访问 TiDB 集群
+## 三、访问 TiDB 集群
 
 ```
     # kubectl get svc -n dba-test
@@ -51,6 +51,7 @@
 ```
 
 找到 test-tidb 这个 Service 的 CLUSTER-IP，通过其访问 TiDB 集群
+
 ```
     # mysql -h 10.104.37.71 -uroot -P4000
     Welcome to the MySQL monitor.  Commands end with ; or \g.

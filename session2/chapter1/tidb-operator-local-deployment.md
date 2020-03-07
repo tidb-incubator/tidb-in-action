@@ -28,6 +28,7 @@
 ```
 # cd /root/tidb-operator && hack/kind-cluster-build.sh
 ```
+
 执行成功后会有如下关键提示信息:
 
 ```
@@ -41,6 +42,7 @@ To start using your cluster, run:
 ```
     # export PATH=$PATH:/root/tidb-operator/output/bin/
 ```
+
 #### 四、验证 K8s 环境是否符合要求
 
 ```
@@ -48,6 +50,7 @@ To start using your cluster, run:
       Kubernetes master is running at https://127.0.0.1:32771
       KubeDNS is running at https://127.0.0.1:32771/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 ```
+
 输出以上信息，则说明 K8s 服务符合要求
 
 ```
@@ -55,6 +58,7 @@ To start using your cluster, run:
       Client: &version.Version{SemVer:"v2.9.1", GitCommit:"20adb27c7c5868466912eebdf6664e7390ebe710", GitTreeState:"clean"}
       Server: &version.Version{SemVer:"v2.9.1", GitCommit:"20adb27c7c5868466912eebdf6664e7390ebe710", GitTreeState:"clean"}
 ```
+
 输出以上信息，则说明 Helm 客户端与服务端都符合要求
 
 ## 第二部分 基于 K8s 部署 TiDB Operator
@@ -97,6 +101,7 @@ To start using your cluster, run:
     STATUS: DEPLOYED
     ...
 ```
+
 #### 二、验证 Operator 运行状态
 
 ```
@@ -105,6 +110,7 @@ To start using your cluster, run:
     tidb-controller-manager-85d8d498bf-2n8km   1/1     Running   0          19s
     tidb-scheduler-7c67d6c77b-qd54r            2/2     Running   0          19s
 ```
+
 以上信息显示 Operator 运行正常
 
 ## 第三部分 基于 TiDB Operator 部署 TiDB 集群
