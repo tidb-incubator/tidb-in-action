@@ -55,7 +55,7 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 
 目前，**全新设计的 TinySQL 和 TinyKV 课程已经基本实现了一个可用的课程框架和相关测试，接下来会进行进一步的优化调整，同时课程材料也在紧锣密鼓地进行编写中**。如果你对于这个课程感兴趣，欢迎通过 [tidbcommunity slack channel #wg-talent-plan-courses](https://join.slack.com/t/tidbcommunity/shared_invite/enQtNzc0MzI4ODExMDc4LWYwYmIzMjZkYzJiNDUxMmZlN2FiMGJkZjAyMzQ5NGU0NGY0NzI3NTYwMjAyNGQ1N2I2ZjAxNzc1OGUwYWM0NzE) 与我们取得联系。
 
-**Deep Dive into TiDB Ecosystem 课程系列**
+#### Deep Dive into TiDB Ecosystem 课程系列
 
 这个课程系列将深入解读 TiDB 生态项目内部设计原理，TiDB、TiKV、Cloud TiDB d深度原理解析会逐步呈现在大家面前。
 
