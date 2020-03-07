@@ -1,6 +1,6 @@
 ## SQL层简介
 
-TiDB的SQL层，即tidb-server，跟Google的F1层比较类似，负责将SQL翻译成KV操作，转发给共享的分布式KV存储层TiKV，并组装返回结果，最终返回查询结果。
+TiDB的SQL层，即tidb-server，跟Google的[`F1`](https://dbdb.io/db/google-f1)层比较类似，负责将SQL翻译成KV操作，转发给共享的分布式KV存储层TiKV，并组装返回结果，最终返回查询结果。
 
 这一层的节点都是无状态的节点，本身并不存储数据，节点之间完全对等。
 
