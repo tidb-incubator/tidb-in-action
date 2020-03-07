@@ -18,30 +18,6 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 
 所以有了可视化 Statements 直接可以在页面观察 SQL 执行情况，也不需要到系统表中去查询了，方便运维人员。
 
-### Statements 参数配置
-
-* tidb_enable_stmt_summary： Statements 功能默认开启，通过设置系统变量打开，例如：
-```
-set global tidb_enable_stmt_summary = true;
-```
-* tidb_stmt_summary_refresh_interval：performance_schema.events_statements_summary_by_digest 表的的清空周期，单位是秒 (s)，默认值是 1800，例如：
-```
-set global tidb_stmt_summary_refresh_interval = 1800;
-```
-* tidb_stmt_summary_history_size：performance_schema.events_statements_summary_by_digest_history 表保存每种 SQL 的历史的数量，默认值是 24，例如：
-
-```
-set global tidb_stmt_summary_history_size = 24;
-```
-
-由于 Statements 信息存储在是内存表中，为了防止内存问题，需要限制保存的 SQL 条数和 SQL 的最大显示长度。这两个参数都在 config.toml 的 [stmt-summary] 类别下配置：
-
-* 通过 max-stmt-count 更改保存的 SQL 种类数量，默认200条。当 SQL 种类超过 max-stmt-count 时，会移除最近没有使用的 SQL。
-* 通过 max-sql-length 更改 DIGEST_TEXT 和 QUERY_SAMPLE_TEXT 的最大显示长度，默认是4096。
-
-注: tidb_stmt_summary_history_size、max-stmt-count、max-sql-length 这些配置都影响内存占用，建议根据实际情况调整，不宜设置得过大。
-
-
 ### 查看 SQL 语句的整体情况
 登录后，在左侧点击「SQL 语句分析」即可进入此功能页面。在时间区间选项框中选择要分析的时间段即可得到该时段所有数据库的SQL语句执行统计情况，如果只关心某些数据库， 
 则可以在第二个选项框中选择相应的数据库对结果进行过滤，支持多选。
@@ -70,6 +46,30 @@ set global tidb_stmt_summary_history_size = 24;
 4. 各个节点执行指标（可以快速定位出某个节点性能瓶颈）
 
 ![add image](/res/session3/chapter3/slow-query-table/2.jpg)
+
+
+### Statements 参数配置
+
+* tidb_enable_stmt_summary： Statements 功能默认开启，通过设置系统变量打开，例如：
+```
+set global tidb_enable_stmt_summary = true;
+```
+* tidb_stmt_summary_refresh_interval：performance_schema.events_statements_summary_by_digest 表的的清空周期，单位是秒 (s)，默认值是 1800，例如：
+```
+set global tidb_stmt_summary_refresh_interval = 1800;
+```
+* tidb_stmt_summary_history_size：performance_schema.events_statements_summary_by_digest_history 表保存每种 SQL 的历史的数量，默认值是 24，例如：
+
+```
+set global tidb_stmt_summary_history_size = 24;
+```
+
+由于 Statements 信息存储在是内存表中，为了防止内存问题，需要限制保存的 SQL 条数和 SQL 的最大显示长度。这两个参数都在 config.toml 的 [stmt-summary] 类别下配置：
+
+* 通过 max-stmt-count 更改保存的 SQL 种类数量，默认200条。当 SQL 种类超过 max-stmt-count 时，会移除最近没有使用的 SQL。
+* 通过 max-sql-length 更改 DIGEST_TEXT 和 QUERY_SAMPLE_TEXT 的最大显示长度，默认是4096。
+
+注: tidb_stmt_summary_history_size、max-stmt-count、max-sql-length 这些配置都影响内存占用，建议根据实际情况调整，不宜设置得过大。
 
 总之，有了可视化 Statements 就可以快速定位某个 SQL 性能问题，之后也可以可以通过前面章节介绍的 KeyVis 来进行分析。
 
