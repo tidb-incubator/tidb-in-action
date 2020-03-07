@@ -60,7 +60,7 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 
 ### 学习路径
 
-**路径 1：Distributed Storage Engineer**
+#### 路径 1：Distributed Storage Engineer
 
 如果你想要成为一名分布式存储工程师，可以选择以下课程组合：
 
