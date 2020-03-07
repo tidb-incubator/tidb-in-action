@@ -55,7 +55,7 @@ To start using your cluster, run:
 #### 一、通过 helm 安装 TiDB Operator
 创建 TiDB CRD
 ```
-    # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/crd.yaml && kubectl get crd tidbclusters.pingcap.com
+    # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/v1.0.6/manifests/crd.yaml && kubectl get crd tidbclusters.pingcap.com
     customresourcedefinition.apiextensions.k8s.io/tidbclusters.pingcap.com unchanged
     customresourcedefinition.apiextensions.k8s.io/backups.pingcap.com unchanged
     customresourcedefinition.apiextensions.k8s.io/restores.pingcap.com unchanged

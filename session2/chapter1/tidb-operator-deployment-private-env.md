@@ -9,6 +9,7 @@
 2. 至少 6 个 PV 可供使用(3 PV 用于 TiKV 实例，分布于不同服务器；3 PV用于 PD 部署，分布于不同服务器)
 
 ### Linux 内核参数要求如下:
+```
 net.core.somaxconn=32768
 vm.swappiness=0
 net.ipv4.tcp_syncookies=0
@@ -23,6 +24,7 @@ net.ipv4.neigh.default.gc_thresh3=100000
 net.bridge.bridge-nf-call-iptables=1
 net.bridge.bridge-nf-call-arptables=1
 net.bridge.bridge-nf-call-ip6tables=1
+```
 
 ### 其他 Linux 配置要求
 1. 将 Linux swap 关闭（永久关闭）
