@@ -59,18 +59,21 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 ### 学习路径
 
 **路径 1：Distributed Storage Engineer**
+
 如果你想要成为一名分布式存储工程师，可以选择以下课程组合：
 
 * Programming Language: "Practical Networked Applications in Rust"
 * Infrastructure Systems: "Distributed Key-Value Database Internals" &"Distributed System in Rust"
 
 **路径 2：Distributed Relational Database Engineer**
+
 如果你想要成为一名分布式关系型数据库工程师，可以选择以下课程组合：
 
 * Programming Language: "A Tour of Golang"
 * Infrastructure Systems: "Distributed Relational Database Internals"
 
 **路径 3：开源社区运营**
+
 如果你对开源社区运营感兴趣，可以选择：
 
 * Open Source Collaboration: “Introduction to Open Source Software” & “Build a Welcoming Community”
@@ -79,6 +82,7 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 除了以上学习路径，你也可以结合自己的需求，将上述课程自由组合，挖掘新的学习路径。
 
 ### 线下实训——Talent Challenge Program
+
 线上课程成绩优秀的小伙伴将会被邀请参与线下实训项目，实训项目以小组方式进行，每个小组选择一个与 TiDB 生态系统相关的实训项目，在 1 个月左右的时间里通力协作完成项目并进行最终答辩，答辩通过的同学将获得专属 **PingCAP Talent Plan 结业证书**，线下实训期间表现优秀的还将有机会拿到 **PingCAP 校招/实习免面试绿色通道/Special Offer、 PingCAP/TiDB 全球 Meetup 的邀请函**等。
 
 截止目前，线下实训已成功举办 4 期，累计线下学员数 41 人，累计覆盖 10 所高校，38 名同学顺利结业。
