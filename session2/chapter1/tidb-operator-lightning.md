@@ -38,32 +38,34 @@ TiDB Lightning 主要包含两个部分：
 
 - 创建备份所需的 secret
 
+```bash
 kubectl create secret generic backup-secret --namespace=test-backup --from-literal=user=root --from-literal=password='root_password'
+```
 
-`helm install pingcap/tidb-backup --version=v1.1.0-beta.2 --name backup-cluster-1 --namespace test-backup --set-string clusterName=cluster-1,storage.size=500Gi`
+```bash
+helm install pingcap/tidb-backup --version=v1.1.0-beta.2 --name backup-cluster-1 --namespace test-backup --set-string clusterName=cluster-1,storage.size=500Gi
+```
 
 - 确认备份任务完成
 
-```shell
+```bash
 kubectl -n test-backup get job -l app.kubernetes.io/instance=backup-cluster-1
-
-```
 NAME                            COMPLETIONS   DURATION   AGE
 basic-fullbackup-202003080800   1/1           3s         3m32s
 ```
 
 - 检查备份文件
 
+查找备份 PV 挂载在路径
+
+```bash
 kubectl -n test-cluster get pvc -l app.kubernetes.io/instance=backup-cluster-1
 
-```
 NAME               STATUS   VOLUME       CAPACITY   ACCESS MODES   STORAGECLASS    AGE
 fullbackup-202003080800   Bound    local-pv-2a2853fb   77Gi      RWO  local-storage  62m
-```
 
 kubectl describe pv local-pv-2a2853fb
 
-```
 Name:              local-pv-2a2853fb
 Labels:            kubernetes.io/hostname=tidb-operator-worker2
 Annotations:       pv.kubernetes.io/bound-by-controller: yes
@@ -84,12 +86,13 @@ Source:
     Type:  LocalVolume (a persistent volume backed by local storage on a node)
     Path:  /mnt/disks/20
 Events:    <none>
-
 ```
 
+进入 kind worker node 查看备份文件
+
+```bash
 docker exec -ti tidb-operator-worker2 ls /mnt/disks/20/fullbackup-202003080800
 
-```
 cloud-schema-create.sql                   mysql.opt_rule_blacklist-schema.sql
 cloud.test_tbl-schema.sql                 mysql.role_edges-schema.sql
 cloud.test_tbl.sql                        mysql.stats_buckets-schema.sql
@@ -112,24 +115,28 @@ mysql.help_topic-schema.sql
 
 - 在 cluster-2 开启 importer
 
+```bash
 helm upgrade cluster-2 --set-string importer.create=true pingcap/tidb-cluster
+```
 
 - 部署 lightning 开始恢复数据
 
+```bash
 helm install pingcap/tidb-lightning --version=v1.1.0-beta.2 --name restore-cluster-1 --namespace test-cluster --set-string dataSource.adhoc.pvcName='fullbackup-202003080800',targetTidbCluster.name='cluster-2'
+```
 
 - 检查恢复任务状态
 
-kubectl -n test-cluster get job -l app.kubernetes.io/name=restore-cluster-1-tidb-lightning
+```bash
+kubectl -n test-cluster get job -l app.kubernetes.io/name='restore-cluster-1-tidb-lightning'
 
-```
 NAME                               COMPLETIONS   DURATION   AGE
 restore-cluster-1-tidb-lightning   1/1           3s         9m3s
 ```
 
 - 访问 `cluster-2` TiDB 服务，确认数据恢复情况
 
-```
+```bash
 MySQL [(none)]> select * from cloud.test_tbl;
 +----+------------+--------+------------+
 | id | title      | author | date       |
