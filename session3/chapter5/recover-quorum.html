@@ -2834,7 +2834,74 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="53-&#x591A;&#x6570;&#x526F;&#x672C;&#x4E22;&#x5931;&#x6570;&#x636E;&#x6062;&#x590D;&#x6307;&#x5357;">5.3 &#x591A;&#x6570;&#x526F;&#x672C;&#x4E22;&#x5931;&#x6570;&#x636E;&#x6062;&#x590D;&#x6307;&#x5357;</h1>
+<h2 id="531-&#x95EE;&#x9898;&#x80CC;&#x666F;">5.3.1 &#x95EE;&#x9898;&#x80CC;&#x666F;</h2>
+<p>TiDB &#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x4E3A; 3 &#x526F;&#x672C;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A; Region &#x90FD;&#x4F1A;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x4FDD;&#x5B58; 3 &#x4EFD;&#xFF0C;&#x5B83;&#x4EEC;&#x4E4B;&#x95F4;&#x901A;&#x8FC7; Raft &#x534F;&#x8BAE;&#x6765;&#x9009;&#x4E3E; Leader &#x5E76;&#x540C;&#x6B65;&#x6570;&#x636E;&#x3002;Raft &#x534F;&#x8BAE;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x5728;&#x6570;&#x91CF;&#x5C0F;&#x4E8E;&#x526F;&#x672C;&#x6570;&#xFF08;&#x6CE8;&#x610F;&#xFF0C;&#x4E0D;&#x662F;&#x8282;&#x70B9;&#x6570;&#xFF09;&#x4E00;&#x534A;&#x7684;&#x8282;&#x70B9;&#x6302;&#x6389;&#x6216;&#x8005;&#x9694;&#x79BB;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4ECD;&#x7136;&#x80FD;&#x591F;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#xFF0C;&#x5E76;&#x4E14;&#x4E0D;&#x4E22;&#x5931;&#x4EFB;&#x4F55;&#x6570;&#x636E;&#x3002;
+&#x5BF9;&#x4E8E; 3 &#x526F;&#x672C;&#x96C6;&#x7FA4;&#xFF0C;&#x6302;&#x6389;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x9664;&#x4E86;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x6027;&#x80FD;&#x6709;&#x6296;&#x52A8;&#x4E4B;&#x5916;&#xFF0C;&#x53EF;&#x7528;&#x6027;&#x548C;&#x6B63;&#x786E;&#x6027;&#x7406;&#x8BBA;&#x4E0A;&#x4E0D;&#x4F1A;&#x53D7;&#x5F71;&#x54CD;&#xFF1B;
+&#x4F46;&#x662F;&#x6302;&#x6389; 2 &#x4E2A;&#x526F;&#x672C;&#xFF0C;&#x4E00;&#x4E9B; region &#x5C31;&#x4F1A;&#x4E0D;&#x53EF;&#x7528;&#xFF0C;&#x800C;&#x4E14;&#x5982;&#x679C;&#x8FD9; 2 &#x4E2A;&#x526F;&#x672C;&#x65E0;&#x6CD5;&#x5B8C;&#x6574;&#x5730;&#x627E;&#x56DE;&#x4E86;&#xFF0C;&#x8FD8;&#x5B58;&#x5728;&#x6C38;&#x4E45;&#x4E22;&#x5931;&#x90E8;&#x5206;&#x6570;&#x636E;&#x7684;&#x53EF;&#x80FD;&#x3002;
+&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x8BA8;&#x8BBA; 2 &#x4E2A;&#x6216; 3 &#x4E2A;&#x526F;&#x672C;&#x4E22;&#x5931;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x5728;&#x5B9E;&#x9645;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E2D;&#xFF0C;TiDB &#x96C6;&#x7FA4;&#x662F;&#x53EF;&#x80FD;&#x4F1A;&#x51FA;&#x73B0;&#x4E22;&#x5931;&#x6570;&#x636E;&#x60C5;&#x51B5;&#xFF0C;&#x5982;&#xFF1A;</p>
+<ul>
+<li>&#x4E00;&#x4E2A; TiDB &#x96C6;&#x7FA4;&#x53EF;&#x80FD;&#x4F1A;&#x51FA;&#x73B0;&#x591A;&#x53F0; TiKV &#x673A;&#x5668;&#x77ED;&#x65F6;&#x95F4;&#x5185;&#x63A5;&#x8FDE;&#x6545;&#x969C;&#x4E14;&#x65E0;&#x6CD5;&#x77ED;&#x671F;&#x5185;&#x6062;&#x590D;</li>
+<li>&#x4E00;&#x4E2A;&#x53CC;&#x673A;&#x623F;&#x90E8;&#x7F72;&#x7684; TiDB &#x96C6;&#x7FA4;&#x7684;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x673A;&#x623F;&#x6574;&#x4F53;&#x6545;&#x969C;&#x7B49;</li>
+</ul>
+<p>&#x5728;&#x4E0A;&#x8FF0;&#x8FD9;&#x4E9B;&#x60C5;&#x5F62;&#x4E0B;&#xFF0C;&#x4F1A;&#x51FA;&#x73B0;&#x90E8;&#x5206; Region &#x7684;&#x591A;&#x4E2A;&#x526F;&#x672C;&#xFF08;&#x5305;&#x542B;&#x5168;&#x90E8;&#x526F;&#x672C;&#x7684;&#x60C5;&#x51B5;&#xFF09;&#x540C;&#x65F6;&#x6545;&#x969C;&#xFF0C;&#x8FDB;&#x800C;&#x5BFC;&#x81F4; Region &#x7684;&#x6570;&#x636E;&#x90E8;&#x5206;&#x6216;&#x5168;&#x90E8;&#x4E22;&#x5931;&#x7684;&#x95EE;&#x9898;&#x3002;
+&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C;&#x6700;&#x91CD;&#x8981;&#x7684;&#x662F;&#x5FEB;&#x901F;&#x5730;&#x6700;&#x5927;&#x7A0B;&#x5EA6;&#x5730;&#x6062;&#x590D;&#x6570;&#x636E;&#x5E76;&#x6062;&#x590D; TiDB &#x96C6;&#x7FA4;&#x6B63;&#x5E38;&#x670D;&#x52A1;&#x3002;</p>
+<h2 id="532-&#x526F;&#x672C;&#x6570;&#x636E;&#x6062;&#x590D;&#x601D;&#x8DEF;&#x7B80;&#x6790;">5.3.2 &#x526F;&#x672C;&#x6570;&#x636E;&#x6062;&#x590D;&#x601D;&#x8DEF;&#x7B80;&#x6790;</h2>
+<p>&#x526F;&#x672C;&#x6570;&#x636E;&#x6062;&#x590D;&#x5305;&#x542B;&#x4E24;&#x4E2A;&#x90E8;&#x5206;&#xFF1A;&#x6545;&#x969C; Region &#x5904;&#x7406;&#x548C;&#x4E22;&#x5931;&#x6570;&#x636E;&#x5904;&#x7406;</p>
+<ul>
+<li>&#x6545;&#x969C; Region &#x5904;&#x7406;&#xFF0C;&#x9488;&#x5BF9; Region &#x6570;&#x636E;&#x4E22;&#x5931;&#x7684;&#x4E25;&#x91CD;&#x60C5;&#x51B5;&#xFF0C;&#x53EF;&#x5206;&#x4E3A;&#x4E24;&#x79CD;&#xFF1A;<ul>
+<li>Region &#x81F3;&#x5C11;&#x8FD8;&#x6709; 1 &#x4E2A;&#x526F;&#x672C;&#xFF0C;&#x6062;&#x590D;&#x601D;&#x8DEF;&#x662F;&#x5728; Region &#x7684;&#x5269;&#x4F59;&#x526F;&#x672C;&#x4E0A;&#x79FB;&#x9664;&#x6389;&#x6240;&#x6709;&#x4F4D;&#x4E8E;&#x6545;&#x969C;&#x8282;&#x70B9;&#x4E0A;&#x7684; Peer&#xFF0C;
+&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x7528;&#x8FD9;&#x4E9B;&#x5269;&#x4F59;&#x526F;&#x672C;&#x6765;&#x91CD;&#x65B0;&#x9009;&#x4E3E;&#x548C;&#x8865;&#x5145;&#x526F;&#x672C;&#x6765;&#x6062;&#x590D;&#xFF0C;&#x4F46;&#x8FD9;&#x4E9B;&#x5269;&#x4F59;&#x526F;&#x672C;&#x4E2D;&#x53EF;&#x80FD;&#x4E0D;&#x5305;&#x542B;&#x6700;&#x65B0;&#x7684; Raft Log &#x66F4;&#x65B0;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x5C31;&#x4F1A;&#x4E22;&#x5931;&#x90E8;&#x5206;&#x6570;&#x636E;</li>
+<li>Region &#x7684;&#x6240;&#x6709;&#x526F;&#x672C;&#x90FD;&#x4E22;&#x5931;&#x4E86;&#xFF0C;&#x8FD9;&#x4E2A; Region &#x7684;&#x6570;&#x636E;&#x5C31;&#x4E22;&#x5931;&#x4E86;&#xFF0C;&#x65E0;&#x6CD5;&#x6062;&#x590D;&#x3002;
+&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x521B;&#x5EFA; 1 &#x4E2A;&#x7A7A; Region &#x6765;&#x89E3;&#x51B3; Region Unavailable &#x7684;&#x95EE;&#x9898;</li>
+<li>&#x5728;&#x6062;&#x590D; Region &#x6545;&#x969C;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x8981;&#x8BE6;&#x7EC6;&#x8BB0;&#x5F55;&#x4E0B;&#x6240;&#x5904;&#x7406; Region &#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5982; Region ID&#x3001;Region &#x4E22;&#x5931;&#x526F;&#x672C;&#x7684;&#x6570;&#x91CF;&#x7B49;</li>
+</ul>
+</li>
+<li>&#x4E22;&#x5931;&#x6570;&#x636E;&#x5904;&#x7406;<ul>
+<li>&#x6839;&#x636E;&#x6545;&#x969C; Region ID &#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x8868;&#xFF0C;&#x627E;&#x5230;&#x76F8;&#x5173;&#x7528;&#x6237;&#x5E76;&#x8BE2;&#x95EE;&#x7528;&#x6237;&#x5728;&#x6545;&#x969C;&#x524D;&#x7684;&#x67D0;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x5185;&#xFF08;&#x6BD4;&#x5982; 5 min&#xFF09;&#xFF0C;&#x5927;&#x6982;&#x5199;&#x5165;&#x4E86;&#x54EA;&#x4E9B;&#x6570;&#x636E;&#x8868;&#xFF0C;&#x662F;&#x5426;&#x6709; DDL &#x64CD;&#x4F5C;&#xFF0C;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x6D88;&#x8D39;&#x66F4;&#x4E0A;&#x6E38;&#x7684;&#x6570;&#x636E;&#x6765;&#x518D;&#x6B21;&#x5199;&#x5165;&#xFF0C;&#x7B49;&#x7B49;</li>
+<li>&#x5982;&#x679C;&#x53EF;&#x4EE5;&#x91CD;&#x5BFC;&#xFF0C;&#x5219;&#x662F;&#x6700;&#x7B80;&#x5355;&#x7684;&#x5904;&#x7406;&#x65B9;&#x5F0F;&#x3002;&#x5426;&#x5219;&#x7684;&#x8BDD;&#xFF0C;&#x5219;&#x53EA;&#x80FD;&#x5BF9;&#x91CD;&#x8981;&#x7684;&#x6570;&#x636E;&#x8868;&#xFF0C;&#x68C0;&#x67E5;&#x6570;&#x636E;&#x7D22;&#x5F15;&#x7684;&#x4E00;&#x81F4;&#x6027; &#xFF0C;&#x4FDD;&#x8BC1;&#x8FD8;&#x5728;&#x7684;&#x6570;&#x636E;&#x662F;&#x6B63;&#x786E;&#x65E0;&#x8BEF;&#x7684;</li>
+</ul>
+</li>
+</ul>
+<h2 id="533-&#x6545;&#x969C;-region-&#x7684;&#x5904;&#x7406;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;">5.3.3 &#x6545;&#x969C; Region &#x7684;&#x5904;&#x7406;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;</h2>
+<p>&#x6545;&#x969C; Region &#x5904;&#x7406;&#x6B65;&#x9AA4;&#x5305;&#x62EC;&#xFF1A;&#x5904;&#x7406;&#x524D;&#x7981;&#x7528; PD &#x8C03;&#x5EA6;&#x3001;&#x5904;&#x7406;&#x8FD8;&#x6709;&#x5269;&#x4F59;&#x526F;&#x672C;&#x7684; Region&#x3001;&#x5904;&#x7406;&#x6240;&#x6709;&#x526F;&#x672C;&#x90FD;&#x4E22;&#x5931;&#x7684; Region&#x3001;&#x5904;&#x7406;&#x540E;&#x6062;&#x590D; Region &#x8C03;&#x5EA6;&#x3002;</p>
+<ul>
+<li><p>&#x5904;&#x7406;&#x524D;&#x540E;&#x7684; PD &#x8C03;&#x5EA6;&#x5904;&#x7406;</p>
+<ul>
+<li>&#x4E3A;&#x5C06;&#x6062;&#x590D;&#x8FC7;&#x7A0B;&#x4E2D;&#x53EF;&#x80FD;&#x7684;&#x5F02;&#x5E38;&#x60C5;&#x51B5;&#x964D;&#x5230;&#x6700;&#x5C11;&#xFF0C;&#x9700;&#x5728;&#x6545;&#x969C;&#x5904;&#x7406;&#x671F;&#x95F4;&#x7981;&#x7528;&#x76F8;&#x5173;&#x7684;&#x8C03;&#x5EA6;&#xFF1A;<ul>
+<li>&#x901A;&#x8FC7; <code>pd-ctl config get</code> &#x83B7;&#x53D6; region-schedule-limit&#x3001;replica-schedule-limit&#x3001;leader-schedule-limit&#x3001;merge-schedule-limit
+&#x8FD9; 4 &#x4E2A;&#x53C2;&#x6570;&#x7684;&#x503C;&#xFF0C;&#x5E76;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;&#x7528;&#x4E8E;&#x540E;&#x9762;&#x6062;&#x590D;&#x8BBE;&#x7F6E;</li>
+<li>&#x901A;&#x8FC7; <code>pd-ctl config set</code> &#x5C06;&#x8FD9; 4 &#x4E2A;&#x53C2;&#x6570;&#x8BBE;&#x4E3A; 0</li>
+<li>&#x5904;&#x7406;&#x5B8C;&#x4E4B;&#x540E;&#x9700;&#x8981;&#x5C06;&#x8FD9; 4 &#x4E2A;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x6062;&#x590D;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>&#x5904;&#x7406;&#x8FD8;&#x6709;&#x5269;&#x4F59;&#x526F;&#x672C;&#x7684; Region</p>
+<ul>
+<li>&#x4F7F;&#x7528; pd-ctl &#x68C0;&#x67E5;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x4E00;&#x534A;&#x526F;&#x672C;&#x6570;&#x5728;&#x6545;&#x969C;&#x8282;&#x70B9;&#x4E0A;&#x7684; Region&#xFF0C;&#x5E76;&#x8BB0;&#x5F55;&#x5B83;&#x4EEC;&#x7684; ID&#xFF08;&#x5047;&#x8BBE;&#x6545;&#x969C;&#x8282;&#x70B9;&#x4E3A; 1&#xFF0C;4&#xFF0C;5&#xFF09;&#xFF1A;
+<code>pd-ctl -u &lt;endpoint&gt; -d region --jq=&#x2019;.regions[] | {id: .id, peer_stores: [.peers[].store_id] | select(length as $total | map(if .==(1,4,5) then . else empty end) | length&gt;=$total-length) }&#x2019;</code></li>
+<li>&#x6839;&#x636E;&#x4E0A;&#x9762;&#x7684; Region &#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x53D6; 2 &#x79CD;&#x4E0D;&#x540C;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x5F0F;&#xFF08;&#x8FD0;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x65F6;&#x9700;&#x5173;&#x95ED;&#x76F8;&#x5E94; Store &#x4E0A;&#x9762;&#x7684; TiKV&#xFF09;&#xFF1A;<ul>
+<li>Region &#x6BD4;&#x8F83;&#x5C11;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x5728;&#x7ED9;&#x5B9A; Region &#x7684;&#x5269;&#x4F59;&#x526F;&#x672C;&#x4E0A;&#xFF0C;&#x79FB;&#x9664;&#x6389;&#x6240;&#x6709;&#x4F4D;&#x4E8E;&#x6545;&#x969C;&#x8282;&#x70B9;&#x4E0A;&#x7684; Peer&#xFF0C;&#x5728;&#x8FD9;&#x4E9B; Region &#x7684;&#x672A;&#x53D1;&#x751F;&#x6389;&#x7535;&#x6545;&#x969C;&#x7684;&#x673A;&#x5668;&#x4E0A;&#x8FD0;&#x884C;&#xFF1A;
+<code>tikv-ctl --db /path/to/tikv-data/db unsafe-recover remove-fail-stores -s &lt;s1,s2&gt; -r &lt;r1,r2,r3&gt;</code></li>
+<li>&#x53CD;&#x4E4B;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x5728;&#x6240;&#x6709;&#x672A;&#x53D1;&#x751F;&#x6389;&#x7535;&#x6545;&#x969C;&#x7684;&#x5B9E;&#x4F8B;&#x4E0A;&#xFF0C;&#x5BF9;&#x6240;&#x6709; Region &#x79FB;&#x9664;&#x6389;&#x6240;&#x6709;&#x4F4D;&#x4E8E;&#x6545;&#x969C;&#x8282;&#x70B9;&#x4E0A;&#x7684; Peer&#xFF0C;&#x5728;&#x6240;&#x6709;&#x672A;&#x53D1;&#x751F;&#x6389;&#x7535;&#x6545;&#x969C;&#x7684;&#x673A;&#x5668;&#x4E0A;&#x8FD0;&#x884C;&#xFF1A;
+<code>tikv-ctl --db /path/to/tikv-data/db unsafe-recover remove-fail-stores -s &lt;s1,s2&gt; --all-regions</code></li>
+<li>&#x6267;&#x884C;&#x540E;&#x6240;&#x6709;&#x4ECD;&#x7136;&#x6709;&#x526F;&#x672C;&#x5065;&#x5728;&#x7684; Region &#x90FD;&#x53EF;&#x4EE5;&#x9009;&#x51FA; Leader</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>&#x5904;&#x7406;&#x6240;&#x6709;&#x526F;&#x672C;&#x90FD;&#x4E22;&#x5931;&#x7684; Region</p>
+<ul>
+<li>&#x91CD;&#x542F; PD&#xFF0C;&#x91CD;&#x542F; TiKV &#x96C6;&#x7FA4;&#xFF0C;&#x4F7F;&#x7528; <code>pd-ctl</code> &#x68C0;&#x67E5;&#x6CA1;&#x6709; Leader &#x7684; Region&#xFF1A;
+<code>pd-ctl -u &lt;endpoint&gt; -d region --jq &apos;.regions[]|select(has(&quot;leader&quot;)|not)|{id: .id, peer_stores: [.peers[].store_id]}&apos;</code></li>
+<li>&#x521B;&#x5EFA;&#x7A7A; Region &#x89E3;&#x51B3; Unavailable &#x62A5;&#x9519;&#x3002;&#x4EFB;&#x9009;&#x4E00;&#x4E2A; Store&#xFF0C;&#x5173;&#x95ED;&#x4E0A;&#x9762;&#x7684; TiKV&#xFF0C;&#x7136;&#x540E;&#x6267;&#x884C;&#xFF1A;
+<code>tikv-ctl --db /path/to/tikv-data/db recreate-region --pd &lt;endpoint&gt; -r &lt;region_id&gt;</code></li>
+</ul>
+</li>
+</ul>
+
                                 
                                 </section>
                             
@@ -2877,7 +2944,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"next":{"title":"6 TiDB-Operator Troubleshooting","level":"4.6","depth":1,"path":"session3/chapter6/tidb-operator-trouble-shooting.md","ref":"session3/chapter6/tidb-operator-trouble-shooting.md","articles":[]},"previous":{"title":"5.2 利用 Recover 命令秒恢复误删表","level":"4.5.2","depth":2,"path":"session3/chapter5/recover-statements.md","ref":"session3/chapter5/recover-statements.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter5/recover-quorum.md","mtime":"2020-03-08T07:43:51.424Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T07:44:28.161Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"next":{"title":"6 TiDB-Operator Troubleshooting","level":"4.6","depth":1,"path":"session3/chapter6/tidb-operator-trouble-shooting.md","ref":"session3/chapter6/tidb-operator-trouble-shooting.md","articles":[]},"previous":{"title":"5.2 利用 Recover 命令秒恢复误删表","level":"4.5.2","depth":2,"path":"session3/chapter5/recover-statements.md","ref":"session3/chapter5/recover-statements.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter5/recover-quorum.md","mtime":"2020-03-08T07:46:14.013Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T07:46:50.535Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
