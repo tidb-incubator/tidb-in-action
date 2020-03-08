@@ -72,7 +72,7 @@ TiDB 的事务实现是基于 Percolator 模型的，映射到 TiKV 中则是对
 引入流算子机制，例如读盘算子每读 N 行数据则向上输出，多个读盘算子可成为一个多路合并算子的输入，并照此不断衔接。每个算子都要尽可能合理控制 读取->处理->输出 这 3 个步骤的数据批大小，以达到更好的 Pipline 效果。SSTable 按列格式存储，不仅便于同数据簇批处理和拷贝，选择适当的压缩算法和缓存机制也能取得更好的压缩比和 IO 效果。
 
 #### 多版本并发控制优化
-多版本并发控制（MVCC）是实现数据库引擎更新功能的重要途径。TiDB 中的每一条行存数据能在 TiFlash 中以 <key, value> 形式来表示，key 实际可以被拆解为 3 部分 {handle, version, delmark} 依次代表 key 比较的排序键。其中，handle 代表该行数据的唯一索引，version 代表其在不同时刻被修改所对应的版本号（在 TiDB 的体系中为一个 64 位无符号整型），若修改为删除操作则 delmark 为 1，否则为 0。基于此，TiFlash 在实际的磁盘存储结构中，除了 value 需要根据 Schema 拆分出的列外，还多出了 3 个 key 相关的隐藏列。
+多版本并发控制（MVCC）是实现数据库引擎更新功能的重要途径。TiDB 中的每一条行存数据能在 TiFlash 中以 key, value 形式来表示，key 实际可以被拆解为 3 部分 {handle, version, delmark} 依次代表 key 比较的排序键。其中，handle 代表该行数据的唯一索引，version 代表其在不同时刻被修改所对应的版本号（在 TiDB 的体系中为一个 64 位无符号整型），若修改为删除操作则 delmark 为 1，否则为 0。基于此，TiFlash 在实际的磁盘存储结构中，除了 value 需要根据 Schema 拆分出的列外，还多出了 3 个 key 相关的隐藏列。
 
 令 HandleRange 代表 key 值域是 [start, end) 的一段数据，如果一个查询请求包含一组 HandleRange（彼此互不相交且空间占用相对一致），一个特定的版本号 V。该如何找出这些 HandleRange 对应范围内的所有数据 Snapshot Read 后的结果？解决方案大致如下：
 
