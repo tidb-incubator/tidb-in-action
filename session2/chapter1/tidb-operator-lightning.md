@@ -2,11 +2,11 @@
 
 ## 背景
 
-Mydumper + Loader 使用多线程导入导出数据，但在导入数据时需要经过 TiDB SQL 语法解析，导致 TiDB 计算能力成为新的瓶颈。所以又一个想法孕育而出——导入数据不经过 SQL 解析，直接转换成KV键值对写入 TiKV 集群。
+Mydumper + Loader 使用多线程导入导出数据时需要经过 TiDB SQL 语法解析，导致 TiDB 计算能力成为新的瓶颈。所以又一个想法孕育而出——导入数据不经过 SQL 解析，直接转换成 KV 键值对写入 TiKV 集群。
 
 ## 介绍
 
-TiDB Lightning 整体架构
+TiDB Lightning 整体架构：
 
 ![整体架构](https://download.pingcap.com/images/docs-cn/v3.1/tidb-lightning-architecture.png)
 
@@ -17,7 +17,7 @@ TiDB Lightning 主要包含两个部分：
 
 ## 操作
 
-### 1. 通过Mydumper执行全量逻辑备份
+### 1. 通过 Mydumper 执行全量逻辑备份
 
 - 环境信息：
 
@@ -44,12 +44,12 @@ kubectl create secret generic backup-secret --namespace=test-backup --from-liter
 
 - 确认备份任务完成
 
+```shell
 kubectl -n test-backup get job -l app.kubernetes.io/instance=backup-cluster-1
 
 ```
 NAME                            COMPLETIONS   DURATION   AGE
 basic-fullbackup-202003080800   1/1           3s         3m32s
-
 ```
 
 - 检查备份文件
@@ -108,7 +108,7 @@ mysql.global_priv-schema.sql              test-schema-create.sql
 mysql.help_topic-schema.sql
 ```
 
-### 2. 使用Lightning恢复数据
+### 2. 使用 Lightning 恢复数据
 
 - 在 cluster-2 开启 importer
 
