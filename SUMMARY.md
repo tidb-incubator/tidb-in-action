@@ -117,8 +117,11 @@
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
 * [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
-    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md) @[石壹笑](https://github.com/aierui)
-    * [1.2 SQL Plan Management](session3/chapter1/sql-plan-management.md)
+    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui)
+    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md)
+    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md)
+    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md)
+    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 识别集群热点和业务模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 分析 SQL 执行性能](session3/chapter2/statements.md) @李迅
@@ -189,7 +192,7 @@
     * [6.9 流程调度工具与 TiSpark 的集成应用](session4/chapter6/tidb-streaming-scheduler-tools.md)@王娟
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
-    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚 
+    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
     * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东 @谭仁刚
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
