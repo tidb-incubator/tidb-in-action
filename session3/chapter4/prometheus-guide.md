@@ -438,6 +438,6 @@ histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_buck
 - 由于默认的告警发送的内容过多，包含注释等信息，影响可读性。建议用户自己写 webhook 的方式发送告警。
 
 告警示例：
-
+<img style="width:50px;height:50px" src="https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png"  alt="真棒" align=center />
 ![图片](https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png!thumbnail){:height="30" width="100"}![图片](https://uploader.shimo.im/f/PvMs4K4IERQGIxou.png!thumbnail)
 
