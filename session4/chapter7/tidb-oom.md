@@ -3,7 +3,7 @@
 # 一、TiDB-Server
 * 如何快速确认 TiDB-Server 出现了 OOM
   * 客户端收到 tidb-server 报错 "ERROR 2013 (HY000): Lost connection to MySQL server during query"
-  * TiDB grafana 面板中 Server 的 Heap Memory Usage 项，出现一次或者多次内存上涨并突然下跌到底的情况![图片](https://uploader.shimo.im/f/9HTKw1a7JnIXgoLV.png!thumbnail)
+  * TiDB grafana 面板中 Server 的 Heap Memory Usage 项，出现一次或者多次内存上涨并突然下跌到底的情况![图片](/res/session4/chapter7/tidb-oom/oom_example.png)
   * 查看 TiDB service 的启动时间
 ```
 $ systemctl status tidb-4000.service
