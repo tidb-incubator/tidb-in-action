@@ -27,7 +27,7 @@
     * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md) @杜振强
     * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md) @高海涛
     * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
-    * [7.4 Auto Random](session1/chapter7/autorandom.md)
+    * [7.4 Auto Random](session1/chapter7/autorandom.md) @谢滕进 @王聪
     * [7.5 Expression index](session1/chapter7/expression-index.md)
 * [8 Titan 简介与实战](session1/chapter8/titan-intro.md)
     * [8.1 Titan 原理介绍](session1/chapter8/titan-internal.md) @孙晓光
