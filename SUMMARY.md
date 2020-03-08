@@ -12,7 +12,7 @@
     * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @[zhiqiangxu](https://github.com/zhiqiangxu)
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 调度概述](session1/chapter4/scheduling-overview.md)
-    * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
+    * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[季鹏](https://github.com/pengji)
 * [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮
         <!--
         与 MySQL 兼容性对比
@@ -170,7 +170,7 @@
     * [5.7 Mongodb 迁移到 TiDB](session4/chapter5/from-mongodb-to-tidb.md) @北丐 @李仲舒
 * [6 业务适配最佳实践](session4/chapter6/workload-adaptation-best-practices.md)
     * [6.1 业务开发最佳实践](session4/chapter6/application-dev-best-practices.md)
-        * [6.1.1 如何避免乐观锁模式下事务冲突](session4/chapter6/avoid-optimistic-lock-conflicts.md) @George Li
+        * [6.1.1 乐观锁模式下的事务最佳实践](session4/chapter6/avoid-optimistic-lock-conflicts.md) @George Li
         * [6.1.2 TiDB 中事务限制及应对方案](session4/chapter6/transaction-statement-count-limit.md) @谭仁刚
         * [6.1.3 高并发的唯一序列号生成方案](session4/chapter6/serial-number.md) @魏巍 @George Li
         * [6.1.4 一种高效分页批处理方案](session4/chapter6/page-inaction.md) @魏巍
