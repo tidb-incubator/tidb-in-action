@@ -112,9 +112,9 @@ $ ansible-playbook deploy.yml --tags=lightning
 数据导入完成后，在 Importer 目录下执行 * scripts/stop_importer.sh  *
 
 ## 手动部署 TiDB Lightning
-从官网下载与TiDB版本一直的Lightning安装包，并将安装包上传至满足硬件要求的服务器。解压安装包后在bin目录下新建tikv-importer.toml，tidb-lightning.toml，详细配置参数见TiDB Lightning配置参数小节，Lightning启停等使用方式与ansible部署一致。
+# 从官网下载与 TiDB 版本一直的 Lightning 安装包，并将安装包上传至满足硬件要求的服务器。解压安装包后在bin目录下新建tikv-importer.toml，tidb-lightning.toml，详细配置参数见官网地址：[https://pingcap.com/docs-cn/stable/reference/tools/tidb-lightning/deployment/](https://pingcap.com/docs-cn/stable/reference/tools/tidb-lightning/deployment/)。TiDB Lightning启停等使用方式与ansible部署一致。
 
-# TiDB Lightning TiDB-Backend
+TiDB Lightning TiDB-Backend
 ## Importer-backend 和 TiDB-backend 的区别
 TiDB Lightning 的后端决定 tidb-lightning 将如何把将数据导入到目标集群中。目前，TiDB Lightning 支持 Importer-backend（默认）和 TiDB-backend 两种后端，两者导入数据的区别如下：
 
@@ -227,7 +227,7 @@ status-addr = ':8289'
 ```
 TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.1:8289) 来管理程序（实际的 URL 取决于你的 status-addr 设置）。
 ## TiDB Lightning Web 首页
-![1.png](/res/session2/chapter2/lightning-in-action/1.png)
+![图片](https://uploader.shimo.im/f/zyEj4S6boXsYYBt3.png!thumbnail)
 
 标题栏上图标所对应的功能，从左到右依次为：
 
@@ -252,7 +252,7 @@ TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.
 ## 提交任务
 点击标题栏的 + 图标提交任务。
 
-![2.png](/res/session2/chapter2/lightning-in-action/2.png)
+![图片](https://uploader.shimo.im/f/twJcH79h7D0lShTN.png!thumbnail)
 
 任务 (task) 为 TOML 格式的文件，具体参考 [TiDB Lightning 任务配置](https://pingcap.com/docs-cn/stable/reference/tools/tidb-lightning/config#tidb-lightning-%E4%BB%BB%E5%8A%A1%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0)。你也可以点击 UPLOAD 上传一个本地的 TOML 文件。
 
@@ -262,7 +262,7 @@ TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.
 ## 查看导入进度
 点击首页表格卡片上的 > 图标，查看表格导入的详细进度。
 
-![3.png](/res/session2/chapter2/lightning-in-action/3.png)
+![图片](https://uploader.shimo.im/f/q50oeWmpaRM3q2g2.png!thumbnail)
 
 该页显示每张表的引擎文件的导入过程。
 
@@ -271,7 +271,7 @@ TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.
 ## 管理任务
 单击标题栏上的 ⓘ 图标来管理当前及队列中的任务。
 
-![4.png](/res/session2/chapter2/lightning-in-action/4.png)
+![图片](https://uploader.shimo.im/f/iwmHI3H8xSMwmYji.png!thumbnail)
 
 每个任务都是依据提交时间来标记。点击该任务将显示 JSON 格式的配置文件。
 
@@ -311,7 +311,7 @@ tbl-name = "table-pattern-4"
 
 例子：数据源存在如下库表信息：
 
-| 库名 | 表名 | 
+| 库名   | 表名   | 
 |:----:|:----:|
 | logs | messages_2016，messages_2017，messages_2018 | 
 | forum | messages | 
@@ -343,18 +343,27 @@ tbl-name = "~^messages.*"
 db-name = "~^forum.*"
 tbl-name = "messages"
 ```
-结果：
-| 库名   | 结果   | 表名   | 结果   | 
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
-|   logs   | 导入（规则 B）   | messages_2016   | 略过（规则 E）   | 
-|    |    | messages_2017   | 略过（规则 E）   | 
-|    |    | messages_2018   | 导入（规则 D）（不会考虑规则 E）   | 
-| forum   | 导入（规则 B）   | users   | 略过（do-tables 不为空，且没有匹配的项目）   | 
-|    |    | messages   | 导入（规则 F）（不会考虑规则 E）   | 
-| forum_backup_2016   | 略过（规则 C）   | messages   | 略过（数据库已被剔除）   | 
-| forum_backup_2017   | 略过（规则 C）   | messages   | 略过（数据库已被剔除）   | 
-| forum_backup_2018   | 导入（规则 A）（忽略规则 C）   | messages   | 导入（规则 F）（不会考虑规则 E）   | 
-| admin   | 略过（do-dbs 不为空，且没有匹配的项目）   | secrets   | 略过（数据库已被剔除）   | 
+首先进行库过滤：
+| 数据库 | 结果 | 
+|:----:|:----:|
+| `logs` | 导入（规则 B） | 
+| `forum` | 导入（规则 B） | 
+| `forum_backup_2016` | 略过（规则 C） | 
+| `forum_backup_2017 | 略过（规则 C） | 
+| `forum_backup_2018 | 导入（规则 A）（不会考虑规则 C） | 
+| `admin` | 略过（do-dbs 不为空，且没有匹配的项目 | 
+
+再进行表过滤：
+
+| 表 | 结果 | 
+|:----:|:----:|
+| `logs`.`messages_2016`，`logs`.`messages_2017` | 略过（规则 E） | 
+| `logs`.`messages_2018` | 导入（规则 D）（不会考虑规则 E） | 
+| `forum`.`users` | 略过（do-tables 不为空，且没有匹配的项目） | 
+| `forum`.`messages` | 导入（规则 F）（不会考虑规则 E）   | 
+| `forum_backup_2016`.`messages`forum_backup_2017`.`messages | 略过（数据库已被剔除） | 
+| `forum_backup_2018`.`message | 导入（规则 F）（不会考虑规则 E） | 
+| `admin`.`secrets` | 略过（数据库已被剔除） | 
 
 # 断点续传
 在数据量很大的迁移时，数据导入时间较长，长时间运行的进程有可能异常中断。若此时每次重启都从头开始导入， 会浪费大量时间。Lightning断点续传功能可以实现重启时仍然接着之前的进度继续工作。
@@ -932,7 +941,7 @@ scrape_configs:
 如果使用其他方式部署 TiDB Lightning，需先导入[面板的 JSON 文件](https://raw.githubusercontent.com/pingcap/tidb-ansible/master/scripts/lightning.json)。
 
 ### 第一行：速度面板
-![5.png](/res/session2/chapter2/lightning-in-action/5.png)
+![图片](https://uploader.shimo.im/f/tH1DJHs7VXQIYUwY.png!thumbnail)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
@@ -943,7 +952,7 @@ scrape_configs:
 有时导入速度会降到 0，这是为了平衡其他部分的速度，属于正常现象。
 
 ### 第二行：进度面板
-![6.png](/res/session2/chapter2/lightning-in-action/6.png)
+![图片](https://uploader.shimo.im/f/pDjEIfHwnDYW48pF.png!thumbnail)
 
 | 面板名称   | 描述   | 
 |:----|:----|
@@ -952,7 +961,7 @@ scrape_configs:
 | Failures   | 导入失败的表的数量以及故障点，通常为空   | 
 
 ### 第三行：资源使用面板
-![7.png](/res/session2/chapter2/lightning-in-action/7.png)
+![图片](https://uploader.shimo.im/f/WFTgv9E3FXE57MLW.png!thumbnail)
 
 | 面板名称   | 描述   | 
 |:----|:----|
@@ -961,7 +970,7 @@ scrape_configs:
 | CPU%   | 每个服务使用的逻辑 CPU 数量   | 
 
 ### 第四行：配额使用面板
-![8.png](/res/session2/chapter2/lightning-in-action/8.png)
+![图片](https://uploader.shimo.im/f/22LJPH6FFyUaaftG.png!thumbnail)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
@@ -974,7 +983,7 @@ scrape_configs:
 | External resources   | Importer Engines   | 打开的引擎文件数量，不应超过 max-open-engines 的设置   | 
 
 ### 第五行：读取速度面板
-![9.png](/res/session2/chapter2/lightning-in-action/9.png)
+![图片](https://uploader.shimo.im/f/6JDPxDZCLRgjDYKf.png!thumbnail)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
@@ -986,7 +995,7 @@ scrape_configs:
 如果上述项的持续时间过长，则表示 TiDB Lightning 使用的磁盘运行太慢或 I/O 太忙。
 
 ### 第六行：存储空间面板
-![10.png](/res/session2/chapter2/lightning-in-action/10.png)
+![图片](https://uploader.shimo.im/f/PEvm3NeorQwk9i5x.png!thumbnail)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
@@ -999,7 +1008,7 @@ scrape_configs:
 | Total bytes   | storage_size/3   | TiKV 集群占用的存储空间大小的 1/3（3 为默认的副本数量）   | 
 
 ### 第七行：导入速度面板
-![11.png](/res/session2/chapter2/lightning-in-action/11.png)
+![图片](https://uploader.shimo.im/f/GMyoMMdyZrAJtYLU.png!thumbnail)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
