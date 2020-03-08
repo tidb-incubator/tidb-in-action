@@ -22,11 +22,11 @@ Talent Plan 是为社区提供的学习资料，也在社区的建议和反馈�
 
 这是专门为零基础开源爱好者准备的全新课程系列，我们希望通过这个系列课程的学习，即使是技术小白也能快速了解开源是什么、不同开源软件许可协议的差异、知名开源基金会（Linux、Apache、CNCF 等）的运作方式以及开源社区运营的基础知识，快速掌握参与开源项目的小技巧。
 
-这个课程系列目前仍在小范围测试阶段，如果你对于这个课程感兴趣，欢迎通过 [tidbcommunity slack channel #wg-talent-plan-courses](https://join.slack.com/t/tidbcommunity/shared_invite/enQtNzc0MzI4ODExMDc4LWYwYmIzMjZkYzJiNDUxMmZlN2FiMGJkZjAyMzQ5NGU0NGY0NzI3NTYwMjAyNGQ1N2I2ZjAxNzc1OGUwYWM0NzE) 与我们取得联系。
+这个课程系列目前仍在小范围测试阶段，如果你对于这个课程感兴趣，欢迎通过 [参与通道](#如何参与-talent-plan) 与我们取得联系。
 
 #### Programming Language 课程系列
 
-这个课程系列中将逐步对当下常用的编程语言学习课程进行整合，包括但不限于 Go 语言、Rust 语言、C++、Python 等。
+这个课程系列中将逐步对当下常用的编程语言学习课程进行整合，包括但不限于 Go、Rust、C++、Python 等。
 
 需要特别介绍的是由 Rust 核心作者 Brian Anderson 精心设计的 Rust 学习课程—— [Practical Networked Applications in Rust](https://github.com/pingcap/talent-plan/tree/master/rust)，通过这部分课程的学习，你将能够独立创建一个基于 Rust 语言的 Key-Value 数据库。
 
@@ -44,7 +44,7 @@ TinySQL 几乎涵盖了分布式数据库 SQL 层最重要的部分，课程介�
 * 然后关注于一个只读 SQL 的执行，从 Parser 开始解析语义，到执行器如何执行语义，再去了解优化器如何选出最优的执行计划；
 * 最后关注于那些改变数据状态的 SQL（包括 DML 以及 DDL），以及如何处理它们和只读语句之间的相互影响。
 
-TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/talent-plan/tree/master/dss) 课程，它同样受著名的 MIT 6.824 所启发，但这次将更加接近 TiKV 的实现，引入调度相关逻辑，学员可以从 0 到 1 实现一个完整可用的分布式 KV 服务。课程主要分为四个部分：
+TinyKV 类似已有的 [Distributed Systems in Rust](https://github.com/pingcap/talent-plan/tree/master/dss) 课程，它同样受著名的 MIT 6.824 所启发，但这次将更加接近 TiKV 的实现，引入调度相关逻辑，学员可以从 0 到 1 实现一个完整可用的分布式 KV 服务。课程主要分为四个部分：
 
 * LAB1: 实现单机 KV server
 * LAB2: 基于 Raft 实现多副本高可用 KV server
@@ -53,29 +53,35 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 
 通过 TinyKV 课程的学习，你将会从实践中对 Raft 协议，Percolator 分布式事务模型有一个更深刻的理解。同时，在实现 TinyKV 的过程中也有助于了解 TiDB + TiKV + PD 的实际框架，之后深入研究 TiDB/TiKV/PD 的源码会更加游刃有余。
 
-目前，**全新设计的 TinySQL 和 TinyKV 课程已经基本实现了一个可用的课程框架和相关测试，接下来会进行进一步的优化调整，同时课程材料也在紧锣密鼓地进行编写中**。如果你对于这个课程感兴趣，欢迎通过 [tidbcommunity slack channel #wg-talent-plan-courses](https://join.slack.com/t/tidbcommunity/shared_invite/enQtNzc0MzI4ODExMDc4LWYwYmIzMjZkYzJiNDUxMmZlN2FiMGJkZjAyMzQ5NGU0NGY0NzI3NTYwMjAyNGQ1N2I2ZjAxNzc1OGUwYWM0NzE) 与我们取得联系。
+目前，**全新设计的 TinySQL 和 TinyKV 课程已经基本实现了一个可用的课程框架和相关测试，接下来会进行进一步的优化调整，同时课程材料也在紧锣密鼓地进行编写中**。如果你对于这个课程感兴趣，欢迎通过 [参与通道](#如何参与-talent-plan) 与我们取得联系。
 
 #### Deep Dive into TiDB Ecosystem 课程系列
 
 这个课程系列将深入解读 TiDB 生态项目内部设计原理，TiDB、TiKV、Cloud TiDB 深度原理解析会逐步呈现在大家面前。
 
-### 学习路径
+### 线下实训——Talent Challenge Program
 
-#### 路径 1: Distributed Storage Engineer
+线上课程成绩优秀的小伙伴将会被邀请参与线下实训项目，实训项目以小组方式进行，每个小组选择一个与 TiDB 生态系统相关的实训项目，在 1 个月左右的时间里通力协作完成项目并进行最终答辩，答辩通过的同学将获得专属 **PingCAP Talent Plan 结业证书**，线下实训期间表现优秀的还将有机会拿到 **PingCAP 校招/实习免面试绿色通道/Special Offer、 PingCAP/TiDB 全球 Meetup 的邀请函**等。
+
+截止目前，线下实训已成功举办 4 期，累计线下学员数 41 人，累计覆盖 10 所高校，38 名同学顺利结业。
+
+## 学习路径
+
+### 路径 1: Distributed Storage Engineer
 
 如果你想要成为一名分布式存储工程师，可以选择以下课程组合：
 
 * Programming Language: "Practical Networked Applications in Rust"
 * Infrastructure Systems: "Distributed Key-Value Database Internals" &"Distributed System in Rust"
 
-#### 路径 2: Distributed Relational Database Engineer
+### 路径 2: Distributed Relational Database Engineer
 
 如果你想要成为一名分布式关系型数据库工程师，可以选择以下课程组合：
 
 * Programming Language: "A Tour of Golang"
 * Infrastructure Systems: "Distributed Relational Database Internals"
 
-#### 路径 3: 开源社区运营
+### 路径 3: 开源社区运营
 
 如果你对开源社区运营感兴趣，可以选择：
 
@@ -84,13 +90,8 @@ TinyKV 类似已有的 [Distributed System in Rust](https://github.com/pingcap/t
 
 除了以上学习路径，你也可以结合自己的需求，将上述课程自由组合，挖掘新的学习路径。
 
-### 线下实训——Talent Challenge Program
 
-线上课程成绩优秀的小伙伴将会被邀请参与线下实训项目，实训项目以小组方式进行，每个小组选择一个与 TiDB 生态系统相关的实训项目，在 1 个月左右的时间里通力协作完成项目并进行最终答辩，答辩通过的同学将获得专属 **PingCAP Talent Plan 结业证书**，线下实训期间表现优秀的还将有机会拿到 **PingCAP 校招/实习免面试绿色通道/Special Offer、 PingCAP/TiDB 全球 Meetup 的邀请函**等。
-
-截止目前，线下实训已成功举办 4 期，累计线下学员数 41 人，累计覆盖 10 所高校，38 名同学顺利结业。
-
-**学员们说**
+## 学员们说
 
 > “我超级喜欢 PingCAP 的氛围还有培训的方式。这次培训从语言和数据库理论学习到跟进最新论文，再到动手实操小 Demo，了解 TiDB 各个部分实现原理以及最后阅读分析 TiDB 各个模块的代码，丰富的课程让我对数据库的理解又加深了一层。希望自己以后的研究东西能够贴近到具体的场景和系统去发现问题，并把自己的研究成果落地。我也非常期待 PingCAP Global Meetup 之旅和各路大牛交流。其实，现在内心还没平复下来，这次来北京收获太多了，现在话都组织不好了。” ——兰海（第一期优秀学员）
 
