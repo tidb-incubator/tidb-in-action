@@ -81,10 +81,6 @@ metrics_schema> desc select * from tidb_query_duration where value is not null a
 
 如果 SQL 的 `Where` 中没有 time 条件，默认会查询最近 10 分钟的监控数据。 
 
-
-
-
-
 ### session 变量
 
 和监控表查询相关的 2 个 session 变量，可以通过修改session的变量来调整监控查询的默认行为，相关参数如下：
