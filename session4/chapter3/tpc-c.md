@@ -26,7 +26,7 @@ TPC-C 是一个对 OLTP（联机交易处理）系统进行测试的规范，使
 * HISTORY 表中应有 W \* 10 \* 3000 条记录（每个客户一条交易历史）
 * ORDER 表中应有 W \* 10 \* 3000 条记录（每个地区 3000 个订单），并且最后生成的 900 个订单被添加到 NEW-ORDER 表中，每个订单随机生成 5 ~ 15 条 ORDER-LINE 记录。
 
-TPC-C 使用tpmC 值（Transactions per Minute）来衡量系统最大有效吞吐量（MQTh，Max Qualified Throughput），其中Transactions 以NewOrder Transaction 为准，即最终衡量单位为每分钟处理的新订单数。
+TPC-C 使用 tpmC 值（Transactions per Minute）来衡量系统最大有效吞吐量（MQTh，Max Qualified Throughput），其中 Transactions 以 NewOrder Transaction 为准，即最终衡量单位为每分钟处理的新订单数。
 
 ## 二、TIDB测试环境部署
 
