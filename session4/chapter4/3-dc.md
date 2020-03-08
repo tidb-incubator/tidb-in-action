@@ -168,7 +168,7 @@ TiDB-10  ansible_host=10.63.10.10  deploy_dir=/data/tidb_cluster/tidb
 TiDB-11  ansible_host=10.63.10.11  deploy_dir=/data/tidb_cluster/tidb 
 ```
 * TiKV Servers<br />
-设置基于tikv真实物理部署位置的label信息，方便PD进行全局管理和调度。
+设置基于TiKV真实物理部署位置的label信息，方便PD进行全局管理和调度。
 ```
 [tikv_servers]
 TiKV-30 ansible_host=10.63.10.30 deploy_dir=/data/tidb_cluster/tikv1 tikv_port=20171  labels="dc=1,rack=1,zone=1,host=30"
