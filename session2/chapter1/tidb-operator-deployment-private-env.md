@@ -1,17 +1,14 @@
 
 ### 软件版本要求如下：
-
 1. Docker CE 18.09.6
 2. Kubernetes v1.12.5+
 3. CentOS 7.6 以上，内核要求为 3.10.0-957 或之后版本
 
 ### 部署 Cloud TiDB 资源要求如下:
-
 1. 至少 3 台服务器可供使用，服务器采用万兆网卡
 2. 至少 6 个 PV 可供使用(3 PV 用于 TiKV 实例，分布于不同服务器；3 PV用于 PD 部署，分布于不同服务器)
 
 ### Linux 内核参数要求如下:
-
 net.core.somaxconn=32768
 vm.swappiness=0
 net.ipv4.tcp_syncookies=0
@@ -28,6 +25,5 @@ net.bridge.bridge-nf-call-arptables=1
 net.bridge.bridge-nf-call-ip6tables=1
 
 ### 其他 Linux 配置要求
-
 1. 将 Linux swap 关闭（永久关闭）
 2. 启动 irqbalance 服务
