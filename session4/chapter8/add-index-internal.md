@@ -15,5 +15,5 @@
   1. 客户端发送添加索引请求到TiDB，TiDB会检查表、索引等是否符合规范。
    2. 将添加索引请求转化成Job发送到添加索引的队列中（add index job queue）。
    3. TiDB会启动Worker，将Job从添加索引的队列中取出，并且写入到对应表信息中。
-   4. 这时候Worker从PD中获取需要添加表的所有region范围，并且默认分成256个子Job，并发的去扫region中的所有数据，根据生成索引信息。
+   4. 这时候Worker从PD中获取需要添加表的所有region范围，并且默认分成256个子Job，并发的去扫region中的所有数据，生成索引信息。
    5. 当所有子Job都完成之后，会将该Job放入 历史队列中（history ddl job）。 
