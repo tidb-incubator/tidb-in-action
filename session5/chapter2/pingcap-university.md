@@ -4,7 +4,7 @@
 
 PingCAP University 目前提供两大人才培养项目：
 
-1. 培养具备独立运维和管理分布式关系型数据库 [TiDB 的 DBA 认证项目](#tidb-dba-认证项目简介)，即 PCTA（PingCAP Certificated TiDB Associate）— PingCAP 公司认证 TiDB 数据库专员和 PCTP（PingCAP Certified TiDB Professional）— PingCAP 公司认证 TiDB 数据库专家；
+1. 培养具备独立运维和管理分布式关系型数据库的 [TiDB DBA 认证项目](#tidb-dba-认证项目简介)，即 PCTA（PingCAP Certificated TiDB Associate）— PingCAP 公司认证 TiDB 数据库专员和 PCTP（PingCAP Certified TiDB Professional）— PingCAP 公司认证 TiDB 数据库专家；
 2. 培养独立开发 TiDB 生态细分模块能力的 [Talent Plan 项目](./talent-plan.md)。
 
 PingCAP 讲师团队均来自 PingCAP 官方的资深解决方案架构师、核心技术研发工程师、高级 TiDB DBA 及 TiDB 官方认证讲师，具备专业的 TiDB 理论素养，拥有丰富的实战经验。
@@ -46,23 +46,6 @@ TiDB DBA 认证项目 2.0 课程框架见下图：
 ### 线上课程
 
 PingCAP University TiDB DBA 认证项目 [官方网校](https://university.pingcap.com/tidb-dba-courses/) 已正式上线，可免费进行线上基础课程 PCTA 的学习，有助于学员快速了解 TiDB 产品全貌。学员除了可以在线自主学习外，还可以参加 [在线学习打卡营](https://www.mikecrm.com/form.php#/builder?id=200430982&step=edit)，在讲师集中答疑中进行深入交流，优秀学员还可享受线下培训的奖励计划。
-
-线上课程包括的课程为：
-
-* 1.1 分布式数据库历史和发展趋势
-* 1.2 TiDB 架构原理
-* 2.1 TiDB 集群管理概述
-* 2.2 TiDB 集群管理实操
-* 3.1 TiDB 使用管理手册
-* 3.2 使用管理实操
-* 4.1 DM 安装部署实操
-* 4.2 TiDB Binlog 安装部署实操
-* 4.3 TiDB Lightning 安装部署实操
-* 5.1 TiDB 备份恢复
-* 6.1 TiDB 监控与告警
-* 7.1 TiDB 应用开发最佳实践
-* 7.2 TiDB 业务开发与优化 (二)
-* 7.3 TiDB Slow-Query 与优化思路
 
 ### 线下实训
 
