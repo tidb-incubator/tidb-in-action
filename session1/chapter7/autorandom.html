@@ -2821,7 +2821,89 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h2 id="74-autorandom">7.4 AutoRandom</h2>
+<p>AutoRandom &#x662F; TiDB 4.0 &#x63D0;&#x4F9B;&#x7684;&#x4E00;&#x79CD;&#x6269;&#x5C55;&#x8BED;&#x6CD5;&#xFF0C;&#x7528;&#x4E8E;&#x89E3;&#x51B3;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x4E3B;&#x952E;&#x901A;&#x8FC7; AutoIncrement &#x5C5E;&#x6027;&#x9690;&#x5F0F;&#x5206;&#x914D; ID &#x65F6;&#x7684;&#x5199;&#x70ED;&#x70B9;&#x95EE;&#x9898;&#x3002;</p>
+<h3 id="741-autorandom-&#x529F;&#x80FD;&#x4ECB;&#x7ECD;">7.4.1 AutoRandom &#x529F;&#x80FD;&#x4ECB;&#x7ECD;</h3>
+<p>&#x5728;&#x524D;&#x9762;&#x7684;&#x7AE0;&#x8282;&#x63D0;&#x5230;&#x8FC7;&#xFF0C;TiDB &#x7684;&#x6BCF;&#x4E00;&#x884C;&#x6570;&#x636E;&#x90FD;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x9690;&#x5F0F;&#x7684; <code>_tidb_rowid</code>&#x3002;<code>_tidb_rowid</code> &#x4F1A;&#x88AB;&#x7F16;&#x7801;&#x5230;&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x7684; Key &#x4E0A;&#xFF0C;&#x5728; TiKV &#x4E2D;&#xFF0C;&#x8FD9;&#x51B3;&#x5B9A;&#x4E86;&#x6570;&#x636E;&#x5728; TiKV &#x4E2D;&#x7684; Region &#x4F4D;&#x7F6E;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8868;&#x7684;&#x4E3B;&#x952E;&#x4E3A;&#x6574;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x5219; TiDB &#x4F1A;&#x628A;&#x8868;&#x7684;&#x4E3B;&#x952E;&#x6620;&#x5C04;&#x4E3A; <code>_tidb_rowid</code>&#xFF0C;&#x5373;&#x4F7F;&#x7528;&#x201C;&#x4E3B;&#x952E;&#x805A;&#x7C07;&#x7D22;&#x5F15;&#x201D;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5982;&#x679C;&#x8868;&#x4F7F;&#x7528;&#x4E86; <code>AUTO_INCREMENT</code> &#x6765;&#x4FDD;&#x8BC1;&#x4E3B;&#x952E;&#x552F;&#x4E00;&#x6027;&#xFF08;&#x4E0D;&#x9700;&#x8981;&#x8FDE;&#x7EED;&#x6216;&#x9012;&#x589E;&#xFF09;&#xFF0C;&#x6B64;&#x65F6;&#x4F1A;&#x9020;&#x6210;&#x4E3B;&#x952E;&#x7684;&#x70ED;&#x70B9;&#x95EE;&#x9898;&#xFF0C;&#x5E76;&#x65E0;&#x6CD5;&#x4F7F;&#x7528; <code>SHARD_ROW_ID_BITS</code> &#x6765;&#x6253;&#x6563;&#x70ED;&#x70B9;&#x3002;</p>
+<p>&#x8981;&#x89E3;&#x51B3;&#x4E0A;&#x8FF0;&#x70ED;&#x70B9;&#x95EE;&#x9898;&#xFF0C;&#x53EF;&#x4EE5;&#x5229;&#x7528; <code>AUTO_RANDOM</code> &#x5217;&#x5C5E;&#x6027;&#xFF0C;&#x5C06; <code>AUTO_INCREMENT</code> &#x6539;&#x4E3A; <code>AUTO_RANDOM</code>&#xFF0C;&#x63D2;&#x5165;&#x6570;&#x636E;&#x65F6;&#x8BA9; TiDB &#x81EA;&#x52A8;&#x4E3A;&#x6574;&#x578B;&#x4E3B;&#x952E;&#x5217;&#x5206;&#x914D;&#x4E00;&#x4E2A;&#x503C;&#xFF0C;&#x6D88;&#x9664;&#x884C; ID &#x7684;&#x8FDE;&#x7EED;&#x6027;&#xFF0C;&#x4ECE;&#x800C;&#x8FBE;&#x5230;&#x6253;&#x6563;&#x70ED;&#x70B9;&#x7684;&#x76EE;&#x7684;&#x3002;</p>
+<p>AutoRandom &#x63D0;&#x4F9B;&#x4EE5;&#x4E0B;&#x7684;&#x529F;&#x80FD;&#xFF1A;</p>
+<ul>
+<li>&#x552F;&#x4E00;&#x6027;&#xFF1A;TiDB &#x59CB;&#x7EC8;&#x4FDD;&#x6301;&#x586B;&#x5145;&#x6570;&#x636E;&#x5728;&#x8868;&#x8303;&#x56F4;&#x5185;&#x7684;&#x552F;&#x4E00;&#x6027;&#x3002;</li>
+<li>&#x9AD8;&#x6027;&#x80FD;&#xFF1A;TiDB &#x80FD;&#x591F;&#x4EE5;&#x8F83;&#x9AD8;&#x7684;&#x541E;&#x5410;&#x5206;&#x914D;&#x6570;&#x636E;&#xFF0C;&#x5E76;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x7684;&#x968F;&#x673A;&#x5206;&#x5E03;&#x4EE5;&#x914D;&#x5408; <code>PRE_SPLIT_REGION</code> &#x8BED;&#x6CD5;&#x5171;&#x540C;&#x4F7F;&#x7528;&#xFF0C;&#x907F;&#x514D;&#x5927;&#x91CF;&#x5199;&#x5165;&#x65F6;&#x7684;&#x5199;&#x70ED;&#x70B9;&#x95EE;&#x9898;&#x3002;</li>
+<li>&#x652F;&#x6301;&#x9690;&#x5F0F;&#x5206;&#x914D;&#x548C;&#x663E;&#x5F0F;&#x5199;&#x5165;&#xFF1A;&#x7C7B;&#x4F3C;&#x5217;&#x7684; AutoIncrement &#x5C5E;&#x6027;&#xFF0C;&#x5217;&#x7684;&#x503C;&#x65E2;&#x53EF;&#x4EE5;&#x7531; TiDB Server &#x81EA;&#x52A8;&#x5206;&#x914D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x7531;&#x5BA2;&#x6237;&#x7AEF;&#x76F4;&#x63A5;&#x6307;&#x5B9A;&#x5199;&#x5165;&#x3002;&#x8BE5;&#x9700;&#x6C42;&#x6765;&#x81EA;&#x4E8E;&#x4F7F;&#x7528; Binlog &#x8FDB;&#x884C;&#x96C6;&#x7FA4;&#x95F4;&#x540C;&#x6B65;&#x65F6;&#xFF0C;&#x4FDD;&#x8BC1;&#x4E0A;&#x4E0B;&#x6E38;&#x6570;&#x636E;&#x59CB;&#x7EC8;&#x4E00;&#x81F4;&#x3002;</li>
+</ul>
+<h3 id="742-autorandom-&#x8BED;&#x6CD5;&#x4ECB;&#x7ECD;">7.4.2 AutoRandom &#x8BED;&#x6CD5;&#x4ECB;&#x7ECD;</h3>
+<p>&#x5728;&#x5EFA;&#x8868;&#x65F6;&#xFF0C;<code>AUTO_RANDOM</code> &#x5173;&#x952E;&#x5B57;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x5217;&#x5C5E;&#x6027;&#xFF0C;&#x6307;&#x5B9A;&#x5728; TiDB &#x4E3B;&#x952E;&#x5217;&#x4E0A;&#x3002;TiDB 4.0 &#x4E2D;&#xFF0C;&#x5217;&#x5C5E;&#x6027;&#x8BED;&#x6CD5;&#x5B9A;&#x4E49;&#x88AB;&#x66F4;&#x65B0;&#x4E3A;&#xFF1A;</p>
+<pre><code class="lang-SQL">column_definition:
+    data_type [NOT NULL | NULL] [DEFAULT default_value]
+      [AUTO_INCREMENT | AUTO_RANDOM [(length)]]
+      [UNIQUE [KEY] | [PRIMARY] KEY]
+      [COMMENT &apos;string&apos;]
+      [reference_definition]
+</code></pre>
+<p>&#x6CE8;&#x610F;&#xFF0C;AutoRandom &#x4EC5;&#x652F;&#x6301;&#x4E3B;&#x952E;&#x5217;&#xFF0C;&#x552F;&#x4E00;&#x7D22;&#x5F15;&#x5217;&#x5C1A;&#x4E0D;&#x652F;&#x6301;&#xFF0C;&#x76EE;&#x524D;&#x4E5F;&#x6CA1;&#x6709;&#x652F;&#x6301;&#x8BA1;&#x5212;&#x3002;<code>AUTO_RANDOM</code> &#x5173;&#x952E;&#x5B57;&#x540E;&#x53EF;&#x4EE5;&#x6307;&#x5B9A; Shard Bits &#x6570;&#x91CF;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; 5&#x3002;</p>
+<h3 id="743-autorandom-&#x4F7F;&#x7528;&#x793A;&#x4F8B;">7.4.3 AutoRandom &#x4F7F;&#x7528;&#x793A;&#x4F8B;</h3>
+<p>&#x4F7F;&#x7528; AUTO_RANDOM &#x529F;&#x80FD;&#x524D;&#xFF0C;&#x987B;&#x5728; TiDB &#x914D;&#x7F6E;&#x6587;&#x4EF6; <code>experimental</code> &#x90E8;&#x5206;&#x8BBE;&#x7F6E; <code>allow-auto-random = true</code>&#x3002;&#x8BE5;&#x53C2;&#x6570;&#x8BE6;&#x60C5;&#x53EF;&#x53C2;&#x89C1; <a href="https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file#allow-auto-random" target="_blank">allow-auto-random</a>&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x9762;&#x8BED;&#x53E5;&#x5EFA;&#x7ACB;&#x7684;&#x8868;&#x4E3A;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-SQL">tidb&gt; create table t (a int primary key auto_random);
+</code></pre>
+<p>&#x6B64;&#x65F6;&#x518D;&#x6267;&#x884C;&#x5F62;&#x5982; INSERT INTO t(b) values... &#x7684; INSERT &#x8BED;&#x53E5;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-SQL">tidb&gt; insert into t values (), ();
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+tidb&gt; select * from t;
++-----------+
+| a         |
++-----------+
+| 201326593 |
+| 201326594 |
++-----------+
+2 rows in set (0.00 sec)
+
+tidb&gt; insert into t values (), ();
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+tidb&gt; select * from t;
++------------+
+| a          |
++------------+
+|  201326593 |
+|  201326594 |
+| 2080374787 |
+| 2080374788 |
++------------+
+4 rows in set (0.00 sec)
+
+tidb&gt; select last_insert_id();
++------------------+
+| last_insert_id() |
++------------------+
+|       2080374787 |
++------------------+
+1 row in set (0.00 sec)
+</code></pre>
+<p>&#x6CE8;&#x610F;&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x8BE5; INSERT &#x8BED;&#x53E5;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x6574;&#x578B;&#x4E3B;&#x952E;&#x5217;&#xFF08;a &#x5217;&#xFF09;&#x7684;&#x503C;&#xFF0C;TiDB &#x4F1A;&#x4E3A;&#x8BE5;&#x5217;&#x81EA;&#x52A8;&#x5206;&#x914D;&#x503C;&#x3002;&#x8BE5;&#x503C;&#x4E0D;&#x4FDD;&#x8BC1;&#x81EA;&#x589E;&#xFF0C;&#x4E0D;&#x4FDD;&#x8BC1;&#x8FDE;&#x7EED;&#xFF0C;&#x53EA;&#x4FDD;&#x8BC1;&#x552F;&#x4E00;&#xFF0C;&#x907F;&#x514D;&#x4E86;&#x8FDE;&#x7EED;&#x7684;&#x884C; ID &#x5E26;&#x6765;&#x7684;&#x70ED;&#x70B9;&#x95EE;&#x9898;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x8BE5; INSERT &#x8BED;&#x53E5;&#x663E;&#x5F0F;&#x6307;&#x5B9A;&#x4E86;&#x6574;&#x578B;&#x4E3B;&#x952E;&#x5217;&#x7684;&#x503C;&#xFF0C;&#x548C; AutoIncrement &#x5C5E;&#x6027;&#x7C7B;&#x4F3C;&#xFF0C;TiDB &#x4F1A;&#x4FDD;&#x5B58;&#x8BE5;&#x503C;&#x3002;</li>
+<li>&#x82E5;&#x5728;&#x5355;&#x6761; INSERT &#x8BED;&#x53E5;&#x4E2D;&#x5199;&#x5165;&#x591A;&#x4E2A;&#x503C;&#xFF0C;AutoRandom &#x5C5E;&#x6027;&#x4F1A;&#x4FDD;&#x8BC1;&#x5206;&#x914D; ID &#x7684;&#x8FDE;&#x7EED;&#x6027;&#xFF0C;&#x540C;&#x65F6; <code>LAST_INSERT_ID()</code> &#x8FD4;&#x56DE;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x914D;&#x7684;&#x503C;&#xFF0C;&#x8FD9;&#x4F7F;&#x5F97;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>LAST_INSERT_ID()</code> &#x7ED3;&#x679C;&#x63A8;&#x65AD;&#x51FA;&#x6240;&#x6709;&#x88AB;&#x5206;&#x914D;&#x7684; ID&#x3002; </li>
+</ul>
+<h3 id="745-autorandom-&#x4E0E;&#x5176;&#x5B83;&#x65B9;&#x6848;&#x7684;&#x6BD4;&#x8F83;">7.4.5 AutoRandom &#x4E0E;&#x5176;&#x5B83;&#x65B9;&#x6848;&#x7684;&#x6BD4;&#x8F83;</h3>
+<p>&#x4E0E; AutoRandom &#x76F8;&#x6BD4;&#xFF0C;TiDB &#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5176;&#x4ED6;&#x7684;&#x65B9;&#x5F0F;&#x907F;&#x514D;&#x4E3B;&#x952E;&#x81EA;&#x52A8;&#x5206;&#x914D;&#x65F6;&#x7684;&#x5199;&#x70ED;&#x70B9;&#x95EE;&#x9898;&#xFF1A;</p>
+<ul>
+<li><p>&#x4F7F;&#x7528; [alter-primary-key &#x914D;&#x7F6E;&#x9009;&#x9879;]<a href="https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key)&#x5173;&#x95ED;&#x4E3B;&#x952E;&#x805A;&#x7C07;&#x7D22;&#x5F15;&#xFF0C;&#x4F7F;&#x7528;" target="_blank">https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key)&#x5173;&#x95ED;&#x4E3B;&#x952E;&#x805A;&#x7C07;&#x7D22;&#x5F15;&#xFF0C;&#x4F7F;&#x7528;</a> AutoIncrement + <code>SHARD_ROW_ID_BITS</code>&#x3002;</p>
+<p>&#x5728;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x4E0B;&#xFF0C;&#x4E3B;&#x952E;&#x7D22;&#x5F15;&#x88AB;&#x5F53;&#x505A;&#x666E;&#x901A;&#x7684;&#x552F;&#x4E00;&#x7D22;&#x5F15;&#x5904;&#x7406;&#xFF0C;&#x4F7F;&#x5F97;&#x6570;&#x636E;&#x7684;&#x5199;&#x5165;&#x53EF;&#x4EE5;&#x7531; <code>SHARD_ROW_ID_BITS</code> &#x8BED;&#x6CD5;&#x6253;&#x6563;&#x907F;&#x514D;&#x70ED;&#x70B9;&#xFF0C;&#x4F46;&#x7F3A;&#x70B9;&#x5728;&#x4E8E;&#xFF0C;&#x4E3B;&#x952E;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#x7D22;&#x5F15;&#x5199;&#x5165;&#x7684;&#x70ED;&#x70B9;&#xFF0C;&#x540C;&#x65F6;&#x5728;&#x67E5;&#x8BE2;&#x65F6;&#xFF0C;&#x7531;&#x4E8E;&#x5173;&#x95ED;&#x4E86;&#x805A;&#x7C07;&#x7D22;&#x5F15;&#xFF0C;&#x9488;&#x5BF9;&#x4E3B;&#x952E;&#x7684;&#x67E5;&#x8BE2;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x989D;&#x5916;&#x7684;&#x56DE;&#x8868;&#x3002;</p>
+</li>
+<li><p>&#x5728;&#x4E3B;&#x952E;&#x6307;&#x5B9A; <code>UUID()</code> &#x51FD;&#x6570;&#x3002;</p>
+<p>&#x8FD9;&#x79CD;&#x505A;&#x6CD5;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x4E3A;&#x4E3B;&#x952E;&#x81EA;&#x52A8;&#x5206;&#x914D;&#x968F;&#x673A;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x548C;&#x4E3B;&#x952E;&#x4E0D;&#x5B58;&#x5728;&#x5199;&#x70ED;&#x70B9;&#x95EE;&#x9898;&#x3002;&#x4F46;&#x7F3A;&#x70B9;&#x5728;&#x4E8E; <code>UUID()</code> &#x5206;&#x914D;&#x7684;&#x662F;&#x5B57;&#x7B26;&#x4E32;&#x7C7B;&#x578B;&#x3002;TiDB &#x4E0D;&#x652F;&#x6301;&#x5B57;&#x7B26;&#x4E32;&#x7C7B;&#x578B;&#x4E3B;&#x952E;&#x7684;&#x805A;&#x7C07;&#x7D22;&#x5F15;&#xFF0C;&#x540C;&#x6837;&#x5E26;&#x6765;&#x4E3B;&#x952E;&#x67E5;&#x8BE2;&#x7684;&#x989D;&#x5916;&#x56DE;&#x8868;&#x3002;</p>
+</li>
+</ul>
+<p>&#x53C2;&#x8003;&#x6587;&#x732E;&#xFF1A;</p>
+<p>&#x53C2;&#x9605; <a href="../../reference/sql/attributes/auto-random.md"><code>AUTO_RANDOM</code> &#x7684;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;</a></p>
+
                                 
                                 </section>
                             
@@ -2864,7 +2946,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"7.4 Auto Random","level":"2.7.4","depth":2,"next":{"title":"7.5 Expression index","level":"2.7.5","depth":2,"path":"session1/chapter7/expression-index.md","ref":"session1/chapter7/expression-index.md","articles":[]},"previous":{"title":"7.3 Sequence","level":"2.7.3","depth":2,"path":"session1/chapter7/sequence.md","ref":"session1/chapter7/sequence.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter7/autorandom.md","mtime":"2020-03-08T06:11:04.772Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:11:42.830Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"7.4 Auto Random","category":"TiDB DDL","level":"2.7.4","depth":2,"next":{"title":"7.5 Expression index","level":"2.7.5","depth":2,"path":"session1/chapter7/expression-index.md","ref":"session1/chapter7/expression-index.md","articles":[]},"previous":{"title":"7.3 Sequence","level":"2.7.3","depth":2,"path":"session1/chapter7/sequence.md","ref":"session1/chapter7/sequence.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter7/autorandom.md","mtime":"2020-03-08T06:16:43.639Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:17:20.366Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
