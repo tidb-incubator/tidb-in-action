@@ -188,7 +188,7 @@
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
     * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
-    * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东 @谭仁刚
+    * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
     * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md) @胡盼盼
