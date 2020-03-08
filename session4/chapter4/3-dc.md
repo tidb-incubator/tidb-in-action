@@ -215,16 +215,14 @@ location_labels = ["dc","rack","zone","host"]
 
 + pd.yml中相关参数优化<br />
 文件路径：<tidb_ansible_path>/tidb-ansible/conf/pd.yml <br />
-需要在集群安装前进行设置。
-
+需要在集群安装前进行设置。<br />
 调整PD balance缓冲区大小，提高PD容忍度。
 ```
 schedule:
   tolerant-size-ratio: 20.0
 ```
 + DC3 TiKV网络优化<br />
-文件路径：<tidb_cluster_path>/tikv/conf/tikv.toml
-
+文件路径：<tidb_cluster_path>/tikv/conf/tikv.toml<br />
 修改此参数，拉长了异地副本参与选举的时间，尽量避免异地TiKV中的副本参与raft选举。建议在集群部署完毕后，为DC3的TiKV增加额外配置后重启DC3的TiKV。
 ```
 raftstore: 
