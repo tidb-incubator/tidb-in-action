@@ -11,9 +11,8 @@
     * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md) @[Qiannan](https://github.com/hsqlu)
     * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @[zhiqiangxu](https://github.com/zhiqiangxu)
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
-    * [4.1 空间均衡](session1/chapter4/region-balance.md)
-    * [4.2 负载均衡](session1/chapter4/load-balance.md)
-    * [4.3 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
+    * [4.1 调度概述](session1/chapter4/scheduling-overview.md)
+    * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
 * [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮
         <!--
         与 MySQL 兼容性对比
@@ -28,7 +27,6 @@
     * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md) @高海涛
     * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
     * [7.4 Auto Random](session1/chapter7/autorandom.md) @谢滕进 @王聪
-    * [7.5 Expression index](session1/chapter7/expression-index.md)
 * [8 Titan 简介与实战](session1/chapter8/titan-intro.md)
     * [8.1 Titan 原理介绍](session1/chapter8/titan-internal.md) @孙晓光
     * [8.2 在 TiDB 集群中开启 Titan](session1/chapter8/titan-in-action.md) @孙晓光
@@ -77,10 +75,10 @@
         * [1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南](session2/chapter1/tidb-operator-tools.md) @[程威](https://github.com/mikechengwei)
         * [1.2.8 TiDB-Operator 升级](session2/chapter1/tidb-operator-upgrade.md) @[程威](https://github.com/mikechengwei)
     * [1.3 集群扩容缩容](session2/chapter1/tidb-scale.md)
-        * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @黄靓
+        * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @[黄靓](https://github.com/vincent178)
         * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
     * [1.4 集群版本升级](session2/chapter1/tidb-upgrade.md)
-        * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md)
+        * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md) @[黄靓](https://github.com/vincent178)
         * [1.4.2 基于 TiDB-Operator 的集群滚动更新](session2/chapter1/tidb-operator-rolling-upgrade.md) @[宋歌](https://github.com/shonge)
     * [1.5 如何做动态配置修改](session2/chapter1/online-changing-config.md) @[宋歌](https://github.com/shonge)
 
@@ -109,19 +107,18 @@
     * [2.4 4.0 分布式导出工具 Dumpling](session2/chapter2/dumpling-intro.md)
         * [2.4.1 Dumpling 工作原理](session2/chapter2/dumpling-internal.md) @[我不叫大脸猫](https://github.com/qxhy123)
         * [2.4.2 Dumpling 实操指南](session2/chapter2/dumpling-in-action.md) @[我不叫大脸猫](https://github.com/qxhy123)
-
             <!--
             ;使用 Dumpling 导出数据
             -->
 
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
-* [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
+* [1 SQL 调优原理](session3/chapter1/optimization-guide.md) @[石壹笑](https://github.com/aierui)
     * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui)
-    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md)
-    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md)
-    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md)
-    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
+    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md) @[倪健](https://github.com/dapan3927)
+    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md) @[Qiannan](https://github.com/hsqlu)
+    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md) @[Qiannan](https://github.com/hsqlu)
+    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md) @[季朋](https://github.com/PengJi)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 识别集群热点和业务模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 分析 SQL 执行性能](session3/chapter2/statements.md) @李迅
@@ -166,7 +163,7 @@
         * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @[张雯](https://github.com/sandy20140407)
         * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈均-壹米滴答
     * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md) @王英杰
-    * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @汽车之家
+    * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @路斯勇 @张帆
     * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md) @Allen
     * [5.5 DB2 到 TiDB （CDC）](session4/chapter5/from-db2-to-tidb.md) @王新宇
     * [5.6 TiDB 到 TiDB（DATAX）](session4/chapter5/from-tidb-to-tidb-using-datax.md) @Jason
@@ -224,8 +221,11 @@
     * [2.4 Challenge Program](session5/chapter2/challenge-program.md) @张建
     * [2.5 PingCAP Incubator](session5/chapter2/pingcap-incubator.md) @姚维 @崔秋
     * [2.6 PingCAP University](session5/chapter2/pingcap-university.md) @彭琴
-    * [2.7 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
+    * [2.7 AskTUG](session5/chapter2/asktug.md) @张婵 @荣毅龙 @房晓乐 @彭琴
+    * [2.8 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
 
 ## 附录
 
 * [专用术语解释](appendix/tidb-term.md)
+
+

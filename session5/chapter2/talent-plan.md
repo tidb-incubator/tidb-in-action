@@ -10,7 +10,7 @@
 
 Talent Plan 是为社区提供的学习资料，也在社区的建议和反馈中不断优化成长。在社区小伙伴的共同努力下，Talent Plan 正在进行新一轮的升级，这是一个涵盖了开源协作、Rust 语言、分布式数据库、分布式系统、TiDB/TiKV 原理精讲等线上学习课程以及 TiDB 开源社区项目线下实训课程的更大的学习版图。课程框架见下图：
 
-![Talent Plan Framework](/res/session5/chapter2/talent-plan/talent-plan-framework.png)
+![Talent Plan Framework](/res/session5/chapter2/talent-plan/talent-plan-framework.jpg)
 
 ### 线上课程
 
