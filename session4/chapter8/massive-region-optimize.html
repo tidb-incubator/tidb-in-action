@@ -1,0 +1,2967 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>8.2.2 海量 Region 集群调优 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="other-tikv-common-config-optimize.html" />
+    
+    
+    <link rel="prev" href="threadpool-optimize.md" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../PREFACE.html">
+            
+                <a href="../../PREFACE.html">
+            
+                    
+                    推荐序
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第一部分 TiDB 原理和特性</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../../session1/chapter1/tidb-architecture.html">
+            
+                <a href="../../session1/chapter1/tidb-architecture.html">
+            
+                    
+                    1 TiDB 整体架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../../session1/chapter2/tidb-storage.html">
+            
+                <a href="../../session1/chapter2/tidb-storage.html">
+            
+                    
+                    2 说存储
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../../session1/chapter3/tidb-computing.html">
+            
+                <a href="../../session1/chapter3/tidb-computing.html">
+            
+                    
+                    3 谈计算
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="../../session1/chapter3/tidb-kv-to-relation.html">
+            
+                <a href="../../session1/chapter3/tidb-kv-to-relation.html">
+            
+                    
+                    3.1 关系模型到 Key-Value 模型的映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="../../session1/chapter3/tidb-metadata-management.html">
+            
+                <a href="../../session1/chapter3/tidb-metadata-management.html">
+            
+                    
+                    3.2 元信息管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="../../session1/chapter3/tidb-sql-layer-summary.html">
+            
+                <a href="../../session1/chapter3/tidb-sql-layer-summary.html">
+            
+                    
+                    3.3 SQL 层简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../../session1/chapter4/tidb-scheduling.html">
+            
+                <a href="../../session1/chapter4/tidb-scheduling.html">
+            
+                    
+                    4 讲调度
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.1" data-path="../../session1/chapter4/region-balance.html">
+            
+                <a href="../../session1/chapter4/region-balance.html">
+            
+                    
+                    4.1 空间均衡
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.2" data-path="../../session1/chapter4/load-balance.html">
+            
+                <a href="../../session1/chapter4/load-balance.html">
+            
+                    
+                    4.2 负载均衡
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.3" data-path="../../session1/chapter4/elastic-scheduling.html">
+            
+                <a href="../../session1/chapter4/elastic-scheduling.html">
+            
+                    
+                    4.3 弹性调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../../session1/chapter5/mysql-compatibility.html">
+            
+                <a href="../../session1/chapter5/mysql-compatibility.html">
+            
+                    
+                    5 TiDB 和 MySQL 的区别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="../../session1/chapter6/tidb-transaction-mode.html">
+            
+                <a href="../../session1/chapter6/tidb-transaction-mode.html">
+            
+                    
+                    6 TiDB 事务模型
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.6.1" data-path="../../session1/chapter6/optimistic-txn.html">
+            
+                <a href="../../session1/chapter6/optimistic-txn.html">
+            
+                    
+                    6.1 乐观事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.2" data-path="../../session1/chapter6/pessimistic-txn.html">
+            
+                <a href="../../session1/chapter6/pessimistic-txn.html">
+            
+                    
+                    6.2 悲观事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.3" data-path="../../session1/chapter6/big-txn-in-4.0.html">
+            
+                <a href="../../session1/chapter6/big-txn-in-4.0.html">
+            
+                    
+                    6.3 4.0 的大事务支持
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="../../session1/chapter7/tidb-ddl-intro.html">
+            
+                <a href="../../session1/chapter7/tidb-ddl-intro.html">
+            
+                    
+                    7 TiDB DDL
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.7.1" data-path="../../session1/chapter7/tidb-schema-design.html">
+            
+                <a href="../../session1/chapter7/tidb-schema-design.html">
+            
+                    
+                    7.1 表结构设计最佳实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.2" data-path="../../session1/chapter7/tidb-ddl-status.html">
+            
+                <a href="../../session1/chapter7/tidb-ddl-status.html">
+            
+                    
+                    7.2 如何查看 DDL 状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.3" data-path="../../session1/chapter7/sequence.html">
+            
+                <a href="../../session1/chapter7/sequence.html">
+            
+                    
+                    7.3 Sequence
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.4" data-path="../../session1/chapter7/autorandom.html">
+            
+                <a href="../../session1/chapter7/autorandom.html">
+            
+                    
+                    7.4 Auto Random
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.5" data-path="../../session1/chapter7/expression-index.html">
+            
+                <a href="../../session1/chapter7/expression-index.html">
+            
+                    
+                    7.5 Expression index
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="../../session1/chapter8/titan-intro.html">
+            
+                <a href="../../session1/chapter8/titan-intro.html">
+            
+                    
+                    8 Titan 简介与实战
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.8.1" data-path="../../session1/chapter8/titan-internal.html">
+            
+                <a href="../../session1/chapter8/titan-internal.html">
+            
+                    
+                    8.1 Titan 原理介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8.2" data-path="../../session1/chapter8/titan-in-action.html">
+            
+                <a href="../../session1/chapter8/titan-in-action.html">
+            
+                    
+                    8.2 在 TiDB 集群中开启 Titan
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="../../session1/chapter9/tiflash-intro.html">
+            
+                <a href="../../session1/chapter9/tiflash-intro.html">
+            
+                    
+                    9 TiFlash 简介与 HTAP 实战
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.9.1" data-path="../../session1/chapter9/tidb-htap.html">
+            
+                <a href="../../session1/chapter9/tidb-htap.html">
+            
+                    
+                    9.1 TiDB HTAP 的特点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9.2" data-path="../../session1/chapter9/tiflash-architecture.html">
+            
+                <a href="../../session1/chapter9/tiflash-architecture.html">
+            
+                    
+                    9.2 TiFlash 架构与原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9.3" data-path="../../session1/chapter9/tiflash-in-action.html">
+            
+                <a href="../../session1/chapter9/tiflash-in-action.html">
+            
+                    
+                    9.3 TiFlash 的使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="../../session1/chapter10/tidb-security.html">
+            
+                <a href="../../session1/chapter10/tidb-security.html">
+            
+                    
+                    10 TiDB 安全
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.10.1" data-path="../../session1/chapter10/privilege-management.html">
+            
+                <a href="../../session1/chapter10/privilege-management.html">
+            
+                    
+                    10.1 权限管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10.2" data-path="../../session1/chapter10/rbac.html">
+            
+                <a href="../../session1/chapter10/rbac.html">
+            
+                    
+                    10.2 RBAC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10.3" data-path="../../session1/chapter10/cert-management-data-encryption.html">
+            
+                <a href="../../session1/chapter10/cert-management-data-encryption.html">
+            
+                    
+                    10.3 证书管理与数据加密
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="../../session1/chapter11/tispark-intro.html">
+            
+                <a href="../../session1/chapter11/tispark-intro.html">
+            
+                    
+                    11 TiSpark 简介与实战
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.11.1" data-path="../../session1/chapter11/tispark-architecture.html">
+            
+                <a href="../../session1/chapter11/tispark-architecture.html">
+            
+                    
+                    11.1 TiSpark 架构与原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11.2" data-path="../../session1/chapter11/tispark-in-action.html">
+            
+                <a href="../../session1/chapter11/tispark-in-action.html">
+            
+                    
+                    11.2 TiSpark 的使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11.3" data-path="../../session1/chapter11/tispark-on-tiflash.html">
+            
+                <a href="../../session1/chapter11/tispark-on-tiflash.html">
+            
+                    
+                    11.3 TiSpark on TiFlash
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11.4" data-path="../../session1/chapter11/tispark-on-bigdata.html">
+            
+                <a href="../../session1/chapter11/tispark-on-bigdata.html">
+            
+                    
+                    11.4 TiSpark 结合大数据体系
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第二部分 系统安装部署与管理</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../../session2/chapter1/deployment-management.html">
+            
+                <a href="../../session2/chapter1/deployment-management.html">
+            
+                    
+                    1 部署安装 & 常规运维
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../session2/chapter1/tiup-tiops.html">
+            
+                <a href="../../session2/chapter1/tiup-tiops.html">
+            
+                    
+                    1.1 TiUP & TiOps
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1.1" data-path="../../session2/chapter1/tiup-intro.html">
+            
+                <a href="../../session2/chapter1/tiup-intro.html">
+            
+                    
+                    1.1.1 TiUP 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.1.2" data-path="../../session2/chapter1/tiup-playground.html">
+            
+                <a href="../../session2/chapter1/tiup-playground.html">
+            
+                    
+                    1.1.2 用 TiUP 部署本地测试环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.1.3" data-path="../../session2/chapter1/tiup-deployment.html">
+            
+                <a href="../../session2/chapter1/tiup-deployment.html">
+            
+                    
+                    1.1.3 用 TiUP 部署生产环境集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.1.4" data-path="../../session2/chapter1/tiops-intro.html">
+            
+                <a href="../../session2/chapter1/tiops-intro.html">
+            
+                    
+                    1.1.4 TiOps 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.1.5" data-path="../../session2/chapter1/tiops-deployment.html">
+            
+                <a href="../../session2/chapter1/tiops-deployment.html">
+            
+                    
+                    1.1.5 TiOps 部署生产环境集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2" data-path="../../session2/chapter1/tidb-on-k8s.html">
+            
+                <a href="../../session2/chapter1/tidb-on-k8s.html">
+            
+                    
+                    1.2 TiDB on Kubernetes
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.2.1" data-path="../../session2/chapter1/tidb-operator-intro.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-intro.html">
+            
+                    
+                    1.2.1 TiDB-Operator 简介及原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.2" data-path="../../session2/chapter1/tidb-operator-local-deployment.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-local-deployment.html">
+            
+                    
+                    1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3" data-path="../../session2/chapter1/tidb-operator-deployment.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment.html">
+            
+                    
+                    1.2.3 用 TiDB-Operator 部署生产环境集群
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.2.3.1" data-path="../../session2/chapter1/tidb-operator-deployment-public.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-public.html">
+            
+                    
+                    1.2.3.1 公有云部署
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.2.3.1.1" data-path="../../session2/chapter1/tidb-operator-deployment-public-eks.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-public-eks.html">
+            
+                    
+                    1.2.3.1.1 在 AWS EKS 上部署 TiDB 集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.1.2" data-path="../../session2/chapter1/tidb-operator-deployment-public-gke.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-public-gke.html">
+            
+                    
+                    1.2.3.1.2 在 GCP GKE 上部署 TiDB 集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.1.3" data-path="../../session2/chapter1/tidb-operator-deployment-public-ali.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-public-ali.html">
+            
+                    
+                    1.2.3.1.3 在阿里云上部署 TiDB 集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.1.4" data-path="../../session2/chapter1/tidb-operator-deployment-public-jdcloud.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-public-jdcloud.html">
+            
+                    
+                    1.2.3.1.4 在京东云上部署 TiDB 集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.2" data-path="../../session2/chapter1/tidb-operator-deployment-private.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-private.html">
+            
+                    
+                    1.2.3.2 私有云部署
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.2.3.2.1" data-path="../../session2/chapter1/tidb-operator-deployment-private-env.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-private-env.html">
+            
+                    
+                    1.2.3.2.1 集群环境、资源需求
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.2.2" data-path="../../session2/chapter1/tidb-operator-deployment-private-pv.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-private-pv.html">
+            
+                    
+                    1.2.3.2.2 PV 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.2.3" data-path="../../session2/chapter1/tidb-operator-deployment-private-operator.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-private-operator.html">
+            
+                    
+                    1.2.3.2.3 部署 TiDB Operator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.2.4" data-path="../../session2/chapter1/tidb-operator-deployment-private-tidb.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-private-tidb.html">
+            
+                    
+                    1.2.3.2.4 部署 TiDB 集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.2.5" data-path="../../session2/chapter1/tidb-operator-deployment-private-node.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-private-node.html">
+            
+                    
+                    1.2.3.2.5 节点维护
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.3.2.6" data-path="../../session2/chapter1/tidb-operator-deployment-private-delete.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-deployment-private-delete.html">
+            
+                    
+                    1.2.3.2.6 删除 TiDB 集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.4" data-path="../../session2/chapter1/tidb-operator-access-monitoring.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-access-monitoring.html">
+            
+                    
+                    1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.5" data-path="../../session2/chapter1/tidb-operator-br.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-br.html">
+            
+                    
+                    1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.6" data-path="../../session2/chapter1/tidb-operator-lightning.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-lightning.html">
+            
+                    
+                    1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.7" data-path="../../session2/chapter1/tidb-operator-tools.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-tools.html">
+            
+                    
+                    1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2.8" data-path="../../session2/chapter1/tidb-operator-upgrade.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-upgrade.html">
+            
+                    
+                    1.2.8 TiDB-Operator 升级
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.3" data-path="../../session2/chapter1/tidb-scale.html">
+            
+                <a href="../../session2/chapter1/tidb-scale.html">
+            
+                    
+                    1.3 集群扩容缩容
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.3.1" data-path="../../session2/chapter1/tiops-scale.html">
+            
+                <a href="../../session2/chapter1/tiops-scale.html">
+            
+                    
+                    1.3.1 基于 TiOps 的集群扩缩容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.3.2" data-path="../../session2/chapter1/tidb-operator-scale.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-scale.html">
+            
+                    
+                    1.3.2 基于 TiDB-Operator 的集群扩缩容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.4" data-path="../../session2/chapter1/tidb-upgrade.html">
+            
+                <a href="../../session2/chapter1/tidb-upgrade.html">
+            
+                    
+                    1.4 集群版本升级
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.4.1" data-path="../../session2/chapter1/tiops-rolling-upgrade.html">
+            
+                <a href="../../session2/chapter1/tiops-rolling-upgrade.html">
+            
+                    
+                    1.4.1 基于 TiOps 的集群滚动更新
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.4.2" data-path="../../session2/chapter1/tidb-operator-rolling-upgrade.html">
+            
+                <a href="../../session2/chapter1/tidb-operator-rolling-upgrade.html">
+            
+                    
+                    1.4.2 基于 TiDB-Operator 的集群滚动更新
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.5" data-path="../../session2/chapter1/online-changing-config.html">
+            
+                <a href="../../session2/chapter1/online-changing-config.html">
+            
+                    
+                    1.5 如何做动态配置修改
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../../session2/chapter2/tidb-backup-restore-tools.html">
+            
+                <a href="../../session2/chapter2/tidb-backup-restore-tools.html">
+            
+                    
+                    2 TiDB 备份恢复和导入导出工具
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../session2/chapter2/cdc-intro.html">
+            
+                <a href="../../session2/chapter2/cdc-intro.html">
+            
+                    
+                    2.1 4.0 增量数据订阅 CDC
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1.1" data-path="../../session2/chapter2/why-cdc.html">
+            
+                <a href="../../session2/chapter2/why-cdc.html">
+            
+                    
+                    2.1.1 CDC 解决什么问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.1.2" data-path="../../session2/chapter2/cdc-internal.html">
+            
+                <a href="../../session2/chapter2/cdc-internal.html">
+            
+                    
+                    2.1.2 CDC 工作原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.1.3" data-path="../../session2/chapter2/cdc-in-action.html">
+            
+                <a href="../../session2/chapter2/cdc-in-action.html">
+            
+                    
+                    2.1.3 CDC 实操指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../session2/chapter2/lightning-intro.html">
+            
+                <a href="../../session2/chapter2/lightning-intro.html">
+            
+                    
+                    2.2 TiDB 数据导入工具 Lightning
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.2.1" data-path="../../session2/chapter2/lightning-internal.html">
+            
+                <a href="../../session2/chapter2/lightning-internal.html">
+            
+                    
+                    2.2.1 Lightning 工作原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2.2" data-path="../../session2/chapter2/lightning-in-action.html">
+            
+                <a href="../../session2/chapter2/lightning-in-action.html">
+            
+                    
+                    2.2.2 Lightning 实操指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.3" data-path="../../session2/chapter2/br.html">
+            
+                <a href="../../session2/chapter2/br.html">
+            
+                    
+                    2.3 4.0 分布式备份恢复工具 BR
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.3.1" data-path="../../session2/chapter2/br-internal.html">
+            
+                <a href="../../session2/chapter2/br-internal.html">
+            
+                    
+                    2.3.1 BR 工作原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.3.2" data-path="../../session2/chapter2/br-in-action.html">
+            
+                <a href="../../session2/chapter2/br-in-action.html">
+            
+                    
+                    2.3.2 BR 实操指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.4" data-path="../../session2/chapter2/dumpling-intro.html">
+            
+                <a href="../../session2/chapter2/dumpling-intro.html">
+            
+                    
+                    2.4 4.0 分布式导出工具 Dumpling
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.4.1" data-path="../../session2/chapter2/dumpling-internal.html">
+            
+                <a href="../../session2/chapter2/dumpling-internal.html">
+            
+                    
+                    2.4.1 Dumpling 工作原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.4.2" data-path="../../session2/chapter2/dumpling-in-action.html">
+            
+                <a href="../../session2/chapter2/dumpling-in-action.html">
+            
+                    
+                    2.4.2 Dumpling 实操指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第三部分 TiDB Troubleshooting 指南与工具</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../../session3/chapter1/optimization-guide.html">
+            
+                <a href="../../session3/chapter1/optimization-guide.html">
+            
+                    
+                    1 SQL 调优原理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../../session3/chapter1/sql-plan.html">
+            
+                <a href="../../session3/chapter1/sql-plan.html">
+            
+                    
+                    1.1 TiDB 执行计划概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../../session3/chapter1/sql-plan-management.html">
+            
+                <a href="../../session3/chapter1/sql-plan-management.html">
+            
+                    
+                    1.2 SQL Plan Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../../session3/chapter2/tidb-dashboard-intro.html">
+            
+                <a href="../../session3/chapter2/tidb-dashboard-intro.html">
+            
+                    
+                    2 TiDB Dashboard
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.2.1" data-path="../../session3/chapter2/key-vis.html">
+            
+                <a href="../../session3/chapter2/key-vis.html">
+            
+                    
+                    2.1 识别集群热点和业务模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2.2" data-path="../../session3/chapter2/statements.html">
+            
+                <a href="../../session3/chapter2/statements.html">
+            
+                    
+                    2.2 分析 SQL 执行性能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2.3" data-path="../../session3/chapter2/diagnosis-report.html">
+            
+                <a href="../../session3/chapter2/diagnosis-report.html">
+            
+                    
+                    2.3 生成集群诊断报告
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2.4" data-path="../../session3/chapter2/log-export.html">
+            
+                <a href="../../session3/chapter2/log-export.html">
+            
+                    
+                    2.4 日志搜索和导出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2.5" data-path="../../session3/chapter2/profiling.html">
+            
+                <a href="../../session3/chapter2/profiling.html">
+            
+                    
+                    2.5 分析组件 CPU 消耗情况
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="../../session3/chapter3/sql-diagnosis.html">
+            
+                <a href="../../session3/chapter3/sql-diagnosis.html">
+            
+                    
+                    3 诊断系统表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.3.1" data-path="../../session3/chapter3/cluster-info-tables.html">
+            
+                <a href="../../session3/chapter3/cluster-info-tables.html">
+            
+                    
+                    3.1 集群信息表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3.2" data-path="../../session3/chapter3/metrics-schema.html">
+            
+                <a href="../../session3/chapter3/metrics-schema.html">
+            
+                    
+                    3.2 监控表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3.3" data-path="../../session3/chapter3/inspection-tables.html">
+            
+                <a href="../../session3/chapter3/inspection-tables.html">
+            
+                    
+                    3.3 诊断结果表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3.4" data-path="../../session3/chapter3/metrics-summary.html">
+            
+                <a href="../../session3/chapter3/metrics-summary.html">
+            
+                    
+                    3.4 监控汇总表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3.5" data-path="../../session3/chapter3/slow-query-table.md">
+            
+                <span>
+            
+                    
+                    3.5 SQL 慢查询内存表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3.6" data-path="../../session3/chapter3/processlist.html">
+            
+                <a href="../../session3/chapter3/processlist.html">
+            
+                    
+                    3.6 Processlist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3.7" data-path="../../session3/chapter3/statements.html">
+            
+                <a href="../../session3/chapter3/statements.html">
+            
+                    
+                    3.7 Statements
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="../../session3/chapter4/tidb-monitor-alert.html">
+            
+                <a href="../../session3/chapter4/tidb-monitor-alert.html">
+            
+                    
+                    4 TiDB 集群监控与报警
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.4.1" data-path="../../session3/chapter4/performance-map.html">
+            
+                <a href="../../session3/chapter4/performance-map.html">
+            
+                    
+                    4.1 性能调优地图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4.2" data-path="../../session3/chapter4/read-write-metrics.html">
+            
+                <a href="../../session3/chapter4/read-write-metrics.html">
+            
+                    
+                    4.2 TiDB 读写流程相关监控原理解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4.3" data-path="../../session3/chapter4/prometheus-guide.html">
+            
+                <a href="../../session3/chapter4/prometheus-guide.html">
+            
+                    
+                    4.4 Prometheus 使用指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.5" data-path="../../session3/chapter5/disaster-recovery.html">
+            
+                <a href="../../session3/chapter5/disaster-recovery.html">
+            
+                    
+                    5 灾难快速恢复
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.5.1" data-path="../../session3/chapter5/recover-data-gc.html">
+            
+                <a href="../../session3/chapter5/recover-data-gc.html">
+            
+                    
+                    5.1 利用 GC 快照读恢复数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.5.2" data-path="../../session3/chapter5/recover-statements.html">
+            
+                <a href="../../session3/chapter5/recover-statements.html">
+            
+                    
+                    5.2 利用 Recover 命令秒恢复误删表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.5.3" data-path="../../session3/chapter5/recover-quorum.html">
+            
+                <a href="../../session3/chapter5/recover-quorum.html">
+            
+                    
+                    5.3 多数副本丢失数据恢复指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.6" data-path="../../session3/chapter6/tidb-operator-trouble-shooting.html">
+            
+                <a href="../../session3/chapter6/tidb-operator-trouble-shooting.html">
+            
+                    
+                    6 TiDB-Operator Troubleshooting
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第四部分 TiDB 最佳实践</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter1/scenarios.html">
+            
+                <a href="../chapter1/scenarios.html">
+            
+                    
+                    1 适用场景介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="../chapter2/hardware-selection.html">
+            
+                <a href="../chapter2/hardware-selection.html">
+            
+                    
+                    2 硬件选型规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="../chapter3/common-benchmarks.html">
+            
+                <a href="../chapter3/common-benchmarks.html">
+            
+                    
+                    3 常见性能压测
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.3.1" data-path="../chapter3/sysbench.html">
+            
+                <a href="../chapter3/sysbench.html">
+            
+                    
+                    3.1 Sysbench 基准性能测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3.2" data-path="../chapter3/tpc-c.html">
+            
+                <a href="../chapter3/tpc-c.html">
+            
+                    
+                    3.2 TPC-C 基准性能测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="../chapter4/multi-data-center-solution.html">
+            
+                <a href="../chapter4/multi-data-center-solution.html">
+            
+                    
+                    4 跨数据中心方案
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.4.1" data-path="../chapter4/two-dc-binlog.html">
+            
+                <a href="../chapter4/two-dc-binlog.html">
+            
+                    
+                    4.1 两中心异步复制方案（binlog 复制）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4.2" data-path="../chapter4/two-dc-raft.html">
+            
+                <a href="../chapter4/two-dc-raft.html">
+            
+                    
+                    4.2 两中心同步复制方案（三副本 Raft）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4.3" data-path="../chapter4/3-dc.html">
+            
+                <a href="../chapter4/3-dc.html">
+            
+                    
+                    4.3 两地三中心
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4.4" data-path="../chapter4/cross-az-in-aws.html">
+            
+                <a href="../chapter4/cross-az-in-aws.html">
+            
+                    
+                    4.4 AWS 跨 AZ 部署 TiDB
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5" data-path="../chapter5/data-migration.html">
+            
+                <a href="../chapter5/data-migration.html">
+            
+                    
+                    5 数据迁移方案
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.5.1" data-path="../chapter5/from-mysql-to-tidb.html">
+            
+                <a href="../chapter5/from-mysql-to-tidb.html">
+            
+                    
+                    5.1 MySQL 到 TiDB （DM）
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.5.1.1" data-path="../chapter5/from-single-mysql-to-tidb.html">
+            
+                <a href="../chapter5/from-single-mysql-to-tidb.html">
+            
+                    
+                    5.1.1 DM 同步单机 MySQL 到 TiDB 的实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5.1.2" data-path="../chapter5/from-sharding-to-tidb.html">
+            
+                <a href="../chapter5/from-sharding-to-tidb.html">
+            
+                    
+                    5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5.2" data-path="../chapter5/from-oracle-to-tidb.html">
+            
+                <a href="../chapter5/from-oracle-to-tidb.html">
+            
+                    
+                    5.2 Oracle 到 TiDB （OGG）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5.3" data-path="../chapter5/from-sqlserver-to-tidb.html">
+            
+                <a href="../chapter5/from-sqlserver-to-tidb.html">
+            
+                    
+                    5.3 SqlServer 到 TiDB
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5.4" data-path="../chapter5/from-sqlserver-to-tidb-using-datax.html">
+            
+                <a href="../chapter5/from-sqlserver-to-tidb-using-datax.html">
+            
+                    
+                    5.4 SqlServer 到 TiDB（DATAX）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5.5" data-path="../chapter5/from-db2-to-tidb.html">
+            
+                <a href="../chapter5/from-db2-to-tidb.html">
+            
+                    
+                    5.5 DB2 到 TiDB （CDC）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5.6" data-path="../chapter5/from-tidb-to-tidb-using-datax.html">
+            
+                <a href="../chapter5/from-tidb-to-tidb-using-datax.html">
+            
+                    
+                    5.6 TiDB 到 TiDB（DATAX）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5.7" data-path="../chapter5/from-mongodb-to-tidb.html">
+            
+                <a href="../chapter5/from-mongodb-to-tidb.html">
+            
+                    
+                    5.7 Mongodb 迁移到 TiDB
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6" data-path="../chapter6/workload-adaptation-best-practices.html">
+            
+                <a href="../chapter6/workload-adaptation-best-practices.html">
+            
+                    
+                    6 业务适配最佳实践
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.6.1" data-path="../chapter6/application-dev-best-practices.html">
+            
+                <a href="../chapter6/application-dev-best-practices.html">
+            
+                    
+                    6.1 业务开发最佳实践
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.6.1.1" data-path="../chapter6/avoid-optimistic-lock-conflicts.html">
+            
+                <a href="../chapter6/avoid-optimistic-lock-conflicts.html">
+            
+                    
+                    6.1.1 如何避免乐观锁模式下事务冲突
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.1.2" data-path="../chapter6/transaction-statement-count-limit.html">
+            
+                <a href="../chapter6/transaction-statement-count-limit.html">
+            
+                    
+                    6.1.2 TiDB 中事务限制及应对方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.1.3" data-path="../chapter6/serial-number.html">
+            
+                <a href="../chapter6/serial-number.html">
+            
+                    
+                    6.1.3 高并发的唯一序列号生成方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.1.4" data-path="../chapter6/page-inaction.html">
+            
+                <a href="../chapter6/page-inaction.html">
+            
+                    
+                    6.1.4 一种高效分页批处理方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.1.5" data-path="../chapter6/tidb-hint.html">
+            
+                <a href="../chapter6/tidb-hint.html">
+            
+                    
+                    6.1.5 通过 hint 调整执行计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.2" data-path="../chapter6/sql-optimization-cases.html">
+            
+                <a href="../chapter6/sql-optimization-cases.html">
+            
+                    
+                    6.2 SQL 调优案例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.3" data-path="../chapter6/batch-tasks-best-practices.html">
+            
+                <a href="../chapter6/batch-tasks-best-practices.html">
+            
+                    
+                    6.3 TiDB + TiSpark 跑批最佳实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.4" data-path="../chapter6/partition-table-best-practices.html">
+            
+                <a href="../chapter6/partition-table-best-practices.html">
+            
+                    
+                    6.4 分区表实践及问题处理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.6.4.1" data-path="../chapter6/patition-table-info.html">
+            
+                <a href="../chapter6/patition-table-info.html">
+            
+                    
+                    6.4.1 TiDB分区表简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.4.2" data-path="../chapter6/patition-table-scenarios.html">
+            
+                <a href="../chapter6/patition-table-scenarios.html">
+            
+                    
+                    6.4.2 TiDB分区表使用场景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.4.3" data-path="../chapter6/partition-table-practices.html">
+            
+                <a href="../chapter6/partition-table-practices.html">
+            
+                    
+                    6.4.3 TiDB分区表问题处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.5" data-path="../chapter6/tidb-in-electric.html">
+            
+                <a href="../chapter6/tidb-in-electric.html">
+            
+                    
+                    6.5 TiDB 在电力行业的实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.6" data-path="../chapter6/tidb-in-enterprise-practices.html">
+            
+                <a href="../chapter6/tidb-in-enterprise-practices.html">
+            
+                    
+                    6.6 TiDB 在企业数据分级存储中的应用实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.7" data-path="../chapter6/tidb-with-hbase-es-druid.html">
+            
+                <a href="../chapter6/tidb-with-hbase-es-druid.html">
+            
+                    
+                    6.7 TiDB 与 HBase、ES、Druid 的数据交互实战
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.8" data-path="../chapter6/tidb-siku-grafana.html">
+            
+                <a href="../chapter6/tidb-siku-grafana.html">
+            
+                    
+                    6.8 TiDB 与可视化展现 Saiku、Grafana 的集成应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6.9" data-path="../chapter6/tidb-streaming-scheduler-tools.html">
+            
+                <a href="../chapter6/tidb-streaming-scheduler-tools.html">
+            
+                    
+                    6.9 流程调度工具与 TiSpark 的集成应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7" data-path="../chapter7/common-issues.html">
+            
+                <a href="../chapter7/common-issues.html">
+            
+                    
+                    7 常见问题处理思路
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.7.1" data-path="../chapter7/oncall-map.html">
+            
+                <a href="../chapter7/oncall-map.html">
+            
+                    
+                    7.1 Oncall 地图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7.2" data-path="../chapter7/hotspot-resolved.html">
+            
+                <a href="../chapter7/hotspot-resolved.html">
+            
+                    
+                    7.2 热点问题处理思路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7.3" data-path="../chapter7/tikv-is-busy.html">
+            
+                <a href="../chapter7/tikv-is-busy.html">
+            
+                    
+                    7.3 TiKV is busy 处理思路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7.4" data-path="../chapter7/tidb-oom.html">
+            
+                <a href="../chapter7/tidb-oom.html">
+            
+                    
+                    7.4 TiDB OOM 的常见原因
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.8" data-path="optimization-guide.html">
+            
+                <a href="optimization-guide.html">
+            
+                    
+                    8 TiDB 调优指南
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.8.1" data-path="tidb-common-config-optimize.html">
+            
+                <a href="tidb-common-config-optimize.html">
+            
+                    
+                    8.1 TiDB 常见配置优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.8.2" data-path="tikv-common-config-optimize.html">
+            
+                <a href="tikv-common-config-optimize.html">
+            
+                    
+                    8.2 TiKV 常见配置优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.8.2.1" data-path="threadpool-optimize.md">
+            
+                <span>
+            
+                    
+                    8.2.1 TiKV 线程池优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="5.8.2.2" data-path="massive-region-optimize.html">
+            
+                <a href="massive-region-optimize.html">
+            
+                    
+                    8.2.2 海量 Region 集群调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.8.2.3" data-path="other-tikv-common-config-optimize.html">
+            
+                <a href="other-tikv-common-config-optimize.html">
+            
+                    
+                    8.2.3 其他常见优化设置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5.8.3" data-path="add-index-optimization.html">
+            
+                <a href="add-index-optimization.html">
+            
+                    
+                    8.3 添加索引调优加速
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.8.3.1" data-path="add-index-internal.html">
+            
+                <a href="add-index-internal.html">
+            
+                    
+                    8.3.1 TiDB 增加索引原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.8.3.2" data-path="speedup-add-index.html">
+            
+                <a href="speedup-add-index.html">
+            
+                    
+                    8.3.2 动态调整新增索引速度
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第五部分 如何参与 TiDB 社区及周边生态</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    1 TiDB 开源社区历史及其现状
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../../session5/chapter1/a-brief-history-of-tidb.html">
+            
+                <a href="../../session5/chapter1/a-brief-history-of-tidb.html">
+            
+                    
+                    1.1 TiDB 开源社区现状及发展简史
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../../session5/chapter1/tidb-open-source-ecosystem.html">
+            
+                <a href="../../session5/chapter1/tidb-open-source-ecosystem.html">
+            
+                    
+                    1.2 TiDB 开源生态介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../../session5/chapter1/community-governance.html">
+            
+                <a href="../../session5/chapter1/community-governance.html">
+            
+                    
+                    1.3 TiDB 开源社区治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" >
+            
+                <span>
+            
+                    
+                    2 TiDB 开源生态
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.2.1" >
+            
+                <span>
+            
+                    
+                    2.1 社区重要活动介绍
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.2.1.1" data-path="../../session5/chapter2/devcon.html">
+            
+                <a href="../../session5/chapter2/devcon.html">
+            
+                    
+                    2.1.1 TiDB Devcon
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.1.2" data-path="../../session5/chapter2/techday.html">
+            
+                <a href="../../session5/chapter2/techday.html">
+            
+                    
+                    2.1.2 TiDB TechDay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.1.3" data-path="../../session5/chapter2/infra-meetup.html">
+            
+                <a href="../../session5/chapter2/infra-meetup.html">
+            
+                    
+                    2.1.3 Infra Meetup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.1.4" data-path="../../session5/chapter2/hackathon.html">
+            
+                <a href="../../session5/chapter2/hackathon.html">
+            
+                    
+                    2.1.4 TiDB Hackathon
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.1.5" data-path="../../session5/chapter2/tug-event.html">
+            
+                <a href="../../session5/chapter2/tug-event.html">
+            
+                    
+                    2.1.5 TUG 企业行
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.2" data-path="../../session5/chapter2/community-cooperations.html">
+            
+                <a href="../../session5/chapter2/community-cooperations.html">
+            
+                    
+                    2.2 社区重要合作开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.3" data-path="../../session5/chapter2/tidb-user-group.html">
+            
+                <a href="../../session5/chapter2/tidb-user-group.html">
+            
+                    
+                    2.3 TUG（TiDB User Group）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.4" data-path="../../session5/chapter2/talent-plan.html">
+            
+                <a href="../../session5/chapter2/talent-plan.html">
+            
+                    
+                    2.4 Talent Plan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.5" data-path="../../session5/chapter2/challenge-program.html">
+            
+                <a href="../../session5/chapter2/challenge-program.html">
+            
+                    
+                    2.5 Challenge Program
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.6" data-path="../../session5/chapter2/pingcap-incubator.html">
+            
+                <a href="../../session5/chapter2/pingcap-incubator.html">
+            
+                    
+                    2.6 PingCAP Incubator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.7" data-path="../../session5/chapter2/pingcap-university.html">
+            
+                <a href="../../session5/chapter2/pingcap-university.html">
+            
+                    
+                    2.7 PingCAP University
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2.8" data-path="../../session5/chapter2/contribution-map.html">
+            
+                <a href="../../session5/chapter2/contribution-map.html">
+            
+                    
+                    2.8 Contributor Map
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">附录</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="../../appendix/tidb-term.html">
+            
+                <a href="../../appendix/tidb-term.html">
+            
+                    
+                    专用术语解释
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >8.2.2 海量 Region 集群调优</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p>&#x5728; TiDB &#x7684;&#x67B6;&#x6784;&#x4E2D;&#xFF0C;&#x6240;&#x6709;&#x6570;&#x636E;&#x4EE5;&#x4E00;&#x5B9A; key range &#x88AB;&#x5207;&#x5206;&#x6210;&#x82E5;&#x5E72; Region &#x5206;&#x5E03;&#x5728;&#x591A;&#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x4E0A;&#x3002;&#x968F;&#x7740;&#x6570;&#x636E;&#x7684;&#x5199;&#x5165;&#xFF0C;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x4E2D;&#x4F1A;&#x4EA7;&#x751F;&#x4E0A;&#x767E;&#x4E07;&#x4E2A;&#x751A;&#x81F3;&#x5343;&#x4E07;&#x4E2A; Region&#x3002;&#x5355;&#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x4E0A;&#x4EA7;&#x751F;&#x8FC7;&#x591A;&#x7684; Region &#x4F1A;&#x7ED9;&#x96C6;&#x7FA4;&#x5E26;&#x6765;&#x8F83;&#x5927;&#x7684;&#x8D1F;&#x62C5;&#xFF0C;&#x5F71;&#x54CD;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x7684;&#x6027;&#x80FD;&#x8868;&#x73B0;&#x3002;</p>
+<p>&#x672C;&#x5C06;&#x4ECB;&#x7ECD; TiKV &#x6838;&#x5FC3;&#x6A21;&#x5757; Raftstore &#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#xFF0C;&#x6D77;&#x91CF; Region &#x5BFC;&#x81F4;&#x6027;&#x80FD;&#x95EE;&#x9898;&#x7684;&#x539F;&#x56E0;&#xFF0C;&#x4EE5;&#x53CA;&#x4F18;&#x5316;&#x6027;&#x80FD;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="raftstore-&#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;">Raftstore &#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;</h2>
+<p>&#x4E00;&#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x4E0A;&#x6709;&#x591A;&#x4E2A; Region&#x3002;Region &#x6D88;&#x606F;&#x662F;&#x901A;&#x8FC7; Raftstore &#x6A21;&#x5757;&#x9A71;&#x52A8; Raft &#x72B6;&#x6001;&#x673A;&#x6765;&#x5904;&#x7406;&#x7684;&#x3002;&#x8FD9;&#x4E9B;&#x6D88;&#x606F;&#x5305;&#x62EC; Region &#x4E0A;&#x8BFB;&#x5199;&#x8BF7;&#x6C42;&#x7684;&#x5904;&#x7406;&#x3001;Raft log &#x7684;&#x6301;&#x4E45;&#x5316;&#x548C;&#x590D;&#x5236;&#x3001;Raft &#x7684;&#x5FC3;&#x8DF3;&#x5904;&#x7406;&#x7B49;&#x3002;&#x4F46;&#x662F;&#xFF0C;Region &#x6570;&#x91CF;&#x589E;&#x591A;&#x4F1A;&#x5F71;&#x54CD;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x7684;&#x6027;&#x80FD;&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x91CA;&#x8FD9;&#x4E00;&#x70B9;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x4E86;&#x89E3; TiKV &#x7684;&#x6838;&#x5FC3;&#x6A21;&#x5757; Raftstore &#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x3002;</p>
+<p><img src="../../res/session4/chapter8/tikv-config-optimize/raft-process.png" alt="&#x56FE;&#x7247;"></p>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong>
+&#x8BE5;&#x56FE;&#x4EC5;&#x4E3A;&#x793A;&#x610F;&#xFF0C;&#x4E0D;&#x4EE3;&#x8868;&#x4EE3;&#x7801;&#x5C42;&#x9762;&#x7684;&#x5B9E;&#x9645;&#x7ED3;&#x6784;&#x3002;</p>
+</blockquote>
+<p>&#x4E0A;&#x56FE;&#x662F; Raftstore &#x5904;&#x7406;&#x6D41;&#x7A0B;&#x7684;&#x793A;&#x610F;&#x56FE;&#x3002;&#x5982;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x4ECE; TiDB &#x53D1;&#x6765;&#x7684;&#x8BF7;&#x6C42;&#x4F1A;&#x901A;&#x8FC7; gRPC &#x548C; storage &#x6A21;&#x5757;&#x53D8;&#x6210;&#x6700;&#x7EC8;&#x7684; KV &#x8BFB;&#x5199;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x88AB;&#x53D1;&#x5F80;&#x76F8;&#x5E94;&#x7684; Region&#xFF0C;&#x800C;&#x8FD9;&#x4E9B;&#x6D88;&#x606F;&#x5E76;&#x4E0D;&#x4F1A;&#x88AB;&#x7ACB;&#x5373;&#x5904;&#x7406;&#x800C;&#x662F;&#x88AB;&#x6682;&#x5B58;&#x4E0B;&#x6765;&#x3002;Raftstore &#x4F1A;&#x8F6E;&#x8BE2;&#x68C0;&#x67E5;&#x6BCF;&#x4E2A; Region &#x662F;&#x5426;&#x6709;&#x9700;&#x8981;&#x5904;&#x7406;&#x7684;&#x6D88;&#x606F;&#x3002;&#x5982;&#x679C; Region &#x6709;&#x9700;&#x8981;&#x5904;&#x7406;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x90A3;&#x4E48; Raftstore &#x4F1A;&#x9A71;&#x52A8; Raft &#x72B6;&#x6001;&#x673A;&#x53BB;&#x5904;&#x7406;&#x8FD9;&#x4E9B;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x6839;&#x636E;&#x8FD9;&#x4E9B;&#x6D88;&#x606F;&#x6240;&#x4EA7;&#x751F;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x66F4;&#x53BB;&#x8FDB;&#x884C;&#x540E;&#x7EED;&#x64CD;&#x4F5C;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5728;&#x6709;&#x5199;&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;Raft &#x72B6;&#x6001;&#x673A;&#x9700;&#x8981;&#x5C06;&#x65E5;&#x5FD7;&#x843D;&#x76D8;&#x5E76;&#x4E14;&#x5C06;&#x65E5;&#x5FD7;&#x53D1;&#x9001;&#x7ED9;&#x5176;&#x4ED6; Region &#x526F;&#x672C;&#xFF1B;&#x5728;&#x8FBE;&#x5230;&#x5FC3;&#x8DF3;&#x95F4;&#x9694;&#x65F6;&#xFF0C;Raft &#x72B6;&#x6001;&#x673A;&#x9700;&#x8981;&#x5C06;&#x5FC3;&#x8DF3;&#x4FE1;&#x606F;&#x53D1;&#x9001;&#x7ED9;&#x5176;&#x4ED6; Region &#x526F;&#x672C;&#x3002;</p>
+<h2 id="&#x6027;&#x80FD;&#x95EE;&#x9898;">&#x6027;&#x80FD;&#x95EE;&#x9898;</h2>
+<p>&#x4ECE; Raftstore &#x5904;&#x7406;&#x6D41;&#x7A0B;&#x793A;&#x610F;&#x56FE;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x9700;&#x8981;&#x4F9D;&#x6B21;&#x5904;&#x7406;&#x5404;&#x4E2A; Region &#x7684;&#x6D88;&#x606F;&#x3002;&#x90A3;&#x4E48;&#x5728; Region &#x6570;&#x91CF;&#x8F83;&#x591A;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;Raftstore &#x9700;&#x8981;&#x82B1;&#x8D39;&#x4E00;&#x4E9B;&#x65F6;&#x95F4;&#x53BB;&#x5904;&#x7406;&#x5927;&#x91CF; Region &#x7684;&#x5FC3;&#x8DF3;&#xFF0C;&#x4ECE;&#x800C;&#x5E26;&#x6765;&#x4E00;&#x4E9B;&#x5EF6;&#x8FDF;&#xFF0C;&#x5BFC;&#x81F4;&#x67D0;&#x4E9B;&#x8BFB;&#x5199;&#x8BF7;&#x6C42;&#x5F97;&#x4E0D;&#x5230;&#x53CA;&#x65F6;&#x5904;&#x7406;&#x3002;&#x5982;&#x679C;&#x8BFB;&#x5199;&#x538B;&#x529B;&#x8F83;&#x5927;&#xFF0C;Raftstore &#x7EBF;&#x7A0B;&#x7684; CPU &#x4F7F;&#x7528;&#x7387;&#x5BB9;&#x6613;&#x8FBE;&#x5230;&#x74F6;&#x9888;&#xFF0C;&#x5BFC;&#x81F4;&#x5EF6;&#x8FDF;&#x8FDB;&#x4E00;&#x6B65;&#x589E;&#x52A0;&#xFF0C;&#x8FDB;&#x800C;&#x5F71;&#x54CD;&#x6027;&#x80FD;&#x8868;&#x73B0;&#x3002;</p>
+<p>&#x901A;&#x5E38;&#x5728;&#x6709;&#x8D1F;&#x8F7D;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5982;&#x679C; Raftstore &#x7684; CPU &#x4F7F;&#x7528;&#x7387;&#x8FBE;&#x5230;&#x4E86; 85% &#x4EE5;&#x4E0A;&#xFF0C;&#x5373;&#x53EF;&#x89C6;&#x4E3A;&#x8FBE;&#x5230;&#x7E41;&#x5FD9;&#x72B6;&#x6001;&#x4E14;&#x6210;&#x4E3A;&#x4E86;&#x74F6;&#x9888;&#xFF0C;&#x540C;&#x65F6; propose wait duration &#x53EF;&#x80FD;&#x4F1A;&#x9AD8;&#x8FBE;&#x767E;&#x6BEB;&#x79D2;&#x7EA7;&#x522B;&#x3002;</p>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong>
+Raftstore &#x7684; CPU &#x4F7F;&#x7528;&#x7387;&#x662F;&#x6307;&#x5355;&#x7EBF;&#x7A0B;&#x7684;&#x60C5;&#x51B5;&#x3002;&#x5982;&#x679C;&#x662F;&#x591A;&#x7EBF;&#x7A0B; Raftstore&#xFF0C;&#x53EF;&#x7B49;&#x6BD4;&#x4F8B;&#x653E;&#x5927;&#x4F7F;&#x7528;&#x7387;&#x3002;
+&#x7531;&#x4E8E; Raftstore &#x7EBF;&#x7A0B;&#x4E2D;&#x6709; I/O &#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5; CPU &#x4F7F;&#x7528;&#x7387;&#x4E0D;&#x53EF;&#x80FD;&#x8FBE;&#x5230; 100%&#x3002;</p>
+<h3 id="&#x6027;&#x80FD;&#x76D1;&#x63A7;">&#x6027;&#x80FD;&#x76D1;&#x63A7;</h3>
+<p>&#x53EF;&#x5728; Grafana &#x7684; TiKV &#x9762;&#x677F;&#x4E0B;&#x67E5;&#x770B;&#x76F8;&#x5173;&#x7684;&#x76D1;&#x63A7; metrics&#xFF1A;</p>
+</blockquote>
+<p>Thread-CPU &#x4E0B;&#x7684; Raft store CPU</p>
+<p>&#x53C2;&#x8003;&#x503C;&#xFF1A;&#x4F4E;&#x4E8E; raftstore.store-pool-size * 85%&#x3002;</p>
+<ul>
+<li><img src="../../res/session4/chapter8/tikv-config-optimize/raft-store-cpu.png" alt="&#x56FE;&#x7247;"></li>
+</ul>
+<p>Raft Propose &#x4E0B;&#x7684; Propose wait duration</p>
+<p>Propose wait duration &#x662F;&#x4ECE;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x7ED9; Raftstore&#xFF0C;&#x5230; Raftstore &#x771F;&#x6B63;&#x5F00;&#x59CB;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#x4E4B;&#x95F4;&#x7684;&#x5EF6;&#x8FDF;&#x65F6;&#x95F4;&#x3002;&#x5982;&#x679C;&#x8BE5;&#x5EF6;&#x8FDF;&#x65F6;&#x95F4;&#x8F83;&#x957F;&#xFF0C;&#x8BF4;&#x660E; Raftstore &#x6BD4;&#x8F83;&#x7E41;&#x5FD9;&#x6216;&#x8005;&#x5904;&#x7406; append log &#x6BD4;&#x8F83;&#x8017;&#x65F6;&#x5BFC;&#x81F4; Raftstore &#x4E0D;&#x80FD;&#x53CA;&#x65F6;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#x3002;</p>
+<p>&#x53C2;&#x8003;&#x503C;&#xFF1A;&#x4F4E;&#x4E8E; 50-100ms&#x3002;</p>
+<ul>
+<li><p><img src="../../res/session4/chapter8/tikv-config-optimize/propose-wait-duration.png" alt="&#x56FE;&#x7247;"></p>
+<h2 id="&#x6027;&#x80FD;&#x4F18;&#x5316;&#x65B9;&#x6CD5;">&#x6027;&#x80FD;&#x4F18;&#x5316;&#x65B9;&#x6CD5;</h2>
+<p>&#x627E;&#x5230;&#x6027;&#x80FD;&#x95EE;&#x9898;&#x7684;&#x6839;&#x6E90;&#x540E;&#xFF0C;&#x53EF;&#x4ECE;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x65B9;&#x5411;&#x6765;&#x89E3;&#x51B3;&#x6027;&#x80FD;&#x95EE;&#x9898;&#xFF1A;</p>
+</li>
+<li><p>&#x51CF;&#x5C11;&#x5355;&#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x7684; Region &#x6570; </p>
+</li>
+<li>&#x51CF;&#x5C11;&#x5355;&#x4E2A; Region &#x7684;&#x6D88;&#x606F;&#x6570;<h3 id="&#x65B9;&#x6CD5;&#x4E00;&#xFF1A;&#x589E;&#x52A0;-tikv-&#x5B9E;&#x4F8B;">&#x65B9;&#x6CD5;&#x4E00;&#xFF1A;&#x589E;&#x52A0; TiKV &#x5B9E;&#x4F8B;</h3>
+&#x5982;&#x679C; I/O &#x8D44;&#x6E90;&#x548C; CPU &#x8D44;&#x6E90;&#x90FD;&#x6BD4;&#x8F83;&#x5145;&#x8DB3;&#xFF0C;&#x53EF;&#x5728;&#x5355;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x90E8;&#x7F72;&#x591A;&#x4E2A; TiKV &#x5B9E;&#x4F8B;&#xFF0C;&#x4EE5;&#x51CF;&#x5C11;&#x5355;&#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x4E0A;&#x7684; Region &#x4E2A;&#x6570;&#xFF1B;&#x6216;&#x8005;&#x589E;&#x52A0; TiKV &#x96C6;&#x7FA4;&#x7684;&#x673A;&#x5668;&#x6570;&#x3002;</li>
+</ul>
+<h3 id="&#x65B9;&#x6CD5;&#x4E8C;&#xFF1A;&#x8C03;&#x6574;-raft-base-tick-interval">&#x65B9;&#x6CD5;&#x4E8C;&#xFF1A;&#x8C03;&#x6574; raft-base-tick-interval</h3>
+<p>&#x9664;&#x4E86;&#x51CF;&#x5C11; Region &#x4E2A;&#x6570;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x51CF;&#x5C11; Region &#x5355;&#x4F4D;&#x65F6;&#x95F4;&#x5185;&#x7684;&#x6D88;&#x606F;&#x6570;&#x91CF;&#x6765;&#x51CF;&#x5C0F; Raftstore &#x7684;&#x538B;&#x529B;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5728; TiKV &#x914D;&#x7F6E;&#x4E2D;&#x9002;&#x5F53;&#x8C03;&#x5927; raft-base-tick-interval&#xFF1A;</p>
+<pre><code>[raftstore]
+raft-base-tick-interval = &quot;2s&quot;
+</code></pre><p>raft-base-tick-interval &#x662F; Raftstore &#x9A71;&#x52A8;&#x6BCF;&#x4E2A; Region &#x7684; Raft &#x72B6;&#x6001;&#x673A;&#x7684;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6BCF;&#x9694;&#x8BE5;&#x65F6;&#x957F;&#x5C31;&#x9700;&#x8981;&#x5411; Raft &#x72B6;&#x6001;&#x673A;&#x53D1;&#x9001;&#x4E00;&#x4E2A; tick &#x6D88;&#x606F;&#x3002;&#x589E;&#x52A0;&#x8BE5;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x51CF;&#x5C11; Raftstore &#x7684;&#x6D88;&#x606F;&#x6570;&#x91CF;&#x3002;
+&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x8BE5; tick &#x6D88;&#x606F;&#x7684;&#x95F4;&#x9694;&#x4E5F;&#x51B3;&#x5B9A;&#x4E86; election timeout &#x548C; heartbeat &#x7684;&#x95F4;&#x9694;&#x3002;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>raft-election-timeout = raft-base-tick-interval * raft-election-timeout-ticks
+raft-heartbeat-interval = raft-base-tick-interval * raft-heartbeat-ticks
+</code></pre><p>&#x5982;&#x679C; Region Follower &#x5728; raft-election-timeout &#x95F4;&#x9694;&#x5185;&#x672A;&#x6536;&#x5230;&#x6765;&#x81EA; Leader &#x7684;&#x5FC3;&#x8DF3;&#xFF0C;&#x5C31;&#x4F1A;&#x5224;&#x65AD; Leader &#x51FA;&#x73B0;&#x6545;&#x969C;&#x800C;&#x53D1;&#x8D77;&#x65B0;&#x7684;&#x9009;&#x4E3E;&#x3002;raft-heartbeat-interval &#x662F; Leader &#x5411; Follower &#x53D1;&#x9001;&#x5FC3;&#x8DF3;&#x7684;&#x95F4;&#x9694;&#xFF0C;&#x56E0;&#x6B64;&#x8C03;&#x5927; raft-base-tick-interval &#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x5355;&#x4F4D;&#x65F6;&#x95F4;&#x5185; Raft &#x53D1;&#x9001;&#x7684;&#x7F51;&#x7EDC;&#x6D88;&#x606F;&#xFF0C;&#x4F46;&#x4E5F;&#x4F1A;&#x8BA9; Raft &#x68C0;&#x6D4B;&#x5230; Leader &#x6545;&#x969C;&#x7684;&#x65F6;&#x95F4;&#x66F4;&#x957F;&#x3002;</p>
+<h3 id="&#x65B9;&#x6CD5;&#x4E09;&#xFF1A;&#x63D0;&#x9AD8;-raftstore-&#x5E76;&#x53D1;&#x6570;">&#x65B9;&#x6CD5;&#x4E09;&#xFF1A;&#x63D0;&#x9AD8; Raftstore &#x5E76;&#x53D1;&#x6570;</h3>
+<p>TiKV &#x9ED8;&#x8BA4;&#x5C06; raftstore.store-pool-size &#x914D;&#x7F6E;&#x4E3A; 2&#x3002;&#x5982;&#x679C; Raftstore &#x51FA;&#x73B0;&#x74F6;&#x9888;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x9002;&#x5F53;&#x8C03;&#x9AD8;&#x8BE5;&#x53C2;&#x6570;&#x503C;&#xFF0C;&#x4F46;&#x4E0D;&#x5EFA;&#x8BAE;&#x8BBE;&#x7F6E;&#x8FC7;&#x9AD8;&#x4EE5;&#x514D;&#x5F15;&#x5165;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x7EBF;&#x7A0B;&#x5207;&#x6362;&#x5F00;&#x9500;&#x3002;</p>
+<h3 id="&#x65B9;&#x6CD5;&#x56DB;&#xFF1A;&#x5F00;&#x542F;-hibernate-region-&#x529F;&#x80FD;">&#x65B9;&#x6CD5;&#x56DB;&#xFF1A;&#x5F00;&#x542F; Hibernate Region &#x529F;&#x80FD;</h3>
+<p>&#x5728;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x4E2D;&#xFF0C;&#x8BFB;&#x5199;&#x8BF7;&#x6C42;&#x5E76;&#x4E0D;&#x4F1A;&#x5747;&#x5300;&#x5206;&#x5E03;&#x5230;&#x6BCF;&#x4E2A; Region &#x4E0A;&#xFF0C;&#x800C;&#x662F;&#x96C6;&#x4E2D;&#x5728;&#x5C11;&#x6570;&#x7684; Region &#x4E0A;&#x3002;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x5C3D;&#x91CF;&#x51CF;&#x5C11;&#x6682;&#x65F6;&#x7A7A;&#x95F2;&#x7684; Region &#x7684;&#x6D88;&#x606F;&#x6570;&#x91CF;&#xFF0C;&#x8FD9;&#x4E5F;&#x5C31;&#x662F; Hibernate Region &#x7684;&#x529F;&#x80FD;&#x3002;&#x65E0;&#x5FC5;&#x8981;&#x65F6;&#x53EF;&#x4E0D;&#x8FDB;&#x884C; raft-base-tick&#xFF0C;&#x5373;&#x4E0D;&#x9A71;&#x52A8;&#x7A7A;&#x95F2; Region &#x7684; Raft &#x72B6;&#x6001;&#x673A;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4E0D;&#x4F1A;&#x89E6;&#x53D1;&#x8FD9;&#x4E9B; Region &#x7684; Raft &#x4EA7;&#x751F;&#x5FC3;&#x8DF3;&#x4FE1;&#x606F;&#xFF0C;&#x6781;&#x5927;&#x5730;&#x51CF;&#x5C0F;&#x4E86; Raftstore &#x7684;&#x5DE5;&#x4F5C;&#x8D1F;&#x62C5;&#x3002;</p>
+<p>&#x622A;&#x81F3; TiDB v4.0&#xFF0C;Hibernate Region &#x4ECD;&#x662F;&#x4E00;&#x4E2A;&#x5B9E;&#x9A8C;&#x529F;&#x80FD;&#xFF0C;&#x5728; <a href="https://github.com/tikv/tikv/tree/master" target="_blank">TiKV master</a> &#x5206;&#x652F;&#x4E0A;&#x5DF2;&#x7ECF;&#x9ED8;&#x8BA4;&#x5F00;&#x542F;&#x3002;&#x53EF;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x548C;&#x9700;&#x6C42;&#x6765;&#x5F00;&#x542F;&#x8BE5;&#x529F;&#x80FD;&#x3002;Hibernate Region &#x7684;&#x914D;&#x7F6E;&#x8BF4;&#x660E;&#x8BF7;&#x53C2;&#x8003;<a href="https://github.com/tikv/tikv/blob/master/docs/reference/configuration/raftstore-config.md#hibernate-region" target="_blank">&#x914D;&#x7F6E; Hibernate Region</a>&#x3002;</p>
+<h3 id="&#x65B9;&#x6CD5;&#x4E94;&#xFF1A;&#x5F00;&#x542F;-region-merge">&#x65B9;&#x6CD5;&#x4E94;&#xFF1A;&#x5F00;&#x542F; Region Merge</h3>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong>
+Region Merge &#x5728; TiDB v4.0 &#x4E2D;&#x9ED8;&#x8BA4;&#x5F00;&#x542F;&#x3002;</p>
+</blockquote>
+<p>&#x5F00;&#x542F; Region Merge &#x4E5F;&#x80FD;&#x51CF;&#x5C11; Region &#x7684;&#x4E2A;&#x6570;&#x3002;&#x4E0E; Region Split &#x76F8;&#x53CD;&#xFF0C;Region Merge &#x662F;&#x901A;&#x8FC7;&#x8C03;&#x5EA6;&#x628A;&#x76F8;&#x90BB;&#x7684;&#x5C0F; Region &#x5408;&#x5E76;&#x7684;&#x8FC7;&#x7A0B;&#x3002;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x5220;&#x9664;&#x6570;&#x636E;&#x6216;&#x8005;&#x6267;&#x884C; Drop Table/Truncate Table &#x8BED;&#x53E5;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x5C0F; Region &#x751A;&#x81F3;&#x7A7A; Region &#x8FDB;&#x884C;&#x5408;&#x5E76;&#x4EE5;&#x51CF;&#x5C11;&#x8D44;&#x6E90;&#x7684;&#x6D88;&#x8017;&#x3002;</p>
+<p>&#x901A;&#x8FC7; pd-ctl &#x8BBE;&#x7F6E;&#x4EE5;&#x4E0B;&#x53C2;&#x6570;&#x5373;&#x53EF;&#x5F00;&#x542F; Region Merge&#xFF1A;</p>
+<pre><code>&gt;&gt; pd-ctl config set max-merge-region-size 20
+&gt;&gt; pd-ctl config set max-merge-region-keys 200000
+&gt;&gt; pd-ctl config set merge-schedule-limit 8
+</code></pre><p>&#x8BE6;&#x60C5;&#x8BF7;&#x53C2;&#x8003;<a href="https://github.com/tikv/tikv/blob/master/docs/how-to/configure/region-merge.md" target="_blank">&#x5982;&#x4F55;&#x914D;&#x7F6E; Region Merge</a> &#x548C; <a href="https://pingcap.com/docs-cn/stable/reference/configuration/pd-server/configuration-file#schedule" target="_blank">PD &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;</a>&#x3002;
+&#x540C;&#x65F6;&#xFF0C;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x7684; Region Merge &#x7684;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x8F83;&#x4E3A;&#x4FDD;&#x5B88;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x9700;&#x6C42;&#x53C2;&#x8003; <a href="https://pingcap.com/docs-cn/stable/reference/best-practices/pd-scheduling#region-merge-%E9%80%9F%E5%BA%A6%E6%85%A2" target="_blank">PD &#x8C03;&#x5EA6;&#x7B56;&#x7565;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;</a> &#x4E2D;&#x63D0;&#x4F9B;&#x7684;&#x65B9;&#x6CD5;&#x52A0;&#x5FEB; Region Merge &#x8FC7;&#x7A0B;&#x7684;&#x901F;&#x5EA6;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="threadpool-optimize.md" class="navigation navigation-prev " aria-label="Previous page: 8.2.1 TiKV 线程池优化">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="other-tikv-common-config-optimize.html" class="navigation navigation-next " aria-label="Next page: 8.2.3 其他常见优化设置">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"8.2.2 海量 Region 集群调优","level":"5.8.2.2","depth":3,"next":{"title":"8.2.3 其他常见优化设置","level":"5.8.2.3","depth":3,"path":"session4/chapter8/other-tikv-common-config-optimize.md","ref":"session4/chapter8/other-tikv-common-config-optimize.md","articles":[]},"previous":{"title":"8.2.1 TiKV 线程池优化","level":"5.8.2.1","depth":3,"path":"session4/chapter8/threadpool-optimize.md","ref":"session4/chapter8/threadpool-optimize.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter8/massive-region-optimize.md","mtime":"2020-03-08T04:00:57.835Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T04:01:32.762Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
