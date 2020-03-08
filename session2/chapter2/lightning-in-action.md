@@ -114,7 +114,7 @@ $ ansible-playbook deploy.yml --tags=lightning
 ## 手动部署 TiDB Lightning
 从官网下载与TiDB版本一直的Lightning安装包，并将安装包上传至满足硬件要求的服务器。解压安装包后在bin目录下新建tikv-importer.toml，tidb-lightning.toml，详细配置参数见TiDB Lightning配置参数小节，Lightning启停等使用方式与ansible部署一致。
 
- TiDB Lightning TiDB-Backend
+# TiDB Lightning TiDB-Backend
 ## Importer-backend 和 TiDB-backend 的区别
 TiDB Lightning 的后端决定 tidb-lightning 将如何把将数据导入到目标集群中。目前，TiDB Lightning 支持 Importer-backend（默认）和 TiDB-backend 两种后端，两者导入数据的区别如下：
 
