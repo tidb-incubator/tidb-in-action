@@ -34,7 +34,7 @@ SHOW FULL PROCESSLIST;
 * User：当前连接线程的用户。
 * Host：发出命令语句的客户端的主机名。
 * db：线程链接的数据库，如果没有则为 null。
-* Command：线程正在执行的命令类型，一般是休眠（Sleep），查询（Query）。具体可以参考 [MySQL 8.0 文档](https://dev.mysql.com/doc/refman/8.0/en/thread-commands.html)
+* Command：线程正在执行的命令类型，一般是休眠（Sleep），查询（Query）。
 * Time：线程处于当前状态的时间（以秒为单位）。
 * State：显示当前sql语句的状态，比如：Sending data，Sorting for group，Creating tmp table，Locked 等等。
 * Info：线程正在执行的语句，为 NULL 时表示没有在执行任何语句。
