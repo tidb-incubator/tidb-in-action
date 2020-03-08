@@ -123,13 +123,13 @@ TiDB Lightning 的后端决定 tidb-lightning 将如何把将数据导入到�
 
 * Importer-backend：tidb-lightning 先将 SQL 或 CSV 数据编码成键值对，由 tikv-importer 对写入的键值对进行排序，然后把这些键值对 Ingest 到 TiKV 节点中。
 * TiDB-backend：tidb-lightning 先将数据编码成 INSERT 语句，然后直接在 TiDB 节点上运行这些 SQL 语句进行数据导入。
-| 后端   | Importer-backend   | TiDB-backend   | 
+| 后端 | Importer-backend | TiDB-backend | 
 |:----:|:----:|:----:|
-| 对集群的影响   | 超大   | 小   | 
-| 速度   | 快 (~300 GB/小时)   | 慢 (~50 GB/小时)   | 
-| 资源使用率   | 高   | 低   | 
-| 导入时是否满足 ACID   | 否   | 是   | 
-| 目标表   | 必须为空   | 可以不为空 | 
+| 对集群的影响 | 超大 | 小 | 
+| 速度 | 快 (~300 GB/小时) | 慢 (~50 GB/小时) | 
+| 资源使用率 | 高 | 低 | 
+| 导入时是否满足 ACID | 否 | 是 | 
+| 目标表 | 必须为空 | 可以不为空 | 
 
  TiDB Lightning TiDB-Backend 运行时，TiDB 集群可基本正常对外提供服务。
 
