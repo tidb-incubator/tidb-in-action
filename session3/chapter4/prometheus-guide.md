@@ -1,8 +1,8 @@
 ## **Prometheus 简单介绍 **
 ### **prometheus 简介**
-	  TiDB  使用开源时序数据库  Prometheus  作为监控和性能指标信息存储方案，使用 Grafana  作为可视化组件进行展示。
+TiDB  使用开源时序数据库  Prometheus  作为监控和性能指标信息存储方案，使用 Grafana  作为可视化组件进行展示。
 
-	  Prometheus 狭义是上软件本身，即 prometheus server，广义上是基于 prometheus server 为核心的各类软件工具的生态。除 prometheus server 和 grafana 外，Prometheus 生态常用的组件还有 alertmanager、pushgateway 和非常丰富的各类 exporters。
+Prometheus 狭义是上软件本身，即 prometheus server，广义上是基于 prometheus server 为核心的各类软件工具的生态。除 prometheus server 和 grafana 外，Prometheus 生态常用的组件还有 alertmanager、pushgateway 和非常丰富的各类 exporters。
 
 prometheus server 自身是一个时序数据库，相比使用 MySQL 做为底层存储的 zabbix 监控，拥有非常高效的插入和查询性能，同时数据存储占用的空间也非常小。另外不同于 zabbix，prometheus server 中的数据是从各种数据源主动拉过来的，而不是客户端主动推送。如果使用 prometheus server 要接收推送的信息，数据源和 prometheus server 中间需要使用 pushgateway。
 
