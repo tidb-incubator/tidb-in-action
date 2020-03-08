@@ -181,6 +181,7 @@
         * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
         * [6.4.2 TiDB分区表使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
         * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
+        * [6.4.4 TiDB分区表问题处理](session4/chapter6/partition-table-best-practices.md) @代晓磊
     * [6.5 TiDB 在电力行业的实践](session4/chapter6/tidb-in-electric.md)@潘博存
     * [6.6 TiDB 在企业数据分级存储中的应用实践](session4/chapter6/tidb-in-enterprise-practices.md)@潘博存@王伦伟
     * [6.7 TiDB 与 HBase、ES、Druid 的数据交互实战](session4/chapter6/tidb-with-hbase-es-druid.md)@潘博存@王伦伟
