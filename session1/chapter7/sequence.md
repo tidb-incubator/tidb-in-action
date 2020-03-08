@@ -10,15 +10,15 @@ Sequence 是数据库系统按照一定规则自增的数字序列，具有唯�
 - Create Sequence 语法
 
 ```SQL
- CREATE [TEMPORARY] SEQUENCE [IF NOT EXISTS] sequence_name
- [ INCREMENT [ BY | = ] increment ]
- [ MINVALUE [=] minvalue | NO MINVALUE | NOMINVALUE ]
- [ MAXALUE [=] maxvalue | NO MAXVALUE | NOMAXVALUE ]
- [ START [ WITH | = ] start ]
- [ CACHE [=] cache | NOCACHE | NO CACHE]
- [ CYCLE | NOCYCLE | NO CYCLE]
- [ ORDER | NOORDER | NO ORDER]
- [table_options]
+CREATE [TEMPORARY] SEQUENCE [IF NOT EXISTS] sequence_name
+[ INCREMENT [ BY | = ] INCREMENT ]
+[ MINVALUE [=] minvalue | NO MINVALUE | NOMINVALUE ]
+[ MAXALUE [=] maxvalue | NO MAXVALUE | NOMAXVALUE ]
+[ START [ WITH | = ] start ]
+[ CACHE [=] cache | NOCACHE | NO CACHE]
+[ CYCLE | NOCYCLE | NO CYCLE]
+[ ORDER | NOORDER | NO ORDER]
+[table_options]
 ```
 
 - Show Create Sequence 语法
@@ -59,10 +59,10 @@ SELECT SETVAL(sequence_name,100)；
 
 在使用分布式数据库的场景里，通常应用也是分布式架构，这样多个应用节点之间如何获取唯一且递增的序列号就成为一个难题。在分布式数据库没有 Sequence 的时候，应用基本通过`雪花算法`、`数据库主键自增`等方法实现，业界也有一些较为成熟的方案，比如  [Leaf - 美团点评分布式 ID](https://tech.meituan.com/2017/04/21/mt-leaf.html)、[百度的 uid-generator](https://github.com/baidu/uid-generator)等，上述方案中为了解决单调递增且不重复的问题引入一个新的系统、模块，极大的提高的应用系统的复杂度。这里通过简单新建一个`Sequence`看看 TiDB 如何解决上述问题。
 
-   1.  首先新建一个 Sequence
+1.  首先新建一个 Sequence
 
 ```SQL
-   CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
+CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 ```
 
 1.2. 针对应用连接至单个 TiDB 和多个 TiDB，取到的 Sequence 值有些不一样
@@ -70,41 +70,41 @@ SELECT SETVAL(sequence_name,100)；
 1） 如果两个应用节点同时连接只同一个`TiDB`节点，两个节点间取到的则为连续递增的值
 
 ```SQL
-   节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
-   +-------------------------------+
-   | NEXT VALUE FOR seq_for_unique |
-   +-------------------------------+
-   |                             1 |
-   +-------------------------------+
-   1 row in set (0.00 sec)
+节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
++-------------------------------+
+| NEXT VALUE FOR seq_for_unique |
++-------------------------------+
+|                             1 |
++-------------------------------+
+1 row in set (0.00 sec)
 
-   节点 B：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
-   +-------------------------------+
-   | NEXT VALUE FOR seq_for_unique |
-   +-------------------------------+
-   |                             2 |
-   +-------------------------------+
-   1 row in set (0.00 sec)
+节点 B：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
++-------------------------------+
+| NEXT VALUE FOR seq_for_unique |
++-------------------------------+
+|                             2 |
++-------------------------------+
+1 row in set (0.00 sec)
 ```
 
 2） 如果两个应用节点分别连接至不同`TiDB`节点，两个节点间取到的则为区间递增（每个 TiDB 上为连续递增）但不连续的值
 
 ```SQL
-   节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
-   +-------------------------------+
-   | NEXT VALUE FOR seq_for_unique |
-   +-------------------------------+
-   |                             1 |
-   +-------------------------------+
-   1 row in set (0.00 sec)
+节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
++-------------------------------+
+| NEXT VALUE FOR seq_for_unique |
++-------------------------------+
+|                             1 |
++-------------------------------+
+1 row in set (0.00 sec)
 
-   节点 B：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
-   +-------------------------------+
-   | NEXT VALUE FOR seq_for_unique |
-   +-------------------------------+
-   |                          1001 |
-   +-------------------------------+
-   1 row in set (0.00 sec)
+节点 B：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
++-------------------------------+
+| NEXT VALUE FOR seq_for_unique |
++-------------------------------+
+|                          1001 |
++-------------------------------+
+1 row in set (0.00 sec)
 ```
 
 2. 在一张表里面需要有多个自增字段
@@ -121,34 +121,34 @@ CREATE SEQUENCE seq_for_logid START WITH 100 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 2.2. 在新建表的时候通过`default nextval(seq_name)`设置列的默认值
 
 ```SQL
-   CREATE TABLE `user` (
-       `userid` varchar(32) NOT NULL,
-       `autoid` int(11) DEFAULT 'nextval(`test`.`seq_for_autoid`)',
-       `logid` int(11) DEFAULT 'nextval(`test`.`seq_for_logid`)',
-       PRIMARY KEY (`userid`)
-    )
+CREATE TABLE `user` (
+    `userid` varchar(32) NOT NULL,
+    `autoid` int(11) DEFAULT 'nextval(`test`.`seq_for_autoid`)',
+    `logid` int(11) DEFAULT 'nextval(`test`.`seq_for_logid`)',
+    PRIMARY KEY (`userid`)
+)
 ```
 
 2.3. 接下来我们插入几个用户信息进行测试：
 
 ```SQL
-   INSERT INTO user (userid) VALUES ('usera');
-   INSERT INTO user (userid) VALUES ('userb');
-   INSERT INTO user (userid) VALUES ('userc');
+INSERT INTO user (userid) VALUES ('usera');
+INSERT INTO user (userid) VALUES ('userb');
+INSERT INTO user (userid) VALUES ('userc');
 ```
 
 2.4. 查询`user`表，可以发现`autoid`和`logid`字段的值按照不同的步长进行自增，且主键仍然在列`userid`上：
 
 ```SQL
-   tidb[test]> select * from user;
-   +--------+--------+-------+
-   | userid | autoid | logid |
-   +--------+--------+-------+
-   | usera  |      1 |   100 |
-   | userb  |      3 |   101 |
-   | userc  |      5 |   102 |
-   +--------+--------+-------+
-   3 rows in set (0.01 sec)
+tidb[test]> select * from user;
++--------+--------+-------+
+| userid | autoid | logid |
++--------+--------+-------+
+| usera  |      1 |   100 |
+| userb  |      3 |   101 |
+| userc  |      5 |   102 |
++--------+--------+-------+
+3 rows in set (0.01 sec)
 ```
 
 3. 更新数据表中其中一列值为连续自增的值
@@ -158,14 +158,14 @@ CREATE SEQUENCE seq_for_logid START WITH 100 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 3.1. 新建一张测试表
 
 ```SQL
-tidb[test]> create table t( a int, name varchar(32));
+tidb[test]> CREATE TABLE t( a int, name varchar(32));
 Query OK, 0 rows affected (0.01 sec)
 ```
 
 3.2. 新建一个 Sequence
 
 ```SQL
-tidb[test]> create sequence test;
+tidb[test]> CREATE SEQUENCE test;
 Query OK, 0 rows affected (0.00 sec)
 ```
 
