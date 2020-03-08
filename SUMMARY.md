@@ -27,7 +27,7 @@
     * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md) @杜振强
     * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md) @高海涛
     * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
-    * [7.4 Auto Random](session1/chapter7/autorandom.md)
+    * [7.4 Auto Random](session1/chapter7/autorandom.md) @谢滕进 @王聪
     * [7.5 Expression index](session1/chapter7/expression-index.md)
 * [8 Titan 简介与实战](session1/chapter8/titan-intro.md)
     * [8.1 Titan 原理介绍](session1/chapter8/titan-internal.md) @孙晓光
@@ -144,7 +144,7 @@
         -->
     * [5.2 利用 Recover 命令秒恢复误删表](session3/chapter5/recover-statements.md) @薛超
     * [5.3 多数副本丢失数据恢复指南](session3/chapter5/recover-quorum.md) @陈付
-* [6 TiDB-Operator Troubleshooting](session3/chapter6/tidb-operator-trouble-shooting.md) @[黄潇](https://github.com/benmaoer)@[陈子军](https://github.com/danche) @[罗霞](https://github.com/xialuo1990)
+* [6 TiDB-Operator Troubleshooting](session3/chapter6/tidb-operator-trouble-shooting.md) @[黄潇](https://github.com/benmaoer)@[陈子军](https://github.com/danche) @[罗霞](https://github.com/xialuo1990) @[朱博帅](https://github.com/zhuboshuai)
 
 ## 第四部分 TiDB 最佳实践
 
@@ -188,7 +188,7 @@
     * [6.9 流程调度工具与 TiSpark 的集成应用](session4/chapter6/tidb-streaming-scheduler-tools.md)@王娟
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
-    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
+    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚 
     * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东 @谭仁刚
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
