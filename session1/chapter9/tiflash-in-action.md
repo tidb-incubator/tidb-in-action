@@ -1,19 +1,19 @@
-# 使用
+# TiFlash 的使用
 用户可以使用 TiDB 或者 TiSpark 读取 TiFlash， TiDB 适合用于中等规模的 OLAP 计算，而
 TiSpark 适合大规模的 OLAP 计算，用户可以根据自己的场景和使用习惯自行选择。
 
 ## 按表构建 TiFlash 副本
 TiFlash 接入 TiKV 集群后，默认不会开始同步数据，可通过 mysql 客户端向 TiDB 发送 DDL 命令来为特定的表建立 TiFlash 副本:
 ```
-ALTER TABLE ​table_name​ SET TIFLASH REPLICA ​count​ [LOCATION LABELS location_labels​]
+ALTER TABLE ​table_name​ SET TIFLASH REPLICA ​count​ 
 ```
-count 表示副本数，0则表示删除
-location_labels 为一组由用户指定字符串用于标识 label，是为了 pd 调度的 topology 隔离，可以不填
+count 表示副本数，0 则表示删除
+
 对于相同表的多次 DDL 命令，仅保证最后一次能生效
 例如:
-为表建立1个 TiFlash 副本并带有2个 locationlabel
+为表建立1个 TiFlash 副本
 ```
-ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 1 LOCATION LABELS "zone", "rack"
+ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 1 
 ```
 
 为表建立2个副本，无 locationlabel
@@ -46,6 +46,7 @@ TiDB 提供三种读取 TiFlash 副本的方式。如果添加了 TiFlash 副本
 
 ## Engine 隔离
 Engine 隔离是通过配置变量来指定所有的查询均使用指定 engine 的副本，可选 engine 为 tikv 和 tiflash，分别有3个配置级别:
+
 1. 全局配置级别，即 GLOBAL 级别。
 
 ```
@@ -55,15 +56,17 @@ set @@global.tidb_isolation_read_engines = "逗号分隔的 engine list";
 ```
 set GLOBAL tidb_isolation_read_engines = "逗号分隔的 engine list";
 ```
-
 例如：
-
 ```
 set GLOBAL tidb_isolation_read_engines = "tiflash,tikv";
 ```
 
-2. 会话级别，即 SESSION 级别。如果没有指定，会继承 GLOBAL 的配置。set@@session.tidb_isolation_read_engines="逗号分隔的enginelist";或者
+2. 会话级别，即 SESSION 级别。如果没有指定，会继承 GLOBAL 的配置。
 
+```
+set@@session.tidb_isolation_read_engines="逗号分隔的enginelist";
+```
+或者
 `set SESSION tidb_isolation_read_engines = "逗号分隔的 engine list";`
 
 3. TiDB 实例级别，即 INSTANCE 级别，和以上配置是​交集​关系。比如 INSTANCE 配置了"tikv,tiflash"，而 SESSION 配置了"tikv"，则只会读取 tikv。如果没有指定，默认继承会话级别配置。在 TiDB 的配置文件添加如下配置项
@@ -90,15 +93,35 @@ select /*+ read_from_storage(tiflash[t]) */ * from t;
 ## TiSpark 读取 TiFlash
 
 TiSpark 目前提供类似 TiDB 中 engine 隔离的方式读取 TiFlash，方式是通过配置参数:
+
+```
 spark.tispark.use.tiflash 为 true (或 false )
+```
+
 可以使用以下任意一种方式进行设置:
 
-1. 在 spark-defaults.conf 文件中添加 spark.tispark.use.tiflash=true
+1. 在 spark-defaults.conf 文件中添加 
 
-2. 在启动 sparkshell 或 thriftserver 时，启动命令中添加 --conf spark.tispark.use.tiflash=true
+```
+spark.tispark.use.tiflash = true
+```
 
-3. Sparkshell 中实时设置: spark.conf.set("spark.tispark.use.tiflash",true)
+2. 在启动 sparkshell 或 thriftserver 时，启动命令中添加 
 
-4. Thriftserver 通过 beeline 连接后实时设置: setspark.tispark.use.tiflash=true;
+```
+--conf spark.tispark.use.tiflash = true
+```
+
+3. Sparkshell 中实时设置: 
+
+```
+spark.conf.set("spark.tispark.use.tiflash", true)
+```
+
+4. Thriftserver 通过 beeline 连接后实时设置: 
+
+```
+setspark.tispark.use.tiflash = true;
+```
 
 注意，设为 true 时，所有查询的表都会只读取 TiFlash 副本，设为 false 则只读取 TiKV 副本。设为 true 时，要求查询所用到的表都必须已创建了 TiFlash 副本，对于未创建 TiFlash 副本的表的查询会报错。
