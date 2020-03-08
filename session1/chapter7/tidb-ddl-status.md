@@ -4,7 +4,7 @@
 TiDB 上的 DDL 操作，不会阻塞任何该数据库上正在执行的 SQL，对业务的 SQL 访问和对 DBA 运维都极为友好，这也是 TiDB 相较于其他数据库产品的一大优势所在。
 
 ### 2 对 DDL 进行管理
-TiDB 对 MySQL 语法进行了扩展，通过 ADMIN 语句对 DDL 操作进行管理。下面罗列了 DDL 管理的基本命令，各命令返回结果中各字段的详细含义，请参考[官方 admin 相关文档](https://pingcap.com/docs-cn/stable/reference/sql/statements/admin/#admin)
+TiDB 对 MySQL 语法进行了扩展，通过 ADMIN 语句对 DDL 操作进行管理。下面罗列了 DDL 管理的基本命令，各命令返回结果中各字段的详细含义，请参考[官方 admin 相关文档](https://pingcap.com/docs-cn/stable/reference/sql/statements/admin/#admin)。
 
 - 查看当前 schema version，owner 信息以及正在执行的 DDL 任务
 
@@ -17,9 +17,17 @@ ADMIN SHOW DDL;
 ```
 ADMIN SHOW DDL JOBS [NUM] [WHERE where_condition];
 
-# 例如，显示当前未完成的 DDL 任务，以及最近 5 条已经执行完成的 DDL 任务
+```
+
+例如，显示当前未完成的 DDL 任务，以及最近 5 条已经执行完成的 DDL 任务
+
+```
 ADMIN SHOW DDL JOBS 5;
-# 例如，显示 test 数据库中未执行完成的 DDL 任务，以及最近 5 条已经执行完成但执行失败的 DDL 任务
+```
+
+例如，显示 test 数据库中未执行完成的 DDL 任务，以及最近 5 条已经执行完成但执行失败的 DDL 任务
+
+```
 ADMIN SHOW DDL JOBS 5 WHERE state!='synced' AND db_name='test';
 ```
 
@@ -41,7 +49,7 @@ ADMIN CANCEL DDL JOBS job_id [, job_id] ...;
 RECOVER TABLE BY JOB ddl_job_id;
 ```
 **特别注意**
-在执行一些 DDL 操作时（如 `ADD INDEX` ），由于执行时间较长，不会立即返回执行结果，mysql-client 会处于卡死的状态。此时可以放心的 `ctrl+c` 来终止该连接，不会影响 DDL 的实际执行。DDL 正常耗时可以参考[相关官方文档](https://pingcap.com/docs-cn/stable/faq/tidb/#332-ddl-%E5%9C%A8%E6%AD%A3%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E8%80%97%E6%97%B6%E6%98%AF%E5%A4%9A%E5%B0%91)
+在执行一些 DDL 操作时（如 `ADD INDEX` ），由于执行时间较长，不会立即返回执行结果，mysql-client 会处于卡死的状态。此时可以放心的 `ctrl+c` 来终止该连接，不会影响 DDL 的实际执行。DDL 正常耗时可以参考[相关官方文档](https://pingcap.com/docs-cn/stable/faq/tidb/#332-ddl-%E5%9C%A8%E6%AD%A3%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E8%80%97%E6%97%B6%E6%98%AF%E5%A4%9A%E5%B0%91)。
 
 ```
 > admin@sbtest02:04:32>alter table sbtest1 add key idx_c_pad(c, pad);
@@ -163,7 +171,7 @@ Owner 上的 worker 在处理 `ADD INDEX` 类型 DDL 任务时，涉及到回填
 ![图片](./images/ddl-workflow.png)
 
 ### 5 DDL 变更原理
-TiDB 在线表变更的原理借鉴自论文 《Online, Asynchronous Schema Change in F1》，通过在表结构变更过程中引入额外状态从而实现了一套在线表变更协议，使得集群存在相邻两个版本的 schema 时候，不会破坏数据完整性或发生数据异常。因此，在实现上，要求集群中所有 schema 版本最多存在两个相邻的版本。
+TiDB 在线表变更的原理借鉴自论文 《Online, Asynchronous Schema Change in F1》，通过在表结构变更过程中引入额外状态从而实现了一套在线表变更协议，使得集群存在相邻两个版本的 schema 时候，不会破坏数据完整性或发生数据异常。因此，在实现上，要求集群中在同一个表上所有 schema 版本最多存在两个相邻的版本。
 
 例如，以 ADD INDEX 类型的 DDL 操作为例，其状态变化如下表所示：
 
