@@ -56,7 +56,7 @@ tidb-binlog 是 TiDB 的 binlog 搜集工具，TiDB 中执行成功的 SQL 会�
 
 ### [TiDB Operator](https://github.com/pingcap/tidb-operator)
 
-TiDB Operator 是 Kubernetes 上的 TiDB 集群自动运维系统，提供了 TiDB 部署、升级、扩缩容、备份恢复和配置变更的能力。只需要简单定义 TiDB 集群的配置和集群，TiDB Operator 就可以把 TiDB 运行在 Kubernetes 上。同时，TiDB Operator 支持私有云和常用的公有云，能够降幅降低 Kubernetes 上 TiDB 的管理成本。
+TiDB Operator 是 Kubernetes 上的 TiDB 集群自动运维系统，提供了 TiDB 部署、升级、扩缩容、备份恢复和配置变更的能力。只需要简单定义 TiDB 集群的配置和集群信息，TiDB Operator 就可以把 TiDB 运行在 Kubernetes 上。同时，TiDB Operator 支持私有云和常用的公有云，能够降幅降低 Kubernetes 上 TiDB 的管理成本。
 
 ## 测试、部署、文档相关项目
 
