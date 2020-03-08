@@ -214,3 +214,228 @@ leader 迁走之后 ，原 TiKV 的 duration 立刻下降了，但是 leader 所
 ### 调优总结
 对于分布式数据库读热点的情况，难以通过优化 SQL 本身来解决，需要通过系统分析整个数据库的状态来定位原因，采用分裂 region 的方式来缓解和消除读热点对 SQL 查询效率的影响。读热点实际上限制了分布式数据库的并发读取优势，分裂 region 的方式本质上是恢复分布式数据库的并发读取优势。
 
+
+## 案例5 SQL 执行计划不准
+
+### 背景
+
+* SQL 执行时间突然变长
+
+### 分析
+
+* SQL 语句：
+
+```
+select count(*)
+from   tods.bus_jijin_trade_record a, tods.bus_jijin_info b 
+where   a.fund_code=b.fund_code  and a.type in   ('PURCHASE','APPLY')  
+and   a.status='CANCEL_SUCCESS' and a.pay_confirm_status = 1 
+and a.cancel_app_no   is not null and a.id >=    177045000  
+and a.updated_at   > date_sub(now(), interval 48 hour) ;
+ 
+执行结果，需要 1 分 3.7s：
+mysql> select   count(*)
+    -> from tods.bus_jijin_trade_record a,   tods.bus_jijin_info b 
+    -> where a.fund_code=b.fund_code  and a.type in ('PURCHASE','APPLY')  
+    -> and a.status='CANCEL_SUCCESS' and   a.pay_confirm_status = 1 
+    -> and a.cancel_app_no is not null and   a.id >=  177045000  
+    -> and a.updated_at >   date_sub(now(), interval 48 hour) ;
++----------+
+| count(*) |
++----------+
+|      708 |
++----------+
+1   row in set (1 min 3.77 sec)
+```
+ 
+
+* 索引信息
+
+| **表名**   | **数据行**   | **索引名**   | 
+|:----|:----|:----|
+| bus_jijin_trade_record   | 176384036   | PRIMARY   KEY (`ID`)  KEY   `idx_bus_jijin_trade_record_upt` (`UPDATED_AT`)   | 
+| bus_jijin_info   | 6442   | PRIMARY   KEY (`ID`)   | 
+
+ 
+
+* 查看执行计划
+
+```
+mysql> explain 
+    -> select count(*)
+    -> from tods.bus_jijin_trade_record a,   tods.bus_jijin_info b 
+    -> where a.fund_code=b.fund_code  and a.type in ('PURCHASE','APPLY')  
+    -> and a.status='CANCEL_SUCCESS' and   a.pay_confirm_status = 1 
+    -> and a.cancel_app_no is not null and   a.id >=  177045000  
+    -> and a.updated_at >   date_sub(now(), interval 48 hour) ;
++----------------------------+--------------+------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| id                         | count        | task | operator info                                                                                                                                                     |
++----------------------------+--------------+------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| StreamAgg_13               | 1.00         | root | funcs:count(1)                                                                                                                                                    |
+| └─HashRightJoin_27         | 421.12       | root | inner join, inner:TableReader_18, equal:[eq(a.fund_code, b.fund_code)]                                                                                            |
+|   ├─TableReader_18         | 421.12       | root | data:Selection_17                                                                                                                                                 |
+|   │ └─Selection_17         | 421.12       | cop  | eq(a.pay_confirm_status, 1), eq(a.status, "CANCEL_SUCCESS"), gt(a.updated_at, 2020-03-03 22:31:08), in(a.type, "PURCHASE", "APPLY"), not(isnull(a.cancel_app_no)) |
+|   │   └─TableScan_16       | 145920790.55 | cop  | table:a, range:[177045000,+inf], keep order:false                                                                                                                 |
+|   └─TableReader_37         | 6442.00      | root | data:TableScan_36                                                                                                                                                 |
+|     └─TableScan_36         | 6442.00      | cop  | table:b, range:[-inf,+inf], keep order:false                                                                                                                      |
++----------------------------+--------------+------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+ 
+TableScan_16，TableScan_36：表示在 KV 端分别对表 a 和 b 的数据进行扫描，其中 TableScan_16 扫描了 1.46 亿的行数；
+Selection_17：表示满足表 a 后面 where 条件的数据
+TableReader_37： 由于表   b 没有独立的附加条件，所以直接将这部分数据返回给 tidb；
+TableReader_18：将各个   coprocessor 满足 a 表条件的结果返回给 tidb；
+HashRightJoin_27：将 TableReader_37   和 TableReader_18   上的结果进行 hash join；
+StreamAgg_13：进一步统计所有行数，将数据返回给客户端；
+```
+ 
+可以看到语句中 a 表 ( bus_jijin_trade_record ) 的条件 id >=  177045000， 和 updated_at > date_sub(now(), interval 48 hour ) 上，这两个列分别都有索引，但是 tidb 还是选择了全表扫描；
+
+ 
+
+按照上面两个条件分别查询数据分区情况
+
+```
+
+mysql> SELECT   COUNT(*) FROM tods.bus_jijin_trade_record WHERE id >=  177045000 ;
++-----------+
+| COUNT(*)  |
++-----------+
+| 145917327 |
++-----------+
+1 row in set (16.86   sec)
+ 
+mysql> SELECT   COUNT(*) FROM tods.bus_jijin_trade_record WHERE updated_at >   date_sub(now(), interval 48 hour)  ;
++-----------+
+|  COUNT(*) |
++-----------+
+|    713682 |
++-----------+ 
+```
+可以看到，表 bus_jijin_trade_record 有 1.7 亿的数据量， 应该走 updated_at 字段上的索引；
+ 
+
+使用强制 hint 进行执行，6.27 秒就执行完成了，**速度从之前 63s 到现在的 6.3s，提升了 10 倍**
+
+```
+mysql> select   count(*)
+    -> from tods.bus_jijin_trade_record a   use index(idx_bus_jijin_trade_record_upt), tods.bus_jijin_info b 
+    -> where a.fund_code=b.fund_code  and a.type in ('PURCHASE','APPLY')  
+    -> and a.status='CANCEL_SUCCESS' and   a.pay_confirm_status = 1 
+    -> and a.cancel_app_no is not null and   a.id >=  177045000  
+    -> and a.updated_at >   date_sub(now(), interval 48 hour) ;
++----------+
+| count(*) |
++----------+
+|      709 |
++----------+
+1 row in set (6.27   sec) 
+```
+强制 hint 后的执行计划
+```
+mysql> explain 
+    -> select count(*)
+    -> from tods.bus_jijin_trade_record a   use index(idx_bus_jijin_trade_record_upt), tods.bus_jijin_info b 
+    -> where a.fund_code=b.fund_code  and a.type in ('PURCHASE','APPLY')  
+    -> and a.status='CANCEL_SUCCESS' and   a.pay_confirm_status = 1 
+    -> and a.cancel_app_no is not null and   a.id >=  177045000  
+    -> and a.updated_at >   date_sub(now(), interval 48 hour) ;
++------------------------------+--------------+------+----------------------------------------------------------------------------------------------------------------------------+
+| id                           | count        | task | operator info                                                                                                              |
++------------------------------+--------------+------+----------------------------------------------------------------------------------------------------------------------------+
+| StreamAgg_13                 | 1.00         | root | funcs:count(1)                                                                                                             |
+| └─HashRightJoin_24           | 421.12       | root | inner join, inner:IndexLookUp_20, equal:[eq(a.fund_code, b.fund_code)]                                                     |
+|   ├─IndexLookUp_20           | 421.12       | root |                                                                                                                            |
+|   │ ├─Selection_18           | 146027634.83 | cop  | ge(a.id, 177045000)                                                                                                        |
+|   │ │   └─IndexScan_16       | 176388219.00 | cop  | table:a, index:UPDATED_AT, range:(2020-03-03 23:05:30,+inf], keep order:false                                              |
+|   │ └─Selection_19           | 421.12       | cop  | eq(a.pay_confirm_status, 1), eq(a.status, "CANCEL_SUCCESS"), in(a.type, "PURCHASE", "APPLY"), not(isnull(a.cancel_app_no)) |
+|   │   └─TableScan_17         | 146027634.83 | cop  |   table:bus_jijin_trade_record, keep order:false                                                                           |
+|   └─TableReader_31           | 6442.00      | root | data:TableScan_30                                                                                                          |
+|     └─TableScan_30           | 6442.00      | cop  | table:b, range:[-inf,+inf], keep order:false                                                                               |
++------------------------------+--------------+------+----------------------------------------------------------------------------------------------------------------------------+
+```
+使用 hint 后的执行计划，预估 updated_at 上的索引会扫描 176388219，**索引选择了全表扫描，可以判定是由于错误的统计信息导致执行计划有问题**
+ 
+
+查看表 bus_jijin_trade_record 上的统计信息
+
+```
+mysql> show   stats_meta where table_name like 'bus_jijin_trade_record' and db_name like   'tods';
++---------+------------------------+---------------------+--------------+-----------+
+| Db_name | Table_name             | Update_time         | Modify_count | Row_count |
++---------+------------------------+---------------------+--------------+-----------+
+| tods    | bus_jijin_trade_record | 2020-03-05 22:04:21 |     10652939 | 176381997 |
++---------+------------------------+---------------------+--------------+-----------+
+ 
+ 
+mysql> show   stats_healthy  where table_name like   'bus_jijin_trade_record' and db_name like 'tods';
++---------+------------------------+---------+
+| Db_name | Table_name             | Healthy |
++---------+------------------------+---------+
+| tods    | bus_jijin_trade_record |      93 |
++---------+------------------------+---------+
+```
+根据统计信息，表 bus_jijin_trade_record 有 176381997，修改的行数有 10652939，
+
+该表的健康度为：(176381997-10652939)/176381997 *100=93
+
+ 
+### 解决
+* 重新收集统计信息
+
+```
+
+mysql> set   tidb_build_stats_concurrency=10;
+Query OK, 0 rows   affected (0.00 sec)
+#调整收集统计信息的并发度，以便快速对统计信息进行收集 
+mysql> analyze   table tods.bus_jijin_trade_record;
+Query OK, 0 rows   affected (3 min 48.74 sec) 
+```
+* 查看没有使用 hint 语句的执行计划
+```
+mysql> explain   select count(*)
+    -> from tods.bus_jijin_trade_record a,   tods.bus_jijin_info b 
+    -> where a.fund_code=b.fund_code  and a.type in ('PURCHASE','APPLY')  
+    -> and a.status='CANCEL_SUCCESS' and   a.pay_confirm_status = 1 
+    -> and a.cancel_app_no is not null and   a.id >=  177045000  
+    -> and a.updated_at >   date_sub(now(), interval 48 hour) ;;
++------------------------------+-----------+------+----------------------------------------------------------------------------------------------------------------------------+
+| id                           | count     | task | operator info                                                                                                              |
++------------------------------+-----------+------+----------------------------------------------------------------------------------------------------------------------------+
+| StreamAgg_13                 | 1.00      | root | funcs:count(1)                                                                                                             |
+| └─HashRightJoin_27           | 1.99      | root | inner join, inner:IndexLookUp_23, equal:[eq(a.fund_code, b.fund_code)]                                                     |
+|   ├─IndexLookUp_23           | 1.99      | root |                                                                                                                            |
+|   │ ├─Selection_21           | 626859.65 | cop  | ge(a.id, 177045000)                                                                                                        |
+|   │ │   └─IndexScan_19       | 757743.08 | cop  | table:a, index:UPDATED_AT, range:(2020-03-03 23:28:14,+inf], keep order:false                                              |
+|   │ └─Selection_22           | 1.99      | cop  | eq(a.pay_confirm_status, 1), eq(a.status, "CANCEL_SUCCESS"), in(a.type, "PURCHASE", "APPLY"), not(isnull(a.cancel_app_no)) |
+|   │   └─TableScan_20         | 626859.65 | cop  | table:bus_jijin_trade_record, keep order:false                                                                             |
+|   └─TableReader_37           | 6442.00   | root | data:TableScan_36                                                                                                          |
+|     └─TableScan_36           | 6442.00   | cop  | table:b, range:[-inf,+inf], keep order:false                                                                               |
++------------------------------+-----------+------+----------------------------------------------------------------------------------------------------------------------------+
+9 rows in set (0.00   sec)
+```
+可以看到，**收集完统计信息后，现在的执行计划走了索引扫描，与手动添加 hint 的行为一致，且扫描的行数 757743 符合预期；**
+
+ 
+
+**此时执行时间变为 1.69s ，在执行计划没变的情况下，应该是由于缓存命中率上升带来的提升。**
+
+```
+mysql> select   count(*)
+    -> from tods.bus_jijin_trade_record a,   tods.bus_jijin_info b 
+    -> where a.fund_code=b.fund_code  and a.type in ('PURCHASE','APPLY')  
+    -> and a.status='CANCEL_SUCCESS' and   a.pay_confirm_status = 1 
+    -> and a.cancel_app_no is not null and   a.id >=  177045000  
+    -> and a.updated_at >   date_sub(now(), interval 48 hour) ;
++----------+
+| count(*) |
++----------+
+|      712 |
++----------+
+1 row in set (1.69   sec) 
+```
+
+### 总结
+可以看出该 SQL 执行效率变差是由于统计信息不准确造成的，在通过收集统计信息之后得到了正确的执行计划。
+
+从最终结果 712 行记录来看，创建联合索引可以更大的降低扫描数据的量，更进一步提升性能。在性能已经满足业务要求情况下，联合索引会有额外的成本，留待以后尝试。
+
