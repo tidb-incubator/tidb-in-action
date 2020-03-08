@@ -24,19 +24,11 @@ release "test" deleted
 
 ```
 
-# kubectl get pvc -n dba-test
-NAME               STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS    AGE
-pd-test-pd-0       Bound    local-pv-682d37c9   1468Mi     RWO            local-storage   24m
-pd-test-pd-1       Bound    local-pv-3c7e9ebb   1468Mi     RWO            local-storage   24m
-pd-test-pd-2       Bound    local-pv-d4cf548e   1468Mi     RWO            local-storage   24m
-tikv-test-tikv-0   Bound    local-pv-3a4dae53   1468Mi     RWO            local-storage   5m39s
-tikv-test-tikv-1   Bound    local-pv-5ebe9899   1468Mi     RWO            local-storage   5m39s
-tikv-test-tikv-2   Bound    local-pv-2c956bbd   1468Mi     RWO            local-storage   5m39s
-
-# kubectl get pvc -n dba-test -o name|awk -F '/' '{print $2}'|xargs -i kubectl delete pvc/{} -n dba-test
+# kubectl delete pvc -n dba-test -l app.kubernetes.io/instance=test,app.kubernetes.io/managed-by=tidb-operator
 persistentvolumeclaim "pd-test-pd-0" deleted
 persistentvolumeclaim "pd-test-pd-1" deleted
 persistentvolumeclaim "pd-test-pd-2" deleted
+persistentvolumeclaim "pd-test-pd-3" deleted
 persistentvolumeclaim "tikv-test-tikv-0" deleted
 persistentvolumeclaim "tikv-test-tikv-1" deleted
 persistentvolumeclaim "tikv-test-tikv-2" deleted
@@ -51,13 +43,15 @@ persistentvolumeclaim "tikv-test-tikv-2" deleted
 
 ```
 
-# kubectl get pv|grep dba-test|awk '{print $1}'|xargs -i kubectl patch pv/{} -p '{"spec":{"persistentVolumeReclaimPolicy":"Delete"}}'
+# kubectl get pv -l app.kubernetes.io/namespace=dba-test,app.kubernetes.io/managed-by=tidb-operator,app.kubernetes.io/instance=test -o name|xargs -I {} kubectl patch {} -p '{"spec":{"persistentVolumeReclaimPolicy":"Delete"}}'
 persistentvolume/local-pv-2c956bbd patched
 persistentvolume/local-pv-3a4dae53 patched
 persistentvolume/local-pv-3c7e9ebb patched
 persistentvolume/local-pv-5ebe9899 patched
 persistentvolume/local-pv-682d37c9 patched
+persistentvolume/local-pv-af00e20c patched
 persistentvolume/local-pv-d4cf548e patched
+
 
 ```
 

@@ -62,7 +62,22 @@ test-tikv-2                       1/1     Running   0          20m
 
 ```
 
-集群所有 POD 已在正常运行，可对 kind-worker5 节点做下线操作：
+集群所有 POD 已在正常运行，集群已恢复正常。
+
+此时，分两种情况:
+1. 短期维护（对节点无破坏性）。
+2. 长期维护，服务器需要长时间修复，甚至需要重装系统。
+
+
+短期维护场景，维护完毕后，将节点解除调度限制即可:
+
+```
+
+# kubectl uncordon kind-worker5
+
+```
+
+长期维护场景，将节点下线，修复之后，再由 K8s 运维专家将服务器上线到 K8s 集群:
 
 ```
 
@@ -71,7 +86,7 @@ node "kind-worker5" deleted
 
 ```
 
-此时，kind-worker5 节点已经从Kubernetes集群下线，可以进行维护了。
+
 
 ## TiKV所在服务器异常下线
 
@@ -177,13 +192,26 @@ test-tikv-3                       1/1     Running   0          25m   10.244.3.5 
 
 此时， test-tikv-2 已经从 kind-worker4 迁移到 kind-worker了。
 
-将 kind-worker4 从 Kubernetes 集群中删除：
+
+此时，分两种情况:
+1. 短期维护（对节点无破坏性）。
+2. 长期维护，服务器需要长时间修复，甚至需要重装系统。
+
+
+短期维护场景，维护完毕后，将节点解除调度限制即可:
 
 ```
 
-# kubectl delete node/kind-worker4
+# kubectl uncordon kind-worker4
+
+```
+
+长期维护场景，将节点下线，修复之后，再由 K8s 运维专家将服务器上线到 K8s 集群:
+
+```
+
+# kubectl delete node kind-worker4
 node "kind-worker4" deleted
 
 ```
 
-此时，kind-worker4 节点已经从Kubernetes集群下线，可以进行维护了。
