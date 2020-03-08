@@ -58,7 +58,7 @@ tidb> SHOW CHARACTER SET;
 5 rows in set (0.00 sec)
 ```
 注意 TiDB 的默认字符集为 utf8mb4，MySQL 5.7 中为 latin1，MySQL 8.0 中修改为 utf8mb4。
-当指定的字符集为 `utf8` 或 `utf8mb4` 时，TiDB 仅支持合法的 UTF8 字符。对于不合法的字符，会报错：`incorrect utf8 value`，该字符合法性检查与 MySQL 8.0 一致。对于 MySQL 5.7 及以下版本，会存在允许插入非法 UTF8 字符，但同步到 TiDB 报错的情况。此时，可以通过 TiDB 配置 `skip-utf8-check` 跳过 UTF8 字符合法性检查强制写入 TiDB。
+当指定的字符集为 `utf8` 或 `utf8mb4` 时，TiDB 仅支持合法的 UTF8 字符。对于不合法的字符，会报错：`incorrect utf8 value`，该字符合法性检查与 MySQL 8.0 一致。对于 MySQL 5.7 及以下版本，会存在允许插入非法 UTF8 字符，但同步到 TiDB 报错的情况。此时，可以通过 TiDB 配置 ["tidb_skip_utf8_check"](https://pingcap.com/docs/stable/faq/upgrade/#issue-3-error-1366-hy000-incorrect-utf8-value-f09f8c80-for-column-a) 跳过 UTF8 字符合法性检查强制写入 TiDB。
 
 每一个字符集，都有一个默认的 Collation，例如 `utf8` 的默认 Collation 为 `utf8_bin`，TiDB 中字符集的默认 Collation 与 MySQL 不一致，具体如下：
 
