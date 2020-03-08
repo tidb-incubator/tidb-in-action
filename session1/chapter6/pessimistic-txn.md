@@ -2,149 +2,121 @@
 
 为了让 TiDB 的使用方式更加贴近传统单机数据库，更好的适配用户场景，在乐观事务模型的基础上，TiDB 实现了悲观事务模型。本文将介绍 TiDB 悲观事务模型特点。
 
+## 悲观锁解决的问题
 
+通过支持悲观事务，降低用户修改代码的难度甚至不用修改代码：
 
-# 悲观锁解决的问题
+* 在 v3.0.8 之前，TiDB 默认使用的乐观事务模式会导致事务提交时因为冲突而失败。为了保证事务的成功率，需要修改应用程序，加上重试的逻辑。
 
-- 通过支持悲观事务，降低用户修改代码的难度甚至不用修改代码。
+- 乐观事务模型在冲突严重的场景和重试代价大的场景无法满足用户需求，支持悲观事务可以 弥补这方面的缺陷，拓展 TiDB 的应用场景。
 
-   在 v3.0.8 之前，TiDB 默认使用的乐观事务模式会导致事务提交时因为冲突而失败。
+以发工资场景为例：对于一个用人单位来说，发工资的过程其实就是从企业账户给多个员工的个人账户转账的过程，一般来说都是批量操作，在一个大的转账事务中可能涉及到成千上万的更新，想象一下如果这个大事务执行的这段时间内，某个个人账户发生了消费（变更），如果这个大事务是乐观事务模型，提交的时候肯定要回滚，涉及上万个个人账户发生消费是大概率事件，如果不做任何处理，最坏的情况是这个大事务永远没办法执行，一直在重试和回滚（饥饿）。
 
-  为了保证事务的成功率，需要修改应用程序，加上重试的逻辑。
+## 基于 Percolator 的悲观事务
 
-  
+悲观事务在 Percolator 乐观事务基础上实现，在 Prewrite 之前增加了 Acquire Pessimistic Lock 阶段用于避免 Prewrite 时发生冲突：
 
-- 乐观事务模型在冲突严重的场景和重试代价大的场景无法满足用户需求，支持悲观事务可以
-  弥补这方面的缺陷，拓展 TiDB 的应用场景 。
-
-    举个简单的例子：
-
-  发工资，对于一个用人单位来说，发工资的过程其实就是从企业账户给多个员工的个人账户转账的过程，
-
-  一般来说都是批量操作，在一个大的转账事务中可能涉及到成千上万的更新，想象一下如果这个大事务执行的这段时间内，某个个人账户发生了消费（变更），
-
-  如果这个大事务是乐观事务模型，提交的时候肯定要回滚，涉及上万个个人账户发生消费是大概率事件，如果不做任何处理，最坏的情况是这个大事务永远没办法执行，一直在重试和回滚（饥饿）
-
-  
-
-# TiDB事务模型回顾
-
-TiDB 使用基于 Percolator 的​乐观事务模型​，支持快照隔离的事务​隔离级别​，
-
-- Percolator 是 Google 在 OSDI 2010 的一篇 [论文](https://ai.google/research/pubs/pub36726) 中提出的在一个分布式 KV 系统上构建分布式事务的模型，其本质上还是一个标准的 2PC（2 Phase Commit），2PC 是一个经典的分布式事务的算法
-
-- TiDB 实现了快照隔离 (Snapshot Isolation, SI) 级别
-
-  SQL-92 标准定义了 4 种隔离级别,其中的可重复读。
-
-  | 隔离级别(Isolation Level)    | 脏读（Dirty Read） | 不可重复读（NonRepeatable Read） | 幻读（Phantom Read） |
-  | :--------------------------- | :----------------- | :------------------------------- | :------------------- |
-  | 未提交读（Read uncommitted） | 可能               | 可能                             | 可能                 |
-  | 已提交读（Read committed）   | 不可能             | 可能                             | 可能                 |
-  | 可重复读（Repeatable read）  | 不可能             | 不可能                           | 可能                 |
-  | 可串行化（Serializable ）    | 不可能             | 不可能                           | 不可能               |
-
-
-
-# TiDB悲观事务模型
-
-## 基于Percolator的悲观事务
-
-TiDB 悲观事务在乐观事务基础上实现，其核心设计思想为，**在 Prewrite 之前增加了 Acquire**
-
-Pessimistic Lock 阶段，其要点为：
-
-● 执行 DML 时，对修改的 key 加上悲观锁 。
-
-● 事务提交同 Percolator :
-
-  ○ Prewrite 将悲观锁改写为 Percolator 的乐观锁，悲观锁的存在保证了 Prewrite 必定成功。
-  ○ 遇到悲观锁时可以保证该锁的事务未到 Commit 阶段，从而不会阻塞读。  
-
-● 基于 Percolator，实现分布式事务的原子提交、Snapshot Isolation，同时保证了与乐观事务的兼容性，支持混合使用。    
+* 每个 DML 都会加悲观锁，锁写到 TiKV 里，同样会通过 raft 同步。
+* 悲观事务在加悲观锁时检查各种约束，如 Write Conflict、key 唯一性约束等。
+* 悲观锁不包含数据，只有锁，只用于防止其他事务修改相同的 key，不会阻塞读，但 Prewrite 后会阻塞读（和 Percolator 相同，但有了大事务支持后将不会阻塞读）。
+* 提交时同 Percolator，悲观锁的存在保证了 Prewrite 不会发生 Write Conflict，保证了提交一定成功。
 
 ![7.png](../../res/session1/chapter6/pessimistic-txn/7.png)
 
-
-
 ![8.png](../../res/session1/chapter6/pessimistic-txn/8.png)
 
+### 等锁顺序
 
+TiKV 中实现了 `Waiter Manager` 用于管理等锁的事务，当悲观事务加锁遇到其他事务的锁时，将会进入 `Waiter Manager` 中等待锁被释放，TiKV 会尽可能按照事务 start timestamp 的顺序来依次获取锁，从而避免事务间无用的竞争。
 
-## 如何添加悲观锁
+### 分布式死锁检测
 
-- 执行 DML 获取到需要修改的 key。
-
-- 对要修改的 key 加上悲观锁
-
-- Prewrite 时的约束检查提前到 Pessimistic Lock 阶段。 
-
-- 遇到更新的数据  ，DML 执行要基于最新已提交的数据，需要重新 执行 DML  
-
-​      除了 start ts 和 commit ts，增加了 for update ts 用于悲观事务读取最新已提交的数据  
-
-
-
-![4.png](../../res/session1/chapter6/pessimistic-txn/4.png)
-
-## 分布式死锁检测
-
-等锁就有可能发生死锁，TiDB 采用的是全局死锁检测来解决死锁：
+在 `Waiter Manager` 中等待锁的事务间可能发生死锁，而且可能发生在不同的机器上，`TiDB` 采用分布式死锁检测来解决死锁问题：
 
 - 在整个 TiKV 集群中，有一个死锁检测器 leader。
-
-- 当要等锁时，其他节点会发送检测死锁的请求给 leader。  
+- 当要等锁时，其他节点会发送检测死锁的请求给 leader。
 
 ![5.png](../../res/session1/chapter6/pessimistic-txn/5.png)
 
+死锁检测器基于 Raft 实现了高可用，等锁事务也会定期发送死锁检测请求给死锁检测器的 leader，从而保证了即使之前 leader 宕机的情况下也能检测到死锁。
 
+## 最佳实践
 
-## 支持 Read Consistency 隔离级别
+### 事务模型的选择
 
-由于历史原因，当前主流数据库的读已提交隔离级别本质上都是 Oracle 定义的一致性读隔离
-级别。TiDB 为了适应类似用户场景需求，在悲观事务中实现了一致性读隔离级别，其语义和
-Oracle 的一致性读隔离级别保持一致。
+TiDB 支持乐观事务和悲观事务，并且允许在同一个集群中混合使用事务模式。由于悲观事务和乐观事务的差异，用户可以根据使用场景灵活的选择适合自己的事务模式：
 
-该模式仅在悲观事务模式下生效，用户在使用悲观事
-务模型时，可以根据自身需要选择。
+* 乐观事务：事务间没有冲突或允许事务因数据冲突而失败；追求极致的性能。
+* 悲观事务：事务间有冲突且对事务提交成功率有要求；因为加锁操作的存在，性能会比乐观事务差。
 
+### 使用方法
 
+v3.0.8 及之后版本新建的 TiDB 集群将默认使用悲观事务模式，从乐观事务模式升级的集群仍将使用乐观事务模式。进入悲观事务模式有以下三种方式:
 
-# 悲观事务的使用方法
+- 执行 `BEGIN PESSIMISTIC`; 语句开启的事务，会进入悲观事务模式。
 
-进入悲观事务模式有以下三种方式:
+  可以通过写成注释的形式 `BEGIN /*!90000 PESSIMISTIC */;` 来兼容 MySQL 语法。
 
-* 执行 BEGIN PESSIMISTIC; 语句开启的事务，会进入悲观事务模式。 
+- 执行 `set @@tidb_txn_mode = 'pessimistic';`，使这个 session 执行的所有显式事务（即非 autocommit 的事务）都会进入悲观事务模式。
 
-  可以通过写成注释的形式 BEGIN /*!90000 PESSIMISTIC */; 来兼容 MySQL 语法。
+- 执行 `set @@global.tidb_txn_mode = 'pessimistic';`，使之后整个集群所有新创建 session 执行的所有显示事务（即非 autocommit 的事务）都会进入悲观事务模式。
 
-* 执行 set @@tidb_txn_mode = 'pessimistic';，使这个 session 执行的所有显式事务（即非 autocommit 的事务）都会进入悲观事务模式。
+可通过执行 `set @@global.tidb_txn_mode = '';` 还原回乐观事务模式。
 
-* 执行 set @@global.tidb_txn_mode = 'pessimistic';，使之后整个集群所有新创建 session 执行的所有显示事务（即非 autocommit 的事务）都会进入悲观事务模式。
+### Batch DML
 
+从上面可以看到，悲观事务在执行每个 DML 时都需要向 TiKV 发送加锁请求，如果事务内 DML 数量很多但 DML 操作很小时，加锁操作会显著增加事务的延迟，所以建议使用悲观事务时尽可能用一条 DML 操作更多的数据。
 
+例如：以下每条 INSERT 都需要向 TiKV 中写入悲观锁，带来了极大的延迟：
 
-# MySQL 兼容性  
+```sql
+BEGIN;
+INSERT INTO my_table VALUES (1);
+INSERT INTO my_table VALUES (2);
+INSERT INTO my_table VALUES (3);
+COMMIT;
+```
 
-**悲观事务的行为和 MySQL 基本一致（不一致之处详见和 MySQL InnoDB 的差异）**
+如果修改为 INSERT 多行，性能将会成倍的提升：
 
-- 当一行数据被加了悲观锁以后，其他尝试修改这一行的写事务会被阻塞，等待悲观锁的释放
+```sql
+BEGIN;
+INSERT INTO my_table VALUES (1), (2), (3);
+COMMIT;
+```
 
-![1.png](../../res/session1/chapter6/pessimistic-txn/1.png)
+### 隔离级别的选择
 
-* SELECT FOR UPDATE 会读取已提交的最新数据，并对读取到的数据加悲观锁
+TiDB 在悲观事务模式下支持了 2 种隔离级别。
 
-  ![2.png](../../res/session1/chapter6/pessimistic-txn/2.png)
+一 、是默认的与 MySQL 行为基本相同的可重复读隔离级别（Repeatable Read）隔离级别。
 
-* 死锁监测
+但因架构和实现细节的不同，TiDB 和 MySQL InnoDB 的行为在细节上有一些不同：
 
-  ![3.png](../../res/session1/chapter6/pessimistic-txn/3.png)
+1. TiDB 使用 range 作为 WHERE 条件，执行 DML 和 `SELECT FOR UPDATE` 语句时不会阻塞范围内并发的 `INSERT` 语句的执行。
 
-* UPDATE、DELETE 和 INSERT 语句都会读取已提交的最新的数据来执行，并对修改的数据加悲观锁。
+   InnoDB 通过实现 gap lock，支持阻塞 range 内并发的 `INSERT` 语句的执行，其主要目的是为了支持 statement based binlog，因此有些业务会通过将隔离级别降低至 READ COMMITTED 来避免 gap lock 导致的并发性能问题。TiDB 不支持 gap lock，也就不需要付出相应的并发性能的代价。
 
-* 当一行数据被加了悲观锁以后，其他尝试读取这一行的事务不会被阻塞，可以读到已提交的数据
+2. TiDB 不支持 `SELECT LOCK IN SHARE MODE`。
 
-  
+   使用这个语句执行的时候，效果和没有加锁是一样的，不会阻塞其他事务的读写。
 
-**由于只支持行锁模式，TiDB 在加锁行为和表现上和 MySQL 有一定的区别** .
+3. DDL 可能会导致悲观事务提交失败。
 
+   MySQL 在执行 DDL 时会被正在执行的事务阻塞住，而在 TiDB 中 DDL 操作会成功，造成悲观事务提交失败：`ERROR 1105 (HY000): Information schema is changed. [try again later]`。
+
+4. `START TRANSACTION WITH CONSISTENT SNAPSHOT` 之后，MySQL 仍然可以读取到之后在其他事务创建的表，而 TiDB 不能。
+
+5. autocommit 事务不支持悲观锁
+
+   所有自动提交的语句都不会加悲观锁，该类语句在用户侧感知不到区别，因为悲观事务的本质是把整个事务的重试变成了单个 DML 的重试，autocommit 事务即使在 TiDB 关闭重试时也会自动重试，效果和悲观事务相同。
+
+   自动提交的 select for update 语句也不会等锁。
+
+二 、是可设置 `SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;`
+
+ 使用与 Oracle 行为相同的读已提交隔离级别 （Read Committed）。
+
+由于历史原因，当前主流数据库的读已提交隔离级别本质上都是 Oracle 定义的一致性读隔离级别。  TiDB 为了适应这一历史原因，悲观事务中的读已提交隔离级别的实质行为也是一致性读。
+
+用户可以自由选择适合业务场景的隔离级别。
