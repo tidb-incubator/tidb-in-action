@@ -227,7 +227,7 @@ status-addr = ':8289'
 ```
 TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.1:8289) 来管理程序（实际的 URL 取决于你的 status-addr 设置）。
 ## TiDB Lightning Web 首页
-![图片](https://uploader.shimo.im/f/zyEj4S6boXsYYBt3.png!thumbnail)
+![1.png](/res/session2/chapter2/lightning-in-action/1.png)
 
 标题栏上图标所对应的功能，从左到右依次为：
 
