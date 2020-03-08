@@ -6,7 +6,7 @@
 .../tidb-ansible/resouce/bin/tidb-lightning-ctl -switch-mode=normal
 ```
 ## **数据库权限要求**
-TiDB Lightning 需要下游 TiDB root 权限，具体如下：
+TiDB Lightning 需要下游 TiDB 具有如下权限：
 
 | 权限 | SELECT | INSERT | UPDATE | DELETE | CREATE | DROP | ALTER | 
 |:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
@@ -20,13 +20,16 @@ tidb-lightning` 和 `tikv-importer` 这两个组件皆为资源密集程序，�
 
 为了优化效能，建议硬件配置如下：
 
-*  `tidb-lightning`
+`tidb-lightning`
+
   * 32+ 逻辑核 CPU
   * 足够储存整个数据源的 SSD 硬盘，读取速度越快越好
   * 使用万兆网卡，带宽需 300 MB/s 以上
   * 运行过程默认会占满 CPU，建议单独部署。条件不允许的情况下可以和其他组件（比如 `tidb-server`）部署在同一台机器上，然后通过配置 `region-concurrency` 限制 `tidb-lightning` 使用 CPU 资源。
-* `tikv-importer`
-  *  32+ 逻辑核 CPU
+
+`tikv-importer`
+
+  * 32+ 逻辑核 CPU
   * 40 GB+ 内存
   * 1 TB+ SSD 硬盘，IOPS 越高越好（要求 ≥8000）
 
@@ -40,19 +43,19 @@ tidb-lightning` 和 `tikv-importer` 这两个组件皆为资源密集程序，�
 ## 使用 TiDB-Ansible 部署 Lightning
 此方法操作简单，不需要过多的修改配置文件。需完成 TiDB-Ansible 用户的创建、互信、 sudo 操作。
 
-**Step1：**编辑 inventory.ini，分别配置一个 IP 来部署 tidb-lightning 和 tikv-importer。
+**Step1：** 编辑 inventory.ini，分别配置一个 IP 来部署 tidb-lightning 和 tikv-importer。
 
 ```
 ...
 [importer_server]
-# import_dir 为转换后的文件存放路径
+# import_dir 为转换的中间数据存放路径
 IS1 ansible_host=172.16.4.1 deploy_dir=/data/deploy tikv_importer_port=8287 import_dir=/data/import
 [lightning_server]
 # data_source_dir 为需导入的文件存放路径 
 LS1 ansible_host=172.16.4.2 deploy_dir=/data/deploy tidb_lightning_pprof_port=8289 data_source_dir=/data/wanted
 ...
 ```
-**Step2: **准备需要导入的数据放到配置文件中 data_source_dir 指定的路径。数据可以是mydumper 备份的 sql 文件或者是 csv 文件。如果是 csv 文件，则需要做额外配置。修改 conf/tidb-lightning.yml
+**Step2: ** 准备需要导入的数据放到配置文件中 data_source_dir 指定的路径。数据可以是mydumper 备份的 sql 文件或者是 csv 文件。如果是 csv 文件，则需要做额外配置。修改 conf/tidb-lightning.yml
 
 ```
 ...
@@ -78,19 +81,19 @@ backslash-escape = true
 trim-last-separator = false
 ...
 ```
-**Step3: **初始化 Lightning 和 Importer
+**Step3: ** 初始化 Lightning 和 Importer
 
 ```
 $ ansible-playbook bootsrap.yml -l IS1，LS
 ```
-**Step4: **部署 Lightning 和 Importer
+**Step4: ** 部署 Lightning 和 Importer
 
 ```
 $ ansible-playbook deploy.yml -l IS1，LS
 或者
 $ ansible-playbook deploy.yml --tags=lightning
 ```
-**Step5：**启动** **Importer 以及 Lightning
+**Step5：** 启动 Importer 以及 Lightning
 
 注意，必须先启动 Importer ，再启动 Lightning ，顺序不能换。
 
@@ -99,7 +102,7 @@ $ ansible-playbook deploy.yml --tags=lightning
 2. 在 Importer 目录下执行 *scripts/start_importer.sh*，启动 Importer
 3. 在 Lightning 目录下执行 *scripts/start_lightning.sh*，开始导入数据
 
-**Step6：**查看导入状态
+**Step6：** 查看导入状态
 
 * 使用grafana监控查看，后面会详细介绍。
 * 使用日志查看
@@ -107,7 +110,7 @@ $ ansible-playbook deploy.yml --tags=lightning
 若数据顺利导入完成，lightning日志会显示["the whole procedure completed"] ，["tidb lightning exit"]等关键信息。
 
 
-**Step7：**关闭 Importer
+**Step7：** 关闭 Importer
 
 数据导入完成后，在 Importer 目录下执行 * scripts/stop_importer.sh  *
 
@@ -1194,4 +1197,3 @@ lightning_apply_worker_seconds（直方图）
     * region
     * io
     * closed-engine
-
