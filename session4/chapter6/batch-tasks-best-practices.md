@@ -76,20 +76,20 @@ cd ${SPARK_HOME}
 假设你已经按照上面的步骤成功部署并启动了 TiSpark 集群，下面分别介绍使用 Spark-Shell 和 Spark-Submit 两种方式来作 OLAP 分析。
 
 ## Spark-Shell
-如果你的 TiSpark 版本是2.0以上，那么在 Spark-Shell 中你可以直接调用 Spark SQL 与 TiDB 数据库交互：
+如果你的 TiSpark 版本是 2.0 以上，那么在 Spark-Shell 中你可以直接调用 Spark SQL 与 TiDB 数据库交互：
 
 ```
 spark.sql("use test")
 spark.sql("select count(*) from user").show
 ```
-TiSpark 版本在2.0以前的需要在之前执行如下命令：
+TiSpark 版本在 2.0 以前的需要在之前执行如下命令：
 
 ```
 import org.apache.spark.sql.TiContext
 val ti = new TiContext(spark, List("127.0.0.1:2379")
 ti.tidbMapDatabase("test")
 ```
-之后便可以像上面那样调用 Spark SQL，不过建议尽量使用2.0以上版本的 TiSpark。
+之后便可以像上面那样调用 Spark SQL，不过建议尽量使用 2.0 以上版本的 TiSpark。
 
 ## Spark-Submit
 在实际开发中，Spark-Shell 多用于测试，更多时候需要将代码打包后使用 Spark-Submit 命令提交到 TiSpark 集群。
@@ -111,6 +111,7 @@ ti.tidbMapDatabase("test")
       <version>${spark.version}</version>
       <scope>provided<scope>
     </dependency>
+    
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-sql_2.11</artifactId>
@@ -126,8 +127,7 @@ SparkSession sc = SparkSession
       .builder()
       .appName("TiSpark example")
       .master("local")
-      .config("spark.sql.extensions", 
-            "org.apache.spark.sql.TiExtensions")
+      .config("spark.sql.extensions","org.apache.spark.sql.TiExtensions")
       .config("spark.tispark.pd.addresses", "127.0.0.1:2379")
       .getOrCreate();
 ```
@@ -149,12 +149,9 @@ sc.read().schema(getStructType())
 
 public StructType getStructType(){
         List<StructField> fields=new ArrayList<>();
-        
         StructField transferAccount = DataTypes.createStructField("transferAccount",DataTypes.StringType,false);
         StructField receiveAccount = DataTypes.createStructField("receiveAccount",DataTypes.StringType,false);
-
         StructField amount = DataTypes.createStructField("amount",DataTypes.createDecimalType(10,2),false);
-
         fields.add(transferAccount);
         fields.add(receiveAccount);
         fields.add(amount);
@@ -171,9 +168,9 @@ public StructType getStructType(){
 另一个任务从数据库读取数据进行分析，一段简单的分析代码如下：
 
 ```
-sc.sqlContext().udf()
-  .register("convert",newConvertUDF(),
-            DataTypes.createDecimalType(10,2));
+sc.sqlContext()
+  .udf()
+  .register("convert",newConvertUDF(),DataTypes.createDecimalType(10,2));
 sc.sql("select transferAccount,receiveAccount,convert(amount) from tableName where receiveAccount='0001'");
 ```
 上面的代码从表中筛选出账户号为0001的所有入账信息，其中 convert 是一个提供单位转换功能的自定义 UDF 函数，他在被注册到 Job 后可以直接在 Spark  SQL 中使用。
