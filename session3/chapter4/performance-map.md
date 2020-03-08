@@ -8,8 +8,10 @@
 * 然后经由这个 session 发送过来的 SQL 会在【Parse】中被转化为能够被 TiDB 所理解的语法树。这个时间可通过监控【Executor/Parse Duration】查看，通常应该在 10ms 以内。
 * 接下来 TiDB 会根据语法树生成物理执行计划，决定选择哪些索引或者算子来进行计算，这个过程被称作【Compile】。执行时间可通过监控【Executor/Compile Duration】
 * 生成的物理执行计划会在【Executor】中进行执行，如果是 DML 语句，TiDB 会将用户更新的内容先缓存在【Transaction】模块中，等到用户执行事务的 Commit 时再进行两阶段提交，将结果写入到 TiKV。对于复杂查询请求，TiDB 会通过 【DistSQL】模块并行地向 TiKV 的多个 region 发送查询请求，然后再按照执行计划中的流程计算出查询结果来。
-    * TiDB 发送给 TiKV 的请求耗时可以通过【KV】
-* TiDB 采用两阶段提交的事务模型，为此需要像 PD 请求一个全局的时间戳来表明事务的开始时间与提交时间，为了不给 PD 造成过多的请求压力，TiDB 通过单个线程一次为多个事务分配时间。事务在 channel 中等待的时间即 'PD TSO Wait Duration'，而 TiDB 像 PD 请求时间戳的网络请求的时间即 'PD TSO RPC duration'。
+    * TiDB 发送给 TiKV 的各种请求耗时可以通过监控【KV Request/KV Request Duration 99 by type】查看。
+* TiDB 采用两阶段提交的事务模型，为此需要向 PD 请求一个全局的时间戳来表明事务的开始时间与提交时间，为了不给 PD 造成过多的请求压力，TiDB 通过单个线程一次为多个事务分配时间。
+    * 事务在 channel 中等待的时间为监控【PD Client/PD TSO Wait Duration】
+    * TiDB 向 PD 请求时间戳的网络请求的时间为监控【PD Client/PD TSO RPC duration】。
 
 ## TiKV
 
@@ -21,8 +23,8 @@
         * 对于 TiDB 的 DistSQL 发送过来的 Coprocessor 请求会转发给 coprocessor-readpool。 （在 4.0 中 storage-readpool 与 coprocessor-readpool 已经被合并为了同一个线程池）
         * 如果是 PD 操作 region 的命令，则直接发送给 raftstore 线程。
     * scheduler 负责检测事务冲突，将复杂的事务操作转换为简单的 key-value 插入、删除，发送给 raftstore 线程。
-        * scheduler 线程执行各个命令的时间可以通过【Scheduler-{{cmd}}/Scheduler command duration】查看。例如，Prewrite 请求的执行时间在【Scheduler-prewrite】面板。
-        * 写请求完成 raft 日志复制到写入 RocksDB 的全部时间可以通过【Storage/async write duration】查看。
+        * scheduler 线程执行各个命令的时间可以通过监控【Scheduler-{{cmd}}/Scheduler command duration】查看。例如，Prewrite 请求的执行时间在【Scheduler-prewrite】面板。
+        * 写请求完成 raft 日志复制到写入 RocksDB 的全部时间可以通过监控【Storage/async write duration】查看。
     * raftstore 负责执行 raft 日志复制，将数据复制给多个副本。当日志在多个副本上达成一致后，会发送给 apply 线程。
         * 写请求消耗在 raftstore 线程的时间为【Raft IO/Commit log duration】（raft 日志在多数副本上达成一致所需的时间）与【Raft Propose/Propose wait duration】（在队列中等待被处理的时间）之和。
     * apply 线程负责将 scheduler 线程的 key-value 操作写入 RocksDB。然后通知 gRPC 线程返回结果给客户端。
