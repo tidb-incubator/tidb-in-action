@@ -2864,36 +2864,29 @@
 <p>TiDB&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x67B6;&#x6784;&#x57FA;&#x4E8E;Raft&#x7B97;&#x6CD5;&#xFF0C;&#x4FDD;&#x8BC1;&#x96C6;&#x7FA4;&#x6570;&#x636E;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x9AD8;&#x53EF;&#x7528;&#x3002;&#x4E24;&#x5730;&#x662F;&#x540C;&#x57CE;&#x3001;&#x5F02;&#x5730;&#xFF0C;&#x540C;&#x57CE;&#x53CC;&#x4E2D;&#x5FC3;&#x6307;&#x5728;&#x540C;&#x57CE;&#x6216;&#x4E34;&#x8FD1;&#x57CE;&#x5E02;&#x5EFA;&#x7ACB;&#x72EC;&#x7ACB;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#xFF0C;&#x53CC;&#x4E2D;&#x5FC3;&#x901A;&#x8FC7;&#x9AD8;&#x901F;&#x94FE;&#x8DEF;&#x5B9E;&#x65F6;&#x540C;&#x6B65;&#x6570;&#x636E;&#xFF0C;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#x76F8;&#x5BF9;&#x8F83;&#x5C0F;&#xFF0C;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x5728;&#x5F02;&#x5730;&#x57CE;&#x5E02;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x573A;&#x666F;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x628A;&#x4E1A;&#x52A1;&#x6D41;&#x91CF;&#x540C;&#x65F6;&#x6D3E;&#x53D1;&#x5230;&#x540C;&#x57CE;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#xFF0C;&#x901A;&#x8FC7;&#x63A7;&#x5236;Region leader&#x548C;PD leader &#x5206;&#x5E03;&#x5728;&#x540C;&#x57CE;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x3002;</p>
 <h2 id="11-&#x67B6;&#x6784;&#x56FE;">1.1 &#x67B6;&#x6784;&#x56FE;</h2>
 <p>&#x4EE5;&#x5317;&#x4EAC;&#x548C;&#x897F;&#x5B89;&#x4E3A;&#x4F8B;&#x9610;&#x8FF0;TiDB&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x67B6;&#x6784;&#x90E8;&#x7F72;&#x6A21;&#x578B;&#xFF0C;&#x8FD9;&#x91CC;&#x91C7;&#x7528;&#x5317;&#x4EAC;&#x4E24;&#x4E2A;&#x673A;&#x623F;IDC1&#x548C;IDC2&#xFF0C;&#x5F02;&#x5730;&#x897F;&#x5B89;&#x4E00;&#x4E2A;&#x673A;&#x623F;IDC3&#x3002;&#x5317;&#x4EAC;&#x4E0E;&#x897F;&#x5B89;&#x4E4B;&#x95F4;&#x5EF6;&#x8FDF;&#x4F4E;&#x4E8E;3ms&#xFF0C;&#x5317;&#x4EAC;&#x4E0E;&#x897F;&#x5B89;&#x4E4B;&#x95F4;&#x4F7F;&#x7528;ISP&#x4E13;&#x7EBF;&#xFF0C;&#x5EF6;&#x8FDF;&#x7EA6;20ms&#x3002;</p>
-<p>&#x5982;&#x4E0B;&#x56FE;1&#x6240;&#x793A;&#x4E3A;&#x96C6;&#x7FA4;&#x90E8;&#x7F72;&#x67B6;&#x6784;&#x56FE;&#xFF0C;&#x5177;&#x4F53;&#x5982;&#x4E0B;&#xFF1A;</p>
-<ul>
-<li>&#x90E8;&#x7F72;&#x91C7;&#x7528;&#x4E3B;&#x4ECE;&#x67B6;&#x6784;&#xFF0C;&#x4E3B;&#x96C6;&#x7FA4;&#x4F5C;&#x4E3A;&#x751F;&#x4EA7;&#x96C6;&#x7FA4;&#xFF0C;&#x627F;&#x62C5;&#x65E5;&#x5E38;&#x751F;&#x4EA7;&#x670D;&#x52A1;&#xFF0C;&#x4ECE;&#x96C6;&#x7FA4;&#x540C;&#x901A;&#x8FC7;binlog&#x5F02;&#x6B65;&#x540C;&#x6B65;&#x4E3B;&#x96C6;&#x7FA4;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4F5C;&#x4E3A;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x3002;</li>
-<li>&#x751F;&#x4EA7;&#x96C6;&#x7FA4;&#x91C7;&#x7528;&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#xFF0C;&#x5206;&#x522B;&#x4E3A;&#x5317;&#x4EAC;IDC1&#xFF0C;&#x5317;&#x4EAC;IDC2&#xFF0C;&#x897F;&#x5B89;IDC3&#x3002;</li>
-<li>&#x751F;&#x4EA7;&#x96C6;&#x7FA4;&#x91C7;&#x7528;5&#x526F;&#x672C;&#x6A21;&#x5F0F;&#xFF0C;&#x5176;&#x4E2D;IDC&#x548C;IDC2&#x5206;&#x522B;&#x653E;2&#x4E2A;&#x526F;&#x672C;&#xFF0C;IDC3&#x653E;1&#x4E2A;&#x526F;&#x672C;&#xFF1B;TiKV&#x6309;&#x673A;&#x67DC;&#x6253;Label&#xFF0C;&#x65E2;&#x6BCF;&#x4E2A;&#x673A;&#x67DC;&#x4E0A;&#x6709;&#x4E00;&#x4EFD;&#x526F;&#x672C;&#x3002;</li>
-<li>&#x4ECE;&#x96C6;&#x7FA4;&#x4E0E;&#x4E3B;&#x96C6;&#x7FA4;&#x76F4;&#x63A5;&#x901A;&#x8FC7;binlog&#x540C;&#x6B65;&#x91C7;&#x7528;&#x6D88;&#x606F;&#x7F13;&#x5B58;&#x670D;&#x52A1;&#x5668;Kafka&#x5B8C;&#x6210;&#x4E2D;&#x95F4;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x4E0E;&#x4F20;&#x8F93;&#x5DE5;&#x4F5C;&#x3002;</li>
-</ul>
-<p><img src="https://github.com/Ryan160922/tidb-in-action/blob/master/session4/chapter4/p1.png" alt="&#x56FE;&#x7247;" title="&#x56FE; 1  &#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x96C6;&#x7FA4;&#x67B6;&#x6784;&#x56FE;"> </p><p align="center"> &#x56FE; 1  &#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x96C6;&#x7FA4;&#x67B6;&#x6784;&#x56FE;</p>  <p></p>
-<p>&#x8BE5;&#x67B6;&#x6784;&#x5177;&#x5907;&#x9AD8;&#x53EF;&#x7528;&#x548C;&#x5BB9;&#x707E;&#x5907;&#x4EFD;&#x80FD;&#x529B;&#x3002;&#x76F8;&#x6BD4;&#x4E8E;&#x4E09;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x65B9;&#x6848;&#x4F18;&#x52BF;&#x5982;&#x4E0B;&#xFF1A;</p>
-<ul>
-<li>&#x5199;&#x5165;&#x901F;&#x5EA6;&#x66F4;&#x4F18;&#x3002;</li>
-<li>&#x4E24;&#x4E2D;&#x5FC3;&#x540C;&#x65F6;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x8D44;&#x6E90;&#x5229;&#x7528;&#x7387;&#x66F4;&#x9AD8;&#x3002;</li>
-<li>&#x53EF;&#x4FDD;&#x8BC1;&#x4EFB;&#x4E00;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x5931;&#x6548;&#x540E;&#xFF0C;&#x670D;&#x52A1;&#x53EF;&#x7528;&#x5E76;&#x4E14;&#x4E0D;&#x53D1;&#x751F;&#x6570;&#x636E;&#x4E22;&#x5931;&#x3002;
-&#x7F3A;&#x70B9;&#x5F88;&#x660E;&#x663E;&#xFF0C;&#x56E0;TiDB&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x57FA;&#x4E8E;Raft&#x7B97;&#x6CD5;&#xFF0C;&#x540C;&#x57CE;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x540C;&#x65F6;&#x5931;&#x6548;&#xFF0C;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x5B58;&#x5728;&#xFF0C;&#x4E0D;&#x6EE1;&#x8DB3;Raft&#x7B97;&#x6CD5;&#x5927;&#x591A;&#x6570;&#x8282;&#x70B9;&#x5B58;&#x5728;&#x8981;&#x6C42;&#xFF0C;&#x6700;&#x7EC8;&#x5C06;&#x5BFC;&#x81F4;&#x96C6;&#x7FA4;&#x4E0D;&#x53EF;&#x7528;&#x53CA;&#x90E8;&#x5206;&#x6570;&#x636E;&#x4E22;&#x5931;&#xFF0C;&#x800C;&#x4E14;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x53D1;&#x751F;&#x6982;&#x7387;&#x9AD8;&#x4E8E;&#x5F02;&#x5730;&#x4E09;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x635F;&#x5931;&#x6982;&#x7387;&#xFF1B;&#x53E6;&#x5916;&#x8BE5;&#x67B6;&#x6784;&#x6210;&#x672C;&#x8F83;&#x9AD8;&#x3002; </li>
-</ul>
+<p>&#x5982;&#x4E0B;&#x56FE;1&#x6240;&#x793A;&#x4E3A;&#x96C6;&#x7FA4;&#x90E8;&#x7F72;&#x67B6;&#x6784;&#x56FE;&#xFF0C;&#x5177;&#x4F53;&#x5982;&#x4E0B;&#xFF1A;
+1&#xFF09;&#x90E8;&#x7F72;&#x91C7;&#x7528;&#x4E3B;&#x4ECE;&#x67B6;&#x6784;&#xFF0C;&#x4E3B;&#x96C6;&#x7FA4;&#x4F5C;&#x4E3A;&#x751F;&#x4EA7;&#x96C6;&#x7FA4;&#xFF0C;&#x627F;&#x62C5;&#x65E5;&#x5E38;&#x751F;&#x4EA7;&#x670D;&#x52A1;&#xFF0C;&#x4ECE;&#x96C6;&#x7FA4;&#x540C;&#x901A;&#x8FC7;binlog&#x5F02;&#x6B65;&#x540C;&#x6B65;&#x4E3B;&#x96C6;&#x7FA4;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4F5C;&#x4E3A;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x3002;
+2&#xFF09;&#x751F;&#x4EA7;&#x96C6;&#x7FA4;&#x91C7;&#x7528;&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#xFF0C;&#x5206;&#x522B;&#x4E3A;&#x5317;&#x4EAC;IDC1&#xFF0C;&#x5317;&#x4EAC;IDC2&#xFF0C;&#x897F;&#x5B89;IDC3&#xFF1B;
+3&#xFF09;&#x751F;&#x4EA7;&#x96C6;&#x7FA4;&#x91C7;&#x7528;5&#x526F;&#x672C;&#x6A21;&#x5F0F;&#xFF0C;&#x5176;&#x4E2D;IDC&#x548C;IDC2&#x5206;&#x522B;&#x653E;2&#x4E2A;&#x526F;&#x672C;&#xFF0C;IDC3&#x653E;1&#x4E2A;&#x526F;&#x672C;&#xFF1B;TiKV&#x6309;&#x673A;&#x67DC;&#x6253;Label&#xFF0C;&#x65E2;&#x6BCF;&#x4E2A;&#x673A;&#x67DC;&#x4E0A;&#x6709;&#x4E00;&#x4EFD;&#x526F;&#x672C;&#x3002;
+4&#xFF09;&#x4ECE;&#x96C6;&#x7FA4;&#x4E0E;&#x4E3B;&#x96C6;&#x7FA4;&#x76F4;&#x63A5;&#x901A;&#x8FC7;binlog&#x540C;&#x6B65;&#x91C7;&#x7528;&#x6D88;&#x606F;&#x7F13;&#x5B58;&#x670D;&#x52A1;&#x5668;Kafka&#x5B8C;&#x6210;&#x4E2D;&#x95F4;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x4E0E;&#x4F20;&#x8F93;&#x5DE5;&#x4F5C;&#x3002;</p>
+<p><img src="../../res/session4/chapter4/3-dc/1.png" alt="P1.md">
+&#x56FE;1 &#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x96C6;&#x7FA4;&#x67B6;&#x6784;&#x56FE;</p>
+<p>&#x8BE5;&#x67B6;&#x6784;&#x5177;&#x5907;&#x9AD8;&#x53EF;&#x7528;&#x548C;&#x5BB9;&#x707E;&#x5907;&#x4EFD;&#x80FD;&#x529B;&#x3002;&#x76F8;&#x6BD4;&#x4E8E;&#x4E09;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x65B9;&#x6848;&#x4F18;&#x52BF;&#x5982;&#x4E0B;&#xFF1A;
+1&#xFF09;&#x5199;&#x5165;&#x901F;&#x5EA6;&#x66F4;&#x4F18;&#x3002;
+2&#xFF09;&#x4E24;&#x4E2D;&#x5FC3;&#x540C;&#x65F6;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x8D44;&#x6E90;&#x5229;&#x7528;&#x7387;&#x66F4;&#x9AD8;&#x3002;
+3&#xFF09;&#x53EF;&#x4FDD;&#x8BC1;&#x4EFB;&#x4E00;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x5931;&#x6548;&#x540E;&#xFF0C;&#x670D;&#x52A1;&#x53EF;&#x7528;&#x5E76;&#x4E14;&#x4E0D;&#x53D1;&#x751F;&#x6570;&#x636E;&#x4E22;&#x5931;&#x3002;
+&#x7F3A;&#x70B9;&#x5F88;&#x660E;&#x663E;&#xFF0C;&#x56E0;TiDB&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x57FA;&#x4E8E;Raft&#x7B97;&#x6CD5;&#xFF0C;&#x540C;&#x57CE;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x540C;&#x65F6;&#x5931;&#x6548;&#xFF0C;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x5B58;&#x5728;&#xFF0C;&#x4E0D;&#x6EE1;&#x8DB3;Raft&#x7B97;&#x6CD5;&#x5927;&#x591A;&#x6570;&#x8282;&#x70B9;&#x5B58;&#x5728;&#x8981;&#x6C42;&#xFF0C;&#x6700;&#x7EC8;&#x5C06;&#x5BFC;&#x81F4;&#x96C6;&#x7FA4;&#x4E0D;&#x53EF;&#x7528;&#x53CA;&#x90E8;&#x5206;&#x6570;&#x636E;&#x4E22;&#x5931;&#xFF0C;&#x800C;&#x4E14;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x53D1;&#x751F;&#x6982;&#x7387;&#x9AD8;&#x4E8E;&#x5F02;&#x5730;&#x4E09;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x635F;&#x5931;&#x6982;&#x7387;&#xFF1B;&#x53E6;&#x5916;&#x8BE5;&#x67B6;&#x6784;&#x6210;&#x672C;&#x8F83;&#x9AD8;&#x3002; </p>
 <h2 id="12-&#x90E8;&#x7F72;&#x8BF4;&#x660E;">1.2 &#x90E8;&#x7F72;&#x8BF4;&#x660E;</h2>
 <p>&#x4E0B;&#x9762;&#x5177;&#x4F53;&#x4ECB;&#x7ECD;&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x67B6;&#x6784;&#x90E8;&#x7F72;&#x8BE6;&#x60C5;&#x3002;</p>
-<p><img src="https://github.com/Ryan160922/tidb-in-action/blob/master/session4/chapter4/p2.png" alt="&#x56FE;&#x7247;" title="&#x56FE; 2  &#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x914D;&#x7F6E;&#x8BE6;&#x56FE;"></p><p align="center"> &#x56FE; 2  &#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x914D;&#x7F6E;&#x8BE6;&#x56FE;</p>  <p></p>
-<p>&#x5317;&#x4EAC;&#x3001;&#x897F;&#x5B89;&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x914D;&#x7F6E;&#x8BE6;&#x89E3;&#xFF1A;</p>
-<ul>
-<li>&#x5982;&#x56FE;2&#x6240;&#x793A;&#xFF0C;&#x5317;&#x4EAC;&#x6709;&#x4E24;&#x4E2A;&#x673A;&#x623F;IDC1&#x548C;IDC2&#xFF0C;&#x673A;&#x623F;IDC1&#x4E2D;&#x6709;&#x4E09;&#x5957;&#x673A;&#x67B6;RAC1&#x3001;RAC2&#x3001;RAC3&#xFF0C;&#x673A;&#x623F;IDC2&#x6709;&#x673A;&#x67B6;RAC4&#x3001;RAC5&#xFF1B;&#x897F;&#x5B89;&#x673A;&#x623F;IDC3&#x6709;&#x673A;&#x67B6;RAC6&#x3001;RAC7&#xFF0C;&#x5176;&#x4E2D;&#x673A;&#x67B6;RAC7&#x4E0A;&#x6709;&#x4ECE;&#x96C6;&#x7FA4;&#x7528;&#x4E8E;&#x5907;&#x4EFD;&#x7684;&#x670D;&#x52A1;&#x5668;&#x3002;</li>
-<li>&#x5982;&#x56FE;&#x4E2D;RAC1&#x673A;&#x67B6;&#x6240;&#x793A;&#xFF0C;TiDB&#x3001;PD&#x670D;&#x52A1;&#x90E8;&#x7F72;&#x5728;&#x540C;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#xFF0C;&#x8FD8;&#x6709;&#x4E24;&#x53F0;TiKV&#x670D;&#x52A1;&#x5668;&#xFF1B;&#x6BCF;&#x53F0;TiKV&#x670D;&#x52A1;&#x5668;&#x90E8;&#x7F72;2&#x4E2A;TiKV&#x5B9E;&#x4F8B;&#xFF0C;&#x5373;TiKV&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x6BCF;&#x5757;PCIe SSD&#x4E0A;&#x5355;&#x72EC;&#x90E8;&#x7F72;&#x4E00;&#x4E2A;TiKV&#x5B9E;&#x4F8B;&#xFF1B;RAC2&#x3001;RAC4&#x3001;RAC5&#x3001;RAC6&#x7C7B;&#x4F3C;&#x3002;</li>
-<li>&#x673A;&#x67B6;RAC3&#x4E0A;&#x5B89;&#x653E;TiDB-Server&#x53CA;&#x4E2D;&#x63A7;+&#x76D1;&#x63A7;&#x670D;&#x52A1;&#x5668;&#x3002;&#x90E8;&#x7F72;TiDB-Server&#xFF0C;&#x7528;&#x4E8E;&#x65E5;&#x5E38;&#x7BA1;&#x7406;&#x7EF4;&#x62A4;&#x3001;&#x5907;&#x4EFD;&#x4F7F;&#x7528;&#x3002;&#x4E2D;&#x63A7;+&#x76D1;&#x63A7;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x90E8;&#x7F72;TiDB-Ansible&#x3001;Prometheus&#xFF0C;Grafana&#x4EE5;&#x53CA;&#x6062;&#x590D;&#x5DE5;&#x5177;&#x3002;</li>
-<li>&#x4ECE;&#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#x8F83;&#x9AD8;&#xFF0C;&#x91C7;&#x7528;&#x6DF7;&#x5408;&#x90E8;&#x7F72;&#x65B9;&#x5F0F;&#xFF0C;&#x6BCF;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x90E8;&#x7F72;2&#x4E2A;TiKV&#x5B9E;&#x4F8B;&#xFF0C;&#x5176;&#x4E2D;&#x7684;3&#x53F0;&#x90E8;&#x7F72;TiDB&#x53CA;PD&#x3002;</li>
-<li><p>&#x5907;&#x4EFD;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x90E8;&#x7F72;Mydumper&#x53CA;Dranier&#x4EE5;PB&#x6A21;&#x5F0F;&#x8F93;&#x51FA;&#x4E3A;&#x589E;&#x91CF;&#x5907;&#x4EFD;&#x6587;&#x4EF6;&#x3002;</p>
-<p><br>
-<br></p>
-</li>
-</ul>
-<h1 id="2-&#x90E8;&#x7F72;&#x914D;&#x7F6E;">2. &#x90E8;&#x7F72;&#x914D;&#x7F6E;</h1>
+<p><img src="../../res/session4/chapter4/3-dc/2.png" alt="P2.md">
+&#x56FE;2 &#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x914D;&#x7F6E;&#x8BE6;&#x56FE;</p>
+<p>&#x5317;&#x4EAC;&#x3001;&#x897F;&#x5B89;&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x914D;&#x7F6E;&#x8BE6;&#x89E3;&#xFF1A;
+1&#xFF09;&#x5982;&#x56FE;2&#x6240;&#x793A;&#xFF0C;&#x5317;&#x4EAC;&#x6709;&#x4E24;&#x4E2A;&#x673A;&#x623F;IDC1&#x548C;IDC2&#xFF0C;&#x673A;&#x623F;IDC1&#x4E2D;&#x6709;&#x4E09;&#x5957;&#x673A;&#x67B6;RAC1&#x3001;RAC2&#x3001;RAC3&#xFF0C;&#x673A;&#x623F;IDC2&#x6709;&#x673A;&#x67B6;RAC4&#x3001;RAC5&#xFF1B;&#x897F;&#x5B89;&#x673A;&#x623F;IDC3&#x6709;&#x673A;&#x67B6;RAC6&#x3001;RAC7&#xFF0C;&#x5176;&#x4E2D;&#x673A;&#x67B6;RAC7&#x4E0A;&#x6709;&#x4ECE;&#x96C6;&#x7FA4;&#x7528;&#x4E8E;&#x5907;&#x4EFD;&#x7684;&#x670D;&#x52A1;&#x5668;&#x3002;
+2&#xFF09;&#x5982;&#x56FE;&#x4E2D;RAC1&#x673A;&#x67B6;&#x6240;&#x793A;&#xFF0C;TiDB&#x3001;PD&#x670D;&#x52A1;&#x90E8;&#x7F72;&#x5728;&#x540C;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#xFF0C;&#x8FD8;&#x6709;&#x4E24;&#x53F0;TiKV&#x670D;&#x52A1;&#x5668;&#xFF1B;&#x6BCF;&#x53F0;TiKV&#x670D;&#x52A1;&#x5668;&#x90E8;&#x7F72;2&#x4E2A;TiKV&#x5B9E;&#x4F8B;&#xFF0C;&#x5373;TiKV&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x6BCF;&#x5757;PCIe SSD&#x4E0A;&#x5355;&#x72EC;&#x90E8;&#x7F72;&#x4E00;&#x4E2A;TiKV&#x5B9E;&#x4F8B;&#xFF1B;RAC2&#x3001;RAC4&#x3001;RAC5&#x3001;RAC6&#x7C7B;&#x4F3C;&#x3002;
+3&#xFF09;&#x673A;&#x67B6;RAC3&#x4E0A;&#x5B89;&#x653E;TiDB-Server&#x53CA;&#x4E2D;&#x63A7;+&#x76D1;&#x63A7;&#x670D;&#x52A1;&#x5668;&#x3002;&#x90E8;&#x7F72;TiDB-Server&#xFF0C;&#x7528;&#x4E8E;&#x65E5;&#x5E38;&#x7BA1;&#x7406;&#x7EF4;&#x62A4;&#x3001;&#x5907;&#x4EFD;&#x4F7F;&#x7528;&#x3002;&#x4E2D;&#x63A7;+&#x76D1;&#x63A7;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x90E8;&#x7F72;TiDB-Ansible&#x3001;Prometheus&#xFF0C;Grafana&#x4EE5;&#x53CA;&#x6062;&#x590D;&#x5DE5;&#x5177;&#xFF1B;
+4&#xFF09;&#x4ECE;&#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#x8F83;&#x9AD8;&#xFF0C;&#x91C7;&#x7528;&#x6DF7;&#x5408;&#x90E8;&#x7F72;&#x65B9;&#x5F0F;&#xFF0C;&#x6BCF;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x90E8;&#x7F72;2&#x4E2A;TiKV&#x5B9E;&#x4F8B;&#xFF0C;&#x5176;&#x4E2D;&#x7684;3&#x53F0;&#x90E8;&#x7F72;TiDB&#x53CA;PD&#x3002;
+5&#xFF09;&#x5907;&#x4EFD;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x90E8;&#x7F72;Mydumper&#x53CA;Dranier&#x4EE5;PB&#x6A21;&#x5F0F;&#x8F93;&#x51FA;&#x4E3A;&#x589E;&#x91CF;&#x5907;&#x4EFD;&#x6587;&#x4EF6;&#x3002;</p>
+<h1 id="2-&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x90E8;&#x7F72;&#x914D;&#x7F6E;">2. &#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x90E8;&#x7F72;&#x914D;&#x7F6E;</h1>
 <h2 id="21-inventory&#x914D;&#x7F6E;&#x6A21;&#x677F;">2.1 inventory&#x914D;&#x7F6E;&#x6A21;&#x677F;</h2>
 <p>inventory.ini&#x914D;&#x7F6E;&#x6A21;&#x677F;&#x4FE1;&#x606F;</p>
 <pre><code>## TiDB Cluster Part
@@ -3018,70 +3011,73 @@ enable_bandwidth_limit = True
 collect_bandwidth_limit = 10000
 </code></pre><h2 id="22-inventory&#x914D;&#x7F6E;&#x8BE6;&#x89E3;">2.2 inventory&#x914D;&#x7F6E;&#x8BE6;&#x89E3;</h2>
 <p>inventory.ini&#x4F5C;&#x4E3A;&#x90E8;&#x7F72;TiDB&#x96C6;&#x7FA4;&#x7684;&#x91CD;&#x8981;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5728;&#x914D;&#x7F6E;&#x4E2D;&#x5EFA;&#x8BAE;&#x5BF9;&#x6240;&#x6709;&#x7684;&#x7EC4;&#x4EF6;&#x8FDB;&#x884C;&#x522B;&#x540D;&#x8BBE;&#x7F6E;&#xFF0C;&#x4EE5;&#x65B9;&#x4FBF;&#x4F7F;&#x7528;ansible-playbook&#x7684; -l &#x53C2;&#x6570;&#x64CD;&#x4F5C;&#x5355;&#x4E00;&#x7EC4;&#x4EF6;&#x7684;&#x5355;&#x4E00;&#x5B9E;&#x4F8B;&#x3002;</p>
-<ul>
-<li>TiDB Servers<pre><code>[tidb_servers]
+<p>1.TiDB Servers</p>
+<pre><code>[tidb_servers]
 TiDB-10  ansible_host=10.63.10.10  deploy_dir=/data/tidb_cluster/tidb 
 TiDB-11  ansible_host=10.63.10.11  deploy_dir=/data/tidb_cluster/tidb
-</code></pre></li>
-<li>TiKV Servers<br>
-&#x8BBE;&#x7F6E;&#x57FA;&#x4E8E;TiKV&#x771F;&#x5B9E;&#x7269;&#x7406;&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#x7684;label&#x4FE1;&#x606F;&#xFF0C;&#x65B9;&#x4FBF;PD&#x8FDB;&#x884C;&#x5168;&#x5C40;&#x7BA1;&#x7406;&#x548C;&#x8C03;&#x5EA6;&#x3002;<pre><code>[tikv_servers]
+</code></pre><p>2.TiKV Servers
+&#x8BBE;&#x7F6E;&#x57FA;&#x4E8E;tikv&#x771F;&#x5B9E;&#x7269;&#x7406;&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#x7684;label&#x4FE1;&#x606F;&#xFF0C;&#x65B9;&#x4FBF;PD&#x8FDB;&#x884C;&#x5168;&#x5C40;&#x7BA1;&#x7406;&#x548C;&#x8C03;&#x5EA6;&#x3002;</p>
+<pre><code>[tikv_servers]
 TiKV-30 ansible_host=10.63.10.30 deploy_dir=/data/tidb_cluster/tikv1 tikv_port=20171  labels=&quot;dc=1,rack=1,zone=1,host=30&quot;
 TiKV-31 ansible_host=10.63.10.31 deploy_dir=/data/tidb_cluster/tikv1 tikv_port=20171  labels=&quot;dc=1,rack=2,zone=2,host=31&quot;
-</code></pre></li>
-<li>PD&#x8BBE;&#x7F6E;<br>
-&#x4E3A;PD&#x8BBE;&#x7F6E;TiKV&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#x7B49;&#x7EA7;&#x4FE1;&#x606F;&#x3002;<pre><code>[pd_servers:vars]
+</code></pre><p>3.PD&#x8BBE;&#x7F6E;
+&#x4E3A;PD&#x8BBE;&#x7F6E;TiKV&#x90E8;&#x7F72;&#x4F4D;&#x7F6E;&#x7B49;&#x7EA7;&#x4FE1;&#x606F;&#x3002;</p>
+<pre><code>[pd_servers:vars]
 location_labels = [&quot;dc&quot;,&quot;rack&quot;,&quot;zone&quot;,&quot;host&quot;]
 </code></pre><h2 id="23-labels&#x8BBE;&#x8BA1;">2.3 Labels&#x8BBE;&#x8BA1;</h2>
-&#x5728;&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x90E8;&#x7F72;&#x65B9;&#x5F0F;&#x4E0B;&#xFF0C;&#x5BF9;&#x4E8E;Labels&#x7684;&#x8BBE;&#x8BA1;&#x4E5F;&#x9700;&#x8981;&#x5145;&#x5206;&#x8003;&#x8651;&#x5230;&#x7CFB;&#x7EDF;&#x7684;&#x53EF;&#x7528;&#x6027;&#x548C;&#x5BB9;&#x707E;&#x80FD;&#x529B;&#xFF0C;&#x5EFA;&#x8BAE;&#x6839;&#x636E;&#x90E8;&#x7F72;&#x7684;&#x7269;&#x7406;&#x7ED3;&#x6784;&#x6765;&#x5B9A;&#x4E49;DC&#x3001;AZ&#x3001;RACK&#x3001;HOST&#x56DB;&#x4E2A;&#x7B49;&#x7EA7;&#x3002;</li>
-</ul>
-<p><img src="https://github.com/Ryan160922/tidb-in-action/blob/master/session4/chapter4/p3.png" alt="&#x56FE;&#x7247;" title="&#x56FE; 3 label&#x903B;&#x8F91;&#x5B9A;&#x4E49;&#x56FE;"></p><p align="center"> &#x56FE; 3 label&#x903B;&#x8F91;&#x5B9A;&#x4E49;&#x56FE;</p><p></p>
+<p>&#x5728;&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x90E8;&#x7F72;&#x65B9;&#x5F0F;&#x4E0B;&#xFF0C;&#x5BF9;&#x4E8E;Labels&#x7684;&#x8BBE;&#x8BA1;&#x4E5F;&#x9700;&#x8981;&#x5145;&#x5206;&#x8003;&#x8651;&#x5230;&#x7CFB;&#x7EDF;&#x7684;&#x53EF;&#x7528;&#x6027;&#x548C;&#x5BB9;&#x707E;&#x80FD;&#x529B;&#xFF0C;&#x5EFA;&#x8BAE;&#x6839;&#x636E;&#x90E8;&#x7F72;&#x7684;&#x7269;&#x7406;&#x7ED3;&#x6784;&#x6765;&#x5B9A;&#x4E49;DC&#x3001;AZ&#x3001;RACK&#x3001;HOST&#x56DB;&#x4E2A;&#x7B49;&#x7EA7;&#x3002;</p>
+<p><img src="../../res/session4/chapter4/3-dc/3.png" alt="P3.md">
+&#x56FE;3 label&#x903B;&#x8F91;&#x5B9A;&#x4E49;&#x56FE;</p>
 <h2 id="24-&#x53C2;&#x6570;&#x914D;&#x7F6E;">2.4 &#x53C2;&#x6570;&#x914D;&#x7F6E;</h2>
 <p>&#x5728;&#x4E24;&#x5730;&#x4E09;&#x4E2D;&#x5FC3;&#x7684;&#x67B6;&#x6784;&#x90E8;&#x7F72;&#x4E2D;&#xFF0C;&#x4ECE;&#x6027;&#x80FD;&#x4F18;&#x5316;&#x7684;&#x89D2;&#x5EA6;&#xFF0C;&#x5EFA;&#x8BAE;&#x5BF9;&#x96C6;&#x7FA4;&#x4E2D;&#x76F8;&#x5173;&#x7EC4;&#x4EF6;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x8C03;&#x6574;&#x3002;</p>
 <ul>
-<li><p>tikv.yml&#x4E2D;&#x76F8;&#x5173;&#x53C2;&#x6570;&#x4F18;&#x5316;<br>
-&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF1A;<tidb_ansible_path>/tidb-ansible/conf/tikv.yml <br>
+<li><p>tikv.yml&#x4E2D;&#x76F8;&#x5173;&#x53C2;&#x6570;&#x4F18;&#x5316;
+&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF1A;<tidb_ansible_path>/tidb-ansible/conf/tikv.yml
 &#x9700;&#x8981;&#x5728;&#x96C6;&#x7FA4;&#x5B89;&#x88C5;&#x524D;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#x3002;</tidb_ansible_path></p>
 <ul>
-<li><p>block-cache-size<br>
-&#x5728;TiKV&#x5355;&#x673A;&#x591A;&#x5B9E;&#x4F8B;&#x73AF;&#x5883;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x6309;&#x7167;&#x4EE5;&#x4E0B;&#x516C;&#x5F0F;&#x8C03;&#x6574;&#x8BE5;&#x503C;&#x3002;<br>
-capacity = MEM_TOTAL * 0.5 / TiKV &#x5B9E;&#x4F8B;&#x6570;&#x91CF; <br>
+<li><p>block-cache-size
+&#x5728;TiKV&#x5355;&#x673A;&#x591A;&#x5B9E;&#x4F8B;&#x73AF;&#x5883;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x6309;&#x7167;&#x4EE5;&#x4E0B;&#x516C;&#x5F0F;&#x8C03;&#x6574;&#x8BE5;&#x503C;&#x3002;
+capacity = MEM_TOTAL * 0.5 / TiKV &#x5B9E;&#x4F8B;&#x6570;&#x91CF;
 &#x793A;&#x4F8B;&#x5982;&#x4E0B;:</p>
 <pre><code>Storage:
- block-cache:
-   capacity: &#x201C;1G&#x201D;
+block-cache:
+capacity: &#x201C;1G&#x201D;
 </code></pre></li>
-<li><p>&#x542F;&#x7528;grpc&#x6D88;&#x606F;&#x538B;&#x7F29;<br>
+<li><p>&#x542F;&#x7528;grpc&#x6D88;&#x606F;&#x538B;&#x7F29;
 &#x7531;&#x4E8E;&#x6D89;&#x53CA;&#x5230;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x5728;&#x7F51;&#x7EDC;&#x4E2D;&#x4F20;&#x8F93;&#xFF0C;&#x9700;&#x8981;&#x5F00;&#x542F;grpc&#x6D88;&#x606F;&#x538B;&#x7F29;&#xFF0C;&#x964D;&#x4F4E;&#x7F51;&#x7EDC;&#x6D41;&#x91CF;&#x3002;</p>
 <pre><code>server:
- grpc-compression-type: gzip
+grpc-compression-type: gzip
 </code></pre></li>
 </ul>
 </li>
-<li><p>pd.yml&#x4E2D;&#x76F8;&#x5173;&#x53C2;&#x6570;&#x4F18;&#x5316;<br>
-&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF1A;<tidb_ansible_path>/tidb-ansible/conf/pd.yml <br>
-&#x9700;&#x8981;&#x5728;&#x96C6;&#x7FA4;&#x5B89;&#x88C5;&#x524D;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#x3002;<br>
-&#x8C03;&#x6574;PD balance&#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;&#xFF0C;&#x63D0;&#x9AD8;PD&#x5BB9;&#x5FCD;&#x5EA6;&#x3002;</tidb_ansible_path></p>
+<li><p>pd.yml&#x4E2D;&#x76F8;&#x5173;&#x53C2;&#x6570;&#x4F18;&#x5316;
+&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF1A;<tidb_ansible_path>/tidb-ansible/conf/pd.yml
+&#x9700;&#x8981;&#x5728;&#x96C6;&#x7FA4;&#x5B89;&#x88C5;&#x524D;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#x3002;</tidb_ansible_path></p>
+</li>
+</ul>
+<p>&#x8C03;&#x6574;PD balance&#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;&#xFF0C;&#x63D0;&#x9AD8;PD&#x5BB9;&#x5FCD;&#x5EA6;&#x3002;</p>
 <pre><code>schedule:
-tolerant-size-ratio: 20.0
-</code></pre></li>
-<li><p>DC3 TiKV&#x7F51;&#x7EDC;&#x4F18;&#x5316;<br>
-&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF1A;<tidb_cluster_path>/tikv/conf/tikv.toml<br>
-&#x4FEE;&#x6539;&#x6B64;&#x53C2;&#x6570;&#xFF0C;&#x62C9;&#x957F;&#x4E86;&#x5F02;&#x5730;&#x526F;&#x672C;&#x53C2;&#x4E0E;&#x9009;&#x4E3E;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5C3D;&#x91CF;&#x907F;&#x514D;&#x5F02;&#x5730;TiKV&#x4E2D;&#x7684;&#x526F;&#x672C;&#x53C2;&#x4E0E;raft&#x9009;&#x4E3E;&#x3002;&#x5EFA;&#x8BAE;&#x5728;&#x96C6;&#x7FA4;&#x90E8;&#x7F72;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x4E3A;DC3&#x7684;TiKV&#x589E;&#x52A0;&#x989D;&#x5916;&#x914D;&#x7F6E;&#x540E;&#x91CD;&#x542F;DC3&#x7684;TiKV&#x3002;</tidb_cluster_path></p>
+  tolerant-size-ratio: 20.0
+</code></pre><ul>
+<li>DC3 TiKV&#x7F51;&#x7EDC;&#x4F18;&#x5316;
+&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF1A;<tidb_cluster_path>/tikv/conf/tikv.toml</tidb_cluster_path></li>
+</ul>
+<p>&#x4FEE;&#x6539;&#x6B64;&#x53C2;&#x6570;&#xFF0C;&#x62C9;&#x957F;&#x4E86;&#x5F02;&#x5730;&#x526F;&#x672C;&#x53C2;&#x4E0E;&#x9009;&#x4E3E;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5C3D;&#x91CF;&#x907F;&#x514D;&#x5F02;&#x5730;TiKV&#x4E2D;&#x7684;&#x526F;&#x672C;&#x53C2;&#x4E0E;raft&#x9009;&#x4E3E;&#x3002;&#x5EFA;&#x8BAE;&#x5728;&#x96C6;&#x7FA4;&#x90E8;&#x7F72;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x4E3A;DC3&#x7684;TiKV&#x589E;&#x52A0;&#x989D;&#x5916;&#x914D;&#x7F6E;&#x540E;&#x91CD;&#x542F;DC3&#x7684;TiKV&#x3002;</p>
 <pre><code>raftstore: 
-raft-min-election-timeout-ticks= 1000 
-raft-max-election-timeout-ticks= 1020
-</code></pre></li>
-<li><p>&#x8C03;&#x5EA6;&#x8BBE;&#x7F6E;<br>
+ raft-min-election-timeout-ticks= 1000 
+ raft-max-election-timeout-ticks= 1020
+</code></pre><ul>
+<li><p>&#x8C03;&#x5EA6;&#x8BBE;&#x7F6E;
 &#x5728;&#x96C6;&#x7FA4;&#x542F;&#x52A8;&#x540E;&#xFF0C;&#x901A;&#x8FC7;PD control&#x5DE5;&#x5177;&#x8FDB;&#x884C;&#x8C03;&#x5EA6;&#x7B56;&#x7565;&#x4FEE;&#x6539;&#x3002;</p>
 <ul>
-<li>&#x4FEE;&#x6539;TiKV raft&#x526F;&#x672C;&#x6570;<br>
+<li>&#x4FEE;&#x6539;TiKV raft&#x526F;&#x672C;&#x6570;
 &#x6309;&#x7167;&#x5B89;&#x88C5;&#x65F6;&#x89C4;&#x5212;&#x597D;&#x7684;&#x526F;&#x672C;&#x6570;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#xFF0C;&#x5728;&#x672C;&#x4F8B;&#x4E2D;&#x4E3A;5&#x526F;&#x672C;&#x3002;<pre><code>config set max-replicas 5
 </code></pre></li>
-<li><p>&#x7981;&#x6B62;&#x5411;&#x5F02;&#x5730;&#x673A;&#x623F;&#x8C03;&#x5EA6;raft leader<br>
+<li><p>&#x7981;&#x6B62;&#x5411;&#x5F02;&#x5730;&#x673A;&#x623F;&#x8C03;&#x5EA6;raft leader
 &#x5F53;raft leader&#x5728;&#x5F02;&#x5730;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x65F6;&#xFF0C;&#x4F1A;&#x9020;&#x6210;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x672C;&#x5730;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x4E0E;&#x5F02;&#x5730;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x95F4;&#x7684;&#x7F51;&#x7EDC;&#x6D88;&#x8017;&#xFF0C;&#x540C;&#x65F6;&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x5E26;&#x5BBD;&#x548C;&#x5EF6;&#x8FDF;&#x7684;&#x5F71;&#x54CD;&#xFF0C;&#x4E5F;&#x4F1A;&#x5BF9;tidb&#x7684;&#x96C6;&#x7FA4;&#x6027;&#x80FD;&#x4EA7;&#x751F;&#x5F71;&#x54CD;&#x3002;&#x9700;&#x8981;&#x7981;&#x7528;raft leader&#x7684;&#x8C03;&#x5EA6;&#x3002;</p>
 <pre><code>config set label-property reject-leader dc dc3
 </code></pre></li>
-<li><p>&#x8BBE;&#x7F6E;PD&#x7684;&#x4F18;&#x5148;&#x7EA7;<br>
+<li><p>&#x8BBE;&#x7F6E;PD&#x7684;&#x4F18;&#x5148;&#x7EA7;
 &#x4E3A;&#x4E86;&#x907F;&#x514D;&#x51FA;&#x73B0;&#x5F02;&#x5730;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x7684;PD&#x6210;&#x4E3A;leader&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x672C;&#x5730;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x7684;PD &#x4F18;&#x5148;&#x7EA7;&#x8C03;&#x9AD8;(&#x6570;&#x5B57;&#x8D8A;&#x5927;&#xFF0C;&#x4F18;&#x5148;&#x7EA7;&#x8D8A;&#x9AD8;)&#xFF0C;&#x5C06;&#x5F02;&#x5730;&#x7684;PD&#x4F18;&#x5148;&#x7EA7;&#x8C03;&#x4F4E;&#x3002;</p>
 <pre><code>member leader_priority PD-10 5
 member leader_priority PD-11 5
@@ -3135,7 +3131,7 @@ member leader_priority PD-14 1
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"4.3 两地三中心","level":"5.4.3","depth":2,"next":{"title":"4.4 AWS 跨 AZ 部署 TiDB","level":"5.4.4","depth":2,"path":"session4/chapter4/cross-az-in-aws.md","ref":"session4/chapter4/cross-az-in-aws.md","articles":[]},"previous":{"title":"4.2 两中心同步复制方案（三副本 Raft）","level":"5.4.2","depth":2,"path":"session4/chapter4/two-dc-raft.md","ref":"session4/chapter4/two-dc-raft.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter4/3-dc.md","mtime":"2020-03-08T12:29:00.300Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:29:36.585Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"4.3 两地三中心","level":"5.4.3","depth":2,"next":{"title":"4.4 AWS 跨 AZ 部署 TiDB","level":"5.4.4","depth":2,"path":"session4/chapter4/cross-az-in-aws.md","ref":"session4/chapter4/cross-az-in-aws.md","articles":[]},"previous":{"title":"4.2 两中心同步复制方案（三副本 Raft）","level":"5.4.2","depth":2,"path":"session4/chapter4/two-dc-raft.md","ref":"session4/chapter4/two-dc-raft.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter4/3-dc.md","mtime":"2020-03-08T12:33:10.219Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:33:47.651Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
