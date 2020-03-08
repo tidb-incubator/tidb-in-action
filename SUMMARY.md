@@ -8,7 +8,7 @@
 * [2 说存储](session1/chapter2/tidb-storage.md)  @黄东旭
 * [3 谈计算](session1/chapter3/tidb-computing.md)
     * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md) @[Qiannan](https://github.com/hsqlu)
-    * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md)
+    * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md) @[Qiannan](https://github.com/hsqlu)
     * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @[zhiqiangxu](https://github.com/zhiqiangxu)
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
@@ -117,8 +117,11 @@
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
 * [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
-    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md) @[石壹笑](https://github.com/aierui)
-    * [1.2 SQL Plan Management](session3/chapter1/sql-plan-management.md)
+    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui)
+    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md)
+    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md)
+    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md)
+    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 识别集群热点和业务模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 分析 SQL 执行性能](session3/chapter2/statements.md) @李迅
@@ -189,7 +192,7 @@
     * [6.9 流程调度工具与 TiSpark 的集成应用](session4/chapter6/tidb-streaming-scheduler-tools.md)@王娟
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
-    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚 
+    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
     * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东 @谭仁刚
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
@@ -206,8 +209,9 @@
 
 * 1 TiDB 开源社区历史及其现状
     * [1.1 TiDB 开源社区现状及发展简史](session5/chapter1/a-brief-history-of-tidb.md) @崔秋
-    * [1.2 TiDB 开源生态介绍](session5/chapter1/tidb-open-source-ecosystem.md)
+    * [1.2 TiDB 开源生态介绍](session5/chapter1/tidb-open-source-ecosystem.md) @殷成文 @杨可奥 @童牧 @叶奔
     * [1.3 TiDB 开源社区治理](session5/chapter1/community-governance.md) @崔秋
+    * [1.4 TiDB 开源社区重要合作开发](session5/chapter1/community-cooperations.md) @唐刘 @崔秋
 * 2 TiDB 开源生态
     * 2.1 社区重要活动介绍
         * [2.1.1 TiDB Devcon](session5/chapter2/devcon.md) @余梦杰
@@ -215,13 +219,12 @@
         * [2.1.3 Infra Meetup](session5/chapter2/infra-meetup.md) @唐小丽
         * [2.1.4 TiDB Hackathon](session5/chapter2/hackathon.md) @李莎莎
         * [2.1.5 TUG 企业行](session5/chapter2/tug-event.md) @房晓乐
-    * [2.2 社区重要合作开发](session5/chapter2/community-cooperations.md) @唐刘 @崔秋
-    * [2.3 TUG（TiDB User Group）](session5/chapter2/tidb-user-group.md) @张婵 @彭琴
-    * [2.4 Talent Plan](session5/chapter2/talent-plan.md) @王琳琳
-    * [2.5 Challenge Program](session5/chapter2/challenge-program.md) @张建
-    * [2.6 PingCAP Incubator](session5/chapter2/pingcap-incubator.md) @姚维 @崔秋
-    * [2.7 PingCAP University](session5/chapter2/pingcap-university.md) @彭琴
-    * [2.8 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
+    * [2.2 TUG（TiDB User Group）](session5/chapter2/tidb-user-group.md) @张婵 @彭琴
+    * [2.3 Talent Plan](session5/chapter2/talent-plan.md) @王琳琳
+    * [2.4 Challenge Program](session5/chapter2/challenge-program.md) @张建
+    * [2.5 PingCAP Incubator](session5/chapter2/pingcap-incubator.md) @姚维 @崔秋
+    * [2.6 PingCAP University](session5/chapter2/pingcap-university.md) @彭琴
+    * [2.7 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
 
 ## 附录
 
