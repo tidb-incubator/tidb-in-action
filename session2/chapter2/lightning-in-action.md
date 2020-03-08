@@ -112,9 +112,9 @@ $ ansible-playbook deploy.yml --tags=lightning
 数据导入完成后，在 Importer 目录下执行 * scripts/stop_importer.sh  *
 
 ## 手动部署 TiDB Lightning
-# 从官网下载与TiDB版本一直的Lightning安装包，并将安装包上传至满足硬件要求的服务器。解压安装包后在bin目录下新建tikv-importer.toml，tidb-lightning.toml，详细配置参数见官网地址：[https://pingcap.com/docs-cn/stable/reference/tools/tidb-lightning/deployment/](https://pingcap.com/docs-cn/stable/reference/tools/tidb-lightning/deployment/)。TiDB Lightning启停等使用方式与ansible部署一致。
+从官网下载与TiDB版本一直的Lightning安装包，并将安装包上传至满足硬件要求的服务器。解压安装包后在bin目录下新建tikv-importer.toml，tidb-lightning.toml，详细配置参数见TiDB Lightning配置参数小节，Lightning启停等使用方式与ansible部署一致。
 
- TiDB Lightning TiDB-Backend
+# TiDB Lightning TiDB-Backend
 ## Importer-backend 和 TiDB-backend 的区别
 TiDB Lightning 的后端决定 tidb-lightning 将如何把将数据导入到目标集群中。目前，TiDB Lightning 支持 Importer-backend（默认）和 TiDB-backend 两种后端，两者导入数据的区别如下：
 
@@ -227,7 +227,7 @@ status-addr = ':8289'
 ```
 TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.1:8289) 来管理程序（实际的 URL 取决于你的 status-addr 设置）。
 ## TiDB Lightning Web 首页
-![图片](https://uploader.shimo.im/f/zyEj4S6boXsYYBt3.png!thumbnail)
+![1.png](/res/session2/chapter2/lightning-in-action/1.png)
 
 标题栏上图标所对应的功能，从左到右依次为：
 
