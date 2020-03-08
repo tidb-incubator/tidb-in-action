@@ -4,13 +4,13 @@
 
 自 2018 年 12 月份 Talent Plan 项目启动至今（北京时间 2020 年 3 月 7 日），线上课程共吸引国内外实名认证课程爱好者 **400** 余人，40 余人顺利通过线上课程的考核；线下实训项目成功举办 4 期，38 名同学顺利结业，15 名同学在通过 Talent Plan 课程考核后陆续加入 PingCAP，其他同学也持续在 TiDB Community 中发挥自己的光和热。
 
-![Talent Plan Milestones](https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-milestones.png)
+![Talent Plan Milestones](/res/session5/chapter2/talent-plan/talent-plan-milestones.png)
 
 ## 课程内容
 
 Talent Plan 是为社区提供的学习资料，也在社区的建议和反馈中不断优化成长。在社区小伙伴的共同努力下，Talent Plan 正在进行新一轮的升级，这是一个涵盖了开源协作、Rust 语言、分布式数据库、分布式系统、TiDB/TiKV 原理精讲等线上学习课程以及 TiDB 开源社区项目线下实训课程的更大的学习版图。课程框架见下图：
 
-![Talent Plan Framework](https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-framework.png)
+![Talent Plan Framework](/res/session5/chapter2/talent-plan/talent-plan-framework.jpg)
 
 ### 线上课程
 
@@ -65,7 +65,7 @@ TinyKV 类似已有的 [Distributed Systems in Rust](https://github.com/pingcap/
 
 截止目前，线下实训已成功举办 4 期，累计线下学员数 41 人，累计覆盖 10 所高校，38 名同学顺利结业。
 
-![Talent Plan Students](https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-students.png)
+![Talent Plan Students](/res/session5/chapter2/talent-plan/talent-plan-students.png)
 
 ## 学习路径
 
@@ -104,21 +104,16 @@ TinyKV 类似已有的 [Distributed Systems in Rust](https://github.com/pingcap/
 
 ## 学员们说
 
-> “我超级喜欢 PingCAP 的氛围还有培训的方式。这次培训从语言和数据库理论学习到跟进最新论文，再到动手实操小 Demo，了解 TiDB 各个部分实现原理以及最后阅读分析 TiDB 各个模块的代码，丰富的课程让我对数据库的理解又加深了一层。希望自己以后的研究东西能够贴近到具体的场景和系统去发现问题，并把自己的研究成果落地。我也非常期待 PingCAP Global Meetup 之旅和各路大牛交流。其实，现在内心还没平复下来，这次来北京收获太多了，现在话都组织不好了。” ——兰海（第一期优秀学员）
-
-> “参加 Talent Plan 是一次非常珍贵的体验，一方面是学到了许多的没有接触过的分布式领域的知识，另一方面也结识了来自全国各个高校的优秀的小伙伴以及 PingCAP 的各位厉害的导师，也为我之后来 PingCAP 实习埋下了伏笔。”（节选自[这门分布式 KV 存储系统课程教会了我什么？ | 我与 Talent Plan](https://zhuanlan.zhihu.com/p/78493213)）——张艺文（第二期优秀学员）
-
-> “参加这次 Talent Plan，我不仅学习到了丰富的知识，还深入地参与到具有挑战性的工程项目。更重要的是交到了一群非常优秀、靠谱的朋友。非常感谢 PingCAP 举办这个活动，希望 Talent Plan 越办越好。”——黄文俊（第三期优秀学员）
-
-> “经过 Talent Plan 的学习让我明白了，在实验室里 fancy 的想法在工业界可能并不 work，实际应用环境要比实验环境严格苛刻很多很多。经过这次线下课程的学习，我以后在设计方案的时候会着重考虑从现实的角度出发。”——邹欢（第三期最具潜力奖获得者）
-
-> “这次参加 Talent Plan 收获十分巨大，首先是认识了一群很棒的小伙伴，正如崔秋老师说的，一个月时间很短，但是友谊却是一辈子的。然后，我对整个 TiDB 生态以及其中的各个模块有了更高层次的认识和理解，也切身体验到了 PingCAP 很 Cool 的 Geek 氛围，总之度过了很有意义的一个月。”——林宁（第三期最具潜力奖获得者）
-
-> "工作后参加 Talent Plan 是非常神奇的体验。在这不仅能学习到 TiDB 各个模块的基础理论，还能听到一线的开发直接分享在生产环境中实践的一些细节和经验。最后还能和大家一起齐心协力去落地一个项目，并见证它成为这个优秀开源数据库的一部分。感觉自己回到了久违的学生时光，再一次体验快速成长，并重新找到当初选择这个行业的初心"——郑向升（第四期学员代表）
+> * “我超级喜欢 PingCAP 的氛围还有培训的方式。这次培训从语言和数据库理论学习到跟进最新论文，再到动手实操小 Demo，了解 TiDB 各个部分实现原理以及最后阅读分析 TiDB 各个模块的代码，丰富的课程让我对数据库的理解又加深了一层。希望自己以后的研究东西能够贴近到具体的场景和系统去发现问题，并把自己的研究成果落地。我也非常期待 PingCAP Global Meetup 之旅和各路大牛交流。其实，现在内心还没平复下来，这次来北京收获太多了，现在话都组织不好了。” ——兰海（第一期优秀学员）
+> * “参加 Talent Plan 是一次非常珍贵的体验，一方面是学到了许多的没有接触过的分布式领域的知识，另一方面也结识了来自全国各个高校的优秀的小伙伴以及 PingCAP 的各位厉害的导师，也为我之后来 PingCAP 实习埋下了伏笔。”（节选自[这门分布式 KV 存储系统课程教会了我什么？ | 我与 Talent Plan](https://zhuanlan.zhihu.com/p/78493213)）——张艺文（第二期优秀学员）
+> * “参加这次 Talent Plan，我不仅学习到了丰富的知识，还深入地参与到具有挑战性的工程项目。更重要的是交到了一群非常优秀、靠谱的朋友。非常感谢 PingCAP 举办这个活动，希望 Talent Plan 越办越好。”——黄文俊（第三期优秀学员）
+> * “经过 Talent Plan 的学习让我明白了，在实验室里 fancy 的想法在工业界可能并不 work，实际应用环境要比实验环境严格苛刻很多很多。经过这次线下课程的学习，我以后在设计方案的时候会着重考虑从现实的角度出发。”——邹欢（第三期最具潜力奖获得者）
+> * “这次参加 Talent Plan 收获十分巨大，首先是认识了一群很棒的小伙伴，正如崔秋老师说的，一个月时间很短，但是友谊却是一辈子的。然后，我对整个 TiDB 生态以及其中的各个模块有了更高层次的认识和理解，也切身体验到了 PingCAP 很 Cool 的 Geek 氛围，总之度过了很有意义的一个月。”——林宁（第三期最具潜力奖获得者）
+> * "工作后参加 Talent Plan 是非常神奇的体验。在这不仅能学习到 TiDB 各个模块的基础理论，还能听到一线的开发直接分享在生产环境中实践的一些细节和经验。最后还能和大家一起齐心协力去落地一个项目，并见证它成为这个优秀开源数据库的一部分。感觉自己回到了久违的学生时光，再一次体验快速成长，并重新找到当初选择这个行业的初心"——郑向升（第四期学员代表）
 
 ## 如何参与 Talent Plan
 
 Talent Plan 规划了一个巨大的学习版图，我们期待着能与社区小伙伴一起逐步实现、不断优化，真正做到“Made for Community, by Community”。
 
 * 如果你已经迫不及待想要开始 Talent Plan 课程的学习，[Talent Plan 官方网站](https://university.pingcap.com/talent-plan/) 中有已经规划好的 TiDB 及 TiKV 两条路径供你学习。
-* 如果你想要为 Talent Plan 升级版课程贡献自己的一份力量，我们在 [TiDB Community Slack Workspace](https://join.slack.com/t/tidbcommunity/shared_invite/enQtNzc0MzI4ODExMDc4LWYwYmIzMjZkYzJiNDUxMmZlN2FiMGJkZjAyMzQ5NGU0NGY0NzI3NTYwMjAyNGQ1N2I2ZjAxNzc1OGUwYWM0NzE) 中开通了channel: #wg-talent-plan-courses，欢迎感兴趣的小伙伴们加入进来，一起打造更加“酷炫”的 2.0 版本！
+* 如果你想要为 Talent Plan 升级版课程贡献自己的一份力量，我们在 [TiDB Community Slack Workspace](https://join.slack.com/t/tidbcommunity/shared_invite/enQtNzc0MzI4ODExMDc4LWYwYmIzMjZkYzJiNDUxMmZlN2FiMGJkZjAyMzQ5NGU0NGY0NzI3NTYwMjAyNGQ1N2I2ZjAxNzc1OGUwYWM0NzE) 中开通了channel: **#wg-talent-plan-courses**，欢迎感兴趣的小伙伴们加入进来，一起打造更加“酷炫”的 2.0 版本！
