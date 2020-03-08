@@ -51,11 +51,11 @@ CREATE TABLE：CREATE TABLE t (c int) SHARD_ROW_ID_BITS = 4;
 ALTER TABLE：ALTER TABLE t SHARD_ROW_ID_BITS = 4;
 ```
 SHARD_ROW_ID_BITS  的值可以动态修改，每次修改之后，只对新写入的数据生效。可以根据业务并发度来设置合适的值来尽量解决此类热点 Region 无法打散的问题。
-另外在 TiDB 3.1.0 版本引入了一个新特 auto_random(试验)，这个声明在表的整数类型主键上，将 auto_increment 改为 auto_random，插入数据时让 TiDB 自动为整型主键列分配一个值，消除行 ID 的连续性，从而达到打散热点的目的，更详细的可以参考 [auto_random详细说明](https://github.com/pingcap/docs-cn/blob/master/reference/sql/attributes/auto-random.md)。
+另外在 TiDB 3.1.0 版本引入了一个新特 auto_random(试验)，这个声明在表的整数类型主键上，将 auto_increment 改为 auto_random，插入数据时让 TiDB 自动为整型主键列分配一个值，消除行 ID 的连续性，从而达到打散热点的目的，更详细的可以参考 [auto_random 详细说明](https://github.com/pingcap/docs-cn/blob/master/reference/sql/attributes/auto-random.md)。
 
 ## 新表高并发读写的瓶颈问题
 ### 场景描述
-这个场景和 [TiDB 高并发写入常见热点问题及规避方法](http://TiDB 高并发写入常见热点问题及规避方法) 中的 case 类似。
+这个场景和 [TiDB 高并发写入常见热点问题及规避方法](https://pingcap.com/docs-cn/stable/reference/best-practices/high-concurrency/) 中的 case 类似。
 
 有一张简单的表：
 
@@ -141,4 +141,3 @@ SPLIT TABLE table_name [INDEX index_name] BY (value_list) [, (value_list)] ...
   1. 线上遇到一个 case 是，一个类似数据中台的服务，把从其它存储获取的数据写入到 TiDB 的一张宽表( 70 个字段)上，迁移过来时候基本每个字段都带有索引，业务解释多个索引是为了兼顾业务多样性的需求，最后业务上线后 TP99 线直接飙升到 130ms，业务无法接受延迟，最后在推进优化为7个组合索引后，TP99 恢复到 60ms 达到业务预期。
 # 总结
 以上 case 是在线上遇到的一些常见的因为表设计相关的问题，主要是热点、GC 或者功能相关的问题，这些问题可能会对线上稳定性造成比较严重的冲击，希望大家在线上可以根据不同场景采用不同的解决方案，规避掉这些风险，保障线上 DB 的正常服务。
-
