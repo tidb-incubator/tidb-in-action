@@ -92,18 +92,18 @@ TiDB(root@127.0.0.1:test) > explain select * from t t1 use index(idx_a) join t t
 
 真正执行扫表（读盘或者读 TiKV Block Cache）操作的算子有如下几类：
 
-- **TableFullScan：**这是大家所熟知的 “全表扫” 操作
-- **TableRangeScan：**带有范围的表数据扫描操作，通常扫描的数据量不大
-- **TableRowIDScan：**根据上层传递下来的 `RowID` 精确的扫描表数据的算子
-- **IndexFullScan：**另一种 “全表扫”，只不过这里扫的是索引数据，不是表数据
+- **TableFullScan**：这是大家所熟知的 “全表扫” 操作
+- **TableRangeScan**：带有范围的表数据扫描操作，通常扫描的数据量不大
+- **TableRowIDScan**：根据上层传递下来的 `RowID` 精确的扫描表数据的算子
+- **IndexFullScan**：另一种 “全表扫”，只不过这里扫的是索引数据，不是表数据
 - **IndexRangeScan**：带有范围的索引数据扫描操作，通常扫描的数据量不大
 
 TiDB 会汇聚 TiKV/TiFlash 上扫描的数据或者计算结果，这种 “数据汇聚” 算子目前有如下几类：
 
-- **TableReader：**汇总 TiKV 上底层扫表算子是 `TableFullScan` 或 `TableRangeScan` 的算子。
-- **IndexReader：**汇总 TiKV 上底层扫表算子是 `IndexFullScan` 或 `IndexRangeScan` 的算子。
-- **IndexLookUp：**先汇总 Build 端 TiKV 扫描上来的 RowID，再去 Probe 端上根据这些 RowID 精确的读取 TiKV 上的数据。Build 端是 `IndexFullScan` 或 `IndexRangeScan`，Probe 端是 `TableRowIDScan`。
-- **IndexMerge：**和 IndexLookupReader 类似，可以看做是它的扩展，可以同时读取多个索引的数据，有多个 Build 端，一个 Probe 端。执行过程也很类似，先汇总所有 Build 端 TiKV 扫描上来的 RowID，再去 Probe 端上根据这些 RowID 精确的读取 TiKV 上的数据。Build 端是 `IndexFullScan` 或 `IndexRangeScan`，Probe 端是 `TableRowIDScan`。
+- **TableReader**：汇总 TiKV 上底层扫表算子是 `TableFullScan` 或 `TableRangeScan` 的算子。
+- **IndexReader**：汇总 TiKV 上底层扫表算子是 `IndexFullScan` 或 `IndexRangeScan` 的算子。
+- **IndexLookUp**：先汇总 Build 端 TiKV 扫描上来的 RowID，再去 Probe 端上根据这些 RowID 精确的读取 TiKV 上的数据。Build 端是 `IndexFullScan` 或 `IndexRangeScan`，Probe 端是 `TableRowIDScan`。
+- **IndexMerge**：和 IndexLookupReader 类似，可以看做是它的扩展，可以同时读取多个索引的数据，有多个 Build 端，一个 Probe 端。执行过程也很类似，先汇总所有 Build 端 TiKV 扫描上来的 RowID，再去 Probe 端上根据这些 RowID 精确的读取 TiKV 上的数据。Build 端是 `IndexFullScan` 或 `IndexRangeScan`，Probe 端是 `TableRowIDScan`。
 
 **IndexLookUp 示例：**
 
