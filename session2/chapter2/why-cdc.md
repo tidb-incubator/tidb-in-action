@@ -8,7 +8,8 @@ TiCDC (TiDB Change Data Capture) 是 TiDB 4.0 新推出通过拉取 TiKV 的 kv 
 ### 从易用性来看：
 + TiCDC 更易使用
 	+ TiCDC 部署只需一个二进制文件，非常简洁
-	+ TiCDC 可以全部使用 sql 管理，不需要另外组件，自带 admin ui
+	+ TiCDC 可以全部使用 SQL 管理，不需要另外组件，自带 admin UI
+
 
 ### 从性能上来看：
 + TiCDC 性能更好
@@ -21,5 +22,5 @@ TiCDC (TiDB Change Data Capture) 是 TiDB 4.0 新推出通过拉取 TiKV 的 kv 
 
 ### 从可用性来看：
 + TiCDC 可用性更好
-	+ TiCDC 多个结点写下游不会有单点瓶颈，直接在 watch kv 层变更，有天然数据安全性保证的，TiCDC 各节点无状态，通过 pd 的 etcd 保存元数据信息，因此可以很方便实现数据高可用及服务高可用
+	+ TiCDC 多个结点写下游不会有单点瓶颈，直接在 watch KV 层变更，有天然数据安全性保证的，TiCDC 各节点无状态，通过 PD 的 etcd 保存元数据信息，因此可以很方便实现数据高可用及服务高可用
 	+ TiDB-Binlog 需要单独解决数据安全和服务高可用问题，实现代价很高（目前都未实现）
