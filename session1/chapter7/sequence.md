@@ -62,7 +62,7 @@ SELECT SETVAL(sequence_name,100)；
    1.  首先新建一个 Sequence
 
 ```SQL
-   Create Sequence seq_for_unique start with 1 increment by 1 cache 1000 nocycle;
+   CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 ```
 
 1.2. 针对应用连接至单个 TiDB 和多个 TiDB，取到的 Sequence 值有些不一样
@@ -114,8 +114,8 @@ MySQL 语法中每张表仅能新建一个`auto_increment`字段，且该字段�
 2.1. 首先新建如下两个 Sequence
 
 ```SQL
-   Create Sequence seq_for_autoid start with 1 increment by 2 cache 1000 nocycle;
-   Create Sequence seq_for_logid start with 100 increment by 1 cache 1000 nocycle;
+CREATE SEQUENCE seq_for_autoid START WITH 1 INCREMENT BY 2 CACHE 1000 NOCYCLE;
+CREATE SEQUENCE seq_for_logid START WITH 100 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 ```
 
 2.2. 在新建表的时候通过`default nextval(seq_name)`设置列的默认值
@@ -132,9 +132,9 @@ MySQL 语法中每张表仅能新建一个`auto_increment`字段，且该字段�
 2.3. 接下来我们插入几个用户信息进行测试：
 
 ```SQL
-   insert into user(userid) values('usera');
-   insert into user(userid) values('userb');
-   insert into user(userid) values('userc');
+   INSERT INTO user (userid) VALUES ('usera');
+   INSERT INTO user (userid) VALUES ('userb');
+   INSERT INTO user (userid) VALUES ('userc');
 ```
 
 2.4. 查询`user`表，可以发现`autoid`和`logid`字段的值按照不同的步长进行自增，且主键仍然在列`userid`上：
