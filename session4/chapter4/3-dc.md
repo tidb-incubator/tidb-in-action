@@ -11,7 +11,7 @@ TiDB 两地三中心架构基于 Raft 算法，保证集群数据一致性和高
 * 生产集群采用5副本模式，其中 IDC 和 IDC2 分别放 2 个副本，IDC3 放 1 个副本；TiKV 按机柜打 Label，既每个机柜上有一份副本。
 * 从集群与主集群直接通过 binlog 完成中间数据存储与传输工作。
 
-![图片](https://uploader.shimo.im/f/MJcAAF9gQRoEf7iV.png!thumbnail “图 1  两地三中心集群架构图 )
+![图片](https://github.com/Ryan160922/tidb-in-action/blob/master/session4/chapter4/p1.png “图 1  两地三中心集群架构图 )
 
 
 该架构具备高可用和容灾备份能力。相比于三数据中心方案优势如下：
@@ -25,7 +25,7 @@ TiDB 两地三中心架构基于 Raft 算法，保证集群数据一致性和高
 ## 部署说明
 下面具体介绍两地三中心架构部署详情。
 
-![图片](https://uploader.shimo.im/f/MJcAAF9gQRoEf7iV.png!thumbnail "图 1  两地三中心集群架构图")
+![图片](https://github.com/Ryan160922/tidb-in-action/blob/master/session4/chapter4/p2.png "图 1  两地三中心集群架构图")
 
 北京、西安两地三中心配置详解：
 
