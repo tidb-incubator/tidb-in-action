@@ -4,7 +4,7 @@
 # 二、确认热点问题
 初步怀疑集群存在热点问题时，可以通过 TiDB 3.0 Grafana 提供的 TiKV-Trouble-Shooting 的 Dashboard 的 Hot Read 和 Hot Write 面板来快速确认是否存在读热点或者写热点。
 
-![图片](https://uploader.shimo.im/f/LGgQqt5DzZcxfiXy.jpg!thumbnail)
+![1.jpg](/res/session4/chapter7/hotspot-resolved/1.jpg)
 
 Hot Read 面板聚集了读取热点相关的核心指标：
 
@@ -104,7 +104,7 @@ $ curl http://{TiDBIP}:10080/regions/{RegionId}
 # 四、读热点解决方案
 TiDB 读取热点产生的原因通常是 TiKV 的 BlockCache 命中率下降或者是小表的并发读取过大。检查 TiKV-Details Dashboard 里 RocksDB KV 面板里的 Block cache hit 命中率，如果发现命中率出现大幅度下降或抖动，基本可以定位为慢 SQL 问题；否则倾向于怀疑是小表的大量并发读取导致的。
 
-![图片](https://uploader.shimo.im/f/gk2AALhOdtIUOIcg.jpg!thumbnail)
+![2.jpg](/res/session4/chapter7/hotspot-resolved/2.jpg)
 
 ## BlockCache 命中率下降
 BlockCache 的命中率下降或者抖动时可能是存在全表扫描的SQL、执行计划选择不正确的SQL、存在大量 count(*) 操作的 SQL 等等。可以参照本书 "快速定位慢 SQL" 的章节来定位，通过添加索引或者优化 SQL 语句执行计划、增加 SQL_NO_CACHE 的 Hints 等手段来进行优化。
