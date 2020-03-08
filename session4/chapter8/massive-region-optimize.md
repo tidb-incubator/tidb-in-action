@@ -5,7 +5,7 @@
 ## Raftstore 的工作流程
 一个 TiKV 实例上有多个 Region。Region 消息是通过 Raftstore 模块驱动 Raft 状态机来处理的。这些消息包括 Region 上读写请求的处理、Raft log 的持久化和复制、Raft 的心跳处理等。但是，Region 数量增多会影响整个集群的性能。为了解释这一点，需要先了解 TiKV 的核心模块 Raftstore 的工作流程。
 
-![图片](https://uploader.shimo.im/f/4OrU1AGbvIg3pWxa.png!thumbnail)
+![图片](res/session4/chapter8/tikv-config-optimize/raft-process.png)
 
 >**注意：**
 >该图仅为示意，不代表代码层面的实际结构。
