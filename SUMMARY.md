@@ -9,7 +9,7 @@
 * [3 谈计算](session1/chapter3/tidb-computing.md)
     * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md) @[Qiannan](https://github.com/hsqlu)
     * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md)
-    * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @zhiqiangxu
+    * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @[zhiqiangxu](https://github.com/zhiqiangxu)
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
@@ -117,8 +117,11 @@
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
 * [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
-    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-plan.md) @[石壹笑](https://github.com/aierui)
-    * [1.2 SQL Plan Management](session3/chapter1/sql-plan-management.md)
+    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui)
+    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md)
+    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md)
+    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md)
+    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 识别集群热点和业务模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 分析 SQL 执行性能](session3/chapter2/statements.md) @李迅
@@ -132,7 +135,7 @@
     * [3.4 监控汇总表](session3/chapter3/metrics-summary.md)
     * [3.5 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
     * [3.6 Processlist](session3/chapter3/processlist.md)
-    * [3.7 Statements](session3/chapter3/statements.md)
+    * [3.7 Statement Summary](session3/chapter3/statements.md) @张明
 * [4 TiDB 集群监控与报警](session3/chapter4/tidb-monitor-alert.md)
     * [4.1 性能调优地图](session3/chapter4/performance-map.md)
     * [4.2 TiDB 读写流程相关监控原理解析](session3/chapter4/read-write-metrics.md)
@@ -181,6 +184,7 @@
         * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
         * [6.4.2 TiDB分区表使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
         * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
+        * [6.4.4 TiDB分区表问题处理](session4/chapter6/partition-table-best-practices.md) @代晓磊
     * [6.5 TiDB 在电力行业的实践](session4/chapter6/tidb-in-electric.md)@潘博存
     * [6.6 TiDB 在企业数据分级存储中的应用实践](session4/chapter6/tidb-in-enterprise-practices.md)@潘博存@王伦伟
     * [6.7 TiDB 与 HBase、ES、Druid 的数据交互实战](session4/chapter6/tidb-with-hbase-es-druid.md)@潘博存@王伦伟
@@ -188,7 +192,7 @@
     * [6.9 流程调度工具与 TiSpark 的集成应用](session4/chapter6/tidb-streaming-scheduler-tools.md)@王娟
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
-    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚 
+    * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
     * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东 @谭仁刚
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
