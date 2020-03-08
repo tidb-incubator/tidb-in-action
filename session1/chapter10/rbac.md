@@ -2,7 +2,7 @@
 
 Role-based access control，RBAC 基于角色的权限访问控制。
 
-区别于 强制访问控制 MAC 以及 自由选定访问控制 DAC，RBAC 更为中性且更具灵活性。
+区别于 MAC (Mandatory access control) 以及 DAC (Discretionary Access Control)，RBAC 更为中性且更具灵活性。
 
 TiDB 的基于角色的访问控制 (RBAC) 系统的实现类似于 MySQL 8.0 的 RBAC 系统，兼容大部分 [MySQL RBAC 系统的语法](https://dev.mysql.com/doc/refman/8.0/en/roles.html)。
 
@@ -11,6 +11,7 @@ TiDB 的基于角色的访问控制 (RBAC) 系统的实现类似于 MySQL 8.0 �
 - [RBAC 可以做什么](#rbac-可以做什么)
 - [RBAC 实现原理](#rbac-实现原理)
 - [RBAC 操作示例](#rbac-操作示例)
+- [看一个完整的例子](#看一个完整的例子)
 - [其他](#其他)
 
 ## RBAC 可以做什么
@@ -53,7 +54,8 @@ TiDB 的基于角色的访问控制 (RBAC) 系统的实现类似于 MySQL 8.0 �
 
 ```sql
 +-----------+-----------+---------+---------+-------------------+
-| FROM_HOST | FROM_USER | TO_HOST | TO_USER | WITH_ADMIN_OPTION |+-----------+-----------+---------+---------+-------------------+
+| FROM_HOST | FROM_USER | TO_HOST | TO_USER | WITH_ADMIN_OPTION |
++-----------+-----------+---------+---------+-------------------+
 | %         | r1        | %       | test    | N                 |
 +-----------+-----------+---------+---------+-------------------+
 ```
@@ -71,19 +73,19 @@ TiDB 的基于角色的访问控制 (RBAC) 系统的实现类似于 MySQL 8.0 �
 
 ## RBAC 操作示例
 
-- 创建角色，可以一次创建多个
+- 创建角色 r_1，r_2，可以一次创建多个
 
 ```sql
 CREATE ROLE `r_1`@`%`, `r_2`@`%`;
 ```
 
-- 角色权限设置
+- 设置 r_1 为只读角色
 
 ```sql
 GRANT SELECT ON db_1.* TO 'r_1'@'%';
 ```
 
-- 角色与用户授权
+- 将 r_1 角色授予用户 test@'%'
 
 ```sql
 grant r_1 to test@'%';
@@ -126,6 +128,78 @@ TiDB > SHOW GRANTS FOR 'test'@'%' USING 'r_1';
 REVOKE 'r_1' FROM 'test'@'%', 'root'@'%';
 ```
 
+## 看一个完整的例子
+账户 bi_user 登录，启用只读角色后，才可以查询指定库表权限，会话结束，权限失效。
+
+```sql
+#创建角色 reader
+root@127.0.0.1:(none)>create role reader@'%';
+Query OK, 0 rows affected (0.012 sec)
+
+#设置角色 reader 只读 mysql.role_edges 权限
+root@127.0.0.1:mysql>grant select on mysql.role_edges to reader'%';
+Query OK, 0 rows affected (0.017 sec)
+
+#创建用户 bi_user
+root@127.0.0.1:(none)>create user bi_user@'%';
+Query OK, 0 rows affected (0.011 sec)
+
+#将只读角色 reader 授予 bi_user 用户
+root@127.0.0.1:mysql>grant reader to bi_user'%';
+Query OK, 0 rows affected (0.014 sec)
+
+# bi_user 登录查看无数据权限
+bi_user@127.0.0.1:(none)>show databases;
++--------------------+
+| Database           |
++--------------------+
+| INFORMATION_SCHEMA |
++--------------------+
+1 row in set (0.000 sec)
+
+#查看当前登录用户 bi_user 当前未启用角色
+bi_user@127.0.0.1:(none)>SELECT CURRENT_ROLE();
++----------------+
+| CURRENT_ROLE() |
++----------------+
+|                |
++----------------+
+1 row in set (0.000 sec)
+
+#在当前 session 中启用 bi_user 的 reader 角色
+bi_user@127.0.0.1:(none)>set role reader;
+Query OK, 0 rows affected (0.000 sec)
+
+#查看 bi_user 当前被启用的角色
+bi_user@127.0.0.1:(none)>SELECT CURRENT_ROLE();
++----------------+
+| CURRENT_ROLE() |
++----------------+
+| `reader`@`%`   |
++----------------+
+1 row in set (0.000 sec)
+
+#当前登录用户 bi_user 查看 mysql 库中有权限的表
+bi_user@127.0.0.1:mysql>select * from role_edges;
++-----------+-----------+---------+---------+-------------------+
+| FROM_HOST | FROM_USER | TO_HOST | TO_USER | WITH_ADMIN_OPTION |
++-----------+-----------+---------+---------+-------------------+
+| %         | reader    | %       | bi_user | N                 |
++-----------+-----------+---------+---------+-------------------+
+1 row in set (0.000 sec)
+
+#当前登录用户 bi_user 执行 delete 表报错，权限校验失败
+bi_user@127.0.0.1:mysql>delete from role_edges;
+ERROR 1105 (HY000): privilege check fail
+
+#当前登录用户 bi_user 执行查询其他表报错
+bi_user@127.0.0.1:mysql>select * from user;
+ERROR 1142 (42000): SELECT command denied to user 'bi_user'@'127.0.0.1' for table 'user'
+
+#重新登录 bi_user 权限已经失效
+bi_user@127.0.0.1(none)>use mysql
+ERROR 1044 (42000): Access denied for user 'bi_user'@'%' to database 'mysql'
+```
 ## 其他
 
 由于基于角色的访问控制模块和用户管理以及权限管理结合十分紧密，因此需要参考一些操作的细节：

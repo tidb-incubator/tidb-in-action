@@ -77,9 +77,10 @@ DM 以一个集群为单位运行，包括以下5个组成部分：
     - 3.enable_gtid 是否使用 GTID 同步，前提是上游 MySQL 实例开启了 GTID，本案例里没有用到。
     - 4.这个部分完整的例子
 
-    ```toml
-    [dm_worker_servers]
-    dm-worker1 ansible_host=1.1.1.1 source_id="mariadb-01" server_id=101 mysql_host=172.16.10.81 mysql_user=tidbdm mysql_password="encryptpwd" mysql_port=3306
+```toml
+[dm_worker_servers]
+dm-worker1 ansible_host=1.1.1.1 source_id="mariadb-01" server_id=101 mysql_host=172.16.10.81 mysql_user=tidbdm mysql_password="encryptpwd" mysql_port=3306
+```
 
 - 同步用户需要上游 MySQL 实例访问授权
   - 需要权限有
