@@ -1,53 +1,38 @@
 # 3.5 SQL 慢查询系统表
+
 TiDB 会将执行时间超过 slow-threshold（默认值为 300 毫秒）的语句记录到 slow-query-file（默认值："tidb-slow.log"）日志中，用于帮助定位慢查询语句，分析和解决 SQL 执行的性能问题。
 
 TiDB 默认启用慢查询日志，可以修改配置 enable-slow-log 来启用或禁用它。
 
 ## 日志示例
+
 ```
 # Time: 2019-08-14T09:26:59.487776265+08:00
-
 # Txn_start_ts: 410450924122144769
-
+****
 # User: root@127.0.0.1
-
 # Conn_ID: 3086
-
 # Query_time: 1.527627037
-
 # Parse_time: 0.000054933
-
 # Compile_time: 0.000129729
-
 # Process_time: 0.07 Request_count: 1 Total_keys: 131073 Process_keys: 131072 Prewrite_time: 0.335415029 Commit_time: 0.032175429 Get_commit_ts_time: 0.000177098 Local_latch_wait_time: 0.106869448 Write_keys: 131072 Write_size: 3538944 Prewrite_region: 1
-
 # DB: test
-
 # Is_internal: false
-
 # Digest: 50a2e32d2abbd6c1764b1b7f2058d428ef2712b029282b776beb9506a365c0f1
-
 # Stats: t:414652072816803841
-
 # Num_cop_tasks: 1
-
 # Cop_proc_avg: 0.07 Cop_proc_p90: 0.07 Cop_proc_max: 0.07 Cop_proc_addr: 172.16.5.87:20171
-
 # Cop_wait_avg: 0 Cop_wait_p90: 0 Cop_wait_max: 0 Cop_wait_addr: 172.16.5.87:20171
-
 # Mem_max: 525211
-
 # Succ: true
-
 # Plan: tidb_decode_plan('ZJAwCTMyXzcJMAkyMAlkYXRhOlRhYmxlU2Nhbl82CjEJMTBfNgkxAR0AdAEY1Dp0LCByYW5nZTpbLWluZiwraW5mXSwga2VlcCBvcmRlcjpmYWxzZSwgc3RhdHM6cHNldWRvCg==')
-
 insert into t select * from t;
 ```
 
 ## 字段含义说明
 
->注意：
->慢查询日志中所有时间相关字段的单位都是 “秒”
+> 注意：
+> 慢查询日志中所有时间相关字段的单位都是 “秒”
 
 Slow Query 基础信息：
 
@@ -108,25 +93,24 @@ TiDB 4.0 中的 SLOW_QUERY 已经支持查询任意时间段的慢日志，即�
 
 TiDB 4.0 中新增了 CLUSTER_SLOW_QUERY 系统表，用来查询所有 TiDB 节点的 SLOW_QUERY 数据，使用上和 SLOW_QUERY 是一样的。
 
->注意：
->每次查询 SLOW_QUERY 表时，TiDB 都会去读取和解析一次当前节点的慢查询日志。
+> 注意：
+> 每次查询 SLOW_QUERY 表时，TiDB 都会去读取和解析一次当前节点的慢查询日志。
 
 ## 查询 SLOW_QUERY 示例
 
 ### 搜索 Top N 的慢查询
+
 查询 Top 2 的慢查询。is_internal=false 表示排除 TiDB 内部的慢查询：
 ```
 select query_time, query
-
 from information_schema.slow_query
-
 where is_internal = false  -- 排除 TiDB 内部的慢查询 SQL
-
 order by query_time desc
-
 limit 2;
 ```
+
 输出样例：
+
 ```
 +--------------+------------------------------------------------------------------+
 | query_time   | query                                                            |
@@ -139,20 +123,18 @@ limit 2;
 ### 搜索某个用户的 Top N 慢查询
 
 下面例子中搜索 test 用户执行的慢查询 SQL，且按执行消耗时间逆序排序显式前 2 条：
+
 ```
 select query_time, query, user
-
 from information_schema.slow_query
-
 where is_internal = false  -- 排除 TiDB 内部的慢查询 SQL
-
   and user = "test"        -- 查找的用户名
-
 order by query_time desc
-
 limit 2;
 ```
+
 输出样例：
+
 ```
 +-------------+------------------------------------------------------------------+----------------+
 | Query_time  | query                                                            | user           |
@@ -164,20 +146,18 @@ limit 2;
 ### 根据 SQL 指纹搜索同类慢查询
 
 在得到 Top N 的慢查询 SQL 后，可通过 SQL 指纹继续搜索同类慢查询 SQL。
-
 先获取 Top N 的慢查询和对应的 SQL 指纹：
+
 ```
 select query_time, query, digest
-
 from information_schema.slow_query
-
 where is_internal = false
-
 order by query_time desc
-
 limit 1;
 ```
+
 输出样例：
+
 ```
 +-------------+-----------------------------+------------------------------------------------------------------+
 | query_time  | query                       | digest                                                           |
@@ -185,15 +165,17 @@ limit 1;
 | 0.302558006 | select * from t1 where a=1; | 4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa |
 +-------------+-----------------------------+------------------------------------------------------------------+
 ```
+
 再根据 SQL 指纹搜索同类慢查询：
+
 ```
 select query, query_time
-
 from information_schema.slow_query
-
 where digest = "4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa";
 ```
+
 输出样例：
+
 ```
 +-----------------------------+-------------+
 | query                       | query_time  |
@@ -207,14 +189,13 @@ where digest = "4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa
 
 ```
 select query, query_time, stats
-
 from information_schema.slow_query
-
 where is_internal = false
-
   and stats like '%pseudo%';
 ```
+
 输出样例：
+
 ```
 +-----------------------------+-------------+---------------------------------+
 | query                       | query_time  | stats                           |
@@ -232,7 +213,9 @@ where is_internal = false
 ```
 select instance, count(*) from information_schema.cluster_slow_query where time >= "2020-03-06 00:00:00" and time < now() group by instance;
 ```
+
 输出样例：
+
 ```
 +---------------+----------+
 | instance      | count(*) |
@@ -245,16 +228,19 @@ select instance, count(*) from information_schema.cluster_slow_query where time 
 ## 解析其他的 TiDB 慢日志文件
 
 在 TiDB 4.0 之前，由于只支持解析 当前的慢日志文件，如果需要解析其他的慢日志文件，可以通过设置 session 变量 tidb_slow_query_file 控制查询 INFORMATION_SCHEMA.SLOW_QUERY 时要读取和解析的文件，示例如下：
+
 ```
 set tidb_slow_query_file = "/path-to-log/tidb-slow.log"
 ```
+
 由于 TiDB 4.0 已经支持解析任意时间段的慢日志，所以几乎不需要上面的 session 变量了。
 
 ## 用 pt-query-digest 工具分析 TiDB 慢日志
+
 可以用 pt-query-digest 工具分析 TiDB 慢日志。
 
 > **注意：**
->建议使用 pt-query-digest 3.0.13 及以上版本。
+> 建议使用 pt-query-digest 3.0.13 及以上版本。
 
 示例如下：
 
@@ -266,45 +252,25 @@ pt-query-digest --report tidb-slow.log
 
 ```
 # 320ms user time, 20ms system time, 27.00M rss, 221.32M vsz
-
 # Current date: Mon Mar 18 13:18:51 2019
-
 # Hostname: localhost.localdomain
-
 # Files: tidb-slow.log
-
 # Overall: 1.02k total, 21 unique, 0 QPS, 0x concurrency _________________
-
 # Time range: 2019-03-18-12:22:16 to 2019-03-18-13:08:52
-
 # Attribute          total     min     max     avg     95%  stddev  median
-
 # ============     ======= ======= ======= ======= ======= ======= =======
-
 # Exec time           218s    10ms     13s   213ms    30ms      1s    19ms
-
 # Query size       175.37k       9   2.01k  175.89  158.58  122.36  158.58
-
 # Commit time         46ms     2ms     7ms     3ms     7ms     1ms     3ms
-
 # Conn ID               71       1      16    8.88   15.25    4.06    9.83
-
 # Process keys     581.87k       2 103.15k  596.43  400.73   3.91k  400.73
-
 # Process time         31s     1ms     10s    32ms    19ms   334ms    16ms
-
 # Request coun       1.97k       1      10    2.02    1.96    0.33    1.96
-
 # Total keys       636.43k       2 103.16k  652.35  793.42   3.97k  400.73
-
 # Txn start ts     374.38E       0  16.00E 375.48P   1.25P  89.05T   1.25P
-
 # Wait time          943ms     1ms    19ms     1ms     2ms     1ms   972us
-
 .
-
 .
-
 .
 ```
 
@@ -316,15 +282,16 @@ SLOW_QUERY 中的语句并不是都是有问题的。造成集群整体压力增
 
 除了基于TiDB 日志，还有一种定位慢查询的方式是通过 admin show slow SQL 命令：
 
->注意:
->此命令仅显示当前TiDB节点的慢查询
+> 注意:
+> 此命令仅显示当前TiDB节点的慢查询
 
 ```
 admin show slow recent N;
-
 admin show slow top [internal | all] N;
 ```
+
 recent N 会显示最近的 N 条慢查询记录，例如：
+
 ```
 admin show slow recent 10;
 ```
@@ -356,19 +323,18 @@ admin show slow top 3;
 
 输出内容详细说明，如下：
 
-| 列名   | 描述   | 
-|:----|:----|
-| start   | SQL 语句执行开始时间   | 
-| duration   | SQL 语句执行持续时间   | 
-| details   | 执行语句的详细信息   | 
-| succ   | SQL 语句执行是否成功，1: 成功，0: 失败   | 
-| conn_id   | session 连接 ID   | 
-| transcation_ts   | 事务提交的 commit ts   | 
-| user   | 执行该语句的用户名   | 
-| db   | 执行该 SQL 涉及到 database   | 
-| table_ids   | 执行该 SQL 涉及到表的 ID   | 
-| index_ids   | 执行该 SQL 涉及到索引 ID   | 
-| internal   | 表示为 TiDB 内部的 SQL 语句   | 
-| digest   | 表示 SQL 语句的指纹   | 
-| sql   | 执行的 SQL 语句   | 
-
+| 列名           | 描述                                   |
+| :------------- | :------------------------------------- |
+| start          | SQL 语句执行开始时间                   |
+| duration       | SQL 语句执行持续时间                   |
+| details        | 执行语句的详细信息                     |
+| succ           | SQL 语句执行是否成功，1: 成功，0: 失败 |
+| conn_id        | session 连接 ID                        |
+| transcation_ts | 事务提交的 commit ts                   |
+| user           | 执行该语句的用户名                     |
+| db             | 执行该 SQL 涉及到 database             |
+| table_ids      | 执行该 SQL 涉及到表的 ID               |
+| index_ids      | 执行该 SQL 涉及到索引 ID               |
+| internal       | 表示为 TiDB 内部的 SQL 语句            |
+| digest         | 表示 SQL 语句的指纹                    |
+| sql            | 执行的 SQL 语句                        |
