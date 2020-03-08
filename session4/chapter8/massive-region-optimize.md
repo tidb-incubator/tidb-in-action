@@ -5,7 +5,7 @@
 ## Raftstore 的工作流程
 一个 TiKV 实例上有多个 Region。Region 消息是通过 Raftstore 模块驱动 Raft 状态机来处理的。这些消息包括 Region 上读写请求的处理、Raft log 的持久化和复制、Raft 的心跳处理等。但是，Region 数量增多会影响整个集群的性能。为了解释这一点，需要先了解 TiKV 的核心模块 Raftstore 的工作流程。
 
-![图片](../../res/session4/chapter8/tikv-config-optimize/raft-process.png)
+![图片](/res/session4/chapter8/tikv-config-optimize/raft-process.png)
 
 >**注意：**
 >该图仅为示意，不代表代码层面的实际结构。
@@ -27,7 +27,7 @@ Thread-CPU 下的 Raft store CPU
 
 参考值：低于 raftstore.store-pool-size * 85%。
 
-* ![图片](https://uploader.shimo.im/f/t5bsxJyvHKAKgMfY.png!thumbnail)
+* ![图片](/res/session4/chapter8/tikv-config-optimize/raft-store-cpu.png)
 
 Raft Propose 下的 Propose wait duration
 
@@ -35,7 +35,7 @@ Propose wait duration 是从发送请求给 Raftstore，到 Raftstore 真正开�
 
 参考值：低于 50-100ms。
 
-* ![图片](https://uploader.shimo.im/f/wCkMrsLO1LcRa2X7.png!thumbnail)
+* ![图片](/res/session4/chapter8/tikv-config-optimize/propose-wait-duration.png)
 ## 性能优化方法
 找到性能问题的根源后，可从以下两个方向来解决性能问题：
 
