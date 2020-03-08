@@ -4,7 +4,7 @@ DataX 数据同步效率较高，可以满足大多数场景下的异构数据�
 
 方案设计如图所示
 
-![图片](https://uploader.shimo.im/f/bnV0HcQVRdcuMETp.png!thumbnail)
+<img src="https://raw.githubusercontent.com/AllenShen-CN/tidb-in-action/master/session4/chapter5/sqlserver%20to%20tidb.png">
 
 第一阶段：切换支持 TiDB 的应用上线之前，把 SQLServer 数据库中的全量数据用 DataX 同步到 TiDB 库中。为避免对线上业务产生影响，可以选择备份库，或者在业务低峰期操作。
 
