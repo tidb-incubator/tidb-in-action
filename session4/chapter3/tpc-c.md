@@ -166,6 +166,7 @@ cd run && \
 ```
 
 3、数据导入有两种方式可以选取，主要如下：
+
 （1）直接使用 BenchmarkSQL 导入（根据机器配置这个过程可能会持续几个小时）
 
 ```shell
@@ -174,7 +175,7 @@ cd run && \
 
 （2）通过 TiDB Lightning 导入（由于导入数据量随着 warehouse 的增加而增加，当需要导入 1000 warehouse 以上数据时，可以先用 BenchmarkSQL 生成 csv 文件，再将文件通过 TiDB Lightning（以下简称 Lightning）导入的方式来快速导入。生成的 csv 文件也可以多次复用，节省每次生成所需要的时间）。
 
-step1.修改 BenchmarkSQL 的配置文件
+  a、修改 BenchmarkSQL 的配置文件
 warehouse 的 csv 文件需要 77 MB 磁盘空间，在生成之前要根据需要分配足够的磁盘空间来保存 csv 文件。可以在 `benchmarksql/run/props.mysql` 文件中增加一行：
 ```text
 fileLocation=/home/user/csv/  # 存储 csv 文件的目录绝对路径，需保证有足够的空间
@@ -187,12 +188,12 @@ fileLocation=/home/user/csv/tpcc.  # 存储 csv 文件的目录绝对路径 + �
 
 这样生成的 csv 文件名将会是类似 `tpcc.bmsql_warehouse.csv` 的样式，符合 Lightning 的要求。
 
-step2.生成 csv 文件
+  b、生成 csv 文件
 ```shell
 ./runLoader.sh props.mysql
 ```
 
-step3.修改 inventory.ini
+  c、修改 inventory.ini
 
 这里最好手动指定清楚部署的 IP、端口、目录，避免各种冲突问题带来的异常。
 ```text
@@ -203,7 +204,7 @@ IS1 ansible_host=172.16.5.34 deploy_dir=/data2/is1 tikv_importer_port=13323 impo
 LS1 ansible_host=172.16.5.34 deploy_dir=/data2/ls1 tidb_lightning_pprof_port=23323 data_source_dir=/home/user/csv
 ```
 
-step4.修改 conf/tidb-lightning.yml
+  d、修改 conf/tidb-lightning.yml
 ```text
 mydumper:
   no-schema: true
@@ -217,24 +218,19 @@ csv:
   trim-last-separator: false
 ```
 
-step5.部署 Lightning 和 Importer
+  e、部署 Lightning 和 Importer
 ```shell
 ansible-playbook deploy.yml --tags=lightning
 ```
 
-step6.启动
+  f、启动
 
 * 登录到部署 Lightning 和 Importer 的服务器
-
 * 进入部署目录
-
 * 在 Importer 目录下执行 `scripts/start_importer.sh`，启动 Importer
-
 * 在 Lightning 目录下执行 `scripts/start_lightning.sh`，开始导入数据
 
-由于是用 ansible 进行部署的，可以在监控页面看到 Lightning 的导入进度，或者通过日志查看导入是否结束。
-
-数据导入完成之后，可以运行 `sql.common/test.sql` 进行数据正确性验证，如果所有 SQL 语句都返回结果为空，即为数据导入正确。
+由于是用 ansible 进行部署的，可以在监控页面看到 Lightning 的导入进度，或者通过日志查看导入是否结束。数据导入完成之后，可以运行 `sql.common/test.sql` 进行数据正确性验证，如果所有 SQL 语句都返回结果为空，即为数据导入正确。
 
 ## 七、运行测试
 
