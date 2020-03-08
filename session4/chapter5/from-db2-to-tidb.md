@@ -26,8 +26,8 @@ IIDR 需要借助 MySQL 驱动通过 JDBC 的方式将数据写入 TiDB 中，�
 ![图片](https://uploader.shimo.im/f/pk4owBXHWvgGZ2ST.png!thumbnail)
 
 * IIDR 下游软件参数配置
-| 参数   | 值   | 
 
+| 参数   | 值   | 
 |:----|:----:|
 | convert_not nullable_column   | true   | 
 | events_max_retain   | 10000   | 
