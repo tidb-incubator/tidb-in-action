@@ -2886,7 +2886,126 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="kubernetes-&#x4E0A;&#x7684;-tidb-&#x5DE5;&#x5177;&#x6307;&#x5357;">Kubernetes &#x4E0A;&#x7684; TiDB &#x5DE5;&#x5177;&#x6307;&#x5357;</h1>
+<p>Kubernetes &#x4E0A;&#x7684; TiDB &#x8FD0;&#x7EF4;&#x7BA1;&#x7406;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x4E00;&#x4E9B;&#x5F00;&#x6E90;&#x5DE5;&#x5177;&#x3002;&#x540C;&#x65F6;&#xFF0C;&#x5728; Kubernetes &#x4E0A;&#x4F7F;&#x7528; TiDB &#x751F;&#x6001;&#x5DE5;&#x5177;&#x65F6;&#xFF0C;&#x4E5F;&#x6709;&#x7279;&#x6B8A;&#x7684;&#x64CD;&#x4F5C;&#x8981;&#x6C42;&#x3002;&#x672C;&#x6587;&#x6863;&#x8BE6;&#x7EC6;&#x63CF;&#x8FF0; Kubernetes &#x4E0A;&#x7684; TiDB &#x76F8;&#x5173;&#x7684;&#x5DE5;&#x5177;&#x53CA;&#x5176;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="&#x5728;-kubernetes-&#x4E0A;&#x4F7F;&#x7528;-pd-control">&#x5728; Kubernetes &#x4E0A;&#x4F7F;&#x7528; PD Control</h2>
+<p><a href="https://pingcap.com/docs-cn/dev/reference/tools/pd-control/" target="_blank">PD Control</a> &#x662F; PD &#x7684;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#x3002;</p>
+<p>&#x4F7F;&#x7528; PD Control &#x64CD;&#x4F5C; Kubernetes &#x4E0A;&#x7684; TiDB &#x96C6;&#x7FA4;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x5165; PD &#x7684;&#x5BB9;&#x5668;&#x4F7F;&#x7528;&#x81EA;&#x5E26;&#x7684;&#x547D;&#x4EE4;&#x3002;&#x5982;:</p>
+<pre><code class="lang-shell">kubectl exec -it &lt;container_name&gt;&gt; sh -n &lt;namespace&gt;
+</code></pre>
+<p>&#x6267;&#x884C;&#x4E0A;&#x8FF0;&#x547D;&#x4EE4;&#x8FDB;&#x5165;&#x5BB9;&#x5668;&#x540E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>127.0.0.1:2379</code> &#x8BBF;&#x95EE;&#x5230; PD &#x670D;&#x52A1;&#xFF0C;&#x4ECE;&#x800C;&#x76F4;&#x63A5;&#x4F7F;&#x7528; <code>pd-ctl</code> &#x547D;&#x4EE4;&#x7684;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x6267;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-shell">./pd-ctl -d config show
+</code></pre>
+<h2 id="&#x5728;-kubernetes-&#x4E0A;&#x4F7F;&#x7528;-tikv-control">&#x5728; Kubernetes &#x4E0A;&#x4F7F;&#x7528; TiKV Control</h2>
+<p><a href="https://pingcap.com/docs-cn/dev/reference/tools/tikv-control/" target="_blank">TiKV Control</a> &#x662F; TiKV &#x7684;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#x3002;&#x5728;&#x4F7F;&#x7528; TiKV Control &#x64CD;&#x4F5C; Kubernetes &#x4E0A;&#x7684; TiDB &#x96C6;&#x7FA4;&#x65F6;&#xFF0C;&#x9488;&#x5BF9; TiKV Control &#x7684;&#x4E0D;&#x540C;&#x64CD;&#x4F5C;&#x6A21;&#x5F0F;&#xFF0C;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;&#x3002;</p>
+<ul>
+<li><p><strong>&#x8FDC;&#x7A0B;&#x6A21;&#x5F0F;</strong>&#xFF1A;&#x6B64;&#x6A21;&#x5F0F;&#x4E0B; <code>tikv-ctl</code> &#x547D;&#x4EE4;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x7F51;&#x7EDC;&#x8BBF;&#x95EE; TiKV &#x670D;&#x52A1;&#x6216; PD &#x670D;&#x52A1;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x5148;&#x4F7F;&#x7528; <code>kubectl port-forward</code> &#x6253;&#x5F00;&#x672C;&#x5730;&#x5230; PD &#x670D;&#x52A1;&#x4EE5;&#x53CA;&#x76EE;&#x6807; TiKV &#x8282;&#x70B9;&#x7684;&#x8FDE;&#x63A5;&#xFF1A;</p>
+<pre><code class="lang-shell">  kubectl port-forward -n &lt;namespace&gt; svc/&lt;cluster-name&gt;-pd 2379:2379 &amp;&gt;/tmp/portforward-pd.log &amp;
+</code></pre>
+<pre><code class="lang-shell">  kubectl port-forward -n &lt;namespace&gt; &lt;tikv-pod-name&gt; 20160:20160 &amp;&gt;/tmp/portforward-tikv.log &amp;
+</code></pre>
+<p>  &#x6253;&#x5F00;&#x8FDE;&#x63A5;&#x540E;&#xFF0C;&#x5373;&#x53EF;&#x901A;&#x8FC7;&#x672C;&#x5730;&#x7684;&#x5BF9;&#x5E94;&#x7AEF;&#x53E3;&#x8BBF;&#x95EE; PD &#x670D;&#x52A1;&#x548C; TiKV &#x8282;&#x70B9;&#xFF1A;</p>
+<pre><code class="lang-shell">  tikv-ctl --host 127.0.0.1:20160 &lt;subcommands&gt;
+</code></pre>
+<pre><code class="lang-shell">  tikv-ctl --pd 127.0.0.1:2379 compact-cluster
+</code></pre>
+</li>
+<li><p><strong>&#x672C;&#x5730;&#x6A21;&#x5F0F;</strong>&#xFF1A;&#x672C;&#x5730;&#x6A21;&#x5F0F;&#x9700;&#x8981;&#x8BBF;&#x95EE; TiKV &#x7684;&#x6570;&#x636E;&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x4E14;&#x9700;&#x8981;&#x505C;&#x6B62;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684; TiKV &#x5B9E;&#x4F8B;&#x3002;&#x9700;&#x8981;&#x5148;&#x4F7F;&#x7528;<a href="https://pingcap.com/docs-cn/dev/tidb-in-kubernetes/troubleshoot/#&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;" target="_blank">&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;</a>&#x5173;&#x95ED; TiKV &#x5B9E;&#x4F8B;&#x81EA;&#x52A8;&#x91CD;&#x542F;&#xFF0C;&#x5173;&#x95ED; TiKV &#x8FDB;&#x7A0B;&#xFF0C;&#x518D;&#x4F7F;&#x7528; <code>tkctl debug</code> &#x547D;&#x4EE4;&#x5728;&#x76EE;&#x6807; TiKV Pod &#x4E2D;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x5305;&#x542B; <code>tikv-ctl</code> &#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x7684;&#x65B0;&#x5BB9;&#x5668;&#x6765;&#x6267;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li><p>&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#xFF1A;</p>
+<pre><code class="lang-shell"> kubectl annotate pod &lt;tikv-pod-name&gt; -n &lt;namespace&gt; runmode=debug
+</code></pre>
+</li>
+<li><p>&#x5173;&#x95ED; TiKV &#x8FDB;&#x7A0B;&#xFF1A;</p>
+<pre><code class="lang-shell"> kubectl exec &lt;tikv-pod-name&gt; -n &lt;namespace&gt; -c tikv -- kill -s TERM 1
+</code></pre>
+</li>
+<li><p>&#x542F;&#x52A8; debug &#x5BB9;&#x5668;&#xFF1A;</p>
+<pre><code class="lang-shell"> tkctl debug &lt;tikv-pod-name&gt; -c tikv
+</code></pre>
+</li>
+<li><p>&#x5F00;&#x59CB;&#x4F7F;&#x7528; <code>tikv-ctl</code> &#x7684;&#x672C;&#x5730;&#x6A21;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F; <code>tikv</code> &#x5BB9;&#x5668;&#x7684;&#x6839;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x5728; <code>/proc/1/root</code> &#x4E0B;&#xFF0C;&#x56E0;&#x6B64;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x65F6;&#x4E5F;&#x9700;&#x8981;&#x8C03;&#x6574;&#x6570;&#x636E;&#x76EE;&#x5F55;&#x7684;&#x8DEF;&#x5F84;&#xFF1A;</p>
+<pre><code class="lang-shell"> tikv-ctl --db /path/to/tikv/db size -r 2
+</code></pre>
+<p> Kubernetes &#x4E0A; TiKV &#x5B9E;&#x4F8B;&#x5728; debug &#x5BB9;&#x5668;&#x4E2D;&#x7684;&#x7684;&#x9ED8;&#x8BA4; db &#x8DEF;&#x5F84;&#x662F; <code>/proc/1/root/var/lib/tikv/db size -r 2</code></p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="&#x5728;-kubernetes-&#x4E0A;&#x4F7F;&#x7528;-tidb-control">&#x5728; Kubernetes &#x4E0A;&#x4F7F;&#x7528; TiDB Control</h2>
+<p><a href="https://pingcap.com/docs-cn/dev/reference/tools/tidb-control/" target="_blank">TiDB Control</a> &#x662F; TiDB &#x7684;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#xFF0C;&#x4F7F;&#x7528; TiDB Control &#x65F6;&#xFF0C;&#x9700;&#x8981;&#x4ECE;&#x672C;&#x5730;&#x8BBF;&#x95EE; TiDB &#x8282;&#x70B9;&#x548C; PD &#x670D;&#x52A1;&#xFF0C;&#x56E0;&#x6B64;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528; <code>kubectl port-forward</code> &#x6253;&#x5F00;&#x5230;&#x96C6;&#x7FA4;&#x4E2D; TiDB &#x8282;&#x70B9;&#x548C; PD &#x670D;&#x52A1;&#x7684;&#x8FDE;&#x63A5;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl port-forward -n &lt;namespace&gt; svc/&lt;cluster-name&gt;-pd 2379:2379 &amp;&gt;/tmp/portforward-pd.log &amp;
+</code></pre>
+<pre><code class="lang-shell">kubectl port-forward -n &lt;namespace&gt; &lt;tidb-pod-name&gt; 10080:10080 &amp;&gt;/tmp/portforward-tidb.log &amp;
+</code></pre>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x4FBF;&#x53EF;&#x5F00;&#x59CB;&#x4F7F;&#x7528; <code>tidb-ctl</code> &#x547D;&#x4EE4;&#xFF1A;</p>
+<pre><code class="lang-shell">tidb-ctl schema in mysql
+</code></pre>
+<h2 id="&#x4F7F;&#x7528;-helm">&#x4F7F;&#x7528; Helm</h2>
+<p><a href="https://helm.sh/" target="_blank">Helm</a> &#x662F;&#x4E00;&#x4E2A; Kubernetes &#x7684;&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x4E0B;&#x9762;&#x7684;&#x4ECB;&#x7ECD;&#x662F;&#x57FA;&#x4E8E;2.9.0 &#x2264; Helm &lt; 3.0.0 &#x7684;Helm &#x7248;&#x672C; &#x3002;&#x5B89;&#x88C5;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li><p>&#x5B89;&#x88C5; Helm &#x5BA2;&#x6237;&#x7AEF;</p>
+<pre><code class="lang-shell"> curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+</code></pre>
+<p> &#x5982;&#x679C;&#x4F7F;&#x7528; macOS&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x901A;&#x8FC7; Homebrew &#x5B89;&#x88C5; Helm&#xFF1A;</p>
+<pre><code class="lang-bash"> brew install helm@2
+ brew link --force helm@2
+</code></pre>
+</li>
+<li><p>&#x5B89;&#x88C5; Helm &#x670D;&#x52A1;&#x7AEF;</p>
+<p> &#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x5E94;&#x7528; helm &#x670D;&#x52A1;&#x7AEF;&#x7EC4;&#x4EF6; <code>tiller</code> &#x6240;&#x9700;&#x7684; <code>RBAC</code> &#x89C4;&#x5219;&#x5E76;&#x5B89;&#x88C5; <code>tiller</code>&#xFF1A;</p>
+<pre><code class="lang-shell"> kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/tiller-rbac.yaml &amp;&amp; \
+ helm init --service-account=tiller --upgrade
+</code></pre>
+<p> &#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x547D;&#x4EE4;&#x786E;&#x8BA4; <code>tiller</code> Pod &#x8FDB;&#x5165; running &#x72B6;&#x6001;&#xFF1A;</p>
+<pre><code class="lang-shell"> kubectl get po -n kube-system -l name=tiller
+</code></pre>
+<p> &#x5982;&#x679C; Kubernetes &#x96C6;&#x7FA4;&#x6CA1;&#x6709;&#x542F;&#x7528; <code>RBAC</code>&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E0B;&#x5217;&#x547D;&#x4EE4;&#x5B89;&#x88C5; <code>tiller</code>&#xFF1A;</p>
+<pre><code class="lang-shell"> helm init --upgrade
+</code></pre>
+</li>
+</ol>
+<p>Kubernetes &#x5E94;&#x7528;&#x5728; helm &#x4E2D;&#x88AB;&#x6253;&#x5305;&#x4E3A; chart&#x3002;PingCAP &#x9488;&#x5BF9; Kubernetes &#x4E0A;&#x7684; TiDB &#x90E8;&#x7F72;&#x8FD0;&#x7EF4;&#x63D0;&#x4F9B;&#x4E86;&#x4E09;&#x4E2A; Helm chart&#xFF1A;</p>
+<ul>
+<li><code>tidb-operator</code>&#xFF1A;&#x7528;&#x4E8E;&#x90E8;&#x7F72; TiDB Operator&#xFF1B;</li>
+<li><code>tidb-cluster</code>&#xFF1A;&#x7528;&#x4E8E;&#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;&#xFF1B;</li>
+<li><code>tidb-backup</code>&#xFF1A;&#x7528;&#x4E8E; TiDB &#x96C6;&#x7FA4;&#x5907;&#x4EFD;&#x6062;&#x590D;&#xFF1B;</li>
+</ul>
+<p>&#x8FD9;&#x4E9B; chart &#x90FD;&#x6258;&#x7BA1;&#x5728; PingCAP &#x7EF4;&#x62A4;&#x7684; helm chart &#x4ED3;&#x5E93; <code>https://charts.pingcap.org/</code> &#x4E2D;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x6DFB;&#x52A0;&#x8BE5;&#x4ED3;&#x5E93;&#xFF1A;</p>
+<pre><code class="lang-shell">helm repo add pingcap https://charts.pingcap.org/
+</code></pre>
+<p>&#x6DFB;&#x52A0;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>helm search</code> &#x641C;&#x7D22; PingCAP &#x63D0;&#x4F9B;&#x7684; chart&#xFF1A;</p>
+<pre><code class="lang-shell">helm search pingcap -l
+</code></pre>
+<pre><code>NAME                    CHART VERSION   APP VERSION DESCRIPTION
+pingcap/tidb-backup     v1.0.0                      A Helm chart for TiDB Backup or Restore
+pingcap/tidb-cluster    v1.0.0                      A Helm chart for TiDB Cluster
+pingcap/tidb-operator   v1.0.0                      tidb-operator Helm chart for Kubernetes
+</code></pre><p>&#x5F53;&#x65B0;&#x7248;&#x672C;&#x7684; chart &#x53D1;&#x5E03;&#x540E;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>helm repo update</code> &#x547D;&#x4EE4;&#x66F4;&#x65B0;&#x672C;&#x5730;&#x5BF9;&#x4E8E;&#x4ED3;&#x5E93;&#x7684;&#x7F13;&#x5B58;&#xFF1A;</p>
+<pre><code>helm repo update
+</code></pre><p>Helm &#x7684;&#x5E38;&#x7528;&#x64CD;&#x4F5C;&#x6709;&#x90E8;&#x7F72;&#xFF08;<code>helm install</code>&#xFF09;&#x3001;&#x5347;&#x7EA7;&#xFF08;<code>helm upgrade</code>)&#x3001;&#x9500;&#x6BC1;&#xFF08;<code>helm del</code>)&#x3001;&#x67E5;&#x8BE2;&#xFF08;<code>helm ls</code>&#xFF09;&#x3002;Helm chart &#x5F80;&#x5F80;&#x90FD;&#x6709;&#x5F88;&#x591A;&#x53EF;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#xFF0C;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x6BD4;&#x8F83;&#x7E41;&#x7410;&#xFF0C;&#x56E0;&#x6B64;&#x63A8;&#x8350;&#x4F7F;&#x7528; YAML &#x6587;&#x4EF6;&#x7684;&#x5F62;&#x5F0F;&#x6765;&#x7F16;&#x5199;&#x8FD9;&#x4E9B;&#x914D;&#x7F6E;&#x9879;&#xFF0C;&#x57FA;&#x4E8E; Helm &#x793E;&#x533A;&#x7EA6;&#x5B9A;&#x4FD7;&#x79F0;&#x7684;&#x547D;&#x540D;&#x65B9;&#x5F0F;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x6587;&#x6863;&#x4E2D;&#x5C06;&#x7528;&#x4E8E;&#x914D;&#x7F6E; chart &#x7684; YAML &#x6587;&#x4EF6;&#x79F0;&#x4E3A; <code>values.yaml</code> &#x6587;&#x4EF6;&#x3002;</p>
+<p>&#x6267;&#x884C;&#x90E8;&#x7F72;&#x3001;&#x5347;&#x7EA7;&#x3001;&#x9500;&#x6BC1;&#x7B49;&#x64CD;&#x4F5C;&#x524D;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>helm ls</code> &#x67E5;&#x770B;&#x96C6;&#x7FA4;&#x4E2D;&#x5DF2;&#x90E8;&#x7F72;&#x7684;&#x5E94;&#x7528;&#xFF1A;</p>
+<pre><code class="lang-shell">helm ls
+</code></pre>
+<p>&#x5728;&#x6267;&#x884C;&#x90E8;&#x7F72;&#x548C;&#x5347;&#x7EA7;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x5FC5;&#x987B;&#x6307;&#x5B9A;&#x4F7F;&#x7528;&#x7684; chart &#x540D;&#x5B57;&#xFF08;<code>chart-name</code>&#xFF09;&#x548C;&#x90E8;&#x7F72;&#x540E;&#x7684;&#x5E94;&#x7528;&#x540D;&#xFF08;<code>release-name</code>&#xFF09;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A; <code>values.yaml</code> &#x6587;&#x4EF6;&#x6765;&#x914D;&#x7F6E; chart&#x3002;&#x6B64;&#x5916;&#xFF0C;&#x5047;&#x5982;&#x5BF9; chart &#x6709;&#x7279;&#x5B9A;&#x7684;&#x7248;&#x672C;&#x9700;&#x6C42;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x901A;&#x8FC7; <code>--version</code> &#x53C2;&#x6570;&#x6307;&#x5B9A; <code>chart-version</code> (&#x9ED8;&#x8BA4;&#x4E3A;&#x6700;&#x65B0;&#x7684; GA &#x7248;&#x672C;&#xFF09;&#x3002;&#x547D;&#x4EE4;&#x5F62;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li><p>&#x6267;&#x884C;&#x5B89;&#x88C5;&#xFF1A;</p>
+<pre><code class="lang-shell">  helm install &lt;chart-name&gt; --name=&lt;release-name&gt; --namespace=&lt;namespace&gt; --version=&lt;chart-version&gt; -f &lt;values-file&gt;
+</code></pre>
+</li>
+<li><p>&#x6267;&#x884C;&#x5347;&#x7EA7;&#xFF08;&#x5347;&#x7EA7;&#x53EF;&#x4EE5;&#x662F;&#x4FEE;&#x6539; <code>chart-version</code> &#x5347;&#x7EA7;&#x5230;&#x65B0;&#x7248;&#x672C;&#x7684; chart&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x4FEE;&#x6539; <code>values.yaml</code> &#x6587;&#x4EF6;&#x66F4;&#x65B0;&#x5E94;&#x7528;&#x914D;&#x7F6E;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-shell">  helm upgrade &lt;release-name&gt; &lt;chart-name&gt; --version=&lt;chart-version&gt; -f &lt;values-file&gt;
+</code></pre>
+</li>
+</ul>
+<p>&#x6700;&#x540E;&#xFF0C;&#x5047;&#x5982;&#x8981;&#x5220;&#x9664; helm &#x90E8;&#x7F72;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#xFF1A;</p>
+<pre><code class="lang-shell">helm del --purge &lt;release-name&gt;
+</code></pre>
+<p>Helm3 &#x5DF2;&#x7ECF;GA,&#x7ECF;&#x6D4B;&#x8BD5;&#x901A;&#x8FC7; Helm3 &#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8FDB;&#x884C;&#x90E8;&#x7F72;&#x3002;&#x66F4;&#x591A; helm &#x7684;&#x76F8;&#x5173;&#x6587;&#x6863;&#xFF0C;&#x8BF7;&#x53C2;&#x8003; <a href="https://helm.sh/docs/" target="_blank">Helm &#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;-terraform">&#x4F7F;&#x7528; Terraform</h2>
+<p><a href="https://www.terraform.io/" target="_blank">Terraform</a> &#x662F;&#x4E00;&#x4E2A;&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#x5373;&#x4EE3;&#x7801;&#xFF08;Infrastructure as Code&#xFF09;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#x3002;&#x5B83;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x4F7F;&#x7528;&#x58F0;&#x660E;&#x5F0F;&#x7684;&#x98CE;&#x683C;&#x63CF;&#x8FF0;&#x81EA;&#x5DF1;&#x7684;&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#xFF0C;&#x5E76;&#x9488;&#x5BF9;&#x63CF;&#x8FF0;&#x751F;&#x6210;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x6765;&#x521B;&#x5EFA;&#x6216;&#x8C03;&#x6574;&#x771F;&#x5B9E;&#x4E16;&#x754C;&#x7684;&#x8BA1;&#x7B97;&#x8D44;&#x6E90;&#x3002;Kubernetes &#x4E0A;&#x7684; TiDB &#x4F7F;&#x7528; Terraform &#x6765;&#x5728;&#x516C;&#x6709;&#x4E91;&#x4E0A;&#x521B;&#x5EFA;&#x548C;&#x7BA1;&#x7406; TiDB &#x96C6;&#x7FA4;&#x3002;</p>
+<p>&#x4F60;&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://www.terraform.io/downloads.html" target="_blank">Terraform &#x5B98;&#x65B9;&#x6587;&#x6863;</a> &#x6765;&#x5B89;&#x88C5; Terraform&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2929,7 +3048,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南","level":"3.1.2.7","depth":3,"next":{"title":"1.2.8 TiDB-Operator 升级","level":"3.1.2.8","depth":3,"path":"session2/chapter1/tidb-operator-upgrade.md","ref":"session2/chapter1/tidb-operator-upgrade.md","articles":[]},"previous":{"title":"1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据","level":"3.1.2.6","depth":3,"path":"session2/chapter1/tidb-operator-lightning.md","ref":"session2/chapter1/tidb-operator-lightning.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-tools.md","mtime":"2020-03-08T11:38:42.344Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:39:20.871Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南","level":"3.1.2.7","depth":3,"next":{"title":"1.2.8 TiDB-Operator 升级","level":"3.1.2.8","depth":3,"path":"session2/chapter1/tidb-operator-upgrade.md","ref":"session2/chapter1/tidb-operator-upgrade.md","articles":[]},"previous":{"title":"1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据","level":"3.1.2.6","depth":3,"path":"session2/chapter1/tidb-operator-lightning.md","ref":"session2/chapter1/tidb-operator-lightning.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-tools.md","mtime":"2020-03-08T11:39:38.268Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:40:34.067Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
