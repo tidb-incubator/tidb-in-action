@@ -9,7 +9,7 @@
 * [3 谈计算](session1/chapter3/tidb-computing.md)
     * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md) @[Qiannan](https://github.com/hsqlu)
     * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md)
-    * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @zhiqiangxu
+    * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @[zhiqiangxu](https://github.com/zhiqiangxu)
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
