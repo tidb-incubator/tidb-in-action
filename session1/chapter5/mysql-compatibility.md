@@ -19,7 +19,7 @@ TiDB 仍处在快速发展的道路上，对 MySQL 功能和行为的支持方�
 截至 4.0 版本，TiDB 与 MySQL 的区别总结如下表：
 
 |    | MySQL   | TiDB   | 
-|:----|:----|:----|:----:|
+|:----|:----|:----|
 | 隔离级别   | 支持读未提交、读已提交、可重复读、串行化，默认为可重复读   | 乐观事务支持快照隔离  悲观事务支持快照隔离和读已提交   | 
 | 锁机制   | 悲观锁   | 乐观锁、悲观锁   | 
 | 存储过程   | 支持   | 不支持   | 
@@ -38,10 +38,12 @@ TiDB 仍处在快速发展的道路上，对 MySQL 功能和行为的支持方�
 | Sequence 序列生成器   | 不支持   | 支持   | 
 
 ## 区别点详述及应对方案
+
 ### 字符集支持
+
 TiDB 目前支持以下字符集：
 
-```
+```sql
 tidb> SHOW CHARACTER SET;
 +---------|---------------|-------------------|--------+
 | Charset | Description   | Default collation | Maxlen |
@@ -70,7 +72,7 @@ tidb> SHOW CHARACTER SET;
 
 在 4.0 版本之前，TiDB 中可以任意指定字符集对应的所有 Collation，并把它们按照默认 Collation 处理，即以编码字节序为字符定序。同时，并未像 MySQL 一样，在比较前按照 Collation 的 `PADDING` 属性将字符补齐空格。因此，会造成以下的行为区别：
 
-```
+```sql
 tidb> create table t(a varchar(20) charset utf8mb4 collate utf8mb4_general_ci primary key);
 Query OK, 0 rows affected
 tidb> insert into t values ('A');                                    
@@ -82,7 +84,7 @@ Query OK, 1 row affected // MySQL 中，由于补齐空格比较，报错 Duplic
 ```
 TiDB 4.0 新增了完整的 Collation 支持框架，允许实现所有 MySQL 中的 Collation，并新增了配置开关 `new_collation_enabled_on_first_boostrap`，在集群初次初始化时决定是否启用新 Collation 框架。在该配置开关打开之后初始化集群，可以通过 `mysql`.`tidb` 表中的 `new_collation_enabled` 变量确认新 Collation 是否启用：
 
-```
+```sql
 tidb> select VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME='new_collation_enabled';
 +----------------+
 | VARIABLE_VALUE |
@@ -92,12 +94,14 @@ tidb> select VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME='new_collation_e
 1 row in set (0.00 sec)
 ```
 在新 Collation 启用后，TiDB 修正了 utf8mb4_general_bin 和 utf8_general_bin 的 PADDING 行为，会将字符串补齐空格后比较；同时支持了 utf8mb4_general_ci 和 utf8_general_ci，这两个 Collation 与 MySQL 保持兼容。
+
 ### 系统时区
+
 在 MySQL 中，系统时区 `system_time_zone` 在 MySQL 服务启动时通过[环境变量 `TZ` 或 命令行参数` --timezone` 指定]([https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html))。
 
 对于 TiDB 而言，作为一个分布式数据库，TiDB 需要保证整个集群的系统时区始终一致。因此 TiDB 的系统时区在集群初始化时，由负责初始化的 TiDB 节点环境变量 `TZ` 决定。集群初始化后，固定在集群状态表 `mysql`.`tidb` 中：
 
-```
+```sql
 tidb> SELECT VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME='system_tz';
 +----------------+
 | VARIABLE_VALUE |
@@ -106,8 +110,9 @@ tidb> SELECT VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME='system_tz';
 +----------------+
 1 row in set (0.00 sec)
 ```
+
 通过查看 `system_time_zone` 变量，可以看到该值与状态表中的 `system_tz` 保持一致：
-```
+```sql
 tidb> select @@system_time_zone;
 +--------------------+
 | @@system_time_zone |
@@ -116,8 +121,9 @@ tidb> select @@system_time_zone;
 +--------------------+
 1 row in set (0.00 sec)
 ```
+
 请注意，这意味着 TiDB 的系统时区在初始化后不再更改。若需要改变集群的时区，可以显式指定 `time_zone` 系统变量，例如：
-```
+```sql
 tidb> set @@global.time_zone='UTC';
 Query OK, 0 rows affected (0.00 sec)
 ```
