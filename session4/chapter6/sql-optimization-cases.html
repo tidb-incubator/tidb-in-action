@@ -3026,14 +3026,194 @@ Coprocessor CPU &#x51E0;&#x4E4E;&#x6253;&#x6EE1;&#x4E86; CPU&#x3002;&#x4E0B;&#x9
 ![case4_pic13.png](../../res/session4/chapter6/sql_optimization_case/case4_pic13.png)
 
 &#x89C2;&#x5BDF;&#x538B;&#x529B;&#x8F83;&#x91CD;&#x7684; tikv&#xFF0C;&#x79FB;&#x8D70;&#x70ED;&#x70B9; region &#x7684; leader&#xFF1A;
-</code></pre><p>pd-ctl &#x2013;u <a href="http://x.x.x.x:2379" target="_blank">http://x.x.x.x:2379</a> operator add transfer-leader 1 2 //&#x628A;Region1 &#x7684; leader &#x8C03;&#x5EA6;&#x5230; Store2
-```
-leader &#x8FC1;&#x8D70;&#x4E4B;&#x540E; &#xFF0C;&#x539F; TiKV &#x7684; duration &#x7ACB;&#x523B;&#x4E0B;&#x964D;&#x4E86;&#xFF0C;&#x4F46;&#x662F; leader &#x6240;&#x5728;&#x7684; TiKV duration &#x968F;&#x4E4B;&#x4E0A;&#x5347;(&#x56FE;&#x4E2D;&#x5C55;&#x793A;&#x4E86;&#x4E00;&#x4E2A; TiKV &#x7684;&#x53D8;&#x5316;&#x8FC7;&#x7A0B;)&#xFF1A;
-<img src="../../res/session4/chapter6/sql_optimization_case/case4_p95handle_duration.png" alt="case4_p95handle_duration.png"></p>
-<p>&#x5206;&#x6790;&#x540E;&#x53CD;&#x590D;&#x5206;&#x88C2;&#x70ED;&#x70B9; region&#xFF0C;&#x4E4B;&#x540E;&#x6548;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
-<p><img src="../../res/session4/chapter6/sql_optimization_case/case4_region_splict.png" alt="case4_region_splict.png"></p>
-<h3 id="&#x8C03;&#x4F18;&#x603B;&#x7ED3;">&#x8C03;&#x4F18;&#x603B;&#x7ED3;</h3>
-<p>&#x5BF9;&#x4E8E;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x8BFB;&#x70ED;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x96BE;&#x4EE5;&#x901A;&#x8FC7;&#x4F18;&#x5316; SQL &#x672C;&#x8EAB;&#x6765;&#x89E3;&#x51B3;&#xFF0C;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x7CFB;&#x7EDF;&#x5206;&#x6790;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x7684;&#x72B6;&#x6001;&#x6765;&#x5B9A;&#x4F4D;&#x539F;&#x56E0;&#xFF0C;&#x91C7;&#x7528;&#x5206;&#x88C2; region &#x7684;&#x65B9;&#x5F0F;&#x6765;&#x7F13;&#x89E3;&#x548C;&#x6D88;&#x9664;&#x8BFB;&#x70ED;&#x70B9;&#x5BF9; SQL &#x67E5;&#x8BE2;&#x6548;&#x7387;&#x7684;&#x5F71;&#x54CD;&#x3002;&#x8BFB;&#x70ED;&#x70B9;&#x5B9E;&#x9645;&#x4E0A;&#x9650;&#x5236;&#x4E86;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x7684;&#x5E76;&#x53D1;&#x8BFB;&#x53D6;&#x4F18;&#x52BF;&#xFF0C;&#x5206;&#x88C2; region &#x7684;&#x65B9;&#x5F0F;&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x6062;&#x590D;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x7684;&#x5E76;&#x53D1;&#x8BFB;&#x53D6;&#x4F18;&#x52BF;&#x3002;</p>
+</code></pre><p>pd-ctl &#x2013;u <a href="http://x.x.x.x:2379" target="_blank">http://x.x.x.x:2379</a> operator add transfer-leader 1 2 //&#x628A;Region1 &#x7684; leader &#x8C03;&#x5EA6;&#x5230; Store2</p>
+<pre><code>leader &#x8FC1;&#x8D70;&#x4E4B;&#x540E; &#xFF0C;&#x539F; TiKV &#x7684; duration &#x7ACB;&#x523B;&#x4E0B;&#x964D;&#x4E86;&#xFF0C;&#x4F46;&#x662F; leader &#x6240;&#x5728;&#x7684; TiKV duration &#x968F;&#x4E4B;&#x4E0A;&#x5347;(&#x56FE;&#x4E2D;&#x5C55;&#x793A;&#x4E86;&#x4E00;&#x4E2A; TiKV &#x7684;&#x53D8;&#x5316;&#x8FC7;&#x7A0B;)&#xFF1A;
+![case4_p95handle_duration.png](../../res/session4/chapter6/sql_optimization_case/case4_p95handle_duration.png)
+
+&#x5206;&#x6790;&#x540E;&#x53CD;&#x590D;&#x5206;&#x88C2;&#x70ED;&#x70B9; region&#xFF0C;&#x4E4B;&#x540E;&#x6548;&#x679C;&#x5982;&#x4E0B;&#xFF1A;
+
+![case4_region_splict.png](../../res/session4/chapter6/sql_optimization_case/case4_region_splict.png)
+
+### &#x8C03;&#x4F18;&#x603B;&#x7ED3;
+&#x5BF9;&#x4E8E;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x8BFB;&#x70ED;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x96BE;&#x4EE5;&#x901A;&#x8FC7;&#x4F18;&#x5316; SQL &#x672C;&#x8EAB;&#x6765;&#x89E3;&#x51B3;&#xFF0C;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x7CFB;&#x7EDF;&#x5206;&#x6790;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x7684;&#x72B6;&#x6001;&#x6765;&#x5B9A;&#x4F4D;&#x539F;&#x56E0;&#xFF0C;&#x91C7;&#x7528;&#x5206;&#x88C2; region &#x7684;&#x65B9;&#x5F0F;&#x6765;&#x7F13;&#x89E3;&#x548C;&#x6D88;&#x9664;&#x8BFB;&#x70ED;&#x70B9;&#x5BF9; SQL &#x67E5;&#x8BE2;&#x6548;&#x7387;&#x7684;&#x5F71;&#x54CD;&#x3002;&#x8BFB;&#x70ED;&#x70B9;&#x5B9E;&#x9645;&#x4E0A;&#x9650;&#x5236;&#x4E86;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x7684;&#x5E76;&#x53D1;&#x8BFB;&#x53D6;&#x4F18;&#x52BF;&#xFF0C;&#x5206;&#x88C2; region &#x7684;&#x65B9;&#x5F0F;&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x6062;&#x590D;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x7684;&#x5E76;&#x53D1;&#x8BFB;&#x53D6;&#x4F18;&#x52BF;&#x3002;
+
+
+## &#x6848;&#x4F8B;5 SQL &#x6267;&#x884C;&#x8BA1;&#x5212;&#x4E0D;&#x51C6;
+
+### &#x80CC;&#x666F;
+
+* SQL &#x6267;&#x884C;&#x65F6;&#x95F4;&#x7A81;&#x7136;&#x53D8;&#x957F;
+
+### &#x5206;&#x6790;
+
+* SQL &#x8BED;&#x53E5;&#xFF1A;
+</code></pre><p>select count(*)
+from   tods.bus_jijin_trade_record a, tods.bus_jijin_info b 
+where   a.fund_code=b.fund_code  and a.type in   (&apos;PURCHASE&apos;,&apos;APPLY&apos;)<br>and   a.status=&apos;CANCEL_SUCCESS&apos; and a.pay_confirm_status = 1 
+and a.cancel_app_no   is not null and a.id &gt;=    177045000<br>and a.updated_at   &gt; date_sub(now(), interval 48 hour) ;</p>
+<p>&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF0C;&#x9700;&#x8981; 1 &#x5206; 3.7s&#xFF1A;
+mysql&gt; select   count(<em>)
+    -&gt; from tods.bus_jijin_trade_record a,   tods.bus_jijin_info b 
+    -&gt; where a.fund_code=b.fund_code  and a.type in (&apos;PURCHASE&apos;,&apos;APPLY&apos;)<br>    -&gt; and a.status=&apos;CANCEL_SUCCESS&apos; and   a.pay_confirm_status = 1 
+    -&gt; and a.cancel_app_no is not null and   a.id &gt;=  177045000<br>    -&gt; and a.updated_at &gt;   date_sub(now(), interval 48 hour) ;
++----------+
+| count(</em>) |
++----------+
+|      708 |
++----------+
+1   row in set (1 min 3.77 sec)</p>
+<pre><code>
+
+* &#x7D22;&#x5F15;&#x4FE1;&#x606F;
+
+| **&#x8868;&#x540D;**   | **&#x6570;&#x636E;&#x884C;**   | **&#x7D22;&#x5F15;&#x540D;**   | 
+|:----|:----|:----|
+| bus_jijin_trade_record   | 176384036   | PRIMARY   KEY (`ID`)  KEY   `idx_bus_jijin_trade_record_upt` (`UPDATED_AT`)   | 
+| bus_jijin_info   | 6442   | PRIMARY   KEY (`ID`)   | 
+
+
+
+* &#x67E5;&#x770B;&#x6267;&#x884C;&#x8BA1;&#x5212;
+</code></pre><p>mysql&gt; explain 
+    -&gt; select count(*)
+    -&gt; from tods.bus_jijin_trade_record a,   tods.bus_jijin_info b 
+    -&gt; where a.fund_code=b.fund_code  and a.type in (&apos;PURCHASE&apos;,&apos;APPLY&apos;)<br>    -&gt; and a.status=&apos;CANCEL_SUCCESS&apos; and   a.pay_confirm_status = 1 
+    -&gt; and a.cancel_app_no is not null and   a.id &gt;=  177045000<br>    -&gt; and a.updated_at &gt;   date_sub(now(), interval 48 hour) ;
++----------------------------+--------------+------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| id                         | count        | task | operator info                                                                                                                                                     |
++----------------------------+--------------+------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| StreamAgg_13               | 1.00         | root | funcs:count(1)                                                                                                                                                    |
+| &#x2514;&#x2500;HashRightJoin_27         | 421.12       | root | inner join, inner:TableReader_18, equal:[eq(a.fund_code, b.fund_code)]                                                                                            |
+|   &#x251C;&#x2500;TableReader_18         | 421.12       | root | data:Selection_17                                                                                                                                                 |
+|   &#x2502; &#x2514;&#x2500;Selection_17         | 421.12       | cop  | eq(a.pay_confirm_status, 1), eq(a.status, &quot;CANCEL_SUCCESS&quot;), gt(a.updated_at, 2020-03-03 22:31:08), in(a.type, &quot;PURCHASE&quot;, &quot;APPLY&quot;), not(isnull(a.cancel_app_no)) |
+|   &#x2502;   &#x2514;&#x2500;TableScan_16       | 145920790.55 | cop  | table:a, range:[177045000,+inf], keep order:false                                                                                                                 |
+|   &#x2514;&#x2500;TableReader_37         | 6442.00      | root | data:TableScan_36                                                                                                                                                 |
+|     &#x2514;&#x2500;TableScan_36         | 6442.00      | cop  | table:b, range:[-inf,+inf], keep order:false                                                                                                                      |
++----------------------------+--------------+------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+</p>
+<p>TableScan_16&#xFF0C;TableScan_36&#xFF1A;&#x8868;&#x793A;&#x5728; KV &#x7AEF;&#x5206;&#x522B;&#x5BF9;&#x8868; a &#x548C; b &#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x626B;&#x63CF;&#xFF0C;&#x5176;&#x4E2D; TableScan_16 &#x626B;&#x63CF;&#x4E86; 1.46 &#x4EBF;&#x7684;&#x884C;&#x6570;&#xFF1B;
+Selection_17&#xFF1A;&#x8868;&#x793A;&#x6EE1;&#x8DB3;&#x8868; a &#x540E;&#x9762; where &#x6761;&#x4EF6;&#x7684;&#x6570;&#x636E;
+TableReader_37&#xFF1A; &#x7531;&#x4E8E;&#x8868;   b &#x6CA1;&#x6709;&#x72EC;&#x7ACB;&#x7684;&#x9644;&#x52A0;&#x6761;&#x4EF6;&#xFF0C;&#x6240;&#x4EE5;&#x76F4;&#x63A5;&#x5C06;&#x8FD9;&#x90E8;&#x5206;&#x6570;&#x636E;&#x8FD4;&#x56DE;&#x7ED9; tidb&#xFF1B;
+TableReader_18&#xFF1A;&#x5C06;&#x5404;&#x4E2A;   coprocessor &#x6EE1;&#x8DB3; a &#x8868;&#x6761;&#x4EF6;&#x7684;&#x7ED3;&#x679C;&#x8FD4;&#x56DE;&#x7ED9; tidb&#xFF1B;
+HashRightJoin_27&#xFF1A;&#x5C06; TableReader_37   &#x548C; TableReader_18   &#x4E0A;&#x7684;&#x7ED3;&#x679C;&#x8FDB;&#x884C; hash join&#xFF1B;
+StreamAgg_13&#xFF1A;&#x8FDB;&#x4E00;&#x6B65;&#x7EDF;&#x8BA1;&#x6240;&#x6709;&#x884C;&#x6570;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x8FD4;&#x56DE;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#xFF1B;</p>
+<pre><code>
+&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8BED;&#x53E5;&#x4E2D; a &#x8868; ( bus_jijin_trade_record ) &#x7684;&#x6761;&#x4EF6; id &gt;=  177045000&#xFF0C; &#x548C; updated_at &gt; date_sub(now(), interval 48 hour ) &#x4E0A;&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A;&#x5217;&#x5206;&#x522B;&#x90FD;&#x6709;&#x7D22;&#x5F15;&#xFF0C;&#x4F46;&#x662F; tidb &#x8FD8;&#x662F;&#x9009;&#x62E9;&#x4E86;&#x5168;&#x8868;&#x626B;&#x63CF;&#xFF1B;
+
+
+
+&#x6309;&#x7167;&#x4E0A;&#x9762;&#x4E24;&#x4E2A;&#x6761;&#x4EF6;&#x5206;&#x522B;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x5206;&#x533A;&#x60C5;&#x51B5;
+</code></pre><p>mysql&gt; SELECT   COUNT(<em>) FROM tods.bus_jijin_trade_record WHERE id &gt;=  177045000 ;
++-----------+
+| COUNT(</em>)  |
++-----------+
+| 145917327 |
++-----------+
+1 row in set (16.86   sec)</p>
+<p>mysql&gt; SELECT   COUNT(<em>) FROM tods.bus_jijin_trade_record WHERE updated_at &gt;   date_sub(now(), interval 48 hour)  ;
++-----------+
+|  COUNT(</em>) |
++-----------+
+|    713682 |
++-----------+ </p>
+<pre><code>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x8868; bus_jijin_trade_record &#x6709; 1.7 &#x4EBF;&#x7684;&#x6570;&#x636E;&#x91CF;&#xFF0C; &#x5E94;&#x8BE5;&#x8D70; updated_at &#x5B57;&#x6BB5;&#x4E0A;&#x7684;&#x7D22;&#x5F15;&#xFF1B;
+
+
+&#x4F7F;&#x7528;&#x5F3A;&#x5236; hint &#x8FDB;&#x884C;&#x6267;&#x884C;&#xFF0C;6.27 &#x79D2;&#x5C31;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E86;&#xFF0C;**&#x901F;&#x5EA6;&#x4ECE;&#x4E4B;&#x524D; 63s &#x5230;&#x73B0;&#x5728;&#x7684; 6.3s&#xFF0C;&#x63D0;&#x5347;&#x4E86; 10 &#x500D;**
+</code></pre><p>mysql&gt; select   count(<em>)
+    -&gt; from tods.bus_jijin_trade_record a   use index(idx_bus_jijin_trade_record_upt), tods.bus_jijin_info b 
+    -&gt; where a.fund_code=b.fund_code  and a.type in (&apos;PURCHASE&apos;,&apos;APPLY&apos;)<br>    -&gt; and a.status=&apos;CANCEL_SUCCESS&apos; and   a.pay_confirm_status = 1 
+    -&gt; and a.cancel_app_no is not null and   a.id &gt;=  177045000<br>    -&gt; and a.updated_at &gt;   date_sub(now(), interval 48 hour) ;
++----------+
+| count(</em>) |
++----------+
+|      709 |
++----------+
+1 row in set (6.27   sec) </p>
+<pre><code>&#x5F3A;&#x5236; hint &#x540E;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;
+</code></pre><p>mysql&gt; explain 
+    -&gt; select count(*)
+    -&gt; from tods.bus_jijin_trade_record a   use index(idx_bus_jijin_trade_record_upt), tods.bus_jijin_info b 
+    -&gt; where a.fund_code=b.fund_code  and a.type in (&apos;PURCHASE&apos;,&apos;APPLY&apos;)<br>    -&gt; and a.status=&apos;CANCEL_SUCCESS&apos; and   a.pay_confirm_status = 1 
+    -&gt; and a.cancel_app_no is not null and   a.id &gt;=  177045000<br>    -&gt; and a.updated_at &gt;   date_sub(now(), interval 48 hour) ;
++------------------------------+--------------+------+----------------------------------------------------------------------------------------------------------------------------+
+| id                           | count        | task | operator info                                                                                                              |
++------------------------------+--------------+------+----------------------------------------------------------------------------------------------------------------------------+
+| StreamAgg_13                 | 1.00         | root | funcs:count(1)                                                                                                             |
+| &#x2514;&#x2500;HashRightJoin_24           | 421.12       | root | inner join, inner:IndexLookUp_20, equal:[eq(a.fund_code, b.fund_code)]                                                     |
+|   &#x251C;&#x2500;IndexLookUp_20           | 421.12       | root |                                                                                                                            |
+|   &#x2502; &#x251C;&#x2500;Selection_18           | 146027634.83 | cop  | ge(a.id, 177045000)                                                                                                        |
+|   &#x2502; &#x2502;   &#x2514;&#x2500;IndexScan_16       | 176388219.00 | cop  | table:a, index:UPDATED_AT, range:(2020-03-03 23:05:30,+inf], keep order:false                                              |
+|   &#x2502; &#x2514;&#x2500;Selection_19           | 421.12       | cop  | eq(a.pay_confirm_status, 1), eq(a.status, &quot;CANCEL_SUCCESS&quot;), in(a.type, &quot;PURCHASE&quot;, &quot;APPLY&quot;), not(isnull(a.cancel_app_no)) |
+|   &#x2502;   &#x2514;&#x2500;TableScan_17         | 146027634.83 | cop  |   table:bus_jijin_trade_record, keep order:false                                                                           |
+|   &#x2514;&#x2500;TableReader_31           | 6442.00      | root | data:TableScan_30                                                                                                          |
+|     &#x2514;&#x2500;TableScan_30           | 6442.00      | cop  | table:b, range:[-inf,+inf], keep order:false                                                                               |
++------------------------------+--------------+------+----------------------------------------------------------------------------------------------------------------------------+</p>
+<pre><code>&#x4F7F;&#x7528; hint &#x540E;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#xFF0C;&#x9884;&#x4F30; updated_at &#x4E0A;&#x7684;&#x7D22;&#x5F15;&#x4F1A;&#x626B;&#x63CF; 176388219&#xFF0C;**&#x7D22;&#x5F15;&#x9009;&#x62E9;&#x4E86;&#x5168;&#x8868;&#x626B;&#x63CF;&#xFF0C;&#x53EF;&#x4EE5;&#x5224;&#x5B9A;&#x662F;&#x7531;&#x4E8E;&#x9519;&#x8BEF;&#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x5BFC;&#x81F4;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x6709;&#x95EE;&#x9898;**
+
+
+&#x67E5;&#x770B;&#x8868; bus_jijin_trade_record &#x4E0A;&#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;
+</code></pre><p>mysql&gt; show   stats_meta where table_name like &apos;bus_jijin_trade_record&apos; and db_name like   &apos;tods&apos;;
++---------+------------------------+---------------------+--------------+-----------+
+| Db_name | Table_name             | Update_time         | Modify_count | Row_count |
++---------+------------------------+---------------------+--------------+-----------+
+| tods    | bus_jijin_trade_record | 2020-03-05 22:04:21 |     10652939 | 176381997 |
++---------+------------------------+---------------------+--------------+-----------+</p>
+<p>mysql&gt; show   stats_healthy  where table_name like   &apos;bus_jijin_trade_record&apos; and db_name like &apos;tods&apos;;
++---------+------------------------+---------+
+| Db_name | Table_name             | Healthy |
++---------+------------------------+---------+
+| tods    | bus_jijin_trade_record |      93 |
++---------+------------------------+---------+</p>
+<pre><code>&#x6839;&#x636E;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#xFF0C;&#x8868; bus_jijin_trade_record &#x6709; 176381997&#xFF0C;&#x4FEE;&#x6539;&#x7684;&#x884C;&#x6570;&#x6709; 10652939&#xFF0C;
+
+&#x8BE5;&#x8868;&#x7684;&#x5065;&#x5EB7;&#x5EA6;&#x4E3A;&#xFF1A;(176381997-10652939)/176381997 *100=93
+
+
+### &#x89E3;&#x51B3;
+* &#x91CD;&#x65B0;&#x6536;&#x96C6;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;
+</code></pre><p>mysql&gt; set   tidb_build_stats_concurrency=10;
+Query OK, 0 rows   affected (0.00 sec)</p>
+<h1 id="&#x8C03;&#x6574;&#x6536;&#x96C6;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x7684;&#x5E76;&#x53D1;&#x5EA6;&#xFF0C;&#x4EE5;&#x4FBF;&#x5FEB;&#x901F;&#x5BF9;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x6536;&#x96C6;">&#x8C03;&#x6574;&#x6536;&#x96C6;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x7684;&#x5E76;&#x53D1;&#x5EA6;&#xFF0C;&#x4EE5;&#x4FBF;&#x5FEB;&#x901F;&#x5BF9;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x6536;&#x96C6;</h1>
+<p>mysql&gt; analyze   table tods.bus_jijin_trade_record;
+Query OK, 0 rows   affected (3 min 48.74 sec) </p>
+<pre><code>* &#x67E5;&#x770B;&#x6CA1;&#x6709;&#x4F7F;&#x7528; hint &#x8BED;&#x53E5;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;
+</code></pre><p>mysql&gt; explain   select count(*)
+    -&gt; from tods.bus_jijin_trade_record a,   tods.bus_jijin_info b 
+    -&gt; where a.fund_code=b.fund_code  and a.type in (&apos;PURCHASE&apos;,&apos;APPLY&apos;)<br>    -&gt; and a.status=&apos;CANCEL_SUCCESS&apos; and   a.pay_confirm_status = 1 
+    -&gt; and a.cancel_app_no is not null and   a.id &gt;=  177045000<br>    -&gt; and a.updated_at &gt;   date_sub(now(), interval 48 hour) ;;
++------------------------------+-----------+------+----------------------------------------------------------------------------------------------------------------------------+
+| id                           | count     | task | operator info                                                                                                              |
++------------------------------+-----------+------+----------------------------------------------------------------------------------------------------------------------------+
+| StreamAgg_13                 | 1.00      | root | funcs:count(1)                                                                                                             |
+| &#x2514;&#x2500;HashRightJoin_27           | 1.99      | root | inner join, inner:IndexLookUp_23, equal:[eq(a.fund_code, b.fund_code)]                                                     |
+|   &#x251C;&#x2500;IndexLookUp_23           | 1.99      | root |                                                                                                                            |
+|   &#x2502; &#x251C;&#x2500;Selection_21           | 626859.65 | cop  | ge(a.id, 177045000)                                                                                                        |
+|   &#x2502; &#x2502;   &#x2514;&#x2500;IndexScan_19       | 757743.08 | cop  | table:a, index:UPDATED_AT, range:(2020-03-03 23:28:14,+inf], keep order:false                                              |
+|   &#x2502; &#x2514;&#x2500;Selection_22           | 1.99      | cop  | eq(a.pay_confirm_status, 1), eq(a.status, &quot;CANCEL_SUCCESS&quot;), in(a.type, &quot;PURCHASE&quot;, &quot;APPLY&quot;), not(isnull(a.cancel_app_no)) |
+|   &#x2502;   &#x2514;&#x2500;TableScan_20         | 626859.65 | cop  | table:bus_jijin_trade_record, keep order:false                                                                             |
+|   &#x2514;&#x2500;TableReader_37           | 6442.00   | root | data:TableScan_36                                                                                                          |
+|     &#x2514;&#x2500;TableScan_36           | 6442.00   | cop  | table:b, range:[-inf,+inf], keep order:false                                                                               |
++------------------------------+-----------+------+----------------------------------------------------------------------------------------------------------------------------+
+9 rows in set (0.00   sec)</p>
+<pre><code>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;**&#x6536;&#x96C6;&#x5B8C;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x540E;&#xFF0C;&#x73B0;&#x5728;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x8D70;&#x4E86;&#x7D22;&#x5F15;&#x626B;&#x63CF;&#xFF0C;&#x4E0E;&#x624B;&#x52A8;&#x6DFB;&#x52A0; hint &#x7684;&#x884C;&#x4E3A;&#x4E00;&#x81F4;&#xFF0C;&#x4E14;&#x626B;&#x63CF;&#x7684;&#x884C;&#x6570; 757743 &#x7B26;&#x5408;&#x9884;&#x671F;&#xFF1B;**
+
+
+
+**&#x6B64;&#x65F6;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x53D8;&#x4E3A; 1.69s &#xFF0C;&#x5728;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x6CA1;&#x53D8;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5E94;&#x8BE5;&#x662F;&#x7531;&#x4E8E;&#x7F13;&#x5B58;&#x547D;&#x4E2D;&#x7387;&#x4E0A;&#x5347;&#x5E26;&#x6765;&#x7684;&#x63D0;&#x5347;&#x3002;**
+</code></pre><p>mysql&gt; select   count(<em>)
+    -&gt; from tods.bus_jijin_trade_record a,   tods.bus_jijin_info b 
+    -&gt; where a.fund_code=b.fund_code  and a.type in (&apos;PURCHASE&apos;,&apos;APPLY&apos;)<br>    -&gt; and a.status=&apos;CANCEL_SUCCESS&apos; and   a.pay_confirm_status = 1 
+    -&gt; and a.cancel_app_no is not null and   a.id &gt;=  177045000<br>    -&gt; and a.updated_at &gt;   date_sub(now(), interval 48 hour) ;
++----------+
+| count(</em>) |
++----------+
+|      712 |
++----------+
+1 row in set (1.69   sec) 
+```</p>
+<h3 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h3>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x8BE5; SQL &#x6267;&#x884C;&#x6548;&#x7387;&#x53D8;&#x5DEE;&#x662F;&#x7531;&#x4E8E;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x4E0D;&#x51C6;&#x786E;&#x9020;&#x6210;&#x7684;&#xFF0C;&#x5728;&#x901A;&#x8FC7;&#x6536;&#x96C6;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x4E4B;&#x540E;&#x5F97;&#x5230;&#x4E86;&#x6B63;&#x786E;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x3002;</p>
+<p>&#x4ECE;&#x6700;&#x7EC8;&#x7ED3;&#x679C; 712 &#x884C;&#x8BB0;&#x5F55;&#x6765;&#x770B;&#xFF0C;&#x521B;&#x5EFA;&#x8054;&#x5408;&#x7D22;&#x5F15;&#x53EF;&#x4EE5;&#x66F4;&#x5927;&#x7684;&#x964D;&#x4F4E;&#x626B;&#x63CF;&#x6570;&#x636E;&#x7684;&#x91CF;&#xFF0C;&#x66F4;&#x8FDB;&#x4E00;&#x6B65;&#x63D0;&#x5347;&#x6027;&#x80FD;&#x3002;&#x5728;&#x6027;&#x80FD;&#x5DF2;&#x7ECF;&#x6EE1;&#x8DB3;&#x4E1A;&#x52A1;&#x8981;&#x6C42;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8054;&#x5408;&#x7D22;&#x5F15;&#x4F1A;&#x6709;&#x989D;&#x5916;&#x7684;&#x6210;&#x672C;&#xFF0C;&#x7559;&#x5F85;&#x4EE5;&#x540E;&#x5C1D;&#x8BD5;&#x3002;</p>
 
                                 
                                 </section>
@@ -3077,7 +3257,7 @@ leader &#x8FC1;&#x8D70;&#x4E4B;&#x540E; &#xFF0C;&#x539F; TiKV &#x7684; duration 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"6.2 SQL 调优案例","level":"5.6.2","depth":2,"next":{"title":"6.3 TiDB + TiSpark 跑批最佳实践","level":"5.6.3","depth":2,"path":"session4/chapter6/batch-tasks-best-practices.md","ref":"session4/chapter6/batch-tasks-best-practices.md","articles":[]},"previous":{"title":"6.1.5 通过 hint 调整执行计划","level":"5.6.1.5","depth":3,"path":"session4/chapter6/tidb-hint.md","ref":"session4/chapter6/tidb-hint.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter6/sql-optimization-cases.md","mtime":"2020-03-08T12:25:35.900Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:26:11.977Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"6.2 SQL 调优案例","level":"5.6.2","depth":2,"next":{"title":"6.3 TiDB + TiSpark 跑批最佳实践","level":"5.6.3","depth":2,"path":"session4/chapter6/batch-tasks-best-practices.md","ref":"session4/chapter6/batch-tasks-best-practices.md","articles":[]},"previous":{"title":"6.1.5 通过 hint 调整执行计划","level":"5.6.1.5","depth":3,"path":"session4/chapter6/tidb-hint.md","ref":"session4/chapter6/tidb-hint.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter6/sql-optimization-cases.md","mtime":"2020-03-08T12:26:21.554Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:26:59.119Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
