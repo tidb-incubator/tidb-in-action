@@ -58,7 +58,7 @@ LS1 ansible_host=172.16.4.2 deploy_dir=/data/deploy tidb_lightning_pprof_port=82
 ...
 ```
 
-**Step2: ** 准备需要导入的数据放到配置文件中 data_source_dir 指定的路径。数据可以是 mydumper 备份的 sql 文件或者是 csv 文件。如果是 csv 文件，则需要做额外配置。修改 conf/tidb-lightning.yml
+**Step2：** 准备需要导入的数据放到配置文件中 data_source_dir 指定的路径。数据可以是 mydumper 备份的 sql 文件或者是 csv 文件。如果是 csv 文件，则需要做额外配置。修改 conf/tidb-lightning.yml
 
 ```
 ...
@@ -85,13 +85,13 @@ trim-last-separator = false
 ...
 ```
 
-**Step3: ** 初始化 Lightning 和 Importer
+**Step3：** 初始化 Lightning 和 Importer
 
 ```
 $ ansible-playbook bootsrap.yml -l IS1，LS
 ```
 
-**Step4: ** 部署 Lightning 和 Importer
+**Step4：** 部署 Lightning 和 Importer
 
 ```
 $ ansible-playbook deploy.yml -l IS1，LS
@@ -152,7 +152,7 @@ TiDB Lightning 的后端决定 tidb-lightning 将如何把将数据导入到�
 * 可以跳过所有涉及 tikv-importer 的步骤。
 * 必须更改相应配置申明使用的是 TiDB-backend。
 
-**Step1：**编辑 inventory.ini，[importer_server] 部分可以留空。
+**Step1：** 编辑 inventory.ini，[importer_server] 部分可以留空。
 
 ```
 ...
@@ -163,7 +163,9 @@ TiDB Lightning 的后端决定 tidb-lightning 将如何把将数据导入到�
 LS1 ansible_host=172.16.4.2 deploy_dir=/data/deploy tidb_lightning_pprof_port=8289 data_source_dir=/data/wante
 ...
 ```
-**Step2: **准备需要导入的数据放到配置文件中 data_source_dir 指定的路径。同时修改 conf/tidb-lightning.yml 中的 backend 参数
+
+**Step2：** 准备需要导入的数据放到配置文件中 data_source_dir 指定的路径。同时修改 conf/tidb-lightning.yml 中的 backend 参数
+
 ```
 tikv_importer:
 backend: "tidb" # <-- 改成 “tidb”
@@ -193,24 +195,28 @@ backslash-escape = true
 trim-last-separator = false
 ...
 ```
-**Step3: **初始化 Lightning 
+
+**Step3：** 初始化 Lightning
+
 ```
 $ ansible-playbook bootsrap.yml -l LS
 ```
-**Step4: **部署 Lightning
+
+**Step4：** 部署 Lightning
 
 ```
 $ ansible-playbook deploy.yml -l LS
 或者
 $ ansible-playbook deploy.yml --tags=lightning
 ```
-**Step5：**启动 Lightning
+
+**Step5：** 启动 Lightning
 
 1. 登录到 Lightning 的服务器
 2. 进入部署目录
 3. 在 Lightning 目录下执行 *scripts/start_lightning.sh*，开始导入数据
 
-**Step6：**查看导入状态
+**Step6：** 查看导入状态
 
 使用 gafana 监控查看
 
