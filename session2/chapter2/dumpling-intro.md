@@ -4,6 +4,8 @@
 
 ### 需要的权限
 
+[查看为用户分配的权限](https://pingcap.com/docs-cn/stable/reference/security/privilege-system/#%E6%9F%A5%E7%9C%8B%E4%B8%BA%E7%94%A8%E6%88%B7%E5%88%86%E9%85%8D%E7%9A%84%E6%9D%83%E9%99%90)
+
 + SELECT
 + RELOAD
 + LOCK TABLES
