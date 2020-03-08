@@ -2886,7 +2886,131 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <p>&#x5728;&#x6570;&#x540C;&#x6B65;&#x573A;&#x666F;&#x4E2D;&#xFF0C;&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x53EF;&#x80FD;&#x662F;&#x4EFB;&#x4F55;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5F02;&#x6784;&#x6570;&#x636E;&#x5E93;&#x4E4B;&#x95F4;&#x7684;&#x540C;&#x6B65;&#x76EE;&#x524D;&#x8FD8;&#x6CA1;&#x6709;&#x4E00;&#x6B3E;&#x901A;&#x7528;&#x7684;&#x5DE5;&#x5177;&#x80FD;&#x591F;&#x5F88;&#x597D;&#x7684;&#x9002;&#x914D;&#x6240;&#x6709;&#x7684;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x3002;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x540C;&#x6B65;&#x6211;&#x4EEC;&#x7684;&#x901A;&#x5E38;&#x4F1A;&#x8C03;&#x7814;&#x5404;&#x79CD;&#x53EF;&#x7528;&#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x5728; DB2 &#x540C;&#x6B65;&#x6570;&#x636E;&#x5230; TiDB &#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53D1;&#x73B0; IBM &#x7684; CDC &#x5DE5;&#x5177;&#x80FD;&#x591F;&#x8F83;&#x597D;&#x7684;&#x5B8C;&#x6210;&#x8FD9;&#x4E00;&#x4EFB;&#x52A1;&#x3002;</p>
+<h2 id="cdc-&#x7B80;&#x4ECB;">CDC &#x7B80;&#x4ECB;</h2>
+<p>IBM &#x516C;&#x53F8;&#x4E3A; DB2 &#x5F00;&#x53D1;&#x4E86;&#x4E00;&#x6B3E;&#x6570;&#x636E;&#x540C;&#x6B65;&#x5DE5;&#x5177;&#xFF0C;&#x521D;&#x671F;&#x8FD9;&#x6B3E;&#x5DE5;&#x5177;&#x88AB;&#x547D;&#x540D;&#x4E3A; InfoSphere Change Data Capture &#x7B80;&#x79F0; CDC &#xFF0C;&#x5728;&#x540E;&#x6765;&#x7684;&#x8FED;&#x4EE3;&#x8FC7;&#x7A0B;&#x4E2D;&#x53C8;&#x66F4;&#x540D;&#x4E3A; IBM InfoSphere Data Replication &#x7B80;&#x79F0; IIDR&#x3002;&#x4F46; CDC &#x5927;&#x5BB6;&#x518D;&#x7528;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x8FD8;&#x662F;&#x4E60;&#x60EF;&#x6027;&#x7684;&#x79F0;&#x5B83;&#x4E3A; CDC &#x3002;&#x672C;&#x6587;&#x4E2D; CDC &#x7B49;&#x4EF7;&#x4E8E; IIDR&#x3002;</p>
+<p>IIDR &#x7684;&#x6838;&#x5FC3;&#x7EC4;&#x4EF6;&#x662F; Q Replication&#xFF0C;IBM &#x4F7F;&#x7528; Q Replication &#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;&#x8FD1;&#x5B9E;&#x65F6;&#x4E8B;&#x52A1;&#x590D;&#x5236;&#x673A;&#x5236;&#x7684;&#x8F6F;&#x4EF6;&#xFF0C;&#x8BE5;&#x673A;&#x5236;&#x53EF;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x4EA4;&#x4ED8;&#x3002;&#x4ECE;&#x6280;&#x672F;&#x4E0A;&#x8BB2;&#xFF0C;Q Replication &#x662F;&#x4E00;&#x9879;&#x5F02;&#x6B65;&#x65E5;&#x5FD7;&#x6355;&#x83B7;/&#x4E8B;&#x52A1;&#x91CD;&#x64AD;&#x6280;&#x672F;&#xFF0C;&#x5B83;&#x501F;&#x52A9;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x65B9;&#x5F0F;&#x5728;&#x6E90;&#x7AEF;&#x548C;&#x76EE;&#x6807;&#x7AEF;&#x4F20;&#x8F93;&#x4E8B;&#x52A1;&#x3002;Q Replication &#x4F1A;&#x6293;&#x53D6;&#x6E90; DB2 &#x4E2D;&#x6307;&#x5B9A;&#x7684;&#x65E5;&#x5FD7;&#x5E76;&#x5C06;&#x5176;&#x5E94;&#x7528;&#x5230;&#x76EE;&#x7684;&#x7AEF;&#x3002;IIDR &#x9700;&#x8981;&#x5206;&#x522B;&#x5728;&#x6E90;&#x7AEF;&#x548C;&#x76EE;&#x6807;&#x7AEF;&#x90E8;&#x7F72;&#x76F8;&#x5173;&#x8F6F;&#x4EF6;&#xFF0C;&#x540C;&#x65F6;&#x9700;&#x8981;&#x6709;&#x4E00;&#x53F0; windows &#x670D;&#x52A1;&#x5668;&#x7528;&#x4E8E;&#x90E8;&#x7F72;&#x7BA1;&#x7406;&#x7AEF;&#x3002;</p>
+<h2 id="&#x90E8;&#x7F72;&#x67B6;&#x6784;">&#x90E8;&#x7F72;&#x67B6;&#x6784;</h2>
+<p><img src="https://uploader.shimo.im/f/uTQkVjDBsG0uHb01.png!thumbnail" alt="&#x56FE;&#x7247;"></p>
+<p>&#x4EE5;&#x4E0A;&#x56FE;&#x7684;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x67B6;&#x6784;&#x4E3A;&#x4F8B;&#xFF0C;&#x4E0A;&#x6E38;&#x662F;&#x4E00;&#x4E2A;&#x6838;&#x5FC3;&#x7CFB;&#x7EDF;&#xFF0C;&#x4F7F;&#x7528;&#x7684;&#x662F;IBM&#x5546;&#x4E1A;&#x5E73;&#x53F0;&#xFF0C;&#x751F;&#x4EA7;&#x548C;&#x5907;&#x4EFD;&#x5E73;&#x53F0;&#x4E4B;&#x95F4;&#x4F7F;&#x7528;&#x4E86; OMS &#x540C;&#x6B65;&#xFF0C;IIDR &#x540C;&#x6B65;&#x7684;&#x6E90;&#x7AEF;&#x4E3A;&#x5907;&#x673A;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x76EE;&#x6807;&#x7AEF;&#x4E3A; TiDB &#x3002;&#x4E3A;&#x4FDD;&#x8BC1;&#x9AD8;&#x53EF;&#x7528;&#xFF0C;&#x5728;&#x4E0B;&#x6E38;&#x7684;&#x53E6;&#x5916;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x90E8;&#x7F72;&#x4E86; IIDR &#x8F6F;&#x4EF6;&#x4F5C;&#x4E3A;&#x5907;&#x7528;&#x8282;&#x70B9;&#x3002;</p>
+<h2 id="&#x5173;&#x952E;&#x53C2;&#x6570;&#x548C;&#x914D;&#x7F6E;&#x9879;">&#x5173;&#x952E;&#x53C2;&#x6570;&#x548C;&#x914D;&#x7F6E;&#x9879;</h2>
+<p>&#x5173;&#x4E8E; IIDR &#x7684;&#x90E8;&#x7F72;&#x5B89;&#x88C5;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x5B98;&#x7F51;&#xFF0C;&#x672C;&#x6587;&#x4E0D;&#x505A;&#x91CD;&#x70B9;&#x4ECB;&#x7ECD;&#x3002;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x8BF4;&#x660E;&#x4E00;&#x4E0B; IIDR &#x7684;&#x4E0B;&#x6E38;&#x4E3A; TiDB &#x65F6;&#xFF0C;&#x5728;&#x90E8;&#x7F72;&#x548C;&#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x70B9;&#x3002;</p>
+<ul>
+<li>IIDR &#x5B89;&#x88C5;&#x9009;&#x9879;&#x9009;&#x62E9; FlexRep</li>
+</ul>
+<p>&#x56E0;&#x4E3A; TiDB &#x5E76;&#x4E0D;&#x5728; IIDR &#x5B98;&#x65B9;&#x7684;&#x652F;&#x6301;&#x5217;&#x8868;&#x4E2D;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x4E0B;&#x6E38;&#x5B89;&#x88C5;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x9009;&#x62E9; <strong>FlexRep &#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</strong></p>
+<p><img src="https://uploader.shimo.im/f/KJyEsAItPqISf8o0.png!thumbnail" alt="&#x56FE;&#x7247;"></p>
+<ul>
+<li>&#x521B;&#x5EFA;&#x9884;&#x5B9A;&#x9700;&#x8981;&#x501F;&#x52A9; MySQL &#x9A71;&#x52A8;</li>
+</ul>
+<p>IIDR &#x9700;&#x8981;&#x501F;&#x52A9; MySQL &#x9A71;&#x52A8;&#x901A;&#x8FC7; JDBC &#x7684;&#x65B9;&#x5F0F;&#x5C06;&#x6570;&#x636E;&#x5199;&#x5165; TiDB &#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x63D0;&#x524D;&#x4E0B;&#x8F7D; MySQL &#x9A71;&#x52A8;&#xFF0C;&#x5E76;&#x5728;&#x521B;&#x5EFA;&#x8BA2;&#x9605;&#x65F6;&#x9009;&#x62E9;&#x8BE5;&#x9A71;&#x52A8;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="https://uploader.shimo.im/f/pk4owBXHWvgGZ2ST.png!thumbnail" alt="&#x56FE;&#x7247;"></p>
+<ul>
+<li>IIDR &#x4E0B;&#x6E38;&#x8F6F;&#x4EF6;&#x53C2;&#x6570;&#x914D;&#x7F6E;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">&#x53C2;&#x6570;</th>
+<th style="text-align:center">&#x503C;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">convert_not nullable_column</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:left">events_max_retain</td>
+<td style="text-align:center">10000</td>
+</tr>
+<tr>
+<td style="text-align:left">global_conversion_not_possible_warning</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:left">global_max_batch_size</td>
+<td style="text-align:center">25</td>
+</tr>
+<tr>
+<td style="text-align:left">global_shutdown_after_no_heartbeat_reponse_minute</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td style="text-align:left">Implicit_transformation_warning</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:left">jdbc_refresh_commit_after_max_operation</td>
+<td style="text-align:center">4000</td>
+</tr>
+<tr>
+<td style="text-align:left">Mirror_commit_after_max_operations</td>
+<td style="text-align:center">4000</td>
+</tr>
+<tr>
+<td style="text-align:left">Mirror_global_disk_quota_gb</td>
+<td style="text-align:center">9223372036854775807</td>
+</tr>
+<tr>
+<td style="text-align:left">Mirror_interim_commit_threshols</td>
+<td style="text-align:center">100</td>
+</tr>
+<tr>
+<td style="text-align:left">Userexit_max_lob_size_kb</td>
+<td style="text-align:center">2097151</td>
+</tr>
+<tr>
+<td style="text-align:left">Mirror_commit_on_transaction_boundary</td>
+<td style="text-align:center">False</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>&#x6570;&#x636E;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x5BF9;&#x7167;&#x8868;</li>
+</ul>
+<p>IIDR &#x5728;&#x540C;&#x6B65;&#x5168;&#x91CF;&#x6570;&#x636E;&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x5728; TiDB &#x4FA7;&#x521B;&#x5EFA;&#x597D;&#x8868;&#x7ED3;&#x6784;&#xFF0C;&#x8868;&#x5B57;&#x6BB5;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&#x5982;&#x4E0B;&#x8868;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">DB2&#x5B57;&#x6BB5;&#x7C7B;&#x578B;</th>
+<th style="text-align:center">TiDB&#x5B57;&#x6BB5;&#x7C7B;&#x578B;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">L</td>
+<td style="text-align:center">date</td>
+</tr>
+<tr>
+<td style="text-align:left">T</td>
+<td style="text-align:center">time</td>
+</tr>
+<tr>
+<td style="text-align:left">Z</td>
+<td style="text-align:center">timestamp&#xFF08;6&#xFF09;</td>
+</tr>
+<tr>
+<td style="text-align:left">A</td>
+<td style="text-align:center">varchar</td>
+</tr>
+<tr>
+<td style="text-align:left">P</td>
+<td style="text-align:center">Decimal</td>
+</tr>
+<tr>
+<td style="text-align:left">S</td>
+<td style="text-align:center">decimal</td>
+</tr>
+<tr>
+<td style="text-align:left">O</td>
+<td style="text-align:center">varchar</td>
+</tr>
+</tbody>
+</table>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>IIDR &#x662F;&#x76EE;&#x524D;&#x80FD;&#x591F;&#x627E;&#x5230;&#x7684;&#x552F;&#x4E00;&#x4E00;&#x6B3E;&#x80FD;&#x591F;&#x6BD4;&#x8F83;&#x597D;&#x7684;&#x5C06; DB2 &#x7684;&#x6570;&#x636E;&#x540C;&#x6B65;&#x5230; TiDB &#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x5728;&#x540C;&#x6B65;&#x8FC7;&#x7A0B;&#x4E2D;&#x5982;&#x9047;&#x5230;&#x4E0A;&#x8FF0;&#x914D;&#x7F6E;&#x8FD8;&#x89E3;&#x51B3;&#x4E0D;&#x4E86;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x8BF7;&#x8054;&#x7CFB; IIDR &#x5B98;&#x65B9;&#x6216;&#x8005; TiDB &#x5B98;&#x65B9;&#xFF0C;&#x5177;&#x4F53;&#x95EE;&#x9898;&#x5177;&#x4F53;&#x5206;&#x6790;&#x89E3;&#x51B3;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2929,7 +3053,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"5.5 DB2 到 TiDB （CDC）","level":"5.5.5","depth":2,"next":{"title":"5.6 TiDB 到 TiDB（DATAX）","level":"5.5.6","depth":2,"path":"session4/chapter5/from-tidb-to-tidb-using-datax.md","ref":"session4/chapter5/from-tidb-to-tidb-using-datax.md","articles":[]},"previous":{"title":"5.4 SqlServer 到 TiDB（DATAX）","level":"5.5.4","depth":2,"path":"session4/chapter5/from-sqlserver-to-tidb-using-datax.md","ref":"session4/chapter5/from-sqlserver-to-tidb-using-datax.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter5/from-db2-to-tidb.md","mtime":"2020-03-08T11:27:18.536Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:27:53.280Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"5.5 DB2 到 TiDB （CDC）","level":"5.5.5","depth":2,"next":{"title":"5.6 TiDB 到 TiDB（DATAX）","level":"5.5.6","depth":2,"path":"session4/chapter5/from-tidb-to-tidb-using-datax.md","ref":"session4/chapter5/from-tidb-to-tidb-using-datax.md","articles":[]},"previous":{"title":"5.4 SqlServer 到 TiDB（DATAX）","level":"5.5.4","depth":2,"path":"session4/chapter5/from-sqlserver-to-tidb-using-datax.md","ref":"session4/chapter5/from-sqlserver-to-tidb-using-datax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter5/from-db2-to-tidb.md","mtime":"2020-03-08T11:33:17.091Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:33:52.789Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
