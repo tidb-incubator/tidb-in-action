@@ -132,7 +132,7 @@
     * [3.4 监控汇总表](session3/chapter3/metrics-summary.md)
     * [3.5 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
     * [3.6 Processlist](session3/chapter3/processlist.md)
-    * [3.7 Statements](session3/chapter3/statements.md)
+    * [3.7 Statement Summary](session3/chapter3/statements.md) @张明
 * [4 TiDB 集群监控与报警](session3/chapter4/tidb-monitor-alert.md)
     * [4.1 性能调优地图](session3/chapter4/performance-map.md)
     * [4.2 TiDB 读写流程相关监控原理解析](session3/chapter4/read-write-metrics.md)
