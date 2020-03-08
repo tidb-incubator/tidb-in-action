@@ -2,7 +2,8 @@
 
 TiDB 在社区中跟多家公司以及高校建立起了深入的合作关系。在高校合作上面，TiDB 现在跟多家高校实验室在不同方向上都有合作，包括但不限于：
 
-1. 与中国科学技术大学某实验室对存储引擎进行性能优化，共同在 ICDE 发表 Paper <<UniKV: Toward High-Performance and Scalable KV Storage in Mixed Workloads via Unified Indexing.>>
+1. 与中国科学技术大学某实验室对存储引擎进行性能优化，共同在 ICDE 发表 Paper - UniKV: Toward High-Performance and Scalable KV Storage in Mixed Workloads via Unified Indexing
+
 2. 与华中科技大学某实验室为 TiDB 在最新的 Intel Optane DC persistent memory 盘上面定制存储引擎。
 3. 与华中师范大学某实验室一起进行分布式数据库测试的研究。
 
