@@ -72,7 +72,7 @@ SELECT SETVAL(sequence_name,100)；
    |                             1 |
    +-------------------------------+
    1 row in set (0.00 sec)
- 
+
    节点 B：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
    +-------------------------------+
    | NEXT VALUE FOR seq_for_unique |
@@ -92,7 +92,7 @@ SELECT SETVAL(sequence_name,100)；
    |                             1 |
    +-------------------------------+
    1 row in set (0.00 sec)
- 
+
    节点 B：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
    +-------------------------------+
    | NEXT VALUE FOR seq_for_unique |
@@ -102,7 +102,7 @@ SELECT SETVAL(sequence_name,100)；
    1 row in set (0.00 sec)
 ```
 
-2. 在一张表里面需要有多个自增字段
+2.  在一张表里面需要有多个自增字段
 
 MySQL 语法中每张表仅能新建一个`auto_increment`字段，且该字段必须为主键，在应用设计的时候，主键通常有业务意义的字段表示，例如用户名、主机名等，但通过 Sequence 和生成列，我们可以实现这个需求。
 
