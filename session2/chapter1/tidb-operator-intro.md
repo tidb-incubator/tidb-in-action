@@ -36,7 +36,7 @@ TiDB Operator 像“牧羊人”一样，持续的监督并管理着 TiDB 各组
 
 ### Kubernetes 控制平面
 
-1. `Kube-apiserver`：Kubernetes 控制平面的前端，所有组件通过API Server获取或更新对象信息。
+1. `Kube-apiserver`：Kubernetes 控制平面的前端，所有组件通过 API Server 获取或更新对象信息。
 
 2. `Kube-controller-manager`：TiDB Cluster 等CRD封装了`StatefulSet`、`Deployment`、`CronJob`等原生对象，所以依然需要K8s原生控制器来进行控制逻辑。
 
