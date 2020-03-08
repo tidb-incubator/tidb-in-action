@@ -6,7 +6,7 @@
 
 ## 查询示例
 
-查询 `metrics_summary` 监控汇总表，在  `['2020-03-08 13:23:00', '2020-03-08 13:33:00')`  时间范围内，TiDB 的 Top 3 的 P99 的平均最长耗时。这里查询监控汇总表是通过 `/*+ time_range() */`  hint 来指定查询时间范围。
+查询 `metrics_summary` 监控汇总表，在  `['2020-03-08 13:23:00', '2020-03-08 13:33:00')`  时间范围内，TiDB 的 Top 3 的 P99 的平均最长耗时。这里查询监控汇总表是通过 `/*+ time_range() */` hint 来指定查询时间范围。
 
 ```sql
 information_schema> select /*+ time_range('2020-03-08 13:23:00','2020-03-08 13:33:00') */ * from `METRICS_SUMMARY` where metrics_name like 'tidb%duration' and avg_value > 0 and quantile=0.99  order by avg_value desc limit 3\G
