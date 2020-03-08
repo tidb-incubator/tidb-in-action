@@ -127,7 +127,7 @@ NAME                               COMPLETIONS   DURATION   AGE
 restore-cluster-1-tidb-lightning   1/1           3s         9m3s
 ```
 
-- 确认数据恢复情况
+- 访问 `cluster-2` TiDB 服务，确认数据恢复情况
 
 ```
 MySQL [(none)]> select * from cloud.test_tbl;
