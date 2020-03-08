@@ -2873,7 +2873,168 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;">&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;</h1>
+<p>&#x7531;&#x4E8E; TiDB &#x7684;&#x76D1;&#x63A7;&#x8868;&#x592A;&#x591A;&#xFF0C;TiDB 4.0 &#x63D0;&#x4F9B;&#x4E86;&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;&#xFF0C;&#x6765;&#x51CF;&#x5C11;&#x4F7F;&#x7528; SQL &#x5BF9;&#x5404;&#x4E2A;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x8FDB;&#x884C;&#x9010;&#x9879;&#x67E5;&#x8BE2;&#x7684;&#x5DE5;&#x4F5C;&#x91CF;&#x3002;</p>
+<p>&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868; <code>information_schema.metrics_summary</code> &#x548C; <code>information_schema.metrics_summary_by_label</code> &#x7528;&#x4E8E;&#x6C47;&#x603B;&#x6240;&#x6709;&#x76D1;&#x63A7;&#x6570;&#x636E;&#x3002;&#x4E24;&#x8005;&#x4E0D;&#x540C;&#x5728;&#x4E8E; information_schema.metrics_summary_by_label &#x4F1A;&#x6309;&#x7167; label &#x8FDB;&#x884C;&#x6C47;&#x603B;&#x3002;</p>
+<h2 id="&#x67E5;&#x8BE2;&#x793A;&#x4F8B;">&#x67E5;&#x8BE2;&#x793A;&#x4F8B;</h2>
+<p>&#x67E5;&#x8BE2; <code>metrics_summary</code> &#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;&#xFF0C;&#x5728;  <code>[&apos;2020-03-08 13:23:00&apos;, &apos;2020-03-08 13:33:00&apos;)</code>  &#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#xFF0C;TiDB &#x7684; Top 3 &#x7684; P99 &#x7684;&#x5E73;&#x5747;&#x6700;&#x957F;&#x8017;&#x65F6;&#x3002;&#x8FD9;&#x91CC;&#x67E5;&#x8BE2;&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;&#x662F;&#x901A;&#x8FC7; <code>/*+ time_range() */</code> hint &#x6765;&#x6307;&#x5B9A;&#x67E5;&#x8BE2;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x3002;</p>
+<pre><code class="lang-sql">information_schema&gt; select /*+ time_range(&apos;2020-03-08 13:23:00&apos;,&apos;2020-03-08 13:33:00&apos;) */ * from `METRICS_SUMMARY` where metrics_name like &apos;tidb%duration&apos; and avg_value &gt; 0 and quantile=0.99  order by avg_value desc limit 3\G
+***************************[ 1. row ]***************************
+METRICS_NAME | tidb_get_token_duration
+QUANTILE     | 0.99
+SUM_VALUE    | 8.972509
+AVG_VALUE    | 0.996945
+MIN_VALUE    | 0.996515
+MAX_VALUE    | 0.997458
+COMMENT      |  The quantile of Duration (us) for getting token, it should be small until concurrency limit is reached(second)
+***************************[ 2. row ]***************************
+METRICS_NAME | tidb_query_duration
+QUANTILE     | 0.99
+SUM_VALUE    | 0.269079
+AVG_VALUE    | 0.007272
+MIN_VALUE    | 0.000667
+MAX_VALUE    | 0.01554
+COMMENT      | The quantile of TiDB query durations(second)
+***************************[ 3. row ]***************************
+METRICS_NAME | tidb_kv_request_duration
+QUANTILE     | 0.99
+SUM_VALUE    | 0.170232
+AVG_VALUE    | 0.004601
+MIN_VALUE    | 0.000975
+MAX_VALUE    | 0.013
+COMMENT      | The quantile of kv requests durations by store
+</code></pre>
+<blockquote>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x5176;&#x4E2D; <code>tidb_get_token_duration</code> &#x7684;&#x5355;&#x4F4D;&#x662F;&#x5FAE;&#x79D2;&#xFF08;us&#xFF09;&#xFF0C; &#x5176; <code>COMMENT</code> &#x91CC;&#x9762;&#x4E5F;&#x6709;&#x63D0;&#x5230;&#x3002;</p>
+</blockquote>
+<p>&#x7C7B;&#x4F3C;&#x7684;&#xFF0C;&#x67E5;&#x8BE2; <code>metrics_summary_by_label</code> &#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-sql">information_schema&gt; select /*+ time_range(&apos;2020-03-08 13:23:00&apos;,&apos;2020-03-08 13:33:00&apos;) */ * from `METRICS_SUMMARY_BY_LABEL` where metrics_name like &apos;tidb%duration&apos; and avg_value &gt; 0 and quantile=0.99  order by avg_value desc limit 10\G
+***************************[ 1. row ]***************************
+INSTANCE     | 172.16.5.40:10089
+METRICS_NAME | tidb_get_token_duration
+LABEL        |
+QUANTILE     | 0.99
+SUM_VALUE    | 8.972509
+AVG_VALUE    | 0.996945
+MIN_VALUE    | 0.996515
+MAX_VALUE    | 0.997458
+COMMENT      |  The quantile of Duration (us) for getting token, it should be small until concurrency limit is reached(second)
+***************************[ 2. row ]***************************
+INSTANCE     | 172.16.5.40:10089
+METRICS_NAME | tidb_query_duration
+LABEL        | Select
+QUANTILE     | 0.99
+SUM_VALUE    | 0.072083
+AVG_VALUE    | 0.008009
+MIN_VALUE    | 0.007905
+MAX_VALUE    | 0.008241
+COMMENT      | The quantile of TiDB query durations(second)
+***************************[ 3. row ]***************************
+INSTANCE     | 172.16.5.40:10089
+METRICS_NAME | tidb_query_duration
+LABEL        | Rollback
+QUANTILE     | 0.99
+SUM_VALUE    | 0.072083
+AVG_VALUE    | 0.008009
+MIN_VALUE    | 0.007905
+MAX_VALUE    | 0.008241
+COMMENT      | The quantile of TiDB query durations(second)
+</code></pre>
+<p><code>metrics_summary_by_label</code> &#x8868;&#x7ED3;&#x6784;&#x76F8;&#x5BF9;&#x4E8E; <code>metrics_summary</code> &#x591A;&#x4E86;&#x4E00;&#x5217; <code>LABEL</code>, &#x6BD4;&#x5982;&#x4E0A;&#x9762;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x7684;&#x7B2C; 2, 3 &#x884C;&#x4E2D;&#xFF1A;&#x5206;&#x522B;&#x662F;&#x6307; <code>tidb_query_duration</code> &#x7684; <code>Select</code> &#x7C7B;&#x578B;&#x7684;&#x8BED;&#x53E5;&#x8017;&#x65F6;&#x548C; <code>tidb_query_duration</code> &#x7684; <code>Rollback</code> &#x7C7B;&#x4F3C;&#x7684;&#x8BED;&#x53E5;&#x8017;&#x65F6;&#x3002;</p>
+<h2 id="&#x63A8;&#x8350;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;">&#x63A8;&#x8350;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</h2>
+<p>&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x5168;&#x94FE;&#x8DEF;&#x76D1;&#x63A7;&#x5BF9;&#x6BD4;&#xFF0C;&#x8FC5;&#x901F;&#x627E;&#x51FA;&#x76D1;&#x63A7;&#x6570;&#x636E;&#x53D8;&#x5316;&#x6700;&#x5927;&#x7684;&#x6A21;&#x5757;&#xFF0C;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D;&#x74F6;&#x9888;&#xFF0C;&#x4F8B;&#x5982;&#x4EE5;&#x4E0B;&#x5BF9;&#x6BD4;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6240;&#x6709;&#x76D1;&#x63A7;&#xFF0C;&#x5E76;&#x6309;&#x7167;&#x5DEE;&#x522B;&#x6700;&#x5927;&#x7684;&#x76D1;&#x63A7;&#x6392;&#x5E8F;&#xFF1A;</p>
+<ul>
+<li>&#x65F6;&#x95F4;&#x6BB5; t1 : (&quot;2020-03-03 17:08:00&quot;, &quot;2020-03-03 17:11:00&quot;)</li>
+<li>&#x65F6;&#x95F4;&#x6BB5; t2 : (&quot;2020-03-03 17:18:00&quot;, &quot;2020-03-03 17:21:00&quot;)</li>
+</ul>
+<p>&#x5BF9;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x76D1;&#x63A7;&#x6309;&#x7167; METRICS_NAME &#x8FDB;&#x884C; join&#xFF0C;&#x5E76;&#x6309;&#x7167;&#x5DEE;&#x503C;&#x6392;&#x5E8F;&#x3002;&#x5176;&#x4E2D; TIME_RANGE &#x662F;&#x7528;&#x4E8E;&#x6307;&#x5B9A;&#x67E5;&#x8BE2;&#x65F6;&#x95F4;&#x7684; Hint&#x3002;</p>
+<ol>
+<li>&#x67E5;&#x8BE2; t1.avg_value / t2.avg_value &#x5DEE;&#x5F02;&#x6700;&#x5927;&#x7684; Top 10 &#x76D1;&#x63A7;&#x9879;</li>
+</ol>
+<pre><code class="lang-sql">information_schema&gt;SELECT 
+  t1.avg_value / t2.avg_value AS ratio, t1.metrics_name,t1.avg_value, t2.avg_value,t2.comment
+FROM 
+  (
+    SELECT /*+ time_range(&quot;2020-03-03 17:08:00&quot;, &quot;2020-03-03 17:11:00&quot;)*/
+      * 
+    FROM metrics_summary
+  ) t1 
+  JOIN
+  (
+    SELECT /*+ time_range(&quot;2020-03-03 17:18:00&quot;, &quot;2020-03-03 17:21:00&quot;)*/
+      * 
+    FROM metrics_summary
+  ) t2
+  ON t1.metrics_name = t2.metrics_name 
+ORDER BY 
+  ratio DESC limit 10;
++----------------+-----------------------------------+-------------------+-------------------+--------------------------------------------------------------------------+
+| ratio          | metrics_name                      | avg_value         | avg_value         | comment                                                                  |
++----------------+-----------------------------------+-------------------+-------------------+--------------------------------------------------------------------------+
+| 17.6439787379  | tikv_region_average_written_bytes |   30816827.0953   |    1746591.71568  | The average rate of writing bytes to Regions per TiKV instance           |
+|  8.88407551364 | tikv_region_average_written_keys  |     108557.034612 |      12219.283193 | The average rate of written keys to Regions per TiKV instance            |
+|  6.4105335594  | tidb_kv_write_num                 |       4493.293654 |        700.923505 | The quantile of kv write times per transaction execution                 |
+|  2.99993333333 | tidb_gc_total_count               |          1.0      |          0.333341 | The total count of kv storage garbage collection time durations          |
+|  2.66412165823 | tikv_engine_avg_seek_duration     |       6569.879007 |       2466.05818  | The time consumed when executing seek operation, the unit is microsecond |
+|  2.66412165823 | tikv_engine_max_seek_duration     |       6569.879007 |       2466.05818  | The time consumed when executing seek operation, the unit is microsecond |
+|  2.49994444321 | tikv_region_change                |         -0.277778 |         -0.111114 | The count of region change per TiKV instance                             |
+|  2.16063829787 | etcd_wal_fsync_duration           |          0.002539 |          0.001175 | The quantile time consumed of writing WAL into the persistent storage    |
+|  2.06089264604 | node_memory_free                  | 4541448192.0      | 2203631616.0      |                                                                          |
+|  1.96749064186 | tidb_kv_write_size                |     514489.28     |     261495.159902 | The quantile of kv write size per transaction execution                  |
++----------------+-----------------------------------+-------------------+-------------------+--------------------------------------------------------------------------+
+</code></pre>
+<p>&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x8868;&#x793A;&#xFF1A;</p>
+<ul>
+<li>t1 &#x65F6;&#x95F4;&#x6BB5;&#x5185;&#x7684; tikv_region_average_written_bytes &#xFF08;region &#x7684;&#x5E73;&#x5747;&#x5199;&#x5165;&#x5B57;&#x8282;&#x6570;&#xFF09; &#x6BD4; t2 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x4E86; 17.6 &#x500D;</li>
+<li>t1 &#x65F6;&#x95F4;&#x6BB5;&#x5185;&#x7684; tikv_region_average_written_keys &#xFF08;region &#x7684;&#x5E73;&#x5747;&#x5199;&#x5165; keys &#x6570;&#xFF09; &#x6BD4; t2 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x4E86; 8.8 &#x500D;</li>
+<li>t1 &#x65F6;&#x95F4;&#x6BB5;&#x5185;&#x7684; tidb_kv_write_size &#xFF08;tidb &#x6BCF;&#x4E2A;&#x4E8B;&#x52A1;&#x5199;&#x5165;&#x7684; kv &#x5927;&#x5C0F;&#xFF09; &#x6BD4; t2 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x4E86; 1.96 &#x500D;</li>
+</ul>
+<p>&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;t1 &#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x5199;&#x5165;&#x8981;&#x6BD4; t2 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x3002;</p>
+<ol>
+<li>&#x53CD;&#x8FC7;&#x6765;&#xFF0C;&#x67E5;&#x8BE2; t2.avg_value / t1.avg_value &#x5DEE;&#x5F02;&#x6700;&#x5927;&#x7684; Top 10 &#x76D1;&#x63A7;&#x9879;</li>
+</ol>
+<pre><code class="lang-sql">information_schema&gt;SELECT 
+  t2.avg_value / t1.avg_value AS ratio, t1.metrics_name,t1.avg_value, t2.avg_value,t2.comment
+FROM 
+  (
+    SELECT /*+ time_range(&quot;2020-03-03 17:08:00&quot;, &quot;2020-03-03 17:11:00&quot;)*/
+      * 
+    FROM metrics_summary
+  ) t1 
+  JOIN
+  (
+    SELECT /*+ time_range(&quot;2020-03-03 17:18:00&quot;, &quot;2020-03-03 17:21:00&quot;)*/
+      * 
+    FROM metrics_summary
+  ) t2
+  ON t1.metrics_name = t2.metrics_name 
+ORDER BY 
+  ratio DESC limit 10;
++----------------+-----------------------------------------+----------------+------------------+---------------------------------------------------------------------------------------------+
+| ratio          | metrics_name                            | avg_value      | avg_value        | comment                                                                                     |
++----------------+-----------------------------------------+----------------+------------------+---------------------------------------------------------------------------------------------+
+| 5865.59537065  | tidb_slow_query_cop_process_total_time  |       0.016333 |        95.804724 | The total time of TiDB slow query statistics with slow query total cop process time(second) |
+| 3648.74109023  | tidb_distsql_partial_scan_key_total_num |   10865.666667 |  39646004.4394   | The total num of distsql partial scan key numbers                                          |
+|  267.002351165 | tidb_slow_query_cop_wait_total_time     |       0.003333 |         0.890008 | The total time of TiDB slow query statistics with slow query total cop wait time(second)    |
+|  192.43267836  | tikv_cop_total_response_total_size      | 2515333.66667  | 484032394.445    |                                                                                             |
+|  192.43267836  | tikv_cop_total_response_size            |   41922.227778 |   8067206.57408  |                                                                                             |
+|  152.780296296 | tidb_distsql_scan_key_total_num         |    5304.333333 |    810397.618317 | The total num of distsql scan numbers                                                      |
+|  126.042290167 | tidb_distsql_execution_total_time       |       0.421622 |        53.142143 | The total time of distsql execution(second)                                                 |
+|  105.164020657 | tikv_cop_scan_details                   |     134.450733 |     14139.379665 |                                                                                             |
+|  105.164020657 | tikv_cop_scan_details_total             |    8067.043981 |    848362.77991  |                                                                                             |
+|  101.635495394 | tikv_cop_total_kv_cursor_operations     |    1070.875    |    108838.91113  |                                                                                             |
++----------------+-----------------------------------------+----------------+------------------+---------------------------------------------------------------------------------------------+
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x8868;&#x793A;&#xFF1A;</p>
+<ul>
+<li>t2 &#x65F6;&#x95F4;&#x6BB5;&#x5185;&#x7684; tidb_slow_query_cop_process_total_time &#xFF08;tidb &#x6162;&#x67E5;&#x8BE2;&#x4E2D;&#x7684; cop process &#x8017;&#x65F6; &#xFF09; &#x6BD4; t1 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x4E86; 5865 &#x500D;</li>
+<li>t2 &#x65F6;&#x95F4;&#x6BB5;&#x5185;&#x7684; tidb_distsql_partial_scan_key_total_num&#xFF08;tidb &#x7684; distsql &#x8BF7;&#x6C42;&#x626B;&#x63CF;key &#x7684;&#x6570;&#x91CF;&#xFF09; &#x6BD4; t1 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x4E86; 3648 &#x500D;</li>
+<li>t2 &#x65F6;&#x95F4;&#x6BB5;&#x5185;&#x7684; tikv_cop_total_response_size&#xFF08;tikv &#x7684; cop &#x8BF7;&#x6C42;&#x7ED3;&#x679C;&#x7684;&#x5927;&#x5C0F; &#xFF09; &#x6BD4; t1 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x4E86; 192 &#x500D;</li>
+<li>t2 &#x65F6;&#x95F4;&#x6BB5;&#x5185;&#x7684; tikv_cop_scan_details&#xFF08;tikv &#x7684; cop &#x8BF7;&#x6C42;&#x7684; scan &#xFF09; &#x6BD4; t1 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x4E86; 105 &#x500D;</li>
+</ul>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x5BF9;&#x6BD4;&#x67E5;&#x8BE2;&#x53EF;&#x4EE5;&#x5927;&#x81F4;&#x4E86;&#x89E3;&#x96C6;&#x7FA4;&#x5728;&#x8FD9;2&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x8D1F;&#x8F7D;&#x60C5;&#x51B5;&#x3002;t2 &#x65F6;&#x95F4;&#x6BB5;&#x7684; Cop &#x8BF7;&#x6C42;&#x8981;&#x6BD4; t2 &#x65F6;&#x95F4;&#x6BB5;&#x9AD8;&#x5F88;&#x591A;&#xFF0C;&#x5BFC;&#x81F4; TiKV &#x7684; Copprocessor &#x8FC7;&#x8F7D;&#xFF0C;&#x51FA;&#x73B0;&#x4E86; cop task &#x7B49;&#x5F85;&#xFF0C;&#x53EF;&#x4EE5;&#x731C;&#x6D4B;&#x53EF;&#x80FD;&#x662F; t2 &#x65F6;&#x95F4;&#x6BB5;&#x51FA;&#x73B0;&#x4E86;&#x4E00;&#x4E9B;&#x5927;&#x67E5;&#x8BE2;&#xFF0C;&#x6216;&#x8005;&#x662F;&#x67E5;&#x8BE2;&#x8F83;&#x591A;&#x7684;&#x8D1F;&#x8F7D;&#x3002;</p>
+<p>&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x5728; t1 ~ t2 &#x6574;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x5185;&#x90FD;&#x5728;&#x8DD1; <a href="https://github.com/pingcap/go-ycsb" target="_blank">go-ycsb</a> &#x7684;&#x538B;&#x6D4B;&#xFF0C;&#x7136;&#x540E;&#x5728; t2 &#x65F6;&#x95F4;&#x6BB5;&#x8DD1;&#x4E86; 20 &#x4E2A; tpch &#x7684;&#x67E5;&#x8BE2;&#xFF0C;&#x6240;&#x4EE5;&#x662F;&#x56E0;&#x4E3A; tpch &#x5927;&#x67E5;&#x8BE2;&#x5BFC;&#x81F4;&#x4E86;&#x5F88;&#x591A;&#x7684; cop &#x8BF7;&#x6C42;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2916,7 +3077,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3.4 监控汇总表","level":"4.3.4","depth":2,"next":{"title":"3.5 SQL 慢查询内存表","level":"4.3.5","depth":2,"path":"session3/chapter3/slow-query-table.md","ref":"session3/chapter3/slow-query-table.md","articles":[]},"previous":{"title":"3.3 诊断结果表","level":"4.3.3","depth":2,"path":"session3/chapter3/inspection-tables.md","ref":"session3/chapter3/inspection-tables.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/metrics-summary.md","mtime":"2020-03-08T08:11:52.414Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T08:12:27.659Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3.4 监控汇总表","level":"4.3.4","depth":2,"next":{"title":"3.5 SQL 慢查询内存表","level":"4.3.5","depth":2,"path":"session3/chapter3/slow-query-table.md","ref":"session3/chapter3/slow-query-table.md","articles":[]},"previous":{"title":"3.3 诊断结果表","level":"4.3.3","depth":2,"path":"session3/chapter3/inspection-tables.md","ref":"session3/chapter3/inspection-tables.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/metrics-summary.md","mtime":"2020-03-08T08:13:49.284Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T08:14:24.764Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
