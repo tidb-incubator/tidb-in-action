@@ -201,4 +201,4 @@ To start using your cluster, run:
 
 ```
 
-显示以上输出显示 TiDB 集群部署成功
+显示以上输出显示 TiDB 集群部署成功。
