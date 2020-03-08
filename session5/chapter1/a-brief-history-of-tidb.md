@@ -27,7 +27,7 @@ TiDB 从 2015 年 4 月份开源以来，马上就要 5 岁了，在这 5 年中
 | 2019 年 06 月 | TiDB 3.0 GA，TiDB + TiKV 22000+ Stars, 390+ Contributors |
 | 2019 年 06 月 | TiDB 社区问答网站 AskTUG 正式上线 |
 | 2019 年 06 月 | TiDB 社区在线学习视频网站 2.0 Courses 正式上线 |
-| 2018 年 07 月 | TiDB Operator 1.0 GA，并提供 AWS/GCP/阿里云一键部署方案 |
+| 2019 年 07 月 | TiDB Operator 1.0 GA，并提供 AWS/GCP/阿里云一键部署方案 |
 | 2019 年 12 月 | 混沌测试平台 Chaos Mesh 正式开源 |
 | 2020 年 01 月 | 实时查询分析引擎 TiFlash Beta 版本发布 |
 | 2020 年 03 月 | TiDB 开源项目 Contributor 突破 400 |
