@@ -46,8 +46,6 @@ kubectl exec -it <container_name>> sh -n <namespace>
 
     1. 进入诊断模式：
 
-        {{< copyable "shell-regular" >}}
-
         ```shell
         kubectl annotate pod <tikv-pod-name> -n <namespace> runmode=debug
         ```
