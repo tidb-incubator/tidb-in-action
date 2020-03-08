@@ -2860,7 +2860,134 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="tidb-htap-&#x7684;&#x7279;&#x70B9;">TiDB HTAP &#x7684;&#x7279;&#x70B9;</h1>
+<p>&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x4ECB;&#x7ECD;&#x8FC7;&#xFF0C;&#x5B8F;&#x89C2;&#x4E0A;&#x7684; TiDB &#x6700;&#x521D;&#x7684;&#x8BBE;&#x8BA1;&#x53D7;&#x5230; Google &#x5185;&#x90E8;&#x5F00;&#x53D1;&#x7684;&#x77E5;&#x540D;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93; Spanner &#x548C; F1 &#x7684;&#x542F;&#x53D1;&#xFF0C; &#x4F5C;&#x4E3A;&#x5F53;&#x4ECA;&#x5F00;&#x6E90; NewSQL &#x6570;&#x636E;&#x5E93;&#x9886;&#x57DF;&#x7684;&#x4EE3;&#x8868;&#x4EA7;&#x54C1;&#x4E4B;&#x4E00;&#xFF0C;&#x76F8;&#x6BD4;&#x4F20;&#x7EDF;&#x7684;&#x5355;&#x673A;&#x6570;&#x636E;&#x5E93;&#xFF0C;TiDB &#x6709;&#x4EE5;&#x4E0B;&#x7684;&#x4E00;&#x4E9B;&#x4F18;&#x52BF;&#xFF1A;</p>
+<ul>
+<li>&#x7EAF;&#x5206;&#x5E03;&#x5F0F;&#x67B6;&#x6784;&#xFF0C;&#x62E5;&#x6709;&#x826F;&#x597D;&#x7684;&#x6269;&#x5C55;&#x6027;&#xFF0C;&#x652F;&#x6301;&#x5F39;&#x6027;&#x7684;&#x6269;&#x7F29;&#x5BB9;</li>
+<li>&#x652F;&#x6301; SQL&#xFF0C;&#x5BF9;&#x5916;&#x66B4;&#x9732; MySQL &#x7684;&#x7F51;&#x7EDC;&#x534F;&#x8BAE;&#xFF0C;&#x5E76;&#x517C;&#x5BB9;&#x5927;&#x591A;&#x6570; MySQL &#x7684;&#x8BED;&#x6CD5;&#xFF0C;&#x5927;&#x591A;&#x6570;&#x573A;&#x666F;&#x4E0B;&#x662F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x66FF;&#x6362; MySQL</li>
+<li>&#x9ED8;&#x8BA4;&#x652F;&#x6301;&#x9AD8;&#x53EF;&#x7528;&#xFF0C;&#x5728;&#x90E8;&#x5206;&#x8282;&#x70B9;&#x5931;&#x6548;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x672C;&#x8EAB;&#x81EA;&#x52A8;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x4FEE;&#x590D;&#x548C;&#x6545;&#x969C;&#x8F6C;&#x79FB;&#xFF0C;&#x5BF9;&#x4E1A;&#x52A1;&#x900F;&#x660E;</li>
+<li>&#x652F;&#x6301; ACID &#x4E8B;&#x52A1;&#xFF0C;&#x5BF9;&#x4E8E;&#x4E00;&#x4E9B;&#x6709;&#x5F3A;&#x4E00;&#x81F4;&#x9700;&#x6C42;&#x7684;&#x573A;&#x666F;&#x53CB;&#x597D;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;&#x94F6;&#x884C;&#x8F6C;&#x8D26;</li>
+<li>&#x6709;&#x4E30;&#x5BCC;&#x7684;&#x5DE5;&#x5177;&#x94FE;&#x751F;&#x6001;&#xFF0C;&#x8986;&#x76D6;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#xFF0C;&#x540C;&#x6B65;&#xFF0C;&#x5907;&#x4EFD;&#x7B49;&#x573A;&#x666F;</li>
+</ul>
+<p>&#x4F5C;&#x4E3A;&#x4E00;&#x6B3E;&#x4F18;&#x79C0;&#x7684; HTAP &#x6570;&#x636E;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5728;&#x5DF2;&#x77E5;&#x7684;&#x4F18;&#x79C0;&#x7684;&#x7684; OLTP &#x6027;&#x80FD;&#x4E4B;&#x5916;&#xFF0C;&#x4E0B;&#x9762;&#x4F1A;&#x91CD;&#x70B9;&#x4ECB;&#x7ECD; TiDB &#x5728; OLAP &#x65B9;&#x9762;&#x7684;&#x8FDB;&#x5316;&#x4E4B;&#x8DEF;&#x3002;</p>
+<ol>
+<li>&#x57FA;&#x4E8E;TiDB+TiKV&#x7684;OLAP&#x80FD;&#x529B;</li>
+</ol>
+<p>&#x501F;&#x52A9;&#x4E8E;&#x4F18;&#x5316;&#x5668;&#x53CA; coprocessor&#x63D0;&#x4F9B;&#x7684;&#x5F3A;&#x5927;&#x7684;&#x4E0B;&#x63A8;&#x8FD0;&#x7B97;&#x80FD;&#x529B;&#xFF0C;TiDB&#x53EF;&#x4EE5;&#x6EE1;&#x8DB3;&#x5927;&#x90E8;&#x5206;OLAP&#x573A;&#x666F;&#x3002;</p>
+<p><img src="../../res/session1/chapter9/htap/coprocessor.jpg" alt="coprocessor.jpg"></p>
+<p>&#x4F46;&#x4F9D;&#x7136;&#x5B58;&#x5728;&#x5982;&#x4E0B;&#x4E0D;&#x8DB3;&#xFF1A;</p>
+<ul>
+<li>TiDB &#x4E4B;&#x95F4;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x4EA4;&#x6362;&#x6570;&#x636E; </li>
+<li>TiKV &#x4E4B;&#x95F4;&#x4E5F;&#x65E0;&#x6CD5;&#x5728;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x4E2D;&#x4EA4;&#x6362;&#x6570;&#x636E; </li>
+<li>&#x6D77;&#x91CF;&#x5B58;&#x50A8;&#xFF08;TiKV&#xFF09;&#xFF0C;&#x534A;&#x5355;&#x673A;&#x8BA1;&#x7B97;&#xFF08;TiDB&#xFF09; </li>
+<li>Coprocessor &#x65E0;&#x6CD5;&#x5904;&#x7406;&#x9700;&#x8981;&#x6570;&#x636E;&#x4EA4;&#x6362;&#x7684;&#x7B97;&#x5B50;</li>
+<li>&#x57FA;&#x4E8E;TiSpark+TiKV&#x7684;OLAP&#x80FD;&#x529B;</li>
+</ul>
+<p>&#x89E3;&#x51B3;&#x4E0A;&#x8FF0;&#x95EE;&#x9898;&#x7684;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#xFF0C;&#x5F15;&#x5165;TiSpark&#x6765;&#x6269;&#x5145;TiDB&#x7684;&#x7B97;&#x529B;&#x3002;</p>
+<p><img src="../../res/session1/chapter9/htap/tispark.jpg" alt="tispark.jpg"></p>
+<p>spark&#x4F5C;&#x4E3A;&#x4E00;&#x6B3E;&#x4F18;&#x79C0;&#x7A33;&#x5B9A;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x8BA1;&#x7B97;&#x5E73;&#x53F0;&#xFF0C;&#x6709;&#x5982;&#x4E0B;&#x4F18;&#x52BF;&#xFF1A;</p>
+<ul>
+<li>&#x65E0;&#x75DB;&#x8854;&#x63A5;&#x5927;&#x6570;&#x636E;&#x751F;&#x6001;&#x5708;</li>
+<li>&#x652F;&#x6301;&#x811A;&#x672C;&#xFF0C;JDBC&#xFF0C;Python&#xFF0C;R&#xFF0C;Apache Zeppelin&#x7B49;&#x65B9;&#x5F0F;&#x64CD;&#x4F5C;</li>
+<li>&#x652F;&#x6301;&#x66F4;&#x5927;&#x6570;&#x636E;&#x91CF;&#x7684;&#x8BA1;&#x7B97;</li>
+</ul>
+<p>&#x4F46;&#x662F;spark&#x4E5F;&#x6709;&#x5982;&#x4E0B;&#x7F3A;&#x70B9;&#xFF1A;</p>
+<ul>
+<li>&#x53EA;&#x80FD;&#x63D0;&#x4F9B;&#x4F4E;&#x5E76;&#x53D1;&#x7684;&#x7C97;&#x66B4;&#x8BA1;&#x7B97;</li>
+<li>&#x8FD0;&#x7EF4;&#x590D;&#x6742;</li>
+<li>&#x57FA;&#x4E8E;TiDB/TiSpark+TiFlash+TiKV&#x7684;OLAP&#x80FD;&#x529B;</li>
+</ul>
+<p>&#x5728;&#x53EA;&#x6709;TiKV&#x4F5C;&#x4E3A;&#x884C;&#x5B58;&#x5B58;&#x50A8;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6709;&#x5982;&#x4E0B;&#x4E24;&#x4E2A;&#x6838;&#x5FC3;&#x77DB;&#x76FE;&#x65E0;&#x6CD5;&#x89E3;&#x51B3;&#xFF1A;</p>
+<ul>
+<li>&#x884C;&#x5B58;&#x5BF9;&#x4E8E;&#x5206;&#x6790;&#x573A;&#x666F;&#x4E0D;&#x53CB;&#x597D;</li>
+<li>&#x65E0;&#x6CD5;&#x505A;&#x5230; Workload &#x9694;&#x79BB;</li>
+</ul>
+<p>&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x4E0A;&#x8FF0;&#x4E24;&#x4E2A;&#x6838;&#x5FC3;&#x77DB;&#x76FE;&#xFF0C;&#x5217;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#x5FC5;&#x987B;&#x5E94;&#x8FD0;&#x800C;&#x751F;&#xFF0C;TiFlash&#x6709;&#x5982;&#x4E0B;&#x4F18;&#x52BF;&#xFF1A;</p>
+<ul>
+<li>&#x4E0E; TiKV &#x4E0D;&#x540C;&#x7684;&#x5B58;&#x50A8;&#x8BBE;&#x8BA1;&#xFF0C;&#x66F4;&#x9AD8;&#x6548;&#x7684;&#x6279;&#x91CF;&#x8BFB;&#x53D6;&#x6027;&#x80FD; </li>
+<li>&#x5206;&#x6790;&#x573A;&#x666F;&#x7279;&#x5316;&#x7684;&#x5B58;&#x50A8;&#x7ED3;&#x6784;&#x8BBE;&#x8BA1;&#xFF0C;&#x66F4;&#x4F4E;&#x7684;&#x8BFB;&#x53D6;&#x6D88;&#x8017; </li>
+<li>&#x914D;&#x5408;&#x6E90;&#x4E8E; ClickHouse &#x7684;&#x6781;&#x81F4;&#x5411;&#x91CF;&#x5316;&#x8BA1;&#x7B97;&#x5F15;&#x64CE;&#xFF0C;&#x66F4;&#x5C11;&#x7684;&#x5E9F;&#x6307;&#x4EE4;&#xFF0C;SIMD &#x52A0;&#x901F;</li>
+</ul>
+<p>&#x4F7F;&#x7528;delta&#x4F5C;&#x4E3A;&#x5B58;&#x50A8;&#xFF0C;&#x6765;&#x63D0;&#x4F9B;&#x66F4;&#x52A0;&#x5FEB;&#x901F;&#x7684;&#x67E5;&#x8BE2;&#x54CD;&#x5E94;</p>
+<p><img src="../../res/session1/chapter9/htap/delta.jpg" alt="delta.jpg"></p>
+<p>TiFlash&#x901A;&#x8FC7;Raft Learner&#xFF0C;&#x6765;&#x66F4;&#x5FEB;&#x7684;&#x83B7;&#x53D6;&#x4E00;&#x81F4;&#x7684;&#x6700;&#x65B0;&#x6570;&#x636E;</p>
+<ul>
+<li>&#x5B9E;&#x65F6;&#xFF0C;&#x4E14;&#x81EA;&#x52A8;&#x5BB9;&#x9519; + &#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7684;&#x6570;&#x636E;&#x590D;&#x5236; <ul>
+<li>&#x5B9E;&#x65F6;&#x5230;&#x8D26;&#x4E14;&#x5BF9; TP &#x538B;&#x529B;&#x975E;&#x5E38;&#x5C0F; </li>
+<li>TiFlash &#x8282;&#x70B9;&#x7A33;&#x5B9A;&#x6027;&#x65E0;&#x5173; TiKV </li>
+<li>AP &#x67E5;&#x8BE2;&#x5BF9; TP &#x6027;&#x80FD;&#x5F71;&#x54CD;&#x975E;&#x5E38;&#x5C0F; </li>
+<li>&#x81EA;&#x5E26;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#xFF0C;&#x53EF;&#x591A;&#x5BF9;&#x591A;&#x9AD8;&#x6548;&#x590D;&#x5236; </li>
+<li>&#x590D;&#x5236;&#x534F;&#x8BAE;&#x672C;&#x8EAB;&#x81EA;&#x5E26;&#x5BB9;&#x9519;&#x548C;&#x6570;&#x636E;&#x6062;&#x590D; </li>
+<li>&#x66F4;&#x5FEB;&#x901F;&#x7684;&#x6570;&#x636E;&#x83B7;&#x53D6;&#x53EF;&#x4EE5;&#x8BA9;&#x4E1A;&#x52A1;&#x51B3;&#x7B56;&#x66F4;&#x6709;&#x6548; <ul>
+<li>&#x66F4;&#x5FEB;&#x7684;&#x7269;&#x6D41;&#x5468;&#x8F6C;&#xFF0C;&#x66F4;&#x7CBE;&#x786E;&#x7684;&#x98CE;&#x63A7;&#xFF0C;&#x66F4;&#x654F;&#x6377;&#x7684;&#x5546;&#x4E1A;&#x7B56;&#x7565;&#x8C03;&#x6574;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="../../res/session1/chapter9/htap/raft.jpg" alt="raft.jpg"></p>
+<p>&#x901A;&#x8FC7;Label&#x8FDB;&#x884C;&#x8282;&#x70B9;&#x7684;&#x7269;&#x7406;&#x9694;&#x79BB;&#xFF0C;&#x677E;&#x7ED1;&#x8BA1;&#x7B97;&#x5F15;&#x64CE;&#x5E76;&#x53D1;&#x80FD;&#x529B;</p>
+<ul>
+<li>TiSpark &#x66FE;&#x7ECF;&#x662F;&#x4E2A;&#x9EBB;&#x70E6; <ul>
+<li>&#x706B;&#x529B;&#x5168;&#x5F00;&#xFF0C;&#x8C03;&#x9AD8;&#x5E76;&#x53D1; &#x2192; TiKV &#x96C6;&#x7FA4;&#x6296;&#x52A8;&#x4E43;&#x81F3;&#x4E1A;&#x52A1;&#x6295;&#x8BC9; </li>
+<li>&#x4F5B;&#x7CFB;&#x8BFB;&#x53D6;&#xFF0C;&#x964D;&#x4F4E;&#x5E76;&#x53D1; &#x2192; &#x96C6;&#x7FA4;&#x7A33;&#x5B9A;&#xFF0C;&#x4F46;&#x67E5;&#x8BE2;&#x33FF;&#x5EA6;&#x6781;&#x6162; <ul>
+<li>&#x4E3A; TiSpark &#x7279;&#x522B;&#x8BBE;&#x8BA1;&#x4E86;&#x964D;&#x4F4E;&#x8BFB;&#x53D6;&#x6548;&#x7387;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x4F55;&#x5176;&#x8111;&#x88C2;&#x7CBE;&#x5206; </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>TiDB &#x76F4;&#x63A5;&#x67E5;&#x8BE2;&#x5728;&#x7EBF;&#x6570;&#x636E;&#x4E5F;&#x6709;&#x7C7B;&#x4F3C;&#x95EE;&#x9898; <ul>
+<li>&#x4E3A;&#x5B9E;&#x65F6;&#x67E5;&#x8BE2;&#x589E;&#x52A0;&#x7D22;&#x5F15; &#x2192; &#x907F;&#x514D;&#x5927;&#x8303;&#x56F4;&#x626B;&#x63CF;&#x3400;&#x6210;&#x6296;&#x52A8; <ul>
+<li>&#x4F46;&#x5374;&#x5F71;&#x54CD; TP &#x4E1A;&#x52A1;&#x5199;&#x5165;&#x33FF;&#x5EA6; </li>
+</ul>
+</li>
+<li>&#x4E0D;&#x589E;&#x52A0;&#x7D22;&#x5F15; &#x2192; &#x4E0D;&#x4F46;&#x7EDF;&#x8BA1;&#x6781;&#x6162;&#xFF0C;&#x4E14;&#x4E00;&#x65E6;&#x505A;&#x4E9B;&#x7EDF;&#x8BA1;&#x4E1A;&#x52A1;&#x5EF6;&#x8FDF;&#x5927;&#x589E;</li>
+</ul>
+</li>
+</ul>
+<p><img src="../../res/session1/chapter9/htap/label.jpg" alt="label.jpg"></p>
+<p>&#x884C;&#x5217;&#x914D;&#x5408;&#xFF0C;&#x800C;&#x4E0D;&#x53EA;&#x662F;&#x884C;&#x5B58;</p>
+<ul>
+<li>&#x7EDF;&#x4E00;&#x5E73;&#x53F0;&#x6EE1;&#x8DB3;&#x9AD8;&#x5E76;&#x53D1;&#x77ED;&#x67E5;&#x8BE2;&#x6DF7;&#x5408;&#x4E2D;&#x4F4E;&#x5E76;&#x53D1;&#x5B9E;&#x65F6;&#x5206;&#x6790;&#x548C;&#x8DD1;&#x6279;&#xFF0C;&#x62A5;&#x8868;&#x7B49;&#x4E1A;&#x52A1; </li>
+<li>&#x751A;&#x81F3;&#x540C;&#x4E00;&#x67E5;&#x8BE2;&#x53EF;&#x540C;&#x65F6;&#x4F7F;&#x7528;&#x884C;&#x5217;&#x8FDB;&#x884C;&#x52A0;&#x901F;&#x8FBE;&#x5230;&#x6700;&#x5927;&#x6548;&#x679C; </li>
+<li>&#x4F8B;&#x5982;&#x7269;&#x6D41;&#x6570;&#x636E;&#x5E73;&#x53F0; <ul>
+<li>&#x5927;&#x91CF;&#x9AD8;&#x5E76;&#x53D1;&#x4F4E;&#x5EF6;&#x8FDF;&#x70B9;&#x67E5;&#x8FFD;&#x8E2A;&#x5305;&#x88F9;&#x6216;&#x8005;&#x5BA2;&#x6237;&#x4FE1;&#x606F; </li>
+<li>&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x4E9A;&#x79D2;&#x7EA7;&#x7684;&#x591A;&#x7EF4;&#x5206;&#x6790;&#xFF0C;&#x4F8B;&#x5982;&#x5206;&#x7701;&#x7EDF;&#x8BA1;&#x67D0;&#x79CD;&#x8D27;&#x7269;&#x7684;&#x53D1;&#x5355;&#x7387; </li>
+<li>&#x7531;&#x4E8E;&#x6570;&#x636E;&#x5B9E;&#x65F6;&#x5230;&#x8D26;&#x4E14;&#x4E00;&#x81F4;&#xFF0C;&#x4E24;&#x79CD;&#x7528;&#x6CD5;&#x6570;&#x636E;&#x5B8C;&#x5168;&#x4E0D;&#x4F1A;&#x6253;&#x67B6; </li>
+<li>&#x540C;&#x4E00;&#x5957;&#x5E73;&#x53F0;&#xFF0C;&#x65E0;&#x9700;&#x5207;&#x6362;</li>
+</ul>
+</li>
+</ul>
+<p><img src="../../res/session1/chapter9/htap/rowcol.jpg" alt="rowcol.jpg"></p>
+<p>&#x66F4;&#x5FEB;&#x7684;&#x4E1A;&#x52A1;&#x63A5;&#x5165;&#x901F;&#x5EA6;</p>
+<ul>
+<li>&#x4EB2;&#x8EAB;&#x7ECF;&#x5386;&#xFF1A;&#x67D0;&#x6E38;&#x620F;&#x63A5;&#x5165; Hadoop &#x5E73;&#x53F0;&#x8FDB;&#x884C;&#x5206;&#x6790; <ul>
+<li>3 &#x5929;&#x65F6;&#x95F4;&#x67B6;&#x8BBE;&#x6570;&#x636E;&#x4ECE;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x4F20;&#x8F93;&#x53D8;&#x66F4;&#x65E5;&#x5FD7;&#x7684;&#x7BA1;&#x9053; </li>
+<li>2 &#x5929;&#x65F6;&#x95F4;&#x7F16;&#x5199;&#x5C06;&#x65E5;&#x5FD7;&#x5165;&#x5E93; Hive &#x7684;&#x4F5C;&#x4E1A; </li>
+<li>&#x7531;&#x4E8E;&#x4F20;&#x8F93;&#x7BA1;&#x9053;&#x672C;&#x8EAB;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x4E00;&#x81F4;&#x6027;&#xFF0C;&#x4F5C;&#x4E1A;&#x672C;&#x8EAB;&#x9700;&#x8981;&#x53BB;&#x91CD;&#xFF0C;&#x4E14;&#x5206;&#x533A;&#x5165; &#x5E93;&#x9700;&#x8981;&#x6821;&#x5BF9;&#x65F6;&#x95F4;&#x8FB9;&#x754C; </li>
+<li>&#x8FD8;&#x9700;&#x8981;&#x7F16;&#x5199;&#x6570;&#x636E;&#x6821;&#x5BF9;&#x4EE3;&#x7801;&#xFF0C;&#x4EE5;&#x4FDD;&#x8BC1;&#x53CA;&#x65F6;&#x53D1;&#x73B0;&#x4F20;&#x8F93;&#x9519;&#x8BEF;&#xFF0C;&#x53C8;&#x8FC7;&#x53BB;&#x51E0;&#x5929; </li>
+</ul>
+</li>
+<li>TiFlash &#x8BA9;&#x7528;&#x6237;&#x66F4;&#x65E9;&#x63A5;&#x5165;&#x670D;&#x52A1; <ul>
+<li>&#x5FEB;&#x5230;&#x4EC5;&#x4EC5;&#x9700;&#x8981;&#x4E00;&#x6761;&#x547D;&#x4EE4;&#x5F00;&#x542F;&#x540C;&#x6B65;&#xFF1A;ALTER TABLE orders SET TIFLASH REPLICA 2;</li>
+</ul>
+</li>
+</ul>
+<p>&#x90A3;&#x4E48;HTAP&#x7684;&#x8FDB;&#x5316;&#x5386;&#x7A0B;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5230;&#x5934;&#x4E86;&#x5462;&#xFF0C;&#x7B54;&#x6848;&#x5F53;&#x7136;&#x662F;&#x4E0D;&#x4F1A;&#xFF0C;&#x8FDB;&#x5316;&#x4F1A;&#x968F;&#x7740;&#x73AF;&#x5883;&#x53D8;&#x5316;&#x52A8;&#x6001;&#x8FDB;&#x884C;&#xFF0C;TiDB&#x5F53;&#x7136;&#x4E5F;&#x662F;&#x3002;&#x672A;&#x6765;&#xFF0C;&#x4E3B;&#x8981;&#x4F1A;&#x5728;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x65B9;&#x9762;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;&#x52A0;&#x5F3A;&#xFF1A;</p>
+<ul>
+<li>TiSpark &#x4F5C;&#x4E3A;&#x552F;&#x4E00;&#x5206;&#x5E03;&#x5F0F;&#x8BA1;&#x7B97;&#x5F15;&#x64CE; <ul>
+<li>&#x7F3A;&#x5C11;&#x4E2D;&#x89C4;&#x6A21;&#x5FEB;&#x901F;&#x67E5;&#x8BE2;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848; </li>
+<li>&#x7565;&#x91CD;&#x7684;&#x6A21;&#x578B;&#xFF08;MR &#x6A21;&#x578B;&#xFF09;- &#x9700;&#x8981; MPP &#x5F15;&#x64CE; </li>
+</ul>
+</li>
+<li>&#x5199;&#x5165;&#x9700;&#x8981;&#x901A;&#x8FC7; TiKV <ul>
+<li>&#x5927;&#x6279;&#x91CF;&#x5199;&#x5165;&#x901F;&#x5EA6;&#x541E;&#x5410;&#x4E0D;&#x591F; </li>
+<li>&#x526F;&#x672C;&#x5FC5;&#x987B;&#x5148;&#x4EE5;&#x884C;&#x5B58;&#x65B9;&#x5F0F;&#x5199;&#x5165;&#x518D;&#x540C;&#x6B65;&#x4E3A;&#x5217;&#x5B58;</li>
+</ul>
+</li>
+</ul>
+<p><img src="../../res/session1/chapter9/htap/mpp1.jpg" alt="mpp1.jpg"><img src="../../res/session1/chapter9/htap/mpp2.jpg" alt="mpp2.jpg"></p>
+
                                 
                                 </section>
                             
@@ -2903,7 +3030,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"9.1 TiDB HTAP 的特点","level":"2.9.1","depth":2,"next":{"title":"9.2 TiFlash 架构与原理","level":"2.9.2","depth":2,"path":"session1/chapter9/tiflash-architecture.md","ref":"session1/chapter9/tiflash-architecture.md","articles":[]},"previous":{"title":"9 TiFlash 简介与 HTAP 实战","level":"2.9","depth":1,"path":"session1/chapter9/tiflash-intro.md","ref":"session1/chapter9/tiflash-intro.md","articles":[{"title":"9.1 TiDB HTAP 的特点","level":"2.9.1","depth":2,"path":"session1/chapter9/tidb-htap.md","ref":"session1/chapter9/tidb-htap.md","articles":[]},{"title":"9.2 TiFlash 架构与原理","level":"2.9.2","depth":2,"path":"session1/chapter9/tiflash-architecture.md","ref":"session1/chapter9/tiflash-architecture.md","articles":[]},{"title":"9.3 TiFlash 的使用","level":"2.9.3","depth":2,"path":"session1/chapter9/tiflash-in-action.md","ref":"session1/chapter9/tiflash-in-action.md","articles":[]}]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter9/tidb-htap.md","mtime":"2020-03-08T13:36:04.051Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T13:36:42.971Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"9.1 TiDB HTAP 的特点","level":"2.9.1","depth":2,"next":{"title":"9.2 TiFlash 架构与原理","level":"2.9.2","depth":2,"path":"session1/chapter9/tiflash-architecture.md","ref":"session1/chapter9/tiflash-architecture.md","articles":[]},"previous":{"title":"9 TiFlash 简介与 HTAP 实战","level":"2.9","depth":1,"path":"session1/chapter9/tiflash-intro.md","ref":"session1/chapter9/tiflash-intro.md","articles":[{"title":"9.1 TiDB HTAP 的特点","level":"2.9.1","depth":2,"path":"session1/chapter9/tidb-htap.md","ref":"session1/chapter9/tidb-htap.md","articles":[]},{"title":"9.2 TiFlash 架构与原理","level":"2.9.2","depth":2,"path":"session1/chapter9/tiflash-architecture.md","ref":"session1/chapter9/tiflash-architecture.md","articles":[]},{"title":"9.3 TiFlash 的使用","level":"2.9.3","depth":2,"path":"session1/chapter9/tiflash-in-action.md","ref":"session1/chapter9/tiflash-in-action.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter9/tidb-htap.md","mtime":"2020-03-08T13:36:40.946Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T13:37:17.260Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
