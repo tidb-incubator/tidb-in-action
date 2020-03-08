@@ -2,13 +2,13 @@
  
  本文介绍如何对 TiDB 进行 [TPC-C](http://www.tpc.org/tpcc/) 测试。
  
- ** TPC-C 简介 **
+ ## TPC-C 简介 
  
 TPC 是一系列事务处理和数据库基准测试的规范。其中TPC-C（Transaction Processing Performance Council）是针对 OLTP 的基准测试模型。TPC-C 测试模型给基准测试提供了一种统一的测试标准，并非实际应用系统中的真实测试结果，但通过测试结果，可以大体观察出数据库服务稳定性、性能以及系统性能等一系列问题。对数据库展开TPCC基准性能测试，一方面可以衡量数据库的性能，另一方面可以衡量硬件性价比，也是被业内广泛应用并关注的一种测试模型。
 
 我们这里以经典的开源数据库测试工具 BenchmarkSQL 为例，其内嵌了 TPCC 测试脚本，可以对 PostgreSQL、MySQL、Oracle、TIDB 等行业内主流的数据库产品直接进行测试。
 
-**一、BenchmarkSQL **
+## 一、BenchmarkSQL 
 
         我们使用TPC-C Benchmark 是一个对OLTP（联机交易处理）系统进行测试的规范，在这里，我们模拟一个商品销售模型对OLTP 系统进行测试，其中包含五类事务：
 
