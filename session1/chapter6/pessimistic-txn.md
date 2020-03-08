@@ -21,7 +21,7 @@
 * 悲观锁不包含数据，只有锁，只用于防止其他事务修改相同的 key，不会阻塞读，但 Prewrite 后会阻塞读（和 Percolator 相同，但有了大事务支持后将不会阻塞读）。
 * 提交时同 Percolator，悲观锁的存在保证了 Prewrite 不会发生 Write Conflict，保证了提交一定成功。
 
-![1.png](../../res/session1/chapter6/pessimistic-txn/1.png)
+![1.png](/res/session1/chapter6/pessimistic-txn/1.png)
 
 ### 等锁顺序
 
@@ -34,7 +34,7 @@ TiKV 中实现了 `Waiter Manager` 用于管理等锁的事务，当悲观事务
 - 在整个 TiKV 集群中，有一个死锁检测器 leader。
 - 当要等锁时，其他节点会发送检测死锁的请求给 leader。
 
-![2.png](../../res/session1/chapter6/pessimistic-txn/2.png)
+![2.png](/res/session1/chapter6/pessimistic-txn/2.png)
 
 死锁检测器基于 Raft 实现了高可用，等锁事务也会定期发送死锁检测请求给死锁检测器的 leader，从而保证了即使之前 leader 宕机的情况下也能检测到死锁。
 
