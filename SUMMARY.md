@@ -224,7 +224,8 @@
     * [2.4 Challenge Program](session5/chapter2/challenge-program.md) @张建
     * [2.5 PingCAP Incubator](session5/chapter2/pingcap-incubator.md) @姚维 @崔秋
     * [2.6 PingCAP University](session5/chapter2/pingcap-university.md) @彭琴
-    * [2.7 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
+    * [2.7 AskTUG](session5/chapter2/asktug.md) @张婵 @荣毅龙 @房晓乐 @彭琴
+    * [2.8 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
 
 ## 附录
 
