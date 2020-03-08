@@ -13,7 +13,7 @@ TiDB Lightning 主要包含两个部分：
 ![1.png](/res/session2/chapter2/lightning-internal/1.png)
 
 ## 导入流程图
-![1.png](/res/session2/chapter2/lightning-internal/2.png)
+![2.png](/res/session2/chapter2/lightning-internal/2.png)
 
 ## TiDB Lightning 整体工作原理
 1. 在导数据之前，tidb-lightning 会自动将 TiKV 集群切换为“导入模式” (import mode)，优化写入效率并停止自动压缩。
@@ -33,7 +33,7 @@ Lightning在导入阶段需要单独使用集群，设置集群来提高速度�
 
 # Lightning
 ## Lightning架构图
-![1.png](/res/session2/chapter2/lightning-internal/3.png)
+![3.png](/res/session2/chapter2/lightning-internal/3.png)
 
 ## Lightning工作原理
 首先，Lightning 会扫描 SQL 备份，区分出结构文件（包含 CREATE TABLE 语句）和数据文件（包含 INSERT 语句）。结构文件的内容会直接发送到 TiDB，用以建立数据库构型。
@@ -49,7 +49,7 @@ INSERT INTO `tbl` VALUES (19, 20, 21), (22, 23, 24), (25, 26, 27);
 Lightning 会作初步分析，找出每行在文件的位置并分配一个行号，使得没有主键的表可以唯一的区分每一行。Lightning 会直接使用 TiDB 实例来把 SQL 转换为 KV 对，称为「KV 编码器」。与外部的 TiDB 集群不同，KV 编码器是寄存在 Lightning 进程内的，而且使用内存存储，所以每执行完一个 INSERT 之后，Lightning 可以直接读取内存获取转换后的 KV 对（这些 KV 对包含数据及索引），得到 KV 对之后便可以发送到 Importer。
 
 ## Lightning并发
-![1.png](/res/session2/chapter2/lightning-internal/4.png)
+![4.png](/res/session2/chapter2/lightning-internal/4.png)
 
 batch-size: 对于很大的单表，比如 5T，如果一次行导入到一个 Engine File，可能会因为 Importer 磁盘空间不足，最终导致该表导入失败，所以 Lightning会按照 batch-size 的配置大小对一个大表进行切分，导入过程中，一个 batch使用一个 Engine File；batch-size 不应该小于 100G，太小的 batch-size 会使region balance 和 leader balance 很高，导致 region 在 TiKV 之间频繁调度，占用网络资源；
 
@@ -69,7 +69,7 @@ encode 需要使用 cpu，主要跟 region-conconcurrency 配置有关，例如 
 
 # **Importer**
 ## **Importer架构图**
-![1.png](/res/session2/chapter2/lightning-internal/5.png)
+![5.png](/res/session2/chapter2/lightning-internal/5.png)
 
 ## **Importer工作原理**
 因异步操作的缘故，Importer 得到的原始 KV 对注定是无序的。所以，Importer 要做的第一件事就是要排序。这需要给每个表划定准备排序的储存空间，我们称之为 engine file。
@@ -81,13 +81,13 @@ encode 需要使用 cpu，主要跟 region-conconcurrency 配置有关，例如 
 最后，Importer 将 SST 上传到对应 Region 的每个副本上。然后通过 Leader 发起 Ingest 命令，把这个 SST 文件导入到 Raft group 里，完成一个 Region 的导入过程。
 
 ## Importer并发
-![1.png](/res/session2/chapter2/lightning-internal/6.png)
+![6.png](/res/session2/chapter2/lightning-internal/6.png)
 
 * max-open-engines: 表示 Lightning 可以在 Importer 同时打开 Engine 的数量，如果是单个 Lightning 实例，这个配置需要不小于 Lightning 中index-concurrency + table-concurreny 的大小，如果是多个 Lightning 实例，则不能小于所有实例的 index-concurrency + table-concurreny 总和；Engine会消耗磁盘空间，Data Engine 的磁盘空间大小为 Lightning 中 batch-size 的大小，Index Engine 的大小参考前文估算方式，需要根据 Importer 机器的磁盘容量来合理配置本参数；
 * num-import-jobs: 一个 Lightning batch-size 的数据写入到一个 Engine 之后，会使用 Import 过程导入到 TiKV，这个参数控制同时进行导入的线程数量，通常使用默认配置即可；
 * region-split-size: 一个 Engine File 可能是 100G，不能一次性导入到 TiKV，所以会把 Engine File 切分成多个更小的 SST 文件，SST 文件不会超过这个大小，不建议低于 512MB，SST 切分过小，会导致 Ingest 的吞吐量小。
 # 校验检查
-![1.png](/res/session2/chapter2/lightning-internal/7.png)
+![7.png](/res/session2/chapter2/lightning-internal/7.png)
 
 我们传输大量数据时，需要自动检查数据完整，避免忽略掉错误。Lightning 会在整个表的 Region 全部导入后，对比传送到 Importer 之前这个表的 Checksum，以及在 TiKV 集群里面时的 Checksum。如果两者一样，我们就有信心说这个表的数据没有问题。
 
@@ -109,7 +109,7 @@ Lightning在检查数据完整后会进行重新计算表的统计信息，支�
 * ANALYZE TABLE `xxxx`;
 * ALTER TABLE `xxxx` AUTO_INCREMENT=123456;
 # **并行导入**
-![1.png](/res/session2/chapter2/lightning-internal/8.png)
+![8.png](/res/session2/chapter2/lightning-internal/8.png)
 
 尽管我们可以不断的优化程序代码，单机的性能总是有限的。要突破这个界限就需要横向扩展：增加机器来同时导入。如前面所述，只要每套 TiDB-Lightning Toolset 操作不同的表，它们就能平行导进同一个集群。可是，现在的版本只支持读取本机文件系统上的 SQL dump，设置成多机版就显得比较麻烦了（要安装一个共享的网络盘，并且手动分配哪台机读取哪张表）。我们计划让 Lightning 能从网路获取 SQL dump（例如通过 S3 API），并提供一个工具自动分割数据库，降低设置成本。
 
