@@ -15,7 +15,8 @@ TiDB 4.0 新增的集群信息表
 * 集群硬件表 `information_schema.cluster_hardware` 主要用于快速查询集群硬件信息。
 * 集群负载表 `information_schema.cluster_load` 主要用于查询集群不同节点的不同硬件类型的负载信息。
 * 集群负载表 `information_schema.cluster_systeminfo` 主要用于查询集群不同节点的内核配置信息，目前支持查询 sysctl 的信息。
-*集群日志表 `information_schema.cluster_log` 表主要用于集群日志查询，通过将查询条件下推到各个节点，降低日志查询对集群的影响，性能影响小于等 grep 命令。
+* 集群日志表 `information_schema.cluster_log` 表主要用于集群日志查询，通过将查询条件下推到各个节点，降低日志查询对集群的影响，性能影响小于等 grep 命令。
+
 
 TiDB 4.0 之前的以下系统表，只能查看当前节点，TiDB 4.0 实现了对应的集群表，可以在单个 TiDB 节点上拥有整个集群的全局视图
 
