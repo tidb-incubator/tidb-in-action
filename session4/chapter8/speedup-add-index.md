@@ -4,8 +4,10 @@
 
 | 参数   | 默认值   | 说明   | 
 |:----|:----|:----|
-| tidb_ddl_reorg_worker_cnt   | 16   | 控制添加索引并发度   | 
-| tidb_ddl_reorg_batch_size   | 1024   | 控制每次添加索引数据的数量   | 
+| tidb_ddl_reorg_worker_cnt   | 4   | 控制添加索引并发度   | 
+
+| tidb_ddl_reorg_batch_size   | 256   | 控制每次添加索引数据的数量   | 
+
 | tidb_ddl_reorg_priority   | PRIORITY_LOW   | 调整添加索引优先级。参数有PRIORITY_LOW/PRIORITY_NORMAL/PRIORITY_HIGH   | 
 | tidb_ddl_error_count_limit     | 512   | 失败重试次数，如果超过该次数添加索引会失败   | 
 
@@ -14,5 +16,4 @@ TiDB主要使用tidb_ddl_reorg_worker_cnt和tidb_ddl_reorg_batch_size参数来�
 添加索引的速度评估使用admin show ddl查询RowCount字段，了解目前ddl已经更新了的行数，再使用show stats_meta查看Row_count字段了添加索引的表有几行，根据当前已经更新的时间和更新行数比例粗略评估剩下多少更新时间，再次进行动态参数的调整。
 
 通常来说：1、为更新不频繁的字段添加索引，对系统影响比较小可以使用默认配置。2、如果为更新频繁的字段添加索引可以调整到4和256确保系统正常稳定的运行。可以查看[添加索引和负载测试](https://pingcap.com/docs-cn/stable/benchmark/add-index-with-load/#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88-1-add-index-%E7%9B%AE%E6%A0%87%E5%88%97%E8%A2%AB%E9%A2%91%E7%B9%81-update)
-
 
