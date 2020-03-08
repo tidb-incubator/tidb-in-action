@@ -5,7 +5,7 @@ category: TiDB DDL
 
 # Sequence
 
-Sequence 是数据库系统按照一定规则自增的数字序列，具有唯一和单调递增的特性。在官方 SQL 2003 标准中，其被定义为“生成连续数值的一种机制，Sequence 既可以是内部对象，也可以是外部对象”。因原生 MySQL 中并未支持 Sequence，TiDB Sequence 语法参考 MariaDB、Oracle 和 IBM DB2。
+Sequence 是数据库系统按照一定规则自增的数字序列，具有唯一和单调递增的特性。在官方 SQL 2003 标准中，其被定义为“生成连续数值的一种机制，Sequence 既可以是内部对象，也可以是外部对象”。因原生 MySQL 中并未支持 Sequence，TiDB Sequence 语法参考 MariaDB、Oracle 和 IBM Db2。
 
 - Create Sequence 语法
 
