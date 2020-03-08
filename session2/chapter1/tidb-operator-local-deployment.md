@@ -96,7 +96,7 @@ To start using your cluster, run:
 
 ```
 
-下载 TiDB Operator 的 helm chart 文件
+下载 TiDB Operator 的 helm chart 文件：
 
 ```
     # mkdir -p /root/chart/
