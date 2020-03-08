@@ -2,12 +2,12 @@
 
 ## DM 分库分表安装部署实战
 
-本实战模拟企业生产环境阿里云DRDS中间件对业务表进行分库分表后，这边使用DM工具将线上分库分表数据同步至 TiDB 中：
+本实战模拟企业生产环境阿里云 DRDS 中间件对业务表进行分库分表后，这边使用 DM 工具将线上分库分表数据同步至 TiDB 中：
 1. 解决跨业务跨库的数据查询分析
 2. 结合 DBA 管理平台提供数据排错查询减少因人为慢查询引起的线上故障
-3. 线上仅保留半年数据，数据归档至TiDB保留。
+3. 线上仅保留半年数据，数据归档至 TiDB 保留。
 
-有部分的分库分表使用了自增长主键ID，使用 DM 的自增长主键重算机制，解决了上游分库分表合并到下游单表时的主键冲突问题。要说明的是这个功能还是有所限制，上游在设计自增主键的时候最好还是使用全局自增服务组件来做比较好。
+有部分的分库分表使用了自增长主键 ID，使用 DM 的自增长主键重算机制，解决了上游分库分表合并到下游单表时的主键冲突问题。要说明的是这个功能还是有所限制，上游在设计自增主键的时候最好还是使用全局自增服务组件来做比较好。
 
 此外 dm 在 loader 恢复时支持断点操作，支持幂等 binlog 重做，不用担心恢复中意外而前功尽弃。
 
@@ -206,7 +206,7 @@ prometheus     : ok=13   changed=4    unreachable=0    failed=0
 #出现以上信息表示 dm 启动成功，此时已经开始同步上游 binlog 至 dm 机器中。
 ```
 ### 配置启动 task
-**上游数据库结构合并至下游TiDB说明**
+**上游数据库结构合并至下游 TiDB 说明**
 
 |上游分库|上游分表|下游合并库名|下游合并表名| 
 |----|----|----|----|
@@ -379,7 +379,7 @@ syncers:
 }
 #任务运行正常
 ```
-**上游数据全量导入TiDB完成后，我们登录dm-worker机器，删除全备并保留表结构文件**
+**上游数据全量导入 TiDB 完成后，我们登录 dm-worker 机器，删除全备并保留表结构文件**
 **（节约磁盘空间成本），操作如下**
 
 **先看一下备份目录的文件**
@@ -401,83 +401,83 @@ shard_db02.shard_tb02.sql
 shard_db01.shard_tb01-schema.sql    shard_db02.shard_tb02-schema.sql 
 shard_db02-schema-create.sql
 ```
-**查看上游分库分表数据已迁移到下游merge_db库merge_tb表**
+**查看上游分库分表数据已迁移到下游 merge_db 库 merge_tb 表**
 
 ![图片](https://uploader.shimo.im/f/XFHFGbCmJRw2EgKu.png!thumbnail)
 
 
 ## DM 常用管理命令
-### dm-worker部署管理
+### dm-worker 部署管理
 **部署命令 deploy.yml**
 
 ```
 #部署所有inventory.ini中所有选项中的主机服务
-[tidb@dmmaster dm-ansible]$ ansible-playbook  deploy.yml
-#使用-l参数部署指定标签，如部署mysql3306标签的dm-worker主机服务
+[tidb@dmmaster dm-ansible]$ ansible-playbook deploy.yml
+#使用-l 参数部署指定标签，如部署 mysql3306 标签的 dm-worker 主机服务
 [tidb@dmmaster dm-ansible]$ ansible-playbook deploy.yml -l mysql3306
-#使得--tags部署指定部署deploy.yml中的某个标签任务，如仅部署所有的dm-worker
+#使得 --tags 部署指定部署 deploy.yml 中的某个标签任务，如仅部署所有的 dm-worker
 [tidb@dmmaster dm-ansible]$ ansible-playbook deploy.yml --tags=dm-worker
 ```
 
-**dm-worker启动停止更新命令**
+**dm-worker 启动停止更新命令**
 
 ```
-#启动dm集群，开始自动拉取上游MySQL的binlog日志
-#相当于开启了MySQL的Slave_IO_Running线程
+#启动 dm 集群，开始自动拉取上游 MySQL 的 binlog 日志
+#相当于开启了 MySQL 的 Slave_IO_Running 线程
 [tidb@dmmaster dm-ansible]$ ansible-playbook start.yml
-#停止dm集群，停止拉取上游MySQL的binlog日志
+#停止 dm 集群，停止拉取上游 MySQL 的 binlog日志
 [tidb@dmmaster dm-ansible]$ ansible-playbook stop.yml
-#滚动更新dm集群
+#滚动更新 dm 集群
 [tidb@dmmaster dm-ansible]$ ansible-playbook rolling_update.yml
 *此三个yml命令也可以配合-l、--tags一起使用。
 ```
-### dm-worker task管理
-**管理Task需要使用dmctl连接上中控机，输入help查看所有命令信息**
+### dm-worker task 管理
+**管理 Tas k需要使用 dmctl 连接上中控机，输入 help 查看所有命令信息**
 
 ```
 #连接中控
 [tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
 »help
 ```
-**start-task 命令读取task文件启动同步任务，相当于开启MySQL的****Slave_SQL_Running****线程**
+**start-task 命令读取 task 文件启动同步任务，相当于开启 MySQL 的 Slave_SQL_Running 线程**
 
 ```
 [tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
-#启动task.yaml配置文件中的所有dm-worker数据写入下游库任务
+#启动 task.yaml 配置文件中的所有 dm-worker 数据写入下游库任务
 »start-task shard_to_tidb.yaml
-#启动shard_to_tidb.yaml配置文件中的某个dm-worker数据写入下游库任务
-#启动shard_to_tidb.yaml对应的子任务192.168.128.133:53307，如下:
+#启动 shard_to_tidb.yaml 配置文件中的某个 dm-worker 数据写入下游库任务
+#启动 shard_to_tidb.yaml 对应的子任务 192.168.128.133:53307，如下:
 »start-task -w '192.168.128.133:53307' shard_to_tidb.yaml 
 ```
 
-**stop-task 命令终止同步任务，相当于停止MySQL的****Slave_SQL_Running****线程**
+**stop-task 命令终止同步任务，相当于停止 MySQL 的 Slave_SQL_Running 线程**
 
 ```
 [tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
-#停止shard_to_tidb.yaml配置文件中的所有dm-worker数据写入下游库任务
-#也可使用-w参数停止某个指定的任务[可选 -w IP:PORT]
+#停止 shard_to_tidb.yaml 配置文件中的所有 dm-worker 数据写入下游库任务
+#也可使用-w 参数停止某个指定的任务[可选 -w IP:PORT]
 »start-task shard_to_tidb
 ```
 **query-status 命令查看任务状态，默认显示所有任务状态，可指定任务名查看**
 
 ```
 [tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
-#查看shard_to_tidb任务当前状态
+#查看 shard_to_tidb 任务当前状态
 »query-status shard_to_tidb
 ```
 **query-error 命令查看任务错误信息，默认显示所有任务的错误信息，可指定任务名查看**
 
 ```
 [tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
-#查看shard_to_tidb任务当前状态
+#查看 shard_to_tidb 任务当前状态
 »query-error shard_to_tidb
 ```
 **skip_sql 跳过正在执行的sql语句**
 
 ```
-#查看出错的binlog位置(failedBinlogPosition)，确定是否可以路过错误
+#查看出错的 binlog 位置(failedBinlogPosition)，确定是否可以路过错误
 query-error shard_to_tidb
-#跳过当前错误的binlog
+#跳过当前错误的 binlog
 sql-skip --worker=192.168.128.133:53307 --binlog-pos=mysql-bin|000001.000003:737983  shard_to_tidb
 #恢复继续任务
 resume-task --worker=192.168.128.133:53307  shard_to_tidb
