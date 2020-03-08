@@ -2,7 +2,7 @@
 
 ## 背景
 
-Mydumper + Loader 使用多线程导入导出数据，但在导入数据时需要经过TiDB SQL语法解析，导致TiDB计算能力成为新的瓶颈。所以又一个想法孕育而出——导入数据不经过SQL解析，直接转换成KV键值对写入TiKV集群。
+Mydumper + Loader 使用多线程导入导出数据，但在导入数据时需要经过 TiDB SQL 语法解析，导致 TiDB 计算能力成为新的瓶颈。所以又一个想法孕育而出——导入数据不经过 SQL 解析，直接转换成KV键值对写入 TiKV 集群。
 
 ## 介绍
 
@@ -21,9 +21,9 @@ TiDB Lightning 主要包含两个部分：
 
 - 环境信息：
 
-在namespace test-cluster下有两套集群：cluster-1、cluster-2
+在 namespace test-cluster 下有两套集群：cluster-1、cluster-2
 
-查看cluster-1集群Mysql数据：
+查看 cluster-1 集群 Mysql 数据：
 
 ```
 'select * from cloud.test_tbl;'
@@ -36,7 +36,7 @@ TiDB Lightning 主要包含两个部分：
 +----+------------+--------+------------+
 ```
 
-- 创建备份所需的secret
+- 创建备份所需的 secret
 
 kubectl create secret generic backup-secret --namespace=test-backup --from-literal=user=root --from-literal=password='root_password'
 
@@ -110,11 +110,11 @@ mysql.help_topic-schema.sql
 
 ### 2. 使用Lightning恢复数据
 
-- 在cluster-2开启importer
+- 在 cluster-2 开启 importer
 
 helm upgrade cluster-2 --set-string importer.create=true pingcap/tidb-cluster
 
-- 部署lightning开始恢复数据
+- 部署 lightning 开始恢复数据
 
 helm install pingcap/tidb-lightning --version=v1.1.0-beta.2 --name restore-cluster-1 --namespace test-cluster --set-string dataSource.adhoc.pvcName='fullbackup-202003080800',targetTidbCluster.name='cluster-2'
 
@@ -127,7 +127,7 @@ NAME                               COMPLETIONS   DURATION   AGE
 restore-cluster-1-tidb-lightning   1/1           3s         9m3s
 ```
 
-- 检查数据恢复情况
+- 确认数据恢复情况
 
 ```
 MySQL [(none)]> select * from cloud.test_tbl;
