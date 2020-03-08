@@ -116,12 +116,12 @@
 
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
-* [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
+* [1 SQL 调优原理](session3/chapter1/optimization-guide.md) @[石壹笑](https://github.com/aierui)
     * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui)
-    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md)
-    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md)
-    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md)
-    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
+    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md) @[倪健](https://github.com/dapan3927)
+    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md) @[Qiannan](https://github.com/hsqlu)
+    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md) @[Qiannan](https://github.com/hsqlu)
+    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md) @[季朋](https://github.com/PengJi)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 识别集群热点和业务模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 分析 SQL 执行性能](session3/chapter2/statements.md) @李迅
