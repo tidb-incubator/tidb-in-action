@@ -29,7 +29,6 @@ IIDR 需要借助 MySQL 驱动通过 JDBC 的方式将数据写入 TiDB 中，�
 | 参数   | 值   | 
 
 |:----|:----:|
-
 | convert_not nullable_column   | true   | 
 | events_max_retain   | 10000   | 
 | global_conversion_not_possible_warning   | false   | 
@@ -48,7 +47,7 @@ IIDR 需要借助 MySQL 驱动通过 JDBC 的方式将数据写入 TiDB 中，�
 IIDR 在同步全量数据之前，需要在 TiDB 侧创建好表结构，表字段对应关系如下表：
 
 | DB2字段类型   | TiDB字段类型   | 
-|:----|:----:|:----|:----:|
+|:----|:----:|
 | L   | date   | 
 | T   | time   | 
 | Z   | timestamp（6）   | 
