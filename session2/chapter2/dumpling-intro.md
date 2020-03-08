@@ -12,7 +12,7 @@
 ### 使用举例
 
 ```
-dumpling -B MySQL -F 2048 -H 127.0.01 -u root -P 3306 --loglevel debug
+dumpling -B test -F 2048 -H 127.0.01 -u root -P 3306 --loglevel debug
 ```
 
 ### 命令参数说明
