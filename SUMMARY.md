@@ -11,9 +11,8 @@
     * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md) @[Qiannan](https://github.com/hsqlu)
     * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @[zhiqiangxu](https://github.com/zhiqiangxu)
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
-    * [4.1 空间均衡](session1/chapter4/region-balance.md)
-    * [4.2 负载均衡](session1/chapter4/load-balance.md)
-    * [4.3 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
+    * [4.1 调度概述](session1/chapter4/scheduling-overview.md)
+    * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
 * [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮
         <!--
         与 MySQL 兼容性对比
@@ -28,7 +27,6 @@
     * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md) @高海涛
     * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
     * [7.4 Auto Random](session1/chapter7/autorandom.md) @谢滕进 @王聪
-    * [7.5 Expression index](session1/chapter7/expression-index.md)
 * [8 Titan 简介与实战](session1/chapter8/titan-intro.md)
     * [8.1 Titan 原理介绍](session1/chapter8/titan-internal.md) @孙晓光
     * [8.2 在 TiDB 集群中开启 Titan](session1/chapter8/titan-in-action.md) @孙晓光
@@ -80,7 +78,7 @@
         * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @[黄靓](https://github.com/vincent178)
         * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
     * [1.4 集群版本升级](session2/chapter1/tidb-upgrade.md)
-        * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md)
+        * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md) @[黄靓](https://github.com/vincent178)
         * [1.4.2 基于 TiDB-Operator 的集群滚动更新](session2/chapter1/tidb-operator-rolling-upgrade.md) @[宋歌](https://github.com/shonge)
     * [1.5 如何做动态配置修改](session2/chapter1/online-changing-config.md) @[宋歌](https://github.com/shonge)
 
@@ -109,7 +107,6 @@
     * [2.4 4.0 分布式导出工具 Dumpling](session2/chapter2/dumpling-intro.md)
         * [2.4.1 Dumpling 工作原理](session2/chapter2/dumpling-internal.md) @[我不叫大脸猫](https://github.com/qxhy123)
         * [2.4.2 Dumpling 实操指南](session2/chapter2/dumpling-in-action.md) @[我不叫大脸猫](https://github.com/qxhy123)
-
             <!--
             ;使用 Dumpling 导出数据
             -->
