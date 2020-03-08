@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>3.7 Statements · GitBook</title>
+        <title>3.7 Statement Summary · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -1606,7 +1606,7 @@
                 <a href="statements.html">
             
                     
-                    3.7 Statements
+                    3.7 Statement Summary
             
                 </a>
             
@@ -2216,6 +2216,19 @@
             
         </li>
     
+        <li class="chapter " data-level="5.6.4.4" data-path="../../session4/chapter6/partition-table-best-practices.html">
+            
+                <a href="../../session4/chapter6/partition-table-best-practices.html">
+            
+                    
+                    6.4.4 TiDB分区表问题处理
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -2403,9 +2416,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="5.8.2.1" data-path="../../session4/chapter8/threadpool-optimize.md">
+        <li class="chapter " data-level="5.8.2.1" data-path="../../session4/chapter8/threadpool-optimize.html">
             
-                <span>
+                <a href="../../session4/chapter8/threadpool-optimize.html">
             
                     
                     8.2.1 TiKV 线程池优化
@@ -2806,7 +2819,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >3.7 Statements</a>
+        <a href="../.." >3.7 Statement Summary</a>
     </h1>
 </div>
 
@@ -2821,7 +2834,143 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="statement-summary-&#x662F;&#x4EC0;&#x4E48;">Statement Summary &#x662F;&#x4EC0;&#x4E48;</h1>
+<p>TiDB &#x5DF2;&#x7ECF;&#x6709;&#x5F88;&#x591A;&#x6027;&#x80FD;&#x6392;&#x67E5;&#x5DE5;&#x5177;&#x4E86;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x5728;&#x5E94;&#x5BF9;&#x5404;&#x7C7B;&#x573A;&#x666F;&#x65F6;&#xFF0C;&#x4ECD;&#x53D1;&#x73B0;&#x5B83;&#x4EEC;&#x6709;&#x4E00;&#x4E9B;&#x4E0D;&#x8DB3;&#xFF0C;&#x8FD9;&#x5728; 2.2 &#x8282;&#x70B9; &#x201C;&#x5206;&#x6790; SQL &#x6267;&#x884C;&#x6027;&#x80FD;&#x201D; &#x91CC;&#x8BB2;&#x8FC7;&#x4E86;&#x3002;&#x4E0B;&#x9762;&#x6765;&#x8BB2;&#x8BB2; TiDB Dashboard &#x4E2D; &quot;Statements&quot; &#x9875;&#x9762;&#x80CC;&#x540E;&#x7684;&#x7CFB;&#x7EDF;&#x8868;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x7528;&#x8FC7;&#x5176;&#x4ED6;&#x4EA7;&#x54C1;&#xFF0C;&#x4F60;&#x53EF;&#x80FD;&#x542C;&#x8BF4;&#x8FC7; &quot;Dynamic Performance Views&quot; &quot;Profile Tables&quot; &quot;SQL Audit&quot; &quot;Statements&quot; &#x7B49;&#x529F;&#x80FD;&#x3002;&#x5B83;&#x4EEC;&#x7684;&#x672C;&#x8D28;&#x90FD;&#x4E00;&#x6837;&#xFF0C;&#x901A;&#x8FC7;&#x7CFB;&#x7EDF;&#x8868;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x628A; SQL &#x7684;&#x6027;&#x80FD;&#x6307;&#x6807;&#x66B4;&#x9732;&#x7ED9;&#x7528;&#x6237;&#xFF0C;&#x53EF;&#x4EE5;&#x5B9A;&#x4F4D;&#x6027;&#x80FD;&#x95EE;&#x9898;&#x3001;&#x6392;&#x67E5;&#x539F;&#x56E0;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x8865;&#x8DB3;&#x73B0;&#x6709;&#x5DE5;&#x5177;&#x5728;&#x6392;&#x67E5; SQL &#x6027;&#x80FD;&#x65B9;&#x9762;&#x7684;&#x7A7A;&#x7F3A;&#xFF0C;TiDB 4.0 &#x63D0;&#x4F9B;&#x4E86; <a href="https://pingcap.com/docs-cn/stable/reference/performance/statement-summary/" target="_blank">Statement Summary Tables</a>&#xFF0C;&#x8FD9;&#x4E2A;&#x540D;&#x5B57;&#x662F;&#x4ECE; MySQL &#x7EE7;&#x627F;&#x800C;&#x6765;&#x3002;</p>
+<p>&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;Statement Summary &#x628A;&#x76F8;&#x4F3C;&#x7684; SQL &#x548C;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x6C47;&#x603B;&#x5230;&#x4E00;&#x7EC4;&#xFF0C;&#x7136;&#x540E;&#x7EDF;&#x8BA1;&#x6BCF;&#x4E00;&#x7EC4;&#x7684;&#x5404;&#x9879;&#x6027;&#x80FD;&#x6307;&#x6807;&#x3002;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;&#xFF0C;TiDB &#x5C31;&#x53EF;&#x4EE5;&#x628A;&#x8FD9;&#x4E9B;&#x6307;&#x6807;&#x8F93;&#x51FA;&#x3002;</p>
+<h2 id="&#x4EC0;&#x4E48;&#x662F;-&#x76F8;&#x4F3C;&#x7684;-sql-&#x548C;&#x6267;&#x884C;&#x8BA1;&#x5212;-&#x5462;&#xFF1F;">&#x4EC0;&#x4E48;&#x662F; &#x201C;&#x76F8;&#x4F3C;&#x7684; SQL &#x548C;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x201D; &#x5462;&#xFF1F;</h2>
+<p>&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x8981;&#x6392;&#x67E5;&#x7684;&#x4E0D;&#x662F;&#x4E00;&#x6761; SQL&#xFF0C;&#x800C;&#x662F;&#x4E00;&#x7C7B; SQL&#x3002;&#x6BD4;&#x5982;&#x6709;&#x8FD9;&#x4E48;&#x4E24;&#x6761; SQL&#xFF1A;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">`order`</span> <span class="hljs-keyword">where</span> item_id=<span class="hljs-number">1000</span>;
+
+<span class="hljs-keyword">SELECT</span> * 
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">`order`</span>
+<span class="hljs-keyword">WHERE</span> item_id=<span class="hljs-number">1001</span>;
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4E24;&#x6761; SQL &#x867D;&#x7136;&#x5927;&#x5C0F;&#x5199;&#x3001;&#x5E38;&#x91CF;&#x3001;&#x7A7A;&#x767D;&#x7B26;&#x90FD;&#x4E0D;&#x4E00;&#x6837;&#xFF0C;&#x4F46;&#x8BED;&#x6CD5;&#x5B8C;&#x5168;&#x4E00;&#x6837;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4EEC;&#x5C31;&#x662F;&#x540C;&#x7C7B;&#x7684; SQL&#x3002;&#x901A;&#x8FC7;&#x628A;&#x540C;&#x7C7B;&#x7684; SQL &#x5F52;&#x5230;&#x4E00;&#x7EC4;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x6392;&#x67E5;&#x8FD9;&#x4E00;&#x7C7B;&#x7684;&#x6027;&#x80FD;&#x95EE;&#x9898;&#x4E86;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x540C;&#x7C7B;&#x7684; SQL &#x4E5F;&#x4F1A;&#x751F;&#x6210;&#x4E0D;&#x540C;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#xFF0C;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x4E0D;&#x540C;&#x4E5F;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x6027;&#x80FD;&#x95EE;&#x9898;&#x3002;&#x4E3A;&#x4E86;&#x6392;&#x67E5;&#x8FD9;&#x79CD;&#x95EE;&#x9898;&#xFF0C;&#x8FD8;&#x8981;&#x628A;&#x7C7B;&#x578B;&#x76F8;&#x4F3C;&#x3001;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x4E0D;&#x540C;&#x7684; SQL &#x5F52;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x7EC4;&#x3002;</p>
+<p>&#x8FD8;&#x662F;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x53EF;&#x80FD;&#x751F;&#x6210; IndexLookup&#xFF0C;&#x4E5F;&#x53EF;&#x80FD;&#x751F;&#x6210; TableScan&#x3002;&#x901A;&#x8FC7;&#x628A;&#x5B83;&#x4EEC;&#x5F52;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x7EC4;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6BD4;&#x8F83;&#x5404;&#x79CD;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x4E0B;&#x7684;&#x8FD0;&#x884C;&#x8017;&#x65F6;&#x4E86;&#x3002;</p>
+<h2 id="&#x6709;&#x54EA;&#x4E9B;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x5462;&#xFF1F;">&#x6709;&#x54EA;&#x4E9B;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x5462;&#xFF1F;</h2>
+<p>&#x4E3A;&#x4E86;&#x5C3D;&#x53EF;&#x80FD;&#x5730;&#x6392;&#x67E5;&#x51FA;&#x539F;&#x56E0;&#xFF0C;TiDB &#x5728;&#x8FD9;&#x4E9B;&#x7CFB;&#x7EDF;&#x8868;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;&#x5F88;&#x591A;&#x5B57;&#x6BB5;&#x3002;&#x622A;&#x6B62; 4.0 &#x7248;&#x672C;&#xFF0C;&#x5171;&#x6709; 60 &#x591A;&#x9879;&#x6307;&#x6807;&#x3002;&#x603B;&#x5171;&#x5206;&#x4E3A;&#x51E0;&#x7C7B;&#xFF1A;</p>
+<ul>
+<li>&#x57FA;&#x672C;&#x4FE1;&#x606F;&#xFF1A;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x3001;&#x539F; SQL &#x8BED;&#x53E5;&#x3001;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x7B49;&#x7B49;&#x3002;</li>
+<li>TiDB &#x4E0A;&#x7684;&#x6267;&#x884C;&#x6570;&#x636E;&#xFF1A;&#x603B;&#x6B21;&#x6570;&#x3001;&#x5E73;&#x5747;&#x5EF6;&#x65F6;&#x3001;&#x5E73;&#x5747;&#x5185;&#x5B58;&#x7B49;&#x7B49;&#x3002;</li>
+<li>TiKV &#x4E0A;&#x7684;&#x6267;&#x884C;&#x6570;&#x636E;&#xFF1A;CopTask &#x6570;&#x91CF;&#x3001;&#x5E73;&#x5747;&#x8017;&#x65F6;&#x3001;&#x626B;&#x63CF;&#x884C;&#x6570;&#x7B49;&#x7B49;&#x3002;</li>
+<li>&#x4E8B;&#x52A1;&#x76F8;&#x5173;&#xFF1A;&#x5199;&#x5165;&#x7684;&#x6570;&#x636E;&#x91CF;&#x3001;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#x7B49;&#x7B49;&#x3002;</li>
+</ul>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x8FD9;&#x4E9B;&#x6307;&#x6807;&#x4E0E; slow log &#x975E;&#x5E38;&#x76F8;&#x4F3C;&#xFF0C;&#x4F46;&#x51E0;&#x4E4E;&#x6BCF;&#x79CD;&#x6307;&#x6807;&#x90FD;&#x6709;&#x6700;&#x5927;&#x503C;&#x3001;&#x5E73;&#x5747;&#x503C;&#x4E24;&#x9879;&#xFF0C;&#x65B9;&#x4FBF;&#x6392;&#x9664;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x4E0D;&#x7A33;&#x5B9A;&#x7B49;&#x56E0;&#x7D20;&#x3002;</p>
+<p>&#x8BD5;&#x7740;&#x8DD1;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre><code>mysql&gt; select * from events_statements_summary_by_digest limit 1\G
+*************************** 1. row ***************************
+       SUMMARY_BEGIN_TIME: 2020-03-04 13:00:00
+         SUMMARY_END_TIME: 2020-03-04 13:30:00
+                STMT_TYPE: select
+              SCHEMA_NAME: test
+                   DIGEST: d8cc0047ec3514d418e6f425d6203966de0094f025dab14babab8f4db0947736
+              DIGEST_TEXT: select buyer_id , item_id from order where order_id = ?
+              TABLE_NAMES: test.order
+              INDEX_NAMES: NULL
+              SAMPLE_USER: root
+               EXEC_COUNT: 8
+              SUM_LATENCY: 2591978
+              MAX_LATENCY: 1345860
+              MIN_LATENCY: 135860
+              AVG_LATENCY: 323997
+        AVG_PARSE_LATENCY: 69993
+        MAX_PARSE_LATENCY: 78761
+      AVG_COMPILE_LATENCY: 137604
+      MAX_COMPILE_LATENCY: 881880
+&#x2026;&#x2026;&#x2026;
+                  AVG_MEM: 0
+                  MAX_MEM: 0
+        AVG_AFFECTED_ROWS: 0
+               FIRST_SEEN: 2020-03-04 13:20:55
+                LAST_SEEN: 2020-03-04 13:21:24
+        QUERY_SAMPLE_TEXT: select buyer_id, item_id from `order` where order_id=1001221
+         PREV_SAMPLE_TEXT:
+              PLAN_DIGEST: 28ccfb38e96b6e4eaab31e82d12f349eb4edcb97bed3be49cb3f73051f2cd9d2
+                     PLAN:     Point_Get_1    root    1    table:order, handle:1001221
+1 row in set (0.00 sec)
+</code></pre><h2 id="&#x6570;&#x636E;&#x4F1A;&#x5237;&#x65B0;&#x5417;&#xFF1F;">&#x6570;&#x636E;&#x4F1A;&#x5237;&#x65B0;&#x5417;&#xFF1F;</h2>
+<p>&#x901A;&#x5E38;&#x6211;&#x4EEC;&#x5728;&#x6392;&#x67E5;&#x95EE;&#x9898;&#x65F6;&#xFF0C;&#x662F;&#x5728;&#x6700;&#x8FD1;&#x624D;&#x51FA;&#x73B0;&#x95EE;&#x9898;&#x7684;&#x3002;&#x4E3A;&#x4E86;&#x6700;&#x8FD1;&#x7684;&#x76D1;&#x63A7;&#x6307;&#x6807;&#xFF0C;<code>events_statements_summary_by_digest</code> &#x4F1A;&#x5B9A;&#x65F6;&#x6E05;&#x7A7A;&#xFF0C;&#x9ED8;&#x8BA4;&#x534A;&#x5C0F;&#x65F6;&#x6E05;&#x7A7A;&#x4E00;&#x6B21;&#x3002;&#x8FD9;&#x6837;&#xFF0C;&#x6211;&#x4EEC;&#x67E5;&#x770B;&#x8FD9;&#x5F20;&#x8868;&#x65F6;&#xFF0C;&#x603B;&#x662F;&#x67E5;&#x770B;&#x5230;&#x6700;&#x65B0;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x5373;&#x4F7F;&#x6211;&#x770B;&#x5230;&#x4E86;&#x6700;&#x65B0;&#x7684;&#x6307;&#x6807;&#xFF0C;&#x4E5F;&#x5E76;&#x4E0D;&#x77E5;&#x9053;&#x7B97;&#x4E0D;&#x7B97;&#x6B63;&#x5E38;&#x3002;&#x4E3A;&#x4E86;&#x4E0E;&#x5386;&#x53F2;&#x7684;&#x65F6;&#x95F4;&#x6BB5;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;TiDB &#x8FD8;&#x65B0;&#x589E;&#x4E86;&#x4E00;&#x5F20;&#x5386;&#x53F2;&#x8868; <code>events_statements_summary_by_digest_history</code> &#xFF0C;&#x5B83;&#x5B58;&#x653E;&#x7740;&#x4ECE; <code>events_statements_summary_by_digest</code> &#x6E05;&#x6389;&#x7684;&#x5386;&#x53F2;&#x6570;&#x636E;&#x3002;&#x901A;&#x8FC7;&#x6307;&#x5B9A; <code>SUMMARY_BEGIN_TIME</code> &#x548C; <code>SUMMARY_END_TIME</code> &#x4E24;&#x4E2A;&#x5B57;&#x6BB5;&#x7684;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x7279;&#x5B9A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6307;&#x6807;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x5386;&#x53F2;&#x8868;&#x4E5F;&#x662F;&#x5185;&#x5B58;&#x8868;&#xFF0C;&#x6240;&#x4EE5;&#x6709;&#x6570;&#x91CF;&#x9650;&#x5236;&#xFF0C;&#x9ED8;&#x8BA4;&#x53EA;&#x4FDD;&#x5B58; 24 &#x6BB5;&#x5386;&#x53F2;&#x3002;</p>
+<h1 id="&#x4F7F;&#x7528;&#x793A;&#x4F8B;">&#x4F7F;&#x7528;&#x793A;&#x4F8B;</h1>
+<p>&#x6709;&#x4E9B;&#x4EA7;&#x54C1;&#x4F7F;&#x7528;&#x56FE;&#x5F62;&#x5316;&#x754C;&#x9762;&#x6765;&#x5448;&#x73B0;&#x6027;&#x80FD;&#x7ED3;&#x679C;&#xFF0C;&#x4F46;&#x662F;&#x7CFB;&#x7EDF;&#x8868;&#x4E5F;&#x6709;&#x5B83;&#x72EC;&#x7279;&#x7684;&#x4F18;&#x52BF;&#xFF1A;&#x901A;&#x8FC7;&#x501F;&#x52A9; SQL &#x5F3A;&#x5927;&#x7684;&#x8BED;&#x8A00;&#x8868;&#x8FBE;&#x80FD;&#x529B;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6316;&#x6398;&#x66F4;&#x6709;&#x4EF7;&#x503C;&#x7684;&#x5185;&#x5BB9;&#x3002;&#x4E0B;&#x9762;&#x901A;&#x8FC7;&#x51E0;&#x4E2A;&#x6848;&#x4F8B;&#xFF0C;&#x6F14;&#x793A;&#x5982;&#x4F55;&#x4F7F;&#x7528; Statement Summary &#x6765;&#x6392;&#x67E5;&#x6027;&#x80FD;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="&#x6848;&#x4F8B;&#x4E00;">&#x6848;&#x4F8B;&#x4E00;</h2>
+<p>&#x4E1A;&#x52A1;&#x66F4;&#x65B0;&#x540E;&#xFF0C;&#x53D1;&#x73B0;&#x67D0;&#x6761; SQL &#x5EF6;&#x65F6;&#x4E0A;&#x5347;&#x5230;&#x4E86; 10ms&#xFF0C;&#x4F46;&#x662F; Grafana &#x4E0A;&#x6CA1;&#x6709;&#x5F02;&#x5E38;&#xFF0C;&#x5982;&#x4F55;&#x5224;&#x5B9A;&#x662F;&#x5BA2;&#x6237;&#x7AEF;&#x95EE;&#x9898;&#x8FD8;&#x662F;&#x670D;&#x52A1;&#x7AEF;&#x95EE;&#x9898;&#x5462;&#xFF1F;</p>
+<p>&#x53EF;&#x4EE5;&#x7528; <code>QUERY_SAMPLE_TEXT</code> &#x8FDB;&#x884C;&#x6A21;&#x7CCA;&#x67E5;&#x8BE2;&#xFF1A;</p>
+<pre><code>mysql&gt; select avg_latency, query_sample_text from events_statements_summary_by_digest where QUERY_SAMPLE_TEXT LIKE &apos;select buyer_id, item_id from `order`%&apos;\G
+*************************** 1. row ***************************
+      avg_latency: 202225
+query_sample_text: select buyer_id, item_id from `order` where order_id=1001221
+1 row in set (0.00 sec)
+</code></pre><p>&#x4E0A;&#x9762;&#x770B;&#x5230; <code>avg_latency</code> &#x662F; 0.2ms&#xFF0C;&#x8FDC;&#x4F4E;&#x4E8E; 10ms&#xFF0C;&#x8BF4;&#x660E;&#x670D;&#x52A1;&#x7AEF;&#x6CA1;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x7EE7;&#x800C;&#x6392;&#x67E5;&#x7F51;&#x7EDC;&#x6216;&#x5BA2;&#x6237;&#x7AEF;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="&#x6848;&#x4F8B;&#x4E8C;">&#x6848;&#x4F8B;&#x4E8C;</h2>
+<p>&#x4E1A;&#x52A1;&#x76D1;&#x63A7;&#x663E;&#x793A;&#x51CC;&#x6668;&#x4E09;&#x70B9;&#x6574;&#x4E2A;&#x4E1A;&#x52A1;&#x7684;&#x5EF6;&#x65F6;&#x51FA;&#x73B0;&#x4E86;&#x6CE2;&#x52A8;&#xFF0C;&#x600E;&#x4E48;&#x770B;&#x5F53;&#x65F6;&#x8017;&#x65F6;&#x6700;&#x9AD8;&#x7684;&#x51E0;&#x6761; SQL &#x5462;&#xFF1F;</p>
+<pre><code>mysql&gt; select sum_latency, query_sample_text, digest
+    -&gt;     from events_statements_summary_by_digest
+    -&gt;     where summary_begin_time=&apos;2020-3-1 3:00:00&apos;
+    -&gt;     order by sum_latency desc limit 3\G
+*************************** 1. row ***************************
+      sum_latency: 120663574508
+query_sample_text: select buyer_id, item_id from `order` where order_id=1001221
+           digest: d8cc0047ec3514d418e6f425d6203966de0094f025dab14babab8f4db0947736
+*************************** 2. row ***************************
+      sum_latency: 97252462621
+query_sample_text: select count(1) from item
+           digest: 1626b9d694faefc4e88ae9fd5e8917e85ed26fe62dbe781eb65edad3aa939ae8
+*************************** 3. row ***************************
+      sum_latency: 65914323442
+query_sample_text: select count(1) from buyer
+           digest: b07c73323c511d3c18407771adb8aec865c0409f4e9a4f53baedc409fd5a1cd0
+3 rows in set (0.00 sec)
+</code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8FD9;&#x51E0;&#x6761; SQL &#x7684;&#x603B;&#x8017;&#x65F6;&#x6700;&#x9AD8;&#xFF0C;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x6392;&#x67E5;&#x5B83;&#x4EEC;&#x7684;&#x5176;&#x4ED6;&#x6307;&#x6807;&#x3002;</p>
+<p><code>digest</code>  &#x662F;&#x8FD9;&#x7C7B; SQL &#x7684;&#x552F;&#x4E00; ID&#xFF0C;&#x6240;&#x4EE5;&#x4E4B;&#x540E;&#x7684;&#x8BED;&#x53E5;&#xFF0C;&#x53EF;&#x4EE5;&#x5E26;&#x4E0A; <code>digest</code> &#x6765;&#x8FC7;&#x6EE4;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x7528;&#x6A21;&#x7CCA;&#x67E5;&#x8BE2;&#x4E86;&#x3002;</p>
+<h2 id="&#x6848;&#x4F8B;&#x4E09;">&#x6848;&#x4F8B;&#x4E09;</h2>
+<p>&#x6709;&#x6761; SQL &#x4E0A;&#x5348; 10 &#x70B9;&#x8FD8;&#x662F;&#x597D;&#x7684;&#xFF0C;&#x4E0B;&#x5348; 2 &#x70B9;&#x660E;&#x663E;&#x53D8;&#x6162;&#x4E86;&#x3002;&#x6211;&#x600E;&#x4E48;&#x77E5;&#x9053;&#x5B83;&#x662F;&#x54EA;&#x91CC;&#x53D8;&#x6162;&#x4E86;&#x5462;&#xFF1F;</p>
+<p>&#x53EF;&#x4EE5;&#x6BD4;&#x8F83;&#x8FD9;&#x6761; SQL &#x5728;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x5404;&#x9879;&#x6307;&#x6807;&#x7684;&#x5DEE;&#x5F02;&#xFF1A;</p>
+<pre><code>mysql&gt; select abnormal.avg_latency/normal.avg_latency,
+    -&gt; abnormal.avg_process_time/normal.avg_process_time,
+    -&gt; abnormal.avg_total_keys/normal.avg_total_keys,
+    -&gt; abnormal.avg_wait_time/normal.avg_wait_time
+    -&gt; from events_statements_summary_by_digest_history abnormal,
+    -&gt; events_statements_summary_by_digest_history normal
+    -&gt; where normal.summary_begin_time=&apos;2020-3-1 10:00:00&apos;
+    -&gt; and abnormal.summary_begin_time=&apos;2020-3-1 14:00:00&apos;
+    -&gt; and abnormal.digest=normal.digest
+    -&gt; and normal.digest = &apos;d8cc0047ec3514d418e6f425d6203966de0094f025dab14babab8f4db0947736&apos;\G
+*************************** 1. row ***************************
+          abnormal.avg_latency/normal.avg_latency: 6.3433
+abnormal.avg_process_time/normal.avg_process_time: 8.9993
+    abnormal.avg_total_keys/normal.avg_total_keys: 12.6666
+      abnormal.avg_wait_time/normal.avg_wait_time: 0.9883
+1 row in set, 1 warning (0.00 sec)
+</code></pre><p>&#x4E0A;&#x9762;&#x770B;&#x5230;&#xFF0C;&#x5E73;&#x5747;&#x626B;&#x63CF;&#x884C;&#x6570;&#xFF08;<code>avg_total_keys</code>&#xFF09;&#x53D8;&#x5927;&#x4E86;&#xFF0C;&#x5BFC;&#x81F4; TiKV &#x4E0A;&#x7684;&#x5904;&#x7406;&#x65F6;&#x95F4;&#xFF08;<code>avg_process_time</code>&#xFF09;&#x53D8;&#x957F;&#x4E86;&#x3002;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x63A5;&#x7740;&#x6392;&#x67E5;&#x4E3A;&#x4EC0;&#x4E48;&#x626B;&#x63CF;&#x884C;&#x6570;&#x53D8;&#x5927;&#x3002;&#x53EF;&#x80FD;&#x662F;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x3001;&#x8868;&#x7684;&#x6570;&#x636E;&#x91CF;&#x3001;&#x8FC7;&#x6EE4;&#x6761;&#x4EF6;&#x3001;TiKV &#x7684; GC &#x5468;&#x671F;&#x7B49;&#x56E0;&#x7D20;&#x3002;</p>
+<h1 id="&#x914D;&#x7F6E;&#x9879;">&#x914D;&#x7F6E;&#x9879;</h1>
+<p>&#x4E0B;&#x9762;&#x662F;&#x4E0E; Statement Summary &#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#xFF1A;</p>
+<ul>
+<li><code>tidb_enable_stmt_summary</code>&#xFF1A;&#x6253;&#x5F00;&#x6216;&#x5173;&#x95ED;&#x8BE5;&#x529F;&#x80FD;</li>
+<li><code>tidb_stmt_summary_refresh_interval</code>&#xFF1A;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x7684;&#x5237;&#x65B0;&#x5468;&#x671F;</li>
+<li><code>tidb_stmt_summary_history_size</code>&#xFF1A;&#x5386;&#x53F2;&#x8868;&#x4FDD;&#x5B58;&#x7684;&#x5386;&#x53F2;&#x6570;&#x91CF;</li>
+<li><code>max-stmt-count</code>&#xFF1A;&#x4FDD;&#x5B58;&#x7684; SQL &#x7684;&#x79CD;&#x7C7B;&#x6570;&#x91CF;</li>
+<li><code>max-sql-length</code>&#xFF1A;&#x663E;&#x793A;&#x7684; SQL &#x7684;&#x6700;&#x5927;&#x957F;&#x5EA6;</li>
+</ul>
+<p>&#x66F4;&#x5177;&#x4F53;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x53CA;&#x7EC6;&#x8282;&#xFF0C;&#x53C2;&#x7167;<a href="https://pingcap.com/docs-cn/stable/reference/performance/statement-summary/#%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE" target="_blank">&#x6587;&#x6863;</a>&#x3002;</p>
+<h1 id="faq">FAQ</h1>
+<h2 id="&#x914D;&#x7F6E;&#x8D8A;&#x5927;&#x8D8A;&#x597D;&#x5417;&#xFF1F;">&#x914D;&#x7F6E;&#x8D8A;&#x5927;&#x8D8A;&#x597D;&#x5417;&#xFF1F;</h2>
+<p>Q&#xFF1A;&#x6211;&#x60F3;&#x67E5;&#x770B;&#x5C3D;&#x53EF;&#x80FD;&#x591A;&#x7684; SQL&#x3001;&#x4FDD;&#x5B58;&#x7684;&#x5386;&#x53F2;&#x5C3D;&#x53EF;&#x80FD;&#x591A;&#xFF0C;&#x53EF;&#x4EE5;&#x628A; <code>tidb_stmt_summary_history_size</code> &#x548C; <code>max-stmt-count</code> &#x6539;&#x6210;&#x975E;&#x5E38;&#x5927;&#x5417;&#xFF1F;</p>
+<p>A&#xFF1A;&#x56E0;&#x4E3A; Statement Summary Tables &#x662F;&#x5185;&#x5B58;&#x8868;&#xFF0C;&#x628A;&#x914D;&#x7F6E;&#x9879;&#x6539;&#x5F97;&#x8FC7;&#x5927;&#xFF0C;&#x4F1A;&#x5360;&#x7528;&#x66F4;&#x591A;&#x7684;&#x5185;&#x5B58;&#x3002;&#x6240;&#x4EE5;&#x4E0D;&#x662F;&#x8D8A;&#x5927;&#x8D8A;&#x597D;&#xFF0C;&#x9700;&#x8981;&#x6839;&#x636E;&#x6BCF;&#x53F0; TiDB server &#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x3001;&#x5B9E;&#x9645;&#x9700;&#x6C42;&#x800C;&#x5B9A;&#x3002;</p>
+<h2 id="&#x663E;&#x793A;-commit-&#x8BED;&#x53E5;&#x6162;&#x4E86;&#xFF0C;&#x600E;&#x4E48;&#x67E5;&#x5462;&#xFF1F;">&#x663E;&#x793A; commit &#x8BED;&#x53E5;&#x6162;&#x4E86;&#xFF0C;&#x600E;&#x4E48;&#x67E5;&#x5462;&#xFF1F;</h2>
+<p>Q&#xFF1A;&#x56E0;&#x4E3A; TiDB &#x662F;&#x4E50;&#x89C2;&#x4E8B;&#x52A1;&#xFF0C;&#x53EA;&#x6709;&#x5728; commit &#x65F6;&#x624D;&#x5199;&#x6570;&#x636E;&#xFF0C;&#x5BFC;&#x81F4;&#x7ECF;&#x5E38;&#x770B;&#x5230; commit &#x8BED;&#x53E5;&#x6162;&#x4E86;&#xFF0C;&#x6211;&#x8981;&#x600E;&#x4E48;&#x786E;&#x8BA4;&#x662F;&#x54EA;&#x4E2A;&#x4E8B;&#x52A1;&#x5462;&#xFF1F;</p>
+<p>A&#xFF1A;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x786E;&#x5B9E;&#x4E0D;&#x597D;&#x5904;&#x7406;&#x3002;&#x76EE;&#x524D;&#x7684;&#x505A;&#x6CD5;&#x662F;&#x6309; commit &#x7684;&#x524D;&#x4E00;&#x4E2A;&#x8BED;&#x53E5;&#x8FDB;&#x884C;&#x5206;&#x7C7B;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6309; <code>pre_sample_text</code> &#x7684; digest &#x6765;&#x628A; commit &#x5206;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x7EC4;&#x4E2D;&#x3002;&#x8FD9;&#x57FA;&#x4E8E;&#x4E00;&#x4E2A;&#x5047;&#x8BBE;&#xFF1A;commit &#x7684;&#x524D;&#x4E00;&#x6761;&#x8BED;&#x53E5;&#x76F8;&#x540C;&#xFF0C;&#x5C31;&#x7B97;&#x540C;&#x4E00;&#x7C7B;&#x4E8B;&#x52A1;&#x3002;</p>
+<h2 id="schemaname-&#x4E3A;&#x4EC0;&#x4E48;&#x603B;&#x662F;&#x7A7A;&#x7684;&#xFF1F;"><code>schema_name</code> &#x4E3A;&#x4EC0;&#x4E48;&#x603B;&#x662F;&#x7A7A;&#x7684;&#xFF1F;</h2>
+<p>Q&#xFF1A;SQL &#x91CC;&#x660E;&#x660E;&#x6709;&#x8868;&#x540D;&#xFF0C;&#x4F46; <code>schema_name</code> &#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;&#x5374;&#x662F;&#x7A7A;&#x7684;&#xFF0C;&#x600E;&#x4E48;&#x56DE;&#x4E8B;&#xFF1F;</p>
+<p>A&#xFF1A;&#x8FD9;&#x91CC;&#x7684; <code>schema_name</code> &#x5E76;&#x4E0D;&#x662F;&#x8BE5;&#x8BED;&#x53E5;&#x6D89;&#x53CA;&#x7684;&#x6240;&#x6709; schema&#xFF0C;&#x800C;&#x662F;&#x6267;&#x884C;&#x5F53;&#x524D;&#x8BED;&#x53E5;&#x65F6;&#x6240;&#x5728;&#x7684; schema&#xFF08;&#x4F8B;&#x5982;&#x6267;&#x884C; <code>use db</code> &#x4E4B;&#x540E;&#x7684; db &#x7684;&#x540D;&#x5B57;&#xFF09;&#x3002;&#x56E0;&#x4E3A; <code>table_names</code> &#x91CC;&#x8868;&#x540D;&#x7684;&#x683C;&#x5F0F;&#x662F; &quot;{schema}.{table}&quot;&#xFF0C;&#x8981;&#x6839;&#x636E; schema &#x8FC7;&#x6EE4;&#xFF0C;&#x5C31;&#x8981;&#x5728; <code>table_names</code> &#x91CC;&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5339;&#x914D;&#x3002;</p>
+<h2 id="&#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#x6709;&#x6027;&#x80FD;&#x5F71;&#x54CD;&#x5417;&#xFF1F;">&#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#x6709;&#x6027;&#x80FD;&#x5F71;&#x54CD;&#x5417;&#xFF1F;</h2>
+<p>Q&#xFF1A;Statement Summary &#x770B;&#x8D77;&#x6765;&#x8981;&#x7EDF;&#x8BA1;&#x6240;&#x6709; SQL&#xFF0C;&#x4F1A;&#x6709;&#x6027;&#x80FD;&#x5F71;&#x54CD;&#x5417;&#xFF1F;</p>
+<p>A&#xFF1A;&#x51E1;&#x4E8B;&#x90FD;&#x6709;&#x5F0A;&#x7AEF;&#xFF0C;&#x8BE5;&#x529F;&#x80FD;&#x4E5F;&#x4E00;&#x6837;&#x3002;Sysbench &#x7684;&#x7ED3;&#x679C;&#x8868;&#x660E;&#x51E0;&#x4E4E;&#x6CA1;&#x6709;&#x6027;&#x80FD;&#x4E0B;&#x964D;&#xFF0C;&#x4F46;&#x662F; TPCC &#x6709; 2% &#x7684;&#x6027;&#x80FD;&#x4E0B;&#x964D;&#x3002;&#x4F46;&#x662F; TiDB &#x8BA4;&#x4E3A;&#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#x5E26;&#x6765;&#x7684;&#x4EF7;&#x503C;&#x8981;&#x5927;&#x4E8E; 2% &#x7684;&#x6027;&#x80FD;&#x5F71;&#x54CD;&#xFF0C;&#x6240;&#x4EE5;&#x5728; 4.0 &#x4E2D;&#x9ED8;&#x8BA4;&#x6253;&#x5F00;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2864,7 +3013,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3.7 Statements","level":"4.3.7","depth":2,"next":{"title":"4 TiDB 集群监控与报警","level":"4.4","depth":1,"path":"session3/chapter4/tidb-monitor-alert.md","ref":"session3/chapter4/tidb-monitor-alert.md","articles":[{"title":"4.1 性能调优地图","level":"4.4.1","depth":2,"path":"session3/chapter4/performance-map.md","ref":"session3/chapter4/performance-map.md","articles":[]},{"title":"4.2 TiDB 读写流程相关监控原理解析","level":"4.4.2","depth":2,"path":"session3/chapter4/read-write-metrics.md","ref":"session3/chapter4/read-write-metrics.md","articles":[]},{"title":"4.4 Prometheus 使用指南","level":"4.4.3","depth":2,"path":"session3/chapter4/prometheus-guide.md","ref":"session3/chapter4/prometheus-guide.md","articles":[]}]},"previous":{"title":"3.6 Processlist","level":"4.3.6","depth":2,"path":"session3/chapter3/processlist.md","ref":"session3/chapter3/processlist.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/statements.md","mtime":"2020-03-08T07:06:40.700Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T07:07:15.808Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3.7 Statement Summary","level":"4.3.7","depth":2,"next":{"title":"4 TiDB 集群监控与报警","level":"4.4","depth":1,"path":"session3/chapter4/tidb-monitor-alert.md","ref":"session3/chapter4/tidb-monitor-alert.md","articles":[{"title":"4.1 性能调优地图","level":"4.4.1","depth":2,"path":"session3/chapter4/performance-map.md","ref":"session3/chapter4/performance-map.md","articles":[]},{"title":"4.2 TiDB 读写流程相关监控原理解析","level":"4.4.2","depth":2,"path":"session3/chapter4/read-write-metrics.md","ref":"session3/chapter4/read-write-metrics.md","articles":[]},{"title":"4.4 Prometheus 使用指南","level":"4.4.3","depth":2,"path":"session3/chapter4/prometheus-guide.md","ref":"session3/chapter4/prometheus-guide.md","articles":[]}]},"previous":{"title":"3.6 Processlist","level":"4.3.6","depth":2,"path":"session3/chapter3/processlist.md","ref":"session3/chapter3/processlist.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/statements.md","mtime":"2020-03-08T07:43:51.424Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T07:44:28.161Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

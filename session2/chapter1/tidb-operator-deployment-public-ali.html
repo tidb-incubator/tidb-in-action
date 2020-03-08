@@ -1606,7 +1606,7 @@
                 <a href="../../session3/chapter3/statements.html">
             
                     
-                    3.7 Statements
+                    3.7 Statement Summary
             
                 </a>
             
@@ -2216,6 +2216,19 @@
             
         </li>
     
+        <li class="chapter " data-level="5.6.4.4" data-path="../../session4/chapter6/partition-table-best-practices.html">
+            
+                <a href="../../session4/chapter6/partition-table-best-practices.html">
+            
+                    
+                    6.4.4 TiDB分区表问题处理
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -2403,9 +2416,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="5.8.2.1" data-path="../../session4/chapter8/threadpool-optimize.md">
+        <li class="chapter " data-level="5.8.2.1" data-path="../../session4/chapter8/threadpool-optimize.html">
             
-                <span>
+                <a href="../../session4/chapter8/threadpool-optimize.html">
             
                     
                     8.2.1 TiKV 线程池优化
@@ -2821,7 +2834,318 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="&#x5728;&#x963F;&#x91CC;&#x4E91;&#x4E0A;&#x90E8;&#x7F72;-tidb-&#x96C6;&#x7FA4;">&#x5728;&#x963F;&#x91CC;&#x4E91;&#x4E0A;&#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;</h1>
+<p>&#x672C;&#x6587;&#x4ECB;&#x7ECD;&#x4E86;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x4E2A;&#x4EBA;&#x7535;&#x8111;&#xFF08;Linux &#x6216; macOS &#x7CFB;&#x7EDF;&#xFF09;&#x5728;&#x963F;&#x91CC;&#x4E91;&#x4E0A;&#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;&#x3002;</p>
+<h2 id="&#x73AF;&#x5883;&#x9700;&#x6C42;">&#x73AF;&#x5883;&#x9700;&#x6C42;</h2>
+<ul>
+<li><p><a href="https://github.com/aliyun/aliyun-cli" target="_blank">aliyun-cli</a> &gt;= 3.0.15 &#x5E76;&#x4E14;<a href="https://www.alibabacloud.com/help/doc-detail/90766.htm?spm=a2c63.l28256.a3.4.7b52a893EFVglq" target="_blank">&#x914D;&#x7F6E; aliyun-cli</a></p>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<p>Access Key &#x9700;&#x8981;&#x5177;&#x6709;&#x64CD;&#x4F5C;&#x76F8;&#x5E94;&#x8D44;&#x6E90;&#x7684;&#x6743;&#x9650;&#x3002;</p>
+</blockquote>
+</li>
+<li><p><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl" target="_blank">kubectl</a> &gt;= 1.12</p>
+</li>
+<li><a href="https://helm.sh/docs/using_helm/#installing-the-helm-client" target="_blank">helm</a> &gt;= 2.9.1 &#x4E14; &lt;= 2.11.0</li>
+<li><a href="https://stedolan.github.io/jq/download/" target="_blank">jq</a> &gt;= 1.6</li>
+<li><a href="https://learn.hashicorp.com/terraform/getting-started/install.html" target="_blank">terraform</a> 0.12.*</li>
+</ul>
+<p>&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x963F;&#x91CC;&#x4E91;&#x7684;<a href="https://shell.aliyun.com" target="_blank">&#x4E91;&#x547D;&#x4EE4;&#x884C;</a>&#x670D;&#x52A1;&#x6765;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x4E91;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x5DF2;&#x7ECF;&#x9884;&#x88C5;&#x5E76;&#x914D;&#x7F6E;&#x597D;&#x4E86;&#x6240;&#x6709;&#x5DE5;&#x5177;&#x3002;</p>
+<h3 id="&#x6743;&#x9650;">&#x6743;&#x9650;</h3>
+<p>&#x5B8C;&#x6574;&#x90E8;&#x7F72;&#x96C6;&#x7FA4;&#x9700;&#x8981;&#x5177;&#x5907;&#x4EE5;&#x4E0B;&#x6743;&#x9650;&#xFF1A;</p>
+<ul>
+<li>AliyunECSFullAccess</li>
+<li>AliyunESSFullAccess</li>
+<li>AliyunVPCFullAccess</li>
+<li>AliyunSLBFullAccess</li>
+<li>AliyunCSFullAccess</li>
+<li>AliyunEIPFullAccess</li>
+<li>AliyunECIFullAccess</li>
+<li>AliyunVPNGatewayFullAccess</li>
+<li>AliyunNATGatewayFullAccess</li>
+</ul>
+<h2 id="&#x6982;&#x89C8;">&#x6982;&#x89C8;</h2>
+<p>&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x4E0B;&#xFF0C;&#x4F1A;&#x521B;&#x5EFA;&#xFF1A;</p>
+<ul>
+<li>&#x4E00;&#x4E2A;&#x65B0;&#x7684; VPC</li>
+<li>&#x4E00;&#x53F0; ECS &#x5B9E;&#x4F8B;&#x4F5C;&#x4E3A;&#x5821;&#x5792;&#x673A;</li>
+<li>&#x4E00;&#x4E2A;&#x6258;&#x7BA1;&#x7248; ACK&#xFF08;&#x963F;&#x91CC;&#x4E91; Kubernetes&#xFF09;&#x96C6;&#x7FA4;&#x4EE5;&#x53CA;&#x4E00;&#x7CFB;&#x5217; worker &#x8282;&#x70B9;&#xFF1A;<ul>
+<li>&#x5C5E;&#x4E8E;&#x4E00;&#x4E2A;&#x4F38;&#x7F29;&#x7EC4;&#x7684; 2 &#x53F0; ECS &#x5B9E;&#x4F8B;&#xFF08;2 &#x6838; 2 GB&#xFF09;&#x6258;&#x7BA1;&#x7248; Kubernetes &#x7684;&#x9ED8;&#x8BA4;&#x4F38;&#x7F29;&#x7EC4;&#x4E2D;&#x5FC5;&#x987B;&#x81F3;&#x5C11;&#x6709;&#x4E24;&#x53F0;&#x5B9E;&#x4F8B;&#xFF0C;&#x7528;&#x4E8E;&#x627F;&#x8F7D;&#x6574;&#x4E2A;&#x7684;&#x7CFB;&#x7EDF;&#x670D;&#x52A1;&#xFF0C;&#x4F8B;&#x5982; CoreDNS</li>
+<li>&#x5C5E;&#x4E8E;&#x4E00;&#x4E2A;&#x4F38;&#x7F29;&#x7EC4;&#x7684; 3 &#x53F0; <code>ecs.g5.large</code> &#x5B9E;&#x4F8B;&#xFF0C;&#x7528;&#x4E8E;&#x90E8;&#x7F72; PD</li>
+<li>&#x5C5E;&#x4E8E;&#x4E00;&#x4E2A;&#x4F38;&#x7F29;&#x7EC4;&#x7684; 3 &#x53F0; <code>ecs.i2.2xlarge</code> &#x5B9E;&#x4F8B;&#xFF0C;&#x7528;&#x4E8E;&#x90E8;&#x7F72; TiKV</li>
+<li>&#x5C5E;&#x4E8E;&#x4E00;&#x4E2A;&#x4F38;&#x7F29;&#x7EC4;&#x7684; 2 &#x53F0; <code>ecs.c5.4xlarge</code> &#x5B9E;&#x4F8B;&#x7528;&#x4E8E;&#x90E8;&#x7F72; TiDB</li>
+<li>&#x5C5E;&#x4E8E;&#x4E00;&#x4E2A;&#x4F38;&#x7F29;&#x7EC4;&#x7684; 1 &#x53F0; <code>ecs.c5.xlarge</code> &#x5B9E;&#x4F8B;&#x7528;&#x4E8E;&#x90E8;&#x7F72;&#x76D1;&#x63A7;&#x7EC4;&#x4EF6;</li>
+<li>&#x4E00;&#x5757; 100 GB &#x7684;&#x4E91;&#x76D8;&#x7528;&#x4F5C;&#x76D1;&#x63A7;&#x6570;&#x636E;&#x5B58;&#x50A8;</li>
+</ul>
+</li>
+</ul>
+<p>&#x9664;&#x4E86;&#x9ED8;&#x8BA4;&#x4F38;&#x7F29;&#x7EC4;&#x4E4B;&#x5916;&#x7684;&#x5176;&#x5B83;&#x6240;&#x6709;&#x5B9E;&#x4F8B;&#x90FD;&#x662F;&#x8DE8;&#x53EF;&#x7528;&#x533A;&#x90E8;&#x7F72;&#x7684;&#x3002;&#x800C;&#x4F38;&#x7F29;&#x7EC4; (Auto-scaling Group) &#x80FD;&#x591F;&#x4FDD;&#x8BC1;&#x96C6;&#x7FA4;&#x7684;&#x5065;&#x5EB7;&#x5B9E;&#x4F8B;&#x6570;&#x7B49;&#x4E8E;&#x671F;&#x671B;&#x6570;&#x503C;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x5F53;&#x53D1;&#x751F;&#x8282;&#x70B9;&#x6545;&#x969C;&#x751A;&#x81F3;&#x53EF;&#x7528;&#x533A;&#x6545;&#x969C;&#x65F6;&#xFF0C;&#x4F38;&#x7F29;&#x7EC4;&#x80FD;&#x591F;&#x81EA;&#x52A8;&#x4E3A;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x65B0;&#x5B9E;&#x4F8B;&#x6765;&#x786E;&#x4FDD;&#x670D;&#x52A1;&#x53EF;&#x7528;&#x6027;&#x3002;</p>
+<h2 id="&#x5B89;&#x88C5;&#x90E8;&#x7F72;">&#x5B89;&#x88C5;&#x90E8;&#x7F72;</h2>
+<ol>
+<li><p>&#x8BBE;&#x7F6E;&#x76EE;&#x6807; Region &#x548C;&#x963F;&#x91CC;&#x4E91;&#x5BC6;&#x94A5;&#xFF08;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x8FD0;&#x884C; <code>terraform</code> &#x547D;&#x4EE4;&#x65F6;&#x6839;&#x636E;&#x547D;&#x4EE4;&#x63D0;&#x793A;&#x8F93;&#x5165;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-shell"> export TF_VAR_ALICLOUD_REGION=&lt;YOUR_REGION&gt; &amp;&amp; \
+ export TF_VAR_ALICLOUD_ACCESS_KEY=&lt;YOUR_ACCESS_KEY&gt; &amp;&amp; \
+ export TF_VAR_ALICLOUD_SECRET_KEY=&lt;YOUR_SECRET_KEY&gt;
+</code></pre>
+<p> &#x7528;&#x4E8E;&#x90E8;&#x7F72;&#x96C6;&#x7FA4;&#x7684;&#x5404;&#x53D8;&#x91CF;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x5B58;&#x50A8;&#x5728; <code>variables.tf</code> &#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x5982;&#x9700;&#x5B9A;&#x5236;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x6B64;&#x6587;&#x4EF6;&#x6216;&#x5728;&#x5B89;&#x88C5;&#x65F6;&#x901A;&#x8FC7; <code>-var</code> &#x53C2;&#x6570;&#x8986;&#x76D6;&#x3002;</p>
+</li>
+<li><p>&#x4F7F;&#x7528; Terraform &#x8FDB;&#x884C;&#x5B89;&#x88C5;&#xFF1A;</p>
+<pre><code class="lang-shell"> git clone --depth=1 https://github.com/pingcap/tidb-operator &amp;&amp; \
+ cd tidb-operator/deploy/aliyun
+</code></pre>
+<pre><code class="lang-shell"> terraform init
+</code></pre>
+<p> <code>apply</code> &#x8FC7;&#x7A0B;&#x4E2D;&#x9700;&#x8981;&#x8F93;&#x5165; <code>yes</code> &#x6765;&#x786E;&#x8BA4;&#x6267;&#x884C;&#xFF1A;</p>
+<pre><code class="lang-shell"> terraform apply
+</code></pre>
+<p> &#x5047;&#x5982;&#x5728;&#x8FD0;&#x884C; <code>terraform apply</code> &#x65F6;&#x51FA;&#x73B0;&#x62A5;&#x9519;&#xFF0C;&#x53EF;&#x6839;&#x636E;&#x62A5;&#x9519;&#x4FE1;&#x606F;&#xFF08;&#x4F8B;&#x5982;&#x7F3A;&#x5C11;&#x6743;&#x9650;&#xFF09;&#x8FDB;&#x884C;&#x4FEE;&#x590D;&#x540E;&#x518D;&#x6B21;&#x8FD0;&#x884C; <code>terraform apply</code>&#x3002;</p>
+<p> &#x6574;&#x4E2A;&#x5B89;&#x88C5;&#x8FC7;&#x7A0B;&#x5927;&#x7EA6;&#x9700;&#x8981; 5 &#x81F3; 10 &#x5206;&#x949F;&#xFF0C;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#x4F1A;&#x8F93;&#x51FA;&#x96C6;&#x7FA4;&#x7684;&#x5173;&#x952E;&#x4FE1;&#x606F;&#xFF08;&#x60F3;&#x8981;&#x91CD;&#x65B0;&#x67E5;&#x770B;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#xFF0C;&#x53EF;&#x4EE5;&#x8FD0;&#x884C; <code>terraform output</code>&#xFF09;&#xFF1A;</p>
+<pre><code> Apply complete! Resources: 3 added, 0 changed, 1 destroyed.
+
+ Outputs:
+
+ bastion_ip = 47.96.174.214
+ cluster_id = c2d9b20854a194f158ef2bc8ea946f20e
+ kubeconfig_file = /tidb-operator/deploy/aliyun/credentials/kubeconfig
+ monitor_endpoint = 121.199.195.236:3000
+ region = cn-hangzhou
+ ssh_key_file = /tidb-operator/deploy/aliyun/credentials/my-cluster-keyZ.pem
+ tidb_endpoint = 172.21.5.171:4000
+ tidb_version = v3.0.0
+ vpc_id = vpc-bp1v8i5rwsc7yh8dwyep5
+</code></pre></li>
+<li><p>&#x7528; <code>kubectl</code> &#x6216; <code>helm</code> &#x5BF9;&#x96C6;&#x7FA4;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<pre><code class="lang-shell"> export KUBECONFIG=$PWD/credentials/kubeconfig
+</code></pre>
+<pre><code class="lang-shell"> kubectl version
+</code></pre>
+<pre><code class="lang-shell"> helm ls
+</code></pre>
+</li>
+</ol>
+<h2 id="&#x8FDE;&#x63A5;&#x6570;&#x636E;&#x5E93;">&#x8FDE;&#x63A5;&#x6570;&#x636E;&#x5E93;</h2>
+<p>&#x901A;&#x8FC7;&#x5821;&#x5792;&#x673A;&#x53EF;&#x8FDE;&#x63A5; TiDB &#x96C6;&#x7FA4;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#xFF0C;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x5728;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#x7684;&#x8F93;&#x51FA;&#x4E2D;&#x5747;&#x53EF;&#x627E;&#x5230;&#xFF1A;</p>
+<pre><code class="lang-shell">ssh -i credentials/&lt;cluster_name&gt;-key.pem root@&lt;bastion_ip&gt;
+</code></pre>
+<pre><code class="lang-shell">mysql -h &lt;tidb_slb_ip&gt; -P 4000 -u root
+</code></pre>
+<h2 id="&#x76D1;&#x63A7;">&#x76D1;&#x63A7;</h2>
+<p>&#x8BBF;&#x95EE; <code>&lt;monitor_endpoint&gt;</code> &#x5C31;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x76F8;&#x5173;&#x7684; Grafana &#x76D1;&#x63A7;&#x9762;&#x677F;&#x3002;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x53EF;&#x5728;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#x7684;&#x8F93;&#x51FA;&#x4E2D;&#x627E;&#x5230;&#x3002;&#x9ED8;&#x8BA4;&#x5E10;&#x53F7;&#x5BC6;&#x7801;&#x4E3A;&#xFF1A;</p>
+<ul>
+<li>&#x7528;&#x6237;&#x540D;&#xFF1A;admin</li>
+<li>&#x5BC6;&#x7801;&#xFF1A;admin</li>
+</ul>
+<blockquote>
+<p><strong>&#x8B66;&#x544A;&#xFF1A;</strong></p>
+<p>&#x51FA;&#x4E8E;&#x5B89;&#x5168;&#x8003;&#x8651;&#xFF0C;&#x5047;&#x5982;&#x4F60;&#x5DF2;&#x7ECF;&#x6216;&#x5C06;&#x8981;&#x914D;&#x7F6E; VPN &#x7528;&#x4E8E;&#x8BBF;&#x95EE; VPC&#xFF0C;&#x5F3A;&#x70C8;&#x5EFA;&#x8BAE;&#x5C06; <code>deploy/modules/aliyun/tidb-cluster/values/default.yaml</code> &#x6587;&#x4EF6;&#x91CC; <code>monitor.grafana.service.annotations</code> &#x4E2D;&#x7684; <code>service.beta.kubernetes.io/alicloud-loadbalancer-address-type</code> &#x8BBE;&#x7F6E;&#x4E3A; <code>intranet</code> &#x4EE5;&#x7981;&#x6B62;&#x76D1;&#x63A7;&#x670D;&#x52A1;&#x7684;&#x516C;&#x7F51;&#x8BBF;&#x95EE;&#x3002;</p>
+</blockquote>
+<h2 id="&#x5347;&#x7EA7;-tidb-&#x96C6;&#x7FA4;">&#x5347;&#x7EA7; TiDB &#x96C6;&#x7FA4;</h2>
+<p>&#x5728; <code>terraform.tfvars</code> &#x4E2D;&#x8BBE;&#x7F6E; <code>tidb_version</code> &#x53C2;&#x6570;&#xFF0C;&#x5E76;&#x518D;&#x6B21;&#x8FD0;&#x884C; <code>terraform apply</code> &#x5373;&#x53EF;&#x5B8C;&#x6210;&#x5347;&#x7EA7;&#x3002;</p>
+<p>&#x5347;&#x7EA7;&#x64CD;&#x4F5C;&#x53EF;&#x80FD;&#x4F1A;&#x6267;&#x884C;&#x8F83;&#x957F;&#x65F6;&#x95F4;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x6765;&#x6301;&#x7EED;&#x89C2;&#x5BDF;&#x8FDB;&#x5EA6;&#xFF1A;</p>
+<pre><code>kubectl get pods --namespace &lt;tidb_cluster_name&gt; -o wide --watch
+</code></pre><h2 id="tidb-&#x96C6;&#x7FA4;&#x6C34;&#x5E73;&#x4F38;&#x7F29;">TiDB &#x96C6;&#x7FA4;&#x6C34;&#x5E73;&#x4F38;&#x7F29;</h2>
+<p>&#x6309;&#x9700;&#x5728; <code>terraform.tfvars</code> &#x4E2D;&#x8BBE;&#x7F6E; <code>tikv_count</code> &#x548C; <code>tidb_count</code> &#x6570;&#x503C;&#xFF0C;&#x518D;&#x6B21;&#x8FD0;&#x884C; <code>terraform apply</code> &#x5373;&#x53EF;&#x5B8C;&#x6210; TiDB &#x96C6;&#x7FA4;&#x7684;&#x6C34;&#x5E73;&#x4F38;&#x7F29;&#x3002;</p>
+<h2 id="&#x9500;&#x6BC1;&#x96C6;&#x7FA4;">&#x9500;&#x6BC1;&#x96C6;&#x7FA4;</h2>
+<pre><code class="lang-shell">terraform destroy
+</code></pre>
+<p>&#x5047;&#x5982; Kubernetes &#x96C6;&#x7FA4;&#x6CA1;&#x6709;&#x521B;&#x5EFA;&#x6210;&#x529F;&#xFF0C;&#x90A3;&#x4E48;&#x5728; destroy &#x65F6;&#x4F1A;&#x51FA;&#x73B0;&#x62A5;&#x9519;&#xFF0C;&#x65E0;&#x6CD5;&#x8FDB;&#x884C;&#x6B63;&#x5E38;&#x6E05;&#x7406;&#x3002;&#x6B64;&#x65F6;&#x9700;&#x8981;&#x624B;&#x52A8;&#x5C06; Kubernetes &#x8D44;&#x6E90;&#x4ECE;&#x672C;&#x5730;&#x72B6;&#x6001;&#x4E2D;&#x79FB;&#x9664;&#xFF1A;</p>
+<pre><code class="lang-shell">terraform state list
+</code></pre>
+<pre><code class="lang-shell">terraform state rm module.ack.alicloud_cs_managed_kubernetes.k8s
+</code></pre>
+<p>&#x9500;&#x6BC1;&#x96C6;&#x7FA4;&#x64CD;&#x4F5C;&#x9700;&#x8981;&#x6267;&#x884C;&#x8F83;&#x957F;&#x65F6;&#x95F4;&#x3002;</p>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<p>&#x76D1;&#x63A7;&#x7EC4;&#x4EF6;&#x6302;&#x8F7D;&#x7684;&#x4E91;&#x76D8;&#x9700;&#x8981;&#x5728;&#x963F;&#x91CC;&#x4E91;&#x7BA1;&#x7406;&#x63A7;&#x5236;&#x53F0;&#x4E2D;&#x624B;&#x52A8;&#x5220;&#x9664;&#x3002;</p>
+</blockquote>
+<h2 id="&#x914D;&#x7F6E;">&#x914D;&#x7F6E;</h2>
+<h3 id="&#x914D;&#x7F6E;-tidb-operator">&#x914D;&#x7F6E; TiDB Operator</h3>
+<p>&#x901A;&#x8FC7;&#x8C03;&#x6574; <code>variables.tf</code> &#x5185;&#x7684;&#x503C;&#x6765;&#x914D;&#x7F6E; TiDB Operator&#xFF0C;&#x5927;&#x591A;&#x6570;&#x914D;&#x7F6E;&#x9879;&#x5747;&#x80FD;&#x6309;&#x7167; <code>variable</code> &#x7684;&#x6CE8;&#x91CA;&#x7406;&#x89E3;&#x8BED;&#x4E49;&#x540E;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;<code>operator_helm_values</code> &#x914D;&#x7F6E;&#x9879;&#x5141;&#x8BB8;&#x4E3A; TiDB Operator &#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x81EA;&#x5B9A;&#x4E49;&#x7684; <code>values.yaml</code> &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li><p>&#x5728; <code>terraform.tfvars</code> &#x4E2D;&#x8BBE;&#x7F6E; <code>operator_helm_values</code>&#xFF1A;</p>
+<pre><code class="lang-hcl">  operator_helm_values = &quot;./my-operator-values.yaml&quot;
+</code></pre>
+</li>
+<li><p>&#x5728; <code>main.tf</code> &#x4E2D;&#x8BBE;&#x7F6E; <code>operator_helm_values</code>&#xFF1A;</p>
+<pre><code class="lang-hcl">  operator_helm_values = file(&quot;./my-operator-values.yaml&quot;)
+</code></pre>
+</li>
+</ul>
+<p>&#x540C;&#x65F6;&#xFF0C;&#x5728;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x4E0B; Terraform &#x811A;&#x672C;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684; VPC&#xFF0C;&#x5047;&#x5982;&#x8981;&#x4F7F;&#x7528;&#x73B0;&#x6709;&#x7684; VPC&#xFF0C;&#x53EF;&#x4EE5;&#x5728; <code>variable.tf</code> &#x4E2D;&#x8BBE;&#x7F6E; <code>vpc_id</code>&#x3002;&#x6CE8;&#x610F;&#xFF0C;&#x5F53;&#x4F7F;&#x7528;&#x73B0;&#x6709; VPC &#x65F6;&#xFF0C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E; vswitch &#x7684;&#x53EF;&#x7528;&#x533A;&#x5C06;&#x4E0D;&#x4F1A;&#x90E8;&#x7F72; Kubernetes &#x8282;&#x70B9;&#x3002;</p>
+<h3 id="&#x914D;&#x7F6E;-tidb-&#x96C6;&#x7FA4;">&#x914D;&#x7F6E; TiDB &#x96C6;&#x7FA4;</h3>
+<p>TiDB &#x96C6;&#x7FA4;&#x4F1A;&#x4F7F;&#x7528; <code>./my-cluster.yaml</code> &#x4F5C;&#x4E3A;&#x96C6;&#x7FA4;&#x7684; <code>values.yaml</code> &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x4FEE;&#x6539;&#x8BE5;&#x6587;&#x4EF6;&#x5373;&#x53EF;&#x914D;&#x7F6E; TiDB &#x96C6;&#x7FA4;&#x3002;&#x652F;&#x6301;&#x7684;&#x914D;&#x7F6E;&#x9879;&#x53EF;&#x53C2;&#x8003; <a href="../../tidb-in-kubernetes/reference/configuration/tidb-cluster.md">Kubernetes &#x4E0A;&#x7684; TiDB &#x96C6;&#x7FA4;&#x914D;&#x7F6E;</a>&#x3002;</p>
+<h2 id="&#x7BA1;&#x7406;&#x591A;&#x4E2A;-tidb-&#x96C6;&#x7FA4;">&#x7BA1;&#x7406;&#x591A;&#x4E2A; TiDB &#x96C6;&#x7FA4;</h2>
+<p>&#x9700;&#x8981;&#x5728;&#x4E00;&#x4E2A; Kubernetes &#x96C6;&#x7FA4;&#x4E0B;&#x7BA1;&#x7406;&#x591A;&#x4E2A; TiDB &#x96C6;&#x7FA4;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x7F16;&#x8F91; <code>./main.tf</code>&#xFF0C;&#x6309;&#x5B9E;&#x9645;&#x9700;&#x8981;&#x65B0;&#x589E; <code>tidb-cluster</code> &#x58F0;&#x660E;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-hcl">module &quot;tidb-cluster-dev&quot; {
+  source = &quot;../modules/aliyun/tidb-cluster&quot;
+  providers = {
+    helm = helm.default
+  }
+
+  cluster_name = &quot;dev-cluster&quot;
+  ack          = module.tidb-operator
+
+  pd_count                   = 1
+  tikv_count                 = 1
+  tidb_count                 = 1
+  override_values            = file(&quot;dev-cluster.yaml&quot;)
+}
+
+module &quot;tidb-cluster-staging&quot; {
+  source = &quot;../modules/aliyun/tidb-cluster&quot;
+  providers = {
+    helm = helm.default
+  }
+
+  cluster_name = &quot;staging-cluster&quot;
+  ack          = module.tidb-operator
+
+  pd_count                   = 3
+  tikv_count                 = 3
+  tidb_count                 = 2
+  override_values            = file(&quot;staging-cluster.yaml&quot;)
+}
+</code></pre>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x591A;&#x4E2A; TiDB &#x96C6;&#x7FA4;&#x4E4B;&#x95F4; <code>cluster_name</code> &#x5FC5;&#x987B;&#x4FDD;&#x6301;&#x552F;&#x4E00;&#x3002;&#x4E0B;&#x9762;&#x662F; <code>tidb-cluster</code> &#x6A21;&#x5757;&#x7684;&#x6240;&#x6709;&#x53EF;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">&#x53C2;&#x6570;&#x540D;</th>
+<th style="text-align:left">&#x8BF4;&#x660E;</th>
+<th style="text-align:left">&#x9ED8;&#x8BA4;&#x503C;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>ack</code></td>
+<td style="text-align:left">&#x5C01;&#x88C5;&#x76EE;&#x6807; Kubernetes &#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x5FC5;&#x586B;</td>
+<td style="text-align:left"><code>nil</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>cluster_name</code></td>
+<td style="text-align:left">TiDB &#x96C6;&#x7FA4;&#x540D;&#xFF0C;&#x5FC5;&#x586B;&#x4E14;&#x5FC5;&#x987B;&#x552F;&#x4E00;</td>
+<td style="text-align:left"><code>nil</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>tidb_version</code></td>
+<td style="text-align:left">TiDB &#x96C6;&#x7FA4;&#x7248;&#x672C;</td>
+<td style="text-align:left"><code>v3.0.1</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>tidb_cluster_chart_version</code></td>
+<td style="text-align:left"><code>tidb-cluster</code> helm chart &#x7684;&#x7248;&#x672C;</td>
+<td style="text-align:left"><code>v1.0.1</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>pd_count</code></td>
+<td style="text-align:left">PD &#x8282;&#x70B9;&#x6570;</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>pd_instance_type</code></td>
+<td style="text-align:left">PD &#x5B9E;&#x4F8B;&#x7C7B;&#x578B;</td>
+<td style="text-align:left"><code>ecs.g5.large</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>tikv_count</code></td>
+<td style="text-align:left">TiKV &#x8282;&#x70B9;&#x6570;</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>tikv_instance_type</code></td>
+<td style="text-align:left">TiKV &#x5B9E;&#x4F8B;&#x7C7B;&#x578B;</td>
+<td style="text-align:left"><code>ecs.i2.2xlarge</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>tidb_count</code></td>
+<td style="text-align:left">TiDB &#x8282;&#x70B9;&#x6570;</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>tidb_instance_type</code></td>
+<td style="text-align:left">TiDB &#x5B9E;&#x4F8B;&#x7C7B;&#x578B;</td>
+<td style="text-align:left"><code>ecs.c5.4xlarge</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>monitor_instance_type</code></td>
+<td style="text-align:left">&#x76D1;&#x63A7;&#x7EC4;&#x4EF6;&#x7684;&#x5B9E;&#x4F8B;&#x7C7B;&#x578B;</td>
+<td style="text-align:left"><code>ecs.c5.xlarge</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>override_values</code></td>
+<td style="text-align:left">TiDB &#x96C6;&#x7FA4;&#x7684; <code>values.yaml</code> &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x901A;&#x5E38;&#x901A;&#x8FC7; <code>file()</code> &#x51FD;&#x6570;&#x4ECE;&#x6587;&#x4EF6;&#x4E2D;&#x8BFB;&#x53D6;</td>
+<td style="text-align:left"><code>nil</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>local_exec_interpreter</code></td>
+<td style="text-align:left">&#x6267;&#x884C;&#x547D;&#x4EE4;&#x884C;&#x6307;&#x4EE4;&#x7684;&#x89E3;&#x91CA;&#x5668;</td>
+<td style="text-align:left"><code>[&quot;/bin/sh&quot;, &quot;-c&quot;]</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="&#x7BA1;&#x7406;&#x591A;&#x4E2A;-kubernetes-&#x96C6;&#x7FA4;">&#x7BA1;&#x7406;&#x591A;&#x4E2A; Kubernetes &#x96C6;&#x7FA4;</h2>
+<p>&#x63A8;&#x8350;&#x9488;&#x5BF9;&#x6BCF;&#x4E2A; Kubernetes &#x96C6;&#x7FA4;&#x90FD;&#x4F7F;&#x7528;&#x5355;&#x72EC;&#x7684; Terraform &#x6A21;&#x5757;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#xFF08;&#x4E00;&#x4E2A; Terraform Module &#x5373;&#x4E00;&#x4E2A;&#x5305;&#x542B; <code>.tf</code> &#x811A;&#x672C;&#x7684;&#x76EE;&#x5F55;&#xFF09;&#x3002;</p>
+<p><code>deploy/aliyun</code> &#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x5C06; <code>deploy/modules</code> &#x4E2D;&#x7684;&#x6570;&#x4E2A;&#x53EF;&#x590D;&#x7528;&#x7684; Terraform &#x811A;&#x672C;&#x7EC4;&#x5408;&#x5728;&#x4E86;&#x4E00;&#x8D77;&#x3002;&#x5F53;&#x7BA1;&#x7406;&#x591A;&#x4E2A;&#x96C6;&#x7FA4;&#x65F6;&#xFF08;&#x4E0B;&#x9762;&#x7684;&#x64CD;&#x4F5C;&#x5728; <code>tidb-operator</code> &#x9879;&#x76EE;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x8FDB;&#x884C;&#xFF09;&#xFF1A;</p>
+<ol>
+<li><p>&#x9996;&#x5148;&#x9488;&#x5BF9;&#x6BCF;&#x4E2A;&#x96C6;&#x7FA4;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-shell"> mkdir -p deploy/aliyun-staging
+</code></pre>
+</li>
+<li><p>&#x53C2;&#x8003; <code>deploy/aliyun</code> &#x7684; <code>main.tf</code>&#xFF0C;&#x7F16;&#x5199;&#x81EA;&#x5DF1;&#x7684;&#x811A;&#x672C;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-hcl"> provider &quot;alicloud&quot; {
+     region     = &lt;YOUR_REGION&gt;
+     access_key = &lt;YOUR_ACCESS_KEY&gt;
+     secret_key = &lt;YOUR_SECRET_KEY&gt;
+ }
+
+ module &quot;tidb-operator&quot; {
+     source     = &quot;../modules/aliyun/tidb-operator&quot;
+
+     region          = &lt;YOUR_REGION&gt;
+     access_key      = &lt;YOUR_ACCESS_KEY&gt;
+     secret_key      = &lt;YOUR_SECRET_KEY&gt;
+     cluster_name    = &quot;example-cluster&quot;
+     key_file        = &quot;ssh-key.pem&quot;
+     kubeconfig_file = &quot;kubeconfig&quot;
+ }
+
+ provider &quot;helm&quot; {
+     alias    = &quot;default&quot;
+     insecure = true
+     install_tiller = false
+     kubernetes {
+         config_path = module.tidb-operator.kubeconfig_filename
+     }
+ }
+
+ module &quot;tidb-cluster&quot; {
+     source = &quot;../modules/aliyun/tidb-cluster&quot;
+     providers = {
+         helm = helm.default
+     }
+
+     cluster_name = &quot;example-cluster&quot;
+     ack          = module.tidb-operator
+ }
+
+ module &quot;bastion&quot; {
+     source = &quot;../modules/aliyun/bastion&quot;
+
+     bastion_name             = &quot;example-bastion&quot;
+     key_name                 = module.tidb-operator.key_name
+     vpc_id                   = module.tidb-operator.vpc_id
+     vswitch_id               = module.tidb-operator.vswitch_ids[0]
+     enable_ssh_to_worker     = true
+     worker_security_group_id = module.tidb-operator.security_group_id
+ }
+</code></pre>
+</li>
+</ol>
+<p>&#x4E0A;&#x9762;&#x7684;&#x811A;&#x672C;&#x53EF;&#x4EE5;&#x81EA;&#x7531;&#x5B9A;&#x5236;&#xFF0C;&#x6BD4;&#x5982;&#xFF0C;&#x5047;&#x5982;&#x4E0D;&#x9700;&#x8981;&#x5821;&#x5792;&#x673A;&#x5219;&#x53EF;&#x4EE5;&#x79FB;&#x9664; <code>module &quot;bastion&quot;</code> &#x76F8;&#x5173;&#x58F0;&#x660E;&#x3002;</p>
+<p>&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x62F7;&#x8D1D; <code>deploy/aliyun</code> &#x76EE;&#x5F55;&#xFF0C;&#x4F46;&#x8981;&#x6CE8;&#x610F;&#x4E0D;&#x80FD;&#x62F7;&#x8D1D;&#x5DF2;&#x7ECF;&#x8FD0;&#x884C;&#x4E86; <code>terraform apply</code> &#x7684;&#x76EE;&#x5F55;&#xFF0C;&#x5EFA;&#x8BAE;&#x91CD;&#x65B0; clone &#x4ED3;&#x5E93;&#x518D;&#x8FDB;&#x884C;&#x62F7;&#x8D1D;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;&#x9650;&#x5236;">&#x4F7F;&#x7528;&#x9650;&#x5236;</h2>
+<p>&#x76EE;&#x524D;&#xFF0C;<code>pod cidr</code>&#xFF0C;<code>service cidr</code> &#x548C;&#x8282;&#x70B9;&#x578B;&#x53F7;&#x7B49;&#x914D;&#x7F6E;&#x5728;&#x96C6;&#x7FA4;&#x521B;&#x5EFA;&#x540E;&#x5747;&#x65E0;&#x6CD5;&#x4FEE;&#x6539;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2864,7 +3188,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.1.3 在阿里云上部署 TiDB 集群","level":"3.1.2.3.1.3","depth":5,"next":{"title":"1.2.3.1.4 在京东云上部署 TiDB 集群","level":"3.1.2.3.1.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","ref":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","articles":[]},"previous":{"title":"1.2.3.1.2 在 GCP GKE 上部署 TiDB 集群","level":"3.1.2.3.1.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-gke.md","ref":"session2/chapter1/tidb-operator-deployment-public-gke.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-public-ali.md","mtime":"2020-03-08T07:06:40.700Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T07:07:15.808Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.1.3 在阿里云上部署 TiDB 集群","category":"how-to","level":"3.1.2.3.1.3","depth":5,"next":{"title":"1.2.3.1.4 在京东云上部署 TiDB 集群","level":"3.1.2.3.1.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","ref":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","articles":[]},"previous":{"title":"1.2.3.1.2 在 GCP GKE 上部署 TiDB 集群","level":"3.1.2.3.1.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-gke.md","ref":"session2/chapter1/tidb-operator-deployment-public-gke.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-public-ali.md","mtime":"2020-03-08T07:43:51.424Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T07:44:28.161Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
