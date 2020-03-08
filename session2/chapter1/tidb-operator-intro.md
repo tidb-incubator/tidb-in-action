@@ -28,7 +28,7 @@ TiDB Operator 像“牧羊人”一样，持续的监督并管理着 TiDB 各组
 
 1. TiDB Cluster 定义：CRD（`CustomResourceDefinition`）定义了`tidbcluster`等自定义资源，使得 Kubernetes 世界认识 TiDB Cluster 并让其与 `Deployment`、`Statefulset` 一同享受 Kubernetes 的头等公民待遇。目前 TiDB Operator v1.1.0 版本包含的 CRD 有：`TidbCluster`、`Backup`、`Restore`、`BackupSchedule`、`TidbMonitor`、`TidbInitializer` 以及 `TidbClusterAutoScaler`。
 2. 控制器：`tidb-controller-manager` 包含了一组自定义控制器，控制器通过循环不断比对被控制对象的期望状态与实际状态，并通过自定义的逻辑驱动被控制对象达到期望状态。
-3. 调度器：`tidb-scheduler` 是一个 Kubernetes 调度器扩展，它为 Kubernetes 调度器注入 TiDB 集群特有的调度逻辑，比如：为保证高可用，任一 Node 不能调度超过 TiDB 集群半数以上的tikv实例。
+3. 调度器：`tidb-scheduler` 是一个 Kubernetes 调度器扩展，它为 Kubernetes 调度器注入 TiDB 集群特有的调度逻辑，比如：为保证高可用，任一 Node 不能调度超过 TiDB 集群半数以上的 tikv 实例。
 
 ### 自定义资源
 
