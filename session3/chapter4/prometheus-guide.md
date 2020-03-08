@@ -1,5 +1,7 @@
 # Prometheus 简单介绍 
 ## prometheus 简介
+![图片](https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png!thumbnail =10x300)![图片](https://uploader.shimo.im/f/PvMs4K4IERQGIxou.png!thumbnail)
+
 TiDB  使用开源时序数据库  Prometheus  作为监控和性能指标信息存储方案，使用 Grafana  作为可视化组件进行展示。
 
 Prometheus 狭义是上软件本身，即 prometheus server，广义上是基于 prometheus server 为核心的各类软件工具的生态。除 prometheus server 和 grafana 外，Prometheus 生态常用的组件还有 alertmanager、pushgateway 和非常丰富的各类 exporters。
