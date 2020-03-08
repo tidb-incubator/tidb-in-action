@@ -4,7 +4,7 @@
 
 ### [TiKV](https://github.com/tikv/tikv)
 
-TiKV 是一个分布式、支持事物的 K-V 数据库。它通过 RocksDB 进行本地储存，使用 Raft 协议来维护一致性，依照 Percolator 事务模型。在 Raft 和 pd-server 的帮助下，它能够支持横向扩展和异地副本。它既能够作为普通的分布式 K-V 数据库使用，也提供了能够满足 ACID 的事务接口。TiDB 使用它完成底层储存、分布式下推计算。与此同时， TiKV 也提供 java、c 等客户端库可供使用。
+TiKV 是一个分布式、支持事物的 K-V 数据库。它通过 [RocksDB](https://rocksdb.org/) 进行本地储存，使用 Raft 协议来维护一致性，依照 Percolator 事务模型。在 Raft 和 pd-server 的帮助下，它能够支持横向扩展和异地副本。它既能够作为普通的分布式 K-V 数据库使用，也提供了能够满足 ACID 的事务接口。TiDB 使用它完成底层储存、分布式下推计算。与此同时， TiKV 也提供 java、c 等客户端库可供使用。
 
 ### [grpc-rs](https://github.com/tikv/grpc-rs)
 
@@ -16,11 +16,11 @@ raft-rs 是 Raft 协议的 rust 实现。它借鉴了 [etcd 的 Raft 实现](htt
 
 ### [rust-rocksdb](https://github.com/tikv/rust-rocksdb)
 
-rust-rocksdb 是 Rocksdb 的 rust 包装层。为 Rust 应用程序提供了方便易用的使用 Rocksdb 的方式。TiKV 使用它完成硬盘存储。
+rust-rocksdb 是 [Rocksdb](https://rocksdb.org/) 的 rust 包装层。为 Rust 应用程序提供了方便易用的使用 [Rocksdb](https://rocksdb.org/) 的方式。TiKV 使用它完成硬盘存储。
 
 ### [rust-prometheus](https://github.com/tikv/rust-prometheus)
 
-rust-prometheus 是为 rust 应用设计的 Prometheus instrumentation 库。赋予 Rust 程序接入 Prometheus 的能力。
+rust-prometheus 是为 rust 应用设计的 [Prometheus](https://prometheus.io/) instrumentation 库。赋予 Rust 程序接入 [Prometheus](https://prometheus.io/) 的能力。
 
 ### [pprof-rs](https://github.com/tikv/pprof-rs)
 
