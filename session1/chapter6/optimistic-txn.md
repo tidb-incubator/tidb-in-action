@@ -1,6 +1,6 @@
-     事务是数据库的基础，提供高效的、支持完整 ACID 的分布式事务更是分布式数据库的立足之本。本篇文章会首先介绍事务的基础知识，然后介绍 TiDB 如何基于 Percolator 实现的乐观事务以及在使用上的最佳实践。
+事务是数据库的基础，提供高效的、支持完整 ACID 的分布式事务更是分布式数据库的立足之本。本篇文章会首先介绍事务的基础知识，然后介绍 TiDB 如何基于 Percolator 实现的乐观事务以及在使用上的最佳实践。
 
-      TiDB事务模型参考了Percolator论文，由一个两阶段提交构成，Prewrite和Commit。TiDB v3.0.8以前版本（或者由旧版本升级上来），默认使用乐观事务模型。乐观锁或者乐观事务模型是指每次操作数据的时候，认为别人不会修改，所以不必要上锁，在最后提交的时候再进行冲突检测。         
+TiDB事务模型参考了Percolator论文，由一个两阶段提交构成，Prewrite和Commit。TiDB v3.0.8以前版本（或者由旧版本升级上来），默认使用乐观事务模型。乐观锁或者乐观事务模型是指每次操作数据的时候，认为别人不会修改，所以不必要上锁，在最后提交的时候再进行冲突检测。         
 
 # 事务
 事务是数据库执行的最小单元，允许用户将多个读写操作组合为一个逻辑单元。事务需要满足原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）和持久性（Durability），也就是 ACID。
@@ -50,7 +50,7 @@ Percolator 将事务的所有状态都保存在底层支持高可用、强一致
 
 事务的两阶段提交过程如下：
 
-![图片](https://uploader.shimo.im/f/F2CpmGOT3VIEZJJD.JPG!thumbnail)
+![1.png](/res/session1/chapter6/optimistic-txn/1.png)
 
 1. 客户端开始一个事务。
 2. TiDB向 pd 获取 tso 作为当前事务的 start_ts。
@@ -161,7 +161,7 @@ txn-local-latches：事务内存锁相关配置，当本地事务冲突比较多
 
 此外，TiKV 提供了监控查看具体消耗在 latch 等待的时间：
 
-![图片](https://uploader.shimo.im/f/wReUxqMaj0E0rNzq.png!thumbnail)
+![2.png](/res/session1/chapter6/optimistic-txn/2.png)
 
 当 Scheduler latch wait duration 的值特别高时，说明大量时间消耗在等待锁的请求上。如果不存在底层写入慢的问题，基本上可以判断该段时间内冲突比较多。
 
@@ -205,9 +205,9 @@ TiDB 默认不进行事务重试，因为重试事务可能会导致更新丢失
 
 第二步中，重试时仅重新执行包含写操作的 SQL 语句，并不涉及读操作的 SQL 语句。但是当前事务中读到数据的时间与事务真正开始的时间发生了变化，写入的版本变成了重试时获取的 start_ts 而非事务一开始时获取的 start_ts。
 
-       因此，当事务中存在依赖查询结果来更新的语句时，重试将无法保证事务原本可重复读的隔离级别，最终可能导致结果与预期出现不一致。在这种场景下可以使用 select for update 来保证事务提交成功时原先查询的结果没有被修改，但包含 select for update 的事务无法自动重试。
+ 因此，当事务中存在依赖查询结果来更新的语句时，重试将无法保证事务原本可重复读的隔离级别，最终可能导致结果与预期出现不一致。在这种场景下可以使用 select for update 来保证事务提交成功时原先查询的结果没有被修改，但包含 select for update 的事务无法自动重试。
 
-       如果业务可以容忍事务重试导致的异常，或并不关注事务是否以可重复读的隔离级别来执行，则可以开启自动重试。但更建议的是在冲突严重的场景下，使用 TiDB 的悲观事务。
+ 如果业务可以容忍事务重试导致的异常，或并不关注事务是否以可重复读的隔离级别来执行，则可以开启自动重试。但更建议的是在冲突严重的场景下，使用 TiDB 的悲观事务。
 
 ## 垃圾回收（GC）
 TiDB 的事务的实现采用了 MVCC（多版本并发控制）机制，当新写入的数据覆盖旧的数据时，旧的数据不会被替换掉，而是与新写入的数据同时保留，并以时间戳来区分版本。数据版本过多会占用大量空间，同时影响数据库的查询性能，GC 的任务便是清理不再需要的旧数据。
@@ -239,7 +239,7 @@ MySQL [test]>
 
 两个窗口同时按下commit
 
-![图片](https://uploader.shimo.im/f/nLHQA5KxBY0yAaEx.png!thumbnail)
+![3.png](/res/session1/chapter6/optimistic-txn/3.png)
 
 
 分析
@@ -276,8 +276,8 @@ MySQL [test]>
 ### tikv监控--server板块
 lock的大小应该是比较小。
 
-![图片](https://uploader.shimo.im/f/O4mvGqzPOSYWvypD.png!thumbnail)
+![4.png](/res/session1/chapter6/optimistic-txn/4.png)
 
 ### tidb监控-transaction板块
-![图片](https://uploader.shimo.im/f/ne9eIFSFvhEeMgv4.png!thumbnail)
+![5.png](/res/session1/chapter6/optimistic-txn/5.png)
 
