@@ -209,8 +209,9 @@
 
 * 1 TiDB 开源社区历史及其现状
     * [1.1 TiDB 开源社区现状及发展简史](session5/chapter1/a-brief-history-of-tidb.md) @崔秋
-    * [1.2 TiDB 开源生态介绍](session5/chapter1/tidb-open-source-ecosystem.md)
+    * [1.2 TiDB 开源生态介绍](session5/chapter1/tidb-open-source-ecosystem.md) @殷成文 @杨可奥 @童牧 @叶奔
     * [1.3 TiDB 开源社区治理](session5/chapter1/community-governance.md) @崔秋
+    * [1.4 社区重要合作开发](session5/chapter1/community-cooperations.md) @唐刘 @崔秋
 * 2 TiDB 开源生态
     * 2.1 社区重要活动介绍
         * [2.1.1 TiDB Devcon](session5/chapter2/devcon.md) @余梦杰
@@ -218,13 +219,12 @@
         * [2.1.3 Infra Meetup](session5/chapter2/infra-meetup.md) @唐小丽
         * [2.1.4 TiDB Hackathon](session5/chapter2/hackathon.md) @李莎莎
         * [2.1.5 TUG 企业行](session5/chapter2/tug-event.md) @房晓乐
-    * [2.2 社区重要合作开发](session5/chapter2/community-cooperations.md) @唐刘 @崔秋
-    * [2.3 TUG（TiDB User Group）](session5/chapter2/tidb-user-group.md) @张婵 @彭琴
-    * [2.4 Talent Plan](session5/chapter2/talent-plan.md) @王琳琳
-    * [2.5 Challenge Program](session5/chapter2/challenge-program.md) @张建
-    * [2.6 PingCAP Incubator](session5/chapter2/pingcap-incubator.md) @姚维 @崔秋
-    * [2.7 PingCAP University](session5/chapter2/pingcap-university.md) @彭琴
-    * [2.8 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
+    * [2.2 TUG（TiDB User Group）](session5/chapter2/tidb-user-group.md) @张婵 @彭琴
+    * [2.3 Talent Plan](session5/chapter2/talent-plan.md) @王琳琳
+    * [2.4 Challenge Program](session5/chapter2/challenge-program.md) @张建
+    * [2.5 PingCAP Incubator](session5/chapter2/pingcap-incubator.md) @姚维 @崔秋
+    * [2.6 PingCAP University](session5/chapter2/pingcap-university.md) @彭琴
+    * [2.7 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
 
 ## 附录
 
