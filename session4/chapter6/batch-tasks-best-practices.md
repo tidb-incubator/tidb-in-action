@@ -18,7 +18,7 @@ TiSpark 是将 Spark SQL 直接运行在 TiDB 存储引擎 TiKV 上的 OLAP 解�
 # 环境准备
 
 ## TiSpark 依赖包
-当前，TiSpark 2.1.8 是最新的稳定版本，官方强烈建议使用。它与 Spark 2.3.0+ 和 Spark 2.4.0+ 兼容。它还与 TiDB-2.x 和 TiDB-3.x 兼容。可以前往TiSpark 在 GitHub 上的[首页](https://github.com/pingcap/tispark)查看更详细的版本兼容情况并下载。
+当前，TiSpark 2.1.8 是最新的稳定版本，官方强烈建议使用。它与 Spark 2.3.0+ 和 Spark 2.4.0+ 兼容。它还与 TiDB-2.x 和 TiDB-3.x 兼容。可以前往  TiSpark 在 GitHub 上的[首页](https://github.com/pingcap/tispark)查看更详细的版本兼容情况并下载。
 
 ## Spark
 根据现有 TiDB 版本确定兼容的 TiSpark 依赖以后，便可以从 Spark 官网下载支持的版本，这里推荐[下载](https://archive.apache.org/dist/spark/)自带 Hadoop 环境的预编译版。
