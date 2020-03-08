@@ -17,11 +17,9 @@ Prometheus 可以监控的对象远不止官方 exporters 列表中的产品，�
 ## 架构介绍
 Prometheus 的架构图如下：
 
-![1.png](/res/session3/chapter4/rometheus-guide/01architecture.png)
-
+![1.png](/res/session3/chapter4/prometheus/1.png)
 
 Prometheus 生态中 prometheus server 软件用于监控数据库的存储、检索，以及告警消息的推送，是 Prometheus 生态最核心的部分。
-
 
 Alertmanger 负责接收 prometheus 软件推送的告警，并将告警经过分组、去重、等处理后，按告警标签内容路由后，通过邮件、短信、企业微信、钉钉、webhook 等发送给接收者。 	
 
@@ -167,7 +165,7 @@ TiDB 已经原生支持 Prometheus， 在 TiDB 旧版本中，TiDB 的监控信�
 
 从 TiDB 2.1 版本开始由主动上报变成主动暴露 [Metrics 接口](https://pingcap.com/docs-cn/stable/how-to/monitor/monitor-a-cluster/#%E4%BD%BF%E7%94%A8-metrics-%E6%8E%A5%E5%8F%A3) ，由 prometheus server 主动抓取信息， 这样的架构更符合 Prometheus 的设计思想，整个数据采集路径少一层 pushgateway。 数据采集完成后由于 grafana 做报表展示，同时告警信息主动推动 alertmanager，再 altermanager 将告警推送到不同的消息渠道。
 
-![2.png](/res/session3/chapter4/rometheus-guide/02tidb-prom.png)
+![2.png](/res/session3/chapter4/prometheus/2.png)
 
 # Prometheus 表达式在 TiDB 的应用 
 ## PromQL
@@ -189,7 +187,7 @@ Promethes 中的数据类型分 4 类：
 
 up{alert_lev="0",,instance="21.129.14.103:2998",job="hadoop",project="dtl",service="hadoop"}  1
 
-![3.png](/res/session3/chapter4/rometheus-guide/03data.png)
+![3.png](/res/session3/chapter4/prometheus/3.png)
 
 
 **说明：**
@@ -253,7 +251,7 @@ Hadoop_DataNode_BlocksRead{ instance="21.129.14.104:2998"}[1m]
 通常时间范围查询时会和函数一起使用，比如 rate() 函数
 
 rate(node_cpu_seconds_total{mode='user',instance='21.129.20.161:9100'}[5m])
-![4.png](/res/session3/chapter4/rometheus-guide/04range.png)
+![4.png](/res/session3/chapter4/prometheus/4.png)
 
 ### Offset 查询
 
@@ -271,7 +269,7 @@ sum((tidb_server_query_total{result="OK"}  offset 1d))
 
 irate(node_cpu_seconds_total{mode='user',instance='21.129.20.161:9100'}[5m])
 
-![5.png](/res/session3/chapter4/rometheus-guide/05irate.png)
+![5.png](/res/session3/chapter4/prometheus/5.png)
 
 **increase()**
 
@@ -296,28 +294,28 @@ sum(tikv_store_size_bytes{instance=~"$instance", type="available"}) by (instance
 
 rate(node_disk_io_time_ms[1m]) / 1000
 
-![6.png](/res/session3/chapter4/rometheus-guide/06rate.png)
+![6.png](/res/session3/chapter4/prometheus/6.png)
 
 ### increase() 函数应用
 以 bypte 为聚合条件，显示 1 分钟内 Failed Query OPM 总数
 
 sum(increase(tidb_server_execute_error_total[1m])) by (type)
 
-![7.png](/res/session3/chapter4/rometheus-guide/07increase.png)
+![7.png](/res/session3/chapter4/prometheus/7.png)
 
 ### histogram_quantile 在 TiDB 中的应用
 监控 duration 的百分位，百分们是 0.99，直方图的桶是以 le,instance 组合为单位。
 
 histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_bucket[1m])) by (le, instance))
 
-![8.png](/res/session3/chapter4/rometheus-guide/08his.png)
+![8.png](/res/session3/chapter4/prometheus/8.png)
 
 ### 聚合函数应用
 显示 cpu 的使用率，计算方式是先求 idle 空间 CPU 的，然后再同 100 求差异，聚合单们是 instance 标签。
 
 100 - avg by (instance) (irate(node_cpu{mode="idle"}[1m]) ) * 100
 
-![9.png](/res/session3/chapter4/rometheus-guide/09avg.png)
+![9.png](/res/session3/chapter4/prometheus/9.png)
 
 ## **Prometheus 报警在 TiDB 的应用 **
 ##  TiDB 报警规则
@@ -440,4 +438,4 @@ histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_buck
 - 由于默认的告警发送的内容过多，包含注释等信息，影响可读性。建议用户自己写 webhook 的方式发送告警。
 
 告警示例：
-![10.png](/res/session3/chapter4/rometheus-guide/10wechat.jpg)
+![10.png](/res/session3/chapter4/prometheus/10.jpg)
