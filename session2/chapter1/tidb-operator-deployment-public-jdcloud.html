@@ -2873,7 +2873,266 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="&#x5728;&#x4EAC;&#x4E1C;&#x4E91;&#x4E0A;&#x90E8;&#x7F72;-tidb-&#x96C6;&#x7FA4;">&#x5728;&#x4EAC;&#x4E1C;&#x4E91;&#x4E0A;&#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;</h1>
+<h2 id="&#x521B;&#x5EFA;-kubernetes-&#x96C6;&#x7FA4;">&#x521B;&#x5EFA; Kubernetes &#x96C6;&#x7FA4;</h2>
+<p>&#x53C2;&#x8003;&#x5B98;&#x65B9;&#x6587;&#x6863; <a href="https://docs.jdcloud.com/cn/jcs-for-kubernetes/create-to-cluster" target="_blank">https://docs.jdcloud.com/cn/jcs-for-kubernetes/create-to-cluster</a></p>
+<h2 id="&#x8FDE;&#x63A5;&#x96C6;&#x7FA4;">&#x8FDE;&#x63A5;&#x96C6;&#x7FA4;</h2>
+<p>&#x53C2;&#x8003;&#x5B98;&#x65B9;&#x6587;&#x6863; <a href="https://docs.jdcloud.com/cn/jcs-for-kubernetes/connect-to-cluster" target="_blank">https://docs.jdcloud.com/cn/jcs-for-kubernetes/connect-to-cluster</a></p>
+<h2 id="&#x5B89;&#x88C5;-helm">&#x5B89;&#x88C5; Helm</h2>
+<ol>
+<li><p>&#x901A;&#x8FC7; <a href="https://github.com/helm/helm/releases" target="_blank">https://github.com/helm/helm/releases</a>  &#x627E;&#x5230;&#x8981;&#x4E0B;&#x8F7D;&#x7684; helm &#x7248;&#x672C;&#xFF0C; TiDB Operator  &#x8981;&#x6C42; Helm &#x7248;&#x672C; &lt; 3.0</p>
+<pre><code>wget https://get.helm.sh/helm-v2.16.1-linux-amd64.tar.gz
+</code></pre></li>
+<li><p>&#x89E3;&#x538B;&#x7F29;</p>
+<pre><code>tar -zxvf helm-v2.16.1-linux-amd64.tar.gz
+</code></pre></li>
+<li><p>&#x5728;&#x89E3;&#x538B;&#x540E;&#x7684;&#x76EE;&#x5F55;&#x4E2D;&#x627E;&#x5230;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#xFF0C;&#x5C06;&#x5176;&#x79FB;&#x52A8;&#x5230;&#x6240;&#x9700;&#x7684;&#x4F4D;&#x7F6E;&#x5E76;&#x6DFB;&#x52A0;&#x6267;&#x884C;&#x6743;&#x9650;</p>
+<pre><code>mv linux-amd64/helm /usr/local/bin/helm
+chmod +x /usr/local/bin/helm
+</code></pre></li>
+<li><p>&#x8FD0;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;</p>
+<pre><code>helm help
+</code></pre></li>
+<li><p>&#x4E3A; Tiller &#x6DFB;&#x52A0;&#x6743;&#x9650;&#xFF0C;&#x8BE6;&#x89C1; <a href="https://docs.helm.sh/using_helm/#role-based-access-control" target="_blank">Role-based Access Control</a>&#xFF0C;&#x65B0;&#x5EFA; rbac-config.yaml &#xFF0C;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: tiller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: tiller
+    namespace: kube-system
+</code></pre></li>
+<li><p>&#x521D;&#x59CB;&#x5316; Helm &#x5E76;&#x5B89;&#x88C5; Tiller &#x670D;&#x52A1;</p>
+<pre><code>helm init --upgrade --service-account tiller
+</code></pre><p>&#x5982;&#x679C;&#x65E0;&#x6CD5;&#x4E0B;&#x8F7D;&#x955C;&#x50CF;&#xFF0C;&#x53EF;&#x4EE5;&#x7528; <code>--tiller-image</code> &#x53C2;&#x6570;&#x66FF;&#x6362;&#x955C;&#x50CF;&#x5730;&#x5740;</p>
+</li>
+<li><p>&#x8FD0;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;</p>
+<pre><code>helm version
+</code></pre><p>&#x51FA;&#x73B0;&#x4EE5;&#x4E0B;&#x4FE1;&#x606F;&#xFF0C;&#x786E;&#x8BA4;&#x5B89;&#x88C5;&#x6210;&#x529F;</p>
+<pre><code>Client: &amp;version.Version{SemVer:&quot;v2.16.1&quot;, GitCommit:&quot;bbdfe5e7803a12bbdf97e94cd847859890cf4050&quot;, GitTreeState:&quot;clean&quot;}
+Server: &amp;version.Version{SemVer:&quot;v2.16.1&quot;, GitCommit:&quot;bbdfe5e7803a12bbdf97e94cd847859890cf4050&quot;, GitTreeState:&quot;clean&quot;}
+</code></pre></li>
+<li><p>&#x914D;&#x7F6E; PingCAP &#x5B98;&#x65B9; chart &#x4ED3;&#x5E93;</p>
+<pre><code>helm repo add pingcap https://charts.pingcap.org/
+</code></pre></li>
+</ol>
+<h2 id="&#x5B89;&#x88C5;-tidb-operator">&#x5B89;&#x88C5; TiDB Operator</h2>
+<p>TiDB Operator &#x4F7F;&#x7528; <a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/" target="_blank">CRD (Custom Resource Definition)</a> &#x6269;&#x5C55; Kubernetes&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x4F7F;&#x7528; TiDB Operator&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x521B;&#x5EFA; <code>TidbCluster</code> &#x81EA;&#x5B9A;&#x4E49;&#x8D44;&#x6E90;&#x7C7B;&#x578B;&#x3002;&#x53EA;&#x9700;&#x8981;&#x5728;&#x4F60;&#x7684; Kubernetes &#x96C6;&#x7FA4;&#x4E0A;&#x521B;&#x5EFA;&#x4E00;&#x6B21;&#x5373;&#x53EF;&#x3002;</p>
+<pre><code class="lang-bash">kubectl apply <span class="hljs-_">-f</span> https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/crd.yaml &amp;&amp; kubectl get crd tidbclusters.pingcap.com
+</code></pre>
+<p>&#x521B;&#x5EFA; <code>TidbCluster</code> &#x81EA;&#x5B9A;&#x4E49;&#x8D44;&#x6E90;&#x7C7B;&#x578B;&#x540E;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5728; Kubernetes &#x96C6;&#x7FA4;&#x4E0A;&#x5B89;&#x88C5; TiDB Operator&#x3002;</p>
+<ol>
+<li><p>&#x83B7;&#x53D6;&#x4F60;&#x8981;&#x5B89;&#x88C5;&#x7684; <code>tidb-operator</code> chart &#x4E2D;&#x7684; <code>values.yaml</code> &#x6587;&#x4EF6;&#xFF1A;</p>
+<pre><code>mkdir -p /home/tidb/tidb-operator &amp;&amp; \
+helm inspect values pingcap/tidb-operator --version=&lt;chart-version&gt; &gt; /home/tidb/tidb-operator/values-tidb-operator.yaml
+</code></pre><blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<p><code>&lt;chart-version&gt;</code> &#x5728;&#x540E;&#x7EED;&#x6587;&#x4E2D;&#x4EE3;&#x8868; chart &#x7248;&#x672C;&#xFF0C;&#x4F8B;&#x5982; <code>v1.0.0</code>&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;  <code>helm search -l tidb-operator</code> &#x67E5;&#x770B;&#x5F53;&#x524D;&#x652F;&#x6301;&#x7684;&#x7248;&#x672C;</p>
+</blockquote>
+</li>
+<li><p>&#x914D;&#x7F6E; TiDB Operator</p>
+<p>TiDB Operator &#x91CC;&#x9762;&#x4F1A;&#x7528;&#x5230; k8s.gcr.io/kube-scheduler &#x955C;&#x50CF;&#xFF0C;&#x5982;&#x679C;&#x4E0B;&#x8F7D;&#x4E0D;&#x4E86;&#x8BE5;&#x955C;&#x50CF;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4FEE;&#x6539; <code>/home/tidb/tidb-operator/values-tidb-operator.yaml</code> &#x6587;&#x4EF6;&#x4E2D;&#x7684; <code>scheduler.kubeSchedulerImageName</code> &#x66FF;&#x6362;&#x955C;&#x50CF;&#x3002;</p>
+</li>
+<li><p>&#x5B89;&#x88C5; TiDB Operator</p>
+<pre><code>helm install pingcap/tidb-operator --name=tidb-operator --namespace=tidb-admin --version=&lt;chart-version&gt; -f /home/tidb/tidb-operator/values-tidb-operator.yaml &amp;&amp; \
+kubectl get po -n tidb-admin -l app.kubernetes.io/name=tidb-operator
+</code></pre></li>
+</ol>
+<h2 id="&#x81EA;&#x5B9A;&#x4E49;-tidb-operator">&#x81EA;&#x5B9A;&#x4E49; TiDB Operator</h2>
+<p>&#x901A;&#x8FC7;&#x4FEE;&#x6539; <code>/home/tidb/tidb-operator/values-tidb-operator.yaml</code> &#x4E2D;&#x7684;&#x914D;&#x7F6E;&#x81EA;&#x5B9A;&#x4E49; TiDB Operator&#x3002;&#x540E;&#x7EED;&#x6587;&#x6863;&#x4F7F;&#x7528; <code>values.yaml</code>  &#x6307;&#x4EE3; <code>/home/tidb/tidb-operator/values-tidb-operator.yaml</code>&#x3002;</p>
+<p>TiDB Operator &#x6709;&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#xFF1A;</p>
+<ul>
+<li>tidb-controller-manager</li>
+<li>tidb-scheduler</li>
+</ul>
+<p>&#x8FD9;&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x662F;&#x65E0;&#x72B6;&#x6001;&#x7684;&#xFF0C;&#x901A;&#x8FC7; <code>Deployment</code> &#x90E8;&#x7F72;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x5728; <code>values.yaml</code> &#x4E2D;&#x81EA;&#x5B9A;&#x4E49;&#x8D44;&#x6E90; <code>limit</code> &#x3001;<code>request</code> &#x548C; <code>replicas</code>&#x3002;</p>
+<p>&#x4FEE;&#x6539;&#x4E3A; <code>values.yaml</code> &#x540E;&#xFF0C;&#x6267;&#x884C;&#x4E0B;&#x9762;&#x547D;&#x4EE4;&#x4F7F;&#x914D;&#x7F6E;&#x751F;&#x6548;&#xFF1A;</p>
+<pre><code class="lang-bash">helm upgrade tidb-operator pingcap/tidb-operator --version=&lt;chart-version&gt; <span class="hljs-_">-f</span> /home/tidb/tidb-operator/values-tidb-operator.yaml
+</code></pre>
+<h2 id="&#x8BBE;&#x7F6E;-ulimit">&#x8BBE;&#x7F6E; ulimit</h2>
+<p>TiDB &#x9ED8;&#x8BA4;&#x4F1A;&#x4F7F;&#x7528;&#x5F88;&#x591A;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x5DE5;&#x4F5C;&#x8282;&#x70B9;&#x548C;&#x4E0A;&#x9762;&#x7684; Docker &#x8FDB;&#x7A0B;&#x7684; <code>ulimit</code> &#x5FC5;&#x987B;&#x8BBE;&#x7F6E;&#x5927;&#x4E8E;&#x7B49;&#x4E8E; <code>1048576</code>&#xFF1A;</p>
+<ul>
+<li><p>&#x91CD;&#x7F6E;&#x4EAC;&#x4E1C;&#x4E91; Kubernetes &#x96C6;&#x7FA4;&#x6240;&#x6709; Node &#x7684;&#x767B;&#x5F55;&#x5BC6;&#x7801;</p>
+<p> <img src="../../res/session2/chapter1/tidb-operator-deployment-public-jdcloud/1.png" alt="&#x91CD;&#x7F6E;&#x767B;&#x9646;&#x5BC6;&#x7801;"></p>
+</li>
+<li><p>&#x63A7;&#x5236;&#x53F0;&#x767B;&#x9646; Node</p>
+</li>
+<li><p>&#x8BBE;&#x7F6E;&#x5DE5;&#x4F5C;&#x8282;&#x70B9;&#x7684; <code>ulimit</code> &#x503C;&#xFF0C;&#x8BE6;&#x60C5;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://access.redhat.com/solutions/61334" target="_blank">&#x5982;&#x4F55;&#x8BBE;&#x7F6E; ulimit</a></p>
+<pre><code class="lang-bash">sudo vim /etc/security/limits.conf
+</code></pre>
+<p>&#x8BBE;&#x7F6E; root &#x8D26;&#x53F7;&#x7684; <code>soft</code> &#x548C; <code>hard</code> &#x7684; <code>nofile</code> &#x5927;&#x4E8E;&#x7B49;&#x4E8E; <code>1048576</code> &#x3002;</p>
+</li>
+<li><p>&#x8BBE;&#x7F6E; Docker &#x670D;&#x52A1;&#x7684; <code>ulimit</code></p>
+<pre><code class="lang-bash">sudo vim /etc/systemd/system/docker.service
+</code></pre>
+<p>&#x8BBE;&#x7F6E; <code>LimitNOFILE</code> &#x5927;&#x4E8E;&#x7B49;&#x4E8E; <code>1048576</code></p>
+</li>
+<li><p>&#x4FEE;&#x6539;&#x5B8C;&#x540E;&#x91CD;&#x542F; Docker &#x670D;&#x52A1;</p>
+<pre><code>systemctl daemon-reload
+systemctl restart docker
+</code></pre></li>
+</ul>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<p><code>LimitNOFILE</code> &#x9700;&#x8981;&#x663E;&#x5F0F;&#x8BBE;&#x7F6E;&#x4E3A; <code>1048576</code> &#x6216;&#x8005;&#x66F4;&#x5927;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x9ED8;&#x8BA4;&#x7684; <code>infinity</code>&#xFF0C;&#x7531;&#x4E8E; <code>systemd</code> &#x7684; <a href="https://github.com/systemd/systemd/commit/6385cb31ef443be3e0d6da5ea62a267a49174688#diff-108b33cf1bd0765d116dd401376ca356L1186" target="_blank">bug</a>&#xFF0C;<code>infinity</code> &#x5728; <code>systemd</code> &#x67D0;&#x4E9B;&#x7248;&#x672C;&#x4E2D;&#x6307;&#x7684;&#x662F; <code>65536</code>&#x3002;</p>
+</blockquote>
+<h2 id="&#x914D;&#x7F6E;-tidb-&#x96C6;&#x7FA4;">&#x914D;&#x7F6E; TiDB &#x96C6;&#x7FA4;</h2>
+<h3 id="&#x914D;&#x7F6E;-storageclass">&#x914D;&#x7F6E; StorageClass</h3>
+<p>&#x4EAC;&#x4E1C;&#x4E91;&#x4E3A; Kubernetes &#x96C6;&#x7FA4;&#x63D0;&#x4F9B;&#x4E86;&#x81EA;&#x5B9A;&#x4E49;&#x5377;&#x63D2;&#x4EF6; <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/" target="_blank">kubernetes.io/jdcloud-ebs</a> &#xFF0C; &#x5C06; provisioner &#x5B9A;&#x4E49;&#x4E3A;&#x4EAC;&#x4E1C;&#x4E91;&#x81EA;&#x5B9A;&#x4E49;&#x5377;&#x63D2;&#x4EF6;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4EAC;&#x4E1C;&#x4E91;&#x4E91;&#x786C;&#x76D8;&#x4E3A; Kubernetes &#x96C6;&#x7FA4;&#x63D0;&#x4F9B;&#x6301;&#x4E45;&#x5316;&#x5B58;&#x50A8;&#x3002;&#x76EE;&#x524D;&#xFF0C;&#x5728; Kubernetes &#x96C6;&#x7FA4;&#x670D;&#x52A1;&#x4E2D;&#xFF0C;&#x63D0;&#x4F9B;&#x4E09;&#x79CD; StorageClass:</p>
+<pre><code class="lang-bash">kubectl get storageclass
+NAME                PROVISIONER                 AGE
+default (default)   kubernetes.io/jdcloud-ebs   39d
+jdcloud-hdd         kubernetes.io/jdcloud-ebs   39d
+jdcloud-ssd         kubernetes.io/jdcloud-ebs   39d
+</code></pre>
+<p>&#x60A8;&#x4E5F;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x81EA;&#x5B9A;&#x4E49;&#x7684; StorageClass &#xFF1A;</p>
+<pre><code>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: mystorageclass-hdd1
+provisioner: kubernetes.io/jdcloud-ebs
+parameters:
+  zones: cn-north-1a, cn-north-1b
+  fstype: ext4
+reclaimPolicy: RetainTiDB
+</code></pre><p>&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;</p>
+<ol>
+<li><p>provisioner &#xFF1A;&#x8BBE;&#x7F6E;&#x53C2;&#x6570;&#x503C;kubernetes.io/jdcloud-ebs&#xFF0C;&#x4E14;&#x4E0D;&#x53EF;&#x4FEE;&#x6539;&#xFF0C;&#x6807;&#x8BC6;&#x4F7F;&#x7528;&#x4EAC;&#x4E1C;&#x4E91;&#x4E91;&#x786C;&#x76D8;Provisioner&#x63D2;&#x4EF6;&#x521B;&#x5EFA;&#x3002;</p>
+</li>
+<li><p>reclaimPolicy &#xFF1A;&#x7531; storage class &#x52A8;&#x6001;&#x521B;&#x5EFA;&#x7684; Persistent Volume &#x4F1A;&#x5728;&#x7684; reclaimPolicy &#x5B57;&#x6BB5;&#x4E2D;&#x6307;&#x5B9A;&#x56DE;&#x6536;&#x7B56;&#x7565;&#xFF0C;&#x53EF;&#x4EE5;&#x662F; Delete &#x6216;&#x8005; Retain&#x3002;&#x5982;&#x679C; storageClass &#x5BF9;&#x8C61;&#x88AB;&#x521B;&#x5EFA;&#x65F6;&#x6CA1;&#x6709;&#x6307;&#x5B9A; reclaimPolicy &#xFF0C;&#x5B83;&#x5C06;&#x9ED8;&#x8BA4;&#x4E3A; Delete&#x3002;</p>
+</li>
+<li><p>parameters</p>
+</li>
+</ol>
+<p>type&#xFF1A;&#x8BBE;&#x7F6E;&#x53C2;&#x6570;&#x503C;&#x4E3A; ssd.gp1 &#x3001;ssd.io1 &#x6216; hdd.std1 &#xFF0C;&#x5206;&#x522B;&#x5BF9;&#x5E94;&#x4EAC;&#x4E1C;&#x4E91;&#x7684;&#x901A;&#x7528;&#x578B; SSD &#x4E91;&#x76D8;&#x3001;&#x6027;&#x80FD;&#x578B; SSD &#x4E91;&#x76D8;&#x548C;&#x5BB9;&#x91CF;&#x578B; HDD &#x4E91;&#x76D8;</p>
+<table>
+<thead>
+<tr>
+<th>StorageClass type</th>
+<th>&#x4E91;&#x786C;&#x76D8;&#x7C7B;&#x578B;</th>
+<th>&#x5BB9;&#x91CF;&#x8303;&#x56F4;</th>
+<th>&#x6B65;&#x957F;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hdd.std1</td>
+<td>&#x5BB9;&#x91CF;&#x578B;hdd</td>
+<td>[20-16000]GiB</td>
+<td>10GiB</td>
+</tr>
+<tr>
+<td>ssd.gp1</td>
+<td>&#x901A;&#x7528;&#x578B;ssd</td>
+<td>[20-16000]GiB</td>
+<td>10GiB</td>
+</tr>
+<tr>
+<td>ssd.io1</td>
+<td>&#x6027;&#x80FD;&#x578B;ssd</td>
+<td>[20-16000]GiB</td>
+<td>10GiB</td>
+</tr>
+</tbody>
+</table>
+<p>fstype &#xFF1A;&#x8BBE;&#x7F6E;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7C7B;&#x578B;&#xFF0C;&#x53EF;&#x9009;&#x53C2;&#x6570;&#x503C;&#x4E3A; xfs &#x548C; ext4 &#xFF0C;&#x5982;&#x672A;&#x6307;&#x5B9A; fstype &#xFF0C;&#x5C06;&#x4F7F;&#x7528; ext4 &#x4F5C;&#x4E3A;&#x9ED8;&#x8BA4;&#x7684;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7C7B;&#x578B;&#xFF1B;&#x4F8B;&#x5982;&#xFF1A; fstype=ext4</p>
+<p>&#x66F4;&#x591A;&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF0C;&#x53C2;&#x8003;&#x53C2;&#x6570;&#x8BF4;&#x660E; <a href="https://docs.jdcloud.com/cn/jcs-for-kubernetes/deploy-storageclass" target="_blank">https://docs.jdcloud.com/cn/jcs-for-kubernetes/deploy-storageclass</a>  &#x3002;</p>
+<h3 id="&#x83B7;&#x53D6;-values-&#x6587;&#x4EF6;">&#x83B7;&#x53D6; Values &#x6587;&#x4EF6;</h3>
+<p>&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x547D;&#x4EE4;&#x83B7;&#x53D6;&#x5F85;&#x5B89;&#x88C5;&#x7684; tidb-cluster chart &#x7684; <code>values.yaml</code> &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF1A;</p>
+<pre><code class="lang-bash">mkdir -p /home/tidb/&lt;release-name&gt; &amp;&amp; \
+helm inspect values pingcap/tidb-cluster --version=&lt;chart-version&gt; &gt; /home/tidb/&lt;release-name&gt;/values-&lt;release-name&gt;.yaml
+</code></pre>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<ul>
+<li><code>/home/tidb</code> &#x53EF;&#x4EE5;&#x66FF;&#x6362;&#x4E3A;&#x4F60;&#x60F3;&#x7528;&#x7684;&#x76EE;&#x5F55;&#x3002;</li>
+<li><code>release-name</code> &#x5C06;&#x4F1A;&#x4F5C;&#x4E3A; Kubernetes &#x76F8;&#x5173;&#x8D44;&#x6E90;&#xFF08;&#x4F8B;&#x5982; Pod&#xFF0C;Service &#x7B49;&#xFF09;&#x7684;&#x524D;&#x7F00;&#x540D;&#xFF0C;&#x53EF;&#x4EE5;&#x8D77;&#x4E00;&#x4E2A;&#x65B9;&#x4FBF;&#x8BB0;&#x5FC6;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x8981;&#x6C42;&#x5168;&#x5C40;&#x552F;&#x4E00;&#xFF0C;&#x901A;&#x8FC7; <code>helm ls -q</code> &#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x96C6;&#x7FA4;&#x4E2D;&#x5DF2;&#x7ECF;&#x6709;&#x7684; <code>release-name</code>&#x3002;</li>
+<li><code>chart-version</code> &#x662F; tidb-cluster chart &#x53D1;&#x5E03;&#x7684;&#x7248;&#x672C;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>helm search -l tidb-cluster</code> &#x67E5;&#x770B;&#x5F53;&#x524D;&#x652F;&#x6301;&#x7684;&#x7248;&#x672C;&#x3002;</li>
+<li>&#x4E0B;&#x6587;&#x4F1A;&#x7528; <code>values.yaml</code> &#x6307;&#x4EE3; <code>/home/tidb/&lt;release-name&gt;/values-&lt;release-name&gt;.yaml</code>&#x3002;</li>
+</ul>
+</blockquote>
+<h3 id="&#x96C6;&#x7FA4;&#x62D3;&#x6251;">&#x96C6;&#x7FA4;&#x62D3;&#x6251;</h3>
+<p>&#x9ED8;&#x8BA4;&#x90E8;&#x7F72;&#x7684;&#x96C6;&#x7FA4;&#x62D3;&#x6251;&#x662F;&#xFF1A;3 &#x4E2A; PD Pod&#xFF0C;3 &#x4E2A; TiKV Pod&#xFF0C;2 &#x4E2A; TiDB Pod &#x548C; 1 &#x4E2A;&#x76D1;&#x63A7; Pod&#x3002;&#x5728;&#x8BE5;&#x90E8;&#x7F72;&#x62D3;&#x6251;&#x4E0B;&#x6839;&#x636E;&#x6570;&#x636E;&#x9AD8;&#x53EF;&#x7528;&#x539F;&#x5219;&#xFF0C;TiDB Operator &#x6269;&#x5C55;&#x8C03;&#x5EA6;&#x5668;&#x8981;&#x6C42; Kubernetes &#x96C6;&#x7FA4;&#x4E2D;&#x81F3;&#x5C11;&#x6709; 3 &#x4E2A;&#x8282;&#x70B9;&#x3002;&#x5982;&#x679C; Kubernetes &#x96C6;&#x7FA4;&#x8282;&#x70B9;&#x4E2A;&#x6570;&#x5C11;&#x4E8E; 3 &#x4E2A;&#xFF0C;&#x5C06;&#x4F1A;&#x5BFC;&#x81F4;&#x6709;&#x4E00;&#x4E2A; PD Pod &#x5904;&#x4E8E; Pending &#x72B6;&#x6001;&#xFF0C;&#x800C; TiKV &#x548C; TiDB Pod &#x4E5F;&#x90FD;&#x4E0D;&#x4F1A;&#x88AB;&#x521B;&#x5EFA;&#x3002;</p>
+<p>Kubernetes &#x96C6;&#x7FA4;&#x8282;&#x70B9;&#x4E2A;&#x6570;&#x5C11;&#x4E8E; 3 &#x4E2A;&#x65F6;&#xFF0C;&#x4E3A;&#x4E86;&#x4F7F; TiDB &#x96C6;&#x7FA4;&#x80FD;&#x542F;&#x52A8;&#x8D77;&#x6765;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x9ED8;&#x8BA4;&#x90E8;&#x7F72;&#x7684; PD &#x548C; TiKV Pod &#x4E2A;&#x6570;&#x90FD;&#x51CF;&#x5C0F;&#x5230; 1 &#x4E2A;&#xFF0C;&#x6216;&#x8005;&#x5C06; <code>values.yaml</code> &#x4E2D; <code>schedulerName</code> &#x6539;&#x4E3A; Kubernetes &#x5185;&#x7F6E;&#x8C03;&#x5EA6;&#x5668; <code>default-scheduler</code>&#x3002;</p>
+<blockquote>
+<p><strong>&#x8B66;&#x544A;&#xFF1A;</strong></p>
+<p><code>default-scheduler</code> &#x4EC5;&#x9002;&#x7528;&#x4E8E;&#x6F14;&#x793A;&#x73AF;&#x5883;&#xFF0C;&#x6539;&#x4E3A; <code>default-scheduler</code> &#x540E;&#xFF0C; TiDB &#x96C6;&#x7FA4;&#x7684;&#x8C03;&#x5EA6;&#x5C06;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x9AD8;&#x53EF;&#x7528;&#xFF0C;&#x53E6;&#x5916;&#x4E00;&#x4E9B;&#x5176;&#x5B83;&#x7279;&#x6027;&#x4E5F;&#x65E0;&#x6CD5;&#x652F;&#x6301;&#xFF0C;&#x4F8B;&#x5982; <a href="https://github.com/pingcap/tidb-operator/blob/master/docs/design-proposals/tidb-stable-scheduling.md" target="_blank">TiDB Pod StableScheduling</a> &#x7B49;&#x3002;</p>
+</blockquote>
+<p>&#x5176;&#x5B83;&#x66F4;&#x591A;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#x8BF7;&#x53C2;&#x8003; <a href="../../tidb-in-kubernetes/reference/configuration/tidb-cluster.md">TiDB &#x96C6;&#x7FA4;&#x90E8;&#x7F72;&#x914D;&#x7F6E;&#x6587;&#x6863;</a>&#x3002;</p>
+<h2 id="&#x90E8;&#x7F72;-tidb-&#x96C6;&#x7FA4;">&#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;</h2>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<ul>
+<li>&#x4EAC;&#x4E1C;&#x4E91;&#x786C;&#x76D8;&#x652F;&#x6301;&#x521B;&#x5EFA;&#x7684;&#x78C1;&#x76D8;&#x5927;&#x5C0F;&#x8303;&#x56F4;&#x4E3A; <code>[20-16000]GiB</code> ,&#x6B65;&#x957F;  <code>10G</code> ,  <code>values.yaml</code> &#x91CC; <code>PD</code>&#x3001;<code>TiKV</code>&#x3001;<code>Monitor</code>&#x3001;<code>Drainer</code> &#x9ED8;&#x8BA4;&#x7684;&#x78C1;&#x76D8;&#x5927;&#x5C0F;&#x4E0D;&#x6EE1;&#x8DB3;&#x4EAC;&#x4E1C;&#x4E91;&#x76D8;&#x7684;&#x6700;&#x5C0F;&#x78C1;&#x76D8;&#x8981;&#x6C42;&#xFF0C;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x4E3A;&#x78C1;&#x76D8;&#x8303;&#x56F4;&#x5185;&#x7684;&#x5927;&#x5C0F;&#x624D;&#x53EF;&#x4EE5;&#x6B63;&#x786E;&#x521B;&#x5EFA; PV &#x3002;</li>
+</ul>
+</blockquote>
+<p>&#x4FEE;&#x6539; Service</p>
+<p>&#x5982;&#x679C;&#x8981;&#x4F7F;&#x7528;&#x4EAC;&#x4E1C;&#x4E91;Kubernetes&#x96C6;&#x6210;&#x7684;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x670D;&#x52A1;&#xFF0C;&#x9700;&#x8981;&#x4FEE;&#x6539; <code>values.yaml</code> &#x4E2D; tidb &#x4E0B;&#x7684; Service &#x6307;&#x5B9A; annotations  service.beta.kubernetes.io/jdcloud-load-balancer-spec &#xFF0C;&#x56E0;&#x4E3A; TiDB &#x7684; service &#x4E0B;&#x9762;&#x6709;&#x4E24;&#x4E2A; Port&#xFF0C;&#x4E0B;&#x9762;&#x914D;&#x7F6E; listeners &#x5199;&#x4E24;&#x4E2A;</p>
+<pre><code>tidb:
+  service:
+      type: LoadBalancer
+      exposeStatus: true
+      annotations:
+        service.beta.kubernetes.io/jdcloud-load-balancer-spec: |
+            version: &quot;v1&quot;                                # &#x3010;&#x7248;&#x672C;&#x53F7;&#x3011;&#x53EA;&#x652F;&#x6301;&quot;v1&quot;
+            loadBalancerType: nlb                        # &#x3010;&#x5FC5;&#x586B;&#x9879;&#x3011;&#x8981;&#x521B;&#x5EFA;&#x7684;JD LB&#x7684;&#x7C7B;&#x578B;,&#x521B;&#x5EFA;&#x540E;&#x4E0D;&#x652F;&#x6301;&#x53D8;&#x66F4;
+            internal: true                               # true &#x8868;&#x793A; LB &#x5B9E;&#x4F8B;&#x4E0D;&#x4F1A;&#x7ED1;&#x5B9A;&#x516C;&#x7F51; IP,&#x53EA;&#x5185;&#x90E8;&#x4F7F;&#x7528;&#xFF1B; false &#x8868;&#x793A;&#x4E3A;&#x5916;&#x90E8;&#x670D;&#x52A1;&#xFF0C;&#x4F1A;&#x7ED1;&#x5B9A;&#x516C;&#x7F51; IP&#x3002;&#x4FEE;&#x6539;&#x53EF;&#x80FD;&#x4F1A;&#x89E6;&#x53D1; IP&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x7ED1;&#x5B9A;&#x6216;&#x8005;&#x89E3;&#x7ED1;&#xFF0C;&#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x5220;&#x9664;
+            listeners:                                   # &#x6BCF;&#x4E2A; port &#x5BF9;&#x5E94;&#x7684;LB &#x7684; listener &#x7684;&#x914D;&#x7F6E;,&#x6570;&#x91CF;&#x5FC5;&#x987B;&#x548C; ports &#x7684;&#x6570;&#x91CF;&#x4E00;&#x81F4;
+              - protocol: &quot;tcp&quot;                          # &#x4FEE;&#x6539;&#x53EF;&#x80FD;&#x89E6;&#x53D1;&#x5220;&#x9664;&#x91CD;&#x5EFA;&#xFF0C;&#x5BFC;&#x81F4;&#x670D;&#x52A1;&#x77ED;&#x6682;&#x4E2D;&#x65AD;&#xFF0C;listener &#x7684;&#x534F;&#x8BAE;, alb:Tcp,Http,Https,Tls;nlb:Tcp;dnlb:Tcp
+                connectionIdleTimeSeconds: 1800          # &#x8FDE;&#x63A5;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;alb/nlb &#x6709;&#x6548;
+                backend:                                 # &#x5173;&#x4E8E; JD LB &#x7684; backend &#x7684;&#x901A;&#x7528;&#x914D;&#x7F6E;
+                  connectionDrainingSeconds: 300         # &#x3010;nlb&#x3011;&#x79FB;&#x9664; target &#x524D;&#xFF0C;&#x8FDE;&#x63A5;&#x7684;&#x6700;&#x5927;&#x4FDD;&#x6301;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4; 300s&#xFF0C;&#x53D6;&#x503C;&#x8303;&#x56F4; [0-3600] (Optional)
+                  sessionStickyTimeout: 300              # &#x3010;nlb&#x3011;&#x4F1A;&#x8BDD;&#x4FDD;&#x6301;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C; sessionStickiness&#x5F00;&#x542F;&#x65F6;&#x751F;&#x6548;&#xFF0C;&#x9ED8;&#x8BA4; 300s, &#x53D6;&#x503C;&#x8303;&#x56F4; [1-3600] (Optional)
+                  algorithm: &quot;IpHash&quot;                    # &#x8C03;&#x5EA6;&#x7B97;&#x6CD5;, &#x53D6;&#x503C;&#x8303;&#x56F4;&#x4E3A; [ IpHash, RoundRobin,&#x548C; LeastConn ]&#xFF08;&#x53D6;&#x503C;&#x8303;&#x56F4;&#x7684;&#x542B;&#x4E49;&#x5206;&#x522B;&#x4E3A;&#xFF1A;&#x6E90; Ip hash&#xFF0C;&#x52A0;&#x6743;&#x8F6E;&#x8BE2;&#x548C;&#x52A0;&#x6743;&#x6700;&#x5C0F;&#x8FDE;&#x63A5;&#xFF09;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; RoundRobin &#xFF08;&#x52A0;&#x6743;&#x8F6E;&#x8BE2;&#xFF09; (Optional)&#xFF0C;nlb&#xFF1A;&#xFF1B;dnlb&#xFF1A;&#xFF1B;alb
+              - protocol: &quot;tcp&quot;
+                connectionIdleTimeSeconds: 1800
+                backend:
+                  connectionDrainingSeconds: 300
+                  sessionStickyTimeout: 300
+                  algorithm: &quot;IpHash&quot;
+</code></pre><p>&#x5173;&#x4E8E;LoadBalance&#x7684;&#x66F4;&#x591A;&#x53C2;&#x6570;&#x53C2;&#x8003;&#x5B98;&#x65B9;&#x6587;&#x6863; <a href="https://docs.jdcloud.com/cn/jcs-for-kubernetes/deploy-service-new" target="_blank">https://docs.jdcloud.com/cn/jcs-for-kubernetes/deploy-service-new</a></p>
+<p>&#x521B;&#x5EFA; Secret</p>
+<pre><code class="lang-bash">kubectl create secret generic &lt;tidb-secretname&gt; --from-literal=root=&lt;password&gt; --namespace=&lt;namespace&gt;
+</code></pre>
+<p>&#x4FEE;&#x6539; <code>values.yaml</code> &#x7684; tidb &#x4E0B;&#x7684; <code>passwordSecretName</code>  &#x4E3A; <code>&lt;tidb-secretname&gt;</code> &#x8BBE;&#x7F6E; TiDB &#x7684;&#x521D;&#x59CB;&#x5BC6;&#x7801;&#x3002;</p>
+<p><code>values.yaml</code> &#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x597D;&#x4EE5;&#x540E;&#xFF0C;&#x7528;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x521B;&#x5EFA; TiDB &#x96C6;&#x7FA4;</p>
+<pre><code class="lang-bash">helm install pingcap/tidb-cluster --name=&lt;release-name&gt; --namespace=&lt;namespace&gt; --version=&lt;chart-version&gt; <span class="hljs-_">-f</span> /home/tidb/&lt;release-name&gt;/values-&lt;release-name&gt;.yaml
+</code></pre>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<p><code>namespace</code> &#x662F;<a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/" target="_blank">&#x547D;&#x540D;&#x7A7A;&#x95F4;</a>&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x8D77;&#x4E00;&#x4E2A;&#x65B9;&#x4FBF;&#x8BB0;&#x5FC6;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x6BD4;&#x5982;&#x548C; <code>release-name</code> &#x76F8;&#x540C;&#x7684;&#x540D;&#x79F0;&#x3002;</p>
+</blockquote>
+<p>&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x67E5;&#x770B; Pod &#x72B6;&#x6001;&#xFF1A;</p>
+<pre><code class="lang-bash">kubectl get po -n &lt;namespace&gt; <span class="hljs-_">-l</span> app.kubernetes.io/instance=&lt;release-name&gt;
+</code></pre>
+<p>&#x5355;&#x4E2A; Kubernetes &#x96C6;&#x7FA4;&#x4E2D;&#x53EF;&#x4EE5;&#x5229;&#x7528; TiDB Operator &#x90E8;&#x7F72;&#x7BA1;&#x7406;&#x591A;&#x5957; TiDB &#x96C6;&#x7FA4;&#xFF0C;&#x91CD;&#x590D;&#x4EE5;&#x4E0A;&#x547D;&#x4EE4;&#x5E76;&#x5C06; <code>release-name</code> &#x66FF;&#x6362;&#x6210;&#x4E0D;&#x540C;&#x540D;&#x5B57;&#x5373;&#x53EF;&#x3002;&#x4E0D;&#x540C;&#x96C6;&#x7FA4;&#x65E2;&#x53EF;&#x4EE5;&#x5728;&#x76F8;&#x540C; <code>namespace</code> &#x4E2D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x4E0D;&#x540C; <code>namespace</code> &#x4E2D;&#xFF0C;&#x53EF;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x9700;&#x6C42;&#x8FDB;&#x884C;&#x9009;&#x62E9;&#x3002;</p>
+<p>TiDB &#x96C6;&#x7FA4;&#x521B;&#x5EFA;&#x597D;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x67E5;&#x770B; TiDB Service &#x7684; ClusterIP &#xFF1A;</p>
+<pre><code class="lang-bash"><span class="hljs-variable">$kubectl</span> -n jddb get svc <span class="hljs-_">-l</span> app.kubernetes.io/instance=jddb
+
+NAME                       TYPE           CLUSTER-IP        EXTERNAL-IP
+jddb-discovery          ClusterIP      192.168.189.43    &lt;none&gt;           10261/TCP                        65m
+jddb-grafana            NodePort       192.168.190.132   &lt;none&gt;           3000:32445/TCP                   65m
+jddb-monitor-reloader   NodePort       192.168.188.141   &lt;none&gt;           9089:30732/TCP                   65m
+jddb-pd                 ClusterIP      192.168.188.210   &lt;none&gt;           2379/TCP                         65m
+jddb-pd-peer            ClusterIP      None              &lt;none&gt;           2380/TCP                         65m
+jddb-prometheus         NodePort       192.168.186.63    &lt;none&gt;           9090:30415/TCP                   65m
+jddb-tidb               LoadBalancer   192.168.188.201   192.168.176.10   4000:30487/TCP,10080:32045/TCP   65m
+jddb-tidb-peer          ClusterIP      None              &lt;none&gt;           10080/TCP                        62m
+jddb-tikv-peer          ClusterIP      None              &lt;none&gt;           20160/TCP                        63m
+</code></pre>
+<p>&#x5176;&#x4E2D; jddb-tidb &#x5373;&#x662F; TiDB &#x7684; Svc &#xFF0C;&#x96C6;&#x7FA4;&#x5185;&#x90E8;&#x7684; Pod &#x53EF;&#x4EE5;&#x901A;&#x8FC7; CLUSTER-IP &#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;&#xFF0C;&#x540C; VPC &#x4E0B;&#x7684;&#x4E91;&#x4E3B;&#x673A;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; EXTERNAL-IP &#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2916,7 +3175,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.1.4 在京东云上部署 TiDB 集群","level":"3.1.2.3.1.4","depth":5,"next":{"title":"1.2.3.2 私有云部署","level":"3.1.2.3.2","depth":4,"path":"session2/chapter1/tidb-operator-deployment-private.md","ref":"session2/chapter1/tidb-operator-deployment-private.md","articles":[{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-env.md","ref":"session2/chapter1/tidb-operator-deployment-private-env.md","articles":[]},{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]}]},"previous":{"title":"1.2.3.1.3 在阿里云上部署 TiDB 集群","level":"3.1.2.3.1.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-ali.md","ref":"session2/chapter1/tidb-operator-deployment-public-ali.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","mtime":"2020-03-08T08:20:03.529Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T08:20:41.393Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.1.4 在京东云上部署 TiDB 集群","level":"3.1.2.3.1.4","depth":5,"next":{"title":"1.2.3.2 私有云部署","level":"3.1.2.3.2","depth":4,"path":"session2/chapter1/tidb-operator-deployment-private.md","ref":"session2/chapter1/tidb-operator-deployment-private.md","articles":[{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-env.md","ref":"session2/chapter1/tidb-operator-deployment-private-env.md","articles":[]},{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]}]},"previous":{"title":"1.2.3.1.3 在阿里云上部署 TiDB 集群","level":"3.1.2.3.1.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-ali.md","ref":"session2/chapter1/tidb-operator-deployment-public-ali.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","mtime":"2020-03-08T08:22:19.524Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T08:22:58.315Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
