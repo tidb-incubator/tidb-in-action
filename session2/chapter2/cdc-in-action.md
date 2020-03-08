@@ -1,6 +1,6 @@
 本节将介绍如何使用 TiCDC 在两个 TiDB 集群之间实现数据同步。
 
-<img src="/res/session2/chapter2/cdc-in-action/1.png" width="600" />
+[deployment.png](/res/session2/chapter2/cdc-in-action/1.png)
 
 
 部署结构如上图所示。这里我们假定：
@@ -22,7 +22,6 @@
 从 [Github](https://github.com/pingcap/ticdc) 下载源码，并运行以下命令执行编译。编译好的文件会出现在`bin`目录下。
 ```
 $ make
-$ make test
 ```
 
 第3步：启动集群。
