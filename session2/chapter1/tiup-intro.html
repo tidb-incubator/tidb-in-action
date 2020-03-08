@@ -2821,7 +2821,187 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <p>&#x5728;&#x5404;&#x79CD;&#x7CFB;&#x7EDF;&#x8F6F;&#x4EF6;&#x548C;&#x5E94;&#x7528;&#x8F6F;&#x4EF6;&#x7684;&#x5B89;&#x88C5;&#x7BA1;&#x7406;&#x4E2D;&#xFF0C;&#x5305;&#x7BA1;&#x7406;&#x5668;&#x5747;&#x6709;&#x7740;&#x5E7F;&#x6CDB;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#x7684;&#x51FA;&#x73B0;&#x4E5F;&#x5927;&#x5927;&#x7B80;&#x5316;&#x7684;&#x8F6F;&#x4EF6;&#x5B89;&#x88C5;&#x5347;&#x7EA7;&#x7EF4;&#x62A4;&#x7684;&#x5DE5;&#x4F5C;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x51E0;&#x4E4E;&#x6240;&#x6709;&#x4F7F;&#x7528; RPM &#x7684; Linux &#x90FD;&#x4F1A;&#x4F7F;&#x7528; Yum &#x6765;&#x8FDB;&#x884C;&#x5305;&#x7BA1;&#x7406;&#xFF0C;Anaconda &#x53EF;&#x4EE5;&#x975E;&#x5E38;&#x65B9;&#x4FBF;&#x7684;&#x7BA1;&#x7406; python &#x7684;&#x73AF;&#x5883;&#x548C;&#x76F8;&#x5173;&#x8F6F;&#x4EF6;&#x5305;&#x3002;&#x5728;&#x65E9;&#x671F;&#x7684; TiDB &#x751F;&#x6001;&#x4E2D;&#xFF0C;&#x6CA1;&#x6709;&#x4E13;&#x95E8;&#x7684;&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x4F7F;&#x7528;&#x8005;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x76F8;&#x5E94;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x548C;&#x6587;&#x4EF6;&#x5939;&#x547D;&#x540D;&#x6765;&#x624B;&#x52A8;&#x7BA1;&#x7406;&#xFF0C;&#x50CF; Prometheus &#x7B49;&#x7B2C;&#x4E09;&#x65B9;&#x76D1;&#x63A7;&#x62A5;&#x8868;&#x5DE5;&#x5177;&#x751A;&#x81F3;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x7279;&#x6B8A;&#x7BA1;&#x7406;&#xFF0C;&#x8FD9;&#x6837;&#x5927;&#x5927;&#x63D0;&#x9AD8;&#x4E86;&#x76F8;&#x5E94;&#x7684;&#x8FD0;&#x7EF4;&#x7BA1;&#x7406;&#x5DE5;&#x4F5C;&#x3002;</p>
+<p>&#x5982;&#x4ECA;&#xFF0C;&#x5728; TiDB4.0 &#x7684;&#x751F;&#x6001;&#x7CFB;&#x7EDF;&#x91CC;&#xFF0C;TiUP&#x4F5C;&#x4E3A;&#x65B0;&#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x627F;&#x62C5;&#x7740;&#x5305;&#x7BA1;&#x7406;&#x5668;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x7BA1;&#x7406;&#x7740; TiDB &#x751F;&#x6001;&#x4E0B;&#x4F17;&#x591A;&#x7684;&#x7EC4;&#x4EF6;&#xFF08;&#x4F8B;&#x5982; TiDB&#x3001;PD&#x3001;TiKV&#xFF09;&#xFF0C;&#x7528;&#x6237;&#x60F3;&#x8981;&#x8FD0;&#x884C; TiDB &#x751F;&#x6001;&#x4E2D;&#x4EFB;&#x4F55;&#x4E1C;&#x897F;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x6267;&#x884C; TiUP &#x7684;&#x4E00;&#x884C;&#x547D;&#x4EE4;&#x5373;&#x53EF;&#xFF0C;&#x76F8;&#x6BD4;&#x4E4B;&#x524D;&#x6781;&#x5927;&#x7684;&#x964D;&#x4F4E;&#x4E86;&#x7BA1;&#x7406;&#x96BE;&#x5EA6;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE; <a href="https://tiup.io/" target="_blank">https://tiup.io/</a> &#x6765;&#x67E5;&#x770B;&#x76F8;&#x5E94;&#x7684;&#x6587;&#x6863;</p>
+<p><strong>&#x5B89;&#x88C5;</strong></p>
+<p>&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;TiUP &#x7684;&#x5B89;&#x88C5;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x6267;&#x884C;&#x5982;&#x4E0B;&#x547D;&#x4EE4;&#xFF1A;</p>
+<pre><code>curl --proto &apos;=https&apos; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
+</code></pre><p><strong>&#x529F;&#x80FD;&#x4ECB;&#x7ECD;</strong></p>
+<p>TiUP &#x7684;&#x4F7F;&#x7528;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5229;&#x7528; TiUP &#x7684;&#x6307;&#x4EE4;&#x5373;&#x53EF;&#x3002;&#x9996;&#x5148;&#x6267;&#x884C; tiup help &#x770B;&#x4E00;&#x4E0B;&#x5B83;&#x652F;&#x6301;&#x54EA;&#x4E9B;&#x6307;&#x4EE4;&#x548C;&#x53C2;&#x6570;&#xFF1A;</p>
+<pre><code>tiup help
+Usage:
+  tiup [flags]
+  tiup [command]
+Available Commands:
+  clean       Clean the data of the instantiated component
+  help        Help about any command
+  install     Install a specific version of a component
+  list        List the available TiDB components or versions
+  run         Run a component of specific version
+  status      List the status of running components
+  uninstall   Uninstall components or versions of a component
+  update      Update tiup components to the latest version
+  version     Show tiup version and quit
+Flags:
+      --bin &lt;component&gt;:[version]   Print binary path of a specific version of a component &lt;component&gt;:[version]
+  -h, --help                        help for tiup
+      --mirror mirror               Overwrite default mirror
+
+Use &quot;tiup [command] --help&quot; for more information about a command.
+</code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5927;&#x81F4;&#x6709;&#x8FD9;&#x4E9B;&#x547D;&#x4EE4;&#x53EF;&#x9009;&#xFF1A;</p>
+<ul>
+<li>help: &#x6253;&#x5370; help &#x4FE1;&#x606F;&#xFF0C;&#x540E;&#x9762;&#x8DDF;&#x5B50;&#x547D;&#x4EE4;&#x5219;&#x662F;&#x6253;&#x5370;&#x8BE5;&#x5B50;&#x547D;&#x4EE4;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</li>
+<li>version: &#x6253;&#x5370; tiup &#x81EA;&#x8EAB;&#x7684;&#x7248;&#x672C;&#x4FE1;&#x606F;</li>
+<li>list: &#x67E5;&#x770B;&#x6709;&#x54EA;&#x4E9B;&#x7EC4;&#x4EF6;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;&#xFF0C;&#x4EE5;&#x53CA;&#x8FD9;&#x4E9B;&#x7EC4;&#x4EF6;&#x6709;&#x54EA;&#x4E9B;&#x7248;&#x672C;&#x53EF;&#x9009;</li>
+<li>install: &#x5B89;&#x88C5;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x67D0;&#x4E2A;&#x7248;&#x672C;</li>
+<li>update: &#x5347;&#x7EA7;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x5230;&#x6700;&#x65B0;&#x7684;&#x7248;&#x672C;</li>
+<li>uninstall: &#x5220;&#x9664;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;</li>
+<li>run: &#x8FD0;&#x884C;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;</li>
+<li>status: &#x67E5;&#x770B;&#x7EC4;&#x4EF6;&#x7EC4;&#x4EF6;&#x7684;&#x8FD0;&#x884C;&#x72B6;&#x6001;/&#x8FD0;&#x884C;&#x5386;&#x53F2;</li>
+<li>clean: &#x6E05;&#x9664;&#x67D0;&#x6B21;&#x8FD0;&#x884C;&#x540E;&#x7684;&#x6570;&#x636E;</li>
+</ul>
+<p>&#x7136;&#x540E; tiup &#x652F;&#x6301;&#x51E0;&#x4E2A;&#x53EF;&#x9009;&#x7684; flag:</p>
+<ul>
+<li>--bin: &#x6253;&#x5370;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x4F4D;&#x7F6E;</li>
+<li>-h, --help: &#x6253;&#x5370; help &#x4FE1;&#x606F;</li>
+<li>--mirror: &#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x955C;&#x50CF;&#x66FF;&#x6362;&#x9ED8;&#x8BA4;&#x7684;&#x5B98;&#x65B9;&#x955C;&#x50CF;</li>
+</ul>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x77E5;&#x9053;&#x67D0;&#x4E2A;&#x5B50;&#x547D;&#x4EE4;&#x7684;&#x5177;&#x4F53;&#x7528;&#x6CD5;&#xFF0C;&#x6267;&#x884C; tiup subcommand -h &#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x6BD4;&#x5982;&#x6211;&#x4EEC;&#x60F3;&#x77E5;&#x9053; install &#x547D;&#x4EE4;&#x6709;&#x54EA;&#x4E9B;&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x4F20;&#xFF0C;&#x5C31;&#x6267;&#x884C; tiup install -h&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x6309;&#x7167;&#x6B63;&#x5E38;&#x4F7F;&#x7528;&#x4E60;&#x60EF;&#x4F9D;&#x6B21;&#x4ECB;&#x7ECD;&#x8FD9;&#x4E9B;&#x547D;&#x4EE4;&#x3002;</p>
+<ul>
+<li>&#x67E5;&#x8BE2;&#x5217;&#x8868;&#xFF1A;tiup list</li>
+</ul>
+<p>&#x5F53;&#x60F3;&#x8981;&#x7528; TiUP &#x5B89;&#x88C5;&#x4E1C;&#x897F;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9996;&#x5148;&#x9700;&#x8981;&#x77E5;&#x9053;&#x6709;&#x54EA;&#x4E9B;&#x7EC4;&#x4EF6;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;&#xFF0C;&#x4EE5;&#x53CA;&#x8FD9;&#x4E9B;&#x7EC4;&#x4EF6;&#x6709;&#x54EA;&#x4E9B;&#x7248;&#x672C;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;&#xFF0C;&#x8FD9;&#x4FBF;&#x662F; list &#x5B50;&#x547D;&#x4EE4;&#x7684;&#x529F;&#x80FD;&#x3002;</p>
+<p>&#x5B83;&#x7684;&#x7528;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>tiup list --help
+Usage:
+  tiup list [component] [flags]
+Flags:
+  -h, --help        help for list
+      --installed   List installed components only.
+      --refresh     Refresh local components/version list cache.
+</code></pre><p>&#x4ECE;&#x5E2E;&#x52A9;&#x4FE1;&#x606F;&#x4E0A;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;tiup list &#x652F;&#x6301;&#x8FD9;&#x51E0;&#x79CD;&#x7528;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li>tiup list: &#x67E5;&#x770B;&#x5F53;&#x524D;&#x6709;&#x54EA;&#x4E9B;&#x7EC4;&#x4EF6;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;</li>
+<li>tiup list <comp>: &#x67E5;&#x770B;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x6709;&#x54EA;&#x4E9B;&#x7248;&#x672C;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;</comp></li>
+</ul>
+<p>&#x5BF9;&#x4E8E;&#x4E0A;&#x9762;&#x4E24;&#x79CD;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x7EC4;&#x5408;&#x4F7F;&#x7528;&#x4E24;&#x4E2A; flag:</p>
+<ul>
+<li>--installed: &#x672C;&#x5730;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x4E86;&#x54EA;&#x4E9B;&#x7EC4;&#x4EF6;&#xFF0C;&#x6216;&#x8005;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x54EA;&#x4E9B;&#x7248;&#x672C;</li>
+<li>--refresh: &#x670D;&#x52A1;&#x5668;&#x4E0A;&#x6700;&#x65B0;&#x7684;&#x7EC4;&#x4EF6;&#x5217;&#x8868;&#xFF0C;&#x4EE5;&#x53CA;&#x4ED6;&#x4EEC;&#x7684;&#x7248;&#x672C;&#x5217;&#x8868;</li>
+</ul>
+<p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x7684;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#xFF0C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>tiup list --installed
+</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x4ECE;&#x670D;&#x52A1;&#x5668;&#x83B7;&#x53D6; TiKV &#x6240;&#x6709;&#x53EF;&#x5B89;&#x88C5;&#x7248;&#x672C;&#x7EC4;&#x4EF6;&#x5217;&#x8868;&#xFF0C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>tiup list tikv --refresh
+</code></pre><ul>
+<li>&#x5B89;&#x88C5;&#x7EC4;&#x4EF6;&#xFF1A;tiup install</li>
+</ul>
+<p>&#x67E5;&#x770B;&#x5B8C;&#x5217;&#x8868;&#x4E4B;&#x540E;&#xFF0C;&#x8FDB;&#x884C;&#x5B89;&#x88C5;&#x4E5F;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x5229;&#x7528; install &#x8FD9;&#x9879;&#x547D;&#x4EE4;&#x5904;&#x7406;&#x5373;&#x53EF;&#x3002;&#x76F8;&#x5173;&#x7684;&#x547D;&#x4EE4;&#x548C;&#x53C2;&#x6570;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>tiup install -h
+Usage:
+  tiup install &lt;component1&gt;:[version] [component2...N] [flags]
+Flags:
+  -h, --help   help for install
+</code></pre><p>install &#x7684;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x8F83;&#x5355;&#x4E00;&#xFF1A;</p>
+<ul>
+<li>tiup install <component>&#xFF1A;&#x5B89;&#x88C5;&#x6307;&#x5B9A;&#x7EC4;&#x4EF6;&#x7684;&#x6700;&#x65B0;&#x7A33;&#x5B9A;&#x7248;</component></li>
+<li>tiup install <component>:[versiion]: &#x5B89;&#x88C5;&#x6307;&#x5B9A;&#x7EC4;&#x4EF6;&#x7684;&#x6307;&#x5B9A;&#x7248;&#x672C;</component></li>
+</ul>
+<p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x4F7F;&#x7528;TiUP&#x5B89;&#x88C5;TiDB&#xFF1A;</p>
+<pre><code>tiup install tidb
+</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x4F7F;&#x7528;TiUP&#x5B89;&#x88C5;nightly&#x7248;&#x672C;&#x7684;TiDB&#xFF1A;</p>
+<pre><code>tiup install tidb:nightly
+</code></pre><p>&#x793A;&#x4F8B;&#x4E09;&#xFF1A;&#x4F7F;&#x7528;TiUP&#x5B89;&#x88C5;3.0.6&#x7248;&#x672C;&#x7684;TiKV&#xFF1A;</p>
+<pre><code>tiup install tikv:v3.0.6
+</code></pre><ul>
+<li>&#x5347;&#x7EA7;&#x7EC4;&#x4EF6;&#xFF1A;tiup update</li>
+</ul>
+<p>&#x5728;&#x5B98;&#x65B9;&#x7EC4;&#x4EF6;&#x63D0;&#x4F9B;&#x4E86;&#x65B0;&#x7248;&#x4E4B;&#x540E;&#xFF0C;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x5229;&#x7528;TiUP&#x8FDB;&#x884C;&#x5347;&#x7EA7;&#x3002;&#x76F8;&#x5173;&#x7684;&#x547D;&#x4EE4;&#x548C;&#x53C2;&#x6570;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>tiup update -h
+Usage:
+  tiup update [component1]:[version] [component2..N] [flags]
+Flags:
+      --all       Update all components
+      --force     Force update a component to the latest version
+  -h, --help      help for update
+      --nightly   Update the components to nightly version
+      --self      Update tiup to the latest version
+</code></pre><p>&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x4E0A;&#x548C; install &#x57FA;&#x672C;&#x76F8;&#x540C;&#xFF0C;&#x4E0D;&#x8FC7;&#x5B83;&#x652F;&#x6301;&#x51E0;&#x4E2A;&#x989D;&#x5916;&#x7684; flag:</p>
+<ul>
+<li>--all: &#x5347;&#x7EA7;&#x6240;&#x6709;&#x7EC4;&#x4EF6;</li>
+<li>--nightly: &#x5347;&#x7EA7;&#x81F3; nightly &#x7248;&#x672C;&#xFF08;&#x82E5;&#x65E0;&#x6B64;&#x53C2;&#x6570;&#x5219;&#x5347;&#x7EA7;&#x5230;&#x6700;&#x65B0;&#x7A33;&#x5B9A;&#x7248;&#xFF09;</li>
+<li>--self: &#x5347;&#x7EA7; tiup &#x81EA;&#x5DF1;</li>
+<li>--force&#xFF1A;&#x5F3A;&#x5236;&#x5347;&#x7EA7;&#x81F3;&#x6700;&#x65B0;&#x7248;&#x672C;&#xFF08;&#x82E5;&#x65E0;&#x6B64;&#x53C2;&#x6570;&#x5219;&#x672C;&#x5730;&#x6709;&#x6700;&#x65B0;&#x7248;&#x672C;&#x4E86;&#x5C31;&#x4E0D;&#x66F4;&#x65B0;&#xFF09;</li>
+</ul>
+<p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x5347;&#x7EA7;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x81F3;&#x6700;&#x65B0;&#x7248;&#x672C;&#xFF1A;</p>
+<pre><code>tiup update --all
+</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x5347;&#x7EA7;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x81F3;&#x6700;&#x65B0;nightly&#x7248;&#x672C;&#xFF1A;</p>
+<pre><code>tiup update --nightly --all
+</code></pre><p>&#x793A;&#x4F8B;&#x4E09;&#xFF1A;&#x5347;&#x7EA7;TiUP&#x81F3;&#x6700;&#x65B0;&#x7248;&#x672C;&#xFF1A;</p>
+<pre><code>tiup update --self
+</code></pre><ul>
+<li>&#x8FD0;&#x884C;&#x7EC4;&#x4EF6;&#xFF1A;tiup run</li>
+</ul>
+<p>&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x53EF;&#x4EE5;&#x5229;&#x7528;run&#x8FD9;&#x9879;&#x547D;&#x4EE4;&#x542F;&#x52A8;&#x76F8;&#x5E94;&#x7684;&#x7EC4;&#x4EF6;&#x3002;&#x76F8;&#x5173;&#x7684;&#x547D;&#x4EE4;&#x548C;&#x53C2;&#x6570;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>tiup run -h
+Usage:
+  tiup run &lt;component1&gt;:[version] [flags]
+Flags:
+  -h, --help         help for run
+      --rm           Remove data directory on finish
+  -n, --tag string   Specify a tag for this task
+</code></pre><p>&#x8BE5;&#x5B50;&#x547D;&#x4EE4;&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x540D;&#x5B57;&#x4EE5;&#x53CA;&#x53EF;&#x9009;&#x7684;&#x7248;&#x672C;&#xFF0C;&#x82E5;&#x4E0D;&#x63D0;&#x4F9B;&#x7248;&#x672C;&#xFF0C;&#x5219;&#x4F7F;&#x7528;&#x8BE5;&#x7EC4;&#x4EF6;&#x7684;&#x6700;&#x65B0;&#x7A33;&#x5B9A;&#x7248;&#x3002;
+TiUP &#x5C06;&#x7EC4;&#x4EF6;&#x542F;&#x52A8;&#x4E4B;&#x524D;&#x4F1A;&#x4E3A;&#x5B83;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x7EC4;&#x4EF6;&#x653E;&#x5230;&#x8BE5;&#x76EE;&#x5F55;&#x4E2D;&#x8FD0;&#x884C;&#xFF0C;&#x7EC4;&#x4EF6;&#x5E94;&#x8BE5;&#x5C06;&#x6240;&#x6709;&#x6570;&#x636E;&#x751F;&#x6210;&#x5728;&#x8BE5;&#x76EE;&#x5F55;&#x4E2D;&#xFF0C;&#x76EE;&#x5F55;&#x7684;&#x540D;&#x5B57;&#x5C31;&#x662F;&#x8BE5;&#x7EC4;&#x4EF6;&#x8FD0;&#x884C;&#x65F6;&#x6307;&#x5B9A;&#x7684; tag &#x540D;&#x79F0;&#xFF0C;&#x82E5;&#x672A;&#x6307;&#x5B9A;&#xFF0C;&#x5219;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x968F;&#x673A;&#x7684; tag&#x3002;</p>
+<p>run &#x547D;&#x4EE4;&#x6709;&#x4E24;&#x4E2A; flag:</p>
+<ul>
+<li>--rm &#x7EC4;&#x4EF6;&#x9000;&#x51FA;&#x65F6;&#x5220;&#x9664;&#x5B83;&#x7684;&#x5DE5;&#x4F5C;&#x76EE;&#x5F55;</li>
+<li>--tag &#x4E3A;&#x7EC4;&#x4EF6;&#x6307;&#x5B9A;&#x4E00;&#x4E2A; tag</li>
+</ul>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x591A;&#x6B21;&#x542F;&#x52A8;&#x540C;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x5E76;&#x590D;&#x7528;&#x4E4B;&#x524D;&#x7684;&#x5DE5;&#x4F5C;&#x76EE;&#x5F55;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x7528; --tag &#x4E3A;&#x5B83;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x540D;&#x5B57;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x8FD0;&#x884C;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x81EA;&#x52A8;&#x5DE5;&#x4F5C;&#x76EE;&#x5F55;&#xFF0C;&#x5219;&#x4F7F;&#x7528; --rm&#x3002;</p>
+<p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x8FD0;&#x884C;3.0.8&#x7248;&#x672C;&#x7684; TiDB&#xFF1A;</p>
+<pre><code>tiup run tidb:v3.0.8
+</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x901A;&#x8FC7;tag&#x8FD0;&#x884C;TiKV&#xFF1A;</p>
+<pre><code>tiup run --tag=experiment tikv
+</code></pre><p>&#x793A;&#x4F8B;&#x4E09;&#xFF1A;TiUP&#x5728;&#x7EC4;&#x4EF6;&#x8FD0;&#x884C;&#x7ED3;&#x675F;&#x65F6;&#x81EA;&#x52A8;&#x5220;&#x9664;&#x6570;&#x636E;&#xFF1A;</p>
+<pre><code>tiup run --rm tidb
+</code></pre><ul>
+<li>&#x5220;&#x9664;&#x7EC4;&#x4EF6;&#xFF1A;tiup uninstall &#x53C2;&#x6570;</li>
+</ul>
+<p>TiUP &#x5B89;&#x88C5;&#x7684;&#x7EC4;&#x4EF6;&#x662F;&#x8981;&#x5360;&#x7528;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x60F3;&#x8981;&#x90A3;&#x4E48;&#x591A;&#x8001;&#x7248;&#x672C;&#x7684;&#x7EC4;&#x4EF6;&#xFF0C;&#x53EF;&#x4EE5;&#x5148;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x5B89;&#x88C5;&#x4E86;&#x54EA;&#x4E9B;&#x7248;&#x672C;&#x7684;&#x7EC4;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x5220;&#x9664;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x67D0;&#x4E2A;&#x7248;&#x672C;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x652F;&#x6301;&#x5220;&#x9664;&#x6240;&#x6709;&#x7248;&#x672C;&#x3002;&#x76F8;&#x5E94;&#x7684;&#x547D;&#x4EE4;&#x548C;&#x53C2;&#x6570;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>Usage:
+  tiup uninstall &lt;component1&gt;:&lt;version&gt; [flags]
+Flags:
+      --all    Remove all components or versions.
+  -h, --help   help for uninstall
+      --self   Uninstall tiup and clean all local data
+</code></pre><p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x5220;&#x9664;3.0.8&#x7248;&#x672C;&#x7684; TiDB&#xFF1A;</p>
+<pre><code>tiup uninstall tidb:v3.0.8
+</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x5220;&#x9664;&#x6240;&#x6709;&#x7248;&#x672C;&#x7684;TiKV&#xFF1A;</p>
+<pre><code>tiup uninstall tikv --all
+</code></pre><p>&#x793A;&#x4F8B;&#x4E09;&#xFF1A;&#x5220;&#x9664;&#x6240;&#x6709;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x7684;&#x7EC4;&#x4EF6;&#xFF1A;</p>
+<pre><code>tiup uninstall --all
+</code></pre><ul>
+<li>&#x6570;&#x636E;&#x6E05;&#x9664;&#xFF1A;tiup clean</li>
+</ul>
+<p>tiup uninstall &#x53EA;&#x662F;&#x5C06;&#x7EC4;&#x4EF6;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x4ECE;&#x7CFB;&#x7EDF;&#x4E2D;&#x5220;&#x9664;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x7EC4;&#x4EF6;&#x8FD0;&#x884C;&#x65F6;&#x751F;&#x6210;&#x7684;&#x6570;&#x636E;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x8981;&#x5220;&#x9664;&#xFF0C;&#x9700;&#x8981;&#x4F7F;&#x7528; tiup clean:</p>
+<pre><code>Usage:
+  tiup clean [flags]
+Flags:
+      --all    Clean all data of instantiated components
+  -h, --help   help for clean
+</code></pre><p>&#x5982;&#x679C;&#x9700;&#x8981;&#x6E05;&#x9664;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8FD0;&#x884C;&#x6570;&#x636E;&#xFF0C;&#x52A0;&#x4E0A; --all &#x5373;&#x53EF;&#x3002;
+&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x6839;&#x636E;&#x5B9E;&#x4F8B; tag &#x6E05;&#x9664;&#x6570;&#x636E;&#xFF1A;</p>
+<pre><code>tiup clean experiment
+</code></pre><ul>
+<li>&#x5176;&#x4ED6;&#x529F;&#x80FD;&#xFF1A;tiup [help | status]</li>
+</ul>
+<p>TiUP&#x8FD8;&#x63D0;&#x4F9B;&#x5E2E;&#x52A9;&#x548C;&#x67E5;&#x770B;&#x6240;&#x6709;&#x5B9E;&#x4F8B;&#xFF08;&#x5305;&#x62EC;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#xFF09;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x76F8;&#x5173;&#x7684;&#x547D;&#x4EE4;&#x548C;&#x53C2;&#x6570;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>tiup help
+&#x67E5;&#x770B;TiUP&#x5E2E;&#x52A9;
+tiup status
+&#x67E5;&#x770B;&#x6240;&#x6709;&#x5B9E;&#x4F8B;&#xFF08;&#x5305;&#x62EC;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#xFF09;
+</code></pre>
                                 
                                 </section>
                             
@@ -2864,7 +3044,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.1.1 TiUP 简介","level":"3.1.1.1","depth":3,"next":{"title":"1.1.2 用 TiUP 部署本地测试环境","level":"3.1.1.2","depth":3,"path":"session2/chapter1/tiup-playground.md","ref":"session2/chapter1/tiup-playground.md","articles":[]},"previous":{"title":"1.1 TiUP & TiOps","level":"3.1.1","depth":2,"path":"session2/chapter1/tiup-tiops.md","ref":"session2/chapter1/tiup-tiops.md","articles":[{"title":"1.1.1 TiUP 简介","level":"3.1.1.1","depth":3,"path":"session2/chapter1/tiup-intro.md","ref":"session2/chapter1/tiup-intro.md","articles":[]},{"title":"1.1.2 用 TiUP 部署本地测试环境","level":"3.1.1.2","depth":3,"path":"session2/chapter1/tiup-playground.md","ref":"session2/chapter1/tiup-playground.md","articles":[]},{"title":"1.1.3 用 TiUP 部署生产环境集群","level":"3.1.1.3","depth":3,"path":"session2/chapter1/tiup-deployment.md","ref":"session2/chapter1/tiup-deployment.md","articles":[]},{"title":"1.1.4 TiOps 简介","level":"3.1.1.4","depth":3,"path":"session2/chapter1/tiops-intro.md","ref":"session2/chapter1/tiops-intro.md","articles":[]},{"title":"1.1.5 TiOps 部署生产环境集群","level":"3.1.1.5","depth":3,"path":"session2/chapter1/tiops-deployment.md","ref":"session2/chapter1/tiops-deployment.md","articles":[]}]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tiup-intro.md","mtime":"2020-03-08T06:44:52.055Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:45:28.553Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.1.1 TiUP 简介","level":"3.1.1.1","depth":3,"next":{"title":"1.1.2 用 TiUP 部署本地测试环境","level":"3.1.1.2","depth":3,"path":"session2/chapter1/tiup-playground.md","ref":"session2/chapter1/tiup-playground.md","articles":[]},"previous":{"title":"1.1 TiUP & TiOps","level":"3.1.1","depth":2,"path":"session2/chapter1/tiup-tiops.md","ref":"session2/chapter1/tiup-tiops.md","articles":[{"title":"1.1.1 TiUP 简介","level":"3.1.1.1","depth":3,"path":"session2/chapter1/tiup-intro.md","ref":"session2/chapter1/tiup-intro.md","articles":[]},{"title":"1.1.2 用 TiUP 部署本地测试环境","level":"3.1.1.2","depth":3,"path":"session2/chapter1/tiup-playground.md","ref":"session2/chapter1/tiup-playground.md","articles":[]},{"title":"1.1.3 用 TiUP 部署生产环境集群","level":"3.1.1.3","depth":3,"path":"session2/chapter1/tiup-deployment.md","ref":"session2/chapter1/tiup-deployment.md","articles":[]},{"title":"1.1.4 TiOps 简介","level":"3.1.1.4","depth":3,"path":"session2/chapter1/tiops-intro.md","ref":"session2/chapter1/tiops-intro.md","articles":[]},{"title":"1.1.5 TiOps 部署生产环境集群","level":"3.1.1.5","depth":3,"path":"session2/chapter1/tiops-deployment.md","ref":"session2/chapter1/tiops-deployment.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tiup-intro.md","mtime":"2020-03-08T06:55:18.800Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:55:57.116Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
