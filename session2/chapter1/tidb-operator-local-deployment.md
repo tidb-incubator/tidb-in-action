@@ -182,7 +182,7 @@ To start using your cluster, run:
 
 ```
 
-以上信息显示 TiDB Cluster 所有 Pod 全部运行正常
+以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
 ### 四、访问 TiDB 集群
 
