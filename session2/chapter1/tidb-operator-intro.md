@@ -1,8 +1,6 @@
 # TiDB Operator 简介及原理
 
-​																													*—— 化繁为简的艺术*
-
-
+​                             *—— 化繁为简的艺术*
 
 ## 一、背景
 
@@ -14,13 +12,11 @@
 
 “兄dei，K8s了解一下？“
 
-
-
 ## 二、简介
 
 > TiDB Operator 是 Kubernetes 上的 TiDB 集群自动运维系统，提供包括部署、升级、扩缩容、备份恢复、配置变更的 TiDB 全生命周期管理。借助 TiDB Operator，TiDB 可以无缝运行在公有云或私有部署的 Kubernetes 集群上。
 >
-> ​																															——来自 PingCAP 官方定义
+> ​                               ——来自 PingCAP 官方定义
 
 TiDB Operator 像“牧羊人”一样，持续的监督并管理着 TiDB 各组件“羊群”以恰当的状态运行在主机集群“牧场”上。现在运维人员只要告诉 Operator “What  to do“，而由 Operator来决定 “How to do”。在最新版本 TiDB Operator 甚至可以根据实际情况来决定 "What to do"，比如：auto-scaler。真正实现了自动化运维，减轻运维人员维护压力，提高服务能力。
 
@@ -30,7 +26,7 @@ TiDB Operator 像“牧羊人”一样，持续的监督并管理着 TiDB 各组
 
 ### TiDB Operator 组件
 
-1.  TiDB Cluster 定义：CRD（`CustomResourceDefinition`）定义了`tidbcluster`等自定义资源，使得 Kubernetes 世界认识 TiDB Cluster 并让其与 `Deployment`、`Statefulset` 一同享受 Kubernetes 的头等公民待遇。目前TiDB Operator v1.1.0 版本包含的CRD有：`TidbCluster`、`Backup`、`Restore`、`BackupSchedule`、`TidbMonitor`、`TidbInitializer`以及`TidbClusterAutoScaler`。
+1. TiDB Cluster 定义：CRD（`CustomResourceDefinition`）定义了`tidbcluster`等自定义资源，使得 Kubernetes 世界认识 TiDB Cluster 并让其与 `Deployment`、`Statefulset` 一同享受 Kubernetes 的头等公民待遇。目前TiDB Operator v1.1.0 版本包含的CRD有：`TidbCluster`、`Backup`、`Restore`、`BackupSchedule`、`TidbMonitor`、`TidbInitializer`以及`TidbClusterAutoScaler`。
 2. 控制器：`tidb-controller-manager` 包含了一组自定义控制器，控制器通过循环不断比对被控制对象的期望状态与实际状态，并通过自定义的逻辑驱动被控制对象达到期望状态。
 3. 调度器：`tidb-scheduler` 是一个 Kubernetes 调度器扩展，它为 Kubernetes 调度器注入 TiDB 集群特有的调度逻辑，比如：为保证高可用，任一 Node 不能调度超过 TiDB 集群半数以上的tikv实例。
 
@@ -46,19 +42,15 @@ TiDB Operator 像“牧羊人”一样，持续的监督并管理着 TiDB 各组
 
 3. `Kube-scheduler`：调度TiDB Cluster等CRD所运行的Pod，需要先经过`tidb-scheduler`的筛选，然后再使用K8s原生调度器来进行Pod调度。
 
-   
-
 举个栗子（脑洞）：
 
 ***小明买了辆家用车，去修车厂改造成变形金刚。***
 
 这辆家用车类似`Deployment`、`StatefulSet`这类原厂的标准化组件。改造成独一无二的变形金刚需要设计图纸（`CRD`）。同时原来车上的零件需要实现新的功能（自定义控制器），轮子不仅能转还可以当关节，后备箱不仅能装东西还可以变成脚。修车厂（K8s 控制平面）根据设计图纸和控制逻辑真的造出了一个变形金刚（`CR`）。这个变形金刚可以根据环境的不同而改变形态（调度器），甚至还可以在战斗损坏后进行修复（调和）。
 
-
-
 ## 三、原理浅析
 
-![](https://download.pingcap.com/images/docs-cn/stable/tidb-operator-control-flow.png)
+![TiDB-Operator-control-flow](https://download.pingcap.com/images/docs-cn/stable/tidb-operator-control-flow.png)
 
 TiDB Operator 中使用 Helm Chart 封装了 TiDB 集群定义。整体的控制流程如下：
 
