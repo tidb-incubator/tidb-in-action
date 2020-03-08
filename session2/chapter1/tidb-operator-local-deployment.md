@@ -63,7 +63,7 @@ To start using your cluster, run:
 
 ```
 
-输出以上信息，则说明 K8s 服务符合要求
+输出以上信息，则说明 K8s 服务符合要求。
 
 ```
 
