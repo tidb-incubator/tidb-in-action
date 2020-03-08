@@ -2821,7 +2821,46 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="&#x90E8;&#x7F72;-tidb-operator">&#x90E8;&#x7F72; TiDB Operator</h1>
+<h2 id="&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;">&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;</h2>
+<h3 id="&#x4E00;&#x3001;&#x901A;&#x8FC7;-helm-&#x5B89;&#x88C5;-tidb-operator">&#x4E00;&#x3001;&#x901A;&#x8FC7; helm &#x5B89;&#x88C5; TiDB Operator</h3>
+<p>&#x521B;&#x5EFA; TiDB CRD&#xFF1A;</p>
+<pre><code>
+    # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/crd.yaml &amp;&amp; kubectl get crd tidbclusters.pingcap.com
+    customresourcedefinition.apiextensions.k8s.io/tidbclusters.pingcap.com created
+    customresourcedefinition.apiextensions.k8s.io/backups.pingcap.com created
+    customresourcedefinition.apiextensions.k8s.io/restores.pingcap.com created
+    customresourcedefinition.apiextensions.k8s.io/backupschedules.pingcap.com created
+    customresourcedefinition.apiextensions.k8s.io/tidbmonitors.pingcap.com created
+    customresourcedefinition.apiextensions.k8s.io/tidbinitializers.pingcap.com created
+    customresourcedefinition.apiextensions.k8s.io/tidbclusterautoscalers.pingcap.com created
+    # kubectl get crd tidbclusters.pingcap.com
+    NAME                       CREATED AT
+    tidbclusters.pingcap.com   2020-03-07T09:58:09Z
+</code></pre><p>&#x4E0B;&#x8F7D; TiDB Operator &#x7684; helm chart &#x6587;&#x4EF6;&#xFF1A;</p>
+<pre><code>
+    # mkdir -p /root/chart/
+
+    &#x4ECE; https://github.com/pingcap/tidb-operator/releases &#x4E0B;&#x8F7D; tidb-operator-chart-v1.0.6.tgz &#x6587;&#x4EF6;&#x653E;&#x5230; /root/chart/ &#x8DEF;&#x5F84;&#x4E0B;
+
+    # cd /root/chart/ &amp;&amp; tar xvf tidb-operator-chart-v1.0.6.tgz
+</code></pre><p>&#x5C06; /root/charts/tidb-operator/values.yaml &#x6587;&#x4EF6;&#x5185;&#x7684; scheduler.kubeSchedulerImageName &#x503C;&#x4FEE;&#x6539;&#x4E3A; registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler &#x4EE5;&#x52A0;&#x5FEB;&#x955C;&#x50CF;&#x62C9;&#x53D6;&#x901F;&#x5EA6;</p>
+<p>&#x5B89;&#x88C5; TiDB Operator&#xFF1A;</p>
+<pre><code>
+    # helm install --namespace=tidb-admin --name=tidb-operator /root/charts/tidb-operator -f /root/charts/tidb-operator/values.yaml
+    NAME:   tidb-operator
+    LAST DEPLOYED: Sat Mar  7 05:02:15 2020
+    NAMESPACE: tidb-admin
+    STATUS: DEPLOYED
+    ...
+</code></pre><h3 id="&#x4E8C;&#x3001;&#x9A8C;&#x8BC1;-operator-&#x8FD0;&#x884C;&#x72B6;&#x6001;">&#x4E8C;&#x3001;&#x9A8C;&#x8BC1; Operator &#x8FD0;&#x884C;&#x72B6;&#x6001;</h3>
+<pre><code>
+    # kubectl get pods -n tidb-admin
+    NAME                                       READY   STATUS    RESTARTS   AGE
+    tidb-controller-manager-85d8d498bf-2n8km   1/1     Running   0          19s
+    tidb-scheduler-7c67d6c77b-qd54r            2/2     Running   0          19s
+</code></pre><p>&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x663E;&#x793A; Operator &#x8FD0;&#x884C;&#x6B63;&#x5E38;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2864,7 +2903,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"next":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},"previous":{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","mtime":"2020-03-08T06:16:43.639Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:17:20.366Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"next":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},"previous":{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","mtime":"2020-03-08T06:22:26.073Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:23:01.936Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

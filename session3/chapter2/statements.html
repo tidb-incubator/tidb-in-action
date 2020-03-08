@@ -2821,7 +2821,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="22-&#x53EF;&#x89C6;&#x5316;-statements">2.2 &#x53EF;&#x89C6;&#x5316; Statements</h2>
+                                <h1 id="22-&#x53EF;&#x89C6;&#x5316;-statements">2.2 &#x53EF;&#x89C6;&#x5316; Statements</h1>
 <p>&#x5728;&#x4E0A;&#x4E00;&#x8282;&#x4ECB;&#x7ECD;&#x4E86;&#x600E;&#x6837;&#x901A;&#x8FC7; KeyVis &#x6765;&#x8BC6;&#x522B; TiDB &#x7684;&#x4E1A;&#x52A1;&#x7684;&#x6A21;&#x5F0F;&#xFF0C;&#x672C;&#x8282;&#x4E3B;&#x8981;&#x5E26;&#x9886;&#x8BFB;&#x8005;&#x4F53;&#x4F1A;&#x600E;&#x6837;&#x901A;&#x8FC7; Dashboard &#x7684; Statements &#x4FE1;&#x606F;&#x6765;&#x5206;&#x6790;&#x6267;&#x884C; SQL &#x60C5;&#x51B5;&#xFF0C;&#x4ECE;&#x800C;&#x8FBE;&#x5230;&#x5E2E;&#x52A9;&#x8FD0;&#x7EF4;&#x4EBA;&#x5458;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D; SQL &#x6027;&#x80FD;&#x95EE;&#x9898;&#x3002;</p>
 <h3 id="statements-&#x662F;&#x4EC0;&#x4E48;">Statements &#x662F;&#x4EC0;&#x4E48;</h3>
 <p>Statement&#xFF0C;&#x5373; SQL &#x8BED;&#x53E5;&#x3002;</p>
@@ -2846,7 +2846,7 @@
 </ol>
 <p>&#x6CE8;&#xFF1A;&#x8FD9;&#x91CC;&#x6240;&#x6307;&#x7684; SQL &#x8BED;&#x53E5;&#x5B9E;&#x9645;&#x6307;&#x7684;&#x662F;&#x67D0;&#x4E00;&#x7C7B; SQL &#x8BED;&#x53E5;&#x3002;&#x8BED;&#x6CD5;&#x4E00;&#x81F4;&#x7684; SQL &#x8BED;&#x53E5;&#x4F1A;&#x89C4;&#x4E00;&#x5212;&#x4E3A;&#x4E00;&#x7C7B;&#x76F8;&#x540C;&#x7684; SQL &#x8BED;&#x53E5;&#x3002;
 &#x6BD4;&#x5982; <code>SELECT * FROM employee WHERE id IN (1, 2, 3)</code> &#x548C; <code>select * from EMPLOYEE where ID in (4, 5)</code> &#x6700;&#x540E;&#x90FD;&#x4F1A;&#x88AB;&#x89C4;&#x4E00;&#x5212;&#x4E3A; <code>select * from employee where id in (...)</code>&#x3002;</p>
-<p><img src="../../res/session3/chapter2/slow-query-table/1.jpg" alt=""></p>
+<p><img src="../../res/session3/chapter2/slow-query-table/1.jpg" alt="slow query table"></p>
 <p>&#x76EE;&#x524D;&#x7684;&#x5DF2;&#x77E5;&#x95EE;&#x9898;:</p>
 <ol>
 <li>&#x5BF9;&#x4E8E; TiDB &#x5185;&#x90E8; SQL &#x8BED;&#x53E5;&#x6765;&#x8BF4;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x8FD9;&#x4E00;&#x5217;&#x5185;&#x5BB9;&#x4E3A;&#x7A7A;</li>
@@ -2861,7 +2861,7 @@
 <li>&#x5E73;&#x5747;&#x626B;&#x63CF;&#x884C;&#x6570;&#xFF08;&#x4E00;&#x822C;&#x662F;&#x8BFB;&#xFF09;</li>
 <li>&#x5404;&#x4E2A;&#x8282;&#x70B9;&#x6267;&#x884C;&#x6307;&#x6807;&#xFF08;&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D;&#x51FA;&#x67D0;&#x4E2A;&#x8282;&#x70B9;&#x6027;&#x80FD;&#x74F6;&#x9888;&#xFF09;</li>
 </ol>
-<p><img src="../../res/session3/chapter2/slow-query-table/2.jpg" alt=""></p>
+<p><img src="../../res/session3/chapter2/slow-query-table/2.jpg" alt="slow query table"></p>
 <h3 id="statements-&#x53C2;&#x6570;&#x914D;&#x7F6E;">Statements &#x53C2;&#x6570;&#x914D;&#x7F6E;</h3>
 <ul>
 <li><p>tidb_enable_stmt_summary&#xFF1A;Statements &#x529F;&#x80FD;&#x9ED8;&#x8BA4;&#x5F00;&#x542F;&#xFF0C;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x7CFB;&#x7EDF;&#x53D8;&#x91CF;&#x6253;&#x5F00;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
@@ -2927,7 +2927,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"2.2 分析 SQL 执行性能","level":"4.2.2","depth":2,"next":{"title":"2.3 生成集群诊断报告","level":"4.2.3","depth":2,"path":"session3/chapter2/diagnosis-report.md","ref":"session3/chapter2/diagnosis-report.md","articles":[]},"previous":{"title":"2.1 识别集群热点和业务模式","level":"4.2.1","depth":2,"path":"session3/chapter2/key-vis.md","ref":"session3/chapter2/key-vis.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter2/statements.md","mtime":"2020-03-08T06:16:43.639Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:17:20.366Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"2.2 分析 SQL 执行性能","level":"4.2.2","depth":2,"next":{"title":"2.3 生成集群诊断报告","level":"4.2.3","depth":2,"path":"session3/chapter2/diagnosis-report.md","ref":"session3/chapter2/diagnosis-report.md","articles":[]},"previous":{"title":"2.1 识别集群热点和业务模式","level":"4.2.1","depth":2,"path":"session3/chapter2/key-vis.md","ref":"session3/chapter2/key-vis.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter2/statements.md","mtime":"2020-03-08T06:22:26.073Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:23:01.936Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
