@@ -1,4 +1,4 @@
-TiSpark 是 PingCAP为解决用户复杂 OLAP 需求而推出的产品。在借助 Spark 平台在计算及生态等方面优势的同时也融合了 TiKV 分布式集群的优势，为大数据环境下的批量任务提供了一种解决方案。在本节将介绍如何在已有TiDB集群基础上引入 TiSpark 进行批量任务开发。本节假设你对 Spark 有基本认知。你可以参阅[ ](https://spark.apache.org/)[Apache Spark 官网](https://spark.apache.org/) 了解 Spark 相关信息。
+TiSpark 是 PingCAP 为解决用户复杂 OLAP 需求而推出的产品。在借助 Spark 平台在计算及生态等方面优势的同时也融合了 TiKV 分布式集群的优势，为大数据环境下的批量任务提供了一种解决方案。在本节将介绍如何在已有TiDB集群基础上引入 TiSpark 进行批量任务开发。本节假设你对 Spark 有基本认知。你可以参阅[ ](https://spark.apache.org/)[Apache Spark 官网](https://spark.apache.org/) 了解 Spark 相关信息。
 
 
 ---
