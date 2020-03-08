@@ -27,7 +27,9 @@ IIDR 需要借助 MySQL 驱动通过 JDBC 的方式将数据写入 TiDB 中，�
 
 * IIDR 下游软件参数配置
 | 参数   | 值   | 
-|:----|:----:|:----|:----:|
+
+|:----|:----:|
+
 | convert_not nullable_column   | true   | 
 | events_max_retain   | 10000   | 
 | global_conversion_not_possible_warning   | false   | 
@@ -57,4 +59,3 @@ IIDR 在同步全量数据之前，需要在 TiDB 侧创建好表结构，表字
 
 ## 总结
 IIDR 是目前能够找到的唯一一款能够比较好的将 DB2 的数据同步到 TiDB 的工具，在同步过程中如遇到上述配置还解决不了的问题，请联系 IIDR 官方或者 TiDB 官方，具体问题具体分析解决。
-
