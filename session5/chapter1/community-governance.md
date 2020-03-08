@@ -1,6 +1,6 @@
 # TiDB 开源社区治理
 
-经过几年的发展，TiDB 社区已经逐渐成熟，但是随着社区的发展壮大，为了更好地组织对 TiDB 社区感兴趣的人一起高效地参与社区的活动，以便更好的激发社区活力，维护积极健康的社区环境，TiDB 一直持续打造透明公正的社区治理规范，参见 https://github.com/pingcap/community。
+经过几年的发展，TiDB 社区已经逐渐成熟，但是随着社区的发展壮大，为了更好地组织对 TiDB 社区感兴趣的人一起高效地参与社区的活动，以便更好的激发社区活力，维护积极健康的社区环境，TiDB 一直持续打造透明公正的社区治理规范，参见 [community](https://github.com/pingcap/community)。
 
 在社区组织架构下面，下设四个不同的组织，PMC，Developer Group，User Group 以及 Organization Committee。
 
@@ -24,4 +24,3 @@
 随着 TiDB 产品的成熟，TiDB 用户群体愈发壮大，用户在使用过程中遇到的问题反馈及实践经验，对于 TiDB 产品的完善及应用推广有着不可忽视的重要作用，希望用户与开发者有更好的交流互动，一起推动 TiDB 社区的健康发展。
 
 4）Organization Committee，项目组织委员会，负责执行、输出，推广技术内容的组织者们，成员包括各地区用户组组长以及社区活动负责人。目前暂时囊括了很多具体方向的 Committee，比如 Legal / Quality / Marketing 等等，都会在这个委员会里面孵化和展开。
-
