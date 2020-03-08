@@ -92,7 +92,6 @@ MySQL [db_stat]> explain select * from table:t_like_list where person_id='153553
 ### 背景
 一个数据量不大(600G左右)读多写少的集群，某段时间发现 query summary 监控中的 duration 显著增加，p99 如下图：
 
-![])
 
 p999 如下图：
 
