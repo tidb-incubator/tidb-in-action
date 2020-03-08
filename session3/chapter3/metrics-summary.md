@@ -171,6 +171,6 @@ ORDER BY
 - t2 时间段内的 tikv_cop_total_response_size（tikv 的 cop 请求结果的大小 ） 比 t1 时间段高了 192 倍
 - t2 时间段内的 tikv_cop_scan_details（tikv 的 cop 请求的 scan ） 比 t1 时间段高了 105 倍
 
-通过上面2个对比查询可以大致了解集群在这2个时间段的负载情况。t2 时间段的 Cop 请求要比 t2 时间段高很多，TiKV 的 Copprocessor 有些处理不过来，出现了一些 cop task 等待，可以猜测可能是 t2 时间段出现了一些大查询，或者是查询较多的负载。
+通过上面两个时间段对比查询可以大致了解集群在这2个时间段的负载情况。t2 时间段的 Cop 请求要比 t2 时间段高很多，导致 TiKV 的 Copprocessor 过载，出现了 cop task 等待，可以猜测可能是 t2 时间段出现了一些大查询，或者是查询较多的负载。
 
 实际上，在 t1 ~ t2 整个时间段内都在跑 [go-ycsb](https://github.com/pingcap/go-ycsb) 的压测，然后在 t2 时间段跑了 20 个 tpch 的查询，所以是因为 tpch 大查询导致了很多的 cop 请求。
