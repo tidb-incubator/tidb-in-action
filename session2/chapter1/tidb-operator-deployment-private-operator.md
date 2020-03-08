@@ -37,7 +37,7 @@
 
 将 /root/charts/tidb-operator/values.yaml 文件内的 scheduler.kubeSchedulerImageName 值修改为 registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler 以加快镜像拉取速度
 
-安装 TiDB Operator
+安装 TiDB Operator：
 
 ```
 
@@ -61,4 +61,4 @@
 
 ```
 
-以上信息显示 Operator 运行正常
+以上信息显示 Operator 运行正常。

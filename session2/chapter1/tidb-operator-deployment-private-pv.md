@@ -77,4 +77,4 @@ local-pv-eb0e3c9f   1974Mi     RWO            Delete           Available        
 
 ```
 
-以上信息说明 Local PV 已经在正常创建了
+以上信息说明 Local PV 已经在正常创建了。

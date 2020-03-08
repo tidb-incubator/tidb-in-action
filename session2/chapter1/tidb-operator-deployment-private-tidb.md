@@ -24,7 +24,7 @@
 
 ```
 
-以上信息显示 TiDB Cluster 部署正常
+以上信息显示 TiDB Cluster 部署正常。
 
 ## 三、观察 TiDB 的 POD 状态
 
@@ -45,7 +45,7 @@
 
 ```
 
-以上信息显示 TiDB Cluster 所有 Pod 全部运行正常
+以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
 ## 四、访问 TiDB 集群
 
@@ -65,7 +65,7 @@
 
 ```
 
-找到 test-tidb 这个 Service 的 CLUSTER-IP，通过其访问 TiDB 集群
+找到 test-tidb 这个 Service 的 CLUSTER-IP，通过其访问 TiDB 集群：
 
 ```
 
