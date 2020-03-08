@@ -181,11 +181,11 @@
         * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
         * [6.4.2 TiDB分区表使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
         * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
-    * [6.5 TiDB 在电力行业的实践](session4/chapter6/tidb-in-electric.md)
-    * [6.6 TiDB 在企业数据分级存储中的应用实践](session4/chapter6/tidb-in-enterprise-practices.md)
-    * [6.7 TiDB 与 HBase、ES、Druid 的数据交互实战](session4/chapter6/tidb-with-hbase-es-druid.md)
-    * [6.8 TiDB 与可视化展现 Saiku、Grafana 的集成应用](session4/chapter6/tidb-siku-grafana.md)
-    * [6.9 流程调度工具与 TiSpark 的集成应用](session4/chapter6/tidb-streaming-scheduler-tools.md)
+    * [6.5 TiDB 在电力行业的实践](session4/chapter6/tidb-in-electric.md)@潘博存
+    * [6.6 TiDB 在企业数据分级存储中的应用实践](session4/chapter6/tidb-in-enterprise-practices.md)@潘博存@王伦伟
+    * [6.7 TiDB 与 HBase、ES、Druid 的数据交互实战](session4/chapter6/tidb-with-hbase-es-druid.md)@潘博存@王伦伟
+    * [6.8 TiDB 与可视化展现 Saiku、Grafana 的集成应用](session4/chapter6/tidb-siku-grafana.md)@潘博存@王伦伟
+    * [6.9 流程调度工具与 TiSpark 的集成应用](session4/chapter6/tidb-streaming-scheduler-tools.md)@王娟
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
     * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
