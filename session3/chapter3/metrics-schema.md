@@ -34,9 +34,40 @@ metrics_schema> select * from tidb_query_duration where value is not null and ti
 | 2020-03-08 13:34:40 | 172.16.5.40:10089 | internal | 0.9      | 0.00327692307692 |
 +---------------------+-------------------+----------+----------+------------------+
 ```
-那么这个查询是怎么实现的呢？ TiDB 会根据 SQL 生成一条 `PromQL` 的查询，然后把查询请求发给 PD 查询监控信息。
 
-我们来看下这个查询的执行计划，可以发现在 `MemTableScan` 中，有一个 `PromQL`，以及 `start_time` 和 `end_time`，表示查询监控的时间范围。`step` 是查询的分辨率步长，默认值是 1 分钟。这几个参数和 [prometheus 的 range query HTTP API](https://prometheus.io/docs/prometheus/latest/querying/api/#range-queries) 的参数是一样的。
+## 监控表列表
+
+目前监控表非常多，本小节不会完全列举所有监控表列表，系统表 `information_schema.metrics_tables` 存储所有监控系统表的元数据信息，所有的监控表可以通过 SQL `select * from information_schema.metrics_tables` 查询。
+
+系统表表结构如下所示：
+
+```
+mysql> desc metrics_tables;
++------------+-----------------+------+------+---------+-------+
+| Field      | Type            | Null | Key  | Default | Extra |
++------------+-----------------+------+------+---------+-------+
+| TABLE_NAME | varchar(64)     | YES  |      | NULL    |       |
+| PROMQL     | varchar(64)     | YES  |      | NULL    |       |
+| LABELS     | varchar(64)     | YES  |      | NULL    |       |
+| QUANTILE   | double unsigned | YES  |      | NULL    |       |
+| COMMENT    | varchar(256)    | YES  |      | NULL    |       |
++------------+-----------------+------+------+---------+-------+
+5 rows in set (0.00 sec)
+```
+
+字段解释:
+
+* TABLE_NAME：对应于metrics_schema中的表名
+* PROMQL：监控表的主要原理是将SQL映射成PromQL，并将Promethues结果转换成 SQL 查询结果。这个字段是 PromQL 的表达式模板，获取监控表数据时使用查询条件改写模板中的变量，生成最终的查询表达式
+* LABELS：监控定义的label，每一个label会对应监控表中的一列，SQL中如果包含对应列的过滤，对应的 PromQL 也会改变。
+* QUANTILE：百分位，对于直方图的监控数据，指定一个默认百分位，如果值为 0，表示该监控表对应的监控不是直方图。
+* COMMENT：是对这个监控表的解释。
+
+## 实现方式
+
+上一小节描述的表结构中有一列 `PROMQL`，TiDB 会根据 SQL 生成一条 `PromQL` 的查询，然后把查询请求发给 PD 查询监控信息。
+
+通过以下 SQL 的执行计划，可以发现在 `MemTableScan` 中，有一个 `PromQL`，以及 `start_time` 和 `end_time`，表示查询监控的时间范围。`step` 是查询的分辨率步长，默认值是 1 分钟。这几个参数和 [prometheus 的 range query HTTP API](https://prometheus.io/docs/prometheus/latest/querying/api/#range-queries) 的参数是一样的。
 
 ```sql
 metrics_schema> desc select * from tidb_query_duration where value is not null and time=now() and quantile=0.90;
@@ -50,14 +81,34 @@ metrics_schema> desc select * from tidb_query_duration where value is not null a
 
 如果 SQL 的 `Where` 中没有 time 条件，默认会查询最近 10 分钟的监控数据。 
 
-和监控表查询相关的 2 个 session 变量：
+### session 变量
+
+和监控表查询相关的 2 个 session 变量，可以通过修改session的变量来调整监控查询的默认行为，相关参数如下：
 
 * `tidb_metric_query_step`：查询的分辨率步长。从 Promethues 的 query_range 数据时需要指定 start，end，step，其中 step 会使用该变量的值。
 * `tidb_metric_query_range_duration`：生成 PormQL 语句时，会将 PROMQL 中的 $RANGE_DURATION 替换成该变量的值，默认值是 60 秒。
 
-目前 PD 会将查询请求转发给 `prometheus`，后续 PD 会考虑内置监控组件，就不用再部署 `prometheus` 组件了。
+> **补充知识点：**
+>
+> range query是Promethues非常常见的一种query，看看它有哪些参数：
+> * query=<string>: PromQL表达式。
+> * start=<rfc3339 | unix_timestamp>: 时间范围的开始。
+> * end=<rfc3339 | unix_timestamp>: 时间范围的结束。
+> * step=<duration | float>: 查询解析度（query resolution）。
+> * timeout=<duration>: 执行超时。这个参数是可选的。
+>
+>Prometheues在对PromQL表达式求值的逻辑是这样的：
+> * 对于[start, end]时间区间，从start开始，以step为长度，把时间区间分成若干段
+> * 对每个段进行求值
+> 举例：start=10,end=20,step=2，那么就会有ts=10,ts=12,ts=14,ts=16,ts=18,ts=206段，然后为这6个段进行求值。
 
-下面是按照 `instance` 和 `sql_type` 聚合后，查询 `['2020-03-08 13:23:00', '2020-03-08 13:33:00')`  范围内的 P99 耗时的 avg, max, min 值。
+例如，将步长调整为60
+ 
+```
+set @@session.tidb_metric_query_step=60
+```
+
+目前 PD 会将查询请求转发给 `prometheus`，后续 PD 会考虑内置监控组件，就不用再部署 `prometheus` 组件了。下面是按照 `instance` 和 `sql_type` 聚合后，查询 `['2020-03-08 13:23:00', '2020-03-08 13:33:00')`  范围内的 P99 耗时的 avg, max, min 值。
 
 ```sql
 metrics_schema> select instance,sql_type, avg(value),max(value),min(value) from tidb_query_duration where time >= '2020-03-08 13:23:00' and time < '2020-03-08 13:33:00' and value is not null and quantile=0.99 group by instance,sql_type;
@@ -70,38 +121,3 @@ metrics_schema> select instance,sql_type, avg(value),max(value),min(value) from 
 | 172.16.5.40:10089 | general  | 0.000923958333333 | 0.00133333333333 | 0.000666666666667 |
 +-------------------+----------+-------------------+------------------+-------------------+
 ```
-
-## metrics_tables 系统表
-
-由于目前添加的监控系统表数量较多，本文不对各个表进行逐个解释。可以通过 `information_schema.metrics_tables` 查询所有监控的信息，下面是示例：
-
-```sql
-information_schema> select * from information_schema.metrics_tables limit 3\G
-***************************[ 1. row ]***************************
-TABLE_NAME | abnormal_stores
-PROMQL     | sum(pd_cluster_status{ type=~"store_disconnected_count|store_unhealth_count|store_low_space_count|store_down_count|store_offline_count|store_tombstone_count"})
-LABELS     | instance,type
-QUANTILE   | 0.0
-COMMENT    |
-***************************[ 2. row ]***************************
-TABLE_NAME | etcd_disk_wal_fsync_rate
-PROMQL     | delta(etcd_disk_wal_fsync_duration_seconds_count{$LABEL_CONDITIONS}[$RANGE_DURATION])
-LABELS     | instance
-QUANTILE   | 0.0
-COMMENT    | The rate of writing WAL into the persistent storage
-***************************[ 3. row ]***************************
-TABLE_NAME | etcd_wal_fsync_duration
-PROMQL     | histogram_quantile($QUANTILE, sum(rate(etcd_disk_wal_fsync_duration_seconds_bucket{$LABEL_CONDITIONS}[$RANGE_DURATION])) by (le,instance))
-LABELS     | instance
-QUANTILE   | 0.99
-COMMENT    | The quantile time consumed of writing WAL into the persistent storage
-```
-
-`metrics_tables` 的字段解释如下：
-
-* TABLE_NAME：对应于 metrics_schema 中的表名。
-* PROMQL：监控表的主要原理是将 SQL 映射成 PromQL，并将 Promethues 结果转换成 SQL 查询结果。这个字段是 PromQL 的表达式模板，获取监控表数据时使用查询条件改写模板中的变量，生成最终的查询表达式。
-* LABELS：监控定义的 label，每一个 label 会对应监控表中的一列，SQL 中如果包含对应列的过滤，对应生成的 PromQL 也会改变。
-* QUANTILE：百分位值，对于直方图类型的监控数据，指定一个默认百分位，如果值为 0，表示该监控表对应的监控不是直方图。
-* COMMENT：是对这个监控表的解释。
-
