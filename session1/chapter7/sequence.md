@@ -59,7 +59,7 @@ SELECT SETVAL(sequence_name,100)；
 
 在使用分布式数据库的场景里，通常应用也是分布式架构，这样多个应用节点之间如何获取唯一且递增的序列号就成为一个难题。在分布式数据库没有 Sequence 的时候，应用基本通过`雪花算法`、`数据库主键自增`等方法实现，业界也有一些较为成熟的方案，比如  [Leaf - 美团点评分布式 ID](https://tech.meituan.com/2017/04/21/mt-leaf.html)、[百度的 uid-generator](https://github.com/baidu/uid-generator)等，上述方案中为了解决单调递增且不重复的问题引入一个新的系统、模块，极大的提高的应用系统的复杂度。这里通过简单新建一个`Sequence`看看 TiDB 如何解决上述问题。
 
-1.  首先新建一个 Sequence
+1.1. 首先新建一个 Sequence
 
 ```SQL
 CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
