@@ -23,7 +23,7 @@
 
 ```
 
-下载 TiDB Operator 的 helm chart 文件
+下载 TiDB Operator 的 helm chart 文件：
 
 ```
 
