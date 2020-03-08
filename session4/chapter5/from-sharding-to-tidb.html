@@ -2886,7 +2886,478 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="512-dm-&#x540C;&#x6B65;&#x5206;&#x5E93;&#x5206;&#x8868;-mysql-&#x5230;-tidb-&#x7684;&#x5B9E;&#x8DF5;">5.1.2 DM &#x540C;&#x6B65;&#x5206;&#x5E93;&#x5206;&#x8868; MySQL &#x5230; TiDB &#x7684;&#x5B9E;&#x8DF5;</h1>
+<h2 id="dm-&#x5206;&#x5E93;&#x5206;&#x8868;&#x5B89;&#x88C5;&#x90E8;&#x7F72;&#x5B9E;&#x6218;">DM &#x5206;&#x5E93;&#x5206;&#x8868;&#x5B89;&#x88C5;&#x90E8;&#x7F72;&#x5B9E;&#x6218;</h2>
+<p>&#x672C;&#x5B9E;&#x6218;&#x6A21;&#x62DF;&#x4F01;&#x4E1A;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x963F;&#x91CC;&#x4E91; DRDS &#x4E2D;&#x95F4;&#x4EF6;&#x5BF9;&#x4E1A;&#x52A1;&#x8868;&#x8FDB;&#x884C;&#x5206;&#x5E93;&#x5206;&#x8868;&#x540E;&#xFF0C;&#x8FD9;&#x8FB9;&#x4F7F;&#x7528; DM &#x5DE5;&#x5177;&#x5C06;&#x7EBF;&#x4E0A;&#x5206;&#x5E93;&#x5206;&#x8868;&#x6570;&#x636E;&#x540C;&#x6B65;&#x81F3; TiDB &#x4E2D;&#xFF1A;</p>
+<ol>
+<li>&#x89E3;&#x51B3;&#x8DE8;&#x4E1A;&#x52A1;&#x8DE8;&#x5E93;&#x7684;&#x6570;&#x636E;&#x67E5;&#x8BE2;&#x5206;&#x6790;</li>
+<li>&#x7ED3;&#x5408; DBA &#x7BA1;&#x7406;&#x5E73;&#x53F0;&#x63D0;&#x4F9B;&#x6570;&#x636E;&#x6392;&#x9519;&#x67E5;&#x8BE2;&#x51CF;&#x5C11;&#x56E0;&#x4EBA;&#x4E3A;&#x6162;&#x67E5;&#x8BE2;&#x5F15;&#x8D77;&#x7684;&#x7EBF;&#x4E0A;&#x6545;&#x969C;</li>
+<li>&#x7EBF;&#x4E0A;&#x4EC5;&#x4FDD;&#x7559;&#x534A;&#x5E74;&#x6570;&#x636E;&#xFF0C;&#x6570;&#x636E;&#x5F52;&#x6863;&#x81F3; TiDB &#x4FDD;&#x7559;&#x3002;</li>
+</ol>
+<p>&#x6709;&#x90E8;&#x5206;&#x7684;&#x5206;&#x5E93;&#x5206;&#x8868;&#x4F7F;&#x7528;&#x4E86;&#x81EA;&#x589E;&#x957F;&#x4E3B;&#x952E; ID&#xFF0C;&#x4F7F;&#x7528; DM &#x7684;&#x81EA;&#x589E;&#x957F;&#x4E3B;&#x952E;&#x91CD;&#x7B97;&#x673A;&#x5236;&#xFF0C;&#x89E3;&#x51B3;&#x4E86;&#x4E0A;&#x6E38;&#x5206;&#x5E93;&#x5206;&#x8868;&#x5408;&#x5E76;&#x5230;&#x4E0B;&#x6E38;&#x5355;&#x8868;&#x65F6;&#x7684;&#x4E3B;&#x952E;&#x51B2;&#x7A81;&#x95EE;&#x9898;&#x3002;&#x8981;&#x8BF4;&#x660E;&#x7684;&#x662F;&#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#x8FD8;&#x662F;&#x6709;&#x6240;&#x9650;&#x5236;&#xFF0C;&#x4E0A;&#x6E38;&#x5728;&#x8BBE;&#x8BA1;&#x81EA;&#x589E;&#x4E3B;&#x952E;&#x7684;&#x65F6;&#x5019;&#x6700;&#x597D;&#x8FD8;&#x662F;&#x4F7F;&#x7528;&#x5168;&#x5C40;&#x81EA;&#x589E;&#x670D;&#x52A1;&#x7EC4;&#x4EF6;&#x6765;&#x505A;&#x6BD4;&#x8F83;&#x597D;&#x3002;</p>
+<p>&#x6B64;&#x5916; dm &#x5728; loader &#x6062;&#x590D;&#x65F6;&#x652F;&#x6301;&#x65AD;&#x70B9;&#x64CD;&#x4F5C;&#xFF0C;&#x652F;&#x6301;&#x5E42;&#x7B49; binlog &#x91CD;&#x505A;&#xFF0C;&#x4E0D;&#x7528;&#x62C5;&#x5FC3;&#x6062;&#x590D;&#x4E2D;&#x610F;&#x5916;&#x800C;&#x524D;&#x529F;&#x5C3D;&#x5F03;&#x3002;</p>
+<h3 id="&#x73AF;&#x5883;&#x8BF4;&#x660E;">&#x73AF;&#x5883;&#x8BF4;&#x660E;</h3>
+<p>&#x5B9E;&#x9A8C;&#x73AF;&#x5883;&#x5BBF;&#x4E3B;&#x673A;&#x7684;&#x7528;&#x6237;&#x540D;&#x3001;&#x5BC6;&#x7801;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x7684;&#x7528;&#x6237;&#x540D;&#x3001;&#x5BC6;&#x7801;&#x4E00;&#x81F4;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>&#x4E3B;&#x673A; IP</th>
+<th>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;</th>
+<th>&#x5E94;&#x7528;&#x90E8;&#x7F72;</th>
+<th>&#x8BF4;&#x660E;</th>
+<th>&#x5E10;&#x53F7;&#x5BC6;&#x7801;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.128.131</td>
+<td>centos7.3 x86_64</td>
+<td>MySQL5.7</td>
+<td>3306 &#x7AEF;&#x53E3;</td>
+<td>root/password</td>
+</tr>
+<tr>
+<td>192.168.128.131</td>
+<td>centos7.3 x86_64</td>
+<td>MySQL5.7</td>
+<td>3307 &#x7AEF;&#x53E3;</td>
+<td>root/password</td>
+</tr>
+<tr>
+<td>192.168.128.131</td>
+<td>centos7.3 x86_64</td>
+<td>MySQL5.7</td>
+<td>3308 &#x7AEF;&#x53E3;</td>
+<td>root/password</td>
+</tr>
+<tr>
+<td>192.168.128.132</td>
+<td>centos7.3 x86_64</td>
+<td>dm-master/dmctl</td>
+<td>&#x4E2D;&#x63A7;&#x673A;</td>
+<td>root/password</td>
+</tr>
+<tr>
+<td>192.168.128.133</td>
+<td>centos7.3 x86_64</td>
+<td>dm-worker</td>
+<td>dm-worker</td>
+<td>root/password</td>
+</tr>
+<tr>
+<td>192.168.206.28</td>
+<td>centos7.3 x86_64</td>
+<td>TiDB &#x5E93;</td>
+<td>4000 &#x7AEF;&#x53E3;</td>
+<td>root/password</td>
+</tr>
+</tbody>
+</table>
+<h3 id="&#x51C6;&#x5907;&#x5DE5;&#x4F5C;">&#x51C6;&#x5907;&#x5DE5;&#x4F5C;</h3>
+<p><strong>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x4F7F;&#x7528; root &#x6743;&#x9650;&#x767B;&#x5F55;&#x4E2D;&#x63A7;&#x673A; 132 &#x4E0A;&#x5E76;&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x5305;</strong></p>
+<pre><code>[tidb@dmmaster ~]# yum -y install epel-release git curl sshpass 
+[tidb@dmmaster ~]# yum -y install python-pip
+</code></pre><p><strong>&#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;&#x5728;&#x4E2D;&#x63A7;&#x673A;&#x4E0A;&#x521B;&#x5EFA; tidb &#x7528;&#x6237;&#x5E76;&#x751F;&#x6210; SSH &#x5BC6;&#x94A5;</strong></p>
+<p>1&#x3001;&#x521B;&#x5EFA; tidb &#x7528;&#x6237;</p>
+<pre><code>[tidb@dmmaster ~]# useradd -m -d /home/tidb tidb
+</code></pre><p>2&#x3001;&#x4E3A; tidb &#x7528;&#x6237;&#x8BBE;&#x7F6E;&#x5BC6;&#x7801;</p>
+<pre><code>[tidb@dmmaster ~]# echo &quot;password&quot;|passwd --stdin tidb
+</code></pre><p>3&#x3001;&#x4E3A; tidb &#x7528;&#x6237;&#x8BBE;&#x7F6E;&#x514D;&#x5BC6;&#x4F7F;&#x7528; sudo</p>
+<pre><code>[tidb@dmmaster ~]# echo &quot;tidb ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt;/etc/sudoers
+</code></pre><p>4&#x3001;&#x5207;&#x6362;&#x81F3; tidb &#x7528;&#x6237; home &#x76EE;&#x5F55;&#x5E76;&#x751F;&#x6210; SSH &#x5BC6;&#x94A5;</p>
+<pre><code>[tidb@dmmaster ~]# su - tidb
+[tidb@dmmaster ~]$ ssh-keygen -t rsa
+&#x4E00;&#x8DEF;&#x6309;&#x56DE;&#x8F66;&#x751F;&#x6210;&#x5BC6;&#x94A5;
+</code></pre><p><strong>&#x7B2C;&#x4E09;&#x6B65;&#xFF1A;&#x4F7F;&#x7528; tidb &#x7528;&#x6237;&#x5728;&#x4E2D;&#x63A7;&#x673A;&#x4E0B;&#x8F7D; DM-Ansible</strong></p>
+<pre><code>[tidb@dmmaster ~]$ wget https://download.pingcap.org/dm-ansible-v1.0.2.tar.gz
+</code></pre><p><strong>&#x7B2C;&#x56DB;&#x6B65;&#xFF1A;&#x5B89;&#x88C5; DM-Ansible &#x53CA;&#x5176;&#x4F9D;&#x8D56;&#x81F3;&#x4E2D;&#x63A7;&#x673A;</strong></p>
+<pre><code>[tidb@dmmaster ~]$ tar -xf dm-ansible-v1.0.2.tar.gz
+[tidb@dmmaster ~]$ mv dm-ansible-v1.0.2.tar.gz dm-ansible
+[tidb@dmmaster ~]$ cd /home/tidb/dm-ansible
+[tidb@dmmaster dm-ansible]$ sudo pip install --upgrade pip
+[tidb@dmmaster dm-ansible]$ sudo pip install -r ./requirements.txt
+</code></pre><p><strong>&#x7B2C;&#x4E94;&#x6B65;: &#x5728;&#x4E2D;&#x63A7;&#x673A;&#x4E0A;&#x914D;&#x7F6E; ssh &#x4E92;&#x4FE1;&#x548C; sudo &#x89C4;&#x5219;</strong></p>
+<pre><code>[tidb@dmmaster dm-ansible]$ cat hosts.ini 
+[servers]
+192.168.128.132
+192.168.128.133
+[all:vars]
+username = tidb
+ansible_ssh_port = 22
+ntp_server = ntp.aliyun.com
+</code></pre><p>dm-worker &#x4E3B;&#x673A;&#x5EFA;&#x7ACB; tidb &#x7528;&#x6237;&#x5E76;&#x5B8C;&#x6210;&#x4E92;&#x4FE1;&#xFF0C;&#x6B64;&#x5904;&#x8F93;&#x5165;&#x8FDC;&#x7A0B;&#x673A;&#x5668;&#x7684; root &#x5BC6;&#x7801; password</p>
+<pre><code>[tidb@dmmaster dm-ansible]$ ansible-playbook -i hosts.ini create_users.yml -u root -k
+SSH password: 
+PLAY [all] 
+********************************************************************
+TASK [create user] 
+********************************************************************
+changed: [192.168.128.133]
+TASK [set authorized key] 
+********************************************************************
+changed: [192.168.128.133]
+TASK [update sudoers file] ********************************************************************
+changed: [192.168.128.133]
+PLAY RECAP
+********************************************************************
+192.168.128.133    : ok=3    changed=3    unreachable=0    failed=0
+</code></pre><p><strong>&#x7B2C;&#x516D;&#x6B65;&#xFF1A;&#x4E0B;&#x8F7D; DM &#x53CA;&#x76D1;&#x63A7;&#x7EC4;&#x4EF6;&#x5B89;&#x88C5;&#x5305;&#x81F3;&#x4E2D;&#x63A7;&#x673A;</strong></p>
+<pre><code>[tidb@dmmaster dm-ansible]$ ansible-playbook local_prepare.yml
+PLAY [do local preparation] ********************************************************************
+TASK [download : Stop if ansible version is too low, make sure that the Ansible version is Ansible 2.5.0 or later, otherwise a compatibility issue occurs.] 
+********************************************************************
+ok: [localhost] =&gt; {
+    &quot;changed&quot;: false, 
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}
+&#x6B64;&#x5904;&#x6253;&#x5370;&#x65E5;&#x5FD7;&#x7701;&#x7565;
+localhost  : ok=13   changed=5    unreachable=0    failed=0
+</code></pre><p><strong>&#x7B2C;&#x4E03;&#x6B65;&#xFF1A;&#x4E0A;&#x6E38; MySQL &#x6570;&#x636E;&#x5E93;&#x5EFA;&#x7ACB; TiDB &#x6570;&#x636E;&#x8FC1;&#x79FB;&#x4E13;&#x7528;&#x5E10;&#x6237;</strong></p>
+<pre><code>root@localhost &gt;grant Reload,Replication slave, Replication client,select on *.* to tidb@&apos;%&apos; IDENTIFIED by &apos;tidb@2020&apos;;
+</code></pre><p><strong>&#x7B2C;&#x516B;&#x6B65;&#xFF1A;&#x4F7F;&#x7528; dmctl &#x52A0;&#x5BC6;&#x4E0A;&#x4E0B;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x767B;&#x5F55;&#x5BC6;&#x7801;</strong></p>
+<pre><code>[tidb@dmmaster bin]$ dmctl -encrypt tidb@2020
+BXTTVvKeWhXgAefaFRNoN0BS4XjZ85uZByE=
+</code></pre><h3 id="&#x90E8;&#x7F72;-dm-worker">&#x90E8;&#x7F72; dm-worker</h3>
+<p><strong>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x7F16;&#x5199; inventory.ini &#x6587;&#x4EF6;</strong></p>
+<p>&#x6B64;&#x5904;&#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x5B9A;&#x4E49; dm-master &#x548C; dm-worker&#xFF0C;&#x672C;&#x7AE0;&#x91C7;&#x53D6;&#x5355;&#x53F0;&#x90E8;&#x7F72;&#x591A;&#x53F0; dm-worker&#x3002;</p>
+<pre><code>[tidb@dmmaster dm-ansible]$ cat inventory.ini
+## DM modules
+[dm_master_servers]
+dm_master ansible_host=192.168.128.132
+[dm_worker_servers]
+dm_worker3306 ansible_host=192.168.128.133 deploy_dir=/data/mysql3306 dm_worker_port=13306 source_id=&quot;mysql3306&quot; server_id=13306 mysql_host=192.168.128.131 mysql_user=tidb mysql_password=BXTTVvKeWhXgAefaFRNoN0BS4XjZ85uZByE mysql_port=3306
+dm_worker3307 ansible_host=192.168.128.133 deploy_dir=/data/mysql3307 dm_worker_port=13307 source_id=&quot;mysql3307&quot; server_id=13307 mysql_host=192.168.128.131 mysql_user=tidb mysql_password=BXTTVvKeWhXgAefaFRNoN0BS4XjZ85uZByE mysql_port=3307
+dm_worker3308 ansible_host=192.168.128.133 deploy_dir=/data/mysql3308 dm_worker_port=13308 source_id=&quot;mysql3308&quot; server_id=13308 mysql_host=192.168.128.131 mysql_user=tidb mysql_password=BXTTVvKeWhXgAefaFRNoN0BS4XjZ85uZByE mysql_port=3308
+[dm_portal_servers]
+dm_portal ansible_host=192.168.128.132
+## Monitoring modules
+[prometheus_servers]
+prometheus ansible_host=192.168.128.132
+[grafana_servers]
+grafana ansible_host=192.168.128.132
+[alertmanager_servers]
+alertmanager ansible_host=192.168.128.132
+## Global variables
+[all:vars]
+cluster_name = dm-cluster
+ansible_user = tidb
+ansible_port = 5622
+dm_version = v1.0.2
+deploy_dir = /home/tidb/deploy
+grafana_admin_user = &quot;admin&quot;
+grafana_admin_password = &quot;admin&quot;
+</code></pre><pre><code>inventory.ini &#x6587;&#x4EF6;&#x53C2;&#x6570;&#x8BF4;&#x660E;
+[dm_master_servers]  dm-master &#x9009;&#x9879;&#xFF0C;&#x7528;&#x4E8E;&#x5B9A;&#x4E49;&#x54EA;&#x53F0;&#x4E3B;&#x673A;&#x662F;&#x4E2D;&#x63A7; dm-master
+[dm_worker_servers]  dm-worker &#x9009;&#x9879;&#xFF0C;&#x7528;&#x4E8E;&#x5B9A;&#x4E49; dm-worker &#x670D;&#x52A1;
+----dm_worker3306    dm&#x670D;&#x52A1;&#x5168;&#x5C40;&#x552F;&#x4E00;&#x6807;&#x7B7E;&#xFF0C;&#x914D;&#x5408;ansible-playbook -l &#x53C2;&#x6570;&#x4F7F;&#x7528;
+----ansible_host     &#x6307;&#x5B9A; dm-worker &#x90E8;&#x7F72;&#x5728;&#x54EA;&#x53F0;&#x4E3B;&#x673A;
+----dm_worker_port   &#x6307;&#x5B9A; dm-worker &#x542F;&#x52A8;&#x670D;&#x52A1;&#x7AEF;&#x53E3;&#x53F7;
+----deploy_dir       &#x6307;&#x5B9A; dm-worker &#x90E8;&#x7F72;&#x5B89;&#x88C5;&#x76EE;&#x5F55;
+----source_id        &#x6307;&#x5B9A; dm-worker &#x7684; source-id
+----mysql_host       &#x4E0A;&#x6E38;MySQL&#x4E3B;&#x673A;&#x5730;&#x5740;
+----mysql_user       &#x4E0A;&#x6E38;MySQL&#x767B;&#x5F55;&#x7528;&#x6237;   
+----mysql_port       &#x4E0A;&#x6E38;MySQL&#x670D;&#x52A1;&#x7AEF;&#x53E3;
+----mysql_password   &#x4E0A;&#x6E38;MySQL&#x767B;&#x5F55;&#x5BC6;&#x7801;(&#x5FC5;&#x987B;dmctl&#x52A0;&#x5BC6;&#x540E;&#x7684;&#x503C;,&#x53C2;&#x8003;2.2&#x7AE0;&#x7B2C;&#x516B;&#x6B65;)
+</code></pre><p><strong>&#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;&#x6267;&#x884C;&#x5B89;&#x88C5;&#x5E76;&#x542F;&#x52A8; dm-worker</strong></p>
+<p>&#x5B89;&#x88C5; dm-worker:</p>
+<pre><code>[tidb@dmmaster dm-ansible]$ ansible-playbook deploy.yml
+PLAY RECAP **********************************************************************
+alertmanager    : ok=13   changed=7    unreachable=0    failed=0   
+dm_master       : ok=13   changed=8    unreachable=0    failed=0   
+dm_portal       : ok=12   changed=5    unreachable=0    failed=0   
+dm_worker3306   : ok=14   changed=2    unreachable=0    failed=0   
+dm_worker3307   : ok=14   changed=2    unreachable=0    failed=0   
+dm_worker3308   : ok=14   changed=2    unreachable=0    failed=0   
+grafana         : ok=17   changed=10   unreachable=0    failed=0   
+localhost       : ok=4    changed=3    unreachable=0    failed=0   
+prometheus      : ok=15   changed=13   unreachable=0    failed=0
+#&#x51FA;&#x73B0;&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x8868;&#x793A;&#x90E8;&#x7F72;&#x6210;&#x529F;
+</code></pre><p>&#x542F;&#x52A8; dm-worker:</p>
+<pre><code>[tidb@dmmaster dm-ansible]$ ansible-playbook start.yml 
+PLAY RECAP **********************************************************************
+alertmanager   : ok=10   changed=1    unreachable=0    failed=0   
+dm_master      : ok=10   changed=1    unreachable=0    failed=0   
+dm_portal      : ok=9    changed=1    unreachable=0    failed=0   
+dm_worker3306  : ok=11   changed=1    unreachable=0    failed=0   
+dm_worker3307  : ok=11   changed=1    unreachable=0    failed=0   
+dm_worker3308  : ok=11   changed=1    unreachable=0    failed=0   
+grafana        : ok=13   changed=1    unreachable=0    failed=0   
+localhost      : ok=4    changed=0    unreachable=0    failed=0   
+prometheus     : ok=13   changed=4    unreachable=0    failed=0 
+#&#x51FA;&#x73B0;&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x8868;&#x793A; dm &#x542F;&#x52A8;&#x6210;&#x529F;&#xFF0C;&#x6B64;&#x65F6;&#x5DF2;&#x7ECF;&#x5F00;&#x59CB;&#x540C;&#x6B65;&#x4E0A;&#x6E38; binlog &#x81F3; dm &#x673A;&#x5668;&#x4E2D;&#x3002;
+</code></pre><h3 id="&#x914D;&#x7F6E;&#x542F;&#x52A8;-task">&#x914D;&#x7F6E;&#x542F;&#x52A8; task</h3>
+<p><strong>&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x7ED3;&#x6784;&#x5408;&#x5E76;&#x81F3;&#x4E0B;&#x6E38; TiDB &#x8BF4;&#x660E;</strong></p>
+<table>
+<thead>
+<tr>
+<th>&#x4E0A;&#x6E38;&#x5206;&#x5E93;</th>
+<th>&#x4E0A;&#x6E38;&#x5206;&#x8868;</th>
+<th>&#x4E0B;&#x6E38;&#x5408;&#x5E76;&#x5E93;&#x540D;</th>
+<th>&#x4E0B;&#x6E38;&#x5408;&#x5E76;&#x8868;&#x540D;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shard_db01</td>
+<td>shard_tb01</td>
+<td>merge_db</td>
+<td>merge_tb</td>
+</tr>
+<tr>
+<td>shard_db02</td>
+<td>shard_tb02</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>shard_db03</td>
+<td>shard_tb03</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>shard_db04</td>
+<td>shard_tb04</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>shard_db05</td>
+<td>shard_tb05</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>shard_db06</td>
+<td>shard_tb06</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x51C6;&#x5907;</strong></p>
+<pre><code>CREATE TABLE shard_tb01~06 (
+  id bigint(20) NOT NULL AUTO_INCREMENT COMMENT&apos;&#x4E3B;&#x952E;ID&apos;,
+  uid bigint(20) NOT NULL COMMENT &apos;&#x7528;&#x6237;ID&apos;,
+  uname varchar(10) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;&#x7528;&#x6237;&#x540D;&apos;,
+  gender tinyint(1) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;&#x6027;&#x522B; 0-&#x7537;&#x3001;1-&#x5973;&apos;,
+  shard varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;&#x5206;&#x7247;&#x4FE1;&#x606F;&apos;,
+  mobile varchar(15) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;&#x8054;&#x7CFB;&#x7535;&#x8BDD;&apos;,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;&#x5206;&#x5E93;&#x5206;&#x8868;&apos;;
+INSERT INTO shard_db01.shard_tb01 
+(uid,uname,gender,shard,mobile) VALUES
+(&apos;10001&apos;,&apos;tb01001&apos;,&apos;0&apos;,&apos;shard_db01_tb01&apos;,&apos;13678189817&apos;),(&apos;10002&apos;,&apos;tb01002&apos;,&apos;1&apos;,&apos;shard_db01_tb01&apos;,&apos;13675222817&apos;);
+INSERT INTO shard_db02.shard_tb02 
+(uid,uname,gender,shard,mobile) VALUES (&apos;20001&apos;,&apos;tb02001&apos;,&apos;1&apos;,&apos;shard_db02_tb02&apos;,&apos;13675222333&apos;), (&apos;20002&apos;,&apos;tb02002&apos;,&apos;0&apos;,&apos;shard_db02_tb02&apos;,&apos;13985222363&apos;);
+INSERT INTO shard_db03.shard_tb03 
+(uid,uname,gender,shard,mobile) VALUES (&apos;30001&apos;,&apos;tb03001&apos;,&apos;0&apos;,&apos;shard_db03_tb03&apos;,&apos;13585392373&apos;),
+(&apos;30002&apos;,&apos;tb03002&apos;,&apos;0&apos;,&apos;shard_db03_tb03&apos;,&apos;13913150046&apos;);
+
+INSERT INTO shard_db04.shard_tb04 
+(uid,uname,gender,shard,mobile) VALUES (&apos;40001&apos;,&apos;tb04001&apos;,&apos;0&apos;,&apos;shard_db04_tb04&apos;,&apos;13713850891&apos;),(&apos;40002&apos;,&apos;tb04002&apos;,&apos;1&apos;,&apos;shard_db04_tb04&apos;,&apos;13813856191&apos;);
+INSERT INTO shard_db05.shard_tb05 
+(uid,uname,gender,shard,mobile) VALUES (&apos;50001&apos;,&apos;tb05001&apos;,&apos;1&apos;,&apos;shard_db05_tb05&apos;,&apos;15813876696&apos;),(&apos;50002&apos;,&apos;tb05002&apos;,&apos;0&apos;,&apos;shard_db05_tb05&apos;,&apos;18813576992&apos;);
+INSERT INTO shard_db06.shard_tb06 
+(uid,uname,gender,shard,mobile) VALUES (&apos;60001&apos;,&apos;tb06001&apos;,&apos;1&apos;,&apos;shard_db06_tb06&apos;,&apos;17813598198&apos;),(&apos;60002&apos;,&apos;tb06002&apos;,&apos;1&apos;,&apos;shard_db06_tb06&apos;,&apos;17513788131&apos;);
+</code></pre><p><strong>&#x5408;&#x5E93;&#x5408;&#x8868; task &#x7684; yaml &#x6587;&#x4EF6;</strong></p>
+<pre><code>[tidb@tidb-dm-4-0-95 task]$ cat shardmysql_to_tidb.yaml
+name: &quot;shard_to_tidb&quot;   #task &#x540D;&#x79F0;&#xFF0C;&#x5FC5;&#x987B;&#x5168;&#x5C40;&#x552F;&#x4E00;
+is-sharding: true    #&#x4E0A;&#x6E38;&#x662F;&#x4E0D;&#x662F;&#x8FDB;&#x884C;&#x4E86;&#x5206;&#x5E93;&#x5206;&#x8868;&#x5E93;
+task-mode: &quot;all&quot;    #&#x8FC1;&#x79FB;&#x540C;&#x6B65;&#x65B9;&#x5F0F; full-&#x5168;&#x91CF;&#x3001;incremental-&#x589E;&#x91CF;&#x3001;all-&#x5168;&#x91CF;+&#x589E;&#x52A0;
+meta-schema: &quot;tidb_meta&quot;   #&#x5B9A;&#x4E49;&#x4E0B;&#x6E38;&#x4FDD;&#x7559;&#x8FC1;&#x79FB;&#x70B9;&#x4F4D;&#x4FE1;&#x606F;&#x5E93;&#x540D;&#x79F0;
+remove-meta: false
+target-database:                                   
+  host: &quot;192.168.206.28&quot; #&#x4E0B;&#x6E38; TiDB &#x4E3B;&#x673A; IP
+  port: 4000             #TiDB &#x8BBF;&#x95EE;&#x7AEF;&#x53E3;
+  user: &quot;root&quot;           #TiDB &#x767B;&#x5F55;&#x7528;&#x6237;
+  password: &quot;vLnqQt44rNFHSxA&quot;    #&#x4F7F;&#x7528; dmctl &#x52A0;&#x5BC6;&#x7684;&#x767B;&#x5F55;&#x5BC6;&#x7801;
+mysql-instances:
+-
+  source-id: &quot;mysql3306&quot;   #&#x5FC5;&#x987B;&#x4E0E; inventory.ini &#x4E2D;&#x5BF9;&#x5E94;&#x7684; source-id &#x4E00;&#x81F4;
+  route-rules: [&quot;rt000&quot;,&quot;rt001&quot;]      #&#x5E93;&#x8868;&#x5408;&#x5E76;&#x89C4;&#x5219;
+  filter-rules: [&quot;ymdd-filter-rule&quot;]  #&#x8FC7;&#x6EE4;&#x89C4;&#x5219;
+  mydumper-config-name: &quot;global&quot;
+  loader-config-name: &quot;global&quot;
+  syncer-config-name: &quot;global&quot;
+  black-white-list: &quot;br01&quot;       #&#x767D;&#x540D;&#x5355;&#x5217;&#x8868;
+  column-mapping-rules: [&quot;cm001&quot;]   #&#x81EA;&#x589E;&#x4E3B;&#x952E;&#x91CD;&#x8BA1;&#x7B97;&#x89C4;&#x5219;
+-
+  source-id: &quot;mysql3307&quot;
+  route-rules: [&quot;rt000&quot;,&quot;rt001&quot;]
+  filter-rules: [&quot;ymdd-filter-rule&quot;]
+  mydumper-config-name: &quot;global&quot;
+  loader-config-name: &quot;global&quot;
+  syncer-config-name: &quot;global&quot;
+  black-white-list: &quot;br01&quot;
+  column-mapping-rules: [&quot;cm002&quot;]
+-
+  source-id: &quot;mysql3308&quot;
+  route-rules: [&quot;rt000&quot;,&quot;rt001&quot;]
+  filter-rules: [&quot;ymdd-filter-rule&quot;]
+  mydumper-config-name: &quot;global&quot;
+  loader-config-name: &quot;global&quot;
+  syncer-config-name: &quot;global&quot;
+  black-white-list: &quot;br01&quot;
+  column-mapping-rules: [&quot;cm003&quot;]
+filters:
+  ymdd-filter-rule:
+    schema-pattern: &quot;shard_db *&quot;
+    #&#x4EE5;&#x4E0B; 2 &#x884C;&#x5B9A;&#x4E49;&#x5FFD;&#x7565;&#x7684; binlog &#x4E8B;&#x4EF6;
+    events: [&quot;truncate table&quot;,&quot;delete&quot;,&quot;drop table&quot;,&quot;drop database&quot;]
+    action: Ignore  
+
+routes:
+  rt000:
+    #&#x5C06;&#x4E0A;&#x6E38;&#x6240;&#x6709; shard_db*&#x5339;&#x914D;&#x7684;&#x5E93;&#x5408;&#x5E76;&#x81F3; merge_db &#x5E93;
+    schema-pattern: &quot;shard_db*&quot;
+    target-schema: &quot;merge_db&quot;
+  rt001:
+    #&#x5C06;&#x4E0A;&#x6E38;&#x6240;&#x6709; shard_tb*&#x5339;&#x914D;&#x7684;&#x5206;&#x8868;&#x5408;&#x5E76;&#x81F3; merge_db &#x5E93;&#x7684; merge_tb &#x8868;&#x4E2D;
+    schema-pattern: &quot;shard_db*&quot;
+    table-pattern: &quot;shard_tb??&quot;
+    target-schema: &quot;merge_db&quot;
+    target-table:  &quot;merge_tb&quot;
+
+#&#x7531;&#x4E8E;&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x4E86;&#x81EA;&#x589E;&#x4E3B;&#x952E;&#xFF0C;&#x6B64;&#x5904;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E0B;&#x6E38;&#x4E3B;&#x952E;&#x91CD;&#x7B97;&#x5904;&#x7406;
+#&#x7279;&#x522B;&#x6CE8;&#x610F;&#x4E0A;&#x6E38;&#x7684;&#x81EA;&#x589E;&#x4E3B;&#x952E;&#x4E0D;&#x80FD;&#x6709;&#x4EFB;&#x4F55;&#x4E1A;&#x52A1;&#x5173;&#x7CFB;
+column-mappings:
+  cm001:
+    schema-pattern: &quot;shard_db*&quot;
+    table-pattern: &quot;shard_tb??&quot;
+    expression: &quot;partition id&quot;
+    source-column: &quot;id&quot;
+    target-column: &quot;id&quot;
+    arguments: [&quot;1&quot;,&quot;shard_db&quot;,&quot;shard_tb&quot;]
+  cm002:
+    schema-pattern: &quot;shard_db*&quot;
+    table-pattern: &quot;shard_tb??&quot;
+    expression: &quot;partition id&quot;
+    source-column: &quot;id&quot;
+    target-column: &quot;id&quot;
+    arguments: [&quot;2&quot;,&quot;shard_db&quot;,&quot;shard_tb&quot;]
+  cm003:
+    schema-pattern: &quot;shard_db*&quot;
+    table-pattern: &quot;shard_tb??&quot;
+    expression: &quot;partition id&quot;
+    source-column: &quot;id&quot;
+    target-column: &quot;id&quot;
+    arguments: [&quot;3&quot;,&quot;shard_db&quot;,&quot;shard_tb&quot;]
+#&#x9ED1;&#x767D;&#x540D;&#x5355;&#x5B9A;&#x4E49;
+black-white-list:
+  br01:
+    do-dbs: [&quot;~shard_db*&quot;]  #&#x9700;&#x8981;&#x540C;&#x6B65;&#x7684;&#x5E93;
+    #&#x9700;&#x8981;&#x5FFD;&#x7565;&#x540C;&#x6B65;&#x7684;&#x5E93;
+    ignore-dbs: [&quot;mysql&quot;,&quot;performance_schema&quot;,&quot;information_schema&quot;]
+    #&#x9700;&#x8981;&#x5FFD;&#x7565;&#x540C;&#x6B65;&#x7684;&#x54EA;&#x4E2A;&#x5E93;&#x7684;&#x54EA;&#x5F20;&#x8868;
+    ignore-tables:
+    - db-name: &quot;~shard_db*&quot;
+      tbl-name: &quot;~txc_undo_log*&quot;
+#&#x4EE5;&#x4E0B;&#x9ED8;&#x8BA4;&#x5373;&#x53EF; 
+mydumpers:
+  global:
+    threads:
+    chunk-filesize: 64
+    skip-tz-utc: true
+    extra-args: &quot;  --no-locks &quot;
+loaders:
+  global:
+    pool-size: 64
+    dir: &quot;./dumped_data&quot;
+syncers:
+  global:
+    worker-count: 6
+    batch: 1000
+</code></pre><p><strong>&#x542F;&#x52A8;&#x8FC1;&#x79FB;&#x540C;&#x6B65;&#x4EFB;&#x52A1;</strong></p>
+<pre><code>[tidb@dmmaster dmctl]$ dmctl -master-addr 192.168.128.132:8261
+&#xBB; start-task shard_to_tidb.yaml
+&#xBB; query-status
+{
+    &quot;result&quot;: true,
+    &quot;msg&quot;: &quot;&quot;,
+    &quot;tasks&quot;: [
+        {
+            &quot;taskName&quot;: &quot;shard_to_tidb&quot;,
+            &quot;taskStatus&quot;: &quot;Running&quot;,
+            &quot;workers&quot;: [
+                &quot;192.168.128.133:53306&quot;,
+                &quot;192.168.128.133:53307&quot;,
+                &quot;192.168.128.133:53308&quot;
+            ]
+        }
+    ]
+}
+#&#x4EFB;&#x52A1;&#x8FD0;&#x884C;&#x6B63;&#x5E38;
+</code></pre><p><strong>&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x5168;&#x91CF;&#x5BFC;&#x5165; TiDB &#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x767B;&#x5F55; dm-worker &#x673A;&#x5668;&#xFF0C;&#x5220;&#x9664;&#x5168;&#x5907;&#x5E76;&#x4FDD;&#x7559;&#x8868;&#x7ED3;&#x6784;&#x6587;&#x4EF6;</strong>
+<strong>&#xFF08;&#x8282;&#x7EA6;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x6210;&#x672C;&#xFF09;&#xFF0C;&#x64CD;&#x4F5C;&#x5982;&#x4E0B;</strong></p>
+<p><strong>&#x5148;&#x770B;&#x4E00;&#x4E0B;&#x5907;&#x4EFD;&#x76EE;&#x5F55;&#x7684;&#x6587;&#x4EF6;</strong></p>
+<pre><code>[root@dmworker dumped_data.shard_to_tidb]# ll |awk &apos;{print $NF}&apos;
+metadata
+shard_db01-schema-create.sql
+shard_db01.shard_tb01-schema.sql
+shard_db01.shard_tb01.sql
+shard_db02-schema-create.sql
+shard_db02.shard_tb02-schema.sql
+shard_db02.shard_tb02.sql
+</code></pre><p><strong>&#x5220;&#x9664;&#x5907;&#x4EFD;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5FC5;&#x987B;&#x4FDD;&#x7559;&#x8868;&#x5E93;&#x7ED3;&#x6784;&#x4FE1;&#x606F;&#x5426;&#x5219;&#x4F1A;&#x51FA;&#x9519;</strong></p>
+<pre><code>[root@dmworker dumped_data.shard_to_tidb]# ls|grep -v schema|xargs rm -f
+[root@dmworker dumped_data.shard_to_tidb]# ls
+shard_db01.shard_tb01-schema.sql    shard_db02.shard_tb02-schema.sql 
+shard_db02-schema-create.sql
+</code></pre><p><strong>&#x67E5;&#x770B;&#x4E0A;&#x6E38;&#x5206;&#x5E93;&#x5206;&#x8868;&#x6570;&#x636E;&#x5DF2;&#x8FC1;&#x79FB;&#x5230;&#x4E0B;&#x6E38; merge_db &#x5E93; merge_tb &#x8868;</strong></p>
+<p><img src="https://uploader.shimo.im/f/XFHFGbCmJRw2EgKu.png!thumbnail" alt="&#x56FE;&#x7247;"></p>
+<h2 id="dm-&#x5E38;&#x7528;&#x7BA1;&#x7406;&#x547D;&#x4EE4;">DM &#x5E38;&#x7528;&#x7BA1;&#x7406;&#x547D;&#x4EE4;</h2>
+<h3 id="dm-worker-&#x90E8;&#x7F72;&#x7BA1;&#x7406;">dm-worker &#x90E8;&#x7F72;&#x7BA1;&#x7406;</h3>
+<p><strong>&#x90E8;&#x7F72;&#x547D;&#x4EE4; deploy.yml</strong></p>
+<pre><code>#&#x90E8;&#x7F72;&#x6240;&#x6709;inventory.ini&#x4E2D;&#x6240;&#x6709;&#x9009;&#x9879;&#x4E2D;&#x7684;&#x4E3B;&#x673A;&#x670D;&#x52A1;
+[tidb@dmmaster dm-ansible]$ ansible-playbook deploy.yml
+#&#x4F7F;&#x7528;-l &#x53C2;&#x6570;&#x90E8;&#x7F72;&#x6307;&#x5B9A;&#x6807;&#x7B7E;&#xFF0C;&#x5982;&#x90E8;&#x7F72; mysql3306 &#x6807;&#x7B7E;&#x7684; dm-worker &#x4E3B;&#x673A;&#x670D;&#x52A1;
+[tidb@dmmaster dm-ansible]$ ansible-playbook deploy.yml -l mysql3306
+#&#x4F7F;&#x5F97; --tags &#x90E8;&#x7F72;&#x6307;&#x5B9A;&#x90E8;&#x7F72; deploy.yml &#x4E2D;&#x7684;&#x67D0;&#x4E2A;&#x6807;&#x7B7E;&#x4EFB;&#x52A1;&#xFF0C;&#x5982;&#x4EC5;&#x90E8;&#x7F72;&#x6240;&#x6709;&#x7684; dm-worker
+[tidb@dmmaster dm-ansible]$ ansible-playbook deploy.yml --tags=dm-worker
+</code></pre><p><strong>dm-worker &#x542F;&#x52A8;&#x505C;&#x6B62;&#x66F4;&#x65B0;&#x547D;&#x4EE4;</strong></p>
+<pre><code>#&#x542F;&#x52A8; dm &#x96C6;&#x7FA4;&#xFF0C;&#x5F00;&#x59CB;&#x81EA;&#x52A8;&#x62C9;&#x53D6;&#x4E0A;&#x6E38; MySQL &#x7684; binlog &#x65E5;&#x5FD7;
+#&#x76F8;&#x5F53;&#x4E8E;&#x5F00;&#x542F;&#x4E86; MySQL &#x7684; Slave_IO_Running &#x7EBF;&#x7A0B;
+[tidb@dmmaster dm-ansible]$ ansible-playbook start.yml
+#&#x505C;&#x6B62; dm &#x96C6;&#x7FA4;&#xFF0C;&#x505C;&#x6B62;&#x62C9;&#x53D6;&#x4E0A;&#x6E38; MySQL &#x7684; binlog&#x65E5;&#x5FD7;
+[tidb@dmmaster dm-ansible]$ ansible-playbook stop.yml
+#&#x6EDA;&#x52A8;&#x66F4;&#x65B0; dm &#x96C6;&#x7FA4;
+[tidb@dmmaster dm-ansible]$ ansible-playbook rolling_update.yml
+*&#x6B64;&#x4E09;&#x4E2A;yml&#x547D;&#x4EE4;&#x4E5F;&#x53EF;&#x4EE5;&#x914D;&#x5408;-l&#x3001;--tags&#x4E00;&#x8D77;&#x4F7F;&#x7528;&#x3002;
+</code></pre><h3 id="dm-worker-task-&#x7BA1;&#x7406;">dm-worker task &#x7BA1;&#x7406;</h3>
+<p><strong>&#x7BA1;&#x7406; Tas k&#x9700;&#x8981;&#x4F7F;&#x7528; dmctl &#x8FDE;&#x63A5;&#x4E0A;&#x4E2D;&#x63A7;&#x673A;&#xFF0C;&#x8F93;&#x5165; help &#x67E5;&#x770B;&#x6240;&#x6709;&#x547D;&#x4EE4;&#x4FE1;&#x606F;</strong></p>
+<pre><code>#&#x8FDE;&#x63A5;&#x4E2D;&#x63A7;
+[tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
+&#xBB;help
+</code></pre><p><strong>start-task &#x547D;&#x4EE4;&#x8BFB;&#x53D6; task &#x6587;&#x4EF6;&#x542F;&#x52A8;&#x540C;&#x6B65;&#x4EFB;&#x52A1;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x5F00;&#x542F; MySQL &#x7684; Slave_SQL_Running &#x7EBF;&#x7A0B;</strong></p>
+<pre><code>[tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
+#&#x542F;&#x52A8; task.yaml &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x6240;&#x6709; dm-worker &#x6570;&#x636E;&#x5199;&#x5165;&#x4E0B;&#x6E38;&#x5E93;&#x4EFB;&#x52A1;
+&#xBB;start-task shard_to_tidb.yaml
+#&#x542F;&#x52A8; shard_to_tidb.yaml &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x67D0;&#x4E2A; dm-worker &#x6570;&#x636E;&#x5199;&#x5165;&#x4E0B;&#x6E38;&#x5E93;&#x4EFB;&#x52A1;
+#&#x542F;&#x52A8; shard_to_tidb.yaml &#x5BF9;&#x5E94;&#x7684;&#x5B50;&#x4EFB;&#x52A1; 192.168.128.133:53307&#xFF0C;&#x5982;&#x4E0B;:
+&#xBB;start-task -w &apos;192.168.128.133:53307&apos; shard_to_tidb.yaml
+</code></pre><p><strong>stop-task &#x547D;&#x4EE4;&#x7EC8;&#x6B62;&#x540C;&#x6B65;&#x4EFB;&#x52A1;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x505C;&#x6B62; MySQL &#x7684; Slave_SQL_Running &#x7EBF;&#x7A0B;</strong></p>
+<pre><code>[tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
+#&#x505C;&#x6B62; shard_to_tidb.yaml &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x6240;&#x6709; dm-worker &#x6570;&#x636E;&#x5199;&#x5165;&#x4E0B;&#x6E38;&#x5E93;&#x4EFB;&#x52A1;
+#&#x4E5F;&#x53EF;&#x4F7F;&#x7528;-w &#x53C2;&#x6570;&#x505C;&#x6B62;&#x67D0;&#x4E2A;&#x6307;&#x5B9A;&#x7684;&#x4EFB;&#x52A1;[&#x53EF;&#x9009; -w IP:PORT]
+&#xBB;start-task shard_to_tidb
+</code></pre><p><strong>query-status &#x547D;&#x4EE4;&#x67E5;&#x770B;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#xFF0C;&#x9ED8;&#x8BA4;&#x663E;&#x793A;&#x6240;&#x6709;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#xFF0C;&#x53EF;&#x6307;&#x5B9A;&#x4EFB;&#x52A1;&#x540D;&#x67E5;&#x770B;</strong></p>
+<pre><code>[tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
+#&#x67E5;&#x770B; shard_to_tidb &#x4EFB;&#x52A1;&#x5F53;&#x524D;&#x72B6;&#x6001;
+&#xBB;query-status shard_to_tidb
+</code></pre><p><strong>query-error &#x547D;&#x4EE4;&#x67E5;&#x770B;&#x4EFB;&#x52A1;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#xFF0C;&#x9ED8;&#x8BA4;&#x663E;&#x793A;&#x6240;&#x6709;&#x4EFB;&#x52A1;&#x7684;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#xFF0C;&#x53EF;&#x6307;&#x5B9A;&#x4EFB;&#x52A1;&#x540D;&#x67E5;&#x770B;</strong></p>
+<pre><code>[tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
+#&#x67E5;&#x770B; shard_to_tidb &#x4EFB;&#x52A1;&#x5F53;&#x524D;&#x72B6;&#x6001;
+&#xBB;query-error shard_to_tidb
+</code></pre><p><strong>skip_sql &#x8DF3;&#x8FC7;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;sql&#x8BED;&#x53E5;</strong></p>
+<pre><code>#&#x67E5;&#x770B;&#x51FA;&#x9519;&#x7684; binlog &#x4F4D;&#x7F6E;(failedBinlogPosition)&#xFF0C;&#x786E;&#x5B9A;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x8DEF;&#x8FC7;&#x9519;&#x8BEF;
+query-error shard_to_tidb
+#&#x8DF3;&#x8FC7;&#x5F53;&#x524D;&#x9519;&#x8BEF;&#x7684; binlog
+sql-skip --worker=192.168.128.133:53307 --binlog-pos=mysql-bin|000001.000003:737983  shard_to_tidb
+#&#x6062;&#x590D;&#x7EE7;&#x7EED;&#x4EFB;&#x52A1;
+resume-task --worker=192.168.128.133:53307  shard_to_tidb
+#&#x518D;&#x6B21;&#x67E5;&#x770B;&#x9519;&#x8BEF;&#x4FE1;&#x606F;
+query-error shard_to_tidb
+</code></pre>
                                 
                                 </section>
                             
@@ -2929,7 +3400,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践","level":"5.5.1.2","depth":3,"next":{"title":"5.2 Oracle 到 TiDB （OGG）","level":"5.5.2","depth":2,"path":"session4/chapter5/from-oracle-to-tidb.md","ref":"session4/chapter5/from-oracle-to-tidb.md","articles":[]},"previous":{"title":"5.1.1 DM 同步单机 MySQL 到 TiDB 的实践","level":"5.5.1.1","depth":3,"path":"session4/chapter5/from-single-mysql-to-tidb.md","ref":"session4/chapter5/from-single-mysql-to-tidb.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter5/from-sharding-to-tidb.md","mtime":"2020-03-08T11:14:08.893Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:14:44.604Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践","level":"5.5.1.2","depth":3,"next":{"title":"5.2 Oracle 到 TiDB （OGG）","level":"5.5.2","depth":2,"path":"session4/chapter5/from-oracle-to-tidb.md","ref":"session4/chapter5/from-oracle-to-tidb.md","articles":[]},"previous":{"title":"5.1.1 DM 同步单机 MySQL 到 TiDB 的实践","level":"5.5.1.1","depth":3,"path":"session4/chapter5/from-single-mysql-to-tidb.md","ref":"session4/chapter5/from-single-mysql-to-tidb.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter5/from-sharding-to-tidb.md","mtime":"2020-03-08T11:15:26.710Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:16:10.295Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
