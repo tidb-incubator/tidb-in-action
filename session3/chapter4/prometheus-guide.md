@@ -1,6 +1,6 @@
 # Prometheus 简单介绍 
 ## prometheus 简介
-![图片](https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png!thumbnail =10x300)![图片](https://uploader.shimo.im/f/PvMs4K4IERQGIxou.png!thumbnail)
+![图片](https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png =20x300)![图片](https://uploader.shimo.im/f/PvMs4K4IERQGIxou.png!thumbnail)
 
 TiDB  使用开源时序数据库  Prometheus  作为监控和性能指标信息存储方案，使用 Grafana  作为可视化组件进行展示。
 
