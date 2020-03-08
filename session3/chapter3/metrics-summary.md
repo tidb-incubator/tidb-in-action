@@ -1,6 +1,6 @@
 # 监控汇总表
 
-由于 TiDB 的监控表太多，每次查询一项监控都去执行一次 SQL 查询非常的不方便，这就是监控汇总表的由来。
+由于 TiDB 的监控表太多，TiDB 4.0 提供了监控汇总表，来减少使用 SQL 对各个监控指标进行逐项查询的工作量。
 
 监控汇总表 `information_schema.metrics_summary` 和 `information_schema.metrics_summary_by_label` 用于汇总所有监控数据。两者不同在于 information_schema.metrics_summary_by_label 会按照 label 进行汇总。
 
