@@ -211,7 +211,7 @@
     * [1.1 TiDB 开源社区现状及发展简史](session5/chapter1/a-brief-history-of-tidb.md) @崔秋
     * [1.2 TiDB 开源生态介绍](session5/chapter1/tidb-open-source-ecosystem.md) @殷成文 @杨可奥 @童牧 @叶奔
     * [1.3 TiDB 开源社区治理](session5/chapter1/community-governance.md) @崔秋
-    * [1.4 社区重要合作开发](session5/chapter1/community-cooperations.md) @唐刘 @崔秋
+    * [1.4 TiDB 开源社区重要合作开发](session5/chapter1/community-cooperations.md) @唐刘 @崔秋
 * 2 TiDB 开源生态
     * 2.1 社区重要活动介绍
         * [2.1.1 TiDB Devcon](session5/chapter2/devcon.md) @余梦杰
