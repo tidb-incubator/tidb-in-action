@@ -14,5 +14,5 @@ TiDB 集群问题导图是一个思维导图，汇集了各个模块常见的一
 ### 问题反馈
 由于 TiDB 一直在快速迭代中，该导图不可能把所有可能的问题都提前列出来，只能是一点点完善，如果在该导图中找不到答案的问题可以搜索官方文档或者在 askTUG 上发帖子询问。
 
-另外在使用 TiDB 集群问题导图的过程中如果有遇到任何问题，或者对于改进该导图有自己的建议，或者导图中一些信息是错误的，欢迎给 https://github.com/pingcap/tidb-map[ ](https://github.com/pingcap/tidb-map)提 issue。
+另外在使用 TiDB 集群问题导图的过程中如果有遇到任何问题，或者对于改进该导图有自己的建议，或者导图中一些信息是错误的，欢迎给 https://github.com/pingcap/tidb-map 提 issue。
 
