@@ -140,15 +140,15 @@ TiDB 默认会使用很多文件描述符，工作节点和上面的 Docker 进�
 
 - 重置京东云 Kubernetes 集群所有 Node 的登录密码
 
- ![重置登陆密码](/res/session2/chapter1/tidb-operator-deployment-public-jdcloud/1.png)
+   ![重置登陆密码](/res/session2/chapter1/tidb-operator-deployment-public-jdcloud/1.png)
 
 - 控制台登陆 Node
 
 - 设置工作节点的 `ulimit` 值，详情可以参考[如何设置 ulimit](https://access.redhat.com/solutions/61334)
 
-```bash
+  ```bash
   sudo vim /etc/security/limits.conf
-```
+  ```
 
   设置 root 账号的 `soft` 和 `hard` 的 `nofile` 大于等于 `1048576` 。
 
@@ -160,7 +160,11 @@ TiDB 默认会使用很多文件描述符，工作节点和上面的 Docker 进�
 
   设置 `LimitNOFILE` 大于等于 `1048576`
 
-- 修改完后重启Node节点
+- 修改完后重启 Docker 服务
+  ```
+  systemctl daemon-reload
+  systemctl restart docker
+  ```
 
 > **注意：**
 >
