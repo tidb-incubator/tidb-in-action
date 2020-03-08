@@ -9,28 +9,23 @@ Titan 存储引擎的主要设计灵感来源于 USENIX FAST 2016 上发表的�
 * 现有 RocksDB 实例无需长期停机转换数据，可在线升级 Titan
 * 100% 兼容 TiKV 使用的全部 RocksDB 特性
 * 尽量减少对 RocksDB 的侵入性改动，提升 Titan 同未来新版本 RocksDB 的兼容性。
+
 # 8.1.2 架构与实现
 Titan 维持 RocksDB 的写入流程不变，在 Flush 和 Compaction 时刻将大 value 从 LSM-Tree 中进行分离并存储到 BlobFile 中。同 RocksDB 相比，Titan 增加了 BlobFile，TitanTableBuilder 和 Garbage Collection（GC）等组件，下面我们将会对这些组件逐一介绍。
 
-![1.png](/res/session1/chapter8/titan-internal/1.png)
-
-图 1 Titan 工作原理示意图
+![图 1 Titan 工作原理示意图](/res/session1/chapter8/titan-internal/1.png)
 
 ### BlobFile
 BlobFile 是存放 LSM-tree 中分离得到的 KV 记录的文件，它由 heeader、record 、meta block、meta index 和 footer 组成。其中每个 record 用于存放一个 key-value 对；meta block 用于在未来保存用户自定义数据；而 meta index  则用于加快检索 meta block 的速度。
 
-![2.png](/res/session1/chapter8/titan-internal/2.png)
+![图 2 BlobFile 文件格式](/res/session1/chapter8/titan-internal/2.png)
 
-图 2 BlobFile 文件格式
-
-为了充分利用 prefetch 机制提高顺序扫描数据时的性能，BlobFile 中的 key-value 是按照 key 的顺序有序存放的。除了从 LSM-tree 中分离出的 value 之外，blob record 中还保存了一份 key 的数据。在这份额外存储的 key 的帮助下，Titan 用较小的写放大收获了 GC 时快速查询 key 最新状态的能力。GC 则会利用 key 的更新信息来确定 value 是否已经过期可以被回收。考虑到 Titan 中存储的 value 大小偏大，将其压缩则可以获得较为显著的空间收益。BlobFile 可以选择 [Snappy](https://github.com/google/snappy)、[LZ4](https://github.com/lz4/lz4) 或 [Zstd](https://github.com/facebook/zstd) 在单个记录级别对数据进行压缩，目前 Titan 默认使用的压缩算法是 LZ4.
+为了充分利用 prefetch 机制提高顺序扫描数据时的性能，BlobFile 中的 key-value 是按照 key 的顺序有序存放的。除了从 LSM-tree 中分离出的 value 之外，blob record 中还保存了一份 key 的数据。在这份额外存储的 key 的帮助下，Titan 用较小的写放大收获了 GC 时快速查询 key 最新状态的能力。GC 则会利用 key 的更新信息来确定 value 是否已经过期可以被回收。考虑到 Titan 中存储的 value 大小偏大，将其压缩则可以获得较为显著的空间收益。BlobFile 可以选择 [Snappy](https://github.com/google/snappy)、[LZ4](https://github.com/lz4/lz4) 或 [Zstd](https://github.com/facebook/zstd) 在单个记录级别对数据进行压缩，目前 Titan 默认使用的压缩算法是 LZ4。
 
 ### TitanTableBuilder
 RocksDB 提供了 TableBuilder 机制供用户自定义的 table 实现。Titan 则利用了这个能力实现了 TitanTableBuilder，在不对 RocksDB 构建 table 流程做侵入型改动的前提下，实现了将大 value 从 LSM-tree 中的功能。
 
-![3.png](/res/session1/chapter8/titan-internal/3.png)
-
-图 3 TitanTableBuilder 处理流程示意图
+![图 3 TitanTableBuilder 处理流程示意图](/res/session1/chapter8/titan-internal/3.png)
 
 在 RocksDB 将数据写入 TableBuilder 时，TitanTableBuilder 根据 value 长度决定是否需要将 value 分离到外部 BlobFile 中。如果 value 长度小于为 Titan 设定的大 value 长度阈值数据会直接写入到 RocksDB 的 SST 中。当 value 长度大于等于这个阈值时 value 则会持久化到 BlobFile，相应的位置检索信息将会替代 value 被写入 RocksDB 的 SST 文件中用于在读取时定位 value 的实际位置。同样利用 RocksDB 的 TableBuilder 机制，我们可以在 RocksDB 做 Compaction 的时候将分离到 BlobFile 中的 value 重新写入到 SST 文件中完成从 Titan 到 RocksDB 的降级。
 
@@ -45,17 +40,14 @@ RocksDB 在 LSM-Tree Compaction 时对已删除数据进行空间回收。同样
 
 首先 Titan 需要决定何时开始进行 GC 操作，显然选择同 RocksDB 一样在 compaction 时丢弃旧版本数据回收空间是最适当的。每当 RocksDB 完成一轮 compaction 并删除了部分过期数据后，根据这些过期数据的 value 是否保存在 Titan 中，BlobFile 中的部分数据也可能会随之失效。因此 Titan 选择监听 RocksDB 的 compaction 事件来触发 GC 检查，通过搜集比对 compaction 中输出和产出 SST 文件对应的 BlobFile 的统计信息（BlobFileSizeProperties）来跟踪对应 BlobFile 的可回收空间大小。
 
-![4.png](/res/session1/chapter8/titan-internal/4.png)
+![图 4 Compaction 阶段可回收空间计算示意图](/res/session1/chapter8/titan-internal/4.png)
 
-图 4 Compaction 阶段可回收空间计算示意图
 
 图中 inputs 代表所有参与本轮 compaction 的 SST 文件计算的得到的 BlobFileSizeProperties 统计信息（BlobFile ID : 有效数据大小），outputs 则代表新生成的 SST 文件对应的统计信息。通过计算这两组统计信息的变化，我们可以得出每个 BlobFile 可被丢弃的数据大小，图中 discardable size 的第一列是文件 ID 第二列则是对应文件可被回收数据的大小。
 
 接下来我们来关注 BlobFileSizeProperties 统计信息是如何计算得到的。我们知道原生 RocksDB 提供了 TablePropertiesCollector 机制来计算每一个 SST 文件的属性数据。Titan 通过这个扩展功能自定义了 BlobFileSizeCollector 用于计算 SST 中被保存在 BlobFile 中数据的统计信息。
 
-![5.png](/res/session1/chapter8/titan-internal/5.png)
-
-图 5 BlobFileSizeCollector 从 SST 数据计算 BlobFileProperties 示意图
+![图 5 BlobFileSizeCollector 从 SST 数据计算 BlobFileProperties 示意图](/res/session1/chapter8/titan-internal/5.png)
 
 BlobFileSizeCollector 的工作原理非常直观，通过解析 SST 中 KV 分离类型数据的索引信息，它可以得到当前 SST 文件引用了多少个 BlobFile 中的数据以及这些数据的实际大小。
 
@@ -67,8 +59,6 @@ BlobFileSizeCollector 的工作原理非常直观，通过解析 SST 中 KV 分�
 
 传统 GC 的实现直观可靠，但大家可能也发现了在传统 GC 过程中还需要伴随着对 LSM-tree 的大量 record key 查询以及 record index 更新操作。GC 时对 LSM-tree 的大量操作不可避免的会对在线的读取和写入产生压力和负面的影响。针对这一问题 Titan 在近期加入了全新的 Level-Merge GC 策略，它的核心思想是在 LSM-tree compaction 时将 SST 文件相对应的 BlobFile 进行归并重写并生成新的 BlobFile。 重写的过程不但避免了 GC 引起的额外 LSM-tree 读写开销，而且通过不断的合并重写过程降低了 BlobFile 之间相互重叠的的比例，此外还提升了数据物理存储有序性进而提高 Scan 的性能。
 
-![6.png](/res/session1/chapter8/titan-internal/6.png)
-
-图 6 Level-Merge 流程示意图
+![图 6 Level-Merge 流程示意图](/res/session1/chapter8/titan-internal/6.png)
 
 Level-Merge 在 RocksDB 对 level z-1 和 level z 的 SST 进行 compaction 时，对所有 KV 对进行一次有序读写，这时就可以对这些 SST 中所使用的 BlobFile 的 value 有序写到新的 BlobFile 中，并在生成新的 SST 时直接保存对应记录的新 blob index。由于 compaction 中被删除的 key 不会被写入到新 BlobFile 中，在整个重新操作完成的同时也就相当于完成了相应 BlobFile 的 GC 操作。考虑到 LSM-Tree 中 99% 的数据都落在最后两层，为了避免分层 Level-Merge 时带来的写放大问题，Titan 仅对 LSM-tree 中最后两层数据对应的 BlobFile 进行 Level-Merge。
