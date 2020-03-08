@@ -252,7 +252,7 @@ TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.
 ## 提交任务
 点击标题栏的 + 图标提交任务。
 
-![图片](https://uploader.shimo.im/f/twJcH79h7D0lShTN.png!thumbnail)
+![2.png](/res/session2/chapter2/lightning-in-action/2.png)
 
 任务 (task) 为 TOML 格式的文件，具体参考 [TiDB Lightning 任务配置](https://pingcap.com/docs-cn/stable/reference/tools/tidb-lightning/config#tidb-lightning-%E4%BB%BB%E5%8A%A1%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0)。你也可以点击 UPLOAD 上传一个本地的 TOML 文件。
 
@@ -262,7 +262,7 @@ TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.
 ## 查看导入进度
 点击首页表格卡片上的 > 图标，查看表格导入的详细进度。
 
-![图片](https://uploader.shimo.im/f/q50oeWmpaRM3q2g2.png!thumbnail)
+![3.png](/res/session2/chapter2/lightning-in-action/3.png)
 
 该页显示每张表的引擎文件的导入过程。
 
@@ -271,7 +271,7 @@ TiDB Lightning 启动后，可以访问 [http://127.0.0.1:8289](http://127.0.0.
 ## 管理任务
 单击标题栏上的 ⓘ 图标来管理当前及队列中的任务。
 
-![图片](https://uploader.shimo.im/f/iwmHI3H8xSMwmYji.png!thumbnail)
+![4.png](/res/session2/chapter2/lightning-in-action/4.png)
 
 每个任务都是依据提交时间来标记。点击该任务将显示 JSON 格式的配置文件。
 
@@ -932,7 +932,7 @@ scrape_configs:
 如果使用其他方式部署 TiDB Lightning，需先导入[面板的 JSON 文件](https://raw.githubusercontent.com/pingcap/tidb-ansible/master/scripts/lightning.json)。
 
 ### 第一行：速度面板
-![图片](https://uploader.shimo.im/f/tH1DJHs7VXQIYUwY.png!thumbnail)
+![5.png](/res/session2/chapter2/lightning-in-action/5.png)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
@@ -943,7 +943,7 @@ scrape_configs:
 有时导入速度会降到 0，这是为了平衡其他部分的速度，属于正常现象。
 
 ### 第二行：进度面板
-![图片](https://uploader.shimo.im/f/pDjEIfHwnDYW48pF.png!thumbnail)
+![6.png](/res/session2/chapter2/lightning-in-action/6.png)
 
 | 面板名称   | 描述   | 
 |:----|:----|
@@ -952,7 +952,7 @@ scrape_configs:
 | Failures   | 导入失败的表的数量以及故障点，通常为空   | 
 
 ### 第三行：资源使用面板
-![图片](https://uploader.shimo.im/f/WFTgv9E3FXE57MLW.png!thumbnail)
+![7.png](/res/session2/chapter2/lightning-in-action/7.png)
 
 | 面板名称   | 描述   | 
 |:----|:----|
@@ -961,7 +961,7 @@ scrape_configs:
 | CPU%   | 每个服务使用的逻辑 CPU 数量   | 
 
 ### 第四行：配额使用面板
-![图片](https://uploader.shimo.im/f/22LJPH6FFyUaaftG.png!thumbnail)
+![8.png](/res/session2/chapter2/lightning-in-action/8.png)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
@@ -974,7 +974,7 @@ scrape_configs:
 | External resources   | Importer Engines   | 打开的引擎文件数量，不应超过 max-open-engines 的设置   | 
 
 ### 第五行：读取速度面板
-![图片](https://uploader.shimo.im/f/6JDPxDZCLRgjDYKf.png!thumbnail)
+![9.png](/res/session2/chapter2/lightning-in-action/9.png)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
@@ -986,7 +986,7 @@ scrape_configs:
 如果上述项的持续时间过长，则表示 TiDB Lightning 使用的磁盘运行太慢或 I/O 太忙。
 
 ### 第六行：存储空间面板
-![图片](https://uploader.shimo.im/f/PEvm3NeorQwk9i5x.png!thumbnail)
+![10.png](/res/session2/chapter2/lightning-in-action/10.png)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
@@ -999,7 +999,7 @@ scrape_configs:
 | Total bytes   | storage_size/3   | TiKV 集群占用的存储空间大小的 1/3（3 为默认的副本数量）   | 
 
 ### 第七行：导入速度面板
-![图片](https://uploader.shimo.im/f/GMyoMMdyZrAJtYLU.png!thumbnail)
+![11.png](/res/session2/chapter2/lightning-in-action/11.png)
 
 | 面板名称   | 序列   | 描述   | 
 |:----|:----|:----|
