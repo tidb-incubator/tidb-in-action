@@ -20,7 +20,8 @@ Prometheus 的架构图如下：
 ![1.png](/res/session3/chapter4/rometheus-guide/01architecture.png)
 
 
-Prometheus 生态中 promtheus server 软件用于监控数据库的存储、检索，以及告警消息的推送，是 Prometheus 生态最核心的部分。
+Prometheus 生态中 prometheus server 软件用于监控数据库的存储、检索，以及告警消息的推送，是 Prometheus 生态最核心的部分。
+
 
 Alertmanger 负责接收 prometheus 软件推送的告警，并将告警经过分组、去重、等处理后，按告警标签内容路由后，通过邮件、短信、企业微信、钉钉、webhook 等发送给接收者。 	
 
@@ -440,4 +441,3 @@ histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_buck
 
 告警示例：
 ![10.png](/res/session3/chapter4/rometheus-guide/10wechat.jpg)
-
