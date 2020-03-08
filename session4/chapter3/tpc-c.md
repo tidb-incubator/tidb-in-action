@@ -28,47 +28,35 @@ TPC-C 是一个对 OLTP（联机交易处理）系统进行测试的规范，使
 
 TPC-C 使用tpmC 值（Transactions per Minute）来衡量系统最大有效吞吐量（MQTh，Max Qualified Throughput），其中Transactions 以NewOrder Transaction 为准，即最终衡量单位为每分钟处理的新订单数。
 
-**二、TIDB测试环境部署**
+## 二、TIDB测试环境部署
 
-对于 1000 WAREHOUSE 我们将在 3 台服务器上部署集群。在 3 台服务器的条件下，建议每台机器部署 1 个 TiDB，1 个 PD 和 1 个 TiKV 实例。
+对于 1000 WAREHOUSE 我们将在 3 台服务器上部署集群。
+在 3 台服务器的条件下，建议每台机器部署 1 个 TiDB，1 个 PD 和 1 个 TiKV 实例。
 
 比如这里采用的机器硬件配置是：
 
- 
-
 | 类别 | 名称 |
-
+| :-: | :-: |
 | OS | Linux (CentOS 7.3.1611) |
-
 | CPU | 40 vCPUs, Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz |
-
 | RAM | 128GB |
-
 | DISK | Optane 500GB SSD |
-
- 
 
 因为该型号 CPU 是 NUMA 架构，建议先用 `taskset` 进行绑核，首先用 `lscpu` 查看 NUMA node，比如：
 
- 
-
-NUMA node0 CPU(s):     0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38
-
-NUMA node1 CPU(s):     1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39
-
- 
+```text
+NUMA node0 CPU(s):     0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38
+NUMA node1 CPU(s):     1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39
+```
 
 之后可以通过下面的命令来启动 TiDB：
 
- 
-
 {{< copyable "shell-regular" >}}
 
+```shell
 nohup taskset -c 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38 bin/tidb-server && \
-
 nohup taskset -c 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39 bin/tidb-server
-
-        
+```
 
 最后，可以选择部署一个 HAproxy 来进行多个 TiDB node 的负载均衡，推荐配置 nbproc 为 CPU 核数。
 
