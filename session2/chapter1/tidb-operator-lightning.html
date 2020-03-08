@@ -2860,7 +2860,131 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="&#x5728;-kubernetes-&#x96C6;&#x7FA4;&#x4E0A;&#x4F7F;&#x7528;-lightning-&#x5BFC;&#x5165;&#x6570;&#x636E;">&#x5728; Kubernetes &#x96C6;&#x7FA4;&#x4E0A;&#x4F7F;&#x7528; Lightning &#x5BFC;&#x5165;&#x6570;&#x636E;</h1>
+<h2 id="&#x80CC;&#x666F;">&#x80CC;&#x666F;</h2>
+<p>Mydumper + Loader &#x4F7F;&#x7528;&#x591A;&#x7EBF;&#x7A0B;&#x5BFC;&#x5165;&#x5BFC;&#x51FA;&#x6570;&#x636E;&#x65F6;&#x9700;&#x8981;&#x7ECF;&#x8FC7; TiDB SQL &#x8BED;&#x6CD5;&#x89E3;&#x6790;&#xFF0C;&#x5BFC;&#x81F4; TiDB &#x8BA1;&#x7B97;&#x80FD;&#x529B;&#x6210;&#x4E3A;&#x65B0;&#x7684;&#x74F6;&#x9888;&#x3002;&#x6240;&#x4EE5;&#x53C8;&#x4E00;&#x4E2A;&#x60F3;&#x6CD5;&#x5B55;&#x80B2;&#x800C;&#x51FA;&#x2014;&#x2014;&#x5BFC;&#x5165;&#x6570;&#x636E;&#x4E0D;&#x7ECF;&#x8FC7; SQL &#x89E3;&#x6790;&#xFF0C;&#x76F4;&#x63A5;&#x8F6C;&#x6362;&#x6210; KV &#x952E;&#x503C;&#x5BF9;&#x5199;&#x5165; TiKV &#x96C6;&#x7FA4;&#x3002;</p>
+<h2 id="&#x4ECB;&#x7ECD;">&#x4ECB;&#x7ECD;</h2>
+<p>TiDB Lightning &#x6574;&#x4F53;&#x67B6;&#x6784;&#xFF1A;</p>
+<p><img src="https://download.pingcap.com/images/docs-cn/v3.1/tidb-lightning-architecture.png" alt="&#x6574;&#x4F53;&#x67B6;&#x6784;"></p>
+<p>TiDB Lightning &#x4E3B;&#x8981;&#x5305;&#x542B;&#x4E24;&#x4E2A;&#x90E8;&#x5206;&#xFF1A;</p>
+<ul>
+<li><strong><code>tidb-lightning</code></strong>&#xFF08;&#x201C;&#x524D;&#x7AEF;&#x201D;&#xFF09;&#xFF1A;&#x4E3B;&#x8981;&#x5B8C;&#x6210;&#x9002;&#x914D;&#x5DE5;&#x4F5C;&#xFF0C;&#x901A;&#x8FC7;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x5728;&#x4E0B;&#x6E38; TiDB &#x96C6;&#x7FA4;&#x5EFA;&#x8868;&#x3001;&#x5C06;&#x6570;&#x636E;&#x8F6C;&#x6362;&#x6210;&#x952E;&#x503C;&#x5BF9;&#xFF08;KV &#x5BF9;&#xFF09;&#x53D1;&#x9001;&#x5230; <code>tikv-importer</code>&#x3001;&#x68C0;&#x67E5;&#x6570;&#x636E;&#x5B8C;&#x6574;&#x6027;&#x7B49;&#x3002;</li>
+<li><strong><code>tikv-importer</code></strong>&#xFF08;&#x201C;&#x540E;&#x7AEF;&#x201D;&#xFF09;&#xFF1A;&#x4E3B;&#x8981;&#x5B8C;&#x6210;&#x5C06;&#x6570;&#x636E;&#x5BFC;&#x5165; TiKV &#x96C6;&#x7FA4;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x5BF9; <code>tidb-lightning</code> &#x5199;&#x5165;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x8FDB;&#x884C;&#x7F13;&#x5B58;&#x3001;&#x6392;&#x5E8F;&#x3001;&#x5207;&#x5206;&#x64CD;&#x4F5C;&#x5E76;&#x5BFC;&#x5165;&#x5230; TiKV &#x96C6;&#x7FA4;&#x3002;</li>
+</ul>
+<h2 id="&#x64CD;&#x4F5C;">&#x64CD;&#x4F5C;</h2>
+<h3 id="1-&#x901A;&#x8FC7;-mydumper-&#x6267;&#x884C;&#x5168;&#x91CF;&#x903B;&#x8F91;&#x5907;&#x4EFD;">1. &#x901A;&#x8FC7; Mydumper &#x6267;&#x884C;&#x5168;&#x91CF;&#x903B;&#x8F91;&#x5907;&#x4EFD;</h3>
+<ul>
+<li>&#x73AF;&#x5883;&#x4FE1;&#x606F;&#xFF1A;</li>
+</ul>
+<p>&#x5728; namespace test-cluster &#x4E0B;&#x6709;&#x4E24;&#x5957;&#x96C6;&#x7FA4;&#xFF1A;cluster-1&#x3001;cluster-2</p>
+<p>&#x67E5;&#x770B; cluster-1 &#x96C6;&#x7FA4; Mysql &#x6570;&#x636E;&#xFF1A;</p>
+<pre><code>&apos;select * from cloud.test_tbl;&apos;
++----+------------+--------+------------+
+| id | title      | author | date       |
++----+------------+--------+------------+
+|  1 | K8s        | shonge | 2020-03-07 |
+|  2 | operator   | shonge | 2020-03-07 |
+|  3 | kubernetes | shonge | 2020-03-07 |
++----+------------+--------+------------+
+</code></pre><ul>
+<li>&#x521B;&#x5EFA;&#x5907;&#x4EFD;&#x6240;&#x9700;&#x7684; secret</li>
+</ul>
+<pre><code class="lang-bash">kubectl create secret generic backup-secret --namespace=<span class="hljs-built_in">test</span>-backup --from-literal=user=root --from-literal=password=<span class="hljs-string">&apos;root_password&apos;</span>
+</code></pre>
+<pre><code class="lang-bash">helm install pingcap/tidb-backup --version=v1.1.0-beta.2 --name backup-cluster-1 --namespace <span class="hljs-built_in">test</span>-backup --set-string clusterName=cluster-1,storage.size=500Gi
+</code></pre>
+<ul>
+<li>&#x786E;&#x8BA4;&#x5907;&#x4EFD;&#x4EFB;&#x52A1;&#x5B8C;&#x6210;</li>
+</ul>
+<pre><code class="lang-bash">kubectl -n <span class="hljs-built_in">test</span>-backup get job <span class="hljs-_">-l</span> app.kubernetes.io/instance=backup-cluster-1
+NAME                            COMPLETIONS   DURATION   AGE
+basic-fullbackup-202003080800   1/1           3s         3m32s
+</code></pre>
+<ul>
+<li>&#x68C0;&#x67E5;&#x5907;&#x4EFD;&#x6587;&#x4EF6;</li>
+</ul>
+<p>&#x67E5;&#x627E;&#x5907;&#x4EFD; PV &#x6302;&#x8F7D;&#x5728;&#x8DEF;&#x5F84;</p>
+<pre><code class="lang-bash">kubectl -n <span class="hljs-built_in">test</span>-cluster get pvc <span class="hljs-_">-l</span> app.kubernetes.io/instance=backup-cluster-1
+
+NAME               STATUS   VOLUME       CAPACITY   ACCESS MODES   STORAGECLASS    AGE
+fullbackup-202003080800   Bound    <span class="hljs-built_in">local</span>-pv-2a2853fb   77Gi      RWO  <span class="hljs-built_in">local</span>-storage  62m
+
+kubectl describe pv <span class="hljs-built_in">local</span>-pv-2a2853fb
+
+Name:              <span class="hljs-built_in">local</span>-pv-2a2853fb
+Labels:            kubernetes.io/hostname=tidb-operator-worker2
+Annotations:       pv.kubernetes.io/bound-by-controller: yes
+                   pv.kubernetes.io/provisioned-by: <span class="hljs-built_in">local</span>-volume-provisioner-tidb-operator-worker2-9d6bdbba-89ff-4180-9917-35b4dda3a3db
+Finalizers:        [kubernetes.io/pv-protection]
+StorageClass:      <span class="hljs-built_in">local</span>-storage
+Status:            Bound
+Claim:             <span class="hljs-built_in">test</span>-cluster/fullbackup-202003080800
+Reclaim Policy:    Delete
+Access Modes:      RWO
+VolumeMode:        Filesystem
+Capacity:          500Gi
+Node Affinity:
+  Required Terms:
+    Term 0:        kubernetes.io/hostname <span class="hljs-keyword">in</span> [tidb-operator-worker2]
+Message:
+Source:
+    Type:  LocalVolume (a persistent volume backed by <span class="hljs-built_in">local</span> storage on a node)
+    Path:  /mnt/disks/20
+Events:    &lt;none&gt;
+</code></pre>
+<p>&#x8FDB;&#x5165; kind worker node &#x67E5;&#x770B;&#x5907;&#x4EFD;&#x6587;&#x4EF6;</p>
+<pre><code class="lang-bash">docker <span class="hljs-built_in">exec</span> -ti tidb-operator-worker2 ls /mnt/disks/20/fullbackup-202003080800
+
+cloud-schema-create.sql                   mysql.opt_rule_blacklist-schema.sql
+cloud.test_tbl-schema.sql                 mysql.role_edges-schema.sql
+cloud.test_tbl.sql                        mysql.stats_buckets-schema.sql
+metadata                                  mysql.stats_feedback-schema.sql
+mysql-schema-create.sql                   mysql.stats_histograms-schema.sql
+mysql.GLOBAL_VARIABLES-schema.sql         mysql.stats_histograms.sql
+mysql.GLOBAL_VARIABLES.sql                mysql.stats_meta-schema.sql
+mysql.bind_info-schema.sql                mysql.stats_meta.sql
+mysql.columns_priv-schema.sql             mysql.stats_top_n-schema.sql
+mysql.db-schema.sql                       mysql.tables_priv-schema.sql
+mysql.default_roles-schema.sql            mysql.tidb-schema.sql
+mysql.expr_pushdown_blacklist-schema.sql  mysql.tidb.sql
+mysql.gc_delete_range-schema.sql          mysql.user-schema.sql
+mysql.gc_delete_range_<span class="hljs-keyword">done</span>-schema.sql     mysql.user.sql
+mysql.global_priv-schema.sql              <span class="hljs-built_in">test</span>-schema-create.sql
+mysql.help_topic-schema.sql
+</code></pre>
+<h3 id="2-&#x4F7F;&#x7528;-lightning-&#x6062;&#x590D;&#x6570;&#x636E;">2. &#x4F7F;&#x7528; Lightning &#x6062;&#x590D;&#x6570;&#x636E;</h3>
+<ul>
+<li>&#x5728; cluster-2 &#x5F00;&#x542F; importer</li>
+</ul>
+<pre><code class="lang-bash">helm upgrade cluster-2 --set-string importer.create=<span class="hljs-literal">true</span> pingcap/tidb-cluster
+</code></pre>
+<ul>
+<li>&#x90E8;&#x7F72; lightning &#x5F00;&#x59CB;&#x6062;&#x590D;&#x6570;&#x636E;</li>
+</ul>
+<pre><code class="lang-bash">helm install pingcap/tidb-lightning --version=v1.1.0-beta.2 --name restore-cluster-1 --namespace <span class="hljs-built_in">test</span>-cluster --set-string dataSource.adhoc.pvcName=<span class="hljs-string">&apos;fullbackup-202003080800&apos;</span>,targetTidbCluster.name=<span class="hljs-string">&apos;cluster-2&apos;</span>
+</code></pre>
+<ul>
+<li>&#x68C0;&#x67E5;&#x6062;&#x590D;&#x4EFB;&#x52A1;&#x72B6;&#x6001;</li>
+</ul>
+<pre><code class="lang-bash">kubectl -n <span class="hljs-built_in">test</span>-cluster get job <span class="hljs-_">-l</span> app.kubernetes.io/name=<span class="hljs-string">&apos;restore-cluster-1-tidb-lightning&apos;</span>
+
+NAME                               COMPLETIONS   DURATION   AGE
+restore-cluster-1-tidb-lightning   1/1           3s         9m3s
+</code></pre>
+<ul>
+<li>&#x8BBF;&#x95EE; <code>cluster-2</code> TiDB &#x670D;&#x52A1;&#xFF0C;&#x786E;&#x8BA4;&#x6570;&#x636E;&#x6062;&#x590D;&#x60C5;&#x51B5;</li>
+</ul>
+<pre><code class="lang-bash">MySQL [(none)]&gt; select * from cloud.test_tbl;
++----+------------+--------+------------+
+| id | title      | author | date       |
++----+------------+--------+------------+
+|  1 | K8s        | shonge | 2020-03-07 |
+|  2 | operator   | shonge | 2020-03-07 |
+|  3 | kubernetes | shonge | 2020-03-07 |
++----+------------+--------+------------+
+3 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.01 sec)
+</code></pre>
+
                                 
                                 </section>
                             
@@ -2903,7 +3027,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据","level":"3.1.2.6","depth":3,"next":{"title":"1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南","level":"3.1.2.7","depth":3,"path":"session2/chapter1/tidb-operator-tools.md","ref":"session2/chapter1/tidb-operator-tools.md","articles":[]},"previous":{"title":"1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群","level":"3.1.2.5","depth":3,"path":"session2/chapter1/tidb-operator-br.md","ref":"session2/chapter1/tidb-operator-br.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-lightning.md","mtime":"2020-03-08T12:03:09.772Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:03:49.556Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据","level":"3.1.2.6","depth":3,"next":{"title":"1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南","level":"3.1.2.7","depth":3,"path":"session2/chapter1/tidb-operator-tools.md","ref":"session2/chapter1/tidb-operator-tools.md","articles":[]},"previous":{"title":"1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群","level":"3.1.2.5","depth":3,"path":"session2/chapter1/tidb-operator-br.md","ref":"session2/chapter1/tidb-operator-br.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-lightning.md","mtime":"2020-03-08T12:05:48.129Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:06:25.667Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
