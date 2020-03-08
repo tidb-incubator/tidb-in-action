@@ -22,10 +22,20 @@ tidb_mem_quota_query
 
 * 作用域：SESSION
 * 默认值：32 GB
-* 含义： 该变量是系统变量，用来设置一条查询语句的内存使用阈值。 如果一条查询语句执行过程中使用的内存空间超过该阈值，会触发 TiDB 启动配置文件中 OOMAction （oom-action 默认值 log，表示打印差过内存阈值 SQL，可通过配置 cancel 实现 SQL Kill）项所指定的行为。
-
+* 含义： 该变量是系统变量，用来设置一条查询语句的内存使用阈值。 如果一条查询语句执行过程中使用的内存空间超过该阈值，会触发 TiDB 启动配置文件中 OOMAction （oom-action 默认值 log，表示打印差过内存阈值 SQL，可通过配置 cancel 实现 SQL Kill）项所指定的行为，SQL设置具体示例如下：
+```
+--设置内存使用限制为10G
+mysql> set @@session.tidb_mem_quota_query=10737418240;
+Query OK, 0 rows affected (0.00 sec)
+mysql> show variables like '%tidb_mem_quota_query%';
++----------------------+-------------+
+| Variable_name        | Value       |
++----------------------+-------------+
+| tidb_mem_quota_query | 10737418240 |
++----------------------+-------------+
+1 row in set (0.00 sec)
+```
 mem-quota-query
-
 * 作用域：GLOBAL
 * 默认值：32GB
 * 含义：该变量是 TiDB 全局 Global 配置，需在 TiDB 配置文件设置（可在 tidb-ansible conf/tidb.yaml 配置 mem-quota-query 滚更生效），如果一条查询语句执行过程中使用的内存空间超过该阈值，会触发 TiDB 启动配置文件中 OOMAction （oom-action 默认值 log，表示打印差过内存阈值 SQL，可通过配置 cancel 实现 SQL Kill）项所指定的行为，具体示例如下：
@@ -50,13 +60,41 @@ tidb_retry_limit
 
 * 作用域：SESSION | GLOBAL
 * 默认值：10
-* 含义：该变量用来设置最大重试次数。一个事务执行中遇到可重试的错误（例如事务冲突、事务提交过慢或表结构变更）时，会根据该变量的设置进行重试。注意当 tidb_retry_limit = 0 时，也会禁用自动重试
-
+* 含义：该变量用来设置最大重试次数。一个事务执行中遇到可重试的错误（例如事务冲突、事务提交过慢或表结构变更）时，会根据该变量的设置进行重试。注意当 tidb_retry_limit = 0 时，也会禁用自动重试，SQL设置具体示例如下：
+```
+--设置SESSION作用域
+mysql> set @@session.tidb_retry_limit=0;
+Query OK, 0 rows affected (0.01 sec)
+--设置GLOBAL作用域
+mysql> set @@global.tidb_retry_limit=0;
+Query OK, 0 rows affected (0.00 sec)
+mysql> show variables like '%tidb_retry_limit%';
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| tidb_retry_limit | 0     |
++------------------+-------+
+```
 tidb_disable_txn_auto_retry
 
 * 作用域：SESSION | GLOBAL
 * 默认值：on
-* 含义：该变量用来设置是否禁用显式事务自动重试，设置为 on 时，不会自动重试，如果遇到事务冲突需要在应用层重试。如果将该变量的值设为 off，TiDB 将会自动重试事务，这样在事务提交时遇到的错误更少。需要注意的是，这样可能会导致数据更新丢失。该变量不会影响自动提交的隐式事务和 TiDB 内部执行的事务，它们依旧会根据 tidb_retry_limit 的值来决定最大重试次数。
+* 含义：该变量用来设置是否禁用显式事务自动重试，设置为 on 时，不会自动重试，如果遇到事务冲突需要在应用层重试。如果将该变量的值设为 off，TiDB 将会自动重试事务，这样在事务提交时遇到的错误更少。需要注意的是，这样可能会导致数据更新丢失。该变量不会影响自动提交的隐式事务和 TiDB 内部执行的事务，它们依旧会根据 tidb_retry_limit 的值来决定最大重试次数，SQL设置具体示例如下：
+```
+--设置SESSION作用域
+mysql> set @@session.tidb_disable_txn_auto_retry=OFF;
+Query OK, 0 rows affected (0.00 sec)
+--设置GLOBAL作用域
+mysql> set @@global.tidb_disable_txn_auto_retry=OFF;
+Query OK, 0 rows affected (0.00 sec)
+mysql> show variables like '%tidb_disable_txn_auto_retry%';
++-----------------------------+-------+
+| Variable_name               | Value |
++-----------------------------+-------+
+| tidb_disable_txn_auto_retry | OFF   |
++-----------------------------+-------+
+1 row in set (0.01 sec)
+```
 ## Join 算子优化
 TiDB 数据库 SQL 执行，Join 算子天然并发，当系统资源富余时，根据数据库 TP | AP 应用可适当调整 Join 算子并发提高 SQL 执行效率，提升数据库系统性能。
 
@@ -64,37 +102,122 @@ tidb_distsql_scan_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：15
-* 含义：该变量用来设置 scan 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值。 对于 AP 类应用，最大值建议不要超过所有 TiKV 节点的 CPU 核数。
-
+* 含义：该变量用来设置 scan 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值。 对于 AP 类应用，最大值建议不要超过所有 TiKV 节点的 CPU 核数，SQL设置具体示例如下：
+```
+--设置SESSION作用域
+mysql> set @@session.tidb_distsql_scan_concurrency=30;
+Query OK, 0 rows affected (0.00 sec)
+--设置GLOBAL作用域
+mysql> set @@global.tidb_distsql_scan_concurrency=30;
+Query OK, 0 rows affected (0.00 sec)
+mysql> show variables like '%tidb_distsql_scan_concurrency%';
++-------------------------------+-------+
+| Variable_name                 | Value |
++-------------------------------+-------+
+| tidb_distsql_scan_concurrency | 30    |
++-------------------------------+-------+
+1 row in set (0.01 sec)
+```
 tidb_index_lookup_size
 
 * 作用域：SESSION | GLOBAL
 * 默认值：20000
-* 含义：该变量用来设置 index lookup 操作的 batch 大小，AP 类应用适合较大的值，TP 类应用适合较小的值。
-
+* 含义：该变量用来设置 index lookup 操作的 batch 大小，AP 类应用适合较大的值，TP 类应用适合较小的值，SQL设置具体示例如下：
+```
+--设置SESSION作用域
+mysql> set @@session.tidb_index_lookup_size=40000;
+Query OK, 0 rows affected (0.00 sec)
+--设置GLOBAL作用域
+mysql> set @@global.tidb_index_lookup_size=40000;
+Query OK, 0 rows affected (0.01 sec)
+mysql> show variables like '%tidb_index_lookup_size%';
++------------------------+-------+
+| Variable_name          | Value |
++------------------------+-------+
+| tidb_index_lookup_size | 40000 |
++------------------------+-------+
+1 row in set (0.00 sec)
+```
 tidb_index_lookup_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：4
-* 含义：该变量用来设置 index lookup 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值。
-
+* 含义：该变量用来设置 index lookup 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值，SQL设置具体示例如下：
+```
+--设置SESSION作用域
+mysql> set @@session.tidb_index_lookup_concurrency=8;
+Query OK, 0 rows affected (0.00 sec)
+--设置GLOBAL作用域
+mysql> set @@global.tidb_index_lookup_concurrency=8;
+Query OK, 0 rows affected (0.00 sec)
+mysql> show variables like '%tidb_index_lookup_concurrency%';
++-------------------------------+-------+
+| Variable_name                 | Value |
++-------------------------------+-------+
+| tidb_index_lookup_concurrency | 8     |
++-------------------------------+-------+
+1 row in set (0.00 sec)
+```
 tidb_index_lookup_join_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：4
-* 含义：该变量用来设置 index lookup join 算法的并发度。
-
+* 含义：该变量用来设置 index lookup join 算法的并发度，SQL设置具体示例如下：
+```
+--设置SESSION作用域
+mysql> set @@session.tidb_index_lookup_join_concurrency=8;
+Query OK, 0 rows affected (0.00 sec)
+--设置GLOBAL作用域
+mysql> set @@global.tidb_index_lookup_join_concurrency=8;
+Query OK, 0 rows affected (0.01 sec)
+mysql> show variables like '%tidb_index_lookup_join_concurrency%';
++------------------------------------+-------+
+| Variable_name                      | Value |
++------------------------------------+-------+
+| tidb_index_lookup_join_concurrency | 8     |
++------------------------------------+-------+
+1 row in set (0.00 sec)
+```
 tidb_hash_join_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：5
-* 含义：该变量用来设置 hash join 算法的并发度。
-
+* 含义：该变量用来设置 hash join 算法的并发度，SQL设置具体示例如下：
+```
+--设置SESSION作用域
+mysql> set @@session.tidb_hash_join_concurrency=10;
+Query OK, 0 rows affected (0.01 sec)
+--设置GLOBAL作用域
+mysql> set @@global.tidb_hash_join_concurrency=10;
+Query OK, 0 rows affected (0.00 sec)
+mysql> show variables like '%tidb_hash_join_concurrency%';
++----------------------------+-------+
+| Variable_name              | Value |
++----------------------------+-------+
+| tidb_hash_join_concurrency | 10    |
++----------------------------+-------+
+1 row in set (0.01 sec)
+```
 tidb_index_serial_scan_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：1
-* 含义：该变量用来设置顺序 scan 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值。
+* 含义：该变量用来设置顺序 scan 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值，SQL设置具体示例如下：
+```
+--设置SESSION作用域
+mysql> set @@session.tidb_index_serial_scan_concurrency=4;
+Query OK, 0 rows affected (0.00 sec)
+--设置GLOBAL作用域
+mysql> set @@global.tidb_index_serial_scan_concurrency=4;
+Query OK, 0 rows affected (0.01 sec)
+mysql> show variables like '%tidb_index_serial_scan_concurrency%';
++------------------------------------+-------+
+| Variable_name                      | Value |
++------------------------------------+-------+
+| tidb_index_serial_scan_concurrency | 4     |
++------------------------------------+-------+
+1 row in set (0.00 sec)
+```
 ## 常见 Mysql 兼容问题
 compatible-kill-query
 
