@@ -31,7 +31,7 @@ python {YOUR_DATAX_HOME}/bin/datax.py {YOUR_DATAX_HOME}/job/job.json
 vi increase.json
 
 代码块：
-
+```json
 {
 
     "job": {
@@ -113,7 +113,6 @@ vi increase.json
     }
 
 }
-
 第三步：编写运行DataX Job的Shell执行脚本
 
 vi datax_excute_job.sh
@@ -205,4 +204,3 @@ DataX Job 的 Shell 执行脚本最好做成服务，用 Supervisor 等工具来
 ![图片](https://uploader.shimo.im/f/krSO1xjLx4o1gJpf.png!thumbnail)
 
 至此，选用 DataX 的方式来进行双 TiDB 集群间数据同步的操作步骤和方案已讲述完成。用DataX 进行双 TiDB 集群数据同步不一定是最好的，但每个方案都有其特定存在的场景和意义。如果存在双集群间网络条件不允许、选用 CDC 方案可靠性不高、成熟度不够，又或者有特殊的定制需求等原因时，可以考虑 DataX 方案是否满足你的业务需求。
-
