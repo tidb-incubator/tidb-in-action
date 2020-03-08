@@ -2886,7 +2886,54 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="&#x5220;&#x9664;-tidb-&#x96C6;&#x7FA4;">&#x5220;&#x9664; TiDB &#x96C6;&#x7FA4;</h1>
+<h2 id="&#x4ECB;&#x7ECD;">&#x4ECB;&#x7ECD;</h2>
+<p>&#x672C;&#x5C0F;&#x8282;&#x6F14;&#x793A;&#x5220;&#x9664;&#x540D;&#x4E3A;  &#x201C;test&#x201D; &#x7684; TiDB &#x96C6;&#x7FA4;&#x3002;</p>
+<h2 id="&#x4E00;&#x3001;&#x901A;&#x8FC7;-helm-&#x5220;&#x9664;-tidb-cluster">&#x4E00;&#x3001;&#x901A;&#x8FC7; helm &#x5220;&#x9664; TiDB Cluster</h2>
+<pre><code>
+# helm list
+NAME             REVISION    UPDATED                     STATUS      CHART                   APP VERSION    NAMESPACE 
+test             1           Sat Mar  7 22:30:16 2020    DEPLOYED    tidb-cluster-v1.0.6                    dba-test  
+tidb-operator    1           Sat Mar  7 05:02:15 2020    DEPLOYED    tidb-operator-v1.0.6                   tidb-admin
+# helm delete test --purge
+release &quot;test&quot; deleted
+</code></pre><p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A; &#x5220;&#x9664;&#x64CD;&#x4F5C;&#x975E;&#x5E38;&#x5371;&#x9669;&#xFF0C;&#x8BF7;&#x5220;&#x9664;&#x6307;&#x5B9A; TiDB &#x96C6;&#x7FA4; &#xFF0C;&#x5343;&#x4E07;&#x4E0D;&#x8981;&#x8BEF;&#x5220;&#x9664;</p>
+<h2 id="&#x4E8C;&#x3001;&#x5220;&#x9664;-pvc">&#x4E8C;&#x3001;&#x5220;&#x9664; PVC</h2>
+<pre><code>
+# kubectl delete pvc -n dba-test -l app.kubernetes.io/instance=test,app.kubernetes.io/managed-by=tidb-operator
+persistentvolumeclaim &quot;pd-test-pd-0&quot; deleted
+persistentvolumeclaim &quot;pd-test-pd-1&quot; deleted
+persistentvolumeclaim &quot;pd-test-pd-2&quot; deleted
+persistentvolumeclaim &quot;pd-test-pd-3&quot; deleted
+persistentvolumeclaim &quot;tikv-test-tikv-0&quot; deleted
+persistentvolumeclaim &quot;tikv-test-tikv-1&quot; deleted
+persistentvolumeclaim &quot;tikv-test-tikv-2&quot; deleted
+</code></pre><p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A; &#x5220;&#x9664;&#x64CD;&#x4F5C;&#x975E;&#x5E38;&#x5371;&#x9669;&#xFF0C;&#x8BF7;&#x5220;&#x9664;&#x6307;&#x5B9A; TiDB &#x96C6;&#x7FA4;&#x7684; pvc &#xFF0C;&#x5343;&#x4E07;&#x4E0D;&#x8981;&#x8BEF;&#x5220;&#x9664;</p>
+<h2 id="&#x4E09;&#x3001;&#x5220;&#x9664;-pv">&#x4E09;&#x3001;&#x5220;&#x9664; PV</h2>
+<pre><code>
+# kubectl get pv -l app.kubernetes.io/namespace=dba-test,app.kubernetes.io/managed-by=tidb-operator,app.kubernetes.io/instance=test -o name|xargs -I {} kubectl patch {} -p &apos;{&quot;spec&quot;:{&quot;persistentVolumeReclaimPolicy&quot;:&quot;Delete&quot;}}&apos;
+persistentvolume/local-pv-2c956bbd patched
+persistentvolume/local-pv-3a4dae53 patched
+persistentvolume/local-pv-3c7e9ebb patched
+persistentvolume/local-pv-5ebe9899 patched
+persistentvolume/local-pv-682d37c9 patched
+persistentvolume/local-pv-af00e20c patched
+persistentvolume/local-pv-d4cf548e patched
+</code></pre><p>&#x4E00;&#x5206;&#x949F;&#x4E4B;&#x540E;&#xFF0C;&#x68C0;&#x67E5; PV &#x72B6;&#x6001;&#xFF1A;</p>
+<pre><code>
+# kubectl get pv
+NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS    REASON   AGE
+local-pv-2c956bbd   1468Mi     RWO            Delete           Available           local-storage            64s
+local-pv-3a4dae53   1468Mi     RWO            Delete           Available           local-storage            72s
+local-pv-3c7e9ebb   1468Mi     RWO            Delete           Available           local-storage            54s
+local-pv-5cb252d7   1974Mi     RWO            Delete           Available           local-storage            24h
+local-pv-5ebe9899   1468Mi     RWO            Delete           Available           local-storage            58s
+local-pv-682d37c9   1468Mi     RWO            Delete           Available           local-storage            72s
+local-pv-af00e20c   1974Mi     RWO            Delete           Available           local-storage            24h
+local-pv-d4cf548e   1468Mi     RWO            Delete           Available           local-storage            58s
+local-pv-eb0e3c9f   1974Mi     RWO            Delete           Available           local-storage            24h
+</code></pre><p>PV &#x8D44;&#x6E90;&#x5DF2;&#x5168;&#x90E8;&#x91CA;&#x653E;&#x3002;&#x81F3;&#x6B64;&#xFF0C;&#x201C;test&#x201D; TiDB &#x96C6;&#x7FA4;&#x5DF2;&#x7ECF;&#x5220;&#x9664;&#x5B8C;&#x6BD5;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2929,7 +2976,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"next":{"title":"1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控","level":"3.1.2.4","depth":3,"path":"session2/chapter1/tidb-operator-access-monitoring.md","ref":"session2/chapter1/tidb-operator-access-monitoring.md","articles":[]},"previous":{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","mtime":"2020-03-08T11:04:02.963Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:04:50.555Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"next":{"title":"1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控","level":"3.1.2.4","depth":3,"path":"session2/chapter1/tidb-operator-access-monitoring.md","ref":"session2/chapter1/tidb-operator-access-monitoring.md","articles":[]},"previous":{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","mtime":"2020-03-08T11:06:46.865Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:07:22.029Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
