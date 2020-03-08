@@ -185,7 +185,7 @@ location_labels = ["dc","rack","zone","host"]
 ## 2.3 Labels设计
 在两地三中心部署方式下，对于Labels的设计也需要充分考虑到系统的可用性和容灾能力，建议根据部署的物理结构来定义DC、AZ、RACK、HOST四个等级。
 
-![P3.md](https://github.com/Ryan160922/tidb-in-action/blob/master/session4/chapter4/P3.png "markdown")
+![P3.md](session4/chapter4/p3.png)
 图3 label逻辑定义图
 
 ## 2.4 参数配置
