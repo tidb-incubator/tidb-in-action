@@ -15,7 +15,7 @@ Prometheus 可以监控的对象远不止官方 exporters 列表中的产品，�
 ## 架构介绍
 Prometheus 的架构图如下：
 
- ![图片](https://uploader.shimo.im/f/hjfzbrnBIdkMGNdc.png!thumbnail)
+![图片](https://uploader.shimo.im/f/hjfzbrnBIdkMGNdc.png!thumbnail)
 
 
 Prometheus 生态中 promtheus server 软件用于监控数据库的存储、检索，以及告警消息的推送，是 Prometheus 生态最核心的部分。
