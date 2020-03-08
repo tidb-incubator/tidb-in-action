@@ -251,7 +251,6 @@ Check Table Before Drop: false
 
     例如：
 
-    {{< copyable "" >}}
 
     ```hcl
     module "example-tidb-cluster" {
@@ -286,7 +285,6 @@ Check Table Before Drop: false
 
     可以通过 `kubectl` 获取创建的 TiDB 集群和监控组件的地址。如果希望 Terraform 脚本打印此信息，可在 `outputs.tf` 中添加一个 `output` 配置项，如下所示：
 
-    {{< copyable "" >}}
 
     ```hcl
     output "how_to_connect_to_example_tidb_cluster_from_bastion" {
