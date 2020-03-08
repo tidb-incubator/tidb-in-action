@@ -198,19 +198,19 @@ location_labels = ["dc","rack","zone","host"]
 
     + block-cache-size
 	在TiKV单机多实例环境下，需要按照以下公式调整该值。
-capacity = MEM_TOTAL * 0.5 / TiKV 实例数量
-示例如下:
-```
-Storage:
-  block-cache:
-     capacity: “1G”
-```
+	capacity = MEM_TOTAL * 0.5 / TiKV 实例数量
+	示例如下:
+	```
+	 Storage:
+       block-cache:
+         capacity: “1G”
+     ```
 
     + 启用grpc消息压缩
 	由于涉及到集群中的数据在网络中传输，需要开启grpc消息压缩，降低网络流量。
 	```
 	server:
-  grpc-compression-type: gzip
+       grpc-compression-type: gzip
 	```
 
 + pd.yml中相关参数优化
@@ -250,18 +250,11 @@ raftstore:
 	为了避免出现异地数据中心的PD成为leader，可以将本地数据中心的PD 优先级调高(数字越大，优先级越高)，将异地的PD优先级调低。
 	```
 	member leader_priority PD-10 5
-member leader_priority PD-11 5
-member leader_priority PD-12 5
-member leader_priority PD-13 5
-member leader_priority PD-14 1
+	member leader_priority PD-11 5
+	member leader_priority PD-12 5
+	member leader_priority PD-13 5
+	member leader_priority PD-14 1
 	```
-
-
-
-
-
-
-
 
 
 
