@@ -1,6 +1,6 @@
 # Prometheus 简单介绍 
 ## prometheus 简介
-![图片](https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png =20x300)![图片](https://uploader.shimo.im/f/PvMs4K4IERQGIxou.png!thumbnail)
+
 
 TiDB  使用开源时序数据库  Prometheus  作为监控和性能指标信息存储方案，使用 Grafana  作为可视化组件进行展示。
 
@@ -440,6 +440,5 @@ histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_buck
 - 由于默认的告警发送的内容过多，包含注释等信息，影响可读性。建议用户自己写 webhook 的方式发送告警。
 
 告警示例：
-<img style="width:10px;height:10px" src="https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png"  alt="真棒" align=center />
-
+![图片](https://uploader.shimo.im/f/PvMs4K4IERQGIxou.png!thumbnail)
 
