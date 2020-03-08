@@ -441,19 +441,20 @@ $ tidb-lightning-ctl --checkpoint-dump=output/directory
 # CSV 支持
 TiDB Lightning 支持读取 CSV（逗号分隔值）的数据源，以及其他定界符格式如 TSV（制表符分隔值）。
 
-## ## 文件名
+## 文件名
 包含整张表的 CSV 文件需命名为 db_name.table_name.csv，该文件会被解析为数据库 db_name 里名为 table_name 的表。
 
 如果一个表分布于多个 CSV 文件，这些 CSV 文件命名需加上文件编号的后缀，如 db_name.table_name.003.csv。
 
 文件扩展名必须为 *.csv，即使文件的内容并非逗号分隔。
 
-## ## 表结构
+## 表结构
 CSV 文件是没有表结构的。要导入 TiDB，就必须为其提供表结构。可以通过以下任一方法实现：
 
 * 创建包含 DDL 语句 CREATE TABLE 的文件 db_name.table_name-schema.sql。
 * 首先在 TiDB 中直接创建空表，然后在 tidb-lightning.toml 中设置 [mydumper] no-schema = true。
-## ## 配置
+
+## 配置
 CSV 格式可在 tidb-lightning.toml 文件中 [mydumper.csv] 下配置。 大部分设置项在 MySQL [LOAD DATA](https://dev.mysql.com/doc/refman/8.0/en/load-data.html) 语句中都有对应的项目。
 
 ```
@@ -476,6 +477,7 @@ backslash-escape = true
 # 是否移除以分隔符结束的行。
 trim-last-separator = false
 ```
+
 ### separator
 * 指定字段分隔符。
 * 必须为单个 ASCII 字符。
@@ -483,17 +485,20 @@ trim-last-separator = false
   * CSV 用 ','
   * TSV 用 "\t"
 * 对应 LOAD DATA 语句中的 FIELDS TERMINATED BY 项。
-### ### delimiter
+
+### delimiter
 * 指定引用定界符。
 * 如果 delimiter 为空，所有字段都会被取消引用。
 * 常用值：
   * '"' 使用双引号引用字段，和 [RFC 4180](https://tools.ietf.org/html/rfc4180) 一致。
   * '' 不引用
 * 对应 LOAD DATA 语句中的 FIELDS ENCLOSED BY 项。
-### ### header
+
+### header
 * 是否*所有* CSV 文件都包含表头行。
 * 如为 true，第一行会被用作*列名*。如为 false，第一行并无特殊性，按普通的数据行处理。
-### ### not-null 和 null
+
+### not-null 和 null
 * not-null 决定是否所有字段不能为空。
 * 如果 not-null 为 false，设定了 null 的字符串会被转换为 SQL NULL 而非具体数值。
 
@@ -506,7 +511,8 @@ A,B,C
 \N,"\N",
 ```
 * 在默认设置（not-null = false; null = '\N'）下，列 A and B 导入 TiDB 后都将会转换为 NULL。列 C 是空字符串 ''，但并不会解析为 NULL。
-### ### backslash-escape
+
+### backslash-escape
 是否解析字段内的反斜线转义符。
 
 * 如果 backslash-escape 为 true，下列转义符会被识别并转换。
@@ -525,7 +531,8 @@ A,B,C
 引用不会影响反斜线转义符的解析与否。
 
 * * 对应 LOAD DATA 语句中的 FIELDS ESCAPED BY '\' 项。
-### ### trim-last-separator
+
+### trim-last-separator
 将 separator 字段当作终止符，并移除尾部所有分隔符。
 
 例如有如下 CSV 文件：
@@ -533,14 +540,17 @@ A,B,C
 * A,,B,,
 * 当 trim-last-separator = false，该文件会被解析为包含 5 个字段的行 ('A', '', 'B', '', '')。
 * 当 trim-last-separator = true，该文件会被解析为包含 3 个字段的行 ('A', '', 'B')。
-### ### 不可配置项
+
+### 不可配置项
 TiDB Lightning 并不完全支持 LOAD DATA 语句中的所有配置项。例如：
 
 * 行终止符只能是 CR（\r），LF（\n）或 CRLF（\r\n），也就是说，无法自定义 LINES TERMINATED BY。
 * 不可使用行前缀 （LINES STARTING BY）。
 * 不可跳过表头（IGNORE n LINES）。如有表头，必须是有效的列名。
 * 定界符和分隔符只能为单个 ASCII 字符。
-## ## 通用配置
+
+## 通用配置
+
 ### CSV
 默认设置已按照 RFC 4180 调整。
 
