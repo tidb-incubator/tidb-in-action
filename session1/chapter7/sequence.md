@@ -65,7 +65,7 @@ SELECT SETVAL(sequence_name,100)；
 CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 ```
 
-1.2. 针对应用连接至单个 TiDB 和多个 TiDB，取到的 Sequence 值有些不一样
+1.2. 从不同的 TiDB 节点获取到的 Sequence 值顺序有所不同
 
 1） 如果两个应用节点同时连接只同一个 TiDB 节点，两个节点间取到的则为连续递增的值
 
