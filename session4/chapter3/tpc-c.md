@@ -31,6 +31,7 @@ TPC-C 使用tpmC 值（Transactions per Minute）来衡量系统最大有效吞�
 ## 二、TIDB测试环境部署
 
 对于 1000 WAREHOUSE 我们将在 3 台服务器上部署集群。
+
 在 3 台服务器的条件下，建议每台机器部署 1 个 TiDB，1 个 PD 和 1 个 TiKV 实例。
 
 比如这里采用的机器硬件配置是：
@@ -64,38 +65,47 @@ nohup taskset -c 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39 bin/tidb
 | node2 | 1 | 1 | 1 | 
 | node3 | 1 | 1 | 1 | 
 
-##三、TIDB调优配置
+## 三、TIDB 调优配置
 
 1、升高日志级别，可以减少打印日志数量，对性能有积极影响。具体在TiDB 配置文件中加入：       
 
+```toml
 [log]
 
 level = "error"
+```
 
 2、性能相关配置，根据机器的CPU 核数设置，TiDB的CPU 使用数量。
 
+```toml
 performance:
 
 # Max CPUs to use, 0 use number of CPUs in the machine.
 
 max-procs: 20
+```
 
 3、缓存语句数量设置，开启TiDB 配置中的prepared plan cache，以减少优化执行计划的开销。
 
+```toml
 prepared_plan_cache:
 
 enabled: true
+```
 
 4、与TIKV客户端设置，默认值为16；当节点负载比较低时，可适当调大该值。
 
+```toml
 tikv_client:
 
 # Max gRPC connections that will be established with each tikv-server.
 
 grpc-connection-count: 4
+```
 
 5、本地事务冲突检测，并发压测建议开启，可减少事务的冲突。
 
+```toml
 txn_local_latches:
 
 # Enable local latches for transactions. Enable it when
@@ -103,13 +113,15 @@ txn_local_latches:
 # there are lots of conflicts between transactions.
 
 enabled: true
+```
 
-**四、TIKV调优配置**
+## 四、TIKV调优配置
 
 1、调整日志级别
 
-        升高TiKV 的日志级别同样有利于性能表现。由于TiKV 是以集群形式部署，在Raft算法的作用下，能保证大多数节点已经写入数据。因此，除了对数据安全极端敏感的场景之外，raftstore 中的sync-log 选项可以关闭。
+升高TiKV 的日志级别同样有利于性能表现。由于TiKV 是以集群形式部署，在 Raft 算法的作用下，能保证大多数节点已经写入数据。因此，除了对数据安全极端敏感的场景之外，raftstore 中的 sync-log 选项可以关闭。
 
+```toml
 global:
 
 log-level = "error"
@@ -117,25 +129,27 @@ log-level = "error"
 [raftstore]
 
 sync-log = false
+```
 
 2、块缓存配置
 
-        在TiKV 中需要根据机器内存大小配置RocksDB 的block cache，以充分利用内存。以
+在 TiKV 中需要根据机器内存大小配置 RocksDB 的block cache，以充分利用内存。以 20 GB 内存的虚拟机部署一个TiKV 为例，其block cache 建议配置如下。
 
-20 GB 内存的虚拟机部署一个TiKV 为例，其block cache 建议配置如下。
-
+```toml
 [storage.block-cache]
 
 capacity = "10GB"
+```
 
 3、其他调节项
 
-        开始可以使用基本的配置，压测运行后可以通过观察 Grafana 并参考 [TiKV 调优说明](/reference/performance/tune-tikv.md)进行调整。 如出现单线程模块瓶颈，可以通过扩展TiKV 节点来进行负载均摊；如出现多线程模块瓶颈，可以通过增加该模块并发度进行调整。
+开始可以使用基本的配置，压测运行后可以通过观察 Grafana 并参考 [TiKV 调优说明]进行调整。 如出现单线程模块瓶颈，可以通过扩展TiKV 节点来进行负载均摊；如出现多线程模块瓶颈，可以通过增加该模块并发度进行调整。
 
-**五、BenchmarkSQL 配置**
+## 五、BenchmarkSQL 配置
 
-修改benchmarksql/run/props.mysql文件
+修改 benchmarksql/run/props.mysql 文件
 
+```toml
 conn=jdbc:mysql://{HAPROXY-HOST}:{HAPROXY-PORT}/tpcc?      
 
 useSSL=false&useServerPrepStmts=true&useConfigs=maxPerformance
@@ -145,19 +159,17 @@ warehouses=1000 # 使用 1000 个 warehouse
 terminals=500   # 使用 500 个终端
 
 loadWorkers=32  # 导入数据的并发数
+```
 
-**六、导入数据**
+## 六、导入数据
 
 （导入数据通常是整个 TPC-C 测试中最耗时，也是最容易出问题的阶段）
 
-       1.首先连接到 TiDB-Server 并执行：
+1、首先连接到 TiDB-Server 并执行：
 
- 
-
-{{< copyable "sql" >}}
-
+```shell
  create database tpcc
-
+```
  
 
 2.之后在 shell 中运行 BenchmarkSQL 建表脚本：
