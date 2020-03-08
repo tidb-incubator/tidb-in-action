@@ -2,9 +2,10 @@
 ## **警告**
 * TiDB Lightning 运行后，TiDB 集群将无法正常对外提供服务。
 * 若 `tidb-lightning` 崩溃，集群会留在“导入模式”。若忘记转回“普通模式”，集群会产生大量未压缩的文件，继而消耗 CPU 并导致延迟。此时，需要使用 `tidb-lightning-ctl` 手动将集群转回“普通模式”：
-```
-.../tidb-ansible/resouce/bin/tidb-lightning-ctl -switch-mode=normal
-```
+
+  ```
+  .../tidb-ansible/resouce/bin/tidb-lightning-ctl -switch-mode=normal
+  ```
 
 ## **数据库权限要求**
 TiDB Lightning 需要下游 TiDB 具有如下权限：
@@ -56,6 +57,7 @@ IS1 ansible_host=172.16.4.1 deploy_dir=/data/deploy tikv_importer_port=8287 impo
 LS1 ansible_host=172.16.4.2 deploy_dir=/data/deploy tidb_lightning_pprof_port=8289 data_source_dir=/data/wanted
 ...
 ```
+
 **Step2: ** 准备需要导入的数据放到配置文件中 data_source_dir 指定的路径。数据可以是 mydumper 备份的 sql 文件或者是 csv 文件。如果是 csv 文件，则需要做额外配置。修改 conf/tidb-lightning.yml
 
 ```
@@ -82,11 +84,13 @@ backslash-escape = true
 trim-last-separator = false
 ...
 ```
+
 **Step3: ** 初始化 Lightning 和 Importer
 
 ```
 $ ansible-playbook bootsrap.yml -l IS1，LS
 ```
+
 **Step4: ** 部署 Lightning 和 Importer
 
 ```
@@ -94,6 +98,7 @@ $ ansible-playbook deploy.yml -l IS1，LS
 或者
 $ ansible-playbook deploy.yml --tags=lightning
 ```
+
 **Step5：** 启动 Importer 以及 Lightning
 
 注意，必须先启动 Importer ，再启动 Lightning ，顺序不能换。
