@@ -69,50 +69,41 @@ nohup taskset -c 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39 bin/tidb
 
 1、升高日志级别，可以减少打印日志数量，对性能有积极影响。具体在TiDB 配置文件中加入：       
 
-```toml
+```text
 [log]
-
 level = "error"
 ```
 
 2、性能相关配置，根据机器的CPU 核数设置，TiDB的CPU 使用数量。
 
-```toml
+```text
 performance:
-
 # Max CPUs to use, 0 use number of CPUs in the machine.
-
-max-procs: 20
+  max-procs: 20
 ```
 
 3、缓存语句数量设置，开启TiDB 配置中的prepared plan cache，以减少优化执行计划的开销。
 
-```toml
+```text
 prepared_plan_cache:
-
-enabled: true
+  enabled: true
 ```
 
 4、与TIKV客户端设置，默认值为16；当节点负载比较低时，可适当调大该值。
 
-```toml
+```text
 tikv_client:
-
 # Max gRPC connections that will be established with each tikv-server.
-
-grpc-connection-count: 4
+  grpc-connection-count: 4
 ```
 
 5、本地事务冲突检测，并发压测建议开启，可减少事务的冲突。
 
-```toml
+```text
 txn_local_latches:
-
 # Enable local latches for transactions. Enable it when
-
 # there are lots of conflicts between transactions.
-
-enabled: true
+  enabled: true
 ```
 
 ## 四、TIKV调优配置
@@ -121,13 +112,11 @@ enabled: true
 
 升高TiKV 的日志级别同样有利于性能表现。由于TiKV 是以集群形式部署，在 Raft 算法的作用下，能保证大多数节点已经写入数据。因此，除了对数据安全极端敏感的场景之外，raftstore 中的 sync-log 选项可以关闭。
 
-```toml
+```text
 global:
-
-log-level = "error"
+  log-level = "error"
 
 [raftstore]
-
 sync-log = false
 ```
 
@@ -135,9 +124,8 @@ sync-log = false
 
 在 TiKV 中需要根据机器内存大小配置 RocksDB 的block cache，以充分利用内存。以 20 GB 内存的虚拟机部署一个TiKV 为例，其block cache 建议配置如下。
 
-```toml
+```text
 [storage.block-cache]
-
 capacity = "10GB"
 ```
 
@@ -149,10 +137,8 @@ capacity = "10GB"
 
 修改 benchmarksql/run/props.mysql 文件
 
-```toml
-conn=jdbc:mysql://{HAPROXY-HOST}:{HAPROXY-PORT}/tpcc?      
-
-useSSL=false&useServerPrepStmts=true&useConfigs=maxPerformance
+```text
+conn=jdbc:mysql://{HAPROXY-HOST}:{HAPROXY-PORT}/tpcc?useSSL=false&useServerPrepStmts=true&useConfigs=maxPerformance
 
 warehouses=1000 # 使用 1000 个 warehouse
 
@@ -168,115 +154,73 @@ loadWorkers=32  # 导入数据的并发数
 1、首先连接到 TiDB-Server 并执行：
 
 ```shell
- create database tpcc
+create database tpcc
 ```
- 
 
-2.之后在 shell 中运行 BenchmarkSQL 建表脚本：
+2、之后在 shell 中运行 BenchmarkSQL 建表脚本：
 
- 
-
-{{< copyable "shell-regular" >}}
-
- 
-
+```shell
 cd run && \
-
 ./runSQL.sh props.mysql sql.mysql/tableCreates.sql && \
-
 ./runSQL.sh props.mysql sql.mysql/indexCreates.sql
+```
 
- 2.3.1直接使用 BenchmarkSQL 导入（根据机器配置这个过程可能会持续几个小时）
+3、数据导入有两种方式可以选取，主要如下：
+（1）直接使用 BenchmarkSQL 导入（根据机器配置这个过程可能会持续几个小时）
 
- 
-
-{{< copyable "shell-regular" >}}
-
+```shell
 ./runLoader.sh props.mysql
+```
 
- 
-
-2.3.2通过 TiDB Lightning 导入（由于导入数据量随着 warehouse 的增加而增加，当需要导入 1000 warehouse 以上数据时，可以先用 BenchmarkSQL 生成 csv 文件，再将文件通过 TiDB Lightning（以下简称 Lightning）导入的方式来快速导入。生成的 csv 文件也可以多次复用，节省每次生成所需要的时间）。
-
- 
+（2）通过 TiDB Lightning 导入（由于导入数据量随着 warehouse 的增加而增加，当需要导入 1000 warehouse 以上数据时，可以先用 BenchmarkSQL 生成 csv 文件，再将文件通过 TiDB Lightning（以下简称 Lightning）导入的方式来快速导入。生成的 csv 文件也可以多次复用，节省每次生成所需要的时间）。
 
 step1.修改 BenchmarkSQL 的配置文件
-
 warehouse 的 csv 文件需要 77 MB 磁盘空间，在生成之前要根据需要分配足够的磁盘空间来保存 csv 文件。可以在 `benchmarksql/run/props.mysql` 文件中增加一行：
-
- 
-
-fileLocation=/home/user/csv/  # 存储 csv 文件的目录绝对路径，需保证有足够的空间
-
- 
+```text
+fileLocation=/home/user/csv/  # 存储 csv 文件的目录绝对路径，需保证有足够的空间
+```
 
 因为最终要使用 Lightning 导入数据，所以 csv 文件名最好符合 Lightning 要求，即 `{database}.{table}.csv` 的命名法。这里可以将以上配置改为：
-
- 
-
-fileLocation=/home/user/csv/tpcc.  # 存储 csv 文件的目录绝对路径 + 文件名前缀（database）
-
- 
+```text
+fileLocation=/home/user/csv/tpcc.  # 存储 csv 文件的目录绝对路径 + 文件名前缀（database）
+```
 
 这样生成的 csv 文件名将会是类似 `tpcc.bmsql_warehouse.csv` 的样式，符合 Lightning 的要求。
 
- 
-
 step2.生成 csv 文件
-
- 
-
-{{< copyable "shell-regular" >}}
-
+```shell
 ./runLoader.sh props.mysql
+```
 
 step3.修改 inventory.ini
 
 这里最好手动指定清楚部署的 IP、端口、目录，避免各种冲突问题带来的异常。
-
+```text
 [importer_server]
-
 IS1 ansible_host=172.16.5.34 deploy_dir=/data2/is1 tikv_importer_port=13323 import_dir=/data2/import
 
- 
-
 [lightning_server]
-
 LS1 ansible_host=172.16.5.34 deploy_dir=/data2/ls1 tidb_lightning_pprof_port=23323 data_source_dir=/home/user/csv
+```
 
 step4.修改 conf/tidb-lightning.yml
-
- 
-
+```text
 mydumper:
-
-no-schema: true
-
+  no-schema: true
 csv:
-
-separator: ','
-
-delimiter: ''
-
-header: false
-
-not-null: false
-
-'null': 'NULL'
-
-backslash-escape: true
-
-trim-last-separator: false
+  separator: ','
+  delimiter: ''
+  header: false
+  not-null: false
+  'null': 'NULL'
+  backslash-escape: true
+  trim-last-separator: false
+```
 
 step5.部署 Lightning 和 Importer
-
- 
-
-{{< copyable "shell-regular" >}}
-
- 
-
+```shell
 ansible-playbook deploy.yml --tags=lightning
+```
 
 step6.启动
 
@@ -288,33 +232,20 @@ step6.启动
 
 * 在 Lightning 目录下执行 `scripts/start_lightning.sh`，开始导入数据
 
- 
-
 由于是用 ansible 进行部署的，可以在监控页面看到 Lightning 的导入进度，或者通过日志查看导入是否结束。
-
- 
 
 数据导入完成之后，可以运行 `sql.common/test.sql` 进行数据正确性验证，如果所有 SQL 语句都返回结果为空，即为数据导入正确。
 
- 
-
-**七、运行测试**
-
- 
+## 七、运行测试
 
 执行 BenchmarkSQL 测试脚本：
-
- 
-
-{{< copyable "shell-regular" >}}
-
+```shell
 nohup ./runBenchmark.sh props.mysql &> test.log &
+```
 
 运行结束后通过 `test.log` 查看结果：
-
- 
-
-07:09:53,455 [Thread-351] INFO   jTPCC : Term-00, Measured tpmC (NewOrders) = 77373.25
+```text
+07:09:53,455 [Thread-351] INFO   jTPCC : Term-00, Measured tpmC (NewOrders) = 77373.25
 
 07:09:53,455 [Thread-351] INFO   jTPCC : Term-00, Measured tpmTOTAL = 171959.88
 
@@ -323,5 +254,6 @@ nohup ./runBenchmark.sh props.mysql &> test.log &
 07:09:53,456 [Thread-351] INFO   jTPCC : Term-00, Session End       = 2019-03-21 07:09:53
 
 07:09:53,456 [Thread-351] INFO   jTPCC : Term-00, Transaction Count = 345240
+```
 
 tpmC 部分即为测试结果。
