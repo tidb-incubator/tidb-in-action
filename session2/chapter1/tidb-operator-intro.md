@@ -40,7 +40,7 @@ TiDB Operator 像“牧羊人”一样，持续的监督并管理着 TiDB 各组
 
 2. `Kube-controller-manager`：TiDB Cluster 等 CR 封装了`StatefulSet`、`Deployment`、`CronJob` 等原生对象，所以依然需要 K8s 原生控制器来进行控制逻辑。
 
-3. `Kube-scheduler`：调度TiDB Cluster等CRD所运行的Pod，需要先经过`tidb-scheduler`的筛选，然后再使用K8s原生调度器来进行Pod调度。
+3. `Kube-scheduler`：调度 TiDB Cluster 的 Pod，`filtering` 阶段，kube-scheduler 筛选出的节点会再经过 `tidb-scheduler` 筛选一次，然后 kube-scheduler 再进行 `scoring` 选择最合适的节点进行Pod调度。
 
 举个栗子（脑洞）：
 
