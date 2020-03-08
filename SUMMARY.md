@@ -9,7 +9,7 @@
 * [3 谈计算](session1/chapter3/tidb-computing.md)
     * [3.1 关系模型到 Key-Value 模型的映射](session1/chapter3/tidb-kv-to-relation.md) @[Qiannan](https://github.com/hsqlu)
     * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md)
-    * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @zhiqiangxu
+    * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @[zhiqiangxu](https://github.com/zhiqiangxu)
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 空间均衡](session1/chapter4/region-balance.md)
     * [4.2 负载均衡](session1/chapter4/load-balance.md)
@@ -132,7 +132,7 @@
     * [3.4 监控汇总表](session3/chapter3/metrics-summary.md)
     * [3.5 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
     * [3.6 Processlist](session3/chapter3/processlist.md)
-    * [3.7 Statements](session3/chapter3/statements.md)
+    * [3.7 Statement Summary](session3/chapter3/statements.md) @张明
 * [4 TiDB 集群监控与报警](session3/chapter4/tidb-monitor-alert.md)
     * [4.1 性能调优地图](session3/chapter4/performance-map.md)
     * [4.2 TiDB 读写流程相关监控原理解析](session3/chapter4/read-write-metrics.md)
