@@ -1,4 +1,4 @@
-## 2.2 可视化 Statements
+# 2.2 可视化 Statements
 
 在上一节介绍了怎样通过 KeyVis 来识别 TiDB 的业务的模式，本节主要带领读者体会怎样通过 Dashboard 的 Statements 信息来分析执行 SQL 情况，从而达到帮助运维人员快速定位 SQL 性能问题。
 
@@ -33,7 +33,7 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 注：这里所指的 SQL 语句实际指的是某一类 SQL 语句。语法一致的 SQL 语句会规一划为一类相同的 SQL 语句。
 比如 `SELECT * FROM employee WHERE id IN (1, 2, 3)` 和 `select * from EMPLOYEE where ID in (4, 5)` 最后都会被规一划为 `select * from employee where id in (...)`。
 
-![](/res/session3/chapter2/slow-query-table/1.jpg)
+![slow query table](/res/session3/chapter2/slow-query-table/1.jpg)
 
 目前的已知问题:
 
@@ -51,7 +51,7 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 3. 平均扫描行数（一般是读）
 4. 各个节点执行指标（可以快速定位出某个节点性能瓶颈）
 
-![](/res/session3/chapter2/slow-query-table/2.jpg)
+![slow query table](/res/session3/chapter2/slow-query-table/2.jpg)
 
 ### Statements 参数配置
 
