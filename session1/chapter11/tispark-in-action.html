@@ -2860,7 +2860,163 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <p>&#x4E0A;&#x4E00;&#x7AE0;&#x8282;&#x4E2D;&#xFF0C;&#x9488;&#x5BF9;TiSpark&#x7684;&#x67B6;&#x6784;&#x548C;&#x539F;&#x7406;&#x8FDB;&#x884C;&#x4E86;&#x8BE6;&#x7EC6;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x5728;&#x672C;&#x7AE0;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x4ECB;&#x7ECD;TiSpark&#x7684;&#x90E8;&#x7F72;&#x548C;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x3002;</p>
+<p><strong>TiSpark&#x7684;&#x90E8;&#x7F72;</strong></p>
+<p>TiSpark&#x76EE;&#x524D;&#x652F;&#x6301;&#x4E24;&#x79CD;&#x90E8;&#x7F72;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<ul>
+<li>&#x5728;&#x73B0;&#x6709;Spark&#x96C6;&#x7FA4;&#x4E0A;&#x90E8;&#x7F72;TiSpark</li>
+<li>&#x90E8;&#x7F72;&#x4E00;&#x5957;&#x65B0;&#x7684;TiSpark&#x96C6;&#x7FA4;</li>
+</ul>
+<p>&#x3002;&#x3002;&#x3002;</p>
+<p><strong>TiSpark&#x7684;&#x57FA;&#x672C;&#x4F7F;&#x7528;</strong></p>
+<p>TiSpark&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x4E0E;&#x539F;&#x751F;Spark&#x7C7B;&#x4F3C;&#xFF0C;&#x63D0;&#x4F9B;&#x591A;&#x79CD;&#x65B9;&#x5F0F;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x3002;</p>
+<ul>
+<li>&#x901A;&#x8FC7;Spark-Shell&#x67E5;&#x8BE2;&#x6570;&#x636E;</li>
+</ul>
+<p>&#x4F7F;&#x7528;spark-shell&#x542F;&#x52A8;&#xFF0C;&#x901A;&#x8FC7;spark&#x63D0;&#x4F9B;&#x7684;api&#x5373;&#x53EF;&#x8BBF;&#x95EE;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x5229;&#x7528;spark-shell&#x67E5;&#x8BE2;lineitem&#x8868;&#x7684;&#x6570;&#x636E;</p>
+<pre><code>scala&gt;spark.sql(&quot;use tpch&quot;)
+&#x4F7F;&#x7528;tpch&#x5E93;
+scala&gt;spark.sql(&quot;select count(*) from lineitem&quot;).show
+&#x67E5;&#x8BE2;lineitem&#x8868;&#x7684;&#x603B;&#x884C;&#x6570;
+&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x663E;&#x793A;&#x5982;&#x4E0B;&#xFF1A;
++-------------+
+| Count (1)   |
++-------------+
+| 600000000   |
++-------------+
+</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x5229;&#x7528;spark-sql&#x67E5;&#x8BE2;&#x590D;&#x6742;sql</p>
+<pre><code>scala&gt; spark.sql(
+      &quot;&quot;&quot;select
+        |   l_returnflag,
+        |   l_linestatus,
+        |   sum(l_quantity) as sum_qty,
+        |   sum(l_extendedprice) as sum_base_price,
+        |   sum(l_extendedprice * (1 - l_discount)) as sum_disc_price,
+        |   sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge,
+        |   avg(l_quantity) as avg_qty,
+        |   avg(l_extendedprice) as avg_price,
+        |   avg(l_discount) as avg_disc,
+        |   count(*) as count_order
+        |from
+        |   lineitem
+        |where
+        |   l_shipdate &lt;= date &apos;1998-12-01&apos; - interval &apos;90&apos; day
+        |group by
+        |   l_returnflag,
+        |   l_linestatus
+        |order by
+        |   l_returnflag,
+        |   l_linestatus
+      &quot;&quot;&quot;.stripMargin).show
+scala&gt; 
++------------+------------+---------+--------------+--------------+
+|l_returnflag|l_linestatus|  sum_qty|sum_base_price|sum_disc_price|
++------------+------------+---------+--------------+--------------+
+|           A|           F|380456.00|  532348211.65|505822441.4861|
+|           N|           F|  8971.00|   12384801.37| 11798257.2080|
+|           N|           O|742802.00| 1041502841.45|989737518.6346|
+|           R|           F|381449.00|  534594445.35|507996454.4067|
++------------+------------+---------+--------------+--------------+
+</code></pre><ul>
+<li>&#x901A;&#x8FC7;Spark SQL&#x67E5;&#x8BE2;&#x6570;&#x636E;</li>
+</ul>
+<p>TiSpark&#x540C;&#x6837;&#x652F;&#x6301;&#x5229;&#x7528;SparkSQL&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x3002;&#x4F7F;&#x7528;spark-sql&#x547D;&#x4EE4;&#x5373;&#x53EF;&#x8FDB;&#x5165;&#x4EA4;&#x4E92;&#x5F0F;&#x6570;&#x636E;&#x67E5;&#x8BE2;&#x9875;&#x9762;&#xFF0C;&#x63A5;&#x5165;&#x8F93;&#x5165;sql&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x793A;&#x4F8B;&#x4E09;&#xFF1A;&#x5229;&#x7528;spark-sql&#x67E5;&#x8BE2;lineitem&#x8868;&#x7684;&#x6570;&#x636E;</p>
+<pre><code>spark-sql&gt; use tpch;
+&#x4F7F;&#x7528;tpch&#x5E93;
+spark-sql&gt; select count(*) from lineitem;
+&#x67E5;&#x8BE2;lineitem&#x8868;&#x7684;&#x603B;&#x884C;&#x6570;
+2000
+Time taken: 0.673 seconds, Fetched 1 row(s)
+</code></pre><ul>
+<li>&#x5229;&#x7528;JDBC&#x8BBF;&#x95EE;TiSpark</li>
+</ul>
+<p>&#x90E8;&#x7F72;&#x65F6;&#x542F;&#x52A8;Thrift&#x670D;&#x52A1;&#x5668;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;JDBC&#x7684;&#x65B9;&#x5F0F;&#x4F7F;&#x7528;TiSpark&#x3002;</p>
+<p>&#x793A;&#x4F8B;&#x56DB;&#xFF1A;&#x5229;&#x7528;beeline&#x5DE5;&#x5177;&#x4F7F;&#x7528;JDBC&#x7684;&#x65B9;&#x5F0F;&#x8BBF;&#x95EE;TiSpark</p>
+<pre><code>beeline&gt; !connect jdbc:hive2://localhost:10000
+1: jdbc:hive2://localhost:10000&gt; use testdb;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.013 seconds)
+select count(*) from account;
++-----------+--+
+| count(1)  |
++-----------+--+
+| 1000000   |
++-----------+--+
+1 row selected (1.97 seconds)
+</code></pre><p><strong>TiSpark&#x7684;&#x591A;&#x8BED;&#x8A00;&#x4F7F;&#x7528;</strong></p>
+<ul>
+<li><strong>&#x4F7F;&#x7528;PySpark&#x8BBF;&#x95EE;TiSpark</strong></li>
+</ul>
+<p>TiSpark on PySpark&#x662F;TiSpark&#x7528;&#x6765;&#x652F;&#x6301;Python&#x8BED;&#x8A00;&#x800C;&#x6784;&#x5EFA;&#x7684;Python&#x5305;&#x3002;PySpark&#x652F;&#x6301;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;python&#x7684;&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#x6765;&#x5B89;&#x88C5;&#x4F7F;&#x7528;&#x3002;</p>
+<p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x76F4;&#x63A5;&#x4F7F;&#x7528;PySpark&#x8BBF;&#x95EE;TiSpark</p>
+<pre><code>./bin/pyspark --jars /PATH/tispark-${name_with_version}.jar
+# Query as you are in spark-shell
+spark.sql(&quot;show databases&quot;).show()
+spark.sql(&quot;use tpch_test&quot;)
+spark.sql(&quot;show tables&quot;).show()
+spark.sql(&quot;select count(*) from customer&quot;).show()
+# Result
++--------+
+|count(1)|
++--------+
+|     150|
++--------+
+</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x5229;&#x7528;pip&#x5B89;&#x88C5;pytispark&#x540E;&#x4F7F;&#x7528;TiSpark</p>
+<p>&#x9996;&#x5148;&#xFF0C;&#x5229;&#x7528;pip&#x6765;&#x5B89;&#x88C5;pytispark&#xFF0C;&#x76F8;&#x5173;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>pip install pytispark
+</code></pre><p>&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7528;&#x4EE5;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x7684;python&#x6587;&#x4EF6;test.py&#xFF0C;&#x6587;&#x4EF6;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>import pytispark.pytispark as pti
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.getOrCreate()
+ti = pti.TiContext(spark)
+ti.tidbMapDatabase(&quot;tpch_test&quot;)
+spark.sql(&quot;select count(*) from customer&quot;).show()
+</code></pre><p>&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x4F7F;&#x7528;spark-submit&#x6765;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#xFF0C;&#x76F8;&#x5173;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>./bin/spark-submit --jars /PATH/tispark-${name_with_version}.jar test.py
+# Result:
++--------+
+|count(1)|
++--------+
+|     150|
++--------+
+</code></pre><ul>
+<li><strong>&#x4F7F;&#x7528;TiSparkR&#x8BBF;&#x95EE;TiSpark</strong></li>
+</ul>
+<p>TiSparkR&#x662F;TiSpark&#x7528;&#x6765;&#x652F;&#x6301;R&#x8BED;&#x8A00;&#x6765;&#x6784;&#x5EFA;&#x7684;R&#x5305;&#x3002;&#x540C;PySpark&#x7C7B;&#x4F3C;&#xFF0C;TiSparkR&#x540C;&#x6837;&#x652F;&#x6301;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x52A0;&#x8F7D;library&#x7684;&#x65B9;&#x5F0F;&#x4F7F;&#x7528;&#x3002;</p>
+<p>&#x793A;&#x4F8B;&#x4E09;&#xFF1A;&#x76F4;&#x63A5;&#x4F7F;&#x7528;PySpark&#x8BBF;&#x95EE;TiSpark</p>
+<pre><code>./bin/sparkR --jars /PATH/tispark-${name_with_version}.jar
+sql(&quot;use tpch_test&quot;)
+count &lt;- sql(&quot;select count(*) from customer&quot;)
+head(count)
+# Result
++--------+
+|count(1)|
++--------+
+|     150|
++--------+
+</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x5229;&#x7528;SparkR&#x5305;&#x7684;&#x5F62;&#x5F0F;&#x4F7F;&#x7528;TiSpark
+&#x9996;&#x5148;&#xFF0C;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7528;&#x4EE5;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x7684;R&#x6587;&#x4EF6;test.R&#xFF0C;&#x6587;&#x4EF6;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>library(SparkR)
+sparkR.session()
+sql(&quot;use tpch_test&quot;)
+count &lt;- sql(&quot;select count(*) from customer&quot;)
+head(count)
+</code></pre><p>&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x4F7F;&#x7528;spark-submit&#x6765;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#xFF0C;&#x76F8;&#x5173;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>./bin/spark-submit  --jars /PATH/tispark-${name_with_version}.jar test.R
+# Result:
++--------+
+|count(1)|
++--------+
+|     150|
++--------
+</code></pre><p><strong>TiSpark&#x8BBF;&#x95EE;TiFlash</strong></p>
+<p>&#x53C2;&#x89C1;TiSpark&#x8BBF;&#x95EE;TiFlash&#x7AE0;&#x8282;</p>
+
                                 
                                 </section>
                             
@@ -2903,7 +3059,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"11.2 TiSpark 的使用","level":"2.11.2","depth":2,"next":{"title":"11.3 TiSpark on TiFlash","level":"2.11.3","depth":2,"path":"session1/chapter11/tispark-on-tiflash.md","ref":"session1/chapter11/tispark-on-tiflash.md","articles":[]},"previous":{"title":"11.1 TiSpark 架构与原理","level":"2.11.1","depth":2,"path":"session1/chapter11/tispark-architecture.md","ref":"session1/chapter11/tispark-architecture.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter11/tispark-in-action.md","mtime":"2020-03-08T12:24:47.860Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:25:23.743Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"11.2 TiSpark 的使用","level":"2.11.2","depth":2,"next":{"title":"11.3 TiSpark on TiFlash","level":"2.11.3","depth":2,"path":"session1/chapter11/tispark-on-tiflash.md","ref":"session1/chapter11/tispark-on-tiflash.md","articles":[]},"previous":{"title":"11.1 TiSpark 架构与原理","level":"2.11.1","depth":2,"path":"session1/chapter11/tispark-architecture.md","ref":"session1/chapter11/tispark-architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter11/tispark-in-action.md","mtime":"2020-03-08T12:25:35.832Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:26:11.977Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
