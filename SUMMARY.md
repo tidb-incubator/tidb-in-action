@@ -77,7 +77,7 @@
         * [1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南](session2/chapter1/tidb-operator-tools.md) @[程威](https://github.com/mikechengwei)
         * [1.2.8 TiDB-Operator 升级](session2/chapter1/tidb-operator-upgrade.md) @[程威](https://github.com/mikechengwei)
     * [1.3 集群扩容缩容](session2/chapter1/tidb-scale.md)
-        * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @黄靓
+        * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @[黄靓](https://github.com/vincent178)
         * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
     * [1.4 集群版本升级](session2/chapter1/tidb-upgrade.md)
         * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md)
