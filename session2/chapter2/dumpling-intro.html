@@ -2886,7 +2886,79 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="dumpling&#x5B9E;&#x64CD;&#x6307;&#x5357;">Dumpling&#x5B9E;&#x64CD;&#x6307;&#x5357;</h1>
+<h2 id="&#x57FA;&#x672C;&#x7528;&#x6CD5;">&#x57FA;&#x672C;&#x7528;&#x6CD5;</h2>
+<h3 id="&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;">&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;</h3>
+<p><a href="https://pingcap.com/docs-cn/stable/reference/security/privilege-system/#%E6%9F%A5%E7%9C%8B%E4%B8%BA%E7%94%A8%E6%88%B7%E5%88%86%E9%85%8D%E7%9A%84%E6%9D%83%E9%99%90" target="_blank">&#x67E5;&#x770B;&#x4E3A;&#x7528;&#x6237;&#x5206;&#x914D;&#x7684;&#x6743;&#x9650;</a></p>
+<ul>
+<li>SELECT</li>
+<li>RELOAD</li>
+<li>LOCK TABLES</li>
+<li>REPLICATION CLIENT</li>
+</ul>
+<h3 id="&#x4F7F;&#x7528;&#x4E3E;&#x4F8B;">&#x4F7F;&#x7528;&#x4E3E;&#x4F8B;</h3>
+<pre><code>dumpling -B test -F 2048 -H 127.0.01 -u root -P 3306 --loglevel debug
+</code></pre><h3 id="&#x547D;&#x4EE4;&#x53C2;&#x6570;&#x8BF4;&#x660E;">&#x547D;&#x4EE4;&#x53C2;&#x6570;&#x8BF4;&#x660E;</h3>
+<p>&#x4F7F;&#x7528; Dumpling &#x53EF;&#x4EE5;&#x5BF9;&#x4E0B;&#x5217;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x914D;&#x7F6E;:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">&#x53C2;&#x6570;</th>
+<th style="text-align:right">&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">--consistency level</td>
+<td style="text-align:right">&#x4E00;&#x81F4;&#x6027;&#x7EA7;&#x522B;: auto, none, flush, lock, snapshot, &#x9ED8;&#x8BA4;&#x4E3A; auto</td>
+</tr>
+<tr>
+<td style="text-align:left">-B, --database database</td>
+<td style="text-align:right">&#x9700;&#x8981;&#x5BFC;&#x51FA;&#x6570;&#x636E;&#x7684;&#x6570;&#x636E;&#x5E93;</td>
+</tr>
+<tr>
+<td style="text-align:left">-F, --filesize size</td>
+<td style="text-align:right">&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x7684;&#x6700;&#x5927;&#x5C3A;&#x5BF8;, &#x5355;&#x4F4D;&#x4E3A; Bytes</td>
+</tr>
+<tr>
+<td style="text-align:left">-H, --host hostname</td>
+<td style="text-align:right">&#x4E3B;&#x673A;&#x540D;, &#x9ED8;&#x8BA4;&#x4E3A; 127.0.0.1</td>
+</tr>
+<tr>
+<td style="text-align:left">--loglevel level</td>
+<td style="text-align:right">&#x65E5;&#x5FD7;&#x7EA7;&#x522B;: debug, info, warn, error, dpanic, panic, fatal, &#x9ED8;&#x8BA4;&#x4E3A; info</td>
+</tr>
+<tr>
+<td style="text-align:left">-W, --no-views</td>
+<td style="text-align:right">&#x662F;&#x5426;&#x5BFC;&#x51FA;&#x89C6;&#x56FE;,&#x9ED8;&#x8BA4;&#x4E3A; true</td>
+</tr>
+<tr>
+<td style="text-align:left">-o, --output dir</td>
+<td style="text-align:right">&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x76EE;&#x5F55;, &#x9ED8;&#x8BA4;&#x683C;&#x5F0F;&#x4E3A;&quot;./export-2020-03-08T11:37:05+08:00&quot;</td>
+</tr>
+<tr>
+<td style="text-align:left">-p, --password password</td>
+<td style="text-align:right">&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x5BC6;&#x7801;</td>
+</tr>
+<tr>
+<td style="text-align:left">-P, --port port</td>
+<td style="text-align:right">&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x7AEF;&#x53E3;, &#x9ED8;&#x8BA4;&#x4E3A; 4000</td>
+</tr>
+<tr>
+<td style="text-align:left">--snapshot position</td>
+<td style="text-align:right">&#x5FEB;&#x7167;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;, &#x4EC5;&#x5728;&#x4E00;&#x81F4;&#x6027;&#x7EA7;&#x522B;&#x4E3A;snapshot&#x65F6;&#x6709;&#x6548;</td>
+</tr>
+<tr>
+<td style="text-align:left">-t, --threads num</td>
+<td style="text-align:right">&#x5E76;&#x53D1;&#x7EBF;&#x7A0B;&#x6570;, &#x9ED8;&#x8BA4;&#x4E3A; 4</td>
+</tr>
+<tr>
+<td style="text-align:left">-u, --user user</td>
+<td style="text-align:right">&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x7528;&#x6237;&#x540D;, &#x9ED8;&#x8BA4;&#x4E3A; root</td>
+</tr>
+</tbody>
+</table>
+
                                 
                                 </section>
                             
@@ -2929,7 +3001,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"2.4 4.0 分布式导出工具 Dumpling","level":"3.2.4","depth":2,"next":{"title":"2.4.1 Dumpling 工作原理","level":"3.2.4.1","depth":3,"path":"session2/chapter2/dumpling-internal.md","ref":"session2/chapter2/dumpling-internal.md","articles":[]},"previous":{"title":"2.3.2 BR 实操指南","level":"3.2.3.2","depth":3,"path":"session2/chapter2/br-in-action.md","ref":"session2/chapter2/br-in-action.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter2/dumpling-intro.md","mtime":"2020-03-08T11:12:44.832Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:13:21.693Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"2.4 4.0 分布式导出工具 Dumpling","level":"3.2.4","depth":2,"next":{"title":"2.4.1 Dumpling 工作原理","level":"3.2.4.1","depth":3,"path":"session2/chapter2/dumpling-internal.md","ref":"session2/chapter2/dumpling-internal.md","articles":[]},"previous":{"title":"2.3.2 BR 实操指南","level":"3.2.3.2","depth":3,"path":"session2/chapter2/br-in-action.md","ref":"session2/chapter2/br-in-action.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter2/dumpling-intro.md","mtime":"2020-03-08T11:14:08.889Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:14:44.604Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
