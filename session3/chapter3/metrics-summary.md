@@ -35,7 +35,7 @@ MIN_VALUE    | 0.000975
 MAX_VALUE    | 0.013
 COMMENT      | The quantile of kv requests durations by store
 ```
-需要注意的是，其中 `tidb_get_token_duration` 的单位是微秒（us）， 其 `COMMENT` 里面也有提到。
+> 注意：其中 `tidb_get_token_duration` 的单位是微秒（us）， 其 `COMMENT` 里面也有提到。
 
 类似的，查询 `metrics_summary_by_label` 监控汇总表结果如下：
 
