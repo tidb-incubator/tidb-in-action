@@ -5,7 +5,7 @@
 
 ### 一、通过 helm 安装 TiDB Operator
 
-创建 TiDB CRD
+创建 TiDB CRD：
 
 ```
 
