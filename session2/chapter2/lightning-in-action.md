@@ -10,7 +10,7 @@ TiDB Lightning 需要下游 TiDB 具有如下权限：
 
 | 权限 | SELECT | INSERT | UPDATE | DELETE | CREATE | DROP | ALTER | 
 |:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
-| 作用域 | Tables | Tables | Tables | Tables | Databases,   tables | Databases,   tables | Tables | 
+| 作用域 | Tables | Tables | Tables | Tables | Databases, tables | Databases, tables | Tables | 
 
   如果配置项 `checksum = true`，则 TiDB Lightning 需要有下游 TiDB admin 用户权限。
 
@@ -104,10 +104,10 @@ $ ansible-playbook deploy.yml --tags=lightning
 
 **Step6：** 查看导入状态
 
-* 使用grafana监控查看，后面会详细介绍。
+* 使用 grafana 监控查看，后面会详细介绍。
 * 使用日志查看
 
-若数据顺利导入完成，lightning日志会显示["the whole procedure completed"] ，["tidb lightning exit"]等关键信息。
+若数据顺利导入完成，lightning 日志会显示["the whole procedure completed"] ，["tidb lightning exit"]等关键信息。
 
 
 **Step7：** 关闭 Importer
@@ -115,7 +115,7 @@ $ ansible-playbook deploy.yml --tags=lightning
 数据导入完成后，在 Importer 目录下执行 * scripts/stop_importer.sh  *
 
 ## 手动部署 TiDB Lightning
-从官网下载与 TiDB 版本一直的 Lightning 安装包，并将安装包上传至满足硬件要求的服务器。解压安装包后在bin目录下新建tikv-importer.toml，tidb-lightning.toml，详细配置说明见后面小节，TiDB Lightning启停等使用方式与ansible部署一致。
+从官网下载与 TiDB 版本一直的 Lightning 安装包，并将安装包上传至满足硬件要求的服务器。解压安装包后在 bin 目录下新建 tikv-importer.toml，tidb-lightning.toml，详细配置说明见后面小节，TiDB Lightning 启停等使用方式与 ansible 部署一致。
 
 TiDB Lightning TiDB-Backend
 ## Importer-backend 和 TiDB-backend 的区别
@@ -162,7 +162,7 @@ LS1 ansible_host=172.16.4.2 deploy_dir=/data/deploy tidb_lightning_pprof_port=82
 tikv_importer:
 backend: "tidb" # <-- 改成 “tidb”
 ```
-数据可以是mydumper 备份的 sql 文件或者是 csv 文件。如果是 csv 文件，则需要做额外配置。修改 conf/tidb-lightning.yml
+数据可以是 mydumper 备份的 sql 文件或者是 csv 文件。如果是 csv 文件，则需要做额外配置。修改 conf/tidb-lightning.yml
 ```
 ...
 [mydumper]
@@ -206,7 +206,7 @@ $ ansible-playbook deploy.yml --tags=lightning
 
 **Step6：**查看导入状态
 
-使用gafana监控查看
+使用 gafana 监控查看
 
 使用日志查看
 
