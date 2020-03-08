@@ -154,8 +154,8 @@
     * [3.1 Sysbench 基准性能测试](session4/chapter3/sysbench.md) @唐希元
     * [3.2 TPC-C 基准性能测试](session4/chapter3/tpc-c.md) @樊一蒙
 * [4 跨数据中心方案](session4/chapter4/multi-data-center-solution.md)
-    * [4.1 两中心异步复制方案（binlog 复制）](session4/chapter4/two-dc-binlog.md) @王新宇
-    * [4.2 两中心同步复制方案（三副本 Raft）](session4/chapter4/two-dc-raft.md) @王君怡
+    * [4.1 两中心异步复制方案（binlog 复制）](session4/chapter4/two-dc-binlog.md) @王新宇 @王君轶
+    * [4.2 两中心同步复制方案（三副本 Raft）](session4/chapter4/two-dc-raft.md) @王君轶
     * [4.3 两地三中心](session4/chapter4/3-dc.md) @杜蓉 @刘浩然
     * [4.4 AWS 跨 AZ 部署 TiDB](session4/chapter4/cross-az-in-aws.md) @George Li
 * [5 数据迁移方案](session4/chapter5/data-migration.md)
