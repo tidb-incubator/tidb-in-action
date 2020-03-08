@@ -74,3 +74,68 @@ Apply 日志不及时可能导致 apply channel 中内存堆积，堆积严重�
 >处理建议：
 >1. 检查 apply cpu 线程是否存在瓶颈，如果 [Async apply CPU] 超过了 [apply-pool-size 数量] * 70% 说明需要加大 apply-pool-size。
 >2. 检查 io 负载情况如磁盘吞吐量是否打满、写延迟是否过高。
+
+
+
+
+
+TiDB oom 是指在使用 TiDB 时，出现的内存溢出现象（out of memory 简称 oom）
+
+发生 TiDB oom 时的现象
+
+1、应用端会收到报错 “ERROR 2013 (HY000): Lost connection to MySQL server during query”
+
+2、Grafana 监控页面上 --> TiDB 面板 --> Server 页签 --> uptime 和 memory usage 监控项会出现掉底的现象。
+
+3、os 层面 dmesg 或者 /var/log/message 中，会出现 oom killer 字样。
+
+4、由于 TiDB 实例是存在 systemd 或 supervise 守护进程的，oom 后 TiDB 实例会被拉起来，其日志 tidb.log 中存在启动特有的 Welcome to TiDB 信息。
+
+TiDB oom 的原因
+
+我司测试过程中遇到的 TiDB OOM 有：
+
+1、select 大表，直接把 TiDB 打爆。
+
+2、delete 大表，where 条件过滤出来的数据量太大，直接把 TiDB 打爆。
+
+3、优化器不够好，在执行数据表和人造常量表在 join 的时候直接把 TiDB 打爆。语句：update table_a a,(select 1 id, 2 name) b set a.name = b.name where a.id = b.id;此时 a 表中并没有 id 为 1 的数据。
+
+4、mydumper导数据时，并发量太大，直接把 TiDB 打爆。
+
+导致 TiDB oom 的本质原因是 TiDB 现有的内存小于 TiDB 要使用的内存。
+
+
+一般情况下缓解 TiDB oom 有几种思路：
+
+1.增大 TiDB 现有内存。
+
+        TiDB 实例默认使用服务器全部内存的，提升物理服务器内存在真实场景中并不现实。但当前市场上服务器多 NUMA 架构，TiDB 使用建议中存在着 NUMA 绑核的机制。如果在做绑核动作时，如果使用了 membind 参数（Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above）绑定到 NUMA NODE上，则默认只能分配该 NUMA NODES 上的内存，而非全部；推荐使用 preferred 参数（Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above）进行绑定，其含义为首先使用分配的 NUMA NODE 的内存资源，不足时会使用其他节点的内存。这样可以提高 TiDB 使用内存的水位。
+
+
+2.减少 TiDB 使用内存。
+
+1）优化单一大 SQL
+
+     当出现 TiDB OOM 时 ，去查看对应的 tidb_slow_query.log 通过 Query_time 和 Mem_max 值定位使用内存过多的慢 SQL 。
+
+      如果是查询 SQL  可通过其执行计划定位，是否存在着以下动作：
+
+        全表扫描  table scan  优化思路：考虑新建索引。
+
+        hash join   优化思路：注意表之间的排列顺序，让筛选性好的表优先 join ；考虑使用 index loop join 代替。
+
+      如果是 delete 语句，可以考虑使用 tidb_batch_delete 方式，或业务上分片方式，达到少量多次的效果。
+
+2）横向扩容 TiDB 
+
+     面对没有单一大 SQL ，而是并发较高的场景，可以选择横向扩展 TiDB 节点来缓解单一 TiDB 实例的压力，从而起到缓解 oom 的作用。
+
+
+3.使用 TiDB 磁盘存储内存数据。
+
+1) 开启 swap ，tidb 默认会关闭掉，所以一般不建议使用。
+
+2）4.0 版本后，会支持 oom-use-tmp-storage 参数 配合 tidb_mem_quota_query 来将默写算子启用磁盘来临时存储。
+
+
