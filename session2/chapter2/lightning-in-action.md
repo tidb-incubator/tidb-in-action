@@ -413,31 +413,37 @@ TiDB Lightning 支持两种存储方式：本地文件或 MySQL 数据库。
 ## 断点续传的控制
 * 若 tidb-lightning 因不可恢复的错误而退出（例如数据出错），重启时不会使用断点，而是直接报错离开。为保证已导入的数据安全，这些错误必须先解决掉才能继续。使用 tidb-lightning-ctl 工具可以标示已经恢复。
 传入指定表清除错误数据
-```
-# 若导入 `schema`.`table` 这个表曾经出错，此命令会从目标数据库DROP这个表，清除已导入的数据，将断点重设到“未开始”的状态
-# 如果 `schema`.`table` 没有出错，则无操作
-$ tidb-lightning-ctl --checkpoint-error-destroy='`schema`.`table`'
-```
+  ```
+  # 若导入 `schema`.`table` 这个表曾经出错，此命令会从目标数据库DROP这个表，清除已导入的数据，将断点重设到“未开始”的状态
+  # 如果 `schema`.`table` 没有出错，则无操作
+  $ tidb-lightning-ctl --checkpoint-error-destroy='`schema`.`table`'
+  ```
+
 * 传入 “all” 会对所有表进行上述操作。这是最方便、安全但保守的断点错误解决方法。
-```
-$ tidb-lightning-ctl --checkpoint-error-destroy=all
-```
+  ```
+  $ tidb-lightning-ctl --checkpoint-error-destroy=all
+  ```
+
 * 如果导入 `schema`.`table` 这个表导入出错，发现此错误可以忽略，这条命令会清除出错状态，传入 “all” 会对所有表进行上述操作。
-```
-$ tidb-lightning-ctl --checkpoint-error-ignore='`schema`.`table`' &&
-$ tidb-lightning-ctl --checkpoint-error-ignore=all
-```
-注意：除非确定错误可以忽略，否则不要使用这个选项。如果错误是真实的话，可能会导致数据不完全。启用校验和 (CHECKSUM) 可以防止数据出错被忽略。
+  ```
+  $ tidb-lightning-ctl --checkpoint-error-ignore='`schema`.`table`' &&
+  $ tidb-lightning-ctl --checkpoint-error-ignore=all
+  ```
+  
+  注意：除非确定错误可以忽略，否则不要使用这个选项。如果错误是真实的话，可能会导致数据不完全。启用校验和 (CHECKSUM) 可以防止数据出错被忽略。
+  
 * 无论是否出错，把断点清除，使用--checkpoint-remove。
-```
-$ tidb-lightning-ctl --checkpoint-remove='`schema`.`table`' &&
-$ tidb-lightning-ctl --checkpoint-remove=all
-```
+  ```
+  $ tidb-lightning-ctl --checkpoint-remove='`schema`.`table`' &&
+  $ tidb-lightning-ctl --checkpoint-remove=all
+  ```
+  
 * 将所有断点备份到传入的文件夹，使用--checkpoint-dump
-```
-#主要用于技术支持。此选项仅于 driver = "mysql" 时有效
-$ tidb-lightning-ctl --checkpoint-dump=output/directory
-```
+  ```
+  #主要用于技术支持。此选项仅于 driver = "mysql" 时有效
+  $ tidb-lightning-ctl --checkpoint-dump=output/directory
+  ```
+
 # CSV 支持
 TiDB Lightning 支持读取 CSV（逗号分隔值）的数据源，以及其他定界符格式如 TSV（制表符分隔值）。
 
@@ -517,20 +523,18 @@ A,B,C
 
 * 如果 backslash-escape 为 true，下列转义符会被识别并转换。
 
-| 转义符   | 转换为   | 
-|:----|:----|
-| \0   | 空字符 (U+0000)   | 
-| \b   | 退格 (U+0008)   | 
-| \n   | 换行 (U+000A)   | 
-| \r   | 回车 (U+000D)   | 
-| \t   | 制表符 (U+0009)   | 
-| \Z   | Windows EOF (U+001A)   | 
+  | 转义符   | 转换为   | 
+  |:----|:----|
+  | \0   | 空字符 (U+0000)   | 
+  | \b   | 退格 (U+0008)   | 
+  | \n   | 换行 (U+000A)   | 
+  | \r   | 回车 (U+000D)   | 
+  | \t   | 制表符 (U+0009)   | 
+  | \Z   | Windows EOF (U+001A)   | 
 
-* 其他情况下（如 \"）反斜线会被移除，仅在字段中保留其后面的字符（"）。
+* 其他情况下（如 \"）反斜线会被移除，仅在字段中保留其后面的字符（"）。引用不会影响反斜线转义符的解析与否。
 
-引用不会影响反斜线转义符的解析与否。
-
-* * 对应 LOAD DATA 语句中的 FIELDS ESCAPED BY '\' 项。
+*对应 LOAD DATA 语句中的 FIELDS ESCAPED BY '\' 项。
 
 ### trim-last-separator
 将 separator 字段当作终止符，并移除尾部所有分隔符。
