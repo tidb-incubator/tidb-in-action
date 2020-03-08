@@ -190,12 +190,12 @@ location_labels = ["dc","rack","zone","host"]
 
 
 + tikv.yml中相关参数优化<br />
-文件路径：<tidb_ansible_path>/tidb-ansible/conf/tikv.yml
+文件路径：<tidb_ansible_path>/tidb-ansible/conf/tikv.yml <br />
 需要在集群安装前进行设置。
 
     * block-cache-size<br />
-	在TiKV单机多实例环境下，需要按照以下公式调整该值。
-	capacity = MEM_TOTAL * 0.5 / TiKV 实例数量
+	在TiKV单机多实例环境下，需要按照以下公式调整该值。<br />
+	capacity = MEM_TOTAL * 0.5 / TiKV 实例数量 <br />
 	示例如下:
 	```
 	 Storage:
@@ -211,7 +211,7 @@ location_labels = ["dc","rack","zone","host"]
 	```
 
 + pd.yml中相关参数优化<br />
-文件路径：<tidb_ansible_path>/tidb-ansible/conf/pd.yml
+文件路径：<tidb_ansible_path>/tidb-ansible/conf/pd.yml <br />
 需要在集群安装前进行设置。
 
 调整PD balance缓冲区大小，提高PD容忍度。
