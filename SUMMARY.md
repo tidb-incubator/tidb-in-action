@@ -172,7 +172,7 @@
     * [6.1 业务开发最佳实践](session4/chapter6/application-dev-best-practices.md)
         * [6.1.1 如何避免乐观锁模式下事务冲突](session4/chapter6/avoid-optimistic-lock-conflicts.md) @George Li
         * [6.1.2 TiDB 中事务限制及应对方案](session4/chapter6/transaction-statement-count-limit.md) @谭仁刚
-        * [6.1.3 高并发的唯一序列号生成方案](session4/chapter6/serial-number.md) @魏巍  @George Li
+        * [6.1.3 高并发的唯一序列号生成方案](session4/chapter6/serial-number.md) @魏巍 @George Li
         * [6.1.4 一种高效分页批处理方案](session4/chapter6/page-inaction.md) @魏巍
         * [6.1.5 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md) @George Li
     * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智晖-腾讯 @王英杰 @[朱博帅](https://github.com/zhuboshuai)
@@ -182,11 +182,9 @@
         * [6.4.2 TiDB分区表使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
         * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
         * [6.4.4 TiDB分区表问题处理](session4/chapter6/partition-table-best-practices.md) @代晓磊
-    * [6.5 TiDB 在电力行业的实践](session4/chapter6/tidb-in-electric.md)@潘博存
-    * [6.6 TiDB 在企业数据分级存储中的应用实践](session4/chapter6/tidb-in-enterprise-practices.md)@潘博存@王伦伟
-    * [6.7 TiDB 与 HBase、ES、Druid 的数据交互实战](session4/chapter6/tidb-with-hbase-es-druid.md)@潘博存@王伦伟
-    * [6.8 TiDB 与可视化展现 Saiku、Grafana 的集成应用](session4/chapter6/tidb-siku-grafana.md)@潘博存@王伦伟
-    * [6.9 流程调度工具与 TiSpark 的集成应用](session4/chapter6/tidb-streaming-scheduler-tools.md)@王娟
+    * [6.5 TiDB 在企业数据分级存储中的应用实践](session4/chapter6/tidb-in-enterprise-practices.md) @白鳝 
+    * [6.6 TiDB 与 HBase、ES、Druid 的数据交互实战](session4/chapter6/tidb-with-hbase-es-druid.md)@潘博存 @王伦伟
+    * [6.7 TiDB 与可视化展现 Saiku、Grafana 的集成应用](session4/chapter6/tidb-siku-grafana.md)@潘博存 @王伦伟
 * [7 常见问题处理思路](session4/chapter7/common-issues.md)
     * [7.1 Oncall 地图](session4/chapter7/oncall-map.md) @黄潇
     * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
