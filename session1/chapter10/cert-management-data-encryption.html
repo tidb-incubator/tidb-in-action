@@ -2886,7 +2886,146 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="103-&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x4E0E;&#x6570;&#x636E;&#x52A0;&#x5BC6;">10.3 &#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x4E0E;&#x6570;&#x636E;&#x52A0;&#x5BC6;</h1>
+<p>&#x4ECE; TiDB 3.0.8 &#x7248;&#x672C;&#x5F00;&#x59CB;&#xFF0C;TiDB &#x652F;&#x6301;&#x57FA;&#x4E8E;&#x8BC1;&#x4E66;&#x9274;&#x6743;&#x7684;&#x767B;&#x5F55;&#x65B9;&#x5F0F;&#x3002;&#x91C7;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;TiDB &#x5BF9;&#x4E0D;&#x540C;&#x7528;&#x6237;&#x7B7E;&#x53D1;&#x8BC1;&#x4E66;&#xFF0C;&#x4F7F;&#x7528;&#x52A0;&#x5BC6;&#x8FDE;&#x63A5;&#x6765;&#x4F20;&#x8F93;&#x6570;&#x636E;&#xFF0C;&#x5E76;&#x5728;&#x7528;&#x6237;&#x767B;&#x5F55;&#x65F6;&#x9A8C;&#x8BC1;&#x8BC1;&#x4E66;&#x3002;&#x76F8;&#x6BD4; MySQL &#x7528;&#x6237;&#x5E38;&#x7528;&#x7684;&#x7528;&#x6237;&#x540D;&#x5BC6;&#x7801;&#x9A8C;&#x8BC1;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0E; MySQL &#x76F8;&#x517C;&#x5BB9;&#x7684;&#x8BC1;&#x4E66;&#x9274;&#x6743;&#x65B9;&#x5F0F;&#x66F4;&#x5B89;&#x5168;&#xFF0C;&#x56E0;&#x6B64;&#x8D8A;&#x6765;&#x8D8A;&#x591A;&#x7684;&#x7528;&#x6237;&#x4F7F;&#x7528;&#x8BC1;&#x4E66;&#x9274;&#x6743;&#x6765;&#x4EE3;&#x66FF;&#x7528;&#x6237;&#x540D;&#x5BC6;&#x7801;&#x9A8C;&#x8BC1;&#x3002;</p>
+<p>&#x672C;&#x8282;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x56DB;&#x4E2A;&#x5C0F;&#x8282;</p>
+<ul>
+<li><a href="#&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x7684;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;">&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x7684;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;</a></li>
+<li><a href="#&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x7684;&#x539F;&#x7406;">&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x7684;&#x539F;&#x7406;</a></li>
+<li><a href="#&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;">&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;</a></li>
+<li><a href="#&#x66F4;&#x65B0;&#x548C;&#x66FF;&#x6362;&#x8BC1;&#x4E66;">&#x66F4;&#x65B0;&#x548C;&#x66FF;&#x6362;&#x8BC1;&#x4E66;</a></li>
+<li><a href="#&#x5176;&#x4ED6;">&#x5176;&#x4ED6;</a></li>
+</ul>
+<h2 id="&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;">&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;</h2>
+<p>TiDB &#x670D;&#x52A1;&#x7AEF;&#x9ED8;&#x8BA4;&#x91C7;&#x7528;&#x975E;&#x52A0;&#x5BC6;&#x8FDE;&#x63A5;&#xFF0C;&#x56E0;&#x800C;&#x5177;&#x5907;&#x76D1;&#x89C6;&#x4FE1;&#x9053;&#x6D41;&#x91CF;&#x80FD;&#x529B;&#x7684;&#x7B2C;&#x4E09;&#x65B9;&#x53EF;&#x4EE5;&#x77E5;&#x6089; TiDB &#x670D;&#x52A1;&#x7AEF;&#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x4E4B;&#x95F4;&#x53D1;&#x9001;&#x548C;&#x63A5;&#x53D7;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5305;&#x62EC;&#x4F46;&#x4E0D;&#x9650;&#x4E8E;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x5185;&#x5BB9;&#x3001;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x7B49;&#x3002;&#x82E5;&#x4FE1;&#x9053;&#x662F;&#x4E0D;&#x53EF;&#x4FE1;&#x7684;&#xFF0C;&#x4F8B;&#x5982;&#x5BA2;&#x6237;&#x7AEF;&#x662F;&#x901A;&#x8FC7;&#x516C;&#x7F51;&#x8FDE;&#x63A5;&#x5230; TiDB &#x670D;&#x52A1;&#x7AEF;&#x7684;&#xFF0C;&#x5219;&#x975E;&#x52A0;&#x5BC6;&#x8FDE;&#x63A5;&#x5BB9;&#x6613;&#x9020;&#x6210;&#x4FE1;&#x606F;&#x6CC4;&#x9732;&#xFF0C;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#x52A0;&#x5BC6;&#x8FDE;&#x63A5;&#x786E;&#x4FDD;&#x5B89;&#x5168;&#x6027;&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x8BC1;&#x4E66;&#x9A8C;&#x8BC1;&#x52A0;&#x5BC6;&#x8FDE;&#x63A5;&#x540E;&#xFF0C;&#x8FDE;&#x63A5;&#x5C06;&#x5177;&#x6709;&#x4EE5;&#x4E0B;&#x5B89;&#x5168;&#x6027;&#x8D28;&#xFF1A;</p>
+<ul>
+<li>&#x4FDD;&#x5BC6;&#x6027;&#xFF1A;&#x6D41;&#x91CF;&#x660E;&#x6587;&#x65E0;&#x6CD5;&#x88AB;&#x7A83;&#x542C;&#xFF1B;</li>
+<li>&#x5B8C;&#x6574;&#x6027;&#xFF1A;&#x6D41;&#x91CF;&#x660E;&#x6587;&#x65E0;&#x6CD5;&#x88AB;&#x7BE1;&#x6539;&#xFF1B;</li>
+<li><p>&#x8EAB;&#x4EFD;&#x9A8C;&#x8BC1;&#xFF08;&#x53EF;&#x9009;&#xFF09;&#xFF1A;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x80FD;&#x9A8C;&#x8BC1;&#x53CC;&#x65B9;&#x8EAB;&#x4EFD;&#xFF0C;&#x907F;&#x514D;&#x4E2D;&#x95F4;&#x4EBA;&#x653B;&#x51FB;&#x3002;</p>
+<h2 id="&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x7684;&#x539F;&#x7406;">&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x7684;&#x539F;&#x7406;</h2>
+<p>TiDB &#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x529F;&#x80FD;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x8BC1;&#x4E66;&#xFF0C;&#x9700;&#x8981;&#x7B26;&#x5408; X.509 &#x534F;&#x8BAE;&#x3002;&#x7528;&#x6237;&#x5148;&#x751F;&#x6210;&#x670D;&#x52A1;&#x7AEF;&#x5BC6;&#x94A5;&#xFF0C;&#x670D;&#x52A1;&#x7AEF;&#x8BC1;&#x4E66;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#xFF0C;&#x7528;&#x6237;&#x518D;&#x901A;&#x8FC7;&#x81EA;&#x5DF1;&#x7684; CA(&#x6839;&#x8BC1;&#x4E66;) &#x5BF9;&#x670D;&#x52A1;&#x7AEF;&#x8BC1;&#x4E66;&#x548C;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#x3002;</p>
+</li>
+<li><p>&#x670D;&#x52A1;&#x7AEF;&#x9A8C;&#x8BC1;&#x673A;&#x5236;&#xFF1A;&#x5982;&#x679C;&#x5BA2;&#x6237;&#x7AEF;&#x5728;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x65F6;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86; CA &#x8BC1;&#x4E66;&#xFF1B;&#x5219;&#x4F1A;&#x9A8C;&#x8BC1;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x8BC1;&#x4E66;&#x662F;&#x5426;&#x662F;&#x7531;&#x8FD9;&#x4E2A; CA &#x7B7E;&#x53D1;&#xFF0C;&#x4ECE;&#x800C;&#x9A8C;&#x8BC1;&#x670D;&#x52A1;&#x7AEF;&#x8EAB;&#x4EFD;&#x3002;</p>
+</li>
+<li>&#x5BA2;&#x6237;&#x7AEF;&#x9A8C;&#x8BC1;&#x673A;&#x5236;&#xFF1A;&#x5982;&#x679C;&#x5728; TiDB &#x4E2D;&#x914D;&#x7F6E;&#x4E86; CA &#x8DEF;&#x5F84;&#xFF0C;&#x5219;&#x4F1A;&#x5728;&#x7528;&#x6237;&#x767B;&#x9646;&#x65F6;&#xFF0C;&#x68C0;&#x67E5;&#x5BA2;&#x6237;&#x7AEF;&#x63D0;&#x4F9B;&#x7684;&#x8BC1;&#x4E66;&#x662F;&#x5426;&#x7531; CA &#x7B7E;&#x53D1;&#xFF0C;&#x4ECE;&#x800C;&#x9A8C;&#x8BC1;&#x5BA2;&#x6237;&#x7AEF;&#x8EAB;&#x4EFD;&#x3002;</li>
+<li>&#x52A0;&#x5BC6;&#x901A;&#x4FE1;&#xFF1A;&#x5728;&#x9A8C;&#x8BC1;&#x8EAB;&#x4EFD;&#x4E4B;&#x540E;&#xFF0C;&#x4F1A;&#x8FDB;&#x884C;&#x5BC6;&#x94A5;&#x534F;&#x5546;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x5C06;&#x91C7;&#x7528;&#x534F;&#x5546;&#x540E;&#x7684;&#x5BC6;&#x94A5;&#x8FDB;&#x884C;&#x52A0;&#x5BC6;</li>
+</ul>
+<p>&#x9664;&#x4E86;&#x9A8C;&#x8BC1;&#x8BC1;&#x4E66;&#x7B7E;&#x540D;&#x5916;&#xFF0C;TiDB &#x8FD8;&#x652F;&#x6301;&#x5BF9;&#x4E8E;&#x6307;&#x5B9A;&#x7528;&#x6237;&#x9A8C;&#x8BC1;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#x7684;&#x5177;&#x4F53;&#x5185;&#x5BB9;&#xFF0C;&#x5305;&#x62EC; sbject, issuer, cipher &#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#x7684;&#x5B9E;&#x73B0;&#x662F;&#x901A;&#x8FC7;&#x5C06;&#x9A8C;&#x8BC1;&#x7684;&#x4FE1;&#x606F;&#x5199;&#x5165; mysql.global_priv &#x7CFB;&#x7EDF;&#x8868;&#x6765;&#x5B8C;&#x6210;&#x3002;</p>
+<p>&#x5728;&#x7528;&#x6237;&#x767B;&#x5F55;&#x65F6;&#xFF0C;TiDB &#x83B7;&#x53D6;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#xFF0C;&#x4F1A;&#x6BD4;&#x5BF9;&#x76F8;&#x5E94;&#x7684;&#x9A8C;&#x8BC1;&#x5185;&#x5BB9;&#x662F;&#x5426;&#x7B26;&#x5408;&#x5BF9;&#x76F8;&#x5173;&#x7528;&#x6237;&#x7684;&#x8981;&#x6C42;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x7B26;&#x5408;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x767B;&#x9646;&#x3002;</p>
+<h2 id="&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;">&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;</h2>
+<h3 id="&#x5236;&#x4F5C;-ca-&#x8BC1;&#x4E66;">&#x5236;&#x4F5C; CA &#x8BC1;&#x4E66;</h3>
+<p>&#x76EE;&#x524D;&#x63A8;&#x8350;&#x4F7F;&#x7528; <a href="https://www.openssl.org/" target="_blank">OpenSSL</a> &#x6765;&#x751F;&#x6210;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#xFF0C;&#x5148;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x6765;&#x5B89;&#x88C5; OpenSSL&#xFF1A;</p>
+<pre><code>sudo apt-get install openssl
+</code></pre><p>&#x9996;&#x5148;&#x8981;&#x5236;&#x4F5C;&#x4E00;&#x4E2A; CA &#xFF0C;&#x751F;&#x6210; CA &#x5BC6;&#x94A5;</p>
+<pre><code>sudo openssl genrsa 2048 &gt; ca-key.pem
+</code></pre><p>&#x751F;&#x6210; CA &#x5BC6;&#x94A5;&#x5BF9;&#x5E94;&#x7684; CA &#x8BC1;&#x4E66;</p>
+<pre><code>sudo openssl req -new -x509 -nodes -days 365000 -key ca-key.pem -out ca-cert.pem
+</code></pre><p>&#x8F93;&#x5165;&#x8BC1;&#x4E66;&#x4FE1;&#x606F;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:California
+Locality Name (eg, city) []:San Francisco
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:PingCAP Inc.
+Organizational Unit Name (eg, section) []:TiDB
+Common Name (e.g. server FQDN or YOUR name) []:TiDB admin
+Email Address []:s@pingcap.com
+</code></pre><p>&#x81F3;&#x6B64; CA &#x8BC1;&#x4E66;&#x5236;&#x4F5C;&#x5B8C;&#x6210;&#xFF0C;&#x5728;&#x7EBF;&#x4E0A;&#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;CA &#x5BC6;&#x94A5;&#x6700;&#x597D;&#x4FDD;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x79BB;&#x7EBF;&#x5B89;&#x5168;&#x7684;&#x670D;&#x52A1;&#x5668;&#x4E0A;</p>
+<h3 id="&#x5236;&#x4F5C;&#x670D;&#x52A1;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;">&#x5236;&#x4F5C;&#x670D;&#x52A1;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;</h3>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x662F;&#x5236;&#x4F5C;&#x670D;&#x52A1;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#xFF0C;&#x7528;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x751F;&#x6210;&#x670D;&#x52A1;&#x7AEF;&#x5BC6;&#x94A5;&#xFF1A;</p>
+<pre><code>sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout server-key.pem -out server-req.pem
+</code></pre><p>&#x8F93;&#x5165;&#x8BC1;&#x4E66;&#x4FE1;&#x606F;&#xFF1A;</p>
+<pre><code>Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:California
+Locality Name (eg, city) []:San Francisco
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:PingCAP Inc.
+Organizational Unit Name (eg, section) []:TiKV
+Common Name (e.g. server FQDN or YOUR name) []:TiKV Test Server
+Email Address []:k@pingcap.com
+
+Please enter the following &apos;extra&apos; attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+</code></pre><p>&#x751F;&#x6210;&#x670D;&#x52A1;&#x7AEF; RAS &#x5BC6;&#x94A5;</p>
+<pre><code>sudo openssl rsa -in server-key.pem -out server-key.pem
+</code></pre><p>&#x4F7F;&#x7528; CA key&#x548C;&#x8BC1;&#x4E66;&#x751F;&#x6210;&#x670D;&#x52A1;&#x7AEF;&#x8BC1;&#x4E66;</p>
+<pre><code>sudo openssl x509 -req -in server-req.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
+</code></pre><h3 id="&#x5236;&#x4F5C;&#x5BA2;&#x6237;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;">&#x5236;&#x4F5C;&#x5BA2;&#x6237;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;</h3>
+<p>&#x751F;&#x6210;&#x5BA2;&#x6237;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#x4E5F;&#x662F;&#x7C7B;&#x4F3C;&#x7684;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<pre><code>sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout client-key.pem -out client-req.pem
+sudo openssl rsa -in client-key.pem -out client-key.pem
+sudo openssl x509 -req -in client-req.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem
+</code></pre><p>&#x751F;&#x6210;&#x670D;&#x52A1;&#x7AEF;&#x548C;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#x4E4B;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x6765;&#x9A8C;&#x8BC1;&#x8BC1;&#x4E66;</p>
+<pre><code>openssl verify -CAfile ca-cert.pem server-cert.pem client-cert.pem
+</code></pre><p>&#x9A8C;&#x8BC1;&#x901A;&#x8FC7;&#x4F1A;&#x663E;&#x793A;&#x4EE5;&#x4E0B;&#x4FE1;&#x606F;</p>
+<pre><code>server-cert.pem: OK
+client-cert.pem: OK
+</code></pre><h3 id="&#x914D;&#x7F6E;-tidb-&#x542F;&#x7528;&#x8BC1;&#x4E66;&#x9A8C;&#x8BC1;">&#x914D;&#x7F6E; TiDB &#x542F;&#x7528;&#x8BC1;&#x4E66;&#x9A8C;&#x8BC1;</h3>
+<p>&#x5728;&#x751F;&#x6210;&#x8BC1;&#x4E66;&#x4E4B;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x4E3A; TiDB &#x914D;&#x7F6E;&#x8BC1;&#x4E66;</p>
+<p>&#x4FEE;&#x6539; TiDB &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x7684; [security] &#x6BB5;&#x3002;&#x8FD9;&#x4E00;&#x6B65;&#x6307;&#x5B9A; CA &#x8BC1;&#x4E66;&#x3001;&#x670D;&#x52A1;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x8BC1;&#x4E66;&#x5B58;&#x653E;&#x7684;&#x8DEF;&#x5F84;&#x3002;</p>
+<pre><code>[security]
+ssl-cert =&quot;path/to/server-cert.pem&quot;
+ssl-key =&quot;path/to/server-key.pem&quot;
+ssl-ca=&quot;path/to/ca-cert.pem&quot;
+</code></pre><p>&#x542F;&#x52A8; TiDB &#x65E5;&#x5FD7;&#x3002;&#x5982;&#x679C;&#x65E5;&#x5FD7;&#x4E2D;&#x6709;&#x4EE5;&#x4E0B;&#x5185;&#x5BB9;&#xFF0C;&#x5373;&#x4EE3;&#x8868;&#x914D;&#x7F6E;&#x751F;&#x6548;&#xFF1A;</p>
+<pre><code>[INFO] [server.go:264] [&quot;secure connection is enabled&quot;] [&quot;client verification enabled&quot;=true]
+</code></pre><p>&#x5BA2;&#x6237;&#x7AEF;&#x5728;&#x767B;&#x9646; TiDB &#x65F6;&#xFF0C;&#x6307;&#x5B9A;&#x5BA2;&#x6237;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#x8DEF;&#x5F84;&#xFF0C;&#x4E0D;&#x6307;&#x5B9A; --ssl-ca &#x5219;&#x53EA;&#x4F1A;&#x52A0;&#x5BC6;&#x8FDE;&#x63A5;&#xFF0C;&#x4E0D;&#x4F1A;&#x9A8C;&#x8BC1;&#x670D;&#x52A1;&#x7AEF;&#x8EAB;&#x4EFD;&#x3002;</p>
+<pre><code>mysql -utest -h0.0.0.0 -P4000 --ssl-cert /path/to/client-cert.pem --ssl-key /path/to/client-key.pem --ssl-ca /path/to/ca-cert.pem
+</code></pre><p>&#x4E0A;&#x9762;&#x6F14;&#x793A;&#x4E86;&#x5982;&#x4F55;&#x5236;&#x4F5C;&#x8BC1;&#x4E66;&#x548C;&#x4F7F;&#x7528;&#x8BC1;&#x4E66;&#x8FDB;&#x884C;&#x52A0;&#x5BC6;&#x8FDE;&#x63A5;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x4F1A;&#x6F14;&#x793A;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x8BC1;&#x4E66;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x8EAB;&#x4EFD;&#x3002;
+TiDB &#x652F;&#x6301;&#x5728;&#x7528;&#x6237;&#x767B;&#x9646;&#x65F6;&#xFF0C;&#x9A8C;&#x8BC1; subject&#xFF0C;issuer&#xFF0C;cipher &#x5206;&#x522B;&#x662F;&#x6307;</p>
+<p>subject: &#x6307;&#x5B9A;&#x7528;&#x6237;&#x5728;&#x8FDE;&#x63A5;&#x65F6;&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#x7684; subject &#x5185;&#x5BB9;&#xFF0C;&#x5BF9;&#x5E94;&#x5236;&#x4F5C;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#x65F6;&#xFF0C;&#x8F93;&#x5165;&#x7684;&#x4FE1;&#x606F;</p>
+<p>issuer: &#x6307;&#x5B9A;&#x7B7E;&#x53D1;&#x7528;&#x6237;&#x8BC1;&#x4E66;&#x7684; CA &#x8BC1;&#x4E66;&#x7684; subject &#x5185;&#x5BB9;&#xFF0C;&#x5BF9;&#x5E94;&#x5236;&#x4F5C; CA &#x8BC1;&#x4E66;&#x65F6;&#xFF0C;&#x8F93;&#x5165;&#x7684;&#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x6307;&#x5B9A;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x7684; subject &#x7528;&#x4E8E;&#x9A8C;&#x8BC1;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#x548C;&#x8D26;&#x53F7;&#x7684;&#x5339;&#x914D;&#x5173;&#x7CFB;&#xFF1B;&#x6307;&#x5B9A;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x7684; issuer &#x7528;&#x6237;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x63D0;&#x4F9B;&#x7684; CA &#x8BC1;&#x4E66;&#x662F;&#x5426;&#x53EF;&#x4FE1;</p>
+<p>&#x53EF;&#x4EE5;&#x5728;&#x521B;&#x5EFA;&#x7528;&#x6237;&#x65F6;&#x6307;&#x5B9A;&#x9A8C;&#x8BC1;&#x4FE1;&#x606F;&#xFF1A;</p>
+<pre><code>create user &apos;u1&apos;@&apos;%&apos;  require issuer &apos;/C=US/ST=California/L=San Francisco/O=PingCAP Inc./OU=TiDB/CN=TiDB admin/emailAddress=s@pingcap.com&apos; subject &apos;/C=US/ST=California/L=San Francisco/O=PingCAP Inc./OU=TiDB/CN=tpch-user1/emailAddress=zz@pingcap.com&apos; cipher &apos;TLS_AES_256_GCM_SHA384
+</code></pre><p>&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x521B;&#x5EFA;&#x7528;&#x6237;&#x540E;&#xFF0C;&#x901A;&#x8FC7; GRANT &#x64CD;&#x4F5C;&#x6307;&#x5B9A;&#x9A8C;&#x8BC1;&#x4FE1;&#x606F;&#xFF1A;</p>
+<pre><code>&gt; create user &apos;u1&apos;@&apos;%&apos;;
+&gt; grant all on *.* to &apos;u1&apos;@&apos;%&apos; require issuer &apos;/C=US/ST=California/L=San Francisco/O=PingCAP Inc./OU=TiDB/CN=TiDB admin/emailAddress=s@pingcap.com&apos; subject &apos;/C=US/ST=California/L=San Francisco/O=PingCAP Inc./OU=TiDB/CN=tpch-user1/emailAddress=zz@pingcap.com&apos; cipher &apos;TLS_AES_256_GCM_SHA384&apos;;
+</code></pre><p>&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x540E;&#xFF0C;TiDB &#x5728;&#x7528;&#x6237;&#x5728;&#x767B;&#x5F55;&#x65F6;&#x4F1A;&#x9A8C;&#x8BC1;&#x4EE5;&#x4E0B;&#x5185;&#x5BB9;&#xFF1A;</p>
+<ul>
+<li>&#x4F7F;&#x7528; SSL &#x767B;&#x5F55;&#xFF0C;&#x4E14;&#x8BC1;&#x4E66;&#x4E3A; Server &#x914D;&#x7F6E;&#x7684; CA &#x8BC1;&#x4E66;&#x6240;&#x7B7E;&#x53D1;</li>
+<li>&#x8BC1;&#x4E66; Issuer &#x4FE1;&#x606F;&#x548C;&#x6743;&#x9650;&#x914D;&#x7F6E;&#x91CC;&#x7684;&#x4FE1;&#x606F;&#x76F8;&#x5339;&#x914D;</li>
+<li>&#x8BC1;&#x4E66; Subject &#x4FE1;&#x606F;&#x548C;&#x6743;&#x9650;&#x914D;&#x7F6E;&#x91CC;&#x7684;&#x4FE1;&#x606F;&#x76F8;&#x5339;&#x914D;</li>
+</ul>
+<p>&#x5168;&#x90E8;&#x9A8C;&#x8BC1;&#x901A;&#x8FC7;&#x540E;&#x65B9;&#x53EF;&#x767B;&#x5F55;&#xFF0C;&#x5426;&#x5219;&#x4F1A;&#x62A5; ERROR 1045 (28000): Access denied &#x9519;&#x8BEF;&#x3002;</p>
+<h2 id="&#x66F4;&#x65B0;&#x548C;&#x66FF;&#x6362;&#x8BC1;&#x4E66;&#xFF1A;">&#x66F4;&#x65B0;&#x548C;&#x66FF;&#x6362;&#x8BC1;&#x4E66;&#xFF1A;</h2>
+<p>&#x8BC1;&#x4E66;&#x548C;&#x5BC6;&#x94A5;&#x901A;&#x5E38;&#x4F1A;&#x5468;&#x671F;&#x6027;&#x66F4;&#x65B0;&#xFF0C;&#x4E0B;&#x6587;&#x4ECB;&#x7ECD;&#x66F4;&#x65B0;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#x7684;&#x6D41;&#x7A0B;&#x3002;</p>
+<p>CA &#x8BC1;&#x4E66; &#x662F;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x76F8;&#x4E92;&#x6821;&#x9A8C;&#x7684;&#x4F9D;&#x636E;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x9700;&#x8981;&#x66FF;&#x6362; CA &#x8BC1;&#x4E66;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x7EC4;&#x5408;&#x8BC1;&#x4E66;&#x6765;&#x5728;&#x6EDA;&#x52A8;&#x671F;&#x95F4;&#x540C;&#x65F6;&#x652F;&#x6301;&#x65B0;&#x65E7;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x5668;&#x7684;&#x9A8C;&#x8BC1;&#xFF0C;&#x5E76;&#x4F18;&#x5148;&#x5C06;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x7684; CA &#x8BC1;&#x4E66;&#x90FD;&#x66FF;&#x6362;&#x5B8C;&#x6210;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x5176;&#x4ED6;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#x66FF;&#x6362;&#x3002;</p>
+<h3 id="&#x66F4;&#x65B0;-ca-&#x8BC1;&#x4E66;">&#x66F4;&#x65B0; CA &#x8BC1;&#x4E66;</h3>
+<p>&#x4EE5;&#x66FF;&#x6362; CA &#x5BC6;&#x94A5;&#x4E3A;&#x4F8B;&#xFF08;&#x5982;&#xFF1A;ca-key.pem &#x88AB;&#x76D7;&#x4E86;&#xFF09;&#xFF0C;&#x9996;&#x5148;&#x5C06;&#x65E7;&#x7684; CA &#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#x8FDB;&#x884C;&#x5907;&#x4EFD;&#xFF1A;</p>
+<pre><code>mv ca-key.pem ca-key.old.pem
+mv ca-cert.pem ca-cert.old.pem
+</code></pre><p>&#x4E4B;&#x540E;&#x751F;&#x6210;&#x65B0;&#x7684; CA &#x5BC6;&#x94A5; &#xFF1A;</p>
+<pre><code>sudo openssl genrsa 2048 &gt; ca-key.pem
+</code></pre><p>&#x7528;&#x65B0;&#x7684;&#x5BC6;&#x94A5;&#x751F;&#x6210;&#x65B0;&#x7684; CA &#x8BC1;&#x4E66;</p>
+<pre><code>sudo openssl req -new -x509 -nodes -days 365000 -key ca-key.pem -out ca-cert.new.pem
+</code></pre><p>&#x751F;&#x6210;&#x7EC4;&#x5408; CA &#x8BC1;&#x4E66;&#xFF1A;</p>
+<pre><code>cat ca-cert.new.pem ca-cert.old.pem &gt; ca-cert.pem
+</code></pre><p>&#x4E4B;&#x540E;&#x4F7F;&#x7528;&#x65B0;&#x751F;&#x6210;&#x7684;&#x7EC4;&#x5408; CA &#x8BC1;&#x4E66;&#x5E76;&#x91CD;&#x542F; TiDB Server&#xFF0C;&#x6B64;&#x65F6;&#x670D;&#x52A1;&#x7AEF;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x63A5;&#x53D7;&#x548C;&#x4F7F;&#x7528;&#x65B0;&#x65E7; CA &#x8BC1;&#x4E66;&#x3002;</p>
+<h3 id="&#x66F4;&#x65B0;&#x670D;&#x52A1;&#x7AEF;&#x8BC1;&#x4E66;">&#x66F4;&#x65B0;&#x670D;&#x52A1;&#x7AEF;&#x8BC1;&#x4E66;</h3>
+<p>&#x751F;&#x6210;&#x65B0;&#x7684;&#x670D;&#x52A1;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#xFF1A;</p>
+<pre><code>sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout server-key.new.pem -out server-req.new.pem
+sudo openssl rsa -in server-key.new.pem -out server-key.new.pem
+</code></pre><p>&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x7EC4;&#x5408; CA &#x4E3A;&#x65B0;&#x670D;&#x52A1;&#x7AEF;&#x8BC1;&#x4E66;&#x7B7E;&#x540D;&#xFF1A;</p>
+<pre><code>sudo openssl x509 -req -in server-req.new.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.new.pem
+</code></pre><p>&#x914D;&#x7F6E; TiDB &#x4F7F;&#x7528;&#x65B0;&#x7684;&#x670D;&#x52A1;&#x7AEF;&#x8BC1;&#x4E66;</p>
+<h3 id="&#x66F4;&#x65B0;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;">&#x66F4;&#x65B0;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;</h3>
+<p>&#x751F;&#x6210;&#x65B0;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#xFF1A;</p>
+<pre><code>sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout client-key.new.pem -out client-req.new.pem
+sudo openssl rsa -in client-key.new.pem -out client-key.new.pem
+</code></pre><p>&#x6CE8;&#x610F;&#xFF1A;&#x8FD9;&#x91CC;&#x76EE;&#x6807;&#x662F;&#x66FF;&#x6362;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x5728;&#x7EBF;&#x7528;&#x6237;&#x4E0D;&#x53D7;&#x5F71;&#x54CD;&#xFF0C;&#x6240;&#x4EE5;&#x4E0A;&#x9762;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x4E2D;&#x586B;&#x5199;&#x7684;&#x9644;&#x52A0;&#x4FE1;&#x606F;&#x5FC5;&#x987B;&#x4E0E;&#x5DF2;&#x914D;&#x7F6E;&#x7684; require subject &#x4FE1;&#x606F;&#x4E00;&#x81F4;&#x3002;
+&#x7136;&#x540E;&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x7EC4;&#x5408; CA &#x7B7E;&#x540D;&#x65B0;&#x5BA2;&#x6237;&#x7AEF;&#x8BC1;&#x4E66;&#xFF1A;</p>
+<pre><code>sudo openssl x509 -req -in client-req.new.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.new.pem
+</code></pre><p>&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x8BC1;&#x4E66;&#x8FDE;&#x63A5; TiDB&#xFF1A;</p>
+<pre><code>mysql -utest -h0.0.0.0 -P4000 --ssl-cert /path/to/client-cert.new.pem --ssl-key /path/to/client-key.new.pem --ssl-ca /path/to/ca-cert.pem
+</code></pre><h2 id="&#x5176;&#x4ED6;">&#x5176;&#x4ED6;</h2>
+<p>&#x66F4;&#x591A;&#x8BC1;&#x4E66;&#x76F8;&#x5173;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#xFF1A;</p>
+<ul>
+<li><a href="https://pingcap.com/docs-cn/stable/how-to/secure/enable-tls-clients/" target="_blank">&#x4F7F;&#x7528;&#x52A0;&#x5BC6;&#x8FDE;&#x63A5;</a></li>
+<li><a href="https://pingcap.com/docs-cn/dev/reference/security/cert-based-authentication/" target="_blank">TiDB &#x8BC1;&#x4E66;&#x9274;&#x6743;&#x4F7F;&#x7528;&#x6307;&#x5357;</a></li>
+</ul>
+
                                 
                                 </section>
                             
@@ -2929,7 +3068,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"10.3 证书管理与数据加密","level":"2.10.3","depth":2,"next":{"title":"11 TiSpark 简介与实战","level":"2.11","depth":1,"path":"session1/chapter11/tispark-intro.md","ref":"session1/chapter11/tispark-intro.md","articles":[{"title":"11.1 TiSpark 架构与原理","level":"2.11.1","depth":2,"path":"session1/chapter11/tispark-architecture.md","ref":"session1/chapter11/tispark-architecture.md","articles":[]},{"title":"11.2 TiSpark 的使用","level":"2.11.2","depth":2,"path":"session1/chapter11/tispark-in-action.md","ref":"session1/chapter11/tispark-in-action.md","articles":[]},{"title":"11.3 TiSpark on TiFlash","level":"2.11.3","depth":2,"path":"session1/chapter11/tispark-on-tiflash.md","ref":"session1/chapter11/tispark-on-tiflash.md","articles":[]},{"title":"11.4 TiSpark 结合大数据体系","level":"2.11.4","depth":2,"path":"session1/chapter11/tispark-on-bigdata.md","ref":"session1/chapter11/tispark-on-bigdata.md","articles":[]}]},"previous":{"title":"10.2 RBAC","level":"2.10.2","depth":2,"path":"session1/chapter10/rbac.md","ref":"session1/chapter10/rbac.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter10/cert-management-data-encryption.md","mtime":"2020-03-08T11:09:45.899Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:10:24.407Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"10.3 证书管理与数据加密","level":"2.10.3","depth":2,"next":{"title":"11 TiSpark 简介与实战","level":"2.11","depth":1,"path":"session1/chapter11/tispark-intro.md","ref":"session1/chapter11/tispark-intro.md","articles":[{"title":"11.1 TiSpark 架构与原理","level":"2.11.1","depth":2,"path":"session1/chapter11/tispark-architecture.md","ref":"session1/chapter11/tispark-architecture.md","articles":[]},{"title":"11.2 TiSpark 的使用","level":"2.11.2","depth":2,"path":"session1/chapter11/tispark-in-action.md","ref":"session1/chapter11/tispark-in-action.md","articles":[]},{"title":"11.3 TiSpark on TiFlash","level":"2.11.3","depth":2,"path":"session1/chapter11/tispark-on-tiflash.md","ref":"session1/chapter11/tispark-on-tiflash.md","articles":[]},{"title":"11.4 TiSpark 结合大数据体系","level":"2.11.4","depth":2,"path":"session1/chapter11/tispark-on-bigdata.md","ref":"session1/chapter11/tispark-on-bigdata.md","articles":[]}]},"previous":{"title":"10.2 RBAC","level":"2.10.2","depth":2,"path":"session1/chapter10/rbac.md","ref":"session1/chapter10/rbac.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter10/cert-management-data-encryption.md","mtime":"2020-03-08T11:11:54.157Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:12:37.774Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

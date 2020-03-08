@@ -2886,7 +2886,141 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="101-&#x6743;&#x9650;&#x7BA1;&#x7406;">10.1 &#x6743;&#x9650;&#x7BA1;&#x7406;</h1>
+<p>TiDB &#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x63D0;&#x4F9B;&#x4E86;&#x57FA;&#x672C;&#x7684;&#x6743;&#x9650;&#x8BBF;&#x95EE;&#x63A7;&#x5236;&#x529F;&#x80FD;&#xFF0C;&#x4FDD;&#x969C;&#x6570;&#x636E;&#x4E0D;&#x88AB;&#x975E;&#x6388;&#x6743;&#x7684;&#x7BE1;&#x6539;</p>
+<p>TiDB &#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x6309;&#x7167; MySQL &#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x8FDB;&#x884C;&#x5B9E;&#x73B0;&#xFF0C;TiDB &#x652F;&#x6301;&#x5927;&#x90E8;&#x5206;&#x7684; MySQL &#x7684;&#x8BED;&#x6CD5;&#x548C;&#x6743;&#x9650;&#x7C7B;&#x578B;&#x3002;</p>
+<p>TiDB &#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x4E3B;&#x8981;&#x5305;&#x542B;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x7528;&#x6237;&#x8D26;&#x6237;&#x7BA1;&#x7406;&#x548C;&#x6743;&#x9650;&#x7BA1;&#x7406;&#xFF0C;&#x5728;&#x672C;&#x8282;&#x4F1A;&#x901A;&#x8FC7;&#x793A;&#x4F8B;&#x4E00;&#x4E00;&#x5C55;&#x793A;</p>
+<p>&#x672C;&#x8282;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x56DB;&#x4E2A;&#x5C0F;&#x8282;</p>
+<ul>
+<li><a href="#&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x7684;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;">&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x7684;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;</a></li>
+<li><a href="#&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x539F;&#x7406;">&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x539F;&#x7406;</a></li>
+<li><a href="#&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;">&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;</a></li>
+<li><a href="#&#x770B;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x4F8B;&#x5B50;">&#x770B;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x4F8B;&#x5B50;</a></li>
+<li><a href="#&#x5176;&#x4ED6;">&#x5176;&#x4ED6;</a></li>
+</ul>
+<h2 id="&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;">&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;</h2>
+<p>&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x548C;&#x5220;&#x9664;&#x7528;&#x6237;&#xFF0C;&#x6388;&#x4E88;&#x548C;&#x64A4;&#x9500;&#x7528;&#x6237;&#x6743;&#x9650;</p>
+<p>&#x53EA;&#x6709;&#x6709;&#x76F8;&#x5E94;&#x6743;&#x9650;&#x7684;&#x7528;&#x6237;&#x624D;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x6BD4;&#x5982;&#x53EA;&#x6709;&#x5BF9;&#x67D0;&#x4E2A;&#x8868;&#x6709;&#x5199;&#x6743;&#x9650;&#x7684;&#x7528;&#x6237;&#xFF0C;&#x624D;&#x53EF;&#x4EE5;&#x5BF9;&#x8FD9;&#x4E2A;&#x8868;&#x8FDB;&#x884C;&#x5199;&#x64CD;&#x4F5C;</p>
+<p>&#x901A;&#x8FC7;&#x4E3A;&#x6BCF;&#x4E2A;&#x7528;&#x6237;&#x8BBE;&#x5B9A;&#x4E25;&#x683C;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x4FDD;&#x969C;&#x6570;&#x636E;&#x4E0D;&#x88AB;&#x6076;&#x610F;&#x7BE1;&#x6539;</p>
+<h2 id="&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x539F;&#x7406;">&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x539F;&#x7406;</h2>
+<p>&#x5728;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x6A21;&#x5757;&#x4E2D;&#xFF0C;&#x6709;&#x4E09;&#x7C7B;&#x5BF9;&#x8C61;&#xFF1B;&#x7528;&#x6237;&#xFF0C;&#x88AB;&#x8BBF;&#x95EE;&#x7684;&#x5BF9;&#x8C61;&#xFF08;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x8868;&#xFF09;&#x4EE5;&#x53CA;&#x6743;&#x9650;</p>
+<p>&#x6240;&#x6709;&#x5BF9;&#x8C61;&#x7684;&#x5177;&#x4F53;&#x4FE1;&#x606F;&#x90FD;&#x4F1A;&#x88AB;&#x8BB0;&#x5F55;&#x5728;&#x51E0;&#x5F20;&#x7CFB;&#x7EDF;&#x8868;&#x4E2D;&#xFF1A;</p>
+<ul>
+<li>mysql.user</li>
+<li>mysql.tables_priv</li>
+<li>mysql.db</li>
+</ul>
+<p>&#x6240;&#x6709;&#x7684;&#x6388;&#x6743;&#xFF0C;&#x64A4;&#x9500;&#x6743;&#x9650;&#xFF0C;&#x521B;&#x5EFA;&#x7528;&#x6237;&#xFF0C;&#x5220;&#x9664;&#x7528;&#x6237;&#x64CD;&#x4F5C;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x90FD;&#x662F;&#x5BF9;&#x4E8E;&#x8FD9;&#x4E09;&#x5F20;&#x7528;&#x6237;&#x8868;&#x7684;&#x4FEE;&#x6539;&#x64CD;&#x4F5C;&#x3002;TiDB &#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x5668;&#x8D1F;&#x8D23;&#x5C06;&#x7CFB;&#x7EDF;&#x8868;&#x89E3;&#x6790;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x65B9;&#x4FBF;&#x5FEB;&#x901F;&#x7684;&#x8FDB;&#x884C;&#x9274;&#x6743;&#x64CD;&#x4F5C;&#x3002;&#x5728;&#x8FDB;&#x884C;&#x6743;&#x9650;&#x4FEE;&#x6539;&#x64CD;&#x4F5C;&#x540E;&#xFF0C;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x5668;&#x4F1A;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;&#x7CFB;&#x7EDF;&#x8868;&#x3002;</p>
+<p>mysql.user &#x8868;&#x89E3;&#x6790;&#xFF1A;</p>
+<pre><code>CREATE TABLE `user` (
+  `Host` char(64) NOT NULL,
+  `User` char(32) NOT NULL,
+  `authentication_string` text DEFAULT NULL,
+  `Select_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Insert_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Update_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Delete_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Drop_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Process_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Grant_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `References_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Alter_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Show_db_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Super_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_tmp_table_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Lock_tables_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Execute_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_view_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Show_view_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_routine_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Alter_routine_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Index_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_user_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Event_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Trigger_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_role_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Drop_role_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Account_locked` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Shutdown_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Reload_priv` enum(&apos;N&apos;,&apos;Y&apos;) DEFAULT &apos;N&apos;,
+  `File_priv` enum(&apos;N&apos;,&apos;Y&apos;) DEFAULT &apos;N&apos;,
+  PRIMARY KEY (`Host`,`User`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
+</code></pre><p>mysql.user &#x8868;&#x4E3B;&#x8981;&#x8BB0;&#x5F55;&#x4E86;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;&#x548C;&#x7528;&#x6237;&#x62E5;&#x6709;&#x7684;&#x5168;&#x5C40;&#x6743;&#x9650;&#xFF0C;Host &#x548C; User &#x5B57;&#x6BB5;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x7528;&#x6237;&#x767B;&#x9646;&#xFF1B;&#x5176;&#x4E2D; Host &#x5B57;&#x6BB5;&#x652F;&#x6301;&#x901A;&#x914D;&#x7B26;&#x529F;&#x80FD;&#xFF0C;&#x7528;&#x6237;&#x5728;&#x767B;&#x9646;&#x65F6;&#xFF0C;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x5668;&#x9996;&#x5148;&#x4F1A;&#x6839;&#x636E;&#x767B;&#x9646;&#x6307;&#x5B9A;&#x7684;&#x7528;&#x6237;&#x540D;&#xFF0C;&#x627E;&#x5230; user &#x8868;&#x4E2D;&#x6240;&#x6709;&#x5305;&#x542B;&#x8FD9;&#x4E2A;&#x7528;&#x6237;&#x540D;&#x7684;&#x884C;&#x3002;&#x518D;&#x901A;&#x8FC7;&#x6BD4;&#x5BF9;&#x767B;&#x9646;&#x4E3B;&#x673A;&#x7684; ip &#x548C;&#x8FD9;&#x4E9B;&#x884C;&#x7684; Host &#x5B57;&#x6BB5;&#xFF0C;&#x6765;&#x786E;&#x5B9A;&#x767B;&#x9646;&#x54EA;&#x4E2A;&#x5177;&#x4F53;&#x7528;&#x6237;&#xFF1B;&#x4F8B;&#x5982;&#x7528;&#x6237;&#x5728; 192.168.1.7 &#x767B;&#x9646; root &#x7528;&#x6237;&#xFF0C;mysql.user &#x8868;&#x4E2D;&#x6709; <code>root</code>@<code>172.16.*</code> &#x548C; <code>root</code>@<code>192.168.1.*</code> &#x8FD9;&#x4E24;&#x4E2A; User &#x5B57;&#x6BB5;&#x4E3A; root &#x7684;&#x7528;&#x6237;&#xFF0C;&#x90A3;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x5668;&#x4F1A;&#x5C06;&#x767B;&#x9646;&#x4E3B;&#x673A; ip 192.168.1.7 &#x548C;&#x8FD9;&#x4E24;&#x4E2A; Host &#x8FDB;&#x884C;&#x5339;&#x914D;&#xFF0C;&#x4ECE;&#x800C;&#x767B;&#x9646;  <code>root</code>@<code>192.168.1.*</code>&#x3002;</p>
+<p>authentication_string &#x5B57;&#x6BB5;&#x5B58;&#x50A8;&#x6709;&#x52A0;&#x5BC6;&#x8FC7;&#x7684;&#x5BC6;&#x7801;</p>
+<p>mysql.table, mysql.db &#x8868;&#x89E3;&#x6790;&#xFF1A;</p>
+<pre><code>CREATE TABLE `tables_priv` (
+  `Host` char(60) NOT NULL,
+  `DB` char(64) NOT NULL,
+  `User` char(32) NOT NULL,
+  `Table_name` char(64) NOT NULL,
+  `Grantor` char(77) DEFAULT NULL,
+  `Timestamp` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `Table_priv` set(&apos;Select&apos;,&apos;Insert&apos;,&apos;Update&apos;,&apos;Delete&apos;,&apos;Create&apos;,&apos;Drop&apos;,&apos;Grant&apos;,&apos;Index&apos;,&apos;Alter&apos;,&apos;Create View&apos;,&apos;Show View&apos;,&apos;Trigger&apos;,&apos;References&apos;) DEFAULT NULL,
+  `Column_priv` set(&apos;Select&apos;,&apos;Insert&apos;,&apos;Update&apos;) DEFAULT NULL,
+  PRIMARY KEY (`Host`,`DB`,`User`,`Table_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
+</code></pre><pre><code>CREATE TABLE `db` (
+  `Host` char(60) NOT NULL,
+  `DB` char(64) NOT NULL,
+  `User` char(32) NOT NULL,
+  `Select_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Insert_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Update_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Delete_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Drop_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Grant_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `References_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Index_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Alter_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_tmp_table_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Lock_tables_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_view_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Show_view_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Create_routine_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Alter_routine_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Execute_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Event_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  `Trigger_priv` enum(&apos;N&apos;,&apos;Y&apos;) NOT NULL DEFAULT &apos;N&apos;,
+  PRIMARY KEY (`Host`,`DB`,`User`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
+</code></pre><p>mysql.tables_priv &#x548C; mysql.db &#x4E3B;&#x8981;&#x8BB0;&#x5F55;&#x4E86;&#x5C06;&#x6743;&#x9650;&#x6388;&#x4E88;&#x7ED9;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5206;&#x522B;&#x5BF9;&#x5E94;&#x8868;&#x6743;&#x9650;&#x548C;&#x6570;&#x636E;&#x5E93;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x5728;&#x8FDB;&#x884C;&#x9274;&#x6743;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x4F1A;&#x6839;&#x636E;&#x8BBF;&#x95EE;&#x5230;&#x7684;&#x8868;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4EE5;&#x53CA;&#x64CD;&#x4F5C;&#x7C7B;&#x578B;&#xFF0C;&#x6C47;&#x603B;&#x51FA;&#x4E00;&#x4E2A;&#x6240;&#x9700;&#x8981;&#x6743;&#x9650;&#x7684; bitmask &#xFF0C;&#x7136;&#x540E;&#x5411;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x5668;&#x8BF7;&#x6C42;&#x9274;&#x6743;&#x3002;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x5668;&#x4F1A;&#x6839;&#x636E;&#x8981;&#x9274;&#x6743;&#x7684; User, Host &#x4ECE;&#x5185;&#x5B58;&#x7684;&#x6743;&#x9650;&#x8868;&#x4E2D;&#x5F97;&#x5230;&#x5BF9;&#x5E94;&#x7528;&#x6237;&#x7684;&#x5168;&#x5C40;&#x6743;&#x9650;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x6743;&#x9650;&#xFF0C;&#x8868;&#x6743;&#x9650;&#x3002;&#x6765;&#x9010;&#x7EA7;&#x68C0;&#x67E5;&#x7528;&#x6237;&#x662F;&#x5426;&#x62E5;&#x6709;&#x6240;&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x5728;&#x8FDB;&#x884C;&#x7C7B;&#x4F3C; GRANT, REVOKE &#x7B49;&#x5BF9;&#x7528;&#x6237;&#x7684;&#x6743;&#x9650;&#x4FEE;&#x6539;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;TiDB &#x4F1A;&#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x5185;&#x90E8; sql &#x4E8B;&#x52A1;&#xFF0C;&#x7528; INSERT, UPDATE, DELETE &#x4FEE;&#x6539;&#x5BF9;&#x5E94;&#x7684;&#x6743;&#x9650;&#x8868;&#xFF0C;&#x7136;&#x540E;&#x63D0;&#x4EA4;&#x5185;&#x90E8;&#x4E8B;&#x52A1;&#xFF0C;&#x5982;&#x679C;&#x63D0;&#x4EA4;&#x6210;&#x529F;&#xFF0C;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x5668;&#x4F1A;&#x5237;&#x65B0;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x6743;&#x9650;&#x8868;&#x3002;</p>
+<h2 id="&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;">&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7CFB;&#x7EDF;&#x64CD;&#x4F5C;&#x793A;&#x4F8B;</h2>
+<p>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x540D;&#x4E3A; developer &#x4E14;&#x80FD;&#x5728; 192.168.0.* &#x8FD9;&#x4E00;&#x5B50;&#x7F51;&#x4E2D;&#x767B;&#x9646;&#x7684;&#x7528;&#x6237;&#xFF0C;&#x5BC6;&#x7801;&#x4E3A; &apos;test_user&apos;</p>
+<pre><code>root&gt; CREATE USER &apos;developer&apos;@&apos;192.168.0.%&apos; IDENTIFIED BY &apos;test_user&apos;;
+</code></pre><p>&#x5E76;&#x4E14;&#x6388;&#x4E88;&#x7ED9; developer &#x7528;&#x6237;&#x5728; read_table &#x8868;&#x4E0A;&#x7684;&#x8BFB;&#x6743;&#x9650;&#xFF0C;write_table &#x8868;&#x4E0A;&#x7684;&#x5199;&#x6743;&#x9650;&#x3002;</p>
+<pre><code>root&gt; GRANT SELECT ON app.read_table TO &apos;developer&apos;@&apos;192.168.0.%&apos;;
+root&gt; GRANT INSERT, UPDATE ON app.write_table TO &apos;developer&apos;@&apos;192.168.0.%&apos;;
+</code></pre><p>&#x67E5;&#x770B; developer &#x7528;&#x6237;&#x5F53;&#x524D;&#x7684;&#x6743;&#x9650;</p>
+<pre><code>root&gt; SHOW GRANTS FOR &apos;developer&apos;@&apos;192.168.0.%&apos;;
+GRANT USAGE ON *.* TO &apos;developer&apos;@&apos;192.168.0.%&apos;                      
+GRANT Select ON app.read_table TO &apos;developer&apos;@&apos;192.168.0.%&apos;
+GRANT Insert,Update,Delete ON app.write_table TO &apos;developer&apos;@&apos;192.168.0.%&apos;
+</code></pre><p>&#x7136;&#x540E;&#x7528; developer &#x767B;&#x9646;&#xFF0C;&#x5C1D;&#x8BD5;&#x4F7F;&#x7528;&#x6743;&#x9650;</p>
+<pre><code>developer&gt; SEECT * FROM app.read_table;
+Empty set (0.01 sec)
+developer&gt; INSERT INTO write_table VALUES (1),(2),(3);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+</code></pre><p>&#x5047;&#x5982;&#x7528; developer &#x8BD5;&#x56FE;&#x5BF9; write_table &#x8FDB;&#x884C;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;TiDB &#x4F1A;&#x63D0;&#x793A;&#x9650;&#x68C0;&#x67E5;&#x672A;&#x901A;&#x8FC7;</p>
+<pre><code>developer&gt; INSERT INTO read_table VALUES (1),(2),(3);
+ERROR 1142 (42000): INSERT command denied to user &apos;developer&apos;@&apos;192.168.0.%&apos; for table &apos;read_table&apos;
+</code></pre><p>&#x5177;&#x6709; GRANT_OPTION &#x6743;&#x9650;&#x7684;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; GRANT, REVOKE &#x7BA1;&#x7406;&#x5176;&#x4ED6;&#x7528;&#x6237;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x6BD4;&#x5982;&#x64A4;&#x9500; developer &#x5728; read_table &#x8868;&#x4E0A;&#x7684;&#x8BFB;&#x6743;&#x9650;</p>
+<pre><code>root&gt; REVOKE SELECT ON app.read_table from &apos;developer&apos;@&apos;192.168.0.%&apos;;
+</code></pre><p>&#x5177;&#x6709; CREATE USER &#x6743;&#x9650;&#x7684;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x5176;&#x4ED6;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x6BD4;&#x5982;&#x4FEE;&#x6539;&#x5BC6;&#x7801;&#xFF0C;&#x5220;&#x9664;&#x7528;&#x6237;</p>
+<pre><code>root&gt; ALTER USER &apos;developer&apos;@&apos;192.168.0.%&apos; IDENTIFIED BY &apos;password&apos;;
+root&gt; DROP USER &apos;developer&apos;@&apos;192.168.0.%&apos;
+</code></pre><h2 id="&#x5176;&#x4ED6;">&#x5176;&#x4ED6;</h2>
+<p>&#x6743;&#x9650;&#x7CFB;&#x7EDF;&#x7684;&#x529F;&#x80FD;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#xFF0C;&#x66F4;&#x591A;&#x6743;&#x9650;&#x4E0D;&#x5728;&#x6B64;&#x4E00;&#x4E00;&#x8BF4;&#x660E;&#xFF0C;&#x5BF9;&#x4E8E;&#x5404;&#x79CD;&#x6743;&#x9650;&#x7684;&#x8BF4;&#x660E;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#xFF1A;</p>
+<ul>
+<li><a href="https://pingcap.com/docs-cn/dev/reference/security/privilege-system/" target="_blank">TiDB &#x6743;&#x9650;&#x7BA1;&#x7406;</a></li>
+<li><a href="https://pingcap.com/docs-cn/dev/reference/security/user-account-management/" target="_blank">TiDB &#x7528;&#x6237;&#x7BA1;&#x7406;</a></li>
+</ul>
+
                                 
                                 </section>
                             
@@ -2929,7 +3063,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"10.1 权限管理","level":"2.10.1","depth":2,"next":{"title":"10.2 RBAC","level":"2.10.2","depth":2,"path":"session1/chapter10/rbac.md","ref":"session1/chapter10/rbac.md","articles":[]},"previous":{"title":"10 TiDB 安全","level":"2.10","depth":1,"path":"session1/chapter10/tidb-security.md","ref":"session1/chapter10/tidb-security.md","articles":[{"title":"10.1 权限管理","level":"2.10.1","depth":2,"path":"session1/chapter10/privilege-management.md","ref":"session1/chapter10/privilege-management.md","articles":[]},{"title":"10.2 RBAC","level":"2.10.2","depth":2,"path":"session1/chapter10/rbac.md","ref":"session1/chapter10/rbac.md","articles":[]},{"title":"10.3 证书管理与数据加密","level":"2.10.3","depth":2,"path":"session1/chapter10/cert-management-data-encryption.md","ref":"session1/chapter10/cert-management-data-encryption.md","articles":[]}]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter10/privilege-management.md","mtime":"2020-03-08T11:09:45.899Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:10:24.407Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"10.1 权限管理","level":"2.10.1","depth":2,"next":{"title":"10.2 RBAC","level":"2.10.2","depth":2,"path":"session1/chapter10/rbac.md","ref":"session1/chapter10/rbac.md","articles":[]},"previous":{"title":"10 TiDB 安全","level":"2.10","depth":1,"path":"session1/chapter10/tidb-security.md","ref":"session1/chapter10/tidb-security.md","articles":[{"title":"10.1 权限管理","level":"2.10.1","depth":2,"path":"session1/chapter10/privilege-management.md","ref":"session1/chapter10/privilege-management.md","articles":[]},{"title":"10.2 RBAC","level":"2.10.2","depth":2,"path":"session1/chapter10/rbac.md","ref":"session1/chapter10/rbac.md","articles":[]},{"title":"10.3 证书管理与数据加密","level":"2.10.3","depth":2,"path":"session1/chapter10/cert-management-data-encryption.md","ref":"session1/chapter10/cert-management-data-encryption.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter10/privilege-management.md","mtime":"2020-03-08T11:11:54.157Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T11:12:37.774Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
