@@ -6,9 +6,13 @@ name: markdown lint
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches-ignore:
+      - '**'
+    # branches: [ master ]
   pull_request:
-    branches: [ master ]
+    branches-ignore:
+      - '**'
+    # branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
