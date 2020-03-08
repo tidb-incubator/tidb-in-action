@@ -524,3 +524,7 @@ tiops quickdeploy -c mai -d tidb -H 10.9.1.1,10.9.1.2,10.9.1.3 -T topology.yaml
 --local-pkg 可选参数，若无外网，可将安装包拷贝中控机本地，通过此参数指相关路径进行离线安装
 -f | --forks 可选参数，并发执行数量，默认：5
 ```
+
+## 六、其他
+
+TiOps 暂时不支持 TiSpark 和 TiFlash 的部署运维操作。
