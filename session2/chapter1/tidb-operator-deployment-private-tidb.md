@@ -1,7 +1,16 @@
 
 # 部署 TiDB 集群
 
-## 一、安装 TiDB Cluster
+## 一、下载 TiDB Cluster 的 helm chart 文件
+
+```
+
+    # mkdir -p /root/chart/
+    从 https://github.com/pingcap/tidb-operator/releases 下载 tidb-cluster-chart-v1.0.6.tgz 文件放到 /root/chart/ 路径下
+
+```
+
+## 二、安装 TiDB Cluster
 
 ```
 
@@ -17,7 +26,7 @@
 
 以上信息显示 TiDB Cluster 部署正常
 
-## 二、观察 TiDB 的 POD 状态
+## 三、观察 TiDB 的 POD 状态
 
 ```
 
@@ -38,7 +47,7 @@
 
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常
 
-## 三、访问 TiDB 集群
+## 四、访问 TiDB 集群
 
 ```
 
