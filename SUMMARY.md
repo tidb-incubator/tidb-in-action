@@ -203,28 +203,24 @@
 
 ## 第五部分 如何参与 TiDB 社区及周边生态
 
-* [1 TiDB 开源社区治理架构介绍](session5/chapter1/open-source-governance.md)
-    * [1.1 TiDB 产品发展简史](session5/chapter1/a-brief-history-of-tidb.md)
-    * [1.2 TiKV 捐献到 CNCF](session5/chapter1/tikv-joined-cncf.md)
-    * [1.3 周边生态工具融入到社区](session5/chapter1/ecosystem-tools-community.md)
-    * [1.4 社区治理框架](session5/chapter1/community-governance.md)
-* [2 TiDB 开源生态](session5/chapter2/tidb-open-source-ecosystem.md)
-    * [2.1 社区重要活动介绍](session5/chapter2/events.md)
-    <!--
-    Devcon
-    TechDay
-    Infra Meetup
-    TUG Meetup
-    Hackathon
-    -->
-    * [2.2 社区重要合作开发（美团，知乎，高校）](session5/chapter2/community-cooperations.md)
+* [1 TiDB 开源社区历史及其现状]
+    * [1.1 TiDB 开源社区现状及发展简史](session5/chapter1/a-brief-history-of-tidb.md)
+    * [1.2 TiDB 开源生态介绍](session5/chapter1/tidb-open-source-ecosystem.md)
+    * [1.3 TiDB 开源社区治理](session5/chapter1/community-governance.md)
+* [2 TiDB 开源生态]
+    * [2.1 社区重要活动介绍]
+        * [2.1.1 TiDB Devcon](session5/chapter2/devcon.md)
+        * [2.1.2 TiDB TechDay](session5/chapter2/techday.md)
+        * [2.1.3 Infra Meetup](session5/chapter2/infra-meetup.md)
+        * [2.1.4 TiDB Hackathon](session5/chapter2/hackathon.md)
+        * [2.1.5 TUG 企业行](session5/chapter2/tug-event.md)
+    * [2.2 社区重要合作开发](session5/chapter2/community-cooperations.md)
     * [2.3 TUG（TiDB User Group）](session5/chapter2/tidb-user-group.md)
     * [2.4 Talent Plan](session5/chapter2/talent-plan.md)
     * [2.5 Challenge Program](session5/chapter2/challenge-program.md)
     * [2.6 PingCAP Incubator](session5/chapter2/pingcap-incubator.md)
     * [2.7 PingCAP University](session5/chapter2/pingcap-university.md)
     * [2.8 Contributor Map](session5/chapter2/contribution-map.md)
-* [3 一些有用的学习资料](session5/chapter3/references.md)
 
 ## 附录
 
