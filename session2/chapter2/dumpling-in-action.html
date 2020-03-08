@@ -1297,9 +1297,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2.4" data-path="dumpling-intro.html">
+        <li class="chapter " data-level="3.2.4" data-path="dumpling-intro.md">
             
-                <a href="dumpling-intro.html">
+                <span>
             
                     
                     2.4 4.0 分布式导出工具 Dumpling
@@ -2860,7 +2860,94 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="dumpling&#x5B9E;&#x64CD;&#x6307;&#x5357;">Dumpling&#x5B9E;&#x64CD;&#x6307;&#x5357;</h1>
+<h2 id="&#x57FA;&#x672C;&#x7528;&#x6CD5;">&#x57FA;&#x672C;&#x7528;&#x6CD5;</h2>
+<h3 id="&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;">&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;</h3>
+<p><a href="https://pingcap.com/docs-cn/stable/reference/security/privilege-system/#%E6%9F%A5%E7%9C%8B%E4%B8%BA%E7%94%A8%E6%88%B7%E5%88%86%E9%85%8D%E7%9A%84%E6%9D%83%E9%99%90" target="_blank">&#x67E5;&#x770B;&#x4E3A;&#x7528;&#x6237;&#x5206;&#x914D;&#x7684;&#x6743;&#x9650;</a></p>
+<ul>
+<li>SELECT</li>
+<li>RELOAD</li>
+<li>LOCK TABLES</li>
+<li>REPLICATION CLIENT</li>
+</ul>
+<p>TiDB&#x6743;&#x9650;&#x7BA1;&#x7406;&#x53C2;&#x8003;: <a href="https://pingcap.com/docs-cn/stable/reference/security/privilege-system/#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86" target="_blank">https://pingcap.com/docs-cn/stable/reference/security/privilege-system/#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86</a></p>
+<h3 id="&#x4F7F;&#x7528;&#x4E3E;&#x4F8B;">&#x4F7F;&#x7528;&#x4E3E;&#x4F8B;</h3>
+<h4 id="&#x5BFC;&#x51FA;&#x547D;&#x4EE4;">&#x5BFC;&#x51FA;&#x547D;&#x4EE4;</h4>
+<pre><code>dumpling -B tidb -F 2048 -H 127.0.0.1 -u root -P 4000 --loglevel debug
+</code></pre><h4 id="&#x8F93;&#x51FA;">&#x8F93;&#x51FA;</h4>
+<pre><code>Release version:
+Git commit hash: a35708fb6a9ca19294b92598b88d7894cf130ca6
+Git branch:      master
+Build timestamp: 2020-03-08 03:15:54Z
+Go version:      go version go1.13.1 darwin/amd64
+
+[2020/03/08 18:09:43.780 +08:00] [DEBUG] [config.go:72] [&quot;parse server info&quot;] [&quot;server info string&quot;=5.7.25-TiDB-v4.0.0-beta-313-g2d5d2fde27]
+[2020/03/08 18:09:43.780 +08:00] [INFO] [config.go:85] [&quot;detect server type&quot;] [type=TiDB]
+[2020/03/08 18:09:43.780 +08:00] [INFO] [config.go:103] [&quot;detect server version&quot;] [version=4.0.0-beta-313-g2d5d2fde27]
+[2020/03/08 18:09:43.781 +08:00] [DEBUG] [prepare.go:27] [&quot;list all the tables&quot;]
+[2020/03/08 18:09:43.788 +08:00] [DEBUG] [black_white_list.go:78] [&quot;filter tables&quot;]
+[2020/03/08 18:09:43.788 +08:00] [WARN] [black_white_list.go:70] [&quot;unsupported dump schema in TiDB now&quot;] [schema=mysql]
+</code></pre><h3 id="&#x547D;&#x4EE4;&#x53C2;&#x6570;&#x8BF4;&#x660E;">&#x547D;&#x4EE4;&#x53C2;&#x6570;&#x8BF4;&#x660E;</h3>
+<p>&#x4F7F;&#x7528; Dumpling &#x53EF;&#x4EE5;&#x5BF9;&#x4E0B;&#x5217;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x914D;&#x7F6E;:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">&#x53C2;&#x6570;</th>
+<th style="text-align:right">&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">--consistency level</td>
+<td style="text-align:right">&#x4E00;&#x81F4;&#x6027;&#x7EA7;&#x522B;: auto, none, flush, lock, snapshot, &#x9ED8;&#x8BA4;&#x4E3A; auto</td>
+</tr>
+<tr>
+<td style="text-align:left">-B, --database database</td>
+<td style="text-align:right">&#x9700;&#x8981;&#x5BFC;&#x51FA;&#x6570;&#x636E;&#x7684;&#x6570;&#x636E;&#x5E93;</td>
+</tr>
+<tr>
+<td style="text-align:left">-F, --filesize size</td>
+<td style="text-align:right">&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x7684;&#x6700;&#x5927;&#x5C3A;&#x5BF8;, &#x5355;&#x4F4D;&#x4E3A; Bytes</td>
+</tr>
+<tr>
+<td style="text-align:left">-H, --host hostname</td>
+<td style="text-align:right">&#x4E3B;&#x673A;&#x540D;, &#x9ED8;&#x8BA4;&#x4E3A; 127.0.0.1</td>
+</tr>
+<tr>
+<td style="text-align:left">--loglevel level</td>
+<td style="text-align:right">&#x65E5;&#x5FD7;&#x7EA7;&#x522B;: debug, info, warn, error, dpanic, panic, fatal, &#x9ED8;&#x8BA4;&#x4E3A; info</td>
+</tr>
+<tr>
+<td style="text-align:left">-W, --no-views</td>
+<td style="text-align:right">&#x662F;&#x5426;&#x5BFC;&#x51FA;&#x89C6;&#x56FE;,&#x9ED8;&#x8BA4;&#x4E3A; true</td>
+</tr>
+<tr>
+<td style="text-align:left">-o, --output dir</td>
+<td style="text-align:right">&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x76EE;&#x5F55;, &#x9ED8;&#x8BA4;&#x683C;&#x5F0F;&#x4E3A;&quot;./export-2020-03-08T11:37:05+08:00&quot;</td>
+</tr>
+<tr>
+<td style="text-align:left">-p, --password password</td>
+<td style="text-align:right">&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x5BC6;&#x7801;</td>
+</tr>
+<tr>
+<td style="text-align:left">-P, --port port</td>
+<td style="text-align:right">&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x7AEF;&#x53E3;, &#x9ED8;&#x8BA4;&#x4E3A; 4000</td>
+</tr>
+<tr>
+<td style="text-align:left">--snapshot position</td>
+<td style="text-align:right">&#x5FEB;&#x7167;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;, &#x4EC5;&#x5728;&#x4E00;&#x81F4;&#x6027;&#x7EA7;&#x522B;&#x4E3A;snapshot&#x65F6;&#x6709;&#x6548;</td>
+</tr>
+<tr>
+<td style="text-align:left">-t, --threads num</td>
+<td style="text-align:right">&#x5E76;&#x53D1;&#x7EBF;&#x7A0B;&#x6570;, &#x9ED8;&#x8BA4;&#x4E3A; 4</td>
+</tr>
+<tr>
+<td style="text-align:left">-u, --user user</td>
+<td style="text-align:right">&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x7528;&#x6237;&#x540D;, &#x9ED8;&#x8BA4;&#x4E3A; root</td>
+</tr>
+</tbody>
+</table>
+
                                 
                                 </section>
                             
@@ -2903,7 +2990,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"2.4.2 Dumpling 实操指南","level":"3.2.4.2","depth":3,"next":{"title":"1 SQL 调优原理","level":"4.1","depth":1,"path":"session3/chapter1/optimization-guide.md","ref":"session3/chapter1/optimization-guide.md","articles":[{"title":"1.1 TiDB 执行计划概览","level":"4.1.1","depth":2,"path":"session3/chapter1/sql-execution-plan.md","ref":"session3/chapter1/sql-execution-plan.md","articles":[]},{"title":"1.2 优化器简介","level":"4.1.2","depth":2,"path":"session3/chapter1/optimizer-summary.md","ref":"session3/chapter1/optimizer-summary.md","articles":[]},{"title":"1.3 SQL Plan Management","level":"4.1.3","depth":2,"path":"session3/chapter1/sql-plan-management.md","ref":"session3/chapter1/sql-plan-management.md","articles":[]},{"title":"1.4 参数调优指南","level":"4.1.4","depth":2,"path":"session3/chapter1/parameter-tuning.md","ref":"session3/chapter1/parameter-tuning.md","articles":[]},{"title":"1.5 限制 SQL 内存使用和执行时间","level":"4.1.5","depth":2,"path":"session3/chapter1/memory-quota-execution-time-limit.md","ref":"session3/chapter1/memory-quota-execution-time-limit.md","articles":[]}]},"previous":{"title":"2.4.1 Dumpling 工作原理","level":"3.2.4.1","depth":3,"path":"session2/chapter2/dumpling-internal.md","ref":"session2/chapter2/dumpling-internal.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter2/dumpling-in-action.md","mtime":"2020-03-08T11:59:55.149Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:00:30.923Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"2.4.2 Dumpling 实操指南","level":"3.2.4.2","depth":3,"next":{"title":"1 SQL 调优原理","level":"4.1","depth":1,"path":"session3/chapter1/optimization-guide.md","ref":"session3/chapter1/optimization-guide.md","articles":[{"title":"1.1 TiDB 执行计划概览","level":"4.1.1","depth":2,"path":"session3/chapter1/sql-execution-plan.md","ref":"session3/chapter1/sql-execution-plan.md","articles":[]},{"title":"1.2 优化器简介","level":"4.1.2","depth":2,"path":"session3/chapter1/optimizer-summary.md","ref":"session3/chapter1/optimizer-summary.md","articles":[]},{"title":"1.3 SQL Plan Management","level":"4.1.3","depth":2,"path":"session3/chapter1/sql-plan-management.md","ref":"session3/chapter1/sql-plan-management.md","articles":[]},{"title":"1.4 参数调优指南","level":"4.1.4","depth":2,"path":"session3/chapter1/parameter-tuning.md","ref":"session3/chapter1/parameter-tuning.md","articles":[]},{"title":"1.5 限制 SQL 内存使用和执行时间","level":"4.1.5","depth":2,"path":"session3/chapter1/memory-quota-execution-time-limit.md","ref":"session3/chapter1/memory-quota-execution-time-limit.md","articles":[]}]},"previous":{"title":"2.4.1 Dumpling 工作原理","level":"3.2.4.1","depth":3,"path":"session2/chapter2/dumpling-internal.md","ref":"session2/chapter2/dumpling-internal.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter2/dumpling-in-action.md","mtime":"2020-03-08T12:03:09.772Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T12:03:49.556Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
