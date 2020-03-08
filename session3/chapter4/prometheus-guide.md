@@ -439,5 +439,5 @@ histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_buck
 
 告警示例：
 
-![图片](https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png!thumbnail)![图片](https://uploader.shimo.im/f/PvMs4K4IERQGIxou.png!thumbnail)
+![图片](https://uploader.shimo.im/f/J99wQmz2aG49iuQT.png!thumbnail40x100)![图片](https://uploader.shimo.im/f/PvMs4K4IERQGIxou.png!thumbnail)
 
