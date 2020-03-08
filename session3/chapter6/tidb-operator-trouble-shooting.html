@@ -2860,7 +2860,651 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <p> &#x4E0A; TiDB &#x96C6;&#x7FA4;&#x7684;&#x4E00;&#x4E9B;&#x5E38;&#x89C1;&#x6545;&#x969C;&#x4EE5;&#x53CA;&#x8BCA;&#x65AD;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</p>
+<h1 id="1-&#x521B;&#x5EFA;&#x96C6;&#x7FA4;">1 &#x521B;&#x5EFA;&#x96C6;&#x7FA4;</h1>
+<h2 id="11-&#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5931;&#x8D25;">1.1 &#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5931;&#x8D25;</h2>
+<h3 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h3>
+<p>&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x9650;&#x5236;&#x8BBF;&#x95EE;&#x76F8;&#x5173;&#x955C;&#x50CF;&#x4ED3;&#x5E93;&#xFF0C;&#x90E8;&#x7F72; Kubernetes &#x65F6;&#x5E38;&#x62C9;&#x53D6;&#x5931;&#x8D25;&#xFF0C;&#x7ED9;&#x4F7F;&#x7528;&#x5E26;&#x6765;&#x4E86;&#x8F83;&#x5927;&#x4E0D;&#x4FBF;&#x3002;</p>
+<h3 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;">&#x89E3;&#x51B3;&#x65B9;&#x6848;</h3>
+<p>&#x4E3B;&#x8981;&#x901A;&#x8FC7;&#x955C;&#x50CF;&#x548C;&#x4EE3;&#x7406;&#x7684;&#x65B9;&#x5F0F;&#x62C9;&#x53D6;&#xFF0C;&#x8FD9;&#x91CC;&#x63A8;&#x8350;&#x4E00;&#x4E2A;&#x597D;&#x7528;&#x7684;&#x5F00;&#x6E90;&#x5DE5;&#x5177;docker-wrapper&#x65B9;&#x4FBF;&#x624B;&#x52A8;&#x62C9;&#x53D6;&#x3002;</p>
+<pre><code>git clone https://github.com/silenceshell/docker-wrapper.git
+cd docker-wrapper/
+# &#x6D4B;&#x8BD5;&#x62C9;&#x53D6; k8s.gcr.io &#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;
+$ ./docker-wrapper.py pull k8s.gcr.io/kube-apiserver:v1.16.0
+-- pull k8s.gcr.io/kube-apiserver:v1.16.0 from gcr.azk8s.cn/google-containers/kube-apiserver:v1.16.0 instead --
+...
+-- pull k8s.gcr.io/kube-apiserver:v1.16.0 done --
+</code></pre><p>&#x5982;&#x679C;&#x662F;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#xFF0C;&#x63A8;&#x8350;&#x91C7;&#x7528;Kubernetes &#x7684;&#x4E00;&#x4E9B;&#x7BA1;&#x7406;&#x5E73;&#x53F0;&#x6765;&#x90E8;&#x7F72;&#x548C;&#x7BA1;&#x7406;Kubernetes &#x96C6;&#x7FA4;&#xFF0C;&#x540C;&#x65F6;&#x5728;&#x7BA1;&#x7406;&#x5E73;&#x53F0;&#x4E0A;&#x8BBE;&#x7F6E;&#x955C;&#x50CF;&#x4EE3;&#x7406;&#x3002;&#x5982;&#x679C;&#x91C7;&#x7528;&#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5230;&#x5185;&#x7F51;image regitstry&#x7684;&#x8BDD;&#xFF0C;TiDB&#x7684;helm chart&#x8981;&#x66F4;&#x6539;&#x5BF9;&#x5E94;&#x7684;image&#x8BBE;&#x7F6E;&#x3002;</p>
+<h2 id="12-pd-&#x5904;&#x4E8E;-running-&#x8FD0;&#x884C;&#x4E2D;&#x72B6;&#x6001;&#xFF0C;&#x4F46;-tikv-&#x672A;&#x5F00;&#x59CB;&#x521B;&#x5EFA;">1.2 PD &#x5904;&#x4E8E; Running &#x8FD0;&#x884C;&#x4E2D;&#x72B6;&#x6001;&#xFF0C;&#x4F46; tikv &#x672A;&#x5F00;&#x59CB;&#x521B;&#x5EFA;</h2>
+<h3 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h3>
+<p>Pod &#x7684;&#x72B6;&#x6001;&#x5904;&#x4E8E; Running&#xFF0C;&#x8868;&#x793A;&#x5BB9;&#x5668;&#x5DF2;&#x7ECF;&#x7ED1;&#x5B9A;&#x5230;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x540C;&#x65F6;Pod &#x4E2D;&#x6240;&#x6709;&#x5BB9;&#x5668;&#x90FD;&#x5DF2;&#x88AB;&#x521B;&#x5EFA;&#x3002;&#x6B64;&#x65F6;&#x5BB9;&#x5668;&#x53EF;&#x80FD;&#x5904;&#x4E8E;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x4E2D;&#x3001;&#x6216;&#x8005;&#x6B63;&#x5904;&#x4E8E;&#x542F;&#x52A8;&#x6216;&#x91CD;&#x542F;&#x4E2D;&#x3002;</p>
+<p>PD&#x542F;&#x52A8;&#x903B;&#x8F91;&#xFF1A; Pod &#x542F;&#x52A8;&#x65F6;&#x4F9D;&#x8D56;&#x542F;&#x52A8;&#x811A;&#x672C; pd_start_script.sh&#xFF0C;&#x901A;&#x8FC7; Service DNS &#x5FAA;&#x73AF;&#x8C03;&#x7528; discovery &#x8FDB;&#x884C;&#x6CE8;&#x518C;&#x53CA;&#x83B7;&#x5F97;&#x542F;&#x52A8;&#x53C2;&#x6570;&#xFF0C;discovery &#x4E5F;&#x901A;&#x8FC7; Service DNS &#x8BBF;&#x95EE; PD &#x83B7;&#x53D6;&#x6700;&#x65B0;&#x7684;&#x96C6;&#x7FA4; members &#x5730;&#x5740;&#x3002;</p>
+<p>&#x7531;&#x4E8E;&#x65E0;&#x660E;&#x663E;&#x8868;&#x8C61;&#xFF0C;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x7B49;&#x65B9;&#x5F0F;&#x6DF1;&#x5165;&#x5BB9;&#x5668;&#x5185;&#x90E8;&#x6392;&#x67E5;&#x3002;</p>
+<h3 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;">&#x89E3;&#x51B3;&#x65B9;&#x6848;</h3>
+<p>&#x67E5;&#x770B; Pod &#x5185;&#x5BB9;&#x5668;&#x7684;&#x65E5;&#x5FD7;</p>
+<pre><code># &#x67E5;&#x770B;&#x6240;&#x6709; pods
+kubectl  get pods -n &lt;namespace&gt;
+# &#x67E5;&#x770B; events &#x662F;&#x5426;&#x6709;&#x5F02;&#x5E38;
+kubectl describe -n &lt;namespace&gt; pods &lt;pd pod-name&gt;
+# &#x67E5;&#x770B;&#x76F8;&#x5173;&#x65E5;&#x5FD7;, &#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709; nslookup &#x89E3;&#x6790;&#x5931;&#x8D25;&#x7684;&#x5F02;&#x5E38;&#x95EE;&#x9898;
+kubectl logs -n &lt;namespace&gt; pods &lt;pd pod-name&gt;
+# &#x7BA1;&#x7406;&#x5DE5;&#x5177;
+tkctl debug  &lt;pd-name&gt;
+</code></pre><p>&#x6839;&#x636E;&#x7ECF;&#x9A8C;&#x4E3B;&#x8981;&#x662F;&#x7F51;&#x7EDC;&#x76F8;&#x5173;&#x95EE;&#x9898;&#x5F15;&#x8D77;&#xFF0C;&#x5EFA;&#x8BAE;&#x4ECE;&#x5982;&#x4E0B;&#x4E24;&#x65B9;&#x9762;&#x8FDB;&#x884C;&#x6392;&#x67E5;&#xFF1A;</p>
+<ul>
+<li>DNS &#x89E3;&#x6790;&#x662F;&#x5426;&#x6B63;&#x5E38;
+```<h1 id="&#x68C0;&#x67E5;-dns-&#x662F;&#x5426;&#x6210;&#x529F;&#x89E3;&#x6790;">&#x68C0;&#x67E5; DNS &#x662F;&#x5426;&#x6210;&#x529F;&#x89E3;&#x6790;</h1>
+kubectl exec -it <discovery pod="" name=""> -n=<namespace>  -- nslookup <service dns=""><h1 id="&#x6210;&#x529F;&#x89E3;&#x6790;-headless-service-dns-&#x7684;&#x793A;&#x4F8B;">&#x6210;&#x529F;&#x89E3;&#x6790; headless service dns &#x7684;&#x793A;&#x4F8B;</h1>
+$ kubectl exec -it tidb-cluster-discovery-6b7f8d9954-48ngh -n=tidb  -- nslookup tidb-cluster-pd-peer.tidb.svc
+Name:      tidb-cluster-pd-peer.tidb.svc
+Address 1: 10.244.2.19 tidb-cluster-pd-0.tidb-cluster-pd-peer.tidb.svc.cluster.local
+Address 2: 10.244.1.13 10-244-1-13.tidb-cluster-pd.tidb.svc.cluster.local
+Address 3: 10.244.3.11 10-244-3-11.tidb-cluster-pd.tidb.svc.cluster.local<h1 id="&#x6210;&#x529F;&#x89E3;&#x6790;-cluser-ip-service-dns-&#x7684;&#x793A;&#x4F8B;">&#x6210;&#x529F;&#x89E3;&#x6790; cluser ip service dns &#x7684;&#x793A;&#x4F8B;</h1>
+$ kubectl exec -it tidb-cluster-discovery-6b7f8d9954-48ngh -n=tidb  -- nslookup tidb-cluster-prometheus.tidb.svc
+Name:      tidb-cluster-prometheus.tidb.svc
+Address 1: 10.107.103.198 tidb-cluster-prometheus.tidb.svc.cluster.local</service></namespace></discovery></li>
+</ul>
+<pre><code>&#x82E5; DNS &#x89E3;&#x6790;&#x5931;&#x8D25;&#xFF0C;&#x8BF7;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5DF2;&#x6210;&#x529F;&#x542F;&#x52A8; CoreDNS &#x7EC4;&#x4EF6;&#x6216;&#x914D;&#x7F6E;&#x662F;&#x5426;&#x6B63;&#x786E;&#x3002;
+</code></pre><h1 id="&#x5931;&#x8D25;&#x89E3;&#x6790;&#x7684;&#x793A;&#x4F8B;">&#x5931;&#x8D25;&#x89E3;&#x6790;&#x7684;&#x793A;&#x4F8B;</h1>
+<p>nslookup: can&apos;t resolve &apos;tidb-cluster-prometheus.tidb.svc1&apos;: Name does not resolve
+command terminated with exit code</p>
+<h1 id="&#x68C0;&#x67E5;-coredns-&#x7EC4;&#x4EF6;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x8FD0;&#x884C;">&#x68C0;&#x67E5; CoreDNS &#x7EC4;&#x4EF6;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x8FD0;&#x884C;</h1>
+<p>kubectl  get pods -n kube-system | grep core
+coredns-9d85f5447-642rs          1/1     Running   1          13h
+coredns-9d85f5447-8swr2          1/1     Running   1          13h</p>
+<h1 id="&#x82E5;-coredns-&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x4ECD;&#x4E0D;&#x80FD;&#x6210;&#x529F;&#x89E3;&#x6790;-dns">&#x82E5; CoreDNS &#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x4ECD;&#x4E0D;&#x80FD;&#x6210;&#x529F;&#x89E3;&#x6790; DNS</h1>
+<h1 id="&#x767B;&#x9646;-pd-pod&#xFF0C;-&#x68C0;&#x67E5;-etcresov-&#x4E2D;&#x7684;-nameserver-&#x662F;&#x5426;&#x914D;&#x7F6E;&#x6B63;&#x786E;">&#x767B;&#x9646; pd pod&#xFF0C; &#x68C0;&#x67E5; /etc/resov &#x4E2D;&#x7684; nameserver &#x662F;&#x5426;&#x914D;&#x7F6E;&#x6B63;&#x786E;</h1>
+<p>kubectl exec -it tidb-cluster-pd-0 -n=tidb  -- cat /etc/resolv.conf</p>
+<pre><code>* IP &#x7F51;&#x7EDC;&#x662F;&#x5426;&#x8FDE;&#x901A;
+
+&#x8BE6;&#x89C1; 1.5 Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;
+
+## 1.3 &#x5BB9;&#x5668;&#x5904;&#x4E8E; CrashLoopBackOff &#x72B6;&#x6001;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+Pod &#x5904;&#x4E8E; CrashLoopBackOff &#x72B6;&#x6001;&#x610F;&#x5473;&#x7740; Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x91CD;&#x590D;&#x5730;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#x3002;&#x53EF;&#x80FD;&#x5BFC;&#x81F4; CrashLoopBackOff &#x7684;&#x539F;&#x56E0;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x6700;&#x6709;&#x6548;&#x7684;&#x5B9A;&#x4F4D;&#x529E;&#x6CD5;&#x662F;&#x67E5;&#x770B; Pod &#x5BB9;&#x5668;&#x7684;&#x65E5;&#x5FD7;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+* &#x67E5;&#x770B; Pod &#x5185;&#x5BB9;&#x5668;&#x7684;&#x65E5;&#x5FD7;
+</code></pre><h1 id="&#x5BFB;&#x627E;&#x5BB9;&#x5668;&#x8FDB;&#x7A0B;&#x9000;&#x51FA;&#x6216;&#x8005;&#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x5931;&#x8D25;&#x9000;&#x51FA;&#x76F8;&#x5173;&#x65E5;&#x5FD7;">&#x5BFB;&#x627E;&#x5BB9;&#x5668;&#x8FDB;&#x7A0B;&#x9000;&#x51FA;&#x6216;&#x8005;&#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x5931;&#x8D25;&#x9000;&#x51FA;&#x76F8;&#x5173;&#x65E5;&#x5FD7;</h1>
+<p>kubectl -n <namespace> logs -f <pod-name></pod-name></namespace></p>
+<h1 id="&#x5F53;&#x524D;pod&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x4E86;&#x591A;&#x6B21;-crashloopbackoff&#xFF0C;&#x6839;&#x56E0;&#x53EF;&#x80FD;&#x5728;&#x4E0A;&#x4E00;&#x6B21;&#x7684;&#x542F;&#x52A8;&#x65E5;&#x5FD7;&#x7684;&#x60C5;&#x51B5;">&#x5F53;&#x524D;Pod&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x4E86;&#x591A;&#x6B21; CrashLoopBackOff&#xFF0C;&#x6839;&#x56E0;&#x53EF;&#x80FD;&#x5728;&#x4E0A;&#x4E00;&#x6B21;&#x7684;&#x542F;&#x52A8;&#x65E5;&#x5FD7;&#x7684;&#x60C5;&#x51B5;</h1>
+<p>kubectl -n <namespace> logs -p <pod-name></pod-name></namespace></p>
+<pre><code>&#x786E;&#x8BA4;&#x65E5;&#x5FD7;&#x4E2D;&#x7684;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;[tidb-server &#x542F;&#x52A8;&#x62A5;&#x9519;](https://pingcap.com/docs-cn/stable/how-to/troubleshoot/cluster-setup#tidb-server-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99)&#xFF0C;[tikv-server &#x542F;&#x52A8;&#x62A5;&#x9519;](https://pingcap.com/docs-cn/stable/how-to/troubleshoot/cluster-setup#tikv-server-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99)&#xFF0C;[pd-server &#x542F;&#x52A8;&#x62A5;&#x9519;](https://pingcap.com/docs-cn/stable/how-to/troubleshoot/cluster-setup#pd-server-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99) &#x4E2D;&#x7684;&#x6307;&#x5F15;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x8FDB;&#x4E00;&#x6B65;&#x6392;&#x67E5;&#x89E3;&#x51B3;
+* &#x6848;&#x4F8B;&#x4E00;&#xFF1A;TiKV Pod &#x65E5;&#x5FD7;&#x4E2D;&#x51FA;&#x73B0; &#x201C;cluster id mismatch&#x201D;
+
+TiKV Pod &#x4F7F;&#x7528;&#x7684;&#x6570;&#x636E;&#x53EF;&#x80FD;&#x662F;&#x5176;&#x4ED6;&#x6216;&#x4E4B;&#x524D;&#x7684; TiKV Pod &#x7684;&#x65E7;&#x6570;&#x636E;&#x3002;&#x5728;&#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#x672C;&#x5730;&#x5B58;&#x50A8;&#x65F6;&#x672A;&#x6E05;&#x9664;&#x673A;&#x5668;&#x4E0A;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x4E0A;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6216;&#x8005;&#x5F3A;&#x5236;&#x5220;&#x9664;&#x4E86; PV &#x5BFC;&#x81F4;&#x6570;&#x636E;&#x5E76;&#x6CA1;&#x6709;&#x88AB; local volume provisioner &#x7A0B;&#x5E8F;&#x56DE;&#x6536;&#xFF0C;&#x53EF;&#x80FD;&#x5BFC;&#x81F4; PV &#x9057;&#x7559;&#x65E7;&#x6570;&#x636E;&#xFF0C;&#x5BFC;&#x81F4;&#x9519;&#x8BEF;&#x3002;
+
+&#x5728;&#x786E;&#x8BA4;&#x8BE5; TiKV &#x5E94;&#x4F5C;&#x4E3A;&#x65B0;&#x8282;&#x70B9;&#x52A0;&#x5165;&#x96C6;&#x7FA4;&#x3001;&#x4E14; PV &#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E94;&#x8BE5;&#x5220;&#x9664;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x5220;&#x9664;&#x8BE5; TiKV Pod &#x548C;&#x5173;&#x8054; PVC&#x3002;TiKV Pod &#x5C06;&#x81EA;&#x52A8;&#x91CD;&#x5EFA;&#x5E76;&#x7ED1;&#x5B9A;&#x65B0;&#x7684; PV &#x6765;&#x4F7F;&#x7528;&#x3002;&#x96C6;&#x7FA4;&#x672C;&#x5730;&#x5B58;&#x50A8;&#x914D;&#x7F6E;&#x4E2D;&#xFF0C;&#x5E94;&#x5BF9;&#x673A;&#x5668;&#x4E0A;&#x7684;&#x672C;&#x5730;&#x5B58;&#x50A8;&#x5220;&#x9664;&#xFF0C;&#x907F;&#x514D; Kubernetes &#x4F7F;&#x7528;&#x673A;&#x5668;&#x4E0A;&#x9057;&#x7559;&#x7684;&#x6570;&#x636E;&#x3002;&#x96C6;&#x7FA4;&#x8FD0;&#x7EF4;&#x4E2D;&#xFF0C;&#x4E0D;&#x53EF;&#x5F3A;&#x5236;&#x5220;&#x9664; PV &#xFF0C;&#x5E94;&#x7531; local volume provisioner &#x7A0B;&#x5E8F;&#x7BA1;&#x7406;&#x3002;&#x7528;&#x6237;&#x901A;&#x8FC7;&#x521B;&#x5EFA;&#x3001;&#x5220;&#x9664; PVC &#x4EE5;&#x53CA;&#x8BBE;&#x7F6E; PV &#x7684; reclaimPolicy &#x6765;&#x7BA1;&#x7406; PV &#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x3002;
+
+* &#x6848;&#x4F8B;&#x4E8C;&#xFF1A;Node&#x8282;&#x70B9;ulimit&#x8BBE;&#x7F6E;&#x4E0D;&#x8DB3;
+</code></pre><p>root             soft    nofile          1000000
+root             hard    nofile          1000000
+root             soft    core            1048576
+root             hard    core            1048576</p>
+<pre><code>TiKV &#x5728; ulimit &#x4E0D;&#x8DB3;&#x65F6;&#x4E5F;&#x4F1A;&#x53D1;&#x751F;&#x542F;&#x52A8;&#x5931;&#x8D25;&#x7684;&#x72B6;&#x51B5;&#xFF0C;&#x5BF9;&#x4E8E;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x53EF;&#x4EE5;&#x4FEE;&#x6539; Kubernetes &#x8282;&#x70B9;&#x7684; /etc/security/limits.conf &#x8C03;&#x5927; ulimit
+* &#x6848;&#x4F8B;&#x4E09;&#x90E8;&#x5206;pd&#x7684;pod&#x53CD;&#x590D;CrashLoopBackOff
+
+&#x5728;&#x8282;&#x70B9;&#x7EF4;&#x62A4;&#x6216;&#x8005;&#x81EA;&#x52A8;&#x6545;&#x969C;&#x8F6C;&#x79FB;&#x7684;&#x573A;&#x666F;&#x4E0B;&#xFF0C;&#x90E8;&#x5206;pd&#x7684;pod&#x53CD;&#x590D;CrashLoopBackOff&#x3002;&#x67E5;&#x770B;&#x5F02;&#x5E38;pod&#x7684;&#x65E5;&#x5FD7;&#x53EF;&#x89C1;&#xFF1A;
+</code></pre><p>waiting for discovery service to return start args...</p>
+<pre><code>&#x53EF;&#x5728;Kubernetes&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x8BBF;&#x95EE;discovery&#x7684;service:
+</code></pre><p>kubectl get service -n {your namespace} | grep discovery //get ip port
+telnet {ip} {port} </p>
+<pre><code>&#x5982;&#x679C;&#x8BBF;&#x95EE;&#x5931;&#x8D25;&#xFF0C;&#x53EF;&#x5C1D;&#x8BD5;&#x91CD;&#x542F;discovery&#x670D;&#x52A1;
+</code></pre><p>kubectl delete po {clustername}-discovery-xxxxxxxx-xxxxx -n {your namespace}</p>
+<pre><code>&#x5982;&#x679C;&#x91CD;&#x542F;&#x540E;&#x95EE;&#x9898;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#xFF0C;&#x53EF;&#x5C1D;&#x8BD5;&#x67E5;&#x770B;discovery&#x7684;pod&#x65E5;&#x5FD7;&#xFF1A;
+</code></pre><p>kubectl logs -f {clustername}-discovery-xxxxxxxx-xxxxx -n {your namespace}</p>
+<pre><code>&#x5982;&#x6709;&#x7C7B;&#x4F3C;&#x65E5;&#x5FD7;&#xFF1A;
+</code></pre><p>E1218 15:49:00.395064       1 mux.go:58] failed to discover: {cluster-name}-pd-3.{cluster-name}-pd-peer.{cluster-name}.svc:2380, Get <a href="http://{cluster-name}-pd.{cluster-name}:2379/pd/api/v1/members" target="_blank">http://{cluster-name}-pd.{cluster-name}:2379/pd/api/v1/members</a>: dial tcp x.x.x.x:2379: connect: connection refused</p>
+<pre><code>&#x53EF;&#x4EE5;&#x89C2;&#x5BDF;pd&#x7684;service&#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>wget -c <a href="http://{cluster-name}-pd.{cluster-name}:2379/pd/api/v1/members" target="_blank">http://{cluster-name}-pd.{cluster-name}:2379/pd/api/v1/members</a></p>
+<pre><code>&#x540C;&#x65F6;&#x89C2;&#x5BDF;pd&#x7684;pod&#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>wget -c <a href="http://{ip" target="_blank">http://{ip</a> of pd&apos;s pod}:2379/pd/api/v1/members</p>
+<pre><code>&#x5982;&#x679C;&#x7B2C;&#x4E00;&#x4E2A;wget&#x547D;&#x4EE4;&#x5931;&#x8D25;&#xFF0C;&#x4F46;&#x662F;&#x7B2C;&#x4E8C;&#x4E2A;wget&#x547D;&#x4EE4;&#x6210;&#x529F;&#xFF0C;&#x5219;&#x53EF;&#x5224;&#x65AD;Kubernetes&#x96C6;&#x7FA4;&#x7684;kube-proxy&#x662F;&#x5426;&#x6709;&#x95EE;&#x9898;&#x3002;&#x5173;&#x4E8E;kube-proxy&#x7684;&#x72B6;&#x6001;&#x5206;&#x6790;&#xFF0C;&#x53EF;&#x53C2;&#x8003;Kubernetes&#x6587;&#x6863;&#x5206;&#x6790;kube-proxy&#x65E5;&#x5FD7;&#x3002;&#x4E5F;&#x53EF;&#x901A;&#x8FC7;&#x5B9E;&#x9A8C;&#x9A8C;&#x8BC1;kube-proxy&#x7684;&#x6709;&#x6548;&#x6027;&#xFF1A;
+&#x9996;&#x5148;&#x90E8;&#x7F72;&#x4E00;&#x4E2A; nginx &#x670D;&#x52A1;&#xFF1A;
+</code></pre><p>kubectl apply -f <a href="https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/service/networking/run-my-nginx.yaml" target="_blank">https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/service/networking/run-my-nginx.yaml</a></p>
+<pre><code>&#x7136;&#x540E;&#x5C06;&#x5B83;&#x66B4;&#x9732;&#x6210;&#x4E00;&#x4E2A; service&#xFF1A;
+</code></pre><p>kubectl expose deployment/my-nginx</p>
+<pre><code>&#x4E4B;&#x540E;&#x8BBF;&#x95EE;&#x8FD9;&#x4E2A;service&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x6210;&#x529F;&#xFF0C;&#x5982;&#x679C;&#x5931;&#x8D25;&#x5219;kube-proxy&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#x3002;&#x53EF;&#x4EE5;&#x91CD;&#x542F;kube-proxy&#x6765;&#x5C1D;&#x8BD5;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x3002;&#x5982;&#x679C;&#x95EE;&#x9898;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x68C0;&#x67E5;Kubernetes&#x7684;&#x7F51;&#x7EDC;&#x914D;&#x7F6E;&#x60C5;&#x51B5;&#xFF0C;&#x5177;&#x4F53;&#x53EF;&#x53C2;&#x8003;Kubernetes&#x6587;&#x6863;&#x3002;
+* &#x6848;&#x4F8B;&#x56DB; &#x90E8;&#x5206;pd&#x7684;pod&#x53CD;&#x590D;CrashLoopBackOff&#x7684;&#x7B2C;&#x4E8C;&#x79CD;&#x60C5;&#x51B5;
+
+chart&#x4E2D;&#x9884;&#x8BBE;&#x7684;pd replicas&#x4E3A;3&#xFF0C;&#x4F46;&#x662F;&#x51FA;&#x73B0;&#x4E86;pd&#x7684;pod&#x4E3A;5&#x4E2A;&#x7684;&#x60C5;&#x51B5;&#xFF0C;3&#x4E2A;&#x975E;running&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x8FD9;3&#x4E2A;&#x4E92;&#x76F8;join&#xFF0C;&#x4E14;&#x53CD;&#x590D;crashloopbackoff&#x3002;&#x73B0;&#x8C61;&#x5982;&#x4E0B;&#xFF1A;
+
+![&#x56FE;&#x7247;](https://uploader.shimo.im/f/sEpHoL1KCaY4gfdt.png!thumbnail)
+
+&#x67E5;&#x770B;pd&#x7684;pod&#x65E5;&#x5FD7;&#xFF1A;
+
+![&#x56FE;&#x7247;](https://uploader.shimo.im/f/27Al2fBM0AMgflDL.png!thumbnail)
+
+&#x65E5;&#x5FD7;&#x4E2D;&#x53EF;&#x89C1;&#x6253;&#x5F00;&#x4E00;&#x4E9B;&#x6587;&#x4EF6;&#x5931;&#x8D25;&#xFF0C;&#x53EF;&#x4EE5;&#x67E5;&#x770B;pod&#x7684;&#x672C;&#x5730;&#x76EE;&#x5F55;&#x6587;&#x4EF6;&#x72B6;&#x6001;&#x3002;&#x5982;&#x679C;&#x53D1;&#x73B0;&#x76EE;&#x5F55;&#x662F;&#x4E0D;&#x5B8C;&#x6574;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x8003;&#x8651;PV&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF0C;&#x6BD4;&#x5982;&#x662F;&#x5426;&#x4E3A;Retain&#x72B6;&#x6001;&#x7B49;&#x3002;
+
+&#x67E5;&#x770B;provisioner&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;
+
+![&#x56FE;&#x7247;](https://uploader.shimo.im/f/JxHkyrfoHaon949O.png!thumbnail)
+
+&#x53EF;&#x89C1;PV&#x66FE;&#x7ECF;&#x88AB;&#x5220;&#x9664;&#x3002;&#x8FD9;&#x662F;pd&#x6570;&#x636E;&#x76EE;&#x5F55;&#x5F02;&#x5E38;&#x7684;&#x539F;&#x56E0;&#x3002;&#x53EF;&#x7EE7;&#x7EED;&#x67E5;&#x770B;kube-apiserver&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x5BFB;&#x627E;&#x5220;&#x9664;PV&#x64CD;&#x4F5C;&#x7684;&#x89E6;&#x53D1;&#x539F;&#x56E0;&#xFF0C;&#x8FD9;&#x9700;&#x8981;kube-apiserver&#x901A;&#x8FC7;&#x542F;&#x52A8;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF1A;
+</code></pre><p>--v=4</p>
+<pre><code>&#x6B64;&#x65F6;&#x7684;pd&#x96C6;&#x7FA4;&#x9700;&#x8981;&#x901A;&#x8FC7;pd-recover&#x6062;&#x590D;&#x3002;
+## 1.4 &#x5BB9;&#x5668;&#x5904;&#x4E8E; Pending &#x72B6;&#x6001;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+</code></pre><p>kubectl get pod
+NAME         READY   STATUS   RESTARTS   AGE
+pod-pvc-pv   0/1     Pending   0          4s</p>
+<pre><code>Pod &#x5904;&#x4E8E; Pending &#x72B6;&#x6001;&#xFF0C;&#x901A;&#x5E38;&#x90FD;&#x662F;&#x8D44;&#x6E90;&#x4E0D;&#x6EE1;&#x8DB3;&#x5BFC;&#x81F4;&#x7684;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;
+* &#x4F7F;&#x7528;&#x6301;&#x4E45;&#x5316;&#x5B58;&#x50A8;&#x7684; PD/TiKV/Monitor Pod &#x4F7F;&#x7528;&#x7684; PVC &#x7684; StorageClass &#x4E0D;&#x5B58;&#x5728;&#x6216; PV&#x4E0D;&#x8DB3;
+* Kubernetes &#x96C6;&#x7FA4;&#x4E2D;&#x6CA1;&#x6709;&#x8282;&#x70B9;&#x80FD;&#x6EE1;&#x8DB3; Pod &#x7533;&#x8BF7;&#x7684; CPU &#x6216;&#x5185;&#x5B58;
+* PD &#x6216;&#x8005; TiKV Replicas &#x6570;&#x91CF;&#x548C;&#x96C6;&#x7FA4;&#x5185;&#x8282;&#x70B9;&#x6570;&#x91CF;&#x4E0D;&#x6EE1;&#x8DB3; tidb-scheduler &#x9AD8;&#x53EF;&#x7528;&#x8C03;&#x5EA6;&#x7B56;&#x7565;
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+* kubectl describe &#x67E5;&#x770B;Pending&#x7684;&#x5177;&#x4F53;&#x539F;&#x56E0;
+</code></pre><p>kubectl describe pod -n <namespace> <pod-name>
+kubectl describe pod pod-pvc-pv
+Name:         pod-pvc-pv
+...
+Status:       Pending
+...
+Warning  FailedScheduling  21s (x4 over 4m28s)  default-scheduler  0/1 nodes are available: 1 node(s) didn&apos;t find available persistent volumes to bind.</pod-name></namespace></p>
+<pre><code>
+* &#x8D44;&#x6E90;&#x4E0D;&#x8DB3;&#x89E3;&#x51B3;&#x529E;&#x6CD5;
+
+ &#x964D;&#x4F4E;&#x5BF9;&#x5E94;&#x7EC4;&#x4EF6;&#x7684; CPU &#x6216;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#x7533;&#x8BF7;&#x4F7F;&#x5176;&#x80FD;&#x591F;&#x5F97;&#x5230;&#x8C03;&#x5EA6;&#xFF0C;&#x6216;&#x662F;&#x589E;&#x52A0;&#x65B0;&#x7684; Kubernetes &#x8282;&#x70B9;&#x3002;
+
+* StorageClass&#x4E0D;&#x5B58;&#x5728;
+
+&#x9700;&#x8981;&#x5728; values.yaml &#x91CC;&#x9762;&#x5C06; storageClassName &#x4FEE;&#x6539;&#x4E3A;&#x96C6;&#x7FA4;&#x4E2D;&#x53EF;&#x7528;&#x7684; StorageClass &#x540D;&#x5B57;&#xFF0C;&#x6267;&#x884C; helm upgrade&#xFF0C;&#x7136;&#x540E;&#x5C06; Statefulset &#x5220;&#x9664;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x5BF9;&#x5E94;&#x7684; PVC &#x4E5F;&#x90FD;&#x5220;&#x9664;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4E2D;&#x53EF;&#x7528;&#x7684; StorageClass&#xFF1A;
+</code></pre><p>kubectl get storageclass</p>
+<pre><code>* Local PV &#x4E0D;&#x8DB3;
+
+     &#x9700;&#x8981;&#x6DFB;&#x52A0;&#x5BF9;&#x5E94;&#x7684; PV &#x8D44;&#x6E90;&#x3002;&#x5BF9;&#x4E8E; Local PV&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;[&#x672C;&#x5730; PV &#x914D;&#x7F6E;](https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/reference/configuration/storage-class#%E6%9C%AC%E5%9C%B0-pv-%E9%85%8D%E7%BD%AE)&#x8FDB;&#x884C;&#x6269;&#x5145;&#x3002;
+
+## 1.5 Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x9488;&#x5BF9; TiDB &#x96C6;&#x7FA4;&#x800C;&#x8A00;&#xFF0C;&#x7EDD;&#x5927;&#x90E8;&#x5206; Pod &#x95F4;&#x7684;&#x8BBF;&#x95EE;&#x5747;&#x901A;&#x8FC7; Pod &#x7684;&#x57DF;&#x540D;&#xFF08;&#x4F7F;&#x7528; Headless Service &#x5206;&#x914D;&#xFF09;&#x8FDB;&#x884C;&#xFF0C;&#x4F8B;&#x5916;&#x7684;&#x60C5;&#x51B5;&#x662F; TiDB Operator &#x5728;&#x6536;&#x96C6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x6216;&#x4E0B;&#x53D1;&#x63A7;&#x5236;&#x6307;&#x4EE4;&#x65F6;&#xFF0C;&#x4F1A;&#x901A;&#x8FC7; PD Service &#x7684; service-name &#x8BBF;&#x95EE; PD &#x96C6;&#x7FA4;&#x3002;
+
+&#x5F53;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x6216;&#x76D1;&#x63A7;&#x786E;&#x8BA4; Pod &#x95F4;&#x5B58;&#x5728;&#x7F51;&#x7EDC;&#x8FDE;&#x901A;&#x6027;&#x95EE;&#x9898;&#xFF0C;&#x6216;&#x6839;&#x636E;&#x6545;&#x969C;&#x60C5;&#x51B5;&#x63A8;&#x65AD;&#x51FA; Pod &#x95F4;&#x7F51;&#x7EDC;&#x8FDE;&#x63A5;&#x53EF;&#x80FD;&#x4E0D;&#x6B63;&#x5E38;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x6309;&#x7167;&#x4E0B;&#x9762;&#x7684;&#x6D41;&#x7A0B;&#x8FDB;&#x884C;&#x8BCA;&#x65AD;&#xFF0C;&#x9010;&#x6B65;&#x7F29;&#x5C0F;&#x95EE;&#x9898;&#x8303;&#x56F4;&#x3002;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+1. &#x786E;&#x8BA4; Service &#x548C; Headless Service &#x7684; Endpoints &#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF1A;
+</code></pre><p>kubectl -n <namespace> get endpoints <release-name>-pd
+kubectl -n <namespace> get endpoints <release-name>-tidb
+kubectl -n <namespace> get endpoints <release-name>-pd-peer
+kubectl -n <namespace> get endpoints <release-name>-tikv-peer
+kubectl -n <namespace> get endpoints <release-name>-tidb-peer</release-name></namespace></release-name></namespace></release-name></namespace></release-name></namespace></release-name></namespace></p>
+<pre><code>&#x4EE5;&#x4E0A;&#x547D;&#x4EE4;&#x5C55;&#x793A;&#x7684; ENDPOINTS &#x5B57;&#x6BB5;&#x4E2D;&#xFF0C;&#x5E94;&#x5F53;&#x662F;&#x7531;&#x9017;&#x53F7;&#x5206;&#x9694;&#x7684; cluster_ip:port &#x5217;&#x8868;&#x3002;&#x5047;&#x5982;&#x5B57;&#x6BB5;&#x4E3A;&#x7A7A;&#x6216;&#x4E0D;&#x6B63;&#x786E;&#xFF0C;&#x8BF7;&#x68C0;&#x67E5; Pod &#x7684;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x4EE5;&#x53CA; kube-controller-manager &#x662F;&#x5426;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#x3002;
+1. &#x8FDB;&#x5165; Pod &#x7684; Network Namespace &#x8BCA;&#x65AD;&#x7F51;&#x7EDC;&#x95EE;&#x9898;&#xFF1A;
+</code></pre><p>tkctl debug -n <namespace> <pod-name></pod-name></namespace></p>
+<pre><code>&#x8FDC;&#x7AEF; shell &#x542F;&#x52A8;&#x540E;&#xFF0C;&#x4F7F;&#x7528; dig &#x547D;&#x4EE4;&#x8BCA;&#x65AD; DNS &#x89E3;&#x6790;&#xFF0C;&#x5047;&#x5982; DNS &#x89E3;&#x6790;&#x5F02;&#x5E38;&#xFF0C;&#x8BF7;&#x53C2;&#x7167;[&#x8BCA;&#x65AD; Kubernetes DNS &#x89E3;&#x6790;](https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/)&#x8FDB;&#x884C;&#x6545;&#x969C;&#x6392;&#x9664;&#xFF1A;
+</code></pre><p>dig <hostname></hostname></p>
+<pre><code>&#x4F7F;&#x7528; ping &#x547D;&#x4EE4;&#x8BCA;&#x65AD;&#x5230;&#x76EE;&#x7684; IP &#x7684;&#x4E09;&#x5C42;&#x7F51;&#x7EDC;&#x662F;&#x5426;&#x8FDE;&#x901A;&#xFF08;&#x76EE;&#x7684; IP &#x4E3A;&#x4F7F;&#x7528; dig &#x89E3;&#x6790;&#x51FA;&#x7684; ClusterIP&#xFF09;:
+</code></pre><p>ping <target_ip></target_ip></p>
+<pre><code>&#x5047;&#x5982; ping &#x68C0;&#x67E5;&#x5931;&#x8D25;&#xFF0C;&#x8BF7;&#x53C2;&#x7167;&#x8BCA;&#x65AD; Kubernetes &#x7F51;&#x7EDC;&#x8FDB;&#x884C;&#x6545;&#x969C;&#x6392;&#x9664;&#x3002;
+&#x5047;&#x5982; ping &#x68C0;&#x67E5;&#x6B63;&#x5E38;&#xFF0C;&#x7EE7;&#x7EED;&#x4F7F;&#x7528; telnet &#x68C0;&#x67E5;&#x76EE;&#x6807;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x6253;&#x5F00;&#xFF1A;
+</code></pre><p>telnet <target_ip> <target_port></target_port></target_ip></p>
+<pre><code>&#x5047;&#x5982; telnet &#x68C0;&#x67E5;&#x5931;&#x8D25;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x9A8C;&#x8BC1; Pod &#x7684;&#x5BF9;&#x5E94;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x6B63;&#x786E;&#x66B4;&#x9732;&#x4EE5;&#x53CA;&#x5E94;&#x7528;&#x7684;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x914D;&#x7F6E;&#x6B63;&#x786E;&#xFF1A;
+</code></pre><h1 id="&#x68C0;&#x67E5;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x4E00;&#x81F4;">&#x68C0;&#x67E5;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x4E00;&#x81F4;</h1>
+<p>kubectl -n <namespace> get po <pod-name> -ojson | jq &apos;.spec.containers[].ports[].containerPort&apos;</pod-name></namespace></p>
+<h1 id="&#x68C0;&#x67E5;&#x5E94;&#x7528;&#x662F;&#x5426;&#x88AB;&#x6B63;&#x786E;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#x4E8E;&#x6307;&#x5B9A;&#x7AEF;&#x53E3;&#x4E0A;">&#x68C0;&#x67E5;&#x5E94;&#x7528;&#x662F;&#x5426;&#x88AB;&#x6B63;&#x786E;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#x4E8E;&#x6307;&#x5B9A;&#x7AEF;&#x53E3;&#x4E0A;</h1>
+<h1 id="pd-&#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A;-2379-&#x7AEF;&#x53E3;">PD, &#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A; 2379 &#x7AEF;&#x53E3;</h1>
+<p>kubectl -n <namespace> -it exec <pod-name> -- cat /etc/pd/pd.toml | grep client-urls</pod-name></namespace></p>
+<h1 id="tikv-&#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A;-20160-&#x7AEF;&#x53E3;">TiKV, &#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A; 20160 &#x7AEF;&#x53E3;</h1>
+<p>kubectl -n <namespace> -it exec <pod-name> -- cat /etc/tikv/tikv.toml | grep addr</pod-name></namespace></p>
+<h1 id="tidb-&#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A;-4000-&#x7AEF;&#x53E3;">TiDB, &#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A; 4000 &#x7AEF;&#x53E3;</h1>
+<p>kubectl -n <namespace> -it exec <pod-name> -- cat /etc/tidb/tidb.toml | grep port</pod-name></namespace></p>
+<pre><code>## 1.6 &#x65E0;&#x6CD5;&#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x7531;&#x4E8E;&#x8FDC;&#x7A0B;&#x8BBF;&#x95EE;&#xFF0C;&#x6240;&#x4EE5;&#x4F18;&#x5148;&#x6392;&#x67E5;&#x7F51;&#x7EDC;&#x94FE;&#x8DEF;&#x3002;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+TiDB &#x670D;&#x52A1;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86;&#x65F6;&#xFF0C;&#x9996;&#x5148;&#x786E;&#x8BA4; TiDB &#x670D;&#x52A1;&#x662F;&#x5426;&#x90E8;&#x7F72;&#x6210;&#x529F;&#xFF0C;&#x786E;&#x8BA4;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;
+
+&#x67E5;&#x770B;&#x8BE5;&#x96C6;&#x7FA4;&#x7684;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x662F;&#x5426;&#x5168;&#x90E8;&#x90FD;&#x542F;&#x52A8;&#x4E86;&#xFF0C;&#x72B6;&#x6001;&#x662F;&#x5426;&#x4E3A; Running&#x3002;
+</code></pre><p>kubectl get po -n <namespace></namespace></p>
+<pre><code>&#x68C0;&#x67E5; TiDB &#x7EC4;&#x4EF6;&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x770B;&#x65E5;&#x5FD7;&#x662F;&#x5426;&#x6709;&#x62A5;&#x9519;&#x3002;
+</code></pre><p>kubectl logs -f <tidb-pod-name> -n <namespace> -c tidb</namespace></tidb-pod-name></p>
+<pre><code>&#x5982;&#x679C;&#x786E;&#x5B9A;&#x96C6;&#x7FA4;&#x90E8;&#x7F72;&#x6210;&#x529F;&#xFF0C;&#x5219;&#x8FDB;&#x884C;&#x7F51;&#x7EDC;&#x68C0;&#x67E5;&#xFF1A;
+1. &#x5982;&#x679C;&#x4F60;&#x662F;&#x901A;&#x8FC7; NodePort &#x65B9;&#x5F0F;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86; TiDB &#x670D;&#x52A1;&#xFF0C;&#x8BF7;&#x5728; node &#x4E0A;&#x5C1D;&#x8BD5;&#x4F7F;&#x7528; service domain &#x6216; clusterIP &#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;&#xFF0C;&#x5047;&#x5982; serviceName &#x6216; clusterIP &#x7684;&#x65B9;&#x5F0F;&#x80FD;&#x8BBF;&#x95EE;&#xFF0C;&#x57FA;&#x672C;&#x5224;&#x65AD; Kubernetes &#x96C6;&#x7FA4;&#x5185;&#x7684;&#x7F51;&#x7EDC;&#x662F;&#x6B63;&#x5E38;&#x7684;&#xFF0C;&#x95EE;&#x9898;&#x53EF;&#x80FD;&#x51FA;&#x5728;&#x4E0B;&#x9762;&#x4E24;&#x4E2A;&#x65B9;&#x9762;&#xFF1A;
+  * &#x5BA2;&#x6237;&#x7AEF;&#x5230; node &#x8282;&#x70B9;&#x7684;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;&#x3002;
+  * &#x67E5;&#x770B; TiDB service &#x7684; externalTrafficPolicy &#x5C5E;&#x6027;&#x662F;&#x5426;&#x4E3A; Local&#x3002;&#x5982;&#x679C;&#x662F; Local &#x5219;&#x5BA2;&#x6237;&#x7AEF;&#x5FC5;&#x987B;&#x901A;&#x8FC7; TiDB Pod &#x6240;&#x5728; node &#x7684; IP &#x6765;&#x8BBF;&#x95EE;&#x3002;
+1. &#x5982;&#x679C; service domain &#x6216; clusterIP &#x65B9;&#x5F0F;&#x4E5F;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86; TiDB &#x670D;&#x52A1;&#xFF0C;&#x5C1D;&#x8BD5;&#x7528; TiDB&#x670D;&#x52A1;&#x540E;&#x7AEF;&#x7684; &lt;PodIP&gt;:4000 &#x8FDE;&#x63A5;&#x770B;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#xFF0C;&#x5982;&#x679C;&#x901A;&#x8FC7; PodIP &#x53EF;&#x4EE5;&#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;&#xFF0C;&#x53EF;&#x4EE5;&#x786E;&#x8BA4;&#x95EE;&#x9898;&#x51FA;&#x5728; service domain &#x6216; clusterIP &#x5230; PodIP &#x4E4B;&#x95F4;&#x7684;&#x8FDE;&#x63A5;&#x4E0A;&#xFF0C;&#x6392;&#x67E5;&#x9879;&#x5982;&#x4E0B;&#xFF1A;
+  * &#x68C0;&#x67E5; DNS &#x670D;&#x52A1;&#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF1A;
+</code></pre><p>kubectl get po -n kube-system -l k8s-app=kube-dns
+dig <tidb-service-domain></tidb-service-domain></p>
+<pre><code>  * &#x68C0;&#x67E5;&#x5404;&#x4E2A; node &#x4E0A;&#x7684; kube-proxy &#x662F;&#x5426;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#xFF1A;
+</code></pre><p>kubectl get po -n kube-system -l k8s-app=kube-proxy</p>
+<pre><code>  * &#x68C0;&#x67E5; node &#x4E0A;&#x7684; iptables &#x89C4;&#x5219;&#x4E2D; TiDB &#x670D;&#x52A1;&#x7684;&#x89C4;&#x5219;&#x662F;&#x5426;&#x6B63;&#x786E;
+</code></pre><p>iptables-save -t nat |grep <clusterip></clusterip></p>
+<pre><code>  * &#x68C0;&#x67E5;&#x5BF9;&#x5E94;&#x7684; endpoint &#x662F;&#x5426;&#x6B63;&#x786E;
+1. &#x5982;&#x679C;&#x901A;&#x8FC7; PodIP &#x8BBF;&#x95EE;&#x4E0D;&#x4E86; TiDB &#x670D;&#x52A1;&#xFF0C;&#x95EE;&#x9898;&#x51FA;&#x5728; Pod &#x5C42;&#x9762;&#x7684;&#x7F51;&#x7EDC;&#x4E0A;&#xFF0C;&#x6392;&#x67E5;&#x9879;&#x5982;&#x4E0B;&#xFF1A;
+  1. &#x68C0;&#x67E5; node &#x4E0A;&#x7684;&#x76F8;&#x5173; route &#x89C4;&#x5219;&#x662F;&#x5426;&#x6B63;&#x786E;
+  2. &#x68C0;&#x67E5;&#x7F51;&#x7EDC;&#x63D2;&#x4EF6;&#x670D;&#x52A1;&#x662F;&#x5426;&#x6B63;&#x5E38;
+  3. &#x53C2;&#x8003;&#x4E0A;&#x9762;&#x7684; [Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;](https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/troubleshoot/#pod-%E4%B9%8B%E9%97%B4%E7%BD%91%E7%BB%9C%E4%B8%8D%E9%80%9A)&#x7AE0;&#x8282;
+# 2 &#x96C6;&#x7FA4;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;
+## 2.1  &#x5220;&#x9664; tikv &#x6216; pd&#xFF0C;&#x518D;&#x6B21;&#x521B;&#x5EFA;&#x542F;&#x52A8;&#x4E0D;&#x6210;&#x529F;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+## 2.2 &#x5E76;&#x53D1;&#x6269;&#x7F29;&#x5BB9;&#xFF0C;TiKV Store &#x5F02;&#x5E38;&#x8FDB;&#x5165; Tombstone &#x72B6;&#x6001;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x6B63;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5F53; TiKV Pod &#x5904;&#x4E8E;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x65F6;&#xFF08;Pod &#x72B6;&#x6001;&#x4E3A; Running&#xFF09;&#xFF0C;&#x5BF9;&#x5E94;&#x7684; TiKV Store &#x72B6;&#x6001;&#x4E5F;&#x662F;&#x5065;&#x5EB7;&#x7684;&#xFF08;Store &#x72B6;&#x6001;&#x4E3A; UP&#xFF09;&#x3002;&#x4F46;&#x5E76;&#x53D1;&#x8FDB;&#x884C; TiKV &#x7EC4;&#x4EF6;&#x7684;&#x6269;&#x5BB9;&#x548C;&#x7F29;&#x5BB9;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x90E8;&#x5206; TiKV Store &#x5F02;&#x5E38;&#x5E76;&#x8FDB;&#x5165; Tombstone &#x72B6;&#x6001;&#x3002;
+
+&#x5BF9;&#x6BD4; Store &#x72B6;&#x6001;&#x4E0E; Pod &#x8FD0;&#x884C;&#x72B6;&#x6001;&#x3002;&#x5047;&#x5982;&#x67D0;&#x4E2A; TiKV Pod &#x6240;&#x5BF9;&#x5E94;&#x7684; Store &#x5904;&#x4E8E; Offline &#x72B6;&#x6001;&#xFF0C;&#x5219;&#x8868;&#x660E;&#x8BE5; Pod &#x7684; Store &#x6B63;&#x5728;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;&#x4E2D;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x53D6;&#x6D88;&#x4E0B;&#x7EBF;&#x8FDB;&#x7A0B;&#xFF0C;&#x8FDB;&#x884C;&#x6062;&#x590D;&#xFF1A;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+&#x6B64;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x6309;&#x7167;&#x4EE5;&#x4E0B;&#x6B65;&#x9AA4;&#x8FDB;&#x884C;&#x4FEE;&#x590D;&#xFF1A;
+
+1. &#x67E5;&#x770B; TiKV Store &#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>kubectl get -n <namespace> tidbcluster <release-name> -ojson | jq &apos;.status.tikv.stores&apos;</release-name></namespace></p>
+<pre><code>1. &#x67E5;&#x770B; TiKV Pod &#x8FD0;&#x884C;&#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>kubectl get -n <namespace> po -l app.kubernetes.io/component=tikv</namespace></p>
+<pre><code>1. &#x5BF9;&#x6BD4; Store &#x72B6;&#x6001;&#x4E0E; Pod &#x8FD0;&#x884C;&#x72B6;&#x6001;&#x3002;&#x5047;&#x5982;&#x67D0;&#x4E2A; TiKV Pod &#x6240;&#x5BF9;&#x5E94;&#x7684; Store &#x5904;&#x4E8E; Offline &#x72B6;&#x6001;&#xFF0C;&#x5219;&#x8868;&#x660E;&#x8BE5; Pod &#x7684; Store &#x6B63;&#x5728;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;&#x4E2D;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x53D6;&#x6D88;&#x4E0B;&#x7EBF;&#x8FDB;&#x7A0B;&#xFF0C;&#x8FDB;&#x884C;&#x6062;&#x590D;&#xFF1A;
+  1. &#x6253;&#x5F00;&#x5230; PD &#x670D;&#x52A1;&#x7684;&#x8FDE;&#x63A5;&#xFF1A;
+</code></pre><p>kubectl port-forward -n <namespace> svc/<cluster-name>-pd <local-port>:2379 &amp;&gt;/tmp/portforward-pd.log &amp;</local-port></cluster-name></namespace></p>
+<pre><code>  1. &#x4E0A;&#x7EBF;&#x5BF9;&#x5E94; Store&#xFF1A;
+</code></pre><p>curl -X POST <a href="http://127.0.0.1:2379/pd/api/v1/store/" target="_blank">http://127.0.0.1:2379/pd/api/v1/store/</a><store-id>/state?state=Up</store-id></p>
+<pre><code>1. &#x5047;&#x5982;&#x67D0;&#x4E2A; TiKV Pod &#x6240;&#x5BF9;&#x5E94;&#x7684; lastHeartbeatTime &#x6700;&#x65B0;&#x7684; Store &#x5904;&#x4E8E; Tombstone &#x72B6;&#x6001; &#xFF0C;&#x5219;&#x8868;&#x660E;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x91CD;&#x5EFA; Pod &#x5E76;&#x7ED1;&#x5B9A;&#x65B0;&#x7684; PV &#x8FDB;&#x884C;&#x6062;&#x590D;&#xFF1A;
+  1. &#x5C06;&#x8BE5; Store &#x5BF9;&#x5E94; PV &#x7684; reclaimPolicy &#x8C03;&#x6574;&#x4E3A; Delete&#xFF1A;
+</code></pre><p>kubectl patch $(kubectl get pv -l app.kubernetes.io/instance=<release-name>,tidb.pingcap.com/store-id=<store-id> -o name) -p &apos;{&quot;spec&quot;:{&quot;persistentVolumeReclaimPolicy&quot;:&quot;Delete&quot;}}</store-id></release-name></p>
+<pre><code>  1. &#x5220;&#x9664; Pod &#x4F7F;&#x7528;&#x7684; PVC&#xFF1A;
+</code></pre><p>kubectl delete -n <namespace> pvc tikv-<pod-name> --wait=false</pod-name></namespace></p>
+<pre><code>  1. &#x5220;&#x9664; Pod&#xFF0C;&#x7B49;&#x5F85; Pod &#x91CD;&#x5EFA;&#xFF1A;
+</code></pre><p>kubectl delete -n <namespace> pod <pod-name></pod-name></namespace></p>
+<pre><code>Pod &#x91CD;&#x5EFA;&#x540E;&#xFF0C;&#x4F1A;&#x4EE5;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x6CE8;&#x518C;&#x4E00;&#x4E2A;&#x65B0;&#x7684; Store&#xFF0C;&#x6062;&#x590D;&#x5B8C;&#x6210;&#x3002;
+
+## 2.3 TiDB &#x957F;&#x8FDE;&#x63A5;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x8BB8;&#x591A;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668; (Load Balancer) &#x4F1A;&#x8BBE;&#x7F6E;&#x8FDE;&#x63A5;&#x7A7A;&#x95F2;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;&#x5F53;&#x8FDE;&#x63A5;&#x4E0A;&#x6CA1;&#x6709;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x7684;&#x65F6;&#x95F4;&#x8D85;&#x8FC7;&#x8BBE;&#x5B9A;&#x503C;&#xFF0C;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668;&#x4F1A;&#x4E3B;&#x52A8;&#x5C06;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x3002;&#x82E5;&#x53D1;&#x73B0; TiDB &#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x957F;&#x67E5;&#x8BE2;&#x4F1A;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;&#xFF0C;&#x53EF;&#x68C0;&#x67E5;&#x5BA2;&#x6237;&#x7AEF;&#x4E0E; TiDB &#x670D;&#x52A1;&#x7AEF;&#x4E4B;&#x95F4;&#x7684;&#x4E2D;&#x95F4;&#x4EF6;&#x7A0B;&#x5E8F;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+&#x82E5;&#x5176;&#x8FDE;&#x63A5;&#x7A7A;&#x95F2;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x8F83;&#x77ED;&#xFF0C;&#x53EF;&#x5C1D;&#x8BD5;&#x589E;&#x5927;&#x8BE5;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;&#x82E5;&#x4E0D;&#x53EF;&#x4FEE;&#x6539;&#xFF0C;&#x53EF;&#x6253;&#x5F00; TiDB tcp-keep-alive &#x9009;&#x9879;&#xFF0C;&#x542F;&#x7528; TCP keepalive &#x7279;&#x6027;&#x3002;
+
+* &#x5982;&#x679C; Kubernetes &#x96C6;&#x7FA4;&#x5185;&#x7684; [kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/) &#x5141;&#x8BB8;&#x914D;&#x7F6E; --allowed-unsafe-sysctls=net.*&#xFF0C;&#x8BF7;&#x4E3A; kubelet &#x914D;&#x7F6E;&#x8BE5;&#x53C2;&#x6570;&#xFF0C;&#x5E76;&#x6309;&#x5982;&#x4E0B;&#x65B9;&#x5F0F;&#x914D;&#x7F6E; TiDB&#xFF1A;
+</code></pre><p>tidb:
+  ...
+  podSecurityContext:
+    sysctls:</p>
+<pre><code>- name: net.ipv4.tcp_keepalive_time
+  value: &quot;300&quot;
+</code></pre><pre><code>* &#x5982;&#x679C; Kubernetes &#x96C6;&#x7FA4;&#x5185;&#x7684; [kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/) &#x4E0D;&#x5141;&#x8BB8;&#x914D;&#x7F6E; --allowed-unsafe-sysctls=net.*&#xFF0C;&#x8BF7;&#x6309;&#x5982;&#x4E0B;&#x65B9;&#x5F0F;&#x914D;&#x7F6E; TiDB&#xFF1A;
+</code></pre><p>tidb:
+  annotations:
+    tidb.pingcap.com/sysctl-init: &quot;true&quot;
+  podSecurityContext:
+    sysctls:</p>
+<pre><code>- name: net.ipv4.tcp_keepalive_time
+  value: &quot;300&quot;
+</code></pre><p>  ...</p>
+<pre><code>&#x6CE8;&#x610F;&#xFF1A;
+&#x8FDB;&#x884C;&#x4EE5;&#x4E0A;&#x914D;&#x7F6E;&#x8981;&#x6C42; TiDB Operator 1.1 &#x53CA;&#x4EE5;&#x4E0A;&#x7248;&#x672C;&#x3002;
+
+# 3 &#x8BCA;&#x65AD;&#x6A21;&#x5F0F;
+&#x5F53; Pod &#x5904;&#x4E8E; CrashLoopBackoff &#x72B6;&#x6001;&#x65F6;&#xFF0C;Pod &#x5185;&#x5BB9;&#x5668;&#x4F1A;&#x4E0D;&#x65AD;&#x9000;&#x51FA;&#xFF0C;&#x5BFC;&#x81F4;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x4F7F;&#x7528; kubectl exec &#x6216; tkctl debug&#xFF0C;&#x7ED9;&#x8BCA;&#x65AD;&#x5E26;&#x6765;&#x4E0D;&#x4FBF;&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;TiDB in Kubernetes &#x63D0;&#x4F9B;&#x4E86; PD/TiKV/TiDB Pod &#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x3002;&#x5728;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x542F;&#x52A8;&#x540E;&#x4F1A;&#x76F4;&#x63A5;&#x6302;&#x8D77;&#xFF0C;&#x4E0D;&#x4F1A;&#x518D;&#x8FDB;&#x5165;&#x91CD;&#x590D; Crash &#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x4FBF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; kubectl exec &#x6216; tkctl debug &#x8FDE;&#x63A5; Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x8BCA;&#x65AD;&#x3002;
+
+&#x64CD;&#x4F5C;&#x4E4B;&#x524D;&#xFF0C;Pod &#x5904;&#x4E8E;  CrashLoopBackoff &#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>$ kubectl get pods -n tidbcluster1
+NAME                              READY   STATUS             RESTARTS   AGE
+demo-discovery-5c78d6bcd8-5ttcl   1/1     Running            0          20h
+demo-monitor-6ddc6d6674-kcmhh     3/3     Running            0          3d22h
+demo-pd-0                         1/1     Running            0          3d22h
+demo-pd-1                         0/1     CrashLoopBackOff   911        3d22h
+demo-pd-2                         1/1     Running            10         3d22h
+demo-pd-3                         0/1     CrashLoopBackOff   932        3d22h
+demo-pd-4                         1/1     Running            0          3d22h
+demo-pd-5                         1/1     Running            0          3d22h
+demo-tidb-0                       2/2     Running            1          3d22h
+demo-tidb-1                       2/2     Running            0          3d22h
+demo-tikv-0                       1/1     Running            0          3d22h
+demo-tikv-1                       1/1     Running            0          3d22h
+demo-tikv-2                       1/1     Running            0          3d22h
+demo-tikv-3                       1/1     Running            0          3d22h
+demo-tikv-4                       1/1     Running            0          3d22h</p>
+<pre><code>demo-tikv-5                       1/1     Running            0          3d22h
+
+&#x9996;&#x5148;&#xFF0C;&#x4E3A;&#x5F85;&#x8BCA;&#x65AD;&#x7684; Pod &#x6DFB;&#x52A0; Annotation&#xFF1A;
+</code></pre><p>kubectl annotate pod <pod-name> -n <namespace> runmode=debug</namespace></pod-name></p>
+<h1 id="kubectl-annotate-pod--demo-pd-1--n-tidbcluster1-runmodedebug">kubectl annotate pod  demo-pd-1 -n tidbcluster1 runmode=debug</h1>
+<pre><code>&#x5728; Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x4E0B;&#x6B21;&#x91CD;&#x542F;&#x65F6;&#xFF0C;&#x4F1A;&#x68C0;&#x6D4B;&#x5230;&#x8BE5; Annotation&#xFF0C;&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x3002;&#x7B49;&#x5F85; Pod &#x8FDB;&#x5165; Running &#x72B6;&#x6001;&#x5373;&#x53EF;&#x5F00;&#x59CB;&#x8BCA;&#x65AD;&#xFF1A;
+</code></pre><p>watch kubectl get pod <pod-name> -n <namespace></namespace></pod-name></p>
+<h1 id="watch-kubectl-get-pod-demo-pd-1--n-tidbcluster1">watch kubectl get pod demo-pd-1 -n tidbcluster1</h1>
+<pre><code>![&#x56FE;&#x7247;](https://uploader.shimo.im/f/AEoBqBFTZm0geOkK.png!thumbnail)
+
+&#x4E0B;&#x9762;&#x662F;&#x4F7F;&#x7528; kubectl exec &#x8FDB;&#x5165;&#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x8BCA;&#x65AD;&#x5DE5;&#x4F5C;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;
+</code></pre><h1 id="&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x540E;-kubectl-logs-&#x4F1A;&#x63D0;&#x793A;&#x5F53;&#x524D;-pod-&#x5DF2;&#x7ECF;&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;">&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x540E; kubectl logs &#x4F1A;&#x63D0;&#x793A;&#x5F53;&#x524D; pod &#x5DF2;&#x7ECF;&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;</h1>
+<p>$ kubectl logs demo-pd-1 -n tidbcluster1
+entering debug mode.</p>
+<h1 id="&#x8FDB;&#x5165;-pod-&#x8FDB;&#x884C;&#x8BCA;&#x65AD;">&#x8FDB;&#x5165; pod &#x8FDB;&#x884C;&#x8BCA;&#x65AD;</h1>
+<p>kubectl exec -it <pod-name> -n <namespace> -- /bin/sh</namespace></pod-name></p>
+<h1 id="kubectl-exec--it-demo-pd-1--n-tidbcluster1----binsh">kubectl exec -it demo-pd-1 -n tidbcluster1 -- /bin/sh</h1>
+<pre><code>&#x8BCA;&#x65AD;&#x5B8C;&#x6BD5;&#xFF0C;&#x4FEE;&#x590D;&#x95EE;&#x9898;&#x540E;&#xFF0C;&#x5220;&#x9664; Pod&#xFF1A;
+</code></pre><p>kubectl delete pod <pod-name> -n <namespace></namespace></pod-name></p>
+<h1 id="kubectl-delete-pod-demo-pd-1--n-tidbcluster1">kubectl delete pod demo-pd-1 -n tidbcluster1</h1>
+<pre><code>&#x8F93;&#x51FA;&#x4E3A;&#xFF1A;
+</code></pre><p>pod &quot;demo-pd-1&quot; deleted</p>
+<pre><code>Pod &#x91CD;&#x5EFA;&#x540E;&#x4F1A;&#x81EA;&#x52A8;&#x56DE;&#x5230;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x6A21;&#x5F0F;&#x3002;
+
+
+
+&#x672C;&#x6587;&#x5C06;&#x4ECB;&#x7ECD; Kubernetes &#x4E0A; TiDB &#x96C6;&#x7FA4;&#x7684;&#x4E00;&#x4E9B;&#x5E38;&#x89C1;&#x6545;&#x969C;&#x4EE5;&#x53CA;&#x8BCA;&#x65AD;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;
+
+# 1 &#x521B;&#x5EFA;&#x96C6;&#x7FA4;
+## 1.1 &#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5931;&#x8D25; 
+### &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x9650;&#x5236;&#x8BBF;&#x95EE;&#x76F8;&#x5173;&#x955C;&#x50CF;&#x4ED3;&#x5E93;&#xFF0C;&#x90E8;&#x7F72; Kubernetes &#x65F6;&#x5E38;&#x62C9;&#x53D6;&#x5931;&#x8D25;&#xFF0C;&#x7ED9;&#x4F7F;&#x7528;&#x5E26;&#x6765;&#x4E86;&#x8F83;&#x5927;&#x4E0D;&#x4FBF;&#x3002;
+
+### &#x89E3;&#x51B3;&#x65B9;&#x6848;
+&#x4E3B;&#x8981;&#x901A;&#x8FC7;&#x955C;&#x50CF;&#x548C;&#x4EE3;&#x7406;&#x7684;&#x65B9;&#x5F0F;&#x62C9;&#x53D6;&#xFF0C;&#x8FD9;&#x91CC;&#x63A8;&#x8350;&#x4E00;&#x4E2A;&#x597D;&#x7528;&#x7684;&#x5F00;&#x6E90;&#x5DE5;&#x5177;docker-wrapper&#x65B9;&#x4FBF;&#x624B;&#x52A8;&#x62C9;&#x53D6;&#x3002;
+</code></pre><p>git clone <a href="https://github.com/silenceshell/docker-wrapper.git" target="_blank">https://github.com/silenceshell/docker-wrapper.git</a>
+cd docker-wrapper/</p>
+<h1 id="&#x6D4B;&#x8BD5;&#x62C9;&#x53D6;-k8sgcrio-&#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;">&#x6D4B;&#x8BD5;&#x62C9;&#x53D6; k8s.gcr.io &#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;</h1>
+<p>$ ./docker-wrapper.py pull k8s.gcr.io/kube-apiserver:v1.16.0
+-- pull k8s.gcr.io/kube-apiserver:v1.16.0 from gcr.azk8s.cn/google-containers/kube-apiserver:v1.16.0 instead --
+...
+-- pull k8s.gcr.io/kube-apiserver:v1.16.0 done --</p>
+<pre><code>&#x5982;&#x679C;&#x662F;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#xFF0C;&#x63A8;&#x8350;&#x91C7;&#x7528;Kubernetes &#x7684;&#x4E00;&#x4E9B;&#x7BA1;&#x7406;&#x5E73;&#x53F0;&#x6765;&#x90E8;&#x7F72;&#x548C;&#x7BA1;&#x7406;Kubernetes &#x96C6;&#x7FA4;&#xFF0C;&#x540C;&#x65F6;&#x5728;&#x7BA1;&#x7406;&#x5E73;&#x53F0;&#x4E0A;&#x8BBE;&#x7F6E;&#x955C;&#x50CF;&#x4EE3;&#x7406;&#x3002;&#x5982;&#x679C;&#x91C7;&#x7528;&#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5230;&#x5185;&#x7F51;image regitstry&#x7684;&#x8BDD;&#xFF0C;TiDB&#x7684;helm chart&#x8981;&#x66F4;&#x6539;&#x5BF9;&#x5E94;&#x7684;image&#x8BBE;&#x7F6E;&#x3002;
+## 1.2 PD &#x5904;&#x4E8E; Running &#x8FD0;&#x884C;&#x4E2D;&#x72B6;&#x6001;&#xFF0C;&#x4F46; tikv &#x672A;&#x5F00;&#x59CB;&#x521B;&#x5EFA; 
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+Pod &#x7684;&#x72B6;&#x6001;&#x5904;&#x4E8E; Running&#xFF0C;&#x8868;&#x793A;&#x5BB9;&#x5668;&#x5DF2;&#x7ECF;&#x7ED1;&#x5B9A;&#x5230;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x540C;&#x65F6;Pod &#x4E2D;&#x6240;&#x6709;&#x5BB9;&#x5668;&#x90FD;&#x5DF2;&#x88AB;&#x521B;&#x5EFA;&#x3002;&#x6B64;&#x65F6;&#x5BB9;&#x5668;&#x53EF;&#x80FD;&#x5904;&#x4E8E;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x4E2D;&#x3001;&#x6216;&#x8005;&#x6B63;&#x5904;&#x4E8E;&#x542F;&#x52A8;&#x6216;&#x91CD;&#x542F;&#x4E2D;&#x3002;
+
+PD&#x542F;&#x52A8;&#x903B;&#x8F91;&#xFF1A; Pod &#x542F;&#x52A8;&#x65F6;&#x4F9D;&#x8D56;&#x542F;&#x52A8;&#x811A;&#x672C; pd_start_script.sh&#xFF0C;&#x901A;&#x8FC7; Service DNS &#x5FAA;&#x73AF;&#x8C03;&#x7528; discovery &#x8FDB;&#x884C;&#x6CE8;&#x518C;&#x53CA;&#x83B7;&#x5F97;&#x542F;&#x52A8;&#x53C2;&#x6570;&#xFF0C;discovery &#x4E5F;&#x901A;&#x8FC7; Service DNS &#x8BBF;&#x95EE; PD &#x83B7;&#x53D6;&#x6700;&#x65B0;&#x7684;&#x96C6;&#x7FA4; members &#x5730;&#x5740;&#x3002;
+
+&#x7531;&#x4E8E;&#x65E0;&#x660E;&#x663E;&#x8868;&#x8C61;&#xFF0C;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x7B49;&#x65B9;&#x5F0F;&#x6DF1;&#x5165;&#x5BB9;&#x5668;&#x5185;&#x90E8;&#x6392;&#x67E5;&#x3002;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+&#x67E5;&#x770B; Pod &#x5185;&#x5BB9;&#x5668;&#x7684;&#x65E5;&#x5FD7;
+</code></pre><h1 id="&#x67E5;&#x770B;&#x6240;&#x6709;-pods">&#x67E5;&#x770B;&#x6240;&#x6709; pods</h1>
+<p>kubectl  get pods -n <namespace></namespace></p>
+<h1 id="&#x67E5;&#x770B;-events-&#x662F;&#x5426;&#x6709;&#x5F02;&#x5E38;">&#x67E5;&#x770B; events &#x662F;&#x5426;&#x6709;&#x5F02;&#x5E38;</h1>
+<p>kubectl describe -n <namespace> pods <pd pod-name=""></pd></namespace></p>
+<h1 id="&#x67E5;&#x770B;&#x76F8;&#x5173;&#x65E5;&#x5FD7;-&#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709;-nslookup-&#x89E3;&#x6790;&#x5931;&#x8D25;&#x7684;&#x5F02;&#x5E38;&#x95EE;&#x9898;">&#x67E5;&#x770B;&#x76F8;&#x5173;&#x65E5;&#x5FD7;, &#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709; nslookup &#x89E3;&#x6790;&#x5931;&#x8D25;&#x7684;&#x5F02;&#x5E38;&#x95EE;&#x9898;</h1>
+<p>kubectl logs -n <namespace> pods <pd pod-name=""></pd></namespace></p>
+<h1 id="&#x7BA1;&#x7406;&#x5DE5;&#x5177;">&#x7BA1;&#x7406;&#x5DE5;&#x5177;</h1>
+<p>tkctl debug  <pd-name></pd-name></p>
+<pre><code>&#x6839;&#x636E;&#x7ECF;&#x9A8C;&#x4E3B;&#x8981;&#x662F;&#x7F51;&#x7EDC;&#x76F8;&#x5173;&#x95EE;&#x9898;&#x5F15;&#x8D77;&#xFF0C;&#x5EFA;&#x8BAE;&#x4ECE;&#x5982;&#x4E0B;&#x4E24;&#x65B9;&#x9762;&#x8FDB;&#x884C;&#x6392;&#x67E5;&#xFF1A;
+
+* DNS &#x89E3;&#x6790;&#x662F;&#x5426;&#x6B63;&#x5E38;
+</code></pre><h1 id="&#x68C0;&#x67E5;-dns-&#x662F;&#x5426;&#x6210;&#x529F;&#x89E3;&#x6790;">&#x68C0;&#x67E5; DNS &#x662F;&#x5426;&#x6210;&#x529F;&#x89E3;&#x6790;</h1>
+<p>kubectl exec -it <discovery pod="" name=""> -n=<namespace>  -- nslookup <service dns=""></service></namespace></discovery></p>
+<h1 id="&#x6210;&#x529F;&#x89E3;&#x6790;-headless-service-dns-&#x7684;&#x793A;&#x4F8B;">&#x6210;&#x529F;&#x89E3;&#x6790; headless service dns &#x7684;&#x793A;&#x4F8B;</h1>
+<p>$ kubectl exec -it tidb-cluster-discovery-6b7f8d9954-48ngh -n=tidb  -- nslookup tidb-cluster-pd-peer.tidb.svc
+Name:      tidb-cluster-pd-peer.tidb.svc
+Address 1: 10.244.2.19 tidb-cluster-pd-0.tidb-cluster-pd-peer.tidb.svc.cluster.local
+Address 2: 10.244.1.13 10-244-1-13.tidb-cluster-pd.tidb.svc.cluster.local
+Address 3: 10.244.3.11 10-244-3-11.tidb-cluster-pd.tidb.svc.cluster.local</p>
+<h1 id="&#x6210;&#x529F;&#x89E3;&#x6790;-cluser-ip-service-dns-&#x7684;&#x793A;&#x4F8B;">&#x6210;&#x529F;&#x89E3;&#x6790; cluser ip service dns &#x7684;&#x793A;&#x4F8B;</h1>
+<p>$ kubectl exec -it tidb-cluster-discovery-6b7f8d9954-48ngh -n=tidb  -- nslookup tidb-cluster-prometheus.tidb.svc
+Name:      tidb-cluster-prometheus.tidb.svc
+Address 1: 10.107.103.198 tidb-cluster-prometheus.tidb.svc.cluster.local</p>
+<pre><code>&#x82E5; DNS &#x89E3;&#x6790;&#x5931;&#x8D25;&#xFF0C;&#x8BF7;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5DF2;&#x6210;&#x529F;&#x542F;&#x52A8; CoreDNS &#x7EC4;&#x4EF6;&#x6216;&#x914D;&#x7F6E;&#x662F;&#x5426;&#x6B63;&#x786E;&#x3002;
+</code></pre><h1 id="&#x5931;&#x8D25;&#x89E3;&#x6790;&#x7684;&#x793A;&#x4F8B;">&#x5931;&#x8D25;&#x89E3;&#x6790;&#x7684;&#x793A;&#x4F8B;</h1>
+<p>nslookup: can&apos;t resolve &apos;tidb-cluster-prometheus.tidb.svc1&apos;: Name does not resolve
+command terminated with exit code</p>
+<h1 id="&#x68C0;&#x67E5;-coredns-&#x7EC4;&#x4EF6;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x8FD0;&#x884C;">&#x68C0;&#x67E5; CoreDNS &#x7EC4;&#x4EF6;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x8FD0;&#x884C;</h1>
+<p>kubectl  get pods -n kube-system | grep core
+coredns-9d85f5447-642rs          1/1     Running   1          13h
+coredns-9d85f5447-8swr2          1/1     Running   1          13h</p>
+<h1 id="&#x82E5;-coredns-&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x4ECD;&#x4E0D;&#x80FD;&#x6210;&#x529F;&#x89E3;&#x6790;-dns">&#x82E5; CoreDNS &#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x4ECD;&#x4E0D;&#x80FD;&#x6210;&#x529F;&#x89E3;&#x6790; DNS</h1>
+<h1 id="&#x767B;&#x9646;-pd-pod&#xFF0C;-&#x68C0;&#x67E5;-etcresov-&#x4E2D;&#x7684;-nameserver-&#x662F;&#x5426;&#x914D;&#x7F6E;&#x6B63;&#x786E;">&#x767B;&#x9646; pd pod&#xFF0C; &#x68C0;&#x67E5; /etc/resov &#x4E2D;&#x7684; nameserver &#x662F;&#x5426;&#x914D;&#x7F6E;&#x6B63;&#x786E;</h1>
+<p>kubectl exec -it tidb-cluster-pd-0 -n=tidb  -- cat /etc/resolv.conf</p>
+<pre><code>* IP &#x7F51;&#x7EDC;&#x662F;&#x5426;&#x8FDE;&#x901A;
+
+&#x8BE6;&#x89C1; 1.5 Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;
+
+## 1.3 &#x5BB9;&#x5668;&#x5904;&#x4E8E; CrashLoopBackOff &#x72B6;&#x6001;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+Pod &#x5904;&#x4E8E; CrashLoopBackOff &#x72B6;&#x6001;&#x610F;&#x5473;&#x7740; Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x91CD;&#x590D;&#x5730;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#x3002;&#x53EF;&#x80FD;&#x5BFC;&#x81F4; CrashLoopBackOff &#x7684;&#x539F;&#x56E0;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x6700;&#x6709;&#x6548;&#x7684;&#x5B9A;&#x4F4D;&#x529E;&#x6CD5;&#x662F;&#x67E5;&#x770B; Pod &#x5BB9;&#x5668;&#x7684;&#x65E5;&#x5FD7;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+* &#x67E5;&#x770B; Pod &#x5185;&#x5BB9;&#x5668;&#x7684;&#x65E5;&#x5FD7;
+</code></pre><h1 id="&#x5BFB;&#x627E;&#x5BB9;&#x5668;&#x8FDB;&#x7A0B;&#x9000;&#x51FA;&#x6216;&#x8005;&#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x5931;&#x8D25;&#x9000;&#x51FA;&#x76F8;&#x5173;&#x65E5;&#x5FD7;">&#x5BFB;&#x627E;&#x5BB9;&#x5668;&#x8FDB;&#x7A0B;&#x9000;&#x51FA;&#x6216;&#x8005;&#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x5931;&#x8D25;&#x9000;&#x51FA;&#x76F8;&#x5173;&#x65E5;&#x5FD7;</h1>
+<p>kubectl -n <namespace> logs -f <pod-name></pod-name></namespace></p>
+<h1 id="&#x5F53;&#x524D;pod&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x4E86;&#x591A;&#x6B21;-crashloopbackoff&#xFF0C;&#x6839;&#x56E0;&#x53EF;&#x80FD;&#x5728;&#x4E0A;&#x4E00;&#x6B21;&#x7684;&#x542F;&#x52A8;&#x65E5;&#x5FD7;&#x7684;&#x60C5;&#x51B5;">&#x5F53;&#x524D;Pod&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x4E86;&#x591A;&#x6B21; CrashLoopBackOff&#xFF0C;&#x6839;&#x56E0;&#x53EF;&#x80FD;&#x5728;&#x4E0A;&#x4E00;&#x6B21;&#x7684;&#x542F;&#x52A8;&#x65E5;&#x5FD7;&#x7684;&#x60C5;&#x51B5;</h1>
+<p>kubectl -n <namespace> logs -p <pod-name></pod-name></namespace></p>
+<pre><code>&#x786E;&#x8BA4;&#x65E5;&#x5FD7;&#x4E2D;&#x7684;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;[tidb-server &#x542F;&#x52A8;&#x62A5;&#x9519;](https://pingcap.com/docs-cn/stable/how-to/troubleshoot/cluster-setup#tidb-server-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99)&#xFF0C;[tikv-server &#x542F;&#x52A8;&#x62A5;&#x9519;](https://pingcap.com/docs-cn/stable/how-to/troubleshoot/cluster-setup#tikv-server-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99)&#xFF0C;[pd-server &#x542F;&#x52A8;&#x62A5;&#x9519;](https://pingcap.com/docs-cn/stable/how-to/troubleshoot/cluster-setup#pd-server-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99) &#x4E2D;&#x7684;&#x6307;&#x5F15;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x8FDB;&#x4E00;&#x6B65;&#x6392;&#x67E5;&#x89E3;&#x51B3;
+* &#x6848;&#x4F8B;&#x4E00;&#xFF1A;TiKV Pod &#x65E5;&#x5FD7;&#x4E2D;&#x51FA;&#x73B0; &#x201C;cluster id mismatch&#x201D;
+
+TiKV Pod &#x4F7F;&#x7528;&#x7684;&#x6570;&#x636E;&#x53EF;&#x80FD;&#x662F;&#x5176;&#x4ED6;&#x6216;&#x4E4B;&#x524D;&#x7684; TiKV Pod &#x7684;&#x65E7;&#x6570;&#x636E;&#x3002;&#x5728;&#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#x672C;&#x5730;&#x5B58;&#x50A8;&#x65F6;&#x672A;&#x6E05;&#x9664;&#x673A;&#x5668;&#x4E0A;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x4E0A;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6216;&#x8005;&#x5F3A;&#x5236;&#x5220;&#x9664;&#x4E86; PV &#x5BFC;&#x81F4;&#x6570;&#x636E;&#x5E76;&#x6CA1;&#x6709;&#x88AB; local volume provisioner &#x7A0B;&#x5E8F;&#x56DE;&#x6536;&#xFF0C;&#x53EF;&#x80FD;&#x5BFC;&#x81F4; PV &#x9057;&#x7559;&#x65E7;&#x6570;&#x636E;&#xFF0C;&#x5BFC;&#x81F4;&#x9519;&#x8BEF;&#x3002;
+
+&#x5728;&#x786E;&#x8BA4;&#x8BE5; TiKV &#x5E94;&#x4F5C;&#x4E3A;&#x65B0;&#x8282;&#x70B9;&#x52A0;&#x5165;&#x96C6;&#x7FA4;&#x3001;&#x4E14; PV &#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E94;&#x8BE5;&#x5220;&#x9664;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x5220;&#x9664;&#x8BE5; TiKV Pod &#x548C;&#x5173;&#x8054; PVC&#x3002;TiKV Pod &#x5C06;&#x81EA;&#x52A8;&#x91CD;&#x5EFA;&#x5E76;&#x7ED1;&#x5B9A;&#x65B0;&#x7684; PV &#x6765;&#x4F7F;&#x7528;&#x3002;&#x96C6;&#x7FA4;&#x672C;&#x5730;&#x5B58;&#x50A8;&#x914D;&#x7F6E;&#x4E2D;&#xFF0C;&#x5E94;&#x5BF9;&#x673A;&#x5668;&#x4E0A;&#x7684;&#x672C;&#x5730;&#x5B58;&#x50A8;&#x5220;&#x9664;&#xFF0C;&#x907F;&#x514D; Kubernetes &#x4F7F;&#x7528;&#x673A;&#x5668;&#x4E0A;&#x9057;&#x7559;&#x7684;&#x6570;&#x636E;&#x3002;&#x96C6;&#x7FA4;&#x8FD0;&#x7EF4;&#x4E2D;&#xFF0C;&#x4E0D;&#x53EF;&#x5F3A;&#x5236;&#x5220;&#x9664; PV &#xFF0C;&#x5E94;&#x7531; local volume provisioner &#x7A0B;&#x5E8F;&#x7BA1;&#x7406;&#x3002;&#x7528;&#x6237;&#x901A;&#x8FC7;&#x521B;&#x5EFA;&#x3001;&#x5220;&#x9664; PVC &#x4EE5;&#x53CA;&#x8BBE;&#x7F6E; PV &#x7684; reclaimPolicy &#x6765;&#x7BA1;&#x7406; PV &#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x3002;
+
+* &#x6848;&#x4F8B;&#x4E8C;&#xFF1A;Node&#x8282;&#x70B9;ulimit&#x8BBE;&#x7F6E;&#x4E0D;&#x8DB3;
+</code></pre><p>root             soft    nofile          1000000
+root             hard    nofile          1000000
+root             soft    core            1048576
+root             hard    core            1048576</p>
+<pre><code>TiKV &#x5728; ulimit &#x4E0D;&#x8DB3;&#x65F6;&#x4E5F;&#x4F1A;&#x53D1;&#x751F;&#x542F;&#x52A8;&#x5931;&#x8D25;&#x7684;&#x72B6;&#x51B5;&#xFF0C;&#x5BF9;&#x4E8E;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x53EF;&#x4EE5;&#x4FEE;&#x6539; Kubernetes &#x8282;&#x70B9;&#x7684; /etc/security/limits.conf &#x8C03;&#x5927; ulimit
+* &#x6848;&#x4F8B;&#x4E09;&#x90E8;&#x5206;pd&#x7684;pod&#x53CD;&#x590D;CrashLoopBackOff
+
+&#x5728;&#x8282;&#x70B9;&#x7EF4;&#x62A4;&#x6216;&#x8005;&#x81EA;&#x52A8;&#x6545;&#x969C;&#x8F6C;&#x79FB;&#x7684;&#x573A;&#x666F;&#x4E0B;&#xFF0C;&#x90E8;&#x5206;pd&#x7684;pod&#x53CD;&#x590D;CrashLoopBackOff&#x3002;&#x67E5;&#x770B;&#x5F02;&#x5E38;pod&#x7684;&#x65E5;&#x5FD7;&#x53EF;&#x89C1;&#xFF1A;
+</code></pre><p>waiting for discovery service to return start args...</p>
+<pre><code>&#x53EF;&#x5728;Kubernetes&#x5185;&#x90E8;&#x5C1D;&#x8BD5;&#x8BBF;&#x95EE;discovery&#x7684;service:
+</code></pre><p>kubectl get service -n {your namespace} | grep discovery //get ip port
+telnet {ip} {port} </p>
+<pre><code>&#x5982;&#x679C;&#x8BBF;&#x95EE;&#x5931;&#x8D25;&#xFF0C;&#x53EF;&#x5C1D;&#x8BD5;&#x91CD;&#x542F;discovery&#x670D;&#x52A1;
+</code></pre><p>kubectl delete po {clustername}-discovery-xxxxxxxx-xxxxx -n {your namespace}</p>
+<pre><code>&#x5982;&#x679C;&#x91CD;&#x542F;&#x540E;&#x95EE;&#x9898;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#xFF0C;&#x53EF;&#x5C1D;&#x8BD5;&#x67E5;&#x770B;discovery&#x7684;pod&#x65E5;&#x5FD7;&#xFF1A;
+</code></pre><p>kubectl logs -f {clustername}-discovery-xxxxxxxx-xxxxx -n {your namespace}</p>
+<pre><code>&#x5982;&#x6709;&#x7C7B;&#x4F3C;&#x65E5;&#x5FD7;&#xFF1A;
+</code></pre><p>E1218 15:49:00.395064       1 mux.go:58] failed to discover: {cluster-name}-pd-3.{cluster-name}-pd-peer.{cluster-name}.svc:2380, Get <a href="http://{cluster-name}-pd.{cluster-name}:2379/pd/api/v1/members" target="_blank">http://{cluster-name}-pd.{cluster-name}:2379/pd/api/v1/members</a>: dial tcp x.x.x.x:2379: connect: connection refused</p>
+<pre><code>&#x53EF;&#x4EE5;&#x89C2;&#x5BDF;pd&#x7684;service&#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>wget -c <a href="http://{cluster-name}-pd.{cluster-name}:2379/pd/api/v1/members" target="_blank">http://{cluster-name}-pd.{cluster-name}:2379/pd/api/v1/members</a></p>
+<pre><code>&#x540C;&#x65F6;&#x89C2;&#x5BDF;pd&#x7684;pod&#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>wget -c <a href="http://{ip" target="_blank">http://{ip</a> of pd&apos;s pod}:2379/pd/api/v1/members</p>
+<pre><code>&#x5982;&#x679C;&#x7B2C;&#x4E00;&#x4E2A;wget&#x547D;&#x4EE4;&#x5931;&#x8D25;&#xFF0C;&#x4F46;&#x662F;&#x7B2C;&#x4E8C;&#x4E2A;wget&#x547D;&#x4EE4;&#x6210;&#x529F;&#xFF0C;&#x5219;&#x53EF;&#x5224;&#x65AD;Kubernetes&#x96C6;&#x7FA4;&#x7684;kube-proxy&#x662F;&#x5426;&#x6709;&#x95EE;&#x9898;&#x3002;&#x5173;&#x4E8E;kube-proxy&#x7684;&#x72B6;&#x6001;&#x5206;&#x6790;&#xFF0C;&#x53EF;&#x53C2;&#x8003;Kubernetes&#x6587;&#x6863;&#x5206;&#x6790;kube-proxy&#x65E5;&#x5FD7;&#x3002;&#x4E5F;&#x53EF;&#x901A;&#x8FC7;&#x5B9E;&#x9A8C;&#x9A8C;&#x8BC1;kube-proxy&#x7684;&#x6709;&#x6548;&#x6027;&#xFF1A;
+&#x9996;&#x5148;&#x90E8;&#x7F72;&#x4E00;&#x4E2A; nginx &#x670D;&#x52A1;&#xFF1A;
+</code></pre><p>kubectl apply -f <a href="https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/service/networking/run-my-nginx.yaml" target="_blank">https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/service/networking/run-my-nginx.yaml</a></p>
+<pre><code>&#x7136;&#x540E;&#x5C06;&#x5B83;&#x66B4;&#x9732;&#x6210;&#x4E00;&#x4E2A; service&#xFF1A;
+</code></pre><p>kubectl expose deployment/my-nginx</p>
+<pre><code>&#x4E4B;&#x540E;&#x8BBF;&#x95EE;&#x8FD9;&#x4E2A;service&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x6210;&#x529F;&#xFF0C;&#x5982;&#x679C;&#x5931;&#x8D25;&#x5219;kube-proxy&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#x3002;&#x53EF;&#x4EE5;&#x91CD;&#x542F;kube-proxy&#x6765;&#x5C1D;&#x8BD5;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x3002;&#x5982;&#x679C;&#x95EE;&#x9898;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x68C0;&#x67E5;Kubernetes&#x7684;&#x7F51;&#x7EDC;&#x914D;&#x7F6E;&#x60C5;&#x51B5;&#xFF0C;&#x5177;&#x4F53;&#x53EF;&#x53C2;&#x8003;Kubernetes&#x6587;&#x6863;&#x3002;
+* &#x6848;&#x4F8B;&#x56DB; &#x90E8;&#x5206;pd&#x7684;pod&#x53CD;&#x590D;CrashLoopBackOff&#x7684;&#x7B2C;&#x4E8C;&#x79CD;&#x60C5;&#x51B5;
+
+chart&#x4E2D;&#x9884;&#x8BBE;&#x7684;pd replicas&#x4E3A;3&#xFF0C;&#x4F46;&#x662F;&#x51FA;&#x73B0;&#x4E86;pd&#x7684;pod&#x4E3A;5&#x4E2A;&#x7684;&#x60C5;&#x51B5;&#xFF0C;3&#x4E2A;&#x975E;running&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x8FD9;3&#x4E2A;&#x4E92;&#x76F8;join&#xFF0C;&#x4E14;&#x53CD;&#x590D;crashloopbackoff&#x3002;&#x73B0;&#x8C61;&#x5982;&#x4E0B;&#xFF1A;
+
+![&#x56FE;&#x7247;](https://uploader.shimo.im/f/sEpHoL1KCaY4gfdt.png!thumbnail)
+
+&#x67E5;&#x770B;pd&#x7684;pod&#x65E5;&#x5FD7;&#xFF1A;
+
+![&#x56FE;&#x7247;](https://uploader.shimo.im/f/27Al2fBM0AMgflDL.png!thumbnail)
+
+&#x65E5;&#x5FD7;&#x4E2D;&#x53EF;&#x89C1;&#x6253;&#x5F00;&#x4E00;&#x4E9B;&#x6587;&#x4EF6;&#x5931;&#x8D25;&#xFF0C;&#x53EF;&#x4EE5;&#x67E5;&#x770B;pod&#x7684;&#x672C;&#x5730;&#x76EE;&#x5F55;&#x6587;&#x4EF6;&#x72B6;&#x6001;&#x3002;&#x5982;&#x679C;&#x53D1;&#x73B0;&#x76EE;&#x5F55;&#x662F;&#x4E0D;&#x5B8C;&#x6574;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x8003;&#x8651;PV&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF0C;&#x6BD4;&#x5982;&#x662F;&#x5426;&#x4E3A;Retain&#x72B6;&#x6001;&#x7B49;&#x3002;
+
+&#x67E5;&#x770B;provisioner&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;
+
+![&#x56FE;&#x7247;](https://uploader.shimo.im/f/JxHkyrfoHaon949O.png!thumbnail)
+
+&#x53EF;&#x89C1;PV&#x66FE;&#x7ECF;&#x88AB;&#x5220;&#x9664;&#x3002;&#x8FD9;&#x662F;pd&#x6570;&#x636E;&#x76EE;&#x5F55;&#x5F02;&#x5E38;&#x7684;&#x539F;&#x56E0;&#x3002;&#x53EF;&#x7EE7;&#x7EED;&#x67E5;&#x770B;kube-apiserver&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x5BFB;&#x627E;&#x5220;&#x9664;PV&#x64CD;&#x4F5C;&#x7684;&#x89E6;&#x53D1;&#x539F;&#x56E0;&#xFF0C;&#x8FD9;&#x9700;&#x8981;kube-apiserver&#x901A;&#x8FC7;&#x542F;&#x52A8;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF1A;
+</code></pre><p>--v=4</p>
+<pre><code>&#x6B64;&#x65F6;&#x7684;pd&#x96C6;&#x7FA4;&#x9700;&#x8981;&#x901A;&#x8FC7;pd-recover&#x6062;&#x590D;&#x3002;
+## 1.4 &#x5BB9;&#x5668;&#x5904;&#x4E8E; Pending &#x72B6;&#x6001;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+</code></pre><p>kubectl get pod
+NAME         READY   STATUS   RESTARTS   AGE
+pod-pvc-pv   0/1     Pending   0          4s</p>
+<pre><code>Pod &#x5904;&#x4E8E; Pending &#x72B6;&#x6001;&#xFF0C;&#x901A;&#x5E38;&#x90FD;&#x662F;&#x8D44;&#x6E90;&#x4E0D;&#x6EE1;&#x8DB3;&#x5BFC;&#x81F4;&#x7684;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;
+* &#x4F7F;&#x7528;&#x6301;&#x4E45;&#x5316;&#x5B58;&#x50A8;&#x7684; PD/TiKV/Monitor Pod &#x4F7F;&#x7528;&#x7684; PVC &#x7684; StorageClass &#x4E0D;&#x5B58;&#x5728;&#x6216; PV&#x4E0D;&#x8DB3;
+* Kubernetes &#x96C6;&#x7FA4;&#x4E2D;&#x6CA1;&#x6709;&#x8282;&#x70B9;&#x80FD;&#x6EE1;&#x8DB3; Pod &#x7533;&#x8BF7;&#x7684; CPU &#x6216;&#x5185;&#x5B58;
+* PD &#x6216;&#x8005; TiKV Replicas &#x6570;&#x91CF;&#x548C;&#x96C6;&#x7FA4;&#x5185;&#x8282;&#x70B9;&#x6570;&#x91CF;&#x4E0D;&#x6EE1;&#x8DB3; tidb-scheduler &#x9AD8;&#x53EF;&#x7528;&#x8C03;&#x5EA6;&#x7B56;&#x7565;
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+* kubectl describe &#x67E5;&#x770B;Pending&#x7684;&#x5177;&#x4F53;&#x539F;&#x56E0;
+</code></pre><p>kubectl describe pod -n <namespace> <pod-name>
+kubectl describe pod pod-pvc-pv
+Name:         pod-pvc-pv
+...
+Status:       Pending
+...
+Warning  FailedScheduling  21s (x4 over 4m28s)  default-scheduler  0/1 nodes are available: 1 node(s) didn&apos;t find available persistent volumes to bind.</pod-name></namespace></p>
+<pre><code>
+* &#x8D44;&#x6E90;&#x4E0D;&#x8DB3;&#x89E3;&#x51B3;&#x529E;&#x6CD5;
+
+ &#x964D;&#x4F4E;&#x5BF9;&#x5E94;&#x7EC4;&#x4EF6;&#x7684; CPU &#x6216;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#x7533;&#x8BF7;&#x4F7F;&#x5176;&#x80FD;&#x591F;&#x5F97;&#x5230;&#x8C03;&#x5EA6;&#xFF0C;&#x6216;&#x662F;&#x589E;&#x52A0;&#x65B0;&#x7684; Kubernetes &#x8282;&#x70B9;&#x3002;
+
+* StorageClass&#x4E0D;&#x5B58;&#x5728;
+
+&#x9700;&#x8981;&#x5728; values.yaml &#x91CC;&#x9762;&#x5C06; storageClassName &#x4FEE;&#x6539;&#x4E3A;&#x96C6;&#x7FA4;&#x4E2D;&#x53EF;&#x7528;&#x7684; StorageClass &#x540D;&#x5B57;&#xFF0C;&#x6267;&#x884C; helm upgrade&#xFF0C;&#x7136;&#x540E;&#x5C06; Statefulset &#x5220;&#x9664;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x5BF9;&#x5E94;&#x7684; PVC &#x4E5F;&#x90FD;&#x5220;&#x9664;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x4E2D;&#x53EF;&#x7528;&#x7684; StorageClass&#xFF1A;
+</code></pre><p>kubectl get storageclass</p>
+<pre><code>* Local PV &#x4E0D;&#x8DB3;
+
+     &#x9700;&#x8981;&#x6DFB;&#x52A0;&#x5BF9;&#x5E94;&#x7684; PV &#x8D44;&#x6E90;&#x3002;&#x5BF9;&#x4E8E; Local PV&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;[&#x672C;&#x5730; PV &#x914D;&#x7F6E;](https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/reference/configuration/storage-class#%E6%9C%AC%E5%9C%B0-pv-%E9%85%8D%E7%BD%AE)&#x8FDB;&#x884C;&#x6269;&#x5145;&#x3002;
+
+## 1.5 Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x9488;&#x5BF9; TiDB &#x96C6;&#x7FA4;&#x800C;&#x8A00;&#xFF0C;&#x7EDD;&#x5927;&#x90E8;&#x5206; Pod &#x95F4;&#x7684;&#x8BBF;&#x95EE;&#x5747;&#x901A;&#x8FC7; Pod &#x7684;&#x57DF;&#x540D;&#xFF08;&#x4F7F;&#x7528; Headless Service &#x5206;&#x914D;&#xFF09;&#x8FDB;&#x884C;&#xFF0C;&#x4F8B;&#x5916;&#x7684;&#x60C5;&#x51B5;&#x662F; TiDB Operator &#x5728;&#x6536;&#x96C6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x6216;&#x4E0B;&#x53D1;&#x63A7;&#x5236;&#x6307;&#x4EE4;&#x65F6;&#xFF0C;&#x4F1A;&#x901A;&#x8FC7; PD Service &#x7684; service-name &#x8BBF;&#x95EE; PD &#x96C6;&#x7FA4;&#x3002;
+
+&#x5F53;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x6216;&#x76D1;&#x63A7;&#x786E;&#x8BA4; Pod &#x95F4;&#x5B58;&#x5728;&#x7F51;&#x7EDC;&#x8FDE;&#x901A;&#x6027;&#x95EE;&#x9898;&#xFF0C;&#x6216;&#x6839;&#x636E;&#x6545;&#x969C;&#x60C5;&#x51B5;&#x63A8;&#x65AD;&#x51FA; Pod &#x95F4;&#x7F51;&#x7EDC;&#x8FDE;&#x63A5;&#x53EF;&#x80FD;&#x4E0D;&#x6B63;&#x5E38;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x6309;&#x7167;&#x4E0B;&#x9762;&#x7684;&#x6D41;&#x7A0B;&#x8FDB;&#x884C;&#x8BCA;&#x65AD;&#xFF0C;&#x9010;&#x6B65;&#x7F29;&#x5C0F;&#x95EE;&#x9898;&#x8303;&#x56F4;&#x3002;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+1. &#x786E;&#x8BA4; Service &#x548C; Headless Service &#x7684; Endpoints &#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF1A;
+</code></pre><p>kubectl -n <namespace> get endpoints <release-name>-pd
+kubectl -n <namespace> get endpoints <release-name>-tidb
+kubectl -n <namespace> get endpoints <release-name>-pd-peer
+kubectl -n <namespace> get endpoints <release-name>-tikv-peer
+kubectl -n <namespace> get endpoints <release-name>-tidb-peer</release-name></namespace></release-name></namespace></release-name></namespace></release-name></namespace></release-name></namespace></p>
+<pre><code>&#x4EE5;&#x4E0A;&#x547D;&#x4EE4;&#x5C55;&#x793A;&#x7684; ENDPOINTS &#x5B57;&#x6BB5;&#x4E2D;&#xFF0C;&#x5E94;&#x5F53;&#x662F;&#x7531;&#x9017;&#x53F7;&#x5206;&#x9694;&#x7684; cluster_ip:port &#x5217;&#x8868;&#x3002;&#x5047;&#x5982;&#x5B57;&#x6BB5;&#x4E3A;&#x7A7A;&#x6216;&#x4E0D;&#x6B63;&#x786E;&#xFF0C;&#x8BF7;&#x68C0;&#x67E5; Pod &#x7684;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x4EE5;&#x53CA; kube-controller-manager &#x662F;&#x5426;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#x3002;
+1. &#x8FDB;&#x5165; Pod &#x7684; Network Namespace &#x8BCA;&#x65AD;&#x7F51;&#x7EDC;&#x95EE;&#x9898;&#xFF1A;
+</code></pre><p>tkctl debug -n <namespace> <pod-name></pod-name></namespace></p>
+<pre><code>&#x8FDC;&#x7AEF; shell &#x542F;&#x52A8;&#x540E;&#xFF0C;&#x4F7F;&#x7528; dig &#x547D;&#x4EE4;&#x8BCA;&#x65AD; DNS &#x89E3;&#x6790;&#xFF0C;&#x5047;&#x5982; DNS &#x89E3;&#x6790;&#x5F02;&#x5E38;&#xFF0C;&#x8BF7;&#x53C2;&#x7167;[&#x8BCA;&#x65AD; Kubernetes DNS &#x89E3;&#x6790;](https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/)&#x8FDB;&#x884C;&#x6545;&#x969C;&#x6392;&#x9664;&#xFF1A;
+</code></pre><p>dig <hostname></hostname></p>
+<pre><code>&#x4F7F;&#x7528; ping &#x547D;&#x4EE4;&#x8BCA;&#x65AD;&#x5230;&#x76EE;&#x7684; IP &#x7684;&#x4E09;&#x5C42;&#x7F51;&#x7EDC;&#x662F;&#x5426;&#x8FDE;&#x901A;&#xFF08;&#x76EE;&#x7684; IP &#x4E3A;&#x4F7F;&#x7528; dig &#x89E3;&#x6790;&#x51FA;&#x7684; ClusterIP&#xFF09;:
+</code></pre><p>ping <target_ip></target_ip></p>
+<pre><code>&#x5047;&#x5982; ping &#x68C0;&#x67E5;&#x5931;&#x8D25;&#xFF0C;&#x8BF7;&#x53C2;&#x7167;&#x8BCA;&#x65AD; Kubernetes &#x7F51;&#x7EDC;&#x8FDB;&#x884C;&#x6545;&#x969C;&#x6392;&#x9664;&#x3002;
+&#x5047;&#x5982; ping &#x68C0;&#x67E5;&#x6B63;&#x5E38;&#xFF0C;&#x7EE7;&#x7EED;&#x4F7F;&#x7528; telnet &#x68C0;&#x67E5;&#x76EE;&#x6807;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x6253;&#x5F00;&#xFF1A;
+</code></pre><p>telnet <target_ip> <target_port></target_port></target_ip></p>
+<pre><code>&#x5047;&#x5982; telnet &#x68C0;&#x67E5;&#x5931;&#x8D25;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x9A8C;&#x8BC1; Pod &#x7684;&#x5BF9;&#x5E94;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x6B63;&#x786E;&#x66B4;&#x9732;&#x4EE5;&#x53CA;&#x5E94;&#x7528;&#x7684;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x914D;&#x7F6E;&#x6B63;&#x786E;&#xFF1A;
+</code></pre><h1 id="&#x68C0;&#x67E5;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x4E00;&#x81F4;">&#x68C0;&#x67E5;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x4E00;&#x81F4;</h1>
+<p>kubectl -n <namespace> get po <pod-name> -ojson | jq &apos;.spec.containers[].ports[].containerPort&apos;</pod-name></namespace></p>
+<h1 id="&#x68C0;&#x67E5;&#x5E94;&#x7528;&#x662F;&#x5426;&#x88AB;&#x6B63;&#x786E;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#x4E8E;&#x6307;&#x5B9A;&#x7AEF;&#x53E3;&#x4E0A;">&#x68C0;&#x67E5;&#x5E94;&#x7528;&#x662F;&#x5426;&#x88AB;&#x6B63;&#x786E;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#x4E8E;&#x6307;&#x5B9A;&#x7AEF;&#x53E3;&#x4E0A;</h1>
+<h1 id="pd-&#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A;-2379-&#x7AEF;&#x53E3;">PD, &#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A; 2379 &#x7AEF;&#x53E3;</h1>
+<p>kubectl -n <namespace> -it exec <pod-name> -- cat /etc/pd/pd.toml | grep client-urls</pod-name></namespace></p>
+<h1 id="tikv-&#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A;-20160-&#x7AEF;&#x53E3;">TiKV, &#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A; 20160 &#x7AEF;&#x53E3;</h1>
+<p>kubectl -n <namespace> -it exec <pod-name> -- cat /etc/tikv/tikv.toml | grep addr</pod-name></namespace></p>
+<h1 id="tidb-&#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A;-4000-&#x7AEF;&#x53E3;">TiDB, &#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A; 4000 &#x7AEF;&#x53E3;</h1>
+<p>kubectl -n <namespace> -it exec <pod-name> -- cat /etc/tidb/tidb.toml | grep port</pod-name></namespace></p>
+<pre><code>## 1.6 &#x65E0;&#x6CD5;&#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x7531;&#x4E8E;&#x8FDC;&#x7A0B;&#x8BBF;&#x95EE;&#xFF0C;&#x6240;&#x4EE5;&#x4F18;&#x5148;&#x6392;&#x67E5;&#x7F51;&#x7EDC;&#x94FE;&#x8DEF;&#x3002;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+TiDB &#x670D;&#x52A1;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86;&#x65F6;&#xFF0C;&#x9996;&#x5148;&#x786E;&#x8BA4; TiDB &#x670D;&#x52A1;&#x662F;&#x5426;&#x90E8;&#x7F72;&#x6210;&#x529F;&#xFF0C;&#x786E;&#x8BA4;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;
+
+&#x67E5;&#x770B;&#x8BE5;&#x96C6;&#x7FA4;&#x7684;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x662F;&#x5426;&#x5168;&#x90E8;&#x90FD;&#x542F;&#x52A8;&#x4E86;&#xFF0C;&#x72B6;&#x6001;&#x662F;&#x5426;&#x4E3A; Running&#x3002;
+</code></pre><p>kubectl get po -n <namespace></namespace></p>
+<pre><code>&#x68C0;&#x67E5; TiDB &#x7EC4;&#x4EF6;&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x770B;&#x65E5;&#x5FD7;&#x662F;&#x5426;&#x6709;&#x62A5;&#x9519;&#x3002;
+</code></pre><p>kubectl logs -f <tidb-pod-name> -n <namespace> -c tidb</namespace></tidb-pod-name></p>
+<pre><code>&#x5982;&#x679C;&#x786E;&#x5B9A;&#x96C6;&#x7FA4;&#x90E8;&#x7F72;&#x6210;&#x529F;&#xFF0C;&#x5219;&#x8FDB;&#x884C;&#x7F51;&#x7EDC;&#x68C0;&#x67E5;&#xFF1A;
+1. &#x5982;&#x679C;&#x4F60;&#x662F;&#x901A;&#x8FC7; NodePort &#x65B9;&#x5F0F;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86; TiDB &#x670D;&#x52A1;&#xFF0C;&#x8BF7;&#x5728; node &#x4E0A;&#x5C1D;&#x8BD5;&#x4F7F;&#x7528; service domain &#x6216; clusterIP &#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;&#xFF0C;&#x5047;&#x5982; serviceName &#x6216; clusterIP &#x7684;&#x65B9;&#x5F0F;&#x80FD;&#x8BBF;&#x95EE;&#xFF0C;&#x57FA;&#x672C;&#x5224;&#x65AD; Kubernetes &#x96C6;&#x7FA4;&#x5185;&#x7684;&#x7F51;&#x7EDC;&#x662F;&#x6B63;&#x5E38;&#x7684;&#xFF0C;&#x95EE;&#x9898;&#x53EF;&#x80FD;&#x51FA;&#x5728;&#x4E0B;&#x9762;&#x4E24;&#x4E2A;&#x65B9;&#x9762;&#xFF1A;
+  * &#x5BA2;&#x6237;&#x7AEF;&#x5230; node &#x8282;&#x70B9;&#x7684;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;&#x3002;
+  * &#x67E5;&#x770B; TiDB service &#x7684; externalTrafficPolicy &#x5C5E;&#x6027;&#x662F;&#x5426;&#x4E3A; Local&#x3002;&#x5982;&#x679C;&#x662F; Local &#x5219;&#x5BA2;&#x6237;&#x7AEF;&#x5FC5;&#x987B;&#x901A;&#x8FC7; TiDB Pod &#x6240;&#x5728; node &#x7684; IP &#x6765;&#x8BBF;&#x95EE;&#x3002;
+1. &#x5982;&#x679C; service domain &#x6216; clusterIP &#x65B9;&#x5F0F;&#x4E5F;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86; TiDB &#x670D;&#x52A1;&#xFF0C;&#x5C1D;&#x8BD5;&#x7528; TiDB&#x670D;&#x52A1;&#x540E;&#x7AEF;&#x7684; &lt;PodIP&gt;:4000 &#x8FDE;&#x63A5;&#x770B;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#xFF0C;&#x5982;&#x679C;&#x901A;&#x8FC7; PodIP &#x53EF;&#x4EE5;&#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;&#xFF0C;&#x53EF;&#x4EE5;&#x786E;&#x8BA4;&#x95EE;&#x9898;&#x51FA;&#x5728; service domain &#x6216; clusterIP &#x5230; PodIP &#x4E4B;&#x95F4;&#x7684;&#x8FDE;&#x63A5;&#x4E0A;&#xFF0C;&#x6392;&#x67E5;&#x9879;&#x5982;&#x4E0B;&#xFF1A;
+  * &#x68C0;&#x67E5; DNS &#x670D;&#x52A1;&#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF1A;
+</code></pre><p>kubectl get po -n kube-system -l k8s-app=kube-dns
+dig <tidb-service-domain></tidb-service-domain></p>
+<pre><code>  * &#x68C0;&#x67E5;&#x5404;&#x4E2A; node &#x4E0A;&#x7684; kube-proxy &#x662F;&#x5426;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#xFF1A;
+</code></pre><p>kubectl get po -n kube-system -l k8s-app=kube-proxy</p>
+<pre><code>  * &#x68C0;&#x67E5; node &#x4E0A;&#x7684; iptables &#x89C4;&#x5219;&#x4E2D; TiDB &#x670D;&#x52A1;&#x7684;&#x89C4;&#x5219;&#x662F;&#x5426;&#x6B63;&#x786E;
+</code></pre><p>iptables-save -t nat |grep <clusterip></clusterip></p>
+<pre><code>  * &#x68C0;&#x67E5;&#x5BF9;&#x5E94;&#x7684; endpoint &#x662F;&#x5426;&#x6B63;&#x786E;
+1. &#x5982;&#x679C;&#x901A;&#x8FC7; PodIP &#x8BBF;&#x95EE;&#x4E0D;&#x4E86; TiDB &#x670D;&#x52A1;&#xFF0C;&#x95EE;&#x9898;&#x51FA;&#x5728; Pod &#x5C42;&#x9762;&#x7684;&#x7F51;&#x7EDC;&#x4E0A;&#xFF0C;&#x6392;&#x67E5;&#x9879;&#x5982;&#x4E0B;&#xFF1A;
+  1. &#x68C0;&#x67E5; node &#x4E0A;&#x7684;&#x76F8;&#x5173; route &#x89C4;&#x5219;&#x662F;&#x5426;&#x6B63;&#x786E;
+  2. &#x68C0;&#x67E5;&#x7F51;&#x7EDC;&#x63D2;&#x4EF6;&#x670D;&#x52A1;&#x662F;&#x5426;&#x6B63;&#x5E38;
+  3. &#x53C2;&#x8003;&#x4E0A;&#x9762;&#x7684; [Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;](https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/troubleshoot/#pod-%E4%B9%8B%E9%97%B4%E7%BD%91%E7%BB%9C%E4%B8%8D%E9%80%9A)&#x7AE0;&#x8282;
+# 2 &#x96C6;&#x7FA4;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;
+## 2.1  &#x5220;&#x9664; tikv &#x6216; pd&#xFF0C;&#x518D;&#x6B21;&#x521B;&#x5EFA;&#x542F;&#x52A8;&#x4E0D;&#x6210;&#x529F;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+## 2.2 &#x5E76;&#x53D1;&#x6269;&#x7F29;&#x5BB9;&#xFF0C;TiKV Store &#x5F02;&#x5E38;&#x8FDB;&#x5165; Tombstone &#x72B6;&#x6001;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x6B63;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5F53; TiKV Pod &#x5904;&#x4E8E;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x65F6;&#xFF08;Pod &#x72B6;&#x6001;&#x4E3A; Running&#xFF09;&#xFF0C;&#x5BF9;&#x5E94;&#x7684; TiKV Store &#x72B6;&#x6001;&#x4E5F;&#x662F;&#x5065;&#x5EB7;&#x7684;&#xFF08;Store &#x72B6;&#x6001;&#x4E3A; UP&#xFF09;&#x3002;&#x4F46;&#x5E76;&#x53D1;&#x8FDB;&#x884C; TiKV &#x7EC4;&#x4EF6;&#x7684;&#x6269;&#x5BB9;&#x548C;&#x7F29;&#x5BB9;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x90E8;&#x5206; TiKV Store &#x5F02;&#x5E38;&#x5E76;&#x8FDB;&#x5165; Tombstone &#x72B6;&#x6001;&#x3002;
+
+&#x5BF9;&#x6BD4; Store &#x72B6;&#x6001;&#x4E0E; Pod &#x8FD0;&#x884C;&#x72B6;&#x6001;&#x3002;&#x5047;&#x5982;&#x67D0;&#x4E2A; TiKV Pod &#x6240;&#x5BF9;&#x5E94;&#x7684; Store &#x5904;&#x4E8E; Offline &#x72B6;&#x6001;&#xFF0C;&#x5219;&#x8868;&#x660E;&#x8BE5; Pod &#x7684; Store &#x6B63;&#x5728;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;&#x4E2D;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x53D6;&#x6D88;&#x4E0B;&#x7EBF;&#x8FDB;&#x7A0B;&#xFF0C;&#x8FDB;&#x884C;&#x6062;&#x590D;&#xFF1A;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+&#x6B64;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x6309;&#x7167;&#x4EE5;&#x4E0B;&#x6B65;&#x9AA4;&#x8FDB;&#x884C;&#x4FEE;&#x590D;&#xFF1A;
+
+1. &#x67E5;&#x770B; TiKV Store &#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>kubectl get -n <namespace> tidbcluster <release-name> -ojson | jq &apos;.status.tikv.stores&apos;</release-name></namespace></p>
+<pre><code>1. &#x67E5;&#x770B; TiKV Pod &#x8FD0;&#x884C;&#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>kubectl get -n <namespace> po -l app.kubernetes.io/component=tikv</namespace></p>
+<pre><code>1. &#x5BF9;&#x6BD4; Store &#x72B6;&#x6001;&#x4E0E; Pod &#x8FD0;&#x884C;&#x72B6;&#x6001;&#x3002;&#x5047;&#x5982;&#x67D0;&#x4E2A; TiKV Pod &#x6240;&#x5BF9;&#x5E94;&#x7684; Store &#x5904;&#x4E8E; Offline &#x72B6;&#x6001;&#xFF0C;&#x5219;&#x8868;&#x660E;&#x8BE5; Pod &#x7684; Store &#x6B63;&#x5728;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;&#x4E2D;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x53D6;&#x6D88;&#x4E0B;&#x7EBF;&#x8FDB;&#x7A0B;&#xFF0C;&#x8FDB;&#x884C;&#x6062;&#x590D;&#xFF1A;
+  1. &#x6253;&#x5F00;&#x5230; PD &#x670D;&#x52A1;&#x7684;&#x8FDE;&#x63A5;&#xFF1A;
+</code></pre><p>kubectl port-forward -n <namespace> svc/<cluster-name>-pd <local-port>:2379 &amp;&gt;/tmp/portforward-pd.log &amp;</local-port></cluster-name></namespace></p>
+<pre><code>  1. &#x4E0A;&#x7EBF;&#x5BF9;&#x5E94; Store&#xFF1A;
+</code></pre><p>curl -X POST <a href="http://127.0.0.1:2379/pd/api/v1/store/" target="_blank">http://127.0.0.1:2379/pd/api/v1/store/</a><store-id>/state?state=Up</store-id></p>
+<pre><code>1. &#x5047;&#x5982;&#x67D0;&#x4E2A; TiKV Pod &#x6240;&#x5BF9;&#x5E94;&#x7684; lastHeartbeatTime &#x6700;&#x65B0;&#x7684; Store &#x5904;&#x4E8E; Tombstone &#x72B6;&#x6001; &#xFF0C;&#x5219;&#x8868;&#x660E;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x91CD;&#x5EFA; Pod &#x5E76;&#x7ED1;&#x5B9A;&#x65B0;&#x7684; PV &#x8FDB;&#x884C;&#x6062;&#x590D;&#xFF1A;
+  1. &#x5C06;&#x8BE5; Store &#x5BF9;&#x5E94; PV &#x7684; reclaimPolicy &#x8C03;&#x6574;&#x4E3A; Delete&#xFF1A;
+</code></pre><p>kubectl patch $(kubectl get pv -l app.kubernetes.io/instance=<release-name>,tidb.pingcap.com/store-id=<store-id> -o name) -p &apos;{&quot;spec&quot;:{&quot;persistentVolumeReclaimPolicy&quot;:&quot;Delete&quot;}}</store-id></release-name></p>
+<pre><code>  1. &#x5220;&#x9664; Pod &#x4F7F;&#x7528;&#x7684; PVC&#xFF1A;
+</code></pre><p>kubectl delete -n <namespace> pvc tikv-<pod-name> --wait=false</pod-name></namespace></p>
+<pre><code>  1. &#x5220;&#x9664; Pod&#xFF0C;&#x7B49;&#x5F85; Pod &#x91CD;&#x5EFA;&#xFF1A;
+</code></pre><p>kubectl delete -n <namespace> pod <pod-name></pod-name></namespace></p>
+<pre><code>Pod &#x91CD;&#x5EFA;&#x540E;&#xFF0C;&#x4F1A;&#x4EE5;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x6CE8;&#x518C;&#x4E00;&#x4E2A;&#x65B0;&#x7684; Store&#xFF0C;&#x6062;&#x590D;&#x5B8C;&#x6210;&#x3002;
+
+## 2.3 TiDB &#x957F;&#x8FDE;&#x63A5;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;
+###  &#x95EE;&#x9898;&#x5206;&#x6790;
+&#x8BB8;&#x591A;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668; (Load Balancer) &#x4F1A;&#x8BBE;&#x7F6E;&#x8FDE;&#x63A5;&#x7A7A;&#x95F2;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;&#x5F53;&#x8FDE;&#x63A5;&#x4E0A;&#x6CA1;&#x6709;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x7684;&#x65F6;&#x95F4;&#x8D85;&#x8FC7;&#x8BBE;&#x5B9A;&#x503C;&#xFF0C;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668;&#x4F1A;&#x4E3B;&#x52A8;&#x5C06;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x3002;&#x82E5;&#x53D1;&#x73B0; TiDB &#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x957F;&#x67E5;&#x8BE2;&#x4F1A;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;&#xFF0C;&#x53EF;&#x68C0;&#x67E5;&#x5BA2;&#x6237;&#x7AEF;&#x4E0E; TiDB &#x670D;&#x52A1;&#x7AEF;&#x4E4B;&#x95F4;&#x7684;&#x4E2D;&#x95F4;&#x4EF6;&#x7A0B;&#x5E8F;
+
+###  &#x89E3;&#x51B3;&#x65B9;&#x6848;
+&#x82E5;&#x5176;&#x8FDE;&#x63A5;&#x7A7A;&#x95F2;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x8F83;&#x77ED;&#xFF0C;&#x53EF;&#x5C1D;&#x8BD5;&#x589E;&#x5927;&#x8BE5;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;&#x82E5;&#x4E0D;&#x53EF;&#x4FEE;&#x6539;&#xFF0C;&#x53EF;&#x6253;&#x5F00; TiDB tcp-keep-alive &#x9009;&#x9879;&#xFF0C;&#x542F;&#x7528; TCP keepalive &#x7279;&#x6027;&#x3002;
+
+* &#x5982;&#x679C; Kubernetes &#x96C6;&#x7FA4;&#x5185;&#x7684; [kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/) &#x5141;&#x8BB8;&#x914D;&#x7F6E; --allowed-unsafe-sysctls=net.*&#xFF0C;&#x8BF7;&#x4E3A; kubelet &#x914D;&#x7F6E;&#x8BE5;&#x53C2;&#x6570;&#xFF0C;&#x5E76;&#x6309;&#x5982;&#x4E0B;&#x65B9;&#x5F0F;&#x914D;&#x7F6E; TiDB&#xFF1A;
+</code></pre><p>tidb:
+  ...
+  podSecurityContext:
+    sysctls:</p>
+<pre><code>- name: net.ipv4.tcp_keepalive_time
+  value: &quot;300&quot;
+</code></pre><pre><code>* &#x5982;&#x679C; Kubernetes &#x96C6;&#x7FA4;&#x5185;&#x7684; [kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/) &#x4E0D;&#x5141;&#x8BB8;&#x914D;&#x7F6E; --allowed-unsafe-sysctls=net.*&#xFF0C;&#x8BF7;&#x6309;&#x5982;&#x4E0B;&#x65B9;&#x5F0F;&#x914D;&#x7F6E; TiDB&#xFF1A;
+</code></pre><p>tidb:
+  annotations:
+    tidb.pingcap.com/sysctl-init: &quot;true&quot;
+  podSecurityContext:
+    sysctls:</p>
+<pre><code>- name: net.ipv4.tcp_keepalive_time
+  value: &quot;300&quot;
+</code></pre><p>  ...</p>
+<pre><code>&#x6CE8;&#x610F;&#xFF1A;
+&#x8FDB;&#x884C;&#x4EE5;&#x4E0A;&#x914D;&#x7F6E;&#x8981;&#x6C42; TiDB Operator 1.1 &#x53CA;&#x4EE5;&#x4E0A;&#x7248;&#x672C;&#x3002;
+
+# 3 &#x8BCA;&#x65AD;&#x6A21;&#x5F0F;
+&#x5F53; Pod &#x5904;&#x4E8E; CrashLoopBackoff &#x72B6;&#x6001;&#x65F6;&#xFF0C;Pod &#x5185;&#x5BB9;&#x5668;&#x4F1A;&#x4E0D;&#x65AD;&#x9000;&#x51FA;&#xFF0C;&#x5BFC;&#x81F4;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x4F7F;&#x7528; kubectl exec &#x6216; tkctl debug&#xFF0C;&#x7ED9;&#x8BCA;&#x65AD;&#x5E26;&#x6765;&#x4E0D;&#x4FBF;&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;TiDB in Kubernetes &#x63D0;&#x4F9B;&#x4E86; PD/TiKV/TiDB Pod &#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x3002;&#x5728;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x542F;&#x52A8;&#x540E;&#x4F1A;&#x76F4;&#x63A5;&#x6302;&#x8D77;&#xFF0C;&#x4E0D;&#x4F1A;&#x518D;&#x8FDB;&#x5165;&#x91CD;&#x590D; Crash &#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x4FBF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; kubectl exec &#x6216; tkctl debug &#x8FDE;&#x63A5; Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x8BCA;&#x65AD;&#x3002;
+
+&#x64CD;&#x4F5C;&#x4E4B;&#x524D;&#xFF0C;Pod &#x5904;&#x4E8E;  CrashLoopBackoff &#x72B6;&#x6001;&#xFF1A;
+</code></pre><p>$ kubectl get pods -n tidbcluster1
+NAME                              READY   STATUS             RESTARTS   AGE
+demo-discovery-5c78d6bcd8-5ttcl   1/1     Running            0          20h
+demo-monitor-6ddc6d6674-kcmhh     3/3     Running            0          3d22h
+demo-pd-0                         1/1     Running            0          3d22h
+demo-pd-1                         0/1     CrashLoopBackOff   911        3d22h
+demo-pd-2                         1/1     Running            10         3d22h
+demo-pd-3                         0/1     CrashLoopBackOff   932        3d22h
+demo-pd-4                         1/1     Running            0          3d22h
+demo-pd-5                         1/1     Running            0          3d22h
+demo-tidb-0                       2/2     Running            1          3d22h
+demo-tidb-1                       2/2     Running            0          3d22h
+demo-tikv-0                       1/1     Running            0          3d22h
+demo-tikv-1                       1/1     Running            0          3d22h
+demo-tikv-2                       1/1     Running            0          3d22h
+demo-tikv-3                       1/1     Running            0          3d22h
+demo-tikv-4                       1/1     Running            0          3d22h</p>
+<pre><code>demo-tikv-5                       1/1     Running            0          3d22h
+
+&#x9996;&#x5148;&#xFF0C;&#x4E3A;&#x5F85;&#x8BCA;&#x65AD;&#x7684; Pod &#x6DFB;&#x52A0; Annotation&#xFF1A;
+</code></pre><p>kubectl annotate pod <pod-name> -n <namespace> runmode=debug</namespace></pod-name></p>
+<h1 id="kubectl-annotate-pod--demo-pd-1--n-tidbcluster1-runmodedebug">kubectl annotate pod  demo-pd-1 -n tidbcluster1 runmode=debug</h1>
+<pre><code>&#x5728; Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x4E0B;&#x6B21;&#x91CD;&#x542F;&#x65F6;&#xFF0C;&#x4F1A;&#x68C0;&#x6D4B;&#x5230;&#x8BE5; Annotation&#xFF0C;&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x3002;&#x7B49;&#x5F85; Pod &#x8FDB;&#x5165; Running &#x72B6;&#x6001;&#x5373;&#x53EF;&#x5F00;&#x59CB;&#x8BCA;&#x65AD;&#xFF1A;
+</code></pre><p>watch kubectl get pod <pod-name> -n <namespace></namespace></pod-name></p>
+<h1 id="watch-kubectl-get-pod-demo-pd-1--n-tidbcluster1">watch kubectl get pod demo-pd-1 -n tidbcluster1</h1>
+<pre><code>![&#x56FE;&#x7247;](https://uploader.shimo.im/f/AEoBqBFTZm0geOkK.png!thumbnail)
+
+&#x4E0B;&#x9762;&#x662F;&#x4F7F;&#x7528; kubectl exec &#x8FDB;&#x5165;&#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x8BCA;&#x65AD;&#x5DE5;&#x4F5C;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;
+</code></pre><h1 id="&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x540E;-kubectl-logs-&#x4F1A;&#x63D0;&#x793A;&#x5F53;&#x524D;-pod-&#x5DF2;&#x7ECF;&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;">&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x540E; kubectl logs &#x4F1A;&#x63D0;&#x793A;&#x5F53;&#x524D; pod &#x5DF2;&#x7ECF;&#x8FDB;&#x5165;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;</h1>
+<p>$ kubectl logs demo-pd-1 -n tidbcluster1
+entering debug mode.</p>
+<h1 id="&#x8FDB;&#x5165;-pod-&#x8FDB;&#x884C;&#x8BCA;&#x65AD;">&#x8FDB;&#x5165; pod &#x8FDB;&#x884C;&#x8BCA;&#x65AD;</h1>
+<p>kubectl exec -it <pod-name> -n <namespace> -- /bin/sh</namespace></pod-name></p>
+<h1 id="kubectl-exec--it-demo-pd-1--n-tidbcluster1----binsh">kubectl exec -it demo-pd-1 -n tidbcluster1 -- /bin/sh</h1>
+<pre><code>&#x8BCA;&#x65AD;&#x5B8C;&#x6BD5;&#xFF0C;&#x4FEE;&#x590D;&#x95EE;&#x9898;&#x540E;&#xFF0C;&#x5220;&#x9664; Pod&#xFF1A;
+</code></pre><p>kubectl delete pod <pod-name> -n <namespace></namespace></pod-name></p>
+<h1 id="kubectl-delete-pod-demo-pd-1--n-tidbcluster1">kubectl delete pod demo-pd-1 -n tidbcluster1</h1>
+<pre><code>&#x8F93;&#x51FA;&#x4E3A;&#xFF1A;
+</code></pre><p>pod &quot;demo-pd-1&quot; deleted
+```
+Pod &#x91CD;&#x5EFA;&#x540E;&#x4F1A;&#x81EA;&#x52A8;&#x56DE;&#x5230;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x6A21;&#x5F0F;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2903,7 +3547,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"6 TiDB-Operator Troubleshooting","level":"4.6","depth":1,"next":{"title":"1 适用场景介绍","level":"5.1","depth":1,"path":"session4/chapter1/scenarios.md","ref":"session4/chapter1/scenarios.md","articles":[]},"previous":{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"path":"session3/chapter5/recover-quorum.md","ref":"session3/chapter5/recover-quorum.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter6/tidb-operator-trouble-shooting.md","mtime":"2020-03-08T12:59:26.860Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T13:00:02.557Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"6 TiDB-Operator Troubleshooting","level":"4.6","depth":1,"next":{"title":"1 适用场景介绍","level":"5.1","depth":1,"path":"session4/chapter1/scenarios.md","ref":"session4/chapter1/scenarios.md","articles":[]},"previous":{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"path":"session3/chapter5/recover-quorum.md","ref":"session3/chapter5/recover-quorum.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter6/tidb-operator-trouble-shooting.md","mtime":"2020-03-08T13:00:40.002Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T13:01:17.216Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
