@@ -77,3 +77,31 @@ BR 是 TiDB 专用的备份恢复工具，BR 的备份和恢复速度都远超�
 ### [tidb-binlog](https://github.com/pingcap/tidb-binlog)
 
 tidb-binlog 是 TiDB 的 binlog 搜集工具，TiDB 中执行成功的 SQL 会被 Pump 实时记录，Drainer 会从 Pump 中收集 binlog 并进行归并后同步给下游，Tidb Binlog 组件能够对接 TiDB, MySQL, Kafka，是基于 SQL 的数据备份和同步方案。
+
+## Cloud 相关项目
+
+### [TiDB Operator](https://github.com/pingcap/tidb-operator)
+
+TiDB Operator 是 Kubernetes 上的 TiDB 集群自动运维系统，提供了 TiDB 部署、升级、扩缩容、备份恢复和配置变更的能力。只需要简单定义 TiDB 集群的配置和集群信息，TiDB Operator 就可以把 TiDB 运行在 Kubernetes 上。同时，TiDB Operator 支持私有云和常用的公有云，能够降幅降低 Kubernetes 上 TiDB 的管理成本。
+
+## 测试、部署、文档相关项目
+
+### [Chaos Mesh](https://github.com/pingcap/chaos-mesh)
+
+Chaos Mesh 是 Kubernetes 上原生的混沌测试工具，通过在 Kubernetes 环境中将进程退出，生成网络错误、文件系统错误、内核错误等生产环境中常见或罕见的错误，增强测试的覆盖率，发现传统测试难以出现的问题。Chaos Mesh 是通用的 Chaos 测试方案，可以用于测试所有运行在 Kubernetes 的应用。
+
+### [tipocket](https://github.com/pingcap/tipocket)
+
+tipocket 是使用 Chaos Mesh 对 TiDB 进行混沌测试的实践，同时使用了 TiDB Operator 和 Chaos Mesh，在 Kubernetes 上对 TiDB 和 Chaos 进行编排管理，并运行各种数据库测试用例。
+
+### [TiDB Ansible](https://github.com/pingcap/tidb-ansible)
+
+TiDB Ansible 是 TiDB 在物理机集群生产环境中使用的部署运维工具，能够对集群进行部署、升级、扩缩容、变更配置等操作。
+
+### [docs](https://github.com/pingcap/docs)
+
+docs 是 PingCAP 所有开源项目的文档，可以在 PingCAP 官方进行查阅，地址为：[https://pingcap.com/docs/](https://pingcap.com/docs/)。
+
+### [docs-cn](https://github.com/pingcap/docs-cn)
+
+docs-cn 是 docs 文档的中文版本，可以在 PingCAP 官方进行查阅，地址为：[https://pingcap.com/docs-cn/](https://pingcap.com/docs-cn/)。
