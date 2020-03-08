@@ -6,7 +6,7 @@ TiDB两地三中心架构基于Raft算法，保证集群数据一致性和高可
 
 如下图1所示为集群部署架构图，具体如下：
 * 部署采用主从架构，主集群作为生产集群，承担日常生产服务，从集群同通过binlog异步同步主集群数据库，作为备份数据库使用。
-* 生产集群采用两地三中心，分别为北京IDC1，北京IDC2，西安IDC3；
+* 生产集群采用两地三中心，分别为北京IDC1，北京IDC2，西安IDC3。
 * 生产集群采用5副本模式，其中IDC和IDC2分别放2个副本，IDC3放1个副本；TiKV按机柜打Label，既每个机柜上有一份副本。
 * 从集群与主集群直接通过binlog同步采用消息缓存服务器Kafka完成中间数据存储与传输工作。
 
@@ -27,7 +27,7 @@ TiDB两地三中心架构基于Raft算法，保证集群数据一致性和高可
 北京、西安两地三中心配置详解：
 * 如图2所示，北京有两个机房IDC1和IDC2，机房IDC1中有三套机架RAC1、RAC2、RAC3，机房IDC2有机架RAC4、RAC5；西安机房IDC3有机架RAC6、RAC7，其中机架RAC7上有从集群用于备份的服务器。
 * 如图中RAC1机架所示，TiDB、PD服务部署在同一台服务器上，还有两台TiKV服务器；每台TiKV服务器部署2个TiKV实例，即TiKV服务器上每块PCIe SSD上单独部署一个TiKV实例；RAC2、RAC4、RAC5、RAC6类似。
-* 机架RAC3上安放TiDB-Server及中控+监控服务器。部署TiDB-Server，用于日常管理维护、备份使用。中控+监控服务器上部署TiDB-Ansible、Prometheus，Grafana以及恢复工具；
+* 机架RAC3上安放TiDB-Server及中控+监控服务器。部署TiDB-Server，用于日常管理维护、备份使用。中控+监控服务器上部署TiDB-Ansible、Prometheus，Grafana以及恢复工具。
 * 从集群配置较高，采用混合部署方式，每台服务器上部署2个TiKV实例，其中的3台部署TiDB及PD。
 * 备份服务器上部署Mydumper及Dranier以PB模式输出为增量备份文件。
 
