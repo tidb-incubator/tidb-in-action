@@ -2873,7 +2873,160 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="&#x9650;&#x5236;-sql-&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x548C;&#x6267;&#x884C;&#x65F6;&#x95F4;">&#x9650;&#x5236; SQL &#x5185;&#x5B58;&#x4F7F;&#x7528;&#x548C;&#x6267;&#x884C;&#x65F6;&#x95F4;</h1>
+<p>&#x9650;&#x5236;SQL&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x548C;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x4E3B;&#x8981;&#x662F;&#x4E3A;&#x9650;&#x5236;&#x6D88;&#x8017;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#x591A;&#x7684;SQL&#xFF0C;&#x9632;&#x6B62;&#x67D0;&#x6761;SQL&#x9020;&#x6210;OOM&#x6216;&#x5F71;&#x54CD;&#x5230;&#x96C6;&#x7FA4;&#x7684;&#x6574;&#x4F53;&#x6027;&#x80FD;&#x3002;</p>
+<h2 id="&#x9650;&#x5236;sql&#x5185;&#x5B58;&#x4F7F;&#x7528;">&#x9650;&#x5236;SQL&#x5185;&#x5B58;&#x4F7F;&#x7528;</h2>
+<p>&#x9650;&#x5236;SQL&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x6709;&#x5982;&#x4E0B;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;&#x3002;</p>
+<ol>
+<li>&#x901A;&#x8FC7;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x53C2;&#x6570;&#x4FEE;&#x6539;</li>
+<li><code>oom-action</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;&quot;log&quot;</li>
+<li>&#x5F53; TiDB &#x4E2D;&#x5355;&#x6761; SQL &#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x8D85;&#x51FA; <code>mem-quota-query</code> &#x9650;&#x5236;&#x4E14;&#x4E0D;&#x80FD;&#x518D;&#x5229;&#x7528;&#x4E34;&#x65F6;&#x78C1;&#x76D8;&#x65F6;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+<li>&#x76EE;&#x524D;&#x5408;&#x6CD5;&#x7684;&#x9009;&#x9879;&#x4E3A; [&quot;log&quot;, &quot;cancel&quot;]&#x3002;</li>
+<li>&#x5982;&#x679C;&#x914D;&#x7F6E;&#x9879;&#x4F7F;&#x7528;&#x7684;&#x662F; &quot;log&quot;&#xFF0C;&#x90A3;&#x4E48;&#x5F53;&#x4E00;&#x6761; SQL &#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x8D85;&#x8FC7;&#x4E00;&#x5B9A;&#x9608;&#x503C;&#x540E;&#xFF0C;TiDB &#x4F1A;&#x5728; log &#x6587;&#x4EF6;&#x4E2D;&#x6253;&#x5370;&#x4E00;&#x6761; LOG&#xFF0C;&#x7136;&#x540E;&#x8FD9;&#x6761; SQL &#x7EE7;&#x7EED;&#x6267;&#x884C;&#xFF0C;&#x4E4B;&#x540E;&#x5982;&#x679C;&#x53D1;&#x751F;&#x4E86; OOM &#x53EF;&#x4EE5;&#x5728; LOG &#x4E2D;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684; SQL&#x3002;</li>
+<li>&#x5982;&#x679C;&#x4E0A;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x9879;&#x4F7F;&#x7528;&#x7684;&#x662F; &quot;cancel&quot;&#xFF0C;&#x90A3;&#x4E48;&#x5F53;&#x4E00;&#x6761; SQL &#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x8D85;&#x8FC7;&#x4E00;&#x5B9A;&#x9608;&#x503C;&#x540E;&#xFF0C;TiDB &#x4F1A;&#x7ACB;&#x5373;&#x4E2D;&#x65AD;&#x8FD9;&#x6761; SQL &#x7684;&#x6267;&#x884C;&#x5E76;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; error&#xFF0C;error &#x4FE1;&#x606F;&#x4E2D;&#x4F1A;&#x8BE6;&#x7EC6;&#x5199;&#x660E;&#x8FD9;&#x6761; SQL &#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x5404;&#x4E2A;&#x5360;&#x7528;&#x5185;&#x5B58;&#x6BD4;&#x8F83;&#x591A;&#x7684;&#x7269;&#x7406;&#x6267;&#x884C;&#x7B97;&#x5B50;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x60C5;&#x51B5;&#x3002;</li>
+</ul>
+</li>
+<li><code>mem-quota-query</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;34359738368&#xFF08;32GB&#xFF09;</li>
+<li>&#x5355;&#x6761; SQL &#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x5360;&#x7528;&#x7684;&#x6700;&#x5927;&#x5185;&#x5B58;&#x9608;&#x503C;&#x3002;</li>
+<li>&#x8D85;&#x8FC7;&#x8BE5;&#x503C;&#x7684;&#x8BF7;&#x6C42;&#x4F1A;&#x88AB; <code>oom-action</code> &#x5B9A;&#x4E49;&#x7684;&#x884C;&#x4E3A;&#x6240;&#x5904;&#x7406;&#x3002;</li>
+</ul>
+</li>
+<li><code>oom-use-tmp-storage</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;true</li>
+<li>&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5728;&#x5355;&#x6761; SQL &#x8BED;&#x53E5;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x8D85;&#x51FA; <code>mem-quota-query</code> &#x9650;&#x5236;&#x65F6;&#x4E3A;&#x67D0;&#x4E9B;&#x7B97;&#x5B50;&#x542F;&#x7528;&#x4E34;&#x65F6;&#x78C1;&#x76D8;&#x3002;</li>
+</ul>
+</li>
+<li><p><code>tmp-storage-path</code></p>
+<ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;&lt;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E34;&#x65F6;&#x6587;&#x4EF6;&#x5939;&gt;/tidb/tmp-storage</li>
+<li>&#x5355;&#x6761; SQL &#x8BED;&#x53E5;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x8D85;&#x51FA; <code>mem-quota-query</code> &#x9650;&#x5236;&#x65F6;&#xFF0C;&#x67D0;&#x4E9B;&#x7B97;&#x5B50;&#x7684;&#x4E34;&#x65F6;&#x78C1;&#x76D8;&#x5B58;&#x50A8;&#x4F4D;&#x7F6E;&#x3002;</li>
+<li>&#x6B64;&#x914D;&#x7F6E;&#x4EC5;&#x5728; <code>oom-use-tmp-storage</code> &#x4E3A; true &#x65F6;&#x6709;&#x6548;&#x3002;</li>
+</ul>
+</li>
+<li><p>&#x4FEE;&#x6539;session&#x7EA7;&#x53D8;&#x91CF;</p>
+</li>
+<li><code>tidb_mem_quota_query</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;32 GB</li>
+<li>&#x8BBE;&#x7F6E;&#x4E00;&#x6761;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x3002; &#x5982;&#x679C;&#x4E00;&#x6761;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8D85;&#x8FC7;&#x8BE5;&#x9608;&#x503C;&#xFF0C;&#x4F1A;&#x89E6;&#x53D1; TiDB &#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; <code>OOMAction</code> &#x9879;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ul>
+</li>
+<li><code>tidb_mem_quota_hashjoin</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;32 GB</li>
+<li>&#x8BBE;&#x7F6E; <code>HashJoin</code> &#x7B97;&#x5B50;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x3002; &#x5982;&#x679C; <code>HashJoin</code> &#x7B97;&#x5B50;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8D85;&#x8FC7;&#x8BE5;&#x9608;&#x503C;&#xFF0C;&#x4F1A;&#x89E6;&#x53D1; TiDB &#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; <code>OOMAction</code> &#x9879;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ul>
+</li>
+<li><code>tidb_mem_quota_mergejoin</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;32 GB</li>
+<li>&#x8BBE;&#x7F6E; <code>MergeJoin</code> &#x7B97;&#x5B50;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x3002; &#x5982;&#x679C; <code>MergeJoin</code> &#x7B97;&#x5B50;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8D85;&#x8FC7;&#x8BE5;&#x9608;&#x503C;&#xFF0C;&#x4F1A;&#x89E6;&#x53D1; TiDB &#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; <code>OOMAction</code> &#x9879;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ul>
+</li>
+<li><code>tidb_mem_quota_sort</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;32 GB</li>
+<li>&#x8BBE;&#x7F6E; Sort &#x7B97;&#x5B50;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x3002; &#x5982;&#x679C; <code>Sort</code> &#x7B97;&#x5B50;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8D85;&#x8FC7;&#x8BE5;&#x9608;&#x503C;&#xFF0C;&#x4F1A;&#x89E6;&#x53D1; TiDB &#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; <code>OOMAction</code> &#x9879;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ul>
+</li>
+<li><code>tidb_mem_quota_topn</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;32 GB</li>
+<li>&#x8BBE;&#x7F6E; TopN &#x7B97;&#x5B50;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x3002; &#x5982;&#x679C; <code>TopN</code> &#x7B97;&#x5B50;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8D85;&#x8FC7;&#x8BE5;&#x9608;&#x503C;&#xFF0C;&#x4F1A;&#x89E6;&#x53D1; TiDB &#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; <code>OOMAction</code> &#x9879;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ul>
+</li>
+<li><code>tidb_mem_quota_indexlookupreader</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;32 GB</li>
+<li>&#x8BBE;&#x7F6E; <code>IndexLookupReader</code> &#x7B97;&#x5B50;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x3002;&#x5982;&#x679C; <code>IndexLookupReader</code> &#x7B97;&#x5B50;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8D85;&#x8FC7;&#x8BE5;&#x9608;&#x503C;&#xFF0C;&#x4F1A;&#x89E6;&#x53D1; TiDB &#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; <code>OOMAction</code> &#x9879;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ul>
+</li>
+<li><code>tidb_mem_quota_indexlookupjoin</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;32 GB</li>
+<li>&#x8BBE;&#x7F6E; <code>IndexLookupJoin</code> &#x7B97;&#x5B50;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x3002; &#x5982;&#x679C; <code>IndexLookupJoin</code> &#x7B97;&#x5B50;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8D85;&#x8FC7;&#x8BE5;&#x9608;&#x503C;&#xFF0C;&#x4F1A;&#x89E6;&#x53D1; TiDB &#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; <code>OOMAction</code> &#x9879;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ul>
+</li>
+<li><code>tidb_mem_quota_nestedloopapply</code><ul>
+<li>&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;32 GB</li>
+<li>&#x8BBE;&#x7F6E; <code>NestedLoopApply</code> &#x7B97;&#x5B50;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x3002; &#x5982;&#x679C; <code>NestedLoopApply</code> &#x7B97;&#x5B50;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x8D85;&#x8FC7;&#x8BE5;&#x9608;&#x503C;&#xFF0C;&#x4F1A;&#x89E6;&#x53D1; TiDB &#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; <code>OOMAction</code> &#x9879;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ul>
+</li>
+</ol>
+<p>&#x793A;&#x4F8B;&#xFF1A;<br>&#x914D;&#x7F6E;&#x6574;&#x6761; SQL &#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x4E3A; 8GB&#xFF1A;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">set</span> @@tidb_mem_quota_query = <span class="hljs-number">8</span> &lt;&lt; <span class="hljs-number">30</span>;
+</code></pre>
+<p>&#x914D;&#x7F6E;&#x6574;&#x6761; SQL &#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x4E3A; 8MB&#xFF1A;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">set</span> @@tidb_mem_quota_query = <span class="hljs-number">8</span> &lt;&lt; <span class="hljs-number">20</span>;
+</code></pre>
+<ol>
+<li>&#x4F7F;&#x7528; Optimizer Hints</li>
+<li><code>memory_quota</code><ul>
+<li>Hint &#x652F;&#x6301; MB &#x548C; GB &#x4E24;&#x79CD;&#x5355;&#x4F4D;&#x3002;</li>
+<li>&#x9650;&#x5236;&#x67E5;&#x8BE2;&#x6267;&#x884C;&#x65F6;&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#xFF0C;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x8D85;&#x8FC7;&#x8BE5;&#x9650;&#x5236;&#x65F6;&#x4F1A;&#x6839;&#x636E;&#x5F53;&#x524D;&#x8BBE;&#x7F6E;&#x7684;&#x5185;&#x5B58;&#x8D85;&#x9650;&#x884C;&#x4E3A;&#x6765;&#x6253;&#x51FA;&#x4E00;&#x6761; log &#x6216;&#x8005;&#x7EC8;&#x6B62;&#x8BED;&#x53E5;&#x7684;&#x6267;&#x884C;&#x3002;</li>
+</ul>
+</li>
+</ol>
+<p>&#x793A;&#x4F8B;&#xFF1A;<br>&#x9650;&#x5236;SQL&#x6267;&#x884C;&#x7684;&#x5185;&#x5B58;&#x4E3A;1024 MB&#xFF1A;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">select</span> <span class="hljs-comment">/*+ MEMORY_QUOTA(1024 MB) */</span> * <span class="hljs-keyword">from</span> t;
+</code></pre>
+<h2 id="&#x9650;&#x5236;sql&#x6267;&#x884C;&#x65F6;&#x95F4;">&#x9650;&#x5236;SQL&#x6267;&#x884C;&#x65F6;&#x95F4;</h2>
+<ol>
+<li>&#x4FEE;&#x6539;session/global&#x53D8;&#x91CF;</li>
+<li><code>max_execution_time</code><ul>
+<li>&#x5355;&#x4F4D;&#x4E3A;&#xFF1A;ms</li>
+<li>&#x76EE;&#x524D;&#x5BF9;&#x6240;&#x6709;&#x7C7B;&#x578B;&#x7684; statement &#x751F;&#x6548;&#xFF0C;&#x5E76;&#x975E;&#x53EA;&#x5BF9; SELECT &#x8BED;&#x53E5;&#x751F;&#x6548;&#x3002;&#x5B9E;&#x9645;&#x7CBE;&#x5EA6;&#x5728; 100ms &#x7EA7;&#x522B;&#xFF0C;&#x800C;&#x975E;&#x66F4;&#x51C6;&#x786E;&#x7684;&#x6BEB;&#x79D2;&#x7EA7;&#x522B;&#x3002;</li>
+</ul>
+</li>
+</ol>
+<p>&#x793A;&#x4F8B;&#xFF1A;<br>&#x8BBE;&#x7F6E;&#x6700;&#x5927;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x4E3A;10&#x79D2;&#x3002;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">set</span> @@<span class="hljs-keyword">global</span>.MAX_EXECUTION_TIME=<span class="hljs-number">10000</span>
+</code></pre>
+<ol>
+<li>&#x4F7F;&#x7528; Optimizer Hints</li>
+<li><code>max_execution_time</code><ul>
+<li>&#x5355;&#x4F4D;&#x4E3A;&#xFF1A;ms</li>
+<li>&#x628A;&#x67E5;&#x8BE2;&#x7684;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x9650;&#x5236;&#x5728;&#x6307;&#x5B9A;&#x7684; N &#x6BEB;&#x79D2;&#x4EE5;&#x5185;&#xFF0C;&#x8D85;&#x65F6;&#x540E;&#x670D;&#x52A1;&#x5668;&#x4F1A;&#x7EC8;&#x6B62;&#x8FD9;&#x6761;&#x8BED;&#x53E5;&#x7684;&#x6267;&#x884C;&#x3002;</li>
+</ul>
+</li>
+</ol>
+<p>&#x793A;&#x4F8B;&#xFF1A;<br>&#x8BBE;&#x7F6E;SQL&#x6267;&#x884C;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x4E3A;1000 &#x6BEB;&#x79D2;&#xFF08;&#x5373; 1 &#x79D2;&#xFF09;&#x3002;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">select</span> <span class="hljs-comment">/*+ MAX_EXECUTION_TIME(1000) */</span> * <span class="hljs-keyword">from</span> t1 <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> t2 <span class="hljs-keyword">where</span> t1.<span class="hljs-keyword">id</span> = t2.<span class="hljs-keyword">id</span>;
+</code></pre>
+<h2 id="&#x5B9A;&#x4F4D;&#x6D88;&#x8017;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#x591A;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;">&#x5B9A;&#x4F4D;&#x6D88;&#x8017;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#x591A;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;</h2>
+<p>&#x4E0A;&#x9762;&#x4ECB;&#x7ECD;&#x4E86;&#x5982;&#x4F55;&#x9650;&#x5236;SQL&#x7684;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x548C;&#x6267;&#x884C;&#x65F6;&#x95F4;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x6761;&#x8BED;&#x53E5;&#x5728;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x8FBE;&#x5230;&#x6216;&#x8D85;&#x8FC7;&#x8D44;&#x6E90;&#x4F7F;&#x7528;&#x9608;&#x503C;&#x65F6;&#xFF08;&#x6267;&#x884C;&#x65F6;&#x95F4;/&#x4F7F;&#x7528;&#x5185;&#x5B58;&#x91CF;&#xFF09;&#x5219;&#x4F1A;&#x5373;&#x65F6;&#x5C06;&#x8FD9;&#x6761;&#x8BED;&#x53E5;&#x5199;&#x5165;&#x5230;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF08;&#x9ED8;&#x8BA4;&#x6587;&#x4EF6;&#x4E3A;&#xFF1A;<code>tidb.log</code>&#xFF09;&#xFF0C;&#x7528;&#x4E8E;&#x5728;&#x8BED;&#x53E5;&#x6267;&#x884C;&#x7ED3;&#x675F;&#x524D;&#x5B9A;&#x4F4D;&#x6D88;&#x8017;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#x591A;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#xFF0C;&#x5E2E;&#x52A9;&#x7528;&#x6237;&#x5206;&#x6790;&#x548C;&#x89E3;&#x51B3;&#x8BED;&#x53E5;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x95EE;&#x9898;&#x3002;&#x4EE5;&#x4E0B;&#x662F;&#x4E00;&#x6761; Expensive query &#x65E5;&#x5FD7;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code>[2020/02/05 15:32:25.096 +08:00] [WARN] [expensivequery.go:167] [expensive_query] [cost_time=60.008338935s] [wait_time=0s] [request_count=1] [total_keys=70] [process_keys=65] [num_cop_tasks=1] [process_avg_time=0s] [process_p90_time=0s] [process_max_time=0s] [process_max_addr=10.0.1.9:20160] [wait_avg_time=0.002s] [wait_p90_time=0.002s] [wait_max_time=0.002s] [wait_max_addr=10.0.1.9:20160] [stats=t:pseudo] [conn_id=60026] [user=root] [database=test] [table_ids=&quot;[122]&quot;] [txn_start_ts=414420273735139329] [mem_max=&quot;1035 Bytes (1.0107421875 KB)&quot;] [sql=&quot;insert into t select sleep(1) from t&quot;]
+</code></pre><p>&#x5404;&#x5B57;&#x6BB5;&#x7684;&#x542B;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>&#x57FA;&#x672C;&#x5B57;&#x6BB5;</p>
+<ul>
+<li><code>cost_time</code>&#xFF1A;&#x65E5;&#x5FD7;&#x6253;&#x5370;&#x65F6;&#x8BED;&#x53E5;&#x5DF2;&#x7ECF;&#x82B1;&#x8D39;&#x7684;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>stats</code>&#xFF1A;&#x8BED;&#x53E5;&#x6D89;&#x53CA;&#x5230;&#x7684;&#x8868;&#x6216;&#x7D22;&#x5F15;&#x4F7F;&#x7528;&#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x7248;&#x672C;&#x3002;&#x503C;&#x4E3A; pesudo &#x65F6;&#x8868;&#x793A;&#x65E0;&#x53EF;&#x7528;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x8868;&#x6216;&#x7D22;&#x5F15;&#x8FDB;&#x884C; analyze&#x3002;</li>
+<li><code>table_ids</code>&#xFF1A;&#x8BED;&#x53E5;&#x6D89;&#x53CA;&#x5230;&#x7684;&#x8868;&#x7684; ID&#x3002;</li>
+<li><code>txn_start_ts</code>&#xFF1A;&#x4E8B;&#x52A1;&#x7684;&#x5F00;&#x59CB;&#x65F6;&#x95F4;&#x6233;&#xFF0C;&#x4E5F;&#x662F;&#x4E8B;&#x52A1;&#x7684;&#x552F;&#x4E00; ID&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x8FD9;&#x4E2A;&#x503C;&#x5728; TiDB &#x65E5;&#x5FD7;&#x4E2D;&#x67E5;&#x627E;&#x4E8B;&#x52A1;&#x76F8;&#x5173;&#x7684;&#x5176;&#x4ED6;&#x65E5;&#x5FD7;&#x3002;</li>
+<li><code>sql</code>&#xFF1A;SQL &#x8BED;&#x53E5;&#x3002;</li>
+</ul>
+<p>&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x76F8;&#x5173;&#x5B57;&#x6BB5;</p>
+<ul>
+<li><code>mem_max</code>&#xFF1A;&#x65E5;&#x5FD7;&#x6253;&#x5370;&#x65F6;&#x8BED;&#x53E5;&#x5DF2;&#x7ECF;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x3002;&#x8BE5;&#x9879;&#x4F7F;&#x7528;&#x4E24;&#x79CD;&#x5355;&#x4F4D;&#x6807;&#x8BC6;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x91CF;&#xFF0C;&#x5206;&#x522B;&#x4E3A; Bytes &#x4EE5;&#x53CA;&#x6613;&#x4E8E;&#x9605;&#x8BFB;&#x7684;&#x81EA;&#x9002;&#x5E94;&#x5355;&#x4F4D;&#xFF08;&#x6BD4;&#x5982; MB&#x3001;GB &#x7B49;&#xFF09;&#x3002;</li>
+</ul>
+<p>&#x7528;&#x6237;&#x76F8;&#x5173;&#x5B57;&#x6BB5;</p>
+<ul>
+<li><code>user</code>&#xFF1A;&#x6267;&#x884C;&#x8BED;&#x53E5;&#x7684;&#x7528;&#x6237;&#x540D;&#x3002;</li>
+<li><code>conn_id</code>&#xFF1A;&#x7528;&#x6237;&#x7684;&#x8FDE;&#x63A5; ID&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x7C7B;&#x4F3C; con:60026 &#x7684;&#x5173;&#x952E;&#x5B57;&#x5728; TiDB &#x65E5;&#x5FD7;&#x4E2D;&#x67E5;&#x627E;&#x8BE5;&#x8FDE;&#x63A5;&#x76F8;&#x5173;&#x7684;&#x5176;&#x4ED6;&#x65E5;&#x5FD7;&#x3002;</li>
+<li><code>database</code>&#xFF1A;&#x6267;&#x884C;&#x8BED;&#x53E5;&#x65F6;&#x4F7F;&#x7528;&#x7684; database&#x3002;</li>
+</ul>
+<p>TiKV Coprocessor Task &#x76F8;&#x5173;&#x5B57;&#x6BB5;</p>
+<ul>
+<li><code>wait_time</code>&#xFF1A;&#x8BE5;&#x8BED;&#x53E5;&#x5728; TiKV &#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x4E4B;&#x548C;&#xFF0C;&#x56E0;&#x4E3A; TiKV &#x7684; Coprocessor &#x7EBF;&#x7A0B;&#x6570;&#x662F;&#x6709;&#x9650;&#x7684;&#xFF0C;&#x5F53;&#x6240;&#x6709;&#x7684; Coprocessor &#x7EBF;&#x7A0B;&#x90FD;&#x5728;&#x5DE5;&#x4F5C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BF7;&#x6C42;&#x4F1A;&#x6392;&#x961F;&#xFF1B;&#x5F53;&#x961F;&#x5217;&#x4E2D;&#x6709;&#x67D0;&#x4E9B;&#x8BF7;&#x6C42;&#x8017;&#x65F6;&#x5F88;&#x957F;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x540E;&#x9762;&#x7684;&#x8BF7;&#x6C42;&#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x90FD;&#x4F1A;&#x589E;&#x52A0;&#x3002;</li>
+<li><code>request_count</code>&#xFF1A;&#x8BE5;&#x8BED;&#x53E5;&#x53D1;&#x9001;&#x7684; Coprocessor &#x8BF7;&#x6C42;&#x7684;&#x6570;&#x91CF;&#x3002;</li>
+<li><code>total_keys</code>&#xFF1A;Coprocessor &#x626B;&#x8FC7;&#x7684; key &#x7684;&#x6570;&#x91CF;&#x3002;</li>
+<li><code>processed_keys</code>&#xFF1A;Coprocessor &#x5904;&#x7406;&#x7684; key &#x7684;&#x6570;&#x91CF;&#x3002;&#x4E0E; <code>total_keys</code> &#x76F8;&#x6BD4;&#xFF0C;<code>processed_keys</code> &#x4E0D;&#x5305;&#x542B; MVCC &#x7684;&#x65E7;&#x7248;&#x672C;&#x3002;&#x5982;&#x679C; processed_keys &#x548C; total_keys &#x76F8;&#x5DEE;&#x5F88;&#x5927;&#xFF0C;&#x8BF4;&#x660E;&#x65E7;&#x7248;&#x672C;&#x6BD4;&#x8F83;&#x591A;&#x3002;</li>
+<li><code>num_cop_tasks</code>&#xFF1A;&#x8BE5;&#x8BED;&#x53E5;&#x53D1;&#x9001;&#x7684; Coprocessor &#x8BF7;&#x6C42;&#x7684;&#x6570;&#x91CF;&#x3002;</li>
+<li><code>process_avg_time</code>&#xFF1A;Coprocessor &#x6267;&#x884C; task &#x7684;&#x5E73;&#x5747;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>process_p90_time</code>&#xFF1A;Coprocessor &#x6267;&#x884C; task &#x7684; P90 &#x5206;&#x4F4D;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>process_max_time</code>&#xFF1A;Coprocessor &#x6267;&#x884C; task &#x7684;&#x6700;&#x957F;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>process_max_addr</code>&#xFF1A;task &#x6267;&#x884C;&#x65F6;&#x95F4;&#x6700;&#x957F;&#x7684; Coprocessor &#x6240;&#x5728;&#x5730;&#x5740;&#x3002;</li>
+<li><code>wait_avg_time</code>&#xFF1A;Coprocessor &#x4E0A; task &#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>wait_p90_time</code>&#xFF1A;Coprocessor &#x4E0A; task &#x7684; P90 &#x5206;&#x4F4D;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>wait_max_time</code>&#xFF1A;Coprocessor &#x4E0A; task &#x7684;&#x6700;&#x957F;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>wait_max_addr</code>&#xFF1A;task &#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x6700;&#x957F;&#x7684; Coprocessor &#x6240;&#x5728;&#x5730;&#x5740;&#x3002;</li>
+</ul>
+
                                 
                                 </section>
                             
@@ -2916,7 +3069,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.5 限制 SQL 内存使用和执行时间","level":"4.1.5","depth":2,"next":{"title":"2 TiDB Dashboard","level":"4.2","depth":1,"path":"session3/chapter2/tidb-dashboard-intro.md","ref":"session3/chapter2/tidb-dashboard-intro.md","articles":[{"title":"2.1 识别集群热点和业务模式","level":"4.2.1","depth":2,"path":"session3/chapter2/key-vis.md","ref":"session3/chapter2/key-vis.md","articles":[]},{"title":"2.2 分析 SQL 执行性能","level":"4.2.2","depth":2,"path":"session3/chapter2/statements.md","ref":"session3/chapter2/statements.md","articles":[]},{"title":"2.3 生成集群诊断报告","level":"4.2.3","depth":2,"path":"session3/chapter2/diagnosis-report.md","ref":"session3/chapter2/diagnosis-report.md","articles":[]},{"title":"2.4 日志搜索和导出","level":"4.2.4","depth":2,"path":"session3/chapter2/log-export.md","ref":"session3/chapter2/log-export.md","articles":[]},{"title":"2.5 分析组件 CPU 消耗情况","level":"4.2.5","depth":2,"path":"session3/chapter2/profiling.md","ref":"session3/chapter2/profiling.md","articles":[]}]},"previous":{"title":"1.4 参数调优指南","level":"4.1.4","depth":2,"path":"session3/chapter1/parameter-tuning.md","ref":"session3/chapter1/parameter-tuning.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter1/memory-quota-execution-time-limit.md","mtime":"2020-03-08T08:32:26.041Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T08:33:03.232Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.5 限制 SQL 内存使用和执行时间","level":"4.1.5","depth":2,"next":{"title":"2 TiDB Dashboard","level":"4.2","depth":1,"path":"session3/chapter2/tidb-dashboard-intro.md","ref":"session3/chapter2/tidb-dashboard-intro.md","articles":[{"title":"2.1 识别集群热点和业务模式","level":"4.2.1","depth":2,"path":"session3/chapter2/key-vis.md","ref":"session3/chapter2/key-vis.md","articles":[]},{"title":"2.2 分析 SQL 执行性能","level":"4.2.2","depth":2,"path":"session3/chapter2/statements.md","ref":"session3/chapter2/statements.md","articles":[]},{"title":"2.3 生成集群诊断报告","level":"4.2.3","depth":2,"path":"session3/chapter2/diagnosis-report.md","ref":"session3/chapter2/diagnosis-report.md","articles":[]},{"title":"2.4 日志搜索和导出","level":"4.2.4","depth":2,"path":"session3/chapter2/log-export.md","ref":"session3/chapter2/log-export.md","articles":[]},{"title":"2.5 分析组件 CPU 消耗情况","level":"4.2.5","depth":2,"path":"session3/chapter2/profiling.md","ref":"session3/chapter2/profiling.md","articles":[]}]},"previous":{"title":"1.4 参数调优指南","level":"4.1.4","depth":2,"path":"session3/chapter1/parameter-tuning.md","ref":"session3/chapter1/parameter-tuning.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter1/memory-quota-execution-time-limit.md","mtime":"2020-03-08T08:45:27.769Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T08:46:03.920Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
