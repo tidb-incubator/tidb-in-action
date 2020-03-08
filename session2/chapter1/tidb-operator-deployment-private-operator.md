@@ -5,7 +5,7 @@
 
 ### 一、通过 helm 安装 TiDB Operator
 
-创建 TiDB CRD
+创建 TiDB CRD：
 
 ```
 
@@ -23,7 +23,7 @@
 
 ```
 
-下载 TiDB Operator 的 helm chart 文件
+下载 TiDB Operator 的 helm chart 文件：
 
 ```
 

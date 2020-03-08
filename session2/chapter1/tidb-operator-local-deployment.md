@@ -63,7 +63,7 @@ To start using your cluster, run:
 
 ```
 
-输出以上信息，则说明 K8s 服务符合要求
+输出以上信息，则说明 K8s 服务符合要求。
 
 ```
 
@@ -96,7 +96,7 @@ To start using your cluster, run:
 
 ```
 
-下载 TiDB Operator 的 helm chart 文件
+下载 TiDB Operator 的 helm chart 文件：
 
 ```
     # mkdir -p /root/chart/
@@ -182,7 +182,7 @@ To start using your cluster, run:
 
 ```
 
-以上信息显示 TiDB Cluster 所有 Pod 全部运行正常
+以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
 ### 四、访问 TiDB 集群
 
@@ -201,4 +201,4 @@ To start using your cluster, run:
 
 ```
 
-显示以上输出显示 TiDB 集群部署成功
+显示以上输出显示 TiDB 集群部署成功。
