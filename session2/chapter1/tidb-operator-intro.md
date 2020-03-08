@@ -20,7 +20,7 @@
 
 > TiDB Operator 是 Kubernetes 上的 TiDB 集群自动运维系统，提供包括部署、升级、扩缩容、备份恢复、配置变更的 TiDB 全生命周期管理。借助 TiDB Operator，TiDB 可以无缝运行在公有云或私有部署的 Kubernetes 集群上。
 >
-> ​																															——来自 PingCAP 官方定义
+> ​																															——来自Pingcap官方定义
 
 TiDB Operator 像“牧羊人”一样，持续的监督并管理着 TiDB 各组件“羊群”以恰当的状态运行在主机集群“牧场”上。现在运维人员只要告诉 Operator “What  to do“，而由 Operator来决定 “How to do”。在最新版本 TiDB Operator 甚至可以根据实际情况来决定 "What to do"，比如：auto-scaler。真正实现了自动化运维，减轻运维人员维护压力，提高服务能力。
 
