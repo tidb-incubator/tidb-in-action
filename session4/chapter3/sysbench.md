@@ -150,7 +150,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --tabl
 | point_select   | 2048   | 663217.00   | 663217.00   | 0.29   | 3.08   | 8.90   | 330.19   |
 | point_select   | 4096   | 736094.00   | 736094.00   | 0.33   | 5.55   | 15.00   | 431.72   |
 
-![图片](img/image.png__thumbnail)
+![图片](/res/session4/chapter3/sysbench/oltp_point_select.png)
 
 * read_only
 | type   | **thread**   | **tps**   | **qps**   | **min latency**   | **avg latency**   | **95th latency**   | **max latency**   |
@@ -162,7 +162,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --tabl
 | read_only   | 1024   | 17691.40   | 283063.00   | 10.87   | 57.73   | 87.56   | 378.12   |
 | read_only   | 2048   | 19086.60   | 305386.00   | 7.68   | 107.12   | 164.45   | 710.91   |
 
-![图片](img/image-1583642658470.png__thumbnail)
+![图片](/res/session4/chapter3/sysbench/oltp_read_only.png)
 
 * oltp_update_index
 | type   | **thread**   | **tps**   | **qps**   | **min latency**   | **avg latency**   | **95th latency**   | **max latency**   |
@@ -174,7 +174,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --tabl
 | update_index   | 1024   | 40731.20   | 40731.20   | 1.74   | 25.12   | 52.89   | 7395.50   |
 | update_index   | 2048   | 44423.50   | 44423.50   | 1.77   | 46.04   | 99.33   | 5563.36   |
 
-![图片](img/image-1583642662869.png__thumbnail)
+![图片](/res/session4/chapter3/sysbench/oltp_update_index.png)
 
 * write_only
 | type   | **thread**   | **tps**   | **qps**   | **min latency**   | **avg latency**   | **95th latency**   | **max latency**   |
@@ -186,7 +186,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --tabl
 | write_only   | 1024   | 14761.20   | 88567.40   | 3.30   | 68.39   | 118.92   | 5426.65   |
 | write_only   | 2048   | 16825.20   | 100951.00   | 3.25   | 121.50   | 223.34   | 5551.31   |
 
-![图片](img/image-1583644405472.png__thumbnail)
+![图片](/res/session4/chapter3/sysbench/oltp_write_only.png)
 
 * read_write
 | type   | **thread**   | **tps**   | **qps**   | **min latency**   | **avg latency**   | **95th latency**   | **max latency**   |
@@ -198,7 +198,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --tabl
 | read_write   | 1024   | 7260.19   | 145204.00   | 13.25   | 140.67   | 196.89   | 5767.52   |
 | read_write   | 2048   | 8228.84   | 164577.00   | 13.96   | 248.19   | 376.49   | 5475.98   |
 
-![图片](img/image-1583644409615.png__thumbnail)
+![图片](/res/session4/chapter3/sysbench/oltp_read_write.png)
 
 # 总结
 由于 TiDB 与 MySQL 由于架构上差别非常大，很多方面是很难找到一个基准点，大家不要用过多精力纠结这类基准测试上，应该更多关注 TiDB 的应用场景上的区别。MySQL 读扩容可以通过添加从库进行扩展，但单节点写入不具备写入扩展能力只能通过分库分表，而分库分表会增加开发维护方面复杂度。TiDB 不管是读流量还是写流量都可以通过添加节点快速方便的进行扩展。TiDB 设计的目标就是针对 MySQL 单台容量限制而被迫做的分库分表的场景，或者需要强一致性和完整分布式事务的场景。它的优势是通过尽量下推到存储节点进行并行计算。对于小表（比如千万级以下）不适合 TiDB，因为数据量少Region 有限，发挥不了并行的优势，最极端的就是计数器表几行记录高频更新，会变成存储引擎上的几个 KV，然后只落在一个 Region 里，而这个 Region 只落在一个节点，加上后台强一致性复制的开销，以及TiDB 引擎到 TiKV 引擎的开销，最后表现出来的就是没有单个 MySQL 好。
