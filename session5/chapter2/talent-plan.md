@@ -14,28 +14,28 @@ Talent Plan 是为社区提供的学习资料，也在社区的建议和反馈�
 
 ### 线上课程
 
-线上课程包括 4 个课程系列，分别是：Open Source Collaboration 课程系列、Programming Language 课程系列、Infrastructure Systems 课程系列、Deep Dive into TiDB Ecosystem 课程系列。
+线上课程包括 4 个课程系列，分别是：[Open Source Collaboration 课程系列](#series-1-open-source-collaboration)、[Programming Language 课程系列](#series-2-programming-language)、[Infrastructure Systems 课程系列](#series-3-infrastructure-systems)、[Deep Dive into TiDB Ecosystem 课程系列](#series-4-deep-dive-into-tidb-ecosystem)。
 
 每个课程系列中会有相关的课程供大家选择，课程之间是相互解耦的，大家可以结合自己需求自由规划学习路径。
 
-#### Open Source Collaboration 课程系列
+#### Series 1: Open Source Collaboration(WIP)
 
 这是专门为零基础开源爱好者准备的全新课程系列，我们希望通过这个系列课程的学习，即使是技术小白也能快速了解开源是什么、不同开源软件许可协议的差异、知名开源基金会（Linux、Apache、CNCF 等）的运作方式以及开源社区运营的基础知识，快速掌握参与开源项目的小技巧。
 
 这个课程系列目前仍在小范围测试阶段，如果你对于这个课程感兴趣，欢迎通过 [参与通道](#如何参与-talent-plan) 与我们取得联系。
 
-#### Programming Language 课程系列
+#### Series 2: Programming Language
 
 这个课程系列中将逐步对当下常用的编程语言学习课程进行整合，包括但不限于 Go、Rust、C++、Python 等。
 
 需要特别介绍的是由 Rust 核心作者 Brian Anderson 精心设计的 Rust 学习课程—— [Practical Networked Applications in Rust](https://github.com/pingcap/talent-plan/tree/master/rust)，通过这部分课程的学习，你将能够独立创建一个基于 Rust 语言的 Key-Value 数据库。
 
-#### Infrastructure Systems 课程系列
+#### Series 3: Infrastructure Systems
 
 这个课程系列专为基础设施爱好者设计，其中包括：
 
-* 用 Go 语言全新设计的分布式关系型数据库（[TinySQL](https://github.com/pingcap-incubator/tinysql)）课程
-* 用 Go 语言全新设计的分布式 Key-Value 数据库（[TinyKV](https://github.com/pingcap-incubator/tinykv)）课程
+* 用 Go 语言全新设计的分布式关系型数据库（[TinySQL](https://github.com/pingcap-incubator/tinysql)）课程（WIP）
+* 用 Go 语言全新设计的分布式 Key-Value 数据库（[TinyKV](https://github.com/pingcap-incubator/tinykv)）课程（WIP）
 * 用 Rust 语言打造的分布式系统（[Distributed Systems in Rust](https://github.com/pingcap/talent-plan/tree/master/dss)）课程
 
 TinySQL 几乎涵盖了分布式数据库 SQL 层最重要的部分，课程介绍按照由简单到复杂，由静态到动态的顺序展开：
@@ -55,7 +55,7 @@ TinyKV 类似已有的 [Distributed Systems in Rust](https://github.com/pingcap/
 
 目前，**全新设计的 TinySQL 和 TinyKV 课程已经基本实现了一个可用的课程框架和相关测试，接下来会进行进一步的优化调整，同时课程材料也在紧锣密鼓地进行编写中**。如果你对于这个课程感兴趣，欢迎通过 [参与通道](#如何参与-talent-plan) 与我们取得联系。
 
-#### Deep Dive into TiDB Ecosystem 课程系列
+#### Series 4: Deep Dive into TiDB Ecosystem
 
 这个课程系列将深入解读 TiDB 生态项目内部设计原理，TiDB、TiKV、Cloud TiDB 深度原理解析会逐步呈现在大家面前。
 
@@ -65,31 +65,42 @@ TinyKV 类似已有的 [Distributed Systems in Rust](https://github.com/pingcap/
 
 截止目前，线下实训已成功举办 4 期，累计线下学员数 41 人，累计覆盖 10 所高校，38 名同学顺利结业。
 
+![Talent Plan Students](https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-students.png)
+
 ## 学习路径
 
 ### 路径 1: Distributed Storage Engineer
 
 如果你想要成为一名分布式存储工程师，可以选择以下课程组合：
 
-* Programming Language: "Practical Networked Applications in Rust"
-* Infrastructure Systems: "Distributed Key-Value Database Internals" &"Distributed System in Rust"
+* Programming Language: "[Practical Networked Applications in Rust](https://github.com/pingcap/talent-plan/tree/master/rust)"
+* Infrastructure Systems: "[Distributed Key-Value Database Internals(WIP)](https://github.com/pingcap-incubator/tinykv)" &"[Distributed Systems in Rust](https://github.com/pingcap/talent-plan/tree/master/dss)"
+* "Deep Dive into TiKV"
 
 ### 路径 2: Distributed Relational Database Engineer
 
 如果你想要成为一名分布式关系型数据库工程师，可以选择以下课程组合：
 
-* Programming Language: "A Tour of Golang"
-* Infrastructure Systems: "Distributed Relational Database Internals"
+* Programming Language: "[A Tour of Go](https://tour.golang.org/welcome/1)"
+* Infrastructure Systems: "[Distributed Relational Database Internals(WIP)](https://github.com/pingcap-incubator/tinysql)"
+* "Deep Dive into TiDB"
 
-### 路径 3: 开源社区运营
+### 路径 3: Cloud TiDB Engineer
+
+如果你想要成为一名云数据库工程师，可以选择以下课程组合：
+
+* Programming Language: "[A Tour of Go](https://tour.golang.org/welcome/1)"
+* Container & Container Orchestration (Docker、K8s …)
+* “Deep Dive into Cloud TiDB(WIP)”
+
+### 路径 4: 开源社区运营
 
 如果你对开源社区运营感兴趣，可以选择：
 
-* Open Source Collaboration: “Introduction to Open Source Software” & “Build a Welcoming Community”
-* 其他运营相关书籍
+* Open Source Collaboration(WIP): “Introduction to Open Source Software” & “Build a Welcoming Community”
+* 其他社区运营相关书籍，如：*[The Art of Community: Building The New Age Of Participation](https://drive.google.com/open?id=1EI6YcKlTdzojLD4RdVjYVlmFRTNzzge0)*, *[The Cathedral & the Bazaar: Musings on Linux and Open Source by an Accidental Revolutionary](https://www.goodreads.com/book/show/134825.The_Cathedral_the_Bazaar)*, *[People Powered: How communities can supercharge your business, brand, and teams](https://www.jonobacon.com/books/peoplepowered/)*
 
 除了以上学习路径，你也可以结合自己的需求，将上述课程自由组合，挖掘新的学习路径。
-
 
 ## 学员们说
 
@@ -103,7 +114,7 @@ TinyKV 类似已有的 [Distributed Systems in Rust](https://github.com/pingcap/
 
 > “这次参加 Talent Plan 收获十分巨大，首先是认识了一群很棒的小伙伴，正如崔秋老师说的，一个月时间很短，但是友谊却是一辈子的。然后，我对整个 TiDB 生态以及其中的各个模块有了更高层次的认识和理解，也切身体验到了 PingCAP 很 Cool 的 Geek 氛围，总之度过了很有意义的一个月。”——林宁（第三期最具潜力奖获得者）
 
-![Talent Plan Students](https://github.com/Soline324/tidb-in-action/blob/master/media/session5-chapter3-talent-plan-students.png)
+> "工作后参加 Talent Plan 是非常神奇的体验。在这不仅能学习到 TiDB 各个模块的基础理论，还能听到一线的开发直接分享在生产环境中实践的一些细节和经验。最后还能和大家一起齐心协力去落地一个项目，并见证它成为这个优秀开源数据库的一部分。感觉自己回到了久违的学生时光，再一次体验快速成长，并重新找到当初选择这个行业的初心"——郑向升（第四期学员代表）
 
 ## 如何参与 Talent Plan
 
