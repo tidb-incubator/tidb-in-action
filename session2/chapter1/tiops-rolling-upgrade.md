@@ -11,8 +11,10 @@ TiOps 滚动升级
 $ tiops upgrade -c tidb-test -t v4.0.0-beta.1
 ```
 
-`-c` 集群名称和 `-t` 版本号是必选参数，其他可选参数为：
+`-c` 和 `-t` 是必选参数，具体参数为：
 ```
+-c|--cluster_name 集群名称
+-t|--tidb-version TiDB 版本
 -r|--role role 按照 TiDB 服务的角色类型，分别启动，取值："pd", "tikv", "pump", "tidb",  "drainer", "monitoring", "monitored", "grafana", "alertmanager"
 -n|--node-id node_id 根据节点 ID 启动服务，节点 ID 可通过 display 命令获得
 --force 常规情况是滚动升级，设置此参数，升级时会强制停机、重启
