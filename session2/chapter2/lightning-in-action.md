@@ -2,7 +2,7 @@
 ## **警告**
 * TiDB Lightning 运行后，TiDB 集群将无法正常对外提供服务。
 * 若 `tidb-lightning` 崩溃，集群会留在“导入模式”。若忘记转回“普通模式”，集群会产生大量未压缩的文件，继而消耗 CPU 并导致延迟。此时，需要使用 `tidb-lightning-ctl` 手动将集群转回“普通模式”：
-
+```
 .../tidb-ansible/resouce/bin/tidb-lightning-ctl -switch-mode=normal
 ```
 
