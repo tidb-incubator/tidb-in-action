@@ -323,4 +323,4 @@ jddb-tidb-peer          ClusterIP      None              <none>           10080/
 jddb-tikv-peer          ClusterIP      None              <none>           20160/TCP                        63m
 ```
 
-其中 jddb-tidb 即是 TiDB 的 Svc ，集群内部的 Pod 可以通过 CLUSTER-IP 访问 TiDB 服务，同 VPC 下的云主机可以通过 EXTERNAL-IP 访问 TiDB 集群
+其中 jddb-tidb 即是 TiDB 的 Svc ，集群内部的 Pod 可以通过 CLUSTER-IP 访问 TiDB 服务，同 VPC 下的云主机可以通过 EXTERNAL-IP 访问 TiDB 集群。
