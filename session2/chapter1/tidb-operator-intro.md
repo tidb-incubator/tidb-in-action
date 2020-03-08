@@ -32,7 +32,7 @@ TiDB Operator 像“牧羊人”一样，持续的监督并管理着 TiDB 各组
 
 ### 自定义资源
 
-1. TiDB Cluster 资源：CR（`CustomResource`）声明了 TiDB Cluster 自定义资源对象，它声明了`tidbcluster`对象的期望状态，并被控制器逻辑不断进行处理，同时将实际运行状态记录下来。 
+1. TiDB Cluster 资源：CR（`CustomResource`）声明了 TiDB Cluster 自定义资源对象，它声明了`tidbcluster`对象的期望状态，并被控制器逻辑不断进行处理，同时将实际运行状态记录下来。
 
 ### Kubernetes 控制平面
 
