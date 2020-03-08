@@ -97,6 +97,7 @@ CREATE TABLE IF NOT EXISTS TEST_HOTSPOT(
 create table t (a int, b int,index idx1(a)) shard_row_id_bits = 4 pre_split_regions=2;
 ```
 **二、如果表已存在则可以 Split Region 命令打散 Region**
+
 Split Region 是 TiDB 的预切分 Region 的功能，可以根据指定的参数，预先为某个表切分出多个 Region，并打散到各个 TiKV 上去。语法有两种：
 
 ```
@@ -136,7 +137,7 @@ SPLIT TABLE table_name [INDEX index_name] BY (value_list) [, (value_list)] ...
 受限于篇幅问题，以下的一些 case 就不做详细介绍了，简单总结下：
 
 1. 避免高并发写入的表上存在顺序写入的二级索引，也会造成写入热点，并且暂时没有较好的解决方案。
-2. 提前确认 [TiDB 和 MySQL 相比不同或不支持的特性](session1/chapter5/mysql-compatibility.md)，比如不允许增删主键、不允许降低字段长度、不允许修改 DECIMAL 的精度等。如果上线后发现必需要进行相关操作，那只能通过重建表迁移数据的方式，对业务影响很大，风险也很大。
+2. 提前确认 [TiDB 和 MySQL 相比不同或不支持的特性](session1/chapter5/mysql-compatibility.md)，比如不允许降低字段长度、不允许修改 DECIMAL 的精度等。如果上线后发现必需要进行相关操作，那只能通过重建表迁移数据的方式，对业务影响很大，风险也很大。
 3. 不要在线上搞过大的宽表以及大量索引。
   1. 线上遇到一个 case 是，一个类似数据中台的服务，把从其它存储获取的数据写入到 TiDB 的一张宽表( 70 个字段)上，迁移过来时候基本每个字段都带有索引，业务解释多个索引是为了兼顾业务多样性的需求，最后业务上线后 TP99 线直接飙升到 130ms，业务无法接受延迟，最后在推进优化为7个组合索引后，TP99 恢复到 60ms 达到业务预期。
 # 总结
