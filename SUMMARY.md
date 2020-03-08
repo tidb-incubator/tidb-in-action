@@ -116,12 +116,12 @@
 
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
-* [1 SQL 调优原理](session3/chapter1/optimization-guide.md)
+* [1 SQL 调优原理](session3/chapter1/optimization-guide.md) @[石壹笑](https://github.com/aierui)
     * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui)
-    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md)
-    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md)
-    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md)
-    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md)
+    * [1.2 优化器简介](session3/chapter1/optimizer-summary.md) @[倪健](https://github.com/dapan3927)
+    * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md) @[Qiannan](https://github.com/hsqlu)
+    * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md) @[Qiannan](https://github.com/hsqlu)
+    * [1.5 限制 SQL 内存使用和执行时间](session3/chapter1/memory-quota-execution-time-limit.md) @[季朋](https://github.com/PengJi)
 * [2 TiDB Dashboard](session3/chapter2/tidb-dashboard-intro.md)
     * [2.1 识别集群热点和业务模式](session3/chapter2/key-vis.md) @[max](https://github.com/ngaut)
     * [2.2 分析 SQL 执行性能](session3/chapter2/statements.md) @李迅
@@ -166,7 +166,7 @@
         * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @[张雯](https://github.com/sandy20140407)
         * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈均-壹米滴答
     * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md) @王英杰
-    * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @汽车之家
+    * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @张帆 @路思勇
     * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md) @Allen
     * [5.5 DB2 到 TiDB （CDC）](session4/chapter5/from-db2-to-tidb.md) @王新宇
     * [5.6 TiDB 到 TiDB（DATAX）](session4/chapter5/from-tidb-to-tidb-using-datax.md) @Jason
@@ -224,8 +224,11 @@
     * [2.4 Challenge Program](session5/chapter2/challenge-program.md) @张建
     * [2.5 PingCAP Incubator](session5/chapter2/pingcap-incubator.md) @姚维 @崔秋
     * [2.6 PingCAP University](session5/chapter2/pingcap-university.md) @彭琴
-    * [2.7 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
+    * [2.7 AskTUG](session5/chapter2/asktug.md) @张婵 @荣毅龙 @房晓乐 @彭琴
+    * [2.8 Contributor Map](session5/chapter2/contribution-map.md) @张金鹏
 
 ## 附录
 
 * [专用术语解释](appendix/tidb-term.md)
+
+
