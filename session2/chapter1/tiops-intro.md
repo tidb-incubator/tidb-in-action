@@ -24,7 +24,7 @@ TiOps 是一款部署、运维 TiDB 的命令行工具，通过简单易用的�
 
 * 操作系统：CentOS 7 （建议使用 el7 系列最新版）
 * 软件源：系统需已安装 epel-release 包，或通过其他方式添加了 EPEL 源
-* 磁盘空间：中控机执行用户的 $HOME 目录可用空间 > 10GB
+* 磁盘空间：中控机执行用户的 `$HOME` 目录可用空间 > 10GB
 * 网络：中控机有互联网访问，且与部署机处在同一网络环境中
 
 ### 3.1 给中控机安装第三方包管理库
@@ -33,7 +33,7 @@ TiOps 是一款部署、运维 TiDB 的命令行工具，通过简单易用的�
 yum install -y epel-release
 ```
 
-### 3.2 安装 tiops
+### 3.2 安装 TiOps
 
 当前只提供 rpm 包，后续会考虑使用 tiup ，通过指定 nightly 等参数来进行下载安装。
 
@@ -44,9 +44,9 @@ wget https://download.pingcap.org/tiops-v0.2.0-1.el7.x86_64.rpm
 yum localinstall -y tiops-v0.2.0-0.7.dev.el7.x86_64.rpm
 ```
 
-### 3.3 测试 tiops 安装是否成功
+### 3.3 测试 TiOps 安装是否成功
 
-在命令行输入：`tiops -h` 后，输出如下内容即表示 tiops 已经安装成功。
+在命令行输入：`tiops -h` 后，输出如下内容即表示 TiOps 已经安装成功。
 
 ```sh
 tiops -h
@@ -76,7 +76,7 @@ positional arguments:
     scale-in            scale in tidb cluster
     exec                run shell command on host in the tidb cluster
     quickdeploy         deploy a tidb cluster in demo mode
-    version             show TiOPS version and exit
+    version             show TiOps version and exit
 
 
 optional arguments:
@@ -88,7 +88,7 @@ optional arguments:
 
 #### 3.4.1 初始化中控机
 
-首先，生成中控机当前用户的 ssh key，它默认会存放在 ~/.ssh/id_rsa 和 ~/.ssh/id_rsa.pub。
+首先，生成中控机当前用户的 ssh key，它默认会存放在 `~/.ssh/id_rsa` 和 `~/.ssh/id_rsa.pub`。
 
 它将被用于中控机和目标机器的 ssh 通讯配置项。
 
@@ -156,7 +156,7 @@ tiops bootstrap-host -H 10.9.1.1,10.9.1.2,10.9.1.3 -d tidb
 
 ### 3.5 拓扑信息
 
-查看 tiops 拓扑配置文件示例。
+查看 TiOps 拓扑配置文件示例。
 
 ```sh
 cat /usr/share/tiops/topology.yaml.example
@@ -184,7 +184,7 @@ cp /usr/share/tiops/topology.yaml.example topology.yaml
 vim topology.yaml
 ```
 
-将 pd, tidb, tikv 的部署节点改为提前准备好的 IP 地址，详细信息如下：
+将 PD, TiDB, TiKV 的部署节点改为提前准备好的 IP 地址，详细信息如下：
 
 ```yaml
 ---
@@ -214,7 +214,7 @@ grafana_server:
 
 #### 4.1.1 部署
 
-根据 -T  所指定的集群拓扑文件，使用 TiOps 部署一个名称为 mai 的集群，但是我们要使其生效，需要启动它。
+根据 -T 所指定的集群拓扑文件，使用 TiOps 部署一个名称为 `mai` 的集群，但是我们要使其生效，需要启动它。
 
 ```sh
 tiops deploy -c mai -T topology.yaml -d tidb
@@ -248,13 +248,13 @@ tiops deploy -c mai -T topology.yaml -d tidb
 tiops start -c mai
 ```
 
-输出 Finished start. 后，再使用 mysql client 来验证 TiDB 集群是否运行成功。
+输出 `Finished start.` 后，再使用 mysql client 来验证 TiDB 集群是否运行成功。
 
 ```sh
 mysql -h 10.9.1.1 -P4000 -u root
 ```
 
-输出 Server version: 5.7.25-TiDB-v3.0.9 MySQL Community Server (Apache License 2.0) 即表示当前 TiDB 已经连接成功。
+输出 `Server version: 5.7.25-TiDB-v3.0.9 MySQL Community Server (Apache License 2.0)`，即表示当前 TiDB 已经连接成功。
 
 #### 5.1.2 参数说明
 
@@ -287,7 +287,7 @@ mysql -h 10.9.1.1 -P4000 -u root
 tiops restart -c mai
 ```
 
-tiops 将会先停止 grafana, blackbox_exporter, node_exporter, prometheus, tidb, tikv, pd 等组件，然后再启动它们。
+TiOps 将会先停止 grafana, blackbox_exporter, node_exporter, prometheus, tidb, tikv, pd 等组件，然后再启动它们。
 
 #### 5.2.2 参数说明
 
@@ -306,7 +306,7 @@ tiops 将会先停止 grafana, blackbox_exporter, node_exporter, prometheus, tid
 tiops stop -c mai
 ```
 
-tiops 将会停止 grafana, blackbox_exporter, node_exporter, prometheus, tidb, tikv, pd 等组件。
+TiOps 将会停止 grafana, blackbox_exporter, node_exporter, prometheus, tidb, tikv, pd 等组件。
 
 #### 5.3.2 参数说明
 
@@ -450,7 +450,7 @@ tiops display -c mai
 
 #### 5.10.3 输出说明
 
-当设置 --status 参数时，会输出 TiDB 各个组件当前的简单状态信息，
+当设置 `--status` 参数时，会输出 TiDB 各个组件当前的简单状态信息，
 
 ```sh
 TiDB cluster mai, version 3.0.9
@@ -481,9 +481,9 @@ Pump Node 状态：如果 Pump 的状态接口请求失败则为 Down
 Drainer Node 状态，如果 Drainer 的状态接口请求失败则为 Down
 ```
 
-若 Status 列显示为 - ，则表示该组件尚不支持实时状态显示。
+若 Status 列显示为 `-` ，则表示该组件尚不支持实时状态显示。
 
-### 5.11 查看 tiops 版本信息
+### 5.11 查看 TiOps 版本信息
 
 #### 5.11.1 命令
 
