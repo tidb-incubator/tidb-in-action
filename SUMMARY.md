@@ -11,9 +11,8 @@
     * [3.2 元信息管理](session1/chapter3/tidb-metadata-management.md) @[Qiannan](https://github.com/hsqlu)
     * [3.3 SQL 层简介](session1/chapter3/tidb-sql-layer-summary.md) @[zhiqiangxu](https://github.com/zhiqiangxu)
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
-    * [4.1 空间均衡](session1/chapter4/region-balance.md)
-    * [4.2 负载均衡](session1/chapter4/load-balance.md)
-    * [4.3 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
+    * [4.1 调度概述](session1/chapter4/scheduling-overview.md)
+    * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[pengji](https://github.com/pengji)
 * [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮
         <!--
         与 MySQL 兼容性对比
