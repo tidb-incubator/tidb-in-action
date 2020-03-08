@@ -1,10 +1,11 @@
 # 快速开始
 ## **警告**
 * TiDB Lightning 运行后，TiDB 集群将无法正常对外提供服务。
-*  若 `tidb-lightning` 崩溃，集群会留在“导入模式”。若忘记转回“普通模式”，集群会产生大量未压缩的文件，继而消耗 CPU 并导致延迟。此时，需要使用 `tidb-lightning-ctl` 手动将集群转回“普通模式”：
+* 若 `tidb-lightning` 崩溃，集群会留在“导入模式”。若忘记转回“普通模式”，集群会产生大量未压缩的文件，继而消耗 CPU 并导致延迟。此时，需要使用 `tidb-lightning-ctl` 手动将集群转回“普通模式”：
 ```
 .../tidb-ansible/resouce/bin/tidb-lightning-ctl -switch-mode=normal
 ```
+
 ## **数据库权限要求**
 TiDB Lightning 需要下游 TiDB 具有如下权限：
 
@@ -18,7 +19,7 @@ TiDB Lightning 需要下游 TiDB 具有如下权限：
 ## 硬件需求
 tidb-lightning` 和 `tikv-importer` 这两个组件皆为资源密集程序，建议各自单独部署。
 
-为了优化效能，建议硬件配置如下：
+为了保证导入效能，建议最低硬件配置如下：
 
 `tidb-lightning`
 
@@ -35,7 +36,7 @@ tidb-lightning` 和 `tikv-importer` 这两个组件皆为资源密集程序，�
 
         * 硬盘必须大于最大的 N 个表的大小总和，其中 N = max(index-concurrency, table-concurrency)。
 
-  *  使用万兆网卡，带宽需 300 MB/s 以上
+  * 使用万兆网卡，带宽需 300 MB/s 以上
   * 运行过程中 CPU、I/O 和网络带宽都可能占满，建议单独部署。
 
 如果机器充裕的话，可以部署多套 `tidb-lightning` + `tikv-importer`，然后将源数据以表为粒度进行切分，并发导入。
