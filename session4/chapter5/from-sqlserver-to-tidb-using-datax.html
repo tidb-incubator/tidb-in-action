@@ -2821,7 +2821,307 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <p>DataX &#x662F;&#x963F;&#x91CC;&#x5DF4;&#x5DF4;&#x96C6;&#x56E2;&#x5185;&#x88AB;&#x5E7F;&#x6CDB;&#x4F7F;&#x7528;&#x7684;&#x79BB;&#x7EBF;&#x6570;&#x636E;&#x540C;&#x6B65;&#x5DE5;&#x5177;/&#x5E73;&#x53F0;&#xFF0C;&#x652F;&#x6301;&#x5305;&#x62EC; MySQL&#x3001;SQL Server&#x3001;Oracle&#x3001;PostgreSQL&#x3001;HDFS&#x3001;Hive&#x3001;HBase&#x3001;OTS&#x3001;ODPS &#x7B49;&#x5404;&#x79CD;&#x5F02;&#x6784;&#x6570;&#x636E;&#x6E90;&#x4E4B;&#x95F4;&#x9AD8;&#x6548;&#x7684;&#x6570;&#x636E;&#x540C;&#x6B65;&#x529F;&#x80FD;&#x3002;DataX &#x91C7;&#x7528;&#x4E86;&#x6846;&#x67B6; + &#x63D2;&#x4EF6; &#x7684;&#x6A21;&#x5F0F;&#x3002;&#x76EE;&#x524D;&#x5DF2;&#x5F00;&#x6E90;&#xFF0C;&#x4EE3;&#x7801;&#x6258;&#x7BA1;&#x5728; GitHub&#x3002;</p>
+<p>DataX &#x6570;&#x636E;&#x540C;&#x6B65;&#x6548;&#x7387;&#x8F83;&#x9AD8;&#xFF0C;&#x53EF;&#x4EE5;&#x6EE1;&#x8DB3;&#x5927;&#x591A;&#x6570;&#x573A;&#x666F;&#x4E0B;&#x7684;&#x5F02;&#x6784;&#x6570;&#x636E;&#x5E93;&#x95F4;&#x7684;&#x6570;&#x636E;&#x540C;&#x6B65;&#x3002;&#x540C;&#x65F6;&#x5176;&#x914D;&#x7F6E;&#x7075;&#x6D3B;&#xFF0C;&#x652F;&#x6301;&#x5B57;&#x6BB5;&#x7EA7;&#x522B;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x8F7B;&#x677E;&#x5E94;&#x5BF9;&#x56E0;&#x8FC1;&#x79FB;&#x5230; TiDB &#x800C;&#x4EA7;&#x751F;&#x7684;&#x4E00;&#x4E9B;&#x6539;&#x52A8;&#x3002;</p>
+<p>&#x65B9;&#x6848;&#x8BBE;&#x8BA1;&#x5982;&#x56FE;&#x6240;&#x793A;</p>
+<p><img src="https://raw.githubusercontent.com/AllenShen-CN/tidb-in-action/master/session4/chapter5/sqlserver%20to%20tidb.png"></p>
+<p>&#x7B2C;&#x4E00;&#x9636;&#x6BB5;&#xFF1A;&#x5207;&#x6362;&#x652F;&#x6301; TiDB &#x7684;&#x5E94;&#x7528;&#x4E0A;&#x7EBF;&#x4E4B;&#x524D;&#xFF0C;&#x628A; SQLServer &#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x5168;&#x91CF;&#x6570;&#x636E;&#x7528; DataX &#x540C;&#x6B65;&#x5230; TiDB &#x5E93;&#x4E2D;&#x3002;&#x4E3A;&#x907F;&#x514D;&#x5BF9;&#x7EBF;&#x4E0A;&#x4E1A;&#x52A1;&#x4EA7;&#x751F;&#x5F71;&#x54CD;&#xFF0C;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x5907;&#x4EFD;&#x5E93;&#xFF0C;&#x6216;&#x8005;&#x5728;&#x4E1A;&#x52A1;&#x4F4E;&#x5CF0;&#x671F;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x7B2C;&#x4E8C;&#x9636;&#x6BB5;&#xFF1A;&#x628A;&#x5168;&#x91CF;&#x540C;&#x6B65;&#x6539;&#x4E3A;&#x589E;&#x91CF;&#x540C;&#x6B65;&#xFF0C;&#x5229;&#x7528; UpdateTime &#x5B57;&#x6BB5;&#xFF08;&#x6216;&#x5176;&#x5B83;&#x6761;&#x4EF6;&#xFF0C;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x4E1A;&#x52A1;&#x7075;&#x6D3B;&#x8C03;&#x6574;&#xFF09;&#x4F5C;&#x4E3A;&#x540C;&#x6B65; Where &#x6761;&#x4EF6;&#xFF0C;&#x8FDB;&#x884C;&#x589E;&#x91CF;&#x8986;&#x76D6;&#x5F0F;&#x540C;&#x6B65;&#x3002; t_sync_record &#x8868;&#x4E2D;&#x8BB0;&#x5F55;&#x6BCF;&#x5F20;&#x8868;&#x4E0A;&#x6B21;&#x589E;&#x91CF;&#x4EFB;&#x52A1;&#x7684;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x7B2C;&#x4E09;&#x9636;&#x6BB5;&#xFF1A;&#x652F;&#x6301; TiDB &#x7684;&#x5E94;&#x7528;&#x4E0A;&#x7EBF;&#x4EE5;&#x540E;&#xFF0C;&#x589E;&#x91CF;&#x540C;&#x6B65;&#x5207;&#x6362;&#x8BFB;&#x5199;&#x6570;&#x636E;&#x6E90;&#x6539;&#x4E3A;&#x9006;&#x5411;&#x589E;&#x91CF;&#x540C;&#x6B65;&#xFF0C;&#x5C06;&#x65B0;&#x6570;&#x636E;&#x8FD1;&#x5B9E;&#x65F6;&#x5199;&#x56DE; SQLServer &#x6570;&#x636E;&#x5E93;&#x3002;&#x4E00;&#x65E6;&#x4E0A;&#x7EBF;&#x4E4B;&#x540E;&#x51FA;&#x73B0;&#x9700;&#x8981;&#x56DE;&#x9000;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x53EF;&#x968F;&#x65F6;&#x5207;&#x56DE; SQLServer&#xFF0C;&#x5F85;&#x4FEE;&#x590D;&#x4E4B;&#x540E;&#x518D;&#x6B21;&#x4E0A;&#x7EBF;&#x3002;</p>
+<p>&#x5177;&#x4F53;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;&#xFF1A;</p>
+<p>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x90E8;&#x7F72; DataX</p>
+<p>&#x4E0B;&#x8F7D;</p>
+<p>wget <a href="http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz" target="_blank">http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz</a></p>
+<p>&#x89E3;&#x538B;</p>
+<p>tar -zxvf datax.tar.gz</p>
+<p>&#x81EA;&#x68C0;</p>
+<p>python {YOUR_DATAX_HOME}/bin/datax.py {YOUR_DATAX_HOME}/job/job.json</p>
+<p>&#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;&#x7F16;&#x5199; DataX &#x6570;&#x636E;&#x540C;&#x6B65; Job&#xFF08;Json&#x683C;&#x5F0F;&#xFF09;</p>
+<p>&#xFF08;1&#xFF09;&#x5168;&#x91CF;&#x540C;&#x6B65;Job</p>
+<p>vi full.json</p>
+<p>&#x4EE3;&#x7801;&#x5757;&#xFF1A;</p>
+<p>{</p>
+<pre><code>&quot;job&quot;: {
+
+    &quot;setting&quot;: {
+
+        &quot;speed&quot;: {
+
+            #&#x6570;&#x636E;&#x5206;&#x7247;&#xFF0C;&#x5206;&#x7247;&#x6570;&#x636E;&#x53EF;&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x540C;&#x6B65;
+
+            &quot;channel&quot;: 128 
+
+        }
+
+    },
+
+    &quot;content&quot;: [{
+
+         #SQL Server&#x914D;&#x7F6E;
+
+        &quot;reader&quot;: {
+
+            &quot;name&quot;: &quot;sqlserverreader&quot;,
+
+            &quot;parameter&quot;: {
+
+                #&#x6570;&#x636E;&#x5E93;&#x7528;&#x6237;&#x540D;
+
+                &quot;username&quot;: &quot;${srcUserName}&quot;,
+
+                #&#x6570;&#x636E;&#x5E93;&#x5BC6;&#x7801;
+
+                &quot;password&quot;: &quot;${srcPassword}&quot;,
+
+                 #&#x9700;&#x8981;&#x8FC1;&#x79FB;&#x7684;&#x5217;&#x540D;&#xFF0C;* &#x8868;&#x793A;&#x5168;&#x90E8;&#x5217;
+
+                &quot;column&quot;: [&quot;*&quot;]
+
+                &quot;connection&quot;: [{
+
+                    #&#x9700;&#x8981;&#x8FC1;&#x79FB;&#x7684;&#x8868;&#x540D;
+
+                    &quot;table&quot;: [&quot;${tableName}&quot;],
+
+                     &#x6570;&#x636E;&#x5E93; jdbc &#x8FDE;&#x63A5;
+
+                    &quot;jdbcUrl&quot;: [&quot;${srcUrl}&quot;]
+
+                }]
+
+            }
+
+    },
+
+    #TiDB&#x914D;&#x7F6E;
+
+    &quot;writer&quot;: {
+
+            &quot;name&quot;: &quot;tidbwriter&quot;,
+
+            &quot;parameter&quot;: {
+
+                #&#x6570;&#x636E;&#x5E93;&#x7528;&#x6237;&#x540D;
+
+                &quot;username&quot;: &quot;${desUserName}&quot;,
+
+                 #&#x6570;&#x636E;&#x5E93;&#x5BC6;&#x7801;
+
+                &quot;password&quot;: &quot;${desPassword}&quot;,
+
+                 #&#x4F7F;&#x7528; Replace &#x8BED;&#x6CD5;
+
+                &quot;writeMode&quot;: &quot;replace&quot;,
+
+                #&#x76EE;&#x6807;&#x8868;&#x5217;&#x540D;&#xFF0C;* &#x8868;&#x793A;&#x5168;&#x90E8;&#x5217;
+
+                &quot;column&quot;: [&quot;*&quot;],
+
+                &quot;connection&quot;: [{
+
+                    #&#x6570;&#x636E;&#x5E93; jdbc &#x8FDE;&#x63A5;
+
+                    &quot;jdbcUrl&quot;: &quot;${desUrl}&quot;,
+
+                    #&#x76EE;&#x6807;&#x8868;&#x540D;
+
+                    &quot;table&quot;: [&quot;${tableName}&quot;]
+
+                }],
+
+                 #&#x672C;&#x6B21;&#x8FC1;&#x79FB;&#x5F00;&#x59CB;&#x524D;&#x6267;&#x884C;&#x7684;sql-&#x4F5C;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x65E5;&#x5FD7;&#x4F7F;&#x7528;
+
+                &quot;preSql&quot;: [
+
+                   &quot;replace into t_sync_record(table_name,start_date,end_date) values(&apos;@table&apos;,now(),null)&quot;],
+
+                #&#x672C;&#x6B21;&#x8FC1;&#x79FB;&#x5B8C;&#x6210;&#x540E;&#x6267;&#x884C;&#x7684; sql- &#x4F5C;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x65E5;&#x5FD7;&#x4F7F;&#x7528;
+
+                &quot;postSql&quot;: [
+
+                   &quot;update t_sync_record set end_date=now() where table_name=&apos;@table&apos; &quot; ]
+
+            }
+
+        }
+
+    }]
+
+}
+</code></pre><p>}</p>
+<p>&#xFF08;2&#xFF09;&#x589E;&#x91CF;&#x540C;&#x6B65; Job</p>
+<p>vi increase.json</p>
+<p>&#x4EE3;&#x7801;&#x5757;&#xFF1A;</p>
+<p>{</p>
+<pre><code>&quot;job&quot;: {
+
+    &quot;setting&quot;: {
+
+        &quot;speed&quot;: {
+
+            #&#x6570;&#x636E;&#x5206;&#x7247;&#xFF0C;&#x5206;&#x7247;&#x6570;&#x636E;&#x53EF;&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x540C;&#x6B65;
+
+            &quot;channel&quot;: 128 
+
+        }
+
+    },
+
+    &quot;content&quot;: [{
+
+         #SQL Server&#x914D;&#x7F6E;
+
+        &quot;reader&quot;: {
+
+            &quot;name&quot;: &quot;sqlserverreader&quot;,
+
+            &quot;parameter&quot;: {
+
+                #&#x6570;&#x636E;&#x5E93;&#x7528;&#x6237;&#x540D;
+
+                &quot;username&quot;: &quot;${srcUserName}&quot;,
+
+                #&#x6570;&#x636E;&#x5E93;&#x5BC6;&#x7801;
+
+                &quot;password&quot;: &quot;${srcPassword}&quot;,
+
+                 #&#x9700;&#x8981;&#x8FC1;&#x79FB;&#x7684;&#x5217;&#x540D;&#xFF0C;* &#x8868;&#x793A;&#x5168;&#x90E8;&#x5217;
+
+                &quot;column&quot;: [&quot;*&quot;],
+
+                &quot;connection&quot;: [{
+
+                    #&#x9700;&#x8981;&#x8FC1;&#x79FB;&#x7684;&#x8868;&#x540D;
+
+                    &quot;table&quot;: [&quot;${tableName}&quot;],
+
+                     &#x6570;&#x636E;&#x5E93; jdbc &#x8FDE;&#x63A5;
+
+                    &quot;jdbcUrl&quot;: [&quot;${srcUrl}&quot;]
+
+                }],
+
+                #&#x6293;&#x53D6;&#x4E00;&#x4E2A;&#x65F6;&#x95F4;&#x7A97;&#x53E3;&#x7684;&#x589E;&#x91CF;&#x6570;&#x636E;
+
+                &quot;where&quot;: &quot;updateTime &gt;= &apos;${syncTime}&apos;&quot;
+
+            }
+
+    },
+
+    #TiDB&#x914D;&#x7F6E;
+
+    &quot;writer&quot;: {
+
+            &quot;name&quot;: &quot;tidbwriter&quot;,
+
+            &quot;parameter&quot;: {
+
+                #&#x6570;&#x636E;&#x5E93;&#x7528;&#x6237;&#x540D;
+
+                &quot;username&quot;: &quot;${desUserName}&quot;,
+
+                 #&#x6570;&#x636E;&#x5E93;&#x5BC6;&#x7801;
+
+                &quot;password&quot;: &quot;${desPassword}&quot;,
+
+                 #&#x4F7F;&#x7528; Replace &#x8BED;&#x6CD5;
+
+                &quot;writeMode&quot;: &quot;replace&quot;,
+
+                #&#x76EE;&#x6807;&#x8868;&#x5217;&#x540D;&#xFF0C;* &#x8868;&#x793A;&#x5168;&#x90E8;&#x5217;
+
+                &quot;column&quot;: [&quot;*&quot;],
+
+                &quot;connection&quot;: [{
+
+                    #&#x6570;&#x636E;&#x5E93; jdbc &#x8FDE;&#x63A5;
+
+                    &quot;jdbcUrl&quot;: &quot;${desUrl}&quot;,
+
+                    #&#x76EE;&#x6807;&#x8868;&#x540D;
+
+                    &quot;table&quot;: [&quot;${tableName}&quot;]
+
+                }],
+
+                 #&#x672C;&#x6B21;&#x8FC1;&#x79FB;&#x5F00;&#x59CB;&#x524D;&#x6267;&#x884C;&#x7684;sql-&#x4F5C;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x65E5;&#x5FD7;&#x4F7F;&#x7528;
+
+                &quot;preSql&quot;: [
+
+                   &quot;replace into t_sync_record(table_name,start_date,end_date) values(&apos;@table&apos;,now(),null)&quot;],
+
+                #&#x672C;&#x6B21;&#x8FC1;&#x79FB;&#x5B8C;&#x6210;&#x540E;&#x6267;&#x884C;&#x7684; sql- &#x4F5C;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x65E5;&#x5FD7;&#x4F7F;&#x7528;
+
+                &quot;postSql&quot;: [
+
+                   &quot;update t_sync_record set end_date=now() where table_name=&apos;@table&apos; &quot; ]
+
+            }
+
+        }
+
+    }]
+
+}
+</code></pre><p>}</p>
+<p>&#xFF08;3&#xFF09;&#x7F16;&#x5199;&#x8FD0;&#x884C;DataX Job&#x7684;Shell&#x6267;&#x884C;&#x811A;&#x672C;</p>
+<p>vi datax_excute_job.sh</p>
+<p>&#x4EE3;&#x7801;&#x5757;&#xFF1A;</p>
+<h1 id="binbash">!/bin/bash</h1>
+<p>source /etc/profile</p>
+<p>srcUrl=&quot;Reader SqlServer &#x5730;&#x5740;&quot;</p>
+<p>srcUserName=&quot;SqlServer &#x8D26;&#x53F7;&quot;</p>
+<p>srcPassword=&quot;SqlServer &#x5BC6;&#x7801;&quot;</p>
+<p>desUrl=&quot;Writer TiDB &#x5730;&#x5740;&quot;</p>
+<p>desUserName=&quot;TiDB &#x8D26;&#x53F7;&quot;</p>
+<p>desPassword=&quot;TiDB &#x5BC6;&#x7801;&quot;</p>
+<h1 id="&#x540C;&#x6B65;&#x5F00;&#x59CB;&#x65F6;&#x95F4;">&#x540C;&#x6B65;&#x5F00;&#x59CB;&#x65F6;&#x95F4;</h1>
+<p>defaultsyncUpdateTime=&quot;2020-03-03 18:00:00.000&quot;</p>
+<h1 id="&#x540C;&#x6B65;&#x5468;&#x671F;&#x79D2;">&#x540C;&#x6B65;&#x5468;&#x671F;(&#x79D2;)</h1>
+<p>sleepTime=&quot;N&quot;</p>
+<p>tableName=&quot;Table1,Table2,...&quot;</p>
+<h1 id="&#x5FAA;&#x73AF;&#x6B21;&#x6570;&#x6807;&#x8BC6;&#xFF0C;-1&#x4E3A;&#x4E00;&#x76F4;&#x5FAA;&#x73AF;&#xFF0C;&#x5176;&#x4ED6;&#x6309;&#x8F93;&#x5165;&#x6B21;&#x6570;&#x5FAA;&#x73AF;">&#x5FAA;&#x73AF;&#x6B21;&#x6570;&#x6807;&#x8BC6;&#xFF0C;-1&#x4E3A;&#x4E00;&#x76F4;&#x5FAA;&#x73AF;&#xFF0C;&#x5176;&#x4ED6;&#x6309;&#x8F93;&#x5165;&#x6B21;&#x6570;&#x5FAA;&#x73AF;</h1>
+<p>flg=-1</p>
+<p>while [ &quot;$flg&quot; -gt 0 -o &quot;$flg&quot; -eq -1 ]</p>
+<p>do</p>
+<pre><code>    #&#x66F4;&#x65B0;&#x65F6;&#x95F4;&#x8BBE;&#x7F6E;&#x4E3A;&#x4E0A;&#x6B21;&#x5FAA;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x65F6;&#x95F4;
+
+    if [ &quot;&quot; = &quot;$preRunTime&quot; ]; then
+
+            syncTime=$defaultsyncUpdateTime
+
+    else
+
+            syncTime=$preRunTime
+
+    fi
+
+    #&#x8BB0;&#x5F55;&#x4E0B;&#x672C;&#x6B21;&#x5FAA;&#x73AF;&#x6267;&#x884C;&#x65F6;&#x95F4;&#xFF0C;&#x4F9B;&#x4E0B;&#x6B21;&#x5FAA;&#x73AF;&#x4F7F;&#x7528;
+
+    preRunTime=$(date -d +&quot;%Y-%m-%d %T&quot;)&quot;.000&quot;;
+
+    echo $syncTime
+
+    echo $preRunTime
+
+    echo $flg
+
+    python {YOUR_DATAX_HOME}/bin/datax.py -p &quot;-DsyncTime=&apos;${syncTime}&apos; -DtableName=&apos;${tableName}&apos; -DsrcUrl=&apos;${srcUrl}&apos; -DsrcUserName=&apos;${srcUserName}&apos; -DsrcPassword=&apos;${srcPassword}&apos; -DdesUrl=&apos;${desUrl}&apos; -DdesUserName=&apos;${desUserName}&apos; -DdesPassword=&apos;${desPassword}&apos;&quot; {YOUR_DATAX_HOME}/job/increase.json
+
+    if [ -1  -lt  &quot;$flg&quot; ]; then
+
+           let &quot;flg-=1&quot;
+
+    fi
+
+    sleep $sleepTime
+</code></pre><p>done</p>
+<p>&#xFF08;4&#xFF09;&#x6267;&#x884C; Shell &#x811A;&#x672C;</p>
+<p>chmod +x datax_excute_job.sh</p>
+<p>nohup ./datax_excute_job.sh &gt; info.file 2&gt;&amp;1 &amp;</p>
+<p>&#x81F3;&#x6B64;&#xFF0C;&#x6838;&#x5FC3;&#x811A;&#x672C;&#x548C;&#x64CD;&#x4F5C;&#x90FD;&#x5DF2;&#x5B8C;&#x6210;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x4FEE;&#x6539;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#xFF0C;&#x8FBE;&#x5230;&#x81EA;&#x5DF1;&#x4E0D;&#x540C;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x914D;&#x5408;&#x6570;&#x636E;&#x5BF9;&#x6BD4;&#x670D;&#x52A1;&#xFF0C;&#x4EE5;&#x671F;&#x8FBE;&#x5230;&#x5C06;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4ECE; SQL Server &#x987A;&#x5229;&#x8FC1;&#x79FB;&#x5230; TiDB &#x7684;&#x76EE;&#x7684;&#x3002;</p>
+
                                 
                                 </section>
                             
@@ -2864,7 +3164,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"5.4 SqlServer 到 TiDB（DATAX）","level":"5.5.4","depth":2,"next":{"title":"5.5 DB2 到 TiDB （CDC）","level":"5.5.5","depth":2,"path":"session4/chapter5/from-db2-to-tidb.md","ref":"session4/chapter5/from-db2-to-tidb.md","articles":[]},"previous":{"title":"5.3 SqlServer 到 TiDB","level":"5.5.3","depth":2,"path":"session4/chapter5/from-sqlserver-to-tidb.md","ref":"session4/chapter5/from-sqlserver-to-tidb.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter5/from-sqlserver-to-tidb-using-datax.md","mtime":"2020-03-08T06:25:17.265Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:25:53.873Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"5.4 SqlServer 到 TiDB（DATAX）","level":"5.5.4","depth":2,"next":{"title":"5.5 DB2 到 TiDB （CDC）","level":"5.5.5","depth":2,"path":"session4/chapter5/from-db2-to-tidb.md","ref":"session4/chapter5/from-db2-to-tidb.md","articles":[]},"previous":{"title":"5.3 SqlServer 到 TiDB","level":"5.5.3","depth":2,"path":"session4/chapter5/from-sqlserver-to-tidb.md","ref":"session4/chapter5/from-sqlserver-to-tidb.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter5/from-sqlserver-to-tidb-using-datax.md","mtime":"2020-03-08T06:35:13.989Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-08T06:35:52.004Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
