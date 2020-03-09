@@ -95,7 +95,7 @@
             -->
     * [2.2 TiDB 数据导入工具 Lightning](session2/chapter2/lightning-intro.md)
         * [2.2.1 Lightning 工作原理](session2/chapter2/lightning-internal.md) @刘春雷
-        * [2.2.2 Lightning 实操指南](session2/chapter2/lightning-in-action.md) @李红
+        * [2.2.2 Lightning 实操指南](session2/chapter2/lightning-in-action.md) @李红 @高恺迪
     * [2.3 4.0 分布式备份恢复工具 BR](session2/chapter2/br.md)
         * [2.3.1 BR 工作原理](session2/chapter2/br-internal.md) @栾成
         * [2.3.2 BR 实操指南](session2/chapter2/br-in-action.md)  @刘伟
@@ -148,7 +148,7 @@
 
 ## 第四部分 TiDB 最佳实践
 
-* [1 适用场景介绍](session4/chapter1/scenarios.md) @贾世闻
+* [1 适用场景介绍](session4/chapter1/scenarios.md) @贾世闻 @庄培培 @吴剑锋
 * [2 硬件选型规划](session4/chapter2/hardware-selection.md) @Shinno
 * [3 常见性能压测](session4/chapter3/common-benchmarks.md)
     * [3.1 Sysbench 基准性能测试](session4/chapter3/sysbench.md) @唐希元
@@ -160,13 +160,13 @@
     * [4.4 AWS 跨 AZ 部署 TiDB](session4/chapter4/cross-az-in-aws.md) @Shinno
 * [5 数据迁移方案](session4/chapter5/data-migration.md)
     * [5.1 MySQL 到 TiDB （DM）](session4/chapter5/from-mysql-to-tidb.md)
-        * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @[张雯](https://github.com/sandy20140407)
-        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈均
-    * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md) @王英杰
+        * [5.1.1 DM 同步单机 MySQL 到 TiDB 的实践](session4/chapter5/from-single-mysql-to-tidb.md) @[张雯](https://github.com/sandy20140407) @陶政
+        * [5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践](session4/chapter5/from-sharding-to-tidb.md) @沈均 @陶政
+    * [5.2 Oracle 到 TiDB （OGG）](session4/chapter5/from-oracle-to-tidb.md) @王英杰 @郭大瑞
     * [5.3 SqlServer 到 TiDB](session4/chapter5/from-sqlserver-to-tidb.md) @路思勇 @张帆
-    * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md) @Allen
+    * [5.4 SqlServer 到 TiDB（DATAX）](session4/chapter5/from-sqlserver-to-tidb-using-datax.md) @申海龙
     * [5.5 DB2 到 TiDB （CDC）](session4/chapter5/from-db2-to-tidb.md) @王新宇 @王轲
-    * [5.6 TiDB 到 TiDB（DATAX）](session4/chapter5/from-tidb-to-tidb-using-datax.md) @Jason
+    * [5.6 TiDB 到 TiDB（DATAX）](session4/chapter5/from-tidb-to-tidb-using-datax.md) @吴剑锋
     * [5.7 Mongodb 迁移到 TiDB](session4/chapter5/from-mongodb-to-tidb.md) @北丐 @李仲舒
 * [6 业务适配最佳实践](session4/chapter6/workload-adaptation-best-practices.md)
     * [6.1 业务开发最佳实践](session4/chapter6/application-dev-best-practices.md)
@@ -175,9 +175,9 @@
         * [6.1.3 高并发的唯一序列号生成方案](session4/chapter6/serial-number.md) @魏巍 @George Li
         * [6.1.4 一种高效分页批处理方案](session4/chapter6/page-inaction.md) @魏巍 @秦天爽
         * [6.1.5 通过 hint 调整执行计划](session4/chapter6/tidb-hint.md) @George Li @聂泽峯
-    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智辉 @王英杰 @[朱博帅](https://github.com/zhuboshuai)
+    * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智辉 @王英杰 @[朱博帅](https://github.com/zhuboshuai) @戚铮
     * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
-    * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md)
+    * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md) @代晓磊 @高振娇
         * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
         * [6.4.2 TiDB分区表使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
         * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
