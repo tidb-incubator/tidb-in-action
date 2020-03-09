@@ -388,8 +388,7 @@ Scheduler 可以简单的认为是包含以下两部分的一个对象：
     * Scheduler duration：等于 latch-wait duration + async-snapshot duration + load lock (all keys total) + async-write duration 的时间总和。
     * Scheduler worker CPU：scheduler worker 线程的 CPU 使用率
     * Scheduler latch wait duration：latch wait 延迟高的原因：
-        * 多个事务同时对相同的 key 进行写操作导致冲突，这个时候需要等锁。
-        * 同时写入到 TiKV 的 key 的个数非常多（比如大并发导数据场景），超过了 latch 的默认值 2048000，这个时候可以调大 latch 来缓解。对应的参数是[storage] scheduler-concurrency。
+        * 多个事务同时对相同的 key 进行写操作导致冲突，每一个 key 都需要等前一个事务在该 region 上的涉及到这个 key 的写请求（可能是 prewrite、commit 或者 acquire-pessimistic-lock）完成 raft 日志复制后，才能获得 latch 锁。
     * Storage async-snapshot duration：请求 raft snapshot 的延迟（读之前需要取一个 snapshot）。
     * Storage async-write duration：raft 写入延迟，如果发现部分延迟高，则需要通过后续 Raftstore 的部分进一步定位
 * Scheduler commit
