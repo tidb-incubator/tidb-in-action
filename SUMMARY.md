@@ -127,9 +127,9 @@
     * [2.5 分析组件 CPU 消耗情况](session3/chapter2/profiling.md) @李迅
 * [3 诊断系统表](session3/chapter3/sql-diagnosis.md)
     * [3.1 集群信息表](session3/chapter3/cluster-info-tables.md) @龙恒
-    * [3.2 监控表](session3/chapter3/metrics-schema.md) @龙恒
+    * [3.2 监控表](session3/chapter3/metrics-schema.md) @王志广
     * [3.3 诊断结果表](session3/chapter3/inspection-tables.md) @龙恒
-    * [3.4 监控汇总表](session3/chapter3/metrics-summary.md) @龙恒
+    * [3.4 监控汇总表](session3/chapter3/metrics-summary.md) @陈霜
     * [3.5 SQL 慢查询内存表](session3/chapter3/slow-query-table.md) @王志广
     * [3.6 Processlist](session3/chapter3/processlist.md) @郭倪
     * [3.7 Statement Summary](session3/chapter3/statements.md) @张明
