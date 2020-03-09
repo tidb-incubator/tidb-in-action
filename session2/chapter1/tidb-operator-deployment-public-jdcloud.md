@@ -195,7 +195,7 @@ provisioner: kubernetes.io/jdcloud-ebs
 parameters:
   zones: cn-north-1a, cn-north-1b
   fstype: ext4
-reclaimPolicy: RetainTiDB
+reclaimPolicy: Retain
 ```
 
 参数说明：
