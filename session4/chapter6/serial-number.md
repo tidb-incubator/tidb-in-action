@@ -3,7 +3,7 @@
 
 互联网时代的数据量爆发，使得应用需要对大量的数据和消息进行唯一标识，即使有 sequence 功能，数据库也可能会由于高并发的 sequence 分配请求而遇到性能瓶颈。下面介绍两种高性能的序列号生成方案。
 
-# 方案一，类 snowflake 方案
+# 方案一 类 snowflake 方案
 Snowflake 是 twitter 提出的分布式 id 生成方案，目前有多种实现，较流行的是百度的 uid-generator 和美团的 leaf。以下以 uid-generator 为例分析。
 
 uid-generator 生成的 64 位 id 结构如下
