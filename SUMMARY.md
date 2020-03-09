@@ -13,7 +13,7 @@
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 调度概述](session1/chapter4/scheduling-overview.md) @陈书宁
     * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[季朋](https://github.com/pengji)
-* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮 @王军
+* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮 @王军 @王聪
         <!--
         与 MySQL 兼容性对比
         TiDB 与 MySQL 的语句兼容性说明
@@ -84,7 +84,7 @@
 
 * [2 TiDB 备份恢复和导入导出工具](session2/chapter2/tidb-backup-restore-tools.md)
     * [2.1 4.0 增量数据订阅 CDC](session2/chapter2/cdc-intro.md)
-        * [2.1.1 CDC 解决什么问题](session2/chapter2/why-cdc.md) @刘宇
+        * [2.1.1 CDC 解决什么问题](session2/chapter2/why-cdc.md) @刘宇 @郭大瑞 @杨非
         * [2.1.2 CDC 工作原理](session2/chapter2/cdc-internal.md) @刘春辉
         * [2.1.3 CDC 实操指南](session2/chapter2/cdc-in-action.md) @刘春辉(部署 + 下游链接TiDB) @洪超 @邱文辉
             <!--
