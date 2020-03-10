@@ -3,7 +3,8 @@ dist: trusty
 language: node_js
 node_js:
   - 12
-cache: npm
+cache:
+  npm: false
 
 before_script:
   - npm install
