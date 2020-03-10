@@ -21,6 +21,6 @@
   "devDependencies": {
     "gitbook": "3.2.3",
     "gitbook-cli": "^2.3.2",
-    "gitbook-plugin-analytics": "^0.2.1"
+    "gitbook-plugin-analytics": "git+https://git@github.com/you06/gitbook-plugin-analytics.git"
   }
 }
