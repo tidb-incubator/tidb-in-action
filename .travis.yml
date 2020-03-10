@@ -6,11 +6,10 @@ node_js:
 cache: npm
 
 before_script:
-  - npm install gitbook-cli
-  - export PATH=$(npm bin):$PATH
+  - npm install
 
 script:
-  - gitbook build .
+  - npm run build
 
 deploy:
   provider: pages
