@@ -1,0 +1,26 @@
+{
+  "name": "tidb-in-action",
+  "version": "1.0.0",
+  "description": "Read it:[TiDB In Action: based on 4.0](https://pingcap-incubator.github.io/tidb-in-action)",
+  "main": "index.js",
+  "scripts": {
+    "build": "gitbook build . --gitbook=3.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pingcap-incubator/tidb-in-action.git"
+  },
+  "keywords": [
+    "tidb"
+  ],
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/pingcap-incubator/tidb-in-action/issues"
+  },
+  "homepage": "https://pingcap-incubator.github.io/tidb-in-action",
+  "devDependencies": {
+    "gitbook": "3.2.3",
+    "gitbook-cli": "^2.3.2",
+    "gitbook-plugin-analytics": "^0.2.1"
+  }
+}
