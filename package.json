@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/pingcap-incubator/tidb-in-action/issues"
   },
-  "homepage": "https://github.com/pingcap-incubator/tidb-in-action#readme",
+  "homepage": "https://pingcap-incubator.github.io/tidb-in-action",
   "devDependencies": {
     "gitbook": "3.2.3",
     "gitbook-cli": "^2.3.2",
