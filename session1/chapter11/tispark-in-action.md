@@ -1,30 +1,39 @@
-上一章节中，针对TiSpark的架构和原理进行了详细的介绍，在本章，我们会介绍TiSpark的部署和使用方法。
+上一章节中，针对 TiSpark 的架构和原理进行了详细的介绍，在本章，我们会介绍 TiSpark 的部署和使用方法。
 
-**TiSpark的部署**
+**TiSpark 的部署**
 
-TiSpark目前支持两种部署方式：
+由于 TiSpark 并没有直接修改 Apache Spark 的代码，因此只要是 Apache Spark 2.1 以上版本，就可以找到对应兼容的 TiSpark。具体版本的对应，可以查看官网文档[对应章节](https://github.com/pingcap/tispark#how-to-choose-tispark-version)。无论是通过 YARN 部署还是通过 Standalone 部署，都可以参考 Apache Spark 官网的[部署环节](https://spark.apache.org/docs/latest/cluster-overview.html)。通过匹配 Spark 版本，可以从 [TiSpark Release 栏目](https://github.com/pingcap/tispark/releases) 下载对应的 TiSpark 版本的 JAR 包。
 
-* 在现有Spark集群上部署TiSpark
-* 部署一套新的TiSpark集群
+实际开启和部署 TiSpark 需要确保如下两点：
+1. Spark Driver 以及 Executor 可以访问到 TiSpark JAR 包。
+2. Spark 开启如下参数（推荐通过修改 spark-defaults.conf 来控制）
+```
+spark.sql.extensions            org.apache.spark.sql.TiExtensions
+spark.tispark.pd.addresses      pd-host1:port1,pd-host2:port2,pd-host3:port3
+```
 
-。。。
+以 Standalone 集群为例，加入 TiSpark 流程如下：
+1. 按照上述介绍修改 SPARK_HOME/spark-defaults.conf，加入上述必要配置。
+2. 启动 Spark 应用时引用 TiSpark JAR 包。以 spark-shell 为例：
+```
+./spark-shell --jars /path/your-tispark.jar
+```
 
+**TiSpark 的基本使用**
 
-**TiSpark的基本使用**
+TiSpark 的使用方法与原生 Spark 类似，提供多种方式查询数据。
 
-TiSpark的使用方法与原生Spark类似，提供多种方式查询数据。
+* 通过 spark-shell 查询数据
 
-* 通过Spark-Shell查询数据
+使用 spark-shell 启动，通过 Spark 提供的 API 即可访问数据。
 
-使用spark-shell启动，通过spark提供的api即可访问数据。
-
-示例一：利用spark-shell查询lineitem表的数据
+示例一：利用 spark-shell 查询 lineitem 表的数据
 
 ```
 scala>spark.sql("use tpch")
-使用tpch库
+使用 tpch 库
 scala>spark.sql("select count(*) from lineitem").show
-查询lineitem表的总行数
+查询 lineitem 表的总行数
 查询结果显示如下：
 +-------------+
 | Count (1)   |
@@ -32,7 +41,7 @@ scala>spark.sql("select count(*) from lineitem").show
 | 600000000   |
 +-------------+
 ```
-示例二：利用spark-sql查询复杂sql
+示例二：利用 Spark SQL 查询复杂 sql
 ```
 scala> spark.sql(
       """select
@@ -67,25 +76,25 @@ scala> 
 |           R|           F|381449.00|  534594445.35|507996454.4067|
 +------------+------------+---------+--------------+--------------+
 ```
-* 通过Spark SQL查询数据
+* 通过 Spark SQL 查询数据
 
-TiSpark同样支持利用SparkSQL查询数据。使用spark-sql命令即可进入交互式数据查询页面，接入输入sql即可。
+TiSpark同样支持利用 Spark SQL 查询数据。使用 spark-sql 命令即可进入交互式数据查询页面，接入输入 sql 即可。
 
-示例三：利用spark-sql查询lineitem表的数据
+示例三：利用 spark-sql 查询 lineitem 表的数据
 
 ```
 spark-sql> use tpch;
-使用tpch库
+使用 tpch 库
 spark-sql> select count(*) from lineitem;
 查询lineitem表的总行数
 2000
 Time taken: 0.673 seconds, Fetched 1 row(s)
 ```
-* 利用JDBC访问TiSpark
+* 利用 JDBC 访问 TiSpark
 
-部署时启动Thrift服务器后，可以通过JDBC的方式使用TiSpark。
+部署时启动 Thrift 服务器后，可以通过 JDBC 的方式使用 TiSpark。
 
-示例四：利用beeline工具使用JDBC的方式访问TiSpark
+示例四：利用 beeline 工具使用 JDBC 的方式访问 TiSpark
 
 ```
 beeline> !connect jdbc:hive2://localhost:10000
@@ -103,13 +112,13 @@ select count(*) from account;
 +-----------+--+
 1 row selected (1.97 seconds)
 ```
-**TiSpark的多语言使用**
+**TiSpark 的多语言使用**
 
-* **使用PySpark访问TiSpark**
+* **使用 PySpark 访问 TiSpark**
 
-TiSpark on PySpark是TiSpark用来支持Python语言而构建的Python包。PySpark支持直接使用也可以通过python的包管理工具来安装使用。
+TiSpark on PySpark 是 TiSpark 用来支持 Python 语言而构建的 Python 包。PySpark 支持直接使用也可以通过 python 的包管理工具来安装使用。
 
-示例一：直接使用PySpark访问TiSpark
+示例一：直接使用 PySpark 访问 TiSpark
 
 ```
 ./bin/pyspark --jars /PATH/tispark-${name_with_version}.jar
@@ -125,14 +134,14 @@ spark.sql("select count(*) from customer").show()
 |     150|
 +--------+
 ```
-示例二：利用pip安装pytispark后使用TiSpark
+示例二：利用 pip 安装 pytispark 后使用 TiSpark
 
-首先，利用pip来安装pytispark，相关命令如下：
+首先，利用 pip 来安装 pytispark，相关命令如下：
 
 ```
 pip install pytispark
 ```
-安装完成之后，创建一个用以查询数据的python文件test.py，文件示例如下：
+安装完成之后，创建一个用以查询数据的 python 文件 test.py，文件示例如下：
 ```
 import pytispark.pytispark as pti
 from pyspark.sql import SparkSession
@@ -141,7 +150,7 @@ ti = pti.TiContext(spark)
 ti.tidbMapDatabase("tpch_test")
 spark.sql("select count(*) from customer").show()
 ```
-创建完成之后使用spark-submit来查询数据，相关命令如下：
+创建完成之后使用 spark-submit 来查询数据，相关命令如下：
 ```
 ./bin/spark-submit --jars /PATH/tispark-${name_with_version}.jar test.py
 # Result:
@@ -151,11 +160,11 @@ spark.sql("select count(*) from customer").show()
 |     150|
 +--------+
 ```
-* **使用TiSparkR访问TiSpark**
+* **使用 TiSparkR 访问 TiSpark**
 
-TiSparkR是TiSpark用来支持R语言来构建的R包。同PySpark类似，TiSparkR同样支持直接使用也可以通过加载library的方式使用。
+TiSparkR 是 TiSpark 用来支持R语言来构建的 R 包。同 PySpark 类似，TiSparkR 同样支持直接使用也可以通过加载 library 的方式使用。
 
-示例三：直接使用PySpark访问TiSpark
+示例三：直接使用 PySpark 访问 TiSpark
 
 ```
 ./bin/sparkR --jars /PATH/tispark-${name_with_version}.jar
@@ -169,8 +178,8 @@ head(count)
 |     150|
 +--------+
 ```
-示例二：利用SparkR包的形式使用TiSpark
-首先，创建一个用以查询数据的R文件test.R，文件示例如下：
+示例二：利用 SparkR 包的形式使用 TiSpark
+首先，创建一个用以查询数据的 R 文件 test.R，文件示例如下：
 
 ```
 library(SparkR)
@@ -179,7 +188,7 @@ sql("use tpch_test")
 count <- sql("select count(*) from customer")
 head(count)
 ```
-创建完成之后使用spark-submit来查询数据，相关命令如下：
+创建完成之后使用 spark-submit 来查询数据，相关命令如下：
 ```
 ./bin/spark-submit  --jars /PATH/tispark-${name_with_version}.jar test.R
 # Result:
@@ -189,7 +198,7 @@ head(count)
 |     150|
 +--------
 ```
-**TiSpark访问TiFlash**
+**TiSpark 访问 TiFlash**
 
-参见TiSpark访问TiFlash章节
+参见 TiSpark 访问 TiFlash 章节
 
