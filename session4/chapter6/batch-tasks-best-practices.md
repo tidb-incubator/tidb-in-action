@@ -1,4 +1,4 @@
-TiSpark 是 PingCAP 为解决用户复杂 OLAP 需求而推出的产品。在借助 Spark 平台在计算及生态等方面优势的同时也融合了 TiKV 分布式集群的优势，为大数据环境下的批量任务提供了一种解决方案。在本节将介绍如何在已有TiDB集群基础上引入 TiSpark 进行批量任务开发。本节假设你对 Spark 有基本认知。你可以参阅[Apache Spark 官网](https://spark.apache.org/) 了解 Spark 相关信息。
+TiSpark 是 PingCAP 为解决用户复杂 OLAP 需求而推出的产品。在借助 Spark 平台在计算及生态等方面优势的同时也融合了 TiKV 分布式集群的优势，为大数据环境下的批量任务提供了一种解决方案。在本节将介绍如何在已有TiDB集群基础上引入 TiSpark 进行批量任务开发。本节假设你对 Spark 有基本认知。你可以参阅  [Apache Spark 官网](https://spark.apache.org/) 了解 Spark 相关信息。
 
 ---
 #  TiSpark 概述
@@ -6,9 +6,9 @@ TiSpark 是将 Spark SQL 直接运行在 TiDB 存储引擎 TiKV 上的 OLAP 解�
 
 ![tispark.png](/res/session4/chapter6/batch-tasks-best-practices/tispark.png)
 
-* TiSpark 深度整合了Spark Catalyst 引擎, 可以对计算提供精确的控制，使 Spark 能够高效的读取 TiKV 中的数据，提供索引支持以实现高速的点查；
+* TiSpark 深度整合了 Spark Catalyst 引擎, 可以对计算提供精确的控制，使 Spark 能够高效的读取 TiKV 中的数据，提供索引支持以实现高速的点查；
 
-* 通过多种计算下推减少Spark SQL 需要处理的数据大小，以加速查询；利用 TiDB 的内建的统计信息选择更优的查询计划。
+* 通过多种计算下推减少 Spark SQL 需要处理的数据大小，以加速查询；利用 TiDB 的内建的统计信息选择更优的查询计划。
 
 * 从数据集群的角度看，TiSpark+TiDB 可以让用户无需进行脆弱和难以维护的 ETL，直接在同一个平台进行事务和分析两种工作，简化了系统架构和运维。
 
@@ -111,7 +111,7 @@ ti.tidbMapDatabase("test")
     </dependency>
 </dependencies>
 ```
-配置好必要的依赖以后，便可以使用如下代码初始化一个 SparkSession 对象，Spark 提供了面向多种语言的 API，如 Scala、Python、Java 等，本节均以Java 为例。
+配置好必要的依赖以后，便可以使用如下代码初始化一个 SparkSession 对象，Spark 提供了面向多种语言的 API，如 Scala、Python、Java 等，本节均以 Java 为例。
 
 ```
 SparkSession sc = SparkSession
@@ -125,7 +125,7 @@ SparkSession sc = SparkSession
 上面的代码支持你在本地调试你的 TiSpark 程序，如果你要打包到 Spark 集群运行，那么指定 master 和 TiSpark 的两个配置项都是不需要的。
 接下来我们结合一个常见的场景展示一个批量任务案例：每天有一些交易文件需要落表，它包含交易双方和金额信息，之后需要基于该表进行分析。在这个案例中可以拆解出两个最基本的批量任务。
 
-一个任务负责解析每天的文件并将数据写入目标表，目前TiSpark不支持直接将数据写入 TiDB，但可以采用 Spark 原生 JDBC 方式写入，Java案例代码如下：
+一个任务负责解析每天的文件并将数据写入目标表，目前 TiSpark 不支持直接将数据写入 TiDB，但可以采用 Spark 原生 JDBC 方式写入，Java案例代码如下：
 
 ```
 sc.read().schema(getStructType())
@@ -153,10 +153,10 @@ public StructType getStructType(){
 关于写入 TiDB，有以下几点需要注意：
 
 1. 为了获得更好的写入效率并充分利用 Spark 集群资源，在写入之前最好使用 repartition 算子对数据进行再分区充分发挥 Spark 集群的计算能力，具体数值要根据任务数据量和集群资源来决定。
-2. 要想让数据进行批量写入，TiDB 连接串中需要跟上 rewriteBatchedStatements 参数并将其设置为 True，然后通过  JDBCOptions.JDBC_BATCH_INSERT_SIZE 参数去控制批量写入的大小，官方推荐的大小为150。
+2. 要想让数据进行批量写入，TiDB 连接串中需要跟上 rewriteBatchedStatements 参数并将其设置为 True，然后通过  JDBCOptions.JDBC_BATCH_INSERT_SIZE 参数去控制批量写入的大小，官方推荐的大小为 150 。
 3. 对于大量数据写入，推荐将事务隔离级别参数 isolationLevel 设置为 NONE。
 
-另一个任务从数据库读取数据进行分析，一段简单的Java分析代码如下：
+另一个任务从数据库读取数据进行分析，一段简单的 Java 分析代码如下：
 
 ```
 sc.sqlContext()
@@ -164,7 +164,7 @@ sc.sqlContext()
   .register("convert",newConvertUDF(),DataTypes.createDecimalType(10,2));
 sc.sql("select transferAccount,receiveAccount,convert(amount) from tableName where receiveAccount='0001'");
 ```
-上面的代码从表中筛选出账户号为0001的所有入账信息，其中 convert 是一个提供单位转换功能的自定义 UDF 函数，他在被注册到 Job 后可以直接在 Spark  SQL 中使用。
+上面的代码从表中筛选出账户号为 0001 的所有入账信息，其中 convert 是一个提供单位转换功能的自定义 UDF 函数，他在被注册到 Job 后可以直接在 Spark  SQL 中使用。
 Spark SQL 支持各种自定义 UDF 或 UDAF 函数，合理利用这个特性可以使你的 SQL 更加强大。TiSpark 支持常见的各种 SQL 语法，如连接和子查询，不过目前 TiSpark 暂时不支持 update 和 delete 的操作，后续会考虑支持这两个操作。
 
 在开发完毕并将代码打包后，使用 Spark-Submit 命令将任务提交到 Spark 集群：
