@@ -3,7 +3,7 @@
 ### 8.1.1 限制 SQL 内存使用和执行时间
 对于关系型数据库来说，SQL 效率毋庸置疑至关重要。可以想象一下，假设在数据库内没有任何控制机制，某条或某几条 SQL 执行时间长且耗用内存高，那么只能依赖告警系统且人工去快速定位 SQL 然后 Kill，期间效率可想而知，而在 TiDB 存在参数能让我们能够很好的限制 SQL 内存使用和执行时间。
 
-1. **执行时间限制**
+(1) **执行时间限制**
 
 max_execution_time
 
@@ -16,7 +16,7 @@ SQL Hint:
 ```
 mysql> SELECT /*+ MAX_EXECUTION_TIME(1000) */ * FROM t1 INNER JOIN t2 WHERE ...;
 ```
-2. **内存使用限制**
+(1) **内存使用限制**
 
 tidb_mem_quota_query
 
@@ -53,7 +53,7 @@ global:
   # Set the memory quota for a query in bytes. Default: 32GB
   # mem-quota-query: 34359738368
 ```
-## 事务重试设置
+### 8.1.2 事务重试设置
 TiDB 数据库锁机制有别于传统数据库悲观锁，采用乐观锁，2PC 提交，此处不作具体展开，详情可查看 TiDB事务模型章节。针对事务冲突处理，可根据业务场景按需决定是否事务重试。
 
 tidb_retry_limit
@@ -99,7 +99,7 @@ mysql> show variables like '%tidb_disable_txn_auto_retry%';
 +-----------------------------+-------+
 1 row in set (0.01 sec)
 ```
-### 8.1.2 Join 算子优化
+### 8.1.3 Join 算子优化
 TiDB 数据库 SQL 执行，Join 算子天然并发，当系统资源富余时，可根据数据库 TP | AP 应用可适当调整 Join 算子并发提高 SQL 执行效率，提升数据库系统性能。
 
 tidb_distsql_scan_concurrency
@@ -232,7 +232,7 @@ mysql> show variables like '%tidb_index_serial_scan_concurrency%';
 +------------------------------------+-------+
 1 row in set (0.00 sec)
 ```
-### 8.1.3 常见 Mysql 兼容问题
+### 8.1.4 常见 Mysql 兼容问题
 compatible-kill-query
 
 * 默认值：false
@@ -269,7 +269,7 @@ begin;
 insert into t values (1);
 ERROR 1062 : Duplicate entry '1' for key 'PRIMARY'
 ```
-### 8.1.4 其他优化项
+### 8.1.5 其他优化项
 prepared-plan-cache 以及 txn_local_latches 两个参数主要是 TiDB 配置参数，需要在 TiDB 配置文件中设置，可在 tidb-ansible conf/tidb.yaml 设置，再滚更 tidb-server 节点。
 
 ```
