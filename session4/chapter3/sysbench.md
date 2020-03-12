@@ -19,20 +19,20 @@ sysbench --version
 
 |  项目  | <center>配置</center> |  <center>台数<center>  |  说明  |
 | :----: | :----  | :----:  | :----  |
-| TiDB & PD | CPU: 2 * E5-2650 v4 @ 2.20GHz  内存: 128G  硬盘：2*800G 固态、3*1.6T SSD  网卡: 2 × 万兆 做 bond-1 |  3  | TiDB 和 PD 应用部署，文件系统 ext4 |
-| TiKV      | CPU：2 * E5-2650 v4 @ 2.20GHz  内存：256G  硬盘：2*480G 固态、4*1.92T NVMe SSD  网卡：2 × 万兆 做 bond-1 |  3  | TiKV 应用部署，文件系统 ext4，PCIe 的盘直接挂载到操作系统目录 |
-| monitor   | 8 核，32G，800 硬盘虚拟机 |  3  | 部署：Grafana + Prometheus |
+| TiDB & PD | CPU：2*E5-2650 v4@2.20GHz  内存：128G  硬盘：2*800G 固态、3*1.6T SSD  网卡: 2 * 万兆 做 bond-1       |  3  | TiDB 和 PD 应用部署，文件系统 ext4 |
+| TiKV      | CPU：2*E5-2650 v4@2.20GHz  内存：256G  硬盘：2*480G 固态、4*1.92T NVMe SSD  网卡：2 * 万兆 做 bond-1 |  3  | TiKV 应用部署，文件系统 ext4，PCIe 盘直接挂载到操作系统目录 |
+| monitor   | 8 核，32G，800G 硬盘虚拟机                                                                           |  3  | 部署：Grafana + Prometheus |
 
 * 环境说明
 
 | 项目   |    |
 |:----|:----|
-| 操作系统   | Redhat  7.4    |
-| TiDB 版本   | 5.7.25-TiDB-v3.0.5   |
-| TiDB & PD   | 每台"TiDB 服务器"部署 2 个 TiDB + 1 个 PD 服务   |
-| TiKV   | 每台"TiKV 服务器"部署 4 个 TiKV 节点   |
-| TiDB 关键参数   | performance:    max-procs: 24   |
-| TiKV 关键参数   | readpool:    coprocessor:      high-concurrency: 8      normal-concurrency: 8      low-concurrency: 8  storage:    block-cache:      capacity: "32GB"   |
+| 操作系统      | Redhat  7.4 |
+| TiDB 版本     | 5.7.25-TiDB-v3.0.5   |
+| TiDB & PD     | 每台 "TiDB 服务器" 部署 2 个 tidb-server + 1 个 pd-server  |
+| TiKV          | 每台 "TiKV 服务器" 部署 4 个 tikv-server |
+| TiDB 关键参数 | performance: <br> max-procs: 24 <br> |
+| TiKV 关键参数 | readpool: <br> coprocessor: <br> high-concurrency: 8 <br> normal-concurrency: 8 <br> low-concurrency: 8 <br> storage: <br> block-cache: <br> capacity: "32GB" <br> |
 
 # 测试实操
 ## 测试准备
