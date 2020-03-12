@@ -1,5 +1,5 @@
+[TOC]
 在前一章节，介绍了 TiDB 常见问题处理思路，本章节主要介绍一些 TiDB 常见的配置优化。
-
 ## 限制 SQL 内存使用和执行时间
 对于关系型数据库来说，SQL 效率毋庸置疑至关重要。可以想象一下，假设在数据库内没有任何控制机制，某条或某几条 SQL 执行时间长且耗用内存高，那么只能依赖告警系统且人工去快速定位 SQL 然后 Kill，期间效率可想而知，而在 TiDB 存在参数能让我们能够很好的限制 SQL 内存使用和执行时间。
 
@@ -236,7 +236,7 @@ mysql> show variables like '%tidb_index_serial_scan_concurrency%';
 compatible-kill-query
 
 * 默认值：false
-* 含义：设置 Kill 语句的兼容性，TiDB 中 Kill xxx 的行为和 MySQL 中的行为不相同。杀死一条查询，在 TiDB 里需要加上 TiDB 关键词，即 Kill TiDB xxx。但如果把 compatible-kill-query 设置为 true，则不需要加上 TiDB 关键词。这种区别很重要，因为当用户按下 Ctrl+C 时，MySQL 命令行客户端的默认行为是：创建与后台的新连接，并在该新连接中执行 Kill 语句。如果负载均衡器或代理已将该新连接发送到与原始会话不同的 TiDB 服务器实例，则该错误会话可能被终止，从而导致使用 TiDB 集群的业务中断。只有当确定在 Kill 语句中引用的连接正好位于 Kill 语句发送到的服务器上时，才可以启用 compatible-kill-query ,具体示例如下(修改 tidb-ansible conf/tidb.yaml 配置再滚更)：
+* 含义：设置 Kill 语句的兼容性，TiDB 中 Kill sessionID 的行为和 MySQL 中的行为不相同。杀死一条查询，在 TiDB 里需要加上 TiDB 关键词，即 Kill TiDB sessionID。但如果把 compatible-kill-query 设置为 true，则不需要加上 TiDB 关键词。这种区别很重要，因为当用户按下 Ctrl+C 时，MySQL 命令行客户端的默认行为是：创建与后台的新连接，并在该新连接中执行 Kill 语句。如果负载均衡器或代理已将该新连接发送到与原始会话不同的 TiDB 服务器实例，则该错误会话可能被终止，从而导致使用 TiDB 集群的业务中断。只有当确定在 Kill 语句中引用的连接正好位于 Kill 语句发送到的服务器上时，才可以启用 compatible-kill-query ,具体示例如下(修改 tidb-ansible conf/tidb.yaml 配置再滚更)：
 ```
 conf/tidb.yaml
 ---
