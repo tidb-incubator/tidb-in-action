@@ -1,8 +1,8 @@
 # 概要
-TiDB 兼容 MySQL，支持无限的水平扩展，具备强一致性和金融级高可用性，为OLTP和OLAP场景提供一站式的解决方案很香。但想要使用使用TIDB时，小伙伴都会被要求做基准测试并与MYSQL对比，本文基于Sysbench测试做简要说明。
+TiDB 兼容 MySQL，支持无限的水平扩展，具备强一致性和金融级高可用性，为 OLTP 和 OLAP 场景提供一站式的解决方案很香。但想要使用使用 TiDB 时，小伙伴都会被要求做基准测试并与 MySQL 对比，本文基于 Sysbench 测试做简要说明。
 
 # 工具集方案
-* Sysbench安装
+* Sysbench 安装
 ```
 mkdir -p /tmp/sysbench
 cd /tmp/sysbench
@@ -19,24 +19,24 @@ sysbench --version
 
 |  项目  | <center>配置</center> |  <center>台数<center>  |  说明  |
 | :----: | :----  | :----:  | :----  |
-| TIDB & PD | CPU: 2 * E5-2650 v4 @ 2.20GHz  内存: 128G  硬盘：2*800G固态、3*1.6T SSD  网卡: 2 × 万兆 做 bind-1 |  3  | TIDB 和 PD 应用部署， 文件系统 ext4 |
-| TIKV      | CPU：2 * E5-2650 v4  2.20 GHz   内存：256G  硬盘：2*480G固态、4*1.92T NVMe SSD  网卡：2 × 万兆 做 bind-1 |  3  | TIKV应用部署，文件系统 ext4，PCIe的盘直接挂载到操作系统目录 |
-| monitor   | 8 核，32G，800硬盘虚拟机 |  3  | 部署：Grafana + Prometheus |
+| TiDB & PD | CPU: 2 * E5-2650 v4 @ 2.20GHz  内存: 128G  硬盘：2*800G 固态、3*1.6T SSD  网卡: 2 × 万兆 做 bond-1 |  3  | TiDB 和 PD 应用部署，文件系统 ext4 |
+| TiKV      | CPU：2 * E5-2650 v4 @ 2.20GHz  内存：256G  硬盘：2*480G 固态、4*1.92T NVMe SSD  网卡：2 × 万兆 做 bond-1 |  3  | TiKV 应用部署，文件系统 ext4，PCIe 的盘直接挂载到操作系统目录 |
+| monitor   | 8 核，32G，800 硬盘虚拟机 |  3  | 部署：Grafana + Prometheus |
 
 * 环境说明
 
 | 项目   |    |
 |:----|:----|
 | 操作系统   | Redhat  7.4    |
-| TIDB版本   | 5.7.25-TiDB-v3.0.5   |
-| TIDB & PD   | 每台"DB服务器"部署2个TIDB + 1个PD服务   |
-| TIKV   | 每台“KV服务器”部署4个TIKV节点   |
-| TIDB关键参数   | performance:    max-procs: 24   |
-| TIKV关键参数   | readpool:    coprocessor:      high-concurrency: 8      normal-concurrency: 8      low-concurrency: 8  storage:    block-cache:      capacity: "32GB"   |
+| TiDB 版本   | 5.7.25-TiDB-v3.0.5   |
+| TiDB & PD   | 每台"TiDB 服务器"部署 2 个 TiDB + 1 个 PD 服务   |
+| TiKV   | 每台"TiKV 服务器"部署 4 个 TiKV 节点   |
+| TiDB 关键参数   | performance:    max-procs: 24   |
+| TiKV 关键参数   | readpool:    coprocessor:      high-concurrency: 8      normal-concurrency: 8      low-concurrency: 8  storage:    block-cache:      capacity: "32GB"   |
 
 # 测试实操
 ## 测试准备
-* Sysbench配置
+* Sysbench 配置
 ```
 mysql-host=192.168.xx.xx
 mysql-port=4000
@@ -50,12 +50,12 @@ db-driver=mysql
 ```
 * 关键参数说明
 ```
---threads=8 表示发起 8个并发连接
---report-interval=10 表示每10秒输出一次测试进度报告
---rand-type=uniform 表示随机类型为固定模式，其他几个可选随机模式：uniform(固定),gaussian(高斯),special(特定的),pareto(帕累托)
---time=120 表示最大执行时长为 120秒
---events=0 表示总请求数为 0，因为上面已经定义了总执行时长，所以总请求数可以设定为 0；也可以只设定总请求数，不设定最大执行时长
---percentile=99 表示设定采样比例，默认是 95%，即丢弃1%的长请求，在剩余的99%里取最大值
+--threads=8 表示发起 8 个并发连接
+--report-interval=10 表示每 10 秒输出一次测试进度报告
+--rand-type=uniform 表示随机类型为固定模式，其他几个可选随机模式：uniform (固定),gaussian (高斯),special (特定的),pareto (帕累托)
+--time=120 表示最大执行时长为 120 秒
+--events=0 表示总请求数为 0，因为上面已经定义了总执行时长，所以总请求数可以设定为 0；也可以只设定总请求数，不设定最大执行时长
+--percentile=99 表示设定采样比例，默认是 95%，即丢弃 1% 的长请求，在剩余的 99% 里取最大值
 ```
 * 结果解读
 
@@ -100,9 +100,9 @@ Latency (ms):
          sum:                               959137.19 
 Threads fairness:
     events (avg/stddev):           80930.3750/440.48 
-    # 平均每线程完成80930.3750次event，标准差为440.48
+    # 平均每线程完成 80930.3750 次 event，标准差为 440.48
     execution time (avg/stddev):   59.9461/0.00
-    # 每个线程平均耗时59.9秒，标准差为0
+    # 每个线程平均耗时 59.9 秒，标准差为 0
 ```
 * 准备数据
 ```
@@ -110,7 +110,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_point_select --tables=32 --ta
 ```
 * 数据预热与统计信息收集
 
-数据预热可将磁盘中的数据载入内存的 block cache 中，预热后的数据对系统整体的性能有较大的改善，建议在每次重启集群后进行一次数据预热。 Sysbench 中某张表 sbtest1 为例，执行如下 SQL 语句 进行数据预热：
+数据预热可将磁盘中的数据载入内存的 block cache 中，预热后的数据对系统整体的性能有较大的改善，建议在每次重启集群后进行一次数据预热。Sysbench 中某张表 sbtest1 为例，执行如下 SQL 语句 进行数据预热：
 
 ```
 SELECT COUNT(pad) FROM sbtest7 USE INDEX (k_7);
@@ -209,6 +209,5 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --tabl
 ![oltp_read_write.png](/res/session4/chapter3/sysbench/oltp_read_write.png)
 
 # 总结
-由于 TiDB 与 MySQL 架构上差别非常大，很多方面是很难找到一个基准点，大家不要用过多精力纠结这类基准测试上，应该更多关注 TiDB 的应用场景上的区别。MySQL 读扩容可以通过添加从库进行扩展，但单节点写入不具备写入扩展能力只能通过分库分表，而分库分表会增加开发维护方面复杂度。TiDB 不管是读流量还是写流量都可以通过添加节点快速方便的进行扩展。TiDB 设计的目标就是针对 MySQL 单台容量限制而被迫做的分库分表的场景，或者需要强一致性和完整分布式事务的场景。它的优势是通过尽量下推到存储节点进行并行计算。对于小表（比如千万级以下）不适合 TiDB，因为数据量少Region 有限，发挥不了并行的优势，最极端的就是计数器表几行记录高频更新，会变成存储引擎上的几个 KV，然后只落在一个 Region 里，而这个 Region 只落在一个节点，加上后台强一致性复制的开销，以及TiDB 引擎到 TiKV 引擎的开销，最后表现出来的就是没有单个 MySQL 好。
-
+由于 TiDB 与 MySQL 架构上差别非常大，很多方面是很难找到一个共同的基准点，大家不要用过多精力纠结这类基准测试上，应该更多关注 TiDB 在应用场景上的区别。MySQL 读扩容可以通过添加从库进行扩展，但单节点写入不具备扩展能力只能通过分库分表，而分库分表会增加开发维护方面成本。TiDB 不管是读流量还是写流量都可以通过添加节点的方式进行快速方便的扩展。TiDB 设计的目标就是针对 MySQL 单台容量限制而被迫做出分库分表的场景，或者需要强一致性和完整分布式事务的场景。它的优势是通过尽量将并行计算下推到各个存储节点。对于小表（比如千万级以下）不适合 TiDB：因为数据量少 region 数有限，发挥不了并行的优势，最极端的就是计数器表几行记录高频更新，会变成存储引擎上的几个 KV，然后只落在一个 region 里，而这个 region 只落在一个计算节点上，加上后台强一致性复制的开销，以及 TiDB 引擎到 TiKV 引擎的开销，最后表现出来的就是没有单个 MySQL 好。
 
