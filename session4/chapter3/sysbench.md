@@ -38,10 +38,10 @@ sysbench --version
 ## 测试准备
 * Sysbench 配置
 ```
-mysql-host=192.168.xx.xx
+mysql-host=192.168.xxx.xxx
 mysql-port=4000
 mysql-user=sysbench
-mysql-password=xxxxx
+mysql-password=******
 mysql-db=test
 time=60
 threads=16
@@ -140,12 +140,12 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_write_only --tables=32 --tabl
 sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --table-size=10000000 run
 ```
 ## 测试报告
-笔者测试数据 32 表，每表有 10M 数据。对每个 tidb-server 进行了 Sysbench 测试，将结果相加，得出最终结果：
+笔者测试数据 32 张表，每张表有 10M 数据。对集群所有 tidb-server 都进行 Sysbench 测试，将结果相加，得出最终结果：
 
 * oltp_point_select
 
 | type   | **thread**   | **tps**   | **qps**   | **min latency**   | **avg latency**   | **95th latency**   | **max latency**   |
-|:----|----:|:----:|----:|:----:|----:|:----:|----:|
+|:----   |----:         |:----:     |----:     |:----:             |----:              |:----:              |----:              |
 | point_select   | 64   | 148098.00   | 148098.00   | 0.26   | 0.43   | 0.52   | 276.54   |
 | point_select   | 128   | 257760.00   | 257760.00   | 0.27   | 0.50   | 0.65   | 261.51   |
 | point_select   | 256   | 343215.00   | 343215.00   | 0.28   | 0.75   | 1.89   | 253.23   |
@@ -158,7 +158,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --tabl
 
 * read_only
 
-| type   | **thread**   | **tps**   | **qps**   | **min latency**   | **avg latency**   | **95th latency**   | **max latency**   |
+| type | **thread** | **tps** | **qps**   | **min latency**   | **avg latency**   | **95th latency**   | **max latency**   |
 |:----|----:|:----:|----:|:----:|----:|:----:|----:|
 | read_only   | 64   | 5984.48   | 95751.60   | 7.87   | 10.69   | 14.21   | 85.24   |
 | read_only   | 128   | 9741.39   | 155862.00   | 7.64   | 13.14   | 18.28   | 236.37   |
