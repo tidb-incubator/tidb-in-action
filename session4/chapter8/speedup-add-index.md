@@ -16,6 +16,6 @@ TiDB 主要使用 `tidb_ddl_reorg_worker_cnt` 和 `tidb_ddl_reorg_batch_size` �
 
 添加索引的速度评估使用 `admin show ddl` 查询 RowCount 字段，了解目前 ddl 已经更新了的行数，再使用 `show stats_meta` 查看 Row_count 字段了添加索引的表有几行，根据当前已经更新的时间和更新行数比例粗略评估剩下多少更新时间，再次进行动态参数的调整。
 
-通常来说：\n
-1、为更新不频繁的字段新增索引，对系统影响比较小可以使用默认配置。\n
+通常来说：  
+1、为更新不频繁的字段新增索引，对系统影响比较小可以使用默认配置。  
 2、如果为更新频繁的字段新增索引可以调整到 4 和 256 确保系统正常稳定的运行。可以查看[添加索引和负载测试](https://pingcap.com/docs-cn/stable/benchmark/add-index-with-load/#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88-1-add-index-%E7%9B%AE%E6%A0%87%E5%88%97%E8%A2%AB%E9%A2%91%E7%B9%81-update)
