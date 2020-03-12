@@ -17,10 +17,10 @@ sysbench --version
 ```
 * 硬件配置
 
-|  项目  | <center>配置</center> |  <center>台数<center>  |  说明  |
+|  项目  | 配置 |  台数  |  说明  |
 | :----: | :----  | :----:  | :----  |
-| TiDB & PD | CPU：2*E5-2650 v4@2.20GHz  内存：128G  硬盘：2*800G 固态、3*1.6T SSD  网卡: 2 * 万兆 做 bond-1       |  3  | TiDB 和 PD 应用部署，文件系统 ext4 |
-| TiKV      | CPU：2*E5-2650 v4@2.20GHz  内存：256G  硬盘：2*480G 固态、4*1.92T NVMe SSD  网卡：2 * 万兆 做 bond-1 |  3  | TiKV 应用部署，文件系统 ext4，PCIe 盘直接挂载到操作系统目录 |
+| TiDB & PD | CPU：2\*E5-2650 v4@2.20GHz  内存：128G  硬盘：2\*800G 固态、3\*1.6T SSD  网卡: 2 \* 万兆 做 bond-1       |  3  | TiDB 和 PD 应用部署，文件系统 ext4 |
+| TiKV      | CPU：2\*E5-2650 v4@2.20GHz  内存：256G  硬盘：2\*480G 固态、4\*1.92T NVMe SSD  网卡：2 \* 万兆 做 bond-1 |  3  | TiKV 应用部署，文件系统 ext4，PCIe 盘直接挂载到操作系统目录 |
 | monitor   | 8 核，32G，800G 硬盘虚拟机                                                                           |  3  | 部署：Grafana + Prometheus |
 
 * 环境说明
