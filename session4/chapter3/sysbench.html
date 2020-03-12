@@ -2822,10 +2822,10 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x6982;&#x8981;">&#x6982;&#x8981;</h1>
-<p>TiDB &#x517C;&#x5BB9; MySQL&#xFF0C;&#x652F;&#x6301;&#x65E0;&#x9650;&#x7684;&#x6C34;&#x5E73;&#x6269;&#x5C55;&#xFF0C;&#x5177;&#x5907;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x91D1;&#x878D;&#x7EA7;&#x9AD8;&#x53EF;&#x7528;&#x6027;&#xFF0C;&#x4E3A;OLTP&#x548C;OLAP&#x573A;&#x666F;&#x63D0;&#x4F9B;&#x4E00;&#x7AD9;&#x5F0F;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x5F88;&#x9999;&#x3002;&#x4F46;&#x60F3;&#x8981;&#x4F7F;&#x7528;&#x4F7F;&#x7528;TIDB&#x65F6;&#xFF0C;&#x5C0F;&#x4F19;&#x4F34;&#x90FD;&#x4F1A;&#x88AB;&#x8981;&#x6C42;&#x505A;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5E76;&#x4E0E;MYSQL&#x5BF9;&#x6BD4;&#xFF0C;&#x672C;&#x6587;&#x57FA;&#x4E8E;Sysbench&#x6D4B;&#x8BD5;&#x505A;&#x7B80;&#x8981;&#x8BF4;&#x660E;&#x3002;</p>
+<p>TiDB &#x517C;&#x5BB9; MySQL&#xFF0C;&#x652F;&#x6301;&#x65E0;&#x9650;&#x7684;&#x6C34;&#x5E73;&#x6269;&#x5C55;&#xFF0C;&#x5177;&#x5907;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x91D1;&#x878D;&#x7EA7;&#x9AD8;&#x53EF;&#x7528;&#x6027;&#xFF0C;&#x4E3A; OLTP &#x548C; OLAP &#x573A;&#x666F;&#x63D0;&#x4F9B;&#x4E00;&#x7AD9;&#x5F0F;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x5F88;&#x9999;&#x3002;&#x4F46;&#x60F3;&#x8981;&#x4F7F;&#x7528;&#x4F7F;&#x7528; TiDB &#x65F6;&#xFF0C;&#x5C0F;&#x4F19;&#x4F34;&#x90FD;&#x4F1A;&#x88AB;&#x8981;&#x6C42;&#x505A;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5E76;&#x4E0E; MySQL &#x5BF9;&#x6BD4;&#xFF0C;&#x672C;&#x6587;&#x57FA;&#x4E8E; Sysbench &#x6D4B;&#x8BD5;&#x505A;&#x7B80;&#x8981;&#x8BF4;&#x660E;&#x3002;</p>
 <h1 id="&#x5DE5;&#x5177;&#x96C6;&#x65B9;&#x6848;">&#x5DE5;&#x5177;&#x96C6;&#x65B9;&#x6848;</h1>
 <ul>
-<li>Sysbench&#x5B89;&#x88C5;<pre><code>mkdir -p /tmp/sysbench
+<li>Sysbench &#x5B89;&#x88C5;<pre><code>mkdir -p /tmp/sysbench
 cd /tmp/sysbench
 wget https://github.com/akopytov/sysbench/archive/1.0.14.tar.gz
 yum -y install make automake libtool pkgconfig libaio-devel
@@ -2842,27 +2842,27 @@ sysbench --version
 <thead>
 <tr>
 <th style="text-align:center">&#x9879;&#x76EE;</th>
-<th style="text-align:left"><center>&#x914D;&#x7F6E;</center></th>
-<th style="text-align:center"><center>&#x53F0;&#x6570;<center></center></center></th>
+<th style="text-align:left">&#x914D;&#x7F6E;</th>
+<th style="text-align:center">&#x53F0;&#x6570;</th>
 <th style="text-align:left">&#x8BF4;&#x660E;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">TIDB &amp; PD</td>
-<td style="text-align:left">CPU: 2 <em> E5-2650 v4 @ 2.20GHz  &#x5185;&#x5B58;: 128G  &#x786C;&#x76D8;&#xFF1A;2</em>800G&#x56FA;&#x6001;&#x3001;3*1.6T SSD  &#x7F51;&#x5361;: 2 &#xD7; &#x4E07;&#x5146; &#x505A; bind-1</td>
+<td style="text-align:center">TiDB &amp; PD</td>
+<td style="text-align:left">CPU&#xFF1A;2*E5-2650 v4@2.20GHz  &#x5185;&#x5B58;&#xFF1A;128G  &#x786C;&#x76D8;&#xFF1A;2*800G &#x56FA;&#x6001;&#x3001;3*1.6T SSD  &#x7F51;&#x5361;: 2 * &#x4E07;&#x5146; &#x505A; bond-1</td>
 <td style="text-align:center">3</td>
-<td style="text-align:left">TIDB &#x548C; PD &#x5E94;&#x7528;&#x90E8;&#x7F72;&#xFF0C; &#x6587;&#x4EF6;&#x7CFB;&#x7EDF; ext4</td>
+<td style="text-align:left">TiDB &#x548C; PD &#x5E94;&#x7528;&#x90E8;&#x7F72;&#xFF0C;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; ext4</td>
 </tr>
 <tr>
-<td style="text-align:center">TIKV</td>
-<td style="text-align:left">CPU&#xFF1A;2 <em> E5-2650 v4  2.20 GHz   &#x5185;&#x5B58;&#xFF1A;256G  &#x786C;&#x76D8;&#xFF1A;2</em>480G&#x56FA;&#x6001;&#x3001;4*1.92T NVMe SSD  &#x7F51;&#x5361;&#xFF1A;2 &#xD7; &#x4E07;&#x5146; &#x505A; bind-1</td>
+<td style="text-align:center">TiKV</td>
+<td style="text-align:left">CPU&#xFF1A;2*E5-2650 v4@2.20GHz  &#x5185;&#x5B58;&#xFF1A;256G  &#x786C;&#x76D8;&#xFF1A;2*480G &#x56FA;&#x6001;&#x3001;4*1.92T NVMe SSD  &#x7F51;&#x5361;&#xFF1A;2 * &#x4E07;&#x5146; &#x505A; bond-1</td>
 <td style="text-align:center">3</td>
-<td style="text-align:left">TIKV&#x5E94;&#x7528;&#x90E8;&#x7F72;&#xFF0C;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; ext4&#xFF0C;PCIe&#x7684;&#x76D8;&#x76F4;&#x63A5;&#x6302;&#x8F7D;&#x5230;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x76EE;&#x5F55;</td>
+<td style="text-align:left">TiKV &#x5E94;&#x7528;&#x90E8;&#x7F72;&#xFF0C;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; ext4&#xFF0C;PCIe &#x76D8;&#x76F4;&#x63A5;&#x6302;&#x8F7D;&#x5230;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x76EE;&#x5F55;</td>
 </tr>
 <tr>
 <td style="text-align:center">monitor</td>
-<td style="text-align:left">8 &#x6838;&#xFF0C;32G&#xFF0C;800&#x786C;&#x76D8;&#x865A;&#x62DF;&#x673A;</td>
+<td style="text-align:left">8 &#x6838;&#xFF0C;32G&#xFF0C;800G &#x786C;&#x76D8;&#x865A;&#x62DF;&#x673A;</td>
 <td style="text-align:center">3</td>
 <td style="text-align:left">&#x90E8;&#x7F72;&#xFF1A;Grafana + Prometheus</td>
 </tr>
@@ -2884,46 +2884,46 @@ sysbench --version
 <td style="text-align:left">Redhat  7.4</td>
 </tr>
 <tr>
-<td style="text-align:left">TIDB&#x7248;&#x672C;</td>
+<td style="text-align:left">TiDB &#x7248;&#x672C;</td>
 <td style="text-align:left">5.7.25-TiDB-v3.0.5</td>
 </tr>
 <tr>
-<td style="text-align:left">TIDB &amp; PD</td>
-<td style="text-align:left">&#x6BCF;&#x53F0;&quot;DB&#x670D;&#x52A1;&#x5668;&quot;&#x90E8;&#x7F72;2&#x4E2A;TIDB + 1&#x4E2A;PD&#x670D;&#x52A1;</td>
+<td style="text-align:left">TiDB &amp; PD</td>
+<td style="text-align:left">&#x6BCF;&#x53F0; &quot;TiDB &#x670D;&#x52A1;&#x5668;&quot; &#x90E8;&#x7F72; 2 &#x4E2A; tidb-server + 1 &#x4E2A; pd-server</td>
 </tr>
 <tr>
-<td style="text-align:left">TIKV</td>
-<td style="text-align:left">&#x6BCF;&#x53F0;&#x201C;KV&#x670D;&#x52A1;&#x5668;&#x201D;&#x90E8;&#x7F72;4&#x4E2A;TIKV&#x8282;&#x70B9;</td>
+<td style="text-align:left">TiKV</td>
+<td style="text-align:left">&#x6BCF;&#x53F0; &quot;TiKV &#x670D;&#x52A1;&#x5668;&quot; &#x90E8;&#x7F72; 4 &#x4E2A; tikv-server</td>
 </tr>
 <tr>
-<td style="text-align:left">TIDB&#x5173;&#x952E;&#x53C2;&#x6570;</td>
-<td style="text-align:left">performance:    max-procs: 24</td>
+<td style="text-align:left">TiDB &#x5173;&#x952E;&#x53C2;&#x6570;</td>
+<td style="text-align:left">performance: <br> max-procs: 24 <br></td>
 </tr>
 <tr>
-<td style="text-align:left">TIKV&#x5173;&#x952E;&#x53C2;&#x6570;</td>
-<td style="text-align:left">readpool:    coprocessor:      high-concurrency: 8      normal-concurrency: 8      low-concurrency: 8  storage:    block-cache:      capacity: &quot;32GB&quot;</td>
+<td style="text-align:left">TiKV &#x5173;&#x952E;&#x53C2;&#x6570;</td>
+<td style="text-align:left">readpool: <br> coprocessor: <br> high-concurrency: 8 <br> normal-concurrency: 8 <br> low-concurrency: 8 <br> storage: <br> block-cache: <br> capacity: &quot;32GB&quot; <br></td>
 </tr>
 </tbody>
 </table>
 <h1 id="&#x6D4B;&#x8BD5;&#x5B9E;&#x64CD;">&#x6D4B;&#x8BD5;&#x5B9E;&#x64CD;</h1>
 <h2 id="&#x6D4B;&#x8BD5;&#x51C6;&#x5907;">&#x6D4B;&#x8BD5;&#x51C6;&#x5907;</h2>
 <ul>
-<li>Sysbench&#x914D;&#x7F6E;<pre><code>mysql-host=192.168.xx.xx
+<li>Sysbench &#x914D;&#x7F6E;<pre><code>mysql-host=192.168.xxx.xxx
 mysql-port=4000
 mysql-user=sysbench
-mysql-password=xxxxx
+mysql-password=******
 mysql-db=test
 time=60
 threads=16
 report-interval=10
 db-driver=mysql
 </code></pre></li>
-<li>&#x5173;&#x952E;&#x53C2;&#x6570;&#x8BF4;&#x660E;<pre><code>--threads=8 &#x8868;&#x793A;&#x53D1;&#x8D77; 8&#x4E2A;&#x5E76;&#x53D1;&#x8FDE;&#x63A5;
---report-interval=10 &#x8868;&#x793A;&#x6BCF;10&#x79D2;&#x8F93;&#x51FA;&#x4E00;&#x6B21;&#x6D4B;&#x8BD5;&#x8FDB;&#x5EA6;&#x62A5;&#x544A;
---rand-type=uniform &#x8868;&#x793A;&#x968F;&#x673A;&#x7C7B;&#x578B;&#x4E3A;&#x56FA;&#x5B9A;&#x6A21;&#x5F0F;&#xFF0C;&#x5176;&#x4ED6;&#x51E0;&#x4E2A;&#x53EF;&#x9009;&#x968F;&#x673A;&#x6A21;&#x5F0F;&#xFF1A;uniform(&#x56FA;&#x5B9A;),gaussian(&#x9AD8;&#x65AF;),special(&#x7279;&#x5B9A;&#x7684;),pareto(&#x5E15;&#x7D2F;&#x6258;)
---time=120 &#x8868;&#x793A;&#x6700;&#x5927;&#x6267;&#x884C;&#x65F6;&#x957F;&#x4E3A; 120&#x79D2;
+<li>&#x5173;&#x952E;&#x53C2;&#x6570;&#x8BF4;&#x660E;<pre><code>--threads=8 &#x8868;&#x793A;&#x53D1;&#x8D77; 8 &#x4E2A;&#x5E76;&#x53D1;&#x8FDE;&#x63A5;
+--report-interval=10 &#x8868;&#x793A;&#x6BCF; 10 &#x79D2;&#x8F93;&#x51FA;&#x4E00;&#x6B21;&#x6D4B;&#x8BD5;&#x8FDB;&#x5EA6;&#x62A5;&#x544A;
+--rand-type=uniform &#x8868;&#x793A;&#x968F;&#x673A;&#x7C7B;&#x578B;&#x4E3A;&#x56FA;&#x5B9A;&#x6A21;&#x5F0F;&#xFF0C;&#x5176;&#x4ED6;&#x51E0;&#x4E2A;&#x53EF;&#x9009;&#x968F;&#x673A;&#x6A21;&#x5F0F;&#xFF1A;uniform (&#x56FA;&#x5B9A;),gaussian (&#x9AD8;&#x65AF;),special (&#x7279;&#x5B9A;&#x7684;),pareto (&#x5E15;&#x7D2F;&#x6258;)
+--time=120 &#x8868;&#x793A;&#x6700;&#x5927;&#x6267;&#x884C;&#x65F6;&#x957F;&#x4E3A; 120 &#x79D2;
 --events=0 &#x8868;&#x793A;&#x603B;&#x8BF7;&#x6C42;&#x6570;&#x4E3A; 0&#xFF0C;&#x56E0;&#x4E3A;&#x4E0A;&#x9762;&#x5DF2;&#x7ECF;&#x5B9A;&#x4E49;&#x4E86;&#x603B;&#x6267;&#x884C;&#x65F6;&#x957F;&#xFF0C;&#x6240;&#x4EE5;&#x603B;&#x8BF7;&#x6C42;&#x6570;&#x53EF;&#x4EE5;&#x8BBE;&#x5B9A;&#x4E3A; 0&#xFF1B;&#x4E5F;&#x53EF;&#x4EE5;&#x53EA;&#x8BBE;&#x5B9A;&#x603B;&#x8BF7;&#x6C42;&#x6570;&#xFF0C;&#x4E0D;&#x8BBE;&#x5B9A;&#x6700;&#x5927;&#x6267;&#x884C;&#x65F6;&#x957F;
---percentile=99 &#x8868;&#x793A;&#x8BBE;&#x5B9A;&#x91C7;&#x6837;&#x6BD4;&#x4F8B;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 95%&#xFF0C;&#x5373;&#x4E22;&#x5F03;1%&#x7684;&#x957F;&#x8BF7;&#x6C42;&#xFF0C;&#x5728;&#x5269;&#x4F59;&#x7684;99%&#x91CC;&#x53D6;&#x6700;&#x5927;&#x503C;
+--percentile=99 &#x8868;&#x793A;&#x8BBE;&#x5B9A;&#x91C7;&#x6837;&#x6BD4;&#x4F8B;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 95%&#xFF0C;&#x5373;&#x4E22;&#x5F03; 1% &#x7684;&#x957F;&#x8BF7;&#x6C42;&#xFF0C;&#x5728;&#x5269;&#x4F59;&#x7684; 99% &#x91CC;&#x53D6;&#x6700;&#x5927;&#x503C;
 </code></pre></li>
 <li>&#x7ED3;&#x679C;&#x89E3;&#x8BFB;</li>
 </ul>
@@ -2967,15 +2967,15 @@ Latency (ms):
          sum:                               959137.19 
 Threads fairness:
     events (avg/stddev):           80930.3750/440.48 
-    # &#x5E73;&#x5747;&#x6BCF;&#x7EBF;&#x7A0B;&#x5B8C;&#x6210;80930.3750&#x6B21;event&#xFF0C;&#x6807;&#x51C6;&#x5DEE;&#x4E3A;440.48
+    # &#x5E73;&#x5747;&#x6BCF;&#x7EBF;&#x7A0B;&#x5B8C;&#x6210; 80930.3750 &#x6B21; event&#xFF0C;&#x6807;&#x51C6;&#x5DEE;&#x4E3A; 440.48
     execution time (avg/stddev):   59.9461/0.00
-    # &#x6BCF;&#x4E2A;&#x7EBF;&#x7A0B;&#x5E73;&#x5747;&#x8017;&#x65F6;59.9&#x79D2;&#xFF0C;&#x6807;&#x51C6;&#x5DEE;&#x4E3A;0
+    # &#x6BCF;&#x4E2A;&#x7EBF;&#x7A0B;&#x5E73;&#x5747;&#x8017;&#x65F6; 59.9 &#x79D2;&#xFF0C;&#x6807;&#x51C6;&#x5DEE;&#x4E3A; 0
 </code></pre><ul>
 <li>&#x51C6;&#x5907;&#x6570;&#x636E;<pre><code>sysbench --config-file=sysbench-thread-16.cfg oltp_point_select --tables=32 --table-size=10000000 prepare
 </code></pre></li>
 <li>&#x6570;&#x636E;&#x9884;&#x70ED;&#x4E0E;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x6536;&#x96C6;</li>
 </ul>
-<p>&#x6570;&#x636E;&#x9884;&#x70ED;&#x53EF;&#x5C06;&#x78C1;&#x76D8;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x7684; block cache &#x4E2D;&#xFF0C;&#x9884;&#x70ED;&#x540E;&#x7684;&#x6570;&#x636E;&#x5BF9;&#x7CFB;&#x7EDF;&#x6574;&#x4F53;&#x7684;&#x6027;&#x80FD;&#x6709;&#x8F83;&#x5927;&#x7684;&#x6539;&#x5584;&#xFF0C;&#x5EFA;&#x8BAE;&#x5728;&#x6BCF;&#x6B21;&#x91CD;&#x542F;&#x96C6;&#x7FA4;&#x540E;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x6570;&#x636E;&#x9884;&#x70ED;&#x3002; Sysbench &#x4E2D;&#x67D0;&#x5F20;&#x8868; sbtest1 &#x4E3A;&#x4F8B;&#xFF0C;&#x6267;&#x884C;&#x5982;&#x4E0B; SQL &#x8BED;&#x53E5; &#x8FDB;&#x884C;&#x6570;&#x636E;&#x9884;&#x70ED;&#xFF1A;</p>
+<p>&#x6570;&#x636E;&#x9884;&#x70ED;&#x53EF;&#x5C06;&#x78C1;&#x76D8;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x7684; block cache &#x4E2D;&#xFF0C;&#x9884;&#x70ED;&#x540E;&#x7684;&#x6570;&#x636E;&#x5BF9;&#x7CFB;&#x7EDF;&#x6574;&#x4F53;&#x7684;&#x6027;&#x80FD;&#x6709;&#x8F83;&#x5927;&#x7684;&#x6539;&#x5584;&#xFF0C;&#x5EFA;&#x8BAE;&#x5728;&#x6BCF;&#x6B21;&#x91CD;&#x542F;&#x96C6;&#x7FA4;&#x540E;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x6570;&#x636E;&#x9884;&#x70ED;&#x3002;Sysbench &#x4E2D;&#x67D0;&#x5F20;&#x8868; sbtest1 &#x4E3A;&#x4F8B;&#xFF0C;&#x6267;&#x884C;&#x5982;&#x4E0B; SQL &#x8BED;&#x53E5; &#x8FDB;&#x884C;&#x6570;&#x636E;&#x9884;&#x70ED;&#xFF1A;</p>
 <pre><code>SELECT COUNT(pad) FROM sbtest7 USE INDEX (k_7);
 </code></pre><p>&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x6536;&#x96C6;&#x6709;&#x52A9;&#x4E8E;&#x4F18;&#x5316;&#x5668;&#x9009;&#x62E9;&#x66F4;&#x4E3A;&#x51C6;&#x786E;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; analyze &#x547D;&#x4EE4;&#x6765;&#x6536;&#x96C6;&#x8868; sbtest &#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#xFF0C;&#x6BCF;&#x4E2A;&#x8868;&#x90FD;&#x9700;&#x8981;&#x7EDF;&#x8BA1;&#x3002;</p>
 <pre><code>ANALYZE TABLE sbtest7;
@@ -2991,7 +2991,7 @@ Threads fairness:
 <li><p>Read-Write &#x6D4B;&#x8BD5;&#x547D;&#x4EE4;</p>
 <pre><code>sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --table-size=10000000 run
 </code></pre><h2 id="&#x6D4B;&#x8BD5;&#x62A5;&#x544A;">&#x6D4B;&#x8BD5;&#x62A5;&#x544A;</h2>
-<p>&#x7B14;&#x8005;&#x6D4B;&#x8BD5;&#x6570;&#x636E; 32 &#x8868;&#xFF0C;&#x6BCF;&#x8868;&#x6709; 10M &#x6570;&#x636E;&#x3002;&#x5BF9;&#x6BCF;&#x4E2A; tidb-server &#x8FDB;&#x884C;&#x4E86; Sysbench &#x6D4B;&#x8BD5;&#xFF0C;&#x5C06;&#x7ED3;&#x679C;&#x76F8;&#x52A0;&#xFF0C;&#x5F97;&#x51FA;&#x6700;&#x7EC8;&#x7ED3;&#x679C;&#xFF1A;</p>
+<p>&#x7B14;&#x8005;&#x6D4B;&#x8BD5;&#x6570;&#x636E; 32 &#x5F20;&#x8868;&#xFF0C;&#x6BCF;&#x5F20;&#x8868;&#x6709; 10M &#x6570;&#x636E;&#x3002;&#x5BF9;&#x96C6;&#x7FA4;&#x6240;&#x6709; tidb-server &#x90FD;&#x8FDB;&#x884C; Sysbench &#x6D4B;&#x8BD5;&#xFF0C;&#x5C06;&#x7ED3;&#x679C;&#x76F8;&#x52A0;&#xFF0C;&#x5F97;&#x51FA;&#x6700;&#x7EC8;&#x7ED3;&#x679C;&#xFF1A;</p>
 </li>
 <li><p>oltp_point_select</p>
 </li>
@@ -3404,7 +3404,7 @@ Threads fairness:
 </table>
 <p><img src="../../res/session4/chapter3/sysbench/oltp_read_write.png" alt="oltp_read_write.png"></p>
 <h1 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h1>
-<p>&#x7531;&#x4E8E; TiDB &#x4E0E; MySQL &#x67B6;&#x6784;&#x4E0A;&#x5DEE;&#x522B;&#x975E;&#x5E38;&#x5927;&#xFF0C;&#x5F88;&#x591A;&#x65B9;&#x9762;&#x662F;&#x5F88;&#x96BE;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x57FA;&#x51C6;&#x70B9;&#xFF0C;&#x5927;&#x5BB6;&#x4E0D;&#x8981;&#x7528;&#x8FC7;&#x591A;&#x7CBE;&#x529B;&#x7EA0;&#x7ED3;&#x8FD9;&#x7C7B;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x4E0A;&#xFF0C;&#x5E94;&#x8BE5;&#x66F4;&#x591A;&#x5173;&#x6CE8; TiDB &#x7684;&#x5E94;&#x7528;&#x573A;&#x666F;&#x4E0A;&#x7684;&#x533A;&#x522B;&#x3002;MySQL &#x8BFB;&#x6269;&#x5BB9;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x4ECE;&#x5E93;&#x8FDB;&#x884C;&#x6269;&#x5C55;&#xFF0C;&#x4F46;&#x5355;&#x8282;&#x70B9;&#x5199;&#x5165;&#x4E0D;&#x5177;&#x5907;&#x5199;&#x5165;&#x6269;&#x5C55;&#x80FD;&#x529B;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x5206;&#x5E93;&#x5206;&#x8868;&#xFF0C;&#x800C;&#x5206;&#x5E93;&#x5206;&#x8868;&#x4F1A;&#x589E;&#x52A0;&#x5F00;&#x53D1;&#x7EF4;&#x62A4;&#x65B9;&#x9762;&#x590D;&#x6742;&#x5EA6;&#x3002;TiDB &#x4E0D;&#x7BA1;&#x662F;&#x8BFB;&#x6D41;&#x91CF;&#x8FD8;&#x662F;&#x5199;&#x6D41;&#x91CF;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x8282;&#x70B9;&#x5FEB;&#x901F;&#x65B9;&#x4FBF;&#x7684;&#x8FDB;&#x884C;&#x6269;&#x5C55;&#x3002;TiDB &#x8BBE;&#x8BA1;&#x7684;&#x76EE;&#x6807;&#x5C31;&#x662F;&#x9488;&#x5BF9; MySQL &#x5355;&#x53F0;&#x5BB9;&#x91CF;&#x9650;&#x5236;&#x800C;&#x88AB;&#x8FEB;&#x505A;&#x7684;&#x5206;&#x5E93;&#x5206;&#x8868;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x6216;&#x8005;&#x9700;&#x8981;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x5B8C;&#x6574;&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;&#x7684;&#x573A;&#x666F;&#x3002;&#x5B83;&#x7684;&#x4F18;&#x52BF;&#x662F;&#x901A;&#x8FC7;&#x5C3D;&#x91CF;&#x4E0B;&#x63A8;&#x5230;&#x5B58;&#x50A8;&#x8282;&#x70B9;&#x8FDB;&#x884C;&#x5E76;&#x884C;&#x8BA1;&#x7B97;&#x3002;&#x5BF9;&#x4E8E;&#x5C0F;&#x8868;&#xFF08;&#x6BD4;&#x5982;&#x5343;&#x4E07;&#x7EA7;&#x4EE5;&#x4E0B;&#xFF09;&#x4E0D;&#x9002;&#x5408; TiDB&#xFF0C;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x91CF;&#x5C11;Region &#x6709;&#x9650;&#xFF0C;&#x53D1;&#x6325;&#x4E0D;&#x4E86;&#x5E76;&#x884C;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x6700;&#x6781;&#x7AEF;&#x7684;&#x5C31;&#x662F;&#x8BA1;&#x6570;&#x5668;&#x8868;&#x51E0;&#x884C;&#x8BB0;&#x5F55;&#x9AD8;&#x9891;&#x66F4;&#x65B0;&#xFF0C;&#x4F1A;&#x53D8;&#x6210;&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x4E0A;&#x7684;&#x51E0;&#x4E2A; KV&#xFF0C;&#x7136;&#x540E;&#x53EA;&#x843D;&#x5728;&#x4E00;&#x4E2A; Region &#x91CC;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A; Region &#x53EA;&#x843D;&#x5728;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x52A0;&#x4E0A;&#x540E;&#x53F0;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x590D;&#x5236;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x4EE5;&#x53CA;TiDB &#x5F15;&#x64CE;&#x5230; TiKV &#x5F15;&#x64CE;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x6700;&#x540E;&#x8868;&#x73B0;&#x51FA;&#x6765;&#x7684;&#x5C31;&#x662F;&#x6CA1;&#x6709;&#x5355;&#x4E2A; MySQL &#x597D;&#x3002;</p>
+<p>&#x7531;&#x4E8E; TiDB &#x4E0E; MySQL &#x67B6;&#x6784;&#x4E0A;&#x5DEE;&#x522B;&#x975E;&#x5E38;&#x5927;&#xFF0C;&#x5F88;&#x591A;&#x65B9;&#x9762;&#x662F;&#x5F88;&#x96BE;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x5171;&#x540C;&#x7684;&#x57FA;&#x51C6;&#x70B9;&#xFF0C;&#x5927;&#x5BB6;&#x4E0D;&#x8981;&#x7528;&#x8FC7;&#x591A;&#x7CBE;&#x529B;&#x7EA0;&#x7ED3;&#x8FD9;&#x7C7B;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x4E0A;&#xFF0C;&#x5E94;&#x8BE5;&#x66F4;&#x591A;&#x5173;&#x6CE8; TiDB &#x548C; MySQL &#x5728;&#x5E94;&#x7528;&#x573A;&#x666F;&#x4E0A;&#x7684;&#x533A;&#x522B;&#x3002;MySQL &#x8BFB;&#x6269;&#x5BB9;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x4ECE;&#x5E93;&#x8FDB;&#x884C;&#x6269;&#x5C55;&#xFF0C;&#x4F46;&#x5355;&#x8282;&#x70B9;&#x5199;&#x5165;&#x4E0D;&#x5177;&#x5907;&#x6269;&#x5C55;&#x80FD;&#x529B;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x5206;&#x5E93;&#x5206;&#x8868;&#xFF0C;&#x800C;&#x5206;&#x5E93;&#x5206;&#x8868;&#x4F1A;&#x589E;&#x52A0;&#x5F00;&#x53D1;&#x7EF4;&#x62A4;&#x65B9;&#x9762;&#x6210;&#x672C;&#x3002;TiDB &#x4E0D;&#x7BA1;&#x662F;&#x8BFB;&#x6D41;&#x91CF;&#x8FD8;&#x662F;&#x5199;&#x6D41;&#x91CF;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x8282;&#x70B9;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x5FEB;&#x901F;&#x65B9;&#x4FBF;&#x7684;&#x6269;&#x5C55;&#x3002;TiDB &#x8BBE;&#x8BA1;&#x7684;&#x76EE;&#x6807;&#x5C31;&#x662F;&#x9488;&#x5BF9; MySQL &#x5355;&#x53F0;&#x5BB9;&#x91CF;&#x9650;&#x5236;&#x800C;&#x88AB;&#x8FEB;&#x505A;&#x51FA;&#x5206;&#x5E93;&#x5206;&#x8868;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x6216;&#x8005;&#x9700;&#x8981;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x5B8C;&#x6574;&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;&#x7684;&#x573A;&#x666F;&#x3002;&#x5B83;&#x7684;&#x4F18;&#x52BF;&#x662F;&#x901A;&#x8FC7;&#x5C3D;&#x91CF;&#x5C06;&#x5E76;&#x884C;&#x8BA1;&#x7B97;&#x4E0B;&#x63A8;&#x5230;&#x5404;&#x4E2A;&#x5B58;&#x50A8;&#x8282;&#x70B9;&#x3002;&#x5BF9;&#x4E8E;&#x5C0F;&#x8868;&#xFF08;&#x6BD4;&#x5982;&#x5343;&#x4E07;&#x7EA7;&#x4EE5;&#x4E0B;&#xFF09;&#x4E0D;&#x9002;&#x5408; TiDB&#xFF1A;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x91CF;&#x5C11; region &#x6570;&#x6709;&#x9650;&#xFF0C;&#x53D1;&#x6325;&#x4E0D;&#x4E86;&#x5E76;&#x884C;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x6700;&#x6781;&#x7AEF;&#x7684;&#x5C31;&#x662F;&#x8BA1;&#x6570;&#x5668;&#x8868;&#x51E0;&#x884C;&#x8BB0;&#x5F55;&#x9AD8;&#x9891;&#x66F4;&#x65B0;&#xFF0C;&#x4F1A;&#x53D8;&#x6210;&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x4E0A;&#x7684;&#x51E0;&#x4E2A; KV&#xFF0C;&#x7136;&#x540E;&#x53EA;&#x843D;&#x5728;&#x4E00;&#x4E2A; region &#x91CC;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A; region &#x53EA;&#x843D;&#x5728;&#x4E00;&#x4E2A;&#x8BA1;&#x7B97;&#x8282;&#x70B9;&#x4E0A;&#xFF0C;&#x52A0;&#x4E0A;&#x540E;&#x53F0;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x590D;&#x5236;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x4EE5;&#x53CA; TiDB &#x5F15;&#x64CE;&#x5230; TiKV &#x5F15;&#x64CE;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x6700;&#x540E;&#x8868;&#x73B0;&#x51FA;&#x6765;&#x7684;&#x5C31;&#x662F;&#x6CA1;&#x6709;&#x5355;&#x4E2A; MySQL &#x597D;&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
@@ -3448,7 +3448,7 @@ Threads fairness:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"next":{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"path":"session4/chapter3/tpc-c.md","ref":"session4/chapter3/tpc-c.md","articles":[]},"previous":{"title":"3 常见性能压测","level":"5.3","depth":1,"path":"session4/chapter3/common-benchmarks.md","ref":"session4/chapter3/common-benchmarks.md","articles":[{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"path":"session4/chapter3/sysbench.md","ref":"session4/chapter3/sysbench.md","articles":[]},{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"path":"session4/chapter3/tpc-c.md","ref":"session4/chapter3/tpc-c.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter3/sysbench.md","mtime":"2020-03-12T09:35:17.740Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-12T09:36:03.853Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"next":{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"path":"session4/chapter3/tpc-c.md","ref":"session4/chapter3/tpc-c.md","articles":[]},"previous":{"title":"3 常见性能压测","level":"5.3","depth":1,"path":"session4/chapter3/common-benchmarks.md","ref":"session4/chapter3/common-benchmarks.md","articles":[{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"path":"session4/chapter3/sysbench.md","ref":"session4/chapter3/sysbench.md","articles":[]},{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"path":"session4/chapter3/tpc-c.md","ref":"session4/chapter3/tpc-c.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter3/sysbench.md","mtime":"2020-03-12T11:28:11.918Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-12T11:29:09.846Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
