@@ -212,7 +212,7 @@ EXEC sys.sp_cdc_enable_table @source_schema = N'dbo', @source_name = N'example',
 SELECT name, is_cdc_enabled from sys.databases where is_cdc_enabled = 1;
 ```
 
-### (2) CDC 开启后，系统会生成一张 `Change Table` 的表，表名为： `cdc.dbo_example_CT`。
+### (2) CDC 开启后，系统会生成一张 `Change Table` 的表，表名为： `cdc.dbo_example_CT`
 
 ```sql
 .schema cdc.dbo_example_CT
