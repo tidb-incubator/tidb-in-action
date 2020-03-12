@@ -50,7 +50,6 @@
     * [1.1 TiUP & TiOps](session2/chapter1/tiup-tiops.md)
         * [1.1.1 TiUP 简介](session2/chapter1/tiup-intro.md) @罗瑞星 @周帅
         * [1.1.2 用 TiUP 部署本地测试环境](session2/chapter1/tiup-playground.md) @罗瑞星
-        * [1.1.3 用 TiUP 部署生产环境集群](session2/chapter1/tiup-deployment.md) @罗瑞星
         * [1.1.4 TiOps 简介](session2/chapter1/tiops-intro.md) @杨文
         * [1.1.5 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md) @杨文
     * [1.2 TiDB on Kubernetes](session2/chapter1/tidb-on-k8s.md)
