@@ -218,4 +218,4 @@ bin/br backup table --db "br_test"  --table "br_table"  --pd "192.168.122.101:23
 bin/br restore table --db "br_test" --table "br_table" --pd "192.168.122.101:2379" --storage "local:///data_nfs1/backup"
 ```
 
-通过上述实践，我们了解了 BR 基本用法，想要了解具体代码实现可以登陆 BR 项目主页(https://github.com/pingcap/br), 欢迎提供更多的使用建议,有助于我们改进。
+通过上述实践，我们了解了 BR 基本用法，想要了解具体代码实现可以登陆 BR 项目主页(https://github.com/pingcap/br), 欢迎提供更多的使用建议，帮助我们改进。
