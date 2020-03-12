@@ -16,7 +16,7 @@ SQL Hint:
 ```
 mysql> SELECT /*+ MAX_EXECUTION_TIME(1000) */ * FROM t1 INNER JOIN t2 WHERE ...;
 ```
-(1) **内存使用限制**
+(2) **内存使用限制**
 
 tidb_mem_quota_query
 
