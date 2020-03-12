@@ -7,9 +7,11 @@ cache: npm
 
 before_script:
   - npm install
+  - npm install -g gitbook-cli
+  - export PATH=$(npm bin):$PATH
 
 script:
-  - npm run build
+  - gitbook build . --gitbook=3.2.3
 
 deploy:
   provider: pages
