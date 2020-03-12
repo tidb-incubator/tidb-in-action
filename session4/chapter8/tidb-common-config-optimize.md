@@ -1,6 +1,6 @@
-[TOC]
+## 8.1 TiDB 常见配置优化
 在前一章节，介绍了 TiDB 常见问题处理思路，本章节主要介绍一些 TiDB 常见的配置优化。
-## 限制 SQL 内存使用和执行时间
+### 8.1.1 限制 SQL 内存使用和执行时间
 对于关系型数据库来说，SQL 效率毋庸置疑至关重要。可以想象一下，假设在数据库内没有任何控制机制，某条或某几条 SQL 执行时间长且耗用内存高，那么只能依赖告警系统且人工去快速定位 SQL 然后 Kill，期间效率可想而知，而在 TiDB 存在参数能让我们能够很好的限制 SQL 内存使用和执行时间。
 
 1. **执行时间限制**
@@ -99,7 +99,7 @@ mysql> show variables like '%tidb_disable_txn_auto_retry%';
 +-----------------------------+-------+
 1 row in set (0.01 sec)
 ```
-## Join 算子优化
+### 8.1.2 Join 算子优化
 TiDB 数据库 SQL 执行，Join 算子天然并发，当系统资源富余时，可根据数据库 TP | AP 应用可适当调整 Join 算子并发提高 SQL 执行效率，提升数据库系统性能。
 
 tidb_distsql_scan_concurrency
@@ -232,7 +232,7 @@ mysql> show variables like '%tidb_index_serial_scan_concurrency%';
 +------------------------------------+-------+
 1 row in set (0.00 sec)
 ```
-## 常见 Mysql 兼容问题
+### 8.1.3 常见 Mysql 兼容问题
 compatible-kill-query
 
 * 默认值：false
@@ -269,7 +269,7 @@ begin;
 insert into t values (1);
 ERROR 1062 : Duplicate entry '1' for key 'PRIMARY'
 ```
-## 其他优化项
+### 8.1.4 其他优化项
 prepared-plan-cache 以及 txn_local_latches 两个参数主要是 TiDB 配置参数，需要在 TiDB 配置文件中设置，可在 tidb-ansible conf/tidb.yaml 设置，再滚更 tidb-server 节点。
 
 ```
