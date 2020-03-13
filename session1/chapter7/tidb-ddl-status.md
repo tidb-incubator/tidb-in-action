@@ -127,7 +127,7 @@ $curl http://127.0.0.1:10080/info/all
 
 | 属性  | 值  |
 |:------------- |:---------------:|
-| 作用域      | GLOBAL \|SESSION |
+| 作用域      | GLOBAL &#124;SESSION |
 | 默认值      | PRIORITY_LOW        |
 | 作用   | 控制数据回填（re-organize）阶段执行的优先级   | 
 
