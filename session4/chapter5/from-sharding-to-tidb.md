@@ -15,14 +15,14 @@
 
 实验环境宿主机的用户名、密码与数据库的用户名、密码一致。
 
-| 主机 IP| 操作系统| 应用部署|说明|帐号密码| 
+| 主机 IP| 操作系统| 应用部署|说明|帐号密码|
 |----|----|----|----|----|
-| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3306 端口   | root/password   | 
-| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3307 端口   | root/password   | 
-| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3308 端口   | root/password   | 
-| 192.168.128.132   | centos7.3 x86_64   | dm-master/dmctl   | 中控机   | root/password   | 
-| 192.168.128.133   | centos7.3 x86_64   | dm-worker   | dm-worker   | root/password   | 
-| 192.168.206.28   | centos7.3 x86_64   | TiDB 库   | 4000 端口   | root/password   | 
+| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3306 端口   | root/password   |
+| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3307 端口   | root/password   |
+| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3308 端口   | root/password   |
+| 192.168.128.132   | centos7.3 x86_64   | dm-master/dmctl   | 中控机   | root/password   |
+| 192.168.128.133   | centos7.3 x86_64   | dm-worker   | dm-worker   | root/password   |
+| 192.168.206.28   | centos7.3 x86_64   | TiDB 库   | 4000 端口   | root/password   |
 
 ### 准备工作
 
@@ -208,14 +208,14 @@ prometheus     : ok=13   changed=4    unreachable=0    failed=0
 ### 配置启动 task
 **上游数据库结构合并至下游 TiDB 说明**
 
-|上游分库|上游分表|下游合并库名|下游合并表名| 
+|上游分库|上游分表|下游合并库名|下游合并表名|
 |----|----|----|----|
-| shard_db01   | shard_tb01   | merge_db   | merge_tb   | 
-| shard_db02   | shard_tb02   |    |    | 
-| shard_db03   | shard_tb03   |    |    | 
-| shard_db04   | shard_tb04   |    |    | 
-| shard_db05   | shard_tb05   |    |    | 
-| shard_db06   | shard_tb06   |    |    | 
+| shard_db01   | shard_tb01   | merge_db   | merge_tb   |
+| shard_db02   | shard_tb02   |    |    |
+| shard_db03   | shard_tb03   |    |    |
+| shard_db04   | shard_tb04   |    |    |
+| shard_db05   | shard_tb05   |    |    |
+| shard_db06   | shard_tb06   |    |    |
 
 **上游数据库准备**
 
@@ -403,7 +403,7 @@ shard_db02-schema-create.sql
 ```
 **查看上游分库分表数据已迁移到下游 merge_db 库 merge_tb 表**
 
-![图片](https://uploader.shimo.im/f/XFHFGbCmJRw2EgKu.png!thumbnail)
+![图片](/res/session4/chapter5/from-sharding-to-tidb/from-sharding-tidb-1.png)
 
 
 ## DM 常用管理命令
