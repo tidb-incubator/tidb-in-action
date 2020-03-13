@@ -68,7 +68,7 @@ OWNER_ADDRESS: 10.40.216.9:4000
 ```
 除此之外，也可以通过访问 TiDB 提供的 HTTP 接口查看当前 owner 所在 TiDB，以及各个 TiDB 节点 `ddl_id`、`lease` 等信息，用法如下：
 
-```shell script
+```console
 # 用法
 curl http://{TiDBIP}:10080/info/all
 # 例如
