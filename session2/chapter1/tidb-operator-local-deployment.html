@@ -2823,24 +2823,23 @@
                                 
                                 <h1 id="tidb-operator-&#x90E8;&#x7F72;&#x672C;&#x5730;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;">TiDB-Operator &#x90E8;&#x7F72;&#x672C;&#x5730;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;</h1>
 <h2 id="&#x80CC;&#x666F;&#x4ECB;&#x7ECD;">&#x80CC;&#x666F;&#x4ECB;&#x7ECD;</h2>
-<p>&#x672C;&#x5C0F;&#x8282;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x4F7F;&#x7528; kind &#x90E8;&#x7F72; TiDB Operator&#xFF0C;&#x5C06;&#x901A;&#x8FC7; kind &#x5FEB;&#x901F;&#x90E8;&#x7F72;&#x4E00;&#x5957; Cloud TiDB &#x96C6;&#x7FA4;&#xFF0C;&#x4E3A;&#x5927;&#x5BB6;&#x68B3;&#x7406;&#x4E09;&#x4E2A;&#x5173;&#x952E;&#x73AF;&#x8282;&#xFF1A;</p>
+<p>&#x672C;&#x5C0F;&#x7ED3;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x5728;&#x4E2A;&#x4EBA;&#x7535;&#x8111;&#xFF08;Linux &#x6216; MacOS&#xFF09;&#x4E0A;&#x91C7;&#x7528; kind &#x65B9;&#x5F0F;&#x5728; Kubernetes &#x4E0A;&#x90E8;&#x7F72; TiDB Operator &#x548C; TiDB &#x96C6;&#x7FA4;&#x3002;&#x90E8;&#x7F72;&#x5305;&#x542B;&#x4E09;&#x4E2A;&#x5173;&#x952E;&#x73AF;&#x8282;&#xFF1A;</p>
 <ol>
-<li>&#x57FA;&#x4E8E; kind &#x90E8;&#x7F72;&#x4E00;&#x5957; K8s &#x96C6;&#x7FA4;</li>
-<li>&#x57FA;&#x4E8E; K8s &#x90E8;&#x7F72; TiDB Operator</li>
-<li>&#x57FA;&#x4E8E; TiDB Operator &#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;</li>
+<li>&#x901A;&#x8FC7; kind &#x90E8;&#x7F72; K8s &#x96C6;&#x7FA4;</li>
+<li>&#x5728; K8s &#x96C6;&#x7FA4;&#x4E0A;&#x90E8;&#x7F72; TiDB Operator</li>
+<li>&#x5728; K8s &#x96C6;&#x7FA4;&#x4E2D;&#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;</li>
 </ol>
-<h2 id="&#x7B2C;&#x4E00;&#x90E8;&#x5206;-&#x57FA;&#x4E8E;-kind-&#x90E8;&#x7F72;&#x4E00;&#x5957;-k8s-&#x96C6;&#x7FA4;">&#x7B2C;&#x4E00;&#x90E8;&#x5206; &#x57FA;&#x4E8E; kind &#x90E8;&#x7F72;&#x4E00;&#x5957; K8s &#x96C6;&#x7FA4;</h2>
-<p>&#x8FD9;&#x4E2A;&#x5C0F;&#x8282;&#x7684;&#x5185;&#x5BB9;&#x5DF2;&#x57FA;&#x672C;&#x505A;&#x5230;&#x5168;&#x81EA;&#x52A8;&#x5316;&#xFF0C;&#x90E8;&#x7F72;&#x524D;&#x8BF7;&#x6309;&#x4EE5;&#x4E0B;&#x8981;&#x6C42;&#x51C6;&#x5907;&#x73AF;&#x5883;&#xFF1A;</p>
+<p>&#x5728;&#x90E8;&#x7F72;&#x524D;&#xFF0C;&#x8BF7;&#x786E;&#x8BA4;&#x8D44;&#x6E90;&#x6EE1;&#x8DB3;&#x4EE5;&#x4E0B;&#x8981;&#x6C42;&#xFF1A;</p>
 <ol>
 <li>&#x5185;&#x5B58; 4GB+&#x3001;CPU 2&#x6838;&#x5FC3;+</li>
 <li>Docker 17.03+</li>
 <li>net.ipv4.ip_forward &#x8BBE;&#x7F6E;&#x4E3A;1</li>
 </ol>
-<h3 id="&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;">&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;</h3>
-<h3 id="&#x4E00;&#x3001;&#x4E0B;&#x8F7D;&#x81EA;&#x52A8;&#x5316;&#x90E8;&#x7F72;&#x7A0B;&#x5E8F;">&#x4E00;&#x3001;&#x4E0B;&#x8F7D;&#x81EA;&#x52A8;&#x5316;&#x90E8;&#x7F72;&#x7A0B;&#x5E8F;</h3>
+<h2 id="&#x901A;&#x8FC7;-kind-&#x90E8;&#x7F72;-k8s-&#x96C6;&#x7FA4;">&#x901A;&#x8FC7; kind &#x90E8;&#x7F72; K8s &#x96C6;&#x7FA4;</h2>
+<h4 id="&#x4E00;&#x3001;&#x4E0B;&#x8F7D;&#x81EA;&#x52A8;&#x5316;&#x90E8;&#x7F72;&#x7A0B;&#x5E8F;">&#x4E00;&#x3001;&#x4E0B;&#x8F7D;&#x81EA;&#x52A8;&#x5316;&#x90E8;&#x7F72;&#x7A0B;&#x5E8F;</h4>
 <pre><code>
 # cd /root &amp; git clone --depth=1 https://github.com/pingcap/tidb-operator &amp;&amp; cd tidb-operator
-</code></pre><h3 id="&#x4E8C;&#x3001;&#x901A;&#x8FC7;&#x7A0B;&#x5E8F;&#x521B;&#x5EFA;&#x96C6;&#x7FA4;">&#x4E8C;&#x3001;&#x901A;&#x8FC7;&#x7A0B;&#x5E8F;&#x521B;&#x5EFA;&#x96C6;&#x7FA4;</h3>
+</code></pre><h4 id="&#x4E8C;&#x3001;&#x901A;&#x8FC7;&#x7A0B;&#x5E8F;&#x521B;&#x5EFA;&#x96C6;&#x7FA4;">&#x4E8C;&#x3001;&#x901A;&#x8FC7;&#x7A0B;&#x5E8F;&#x521B;&#x5EFA;&#x96C6;&#x7FA4;</h4>
 <pre><code>
 # cd /root/tidb-operator &amp;&amp; hack/kind-cluster-build.sh
 </code></pre><p>&#x6267;&#x884C;&#x6210;&#x529F;&#x540E;&#x4F1A;&#x6709;&#x5982;&#x4E0B;&#x5173;&#x952E;&#x63D0;&#x793A;&#x4FE1;&#x606F;:</p>
@@ -2848,10 +2847,10 @@
 ########## success create cluster:[kind] ##########
 To start using your cluster, run:  
     kubectl config use-context kind-kind
-</code></pre><h3 id="&#x4E09;&#x3001;&#x5C06;-k8s-&#x96C6;&#x7FA4;&#x76F8;&#x5173;&#x547D;&#x4EE4;&#x8DEF;&#x5F84;&#x52A0;&#x5165;path&#x8DEF;&#x5F84;">&#x4E09;&#x3001;&#x5C06; K8s &#x96C6;&#x7FA4;&#x76F8;&#x5173;&#x547D;&#x4EE4;&#x8DEF;&#x5F84;&#x52A0;&#x5165;PATH&#x8DEF;&#x5F84;</h3>
+</code></pre><h4 id="&#x4E09;&#x3001;&#x5C06;-k8s-&#x96C6;&#x7FA4;&#x76F8;&#x5173;&#x547D;&#x4EE4;&#x8DEF;&#x5F84;&#x52A0;&#x5165;path&#x8DEF;&#x5F84;">&#x4E09;&#x3001;&#x5C06; K8s &#x96C6;&#x7FA4;&#x76F8;&#x5173;&#x547D;&#x4EE4;&#x8DEF;&#x5F84;&#x52A0;&#x5165;PATH&#x8DEF;&#x5F84;</h4>
 <pre><code>
     # export PATH=$PATH:/root/tidb-operator/output/bin/
-</code></pre><h3 id="&#x56DB;&#x3001;&#x9A8C;&#x8BC1;-k8s-&#x73AF;&#x5883;&#x662F;&#x5426;&#x7B26;&#x5408;&#x8981;&#x6C42;">&#x56DB;&#x3001;&#x9A8C;&#x8BC1; K8s &#x73AF;&#x5883;&#x662F;&#x5426;&#x7B26;&#x5408;&#x8981;&#x6C42;</h3>
+</code></pre><h4 id="&#x56DB;&#x3001;&#x9A8C;&#x8BC1;-k8s-&#x73AF;&#x5883;&#x662F;&#x5426;&#x7B26;&#x5408;&#x8981;&#x6C42;">&#x56DB;&#x3001;&#x9A8C;&#x8BC1; K8s &#x73AF;&#x5883;&#x662F;&#x5426;&#x7B26;&#x5408;&#x8981;&#x6C42;</h4>
 <pre><code>
     # kubectl cluster-info
       Kubernetes master is running at https://127.0.0.1:32771
@@ -2862,8 +2861,8 @@ To start using your cluster, run:
       Client: &amp;version.Version{SemVer:&quot;v2.9.1&quot;, GitCommit:&quot;20adb27c7c5868466912eebdf6664e7390ebe710&quot;, GitTreeState:&quot;clean&quot;}
       Server: &amp;version.Version{SemVer:&quot;v2.9.1&quot;, GitCommit:&quot;20adb27c7c5868466912eebdf6664e7390ebe710&quot;, GitTreeState:&quot;clean&quot;}
 </code></pre><p>&#x8F93;&#x51FA;&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#xFF0C;&#x5219;&#x8BF4;&#x660E; Helm &#x5BA2;&#x6237;&#x7AEF;&#x4E0E;&#x670D;&#x52A1;&#x7AEF;&#x90FD;&#x7B26;&#x5408;&#x8981;&#x6C42;</p>
-<h2 id="&#x7B2C;&#x4E8C;&#x90E8;&#x5206;-&#x57FA;&#x4E8E;-k8s-&#x90E8;&#x7F72;-tidb-operator">&#x7B2C;&#x4E8C;&#x90E8;&#x5206; &#x57FA;&#x4E8E; K8s &#x90E8;&#x7F72; TiDB Operator</h2>
-<h3 id="&#x4E00;&#x3001;&#x901A;&#x8FC7;-helm-&#x5B89;&#x88C5;-tidb-operator">&#x4E00;&#x3001;&#x901A;&#x8FC7; helm &#x5B89;&#x88C5; TiDB Operator</h3>
+<h2 id="&#x5728;-k8s-&#x96C6;&#x7FA4;&#x4E0A;&#x90E8;&#x7F72;-tidb-operator">&#x5728; K8s &#x96C6;&#x7FA4;&#x4E0A;&#x90E8;&#x7F72; TiDB Operator</h2>
+<h4 id="&#x4E00;&#x3001;&#x901A;&#x8FC7;-helm-&#x5B89;&#x88C5;-tidb-operator">&#x4E00;&#x3001;&#x901A;&#x8FC7; helm &#x5B89;&#x88C5; TiDB Operator</h4>
 <p>&#x521B;&#x5EFA; TiDB CRD</p>
 <pre><code>
     # kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/crd.yaml &amp;&amp; kubectl get crd tidbclusters.pingcap.com
@@ -2891,20 +2890,19 @@ To start using your cluster, run:
     NAMESPACE: tidb-admin
     STATUS: DEPLOYED
     ...
-</code></pre><h3 id="&#x4E8C;&#x3001;&#x9A8C;&#x8BC1;-operator-&#x8FD0;&#x884C;&#x72B6;&#x6001;">&#x4E8C;&#x3001;&#x9A8C;&#x8BC1; Operator &#x8FD0;&#x884C;&#x72B6;&#x6001;</h3>
+</code></pre><h4 id="&#x4E8C;&#x3001;&#x9A8C;&#x8BC1;-operator-&#x8FD0;&#x884C;&#x72B6;&#x6001;">&#x4E8C;&#x3001;&#x9A8C;&#x8BC1; Operator &#x8FD0;&#x884C;&#x72B6;&#x6001;</h4>
 <pre><code>
     # kubectl get pods -n tidb-admin
     NAME                                       READY   STATUS    RESTARTS   AGE
     tidb-controller-manager-85d8d498bf-2n8km   1/1     Running   0          19s
     tidb-scheduler-7c67d6c77b-qd54r            2/2     Running   0          19s
 </code></pre><p>&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x663E;&#x793A; Operator &#x8FD0;&#x884C;&#x6B63;&#x5E38;</p>
-<h2 id="&#x7B2C;&#x4E09;&#x90E8;&#x5206;-&#x57FA;&#x4E8E;-tidb-operator-&#x90E8;&#x7F72;-tidb-&#x96C6;&#x7FA4;">&#x7B2C;&#x4E09;&#x90E8;&#x5206; &#x57FA;&#x4E8E; TiDB Operator &#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;</h2>
-<h3 id="&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;">&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;</h3>
-<h3 id="&#x4E00;&#x3001;&#x4E0B;&#x8F7D;-tidb-cluster-&#x7684;-helm-chart-&#x6587;&#x4EF6;">&#x4E00;&#x3001;&#x4E0B;&#x8F7D; TiDB Cluster &#x7684; helm chart &#x6587;&#x4EF6;</h3>
+<h2 id="&#x5728;-k8s-&#x96C6;&#x7FA4;&#x4E2D;&#x90E8;&#x7F72;-tidb-&#x96C6;&#x7FA4;">&#x5728; K8s &#x96C6;&#x7FA4;&#x4E2D;&#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;</h2>
+<h4 id="&#x4E00;&#x3001;&#x4E0B;&#x8F7D;-tidb-cluster-&#x7684;-helm-chart-&#x6587;&#x4EF6;">&#x4E00;&#x3001;&#x4E0B;&#x8F7D; TiDB Cluster &#x7684; helm chart &#x6587;&#x4EF6;</h4>
 <pre><code>
     # mkdir -p /root/chart/
     &#x4ECE; https://github.com/pingcap/tidb-operator/releases &#x4E0B;&#x8F7D; tidb-cluster-chart-v1.0.6.tgz &#x6587;&#x4EF6;&#x653E;&#x5230; /root/chart/ &#x8DEF;&#x5F84;&#x4E0B;
-</code></pre><h3 id="&#x4E8C;&#x3001;&#x5B89;&#x88C5;-tidb-cluster">&#x4E8C;&#x3001;&#x5B89;&#x88C5; TiDB Cluster</h3>
+</code></pre><h4 id="&#x4E8C;&#x3001;&#x5B89;&#x88C5;-tidb-cluster">&#x4E8C;&#x3001;&#x5B89;&#x88C5; TiDB Cluster</h4>
 <pre><code>
     # cd /root/chart/ &amp;&amp; tar xvf tidb-cluster-chart-v1.0.6.tgz
     # helm install --namespace dba-test --name=test /root/charts/tidb-cluster -f /root/charts/tidb-cluster/values.yaml
@@ -2913,7 +2911,7 @@ To start using your cluster, run:
     NAMESPACE: dba-test
     STATUS: DEPLOYED
 </code></pre><p>&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x663E;&#x793A; TiDB Cluster &#x90E8;&#x7F72;&#x6B63;&#x5E38;</p>
-<h3 id="&#x4E09;&#x3001;&#x89C2;&#x5BDF;-tidb-&#x7684;-pod-&#x72B6;&#x6001;">&#x4E09;&#x3001;&#x89C2;&#x5BDF; TiDB &#x7684; POD &#x72B6;&#x6001;</h3>
+<h4 id="&#x4E09;&#x3001;&#x89C2;&#x5BDF;-tidb-&#x7684;-pod-&#x72B6;&#x6001;">&#x4E09;&#x3001;&#x89C2;&#x5BDF; TiDB &#x7684; POD &#x72B6;&#x6001;</h4>
 <pre><code>
     # kubectl get pods -n dba-test
     NAME                              READY   STATUS    RESTARTS   AGE
@@ -2928,7 +2926,7 @@ To start using your cluster, run:
     test-tikv-1                       1/1     Running   0          6m58s
     test-tikv-2                       1/1     Running   0          6m58s
 </code></pre><p>&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x663E;&#x793A; TiDB Cluster &#x6240;&#x6709; Pod &#x5168;&#x90E8;&#x8FD0;&#x884C;&#x6B63;&#x5E38;&#x3002;</p>
-<h3 id="&#x56DB;&#x3001;&#x8BBF;&#x95EE;-tidb-&#x96C6;&#x7FA4;">&#x56DB;&#x3001;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;</h3>
+<h4 id="&#x56DB;&#x3001;&#x8BBF;&#x95EE;-tidb-&#x96C6;&#x7FA4;">&#x56DB;&#x3001;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;</h4>
 <pre><code>
     # nohup kubectl port-forward svc/test-tidb 4000:4000 --namespace=dba-test &amp;
     # yum install -y mysql
@@ -2984,7 +2982,7 @@ To start using your cluster, run:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）","level":"3.1.2.2","depth":3,"next":{"title":"1.2.3 用 TiDB-Operator 部署生产环境集群","level":"3.1.2.3","depth":3,"path":"session2/chapter1/tidb-operator-deployment.md","ref":"session2/chapter1/tidb-operator-deployment.md","articles":[{"title":"1.2.3.1 公有云部署","level":"3.1.2.3.1","depth":4,"path":"session2/chapter1/tidb-operator-deployment-public.md","ref":"session2/chapter1/tidb-operator-deployment-public.md","articles":[{"title":"1.2.3.1.1 在 AWS EKS 上部署 TiDB 集群","level":"3.1.2.3.1.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-eks.md","ref":"session2/chapter1/tidb-operator-deployment-public-eks.md","articles":[]},{"title":"1.2.3.1.2 在 GCP GKE 上部署 TiDB 集群","level":"3.1.2.3.1.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-gke.md","ref":"session2/chapter1/tidb-operator-deployment-public-gke.md","articles":[]},{"title":"1.2.3.1.3 在阿里云上部署 TiDB 集群","level":"3.1.2.3.1.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-ali.md","ref":"session2/chapter1/tidb-operator-deployment-public-ali.md","articles":[]},{"title":"1.2.3.1.4 在京东云上部署 TiDB 集群","level":"3.1.2.3.1.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","ref":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","articles":[]}]},{"title":"1.2.3.2 私有云部署","level":"3.1.2.3.2","depth":4,"path":"session2/chapter1/tidb-operator-deployment-private.md","ref":"session2/chapter1/tidb-operator-deployment-private.md","articles":[{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-env.md","ref":"session2/chapter1/tidb-operator-deployment-private-env.md","articles":[]},{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]}]}]},"previous":{"title":"1.2.1 TiDB-Operator 简介及原理","level":"3.1.2.1","depth":3,"path":"session2/chapter1/tidb-operator-intro.md","ref":"session2/chapter1/tidb-operator-intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-local-deployment.md","mtime":"2020-03-13T08:16:14.304Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T08:17:00.478Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）","level":"3.1.2.2","depth":3,"next":{"title":"1.2.3 用 TiDB-Operator 部署生产环境集群","level":"3.1.2.3","depth":3,"path":"session2/chapter1/tidb-operator-deployment.md","ref":"session2/chapter1/tidb-operator-deployment.md","articles":[{"title":"1.2.3.1 公有云部署","level":"3.1.2.3.1","depth":4,"path":"session2/chapter1/tidb-operator-deployment-public.md","ref":"session2/chapter1/tidb-operator-deployment-public.md","articles":[{"title":"1.2.3.1.1 在 AWS EKS 上部署 TiDB 集群","level":"3.1.2.3.1.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-eks.md","ref":"session2/chapter1/tidb-operator-deployment-public-eks.md","articles":[]},{"title":"1.2.3.1.2 在 GCP GKE 上部署 TiDB 集群","level":"3.1.2.3.1.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-gke.md","ref":"session2/chapter1/tidb-operator-deployment-public-gke.md","articles":[]},{"title":"1.2.3.1.3 在阿里云上部署 TiDB 集群","level":"3.1.2.3.1.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-ali.md","ref":"session2/chapter1/tidb-operator-deployment-public-ali.md","articles":[]},{"title":"1.2.3.1.4 在京东云上部署 TiDB 集群","level":"3.1.2.3.1.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","ref":"session2/chapter1/tidb-operator-deployment-public-jdcloud.md","articles":[]}]},{"title":"1.2.3.2 私有云部署","level":"3.1.2.3.2","depth":4,"path":"session2/chapter1/tidb-operator-deployment-private.md","ref":"session2/chapter1/tidb-operator-deployment-private.md","articles":[{"title":"1.2.3.2.1 集群环境、资源需求","level":"3.1.2.3.2.1","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-env.md","ref":"session2/chapter1/tidb-operator-deployment-private-env.md","articles":[]},{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]}]}]},"previous":{"title":"1.2.1 TiDB-Operator 简介及原理","level":"3.1.2.1","depth":3,"path":"session2/chapter1/tidb-operator-intro.md","ref":"session2/chapter1/tidb-operator-intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-local-deployment.md","mtime":"2020-03-13T08:19:55.562Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T08:20:42.980Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
