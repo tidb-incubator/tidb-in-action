@@ -23,5 +23,5 @@
 3. 此时就可以用：t1/(r1/r2) - t1 来估算剩余执行时间，再根据系统集群使用情况及响应速度来评估是否动态调整参数。  
   
 **总结：**  
-1. 更新不频繁的字段创建索引时，可以根据实际负载合理动态调整参数，可参考[添加索引和负载测试](https://pingcap.com/docs-cn/stable/benchmark/add-index-with-load/#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88-1-add-index-%E7%9B%AE%E6%A0%87%E5%88%97%E8%A2%AB%E9%A2%91%E7%B9%81-update)。  
+1. 更新不频繁的字段创建索引时，可以根据实际负载合理动态调整参数，可参考： [添加索引和负载测试](https://pingcap.com/docs-cn/stable/benchmark/add-index-with-load/#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88-1-add-index-%E7%9B%AE%E6%A0%87%E5%88%97%E8%A2%AB%E9%A2%91%E7%B9%81-update)。  
 2. 如果创建索引的字段上更新十分频繁，可以保持默认参数值，来优先系统及业务的稳定。  
