@@ -2822,7 +2822,7 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="512-dm-&#x540C;&#x6B65;&#x5206;&#x5E93;&#x5206;&#x8868;-mysql-&#x5230;-tidb-&#x7684;&#x5B9E;&#x8DF5;">5.1.2 DM &#x540C;&#x6B65;&#x5206;&#x5E93;&#x5206;&#x8868; MySQL &#x5230; TiDB &#x7684;&#x5B9E;&#x8DF5;</h1>
-<h2 id="dm-&#x5206;&#x5E93;&#x5206;&#x8868;&#x5B89;&#x88C5;&#x90E8;&#x7F72;&#x5B9E;&#x6218;">DM &#x5206;&#x5E93;&#x5206;&#x8868;&#x5B89;&#x88C5;&#x90E8;&#x7F72;&#x5B9E;&#x6218;</h2>
+<h2 id="5121-dm-&#x5206;&#x5E93;&#x5206;&#x8868;&#x5B89;&#x88C5;&#x90E8;&#x7F72;&#x5B9E;&#x6218;">5.1.2.1 DM &#x5206;&#x5E93;&#x5206;&#x8868;&#x5B89;&#x88C5;&#x90E8;&#x7F72;&#x5B9E;&#x6218;</h2>
 <p>&#x672C;&#x5B9E;&#x6218;&#x6A21;&#x62DF;&#x4F01;&#x4E1A;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x963F;&#x91CC;&#x4E91; DRDS &#x4E2D;&#x95F4;&#x4EF6;&#x5BF9;&#x4E1A;&#x52A1;&#x8868;&#x8FDB;&#x884C;&#x5206;&#x5E93;&#x5206;&#x8868;&#x540E;&#xFF0C;&#x8FD9;&#x8FB9;&#x4F7F;&#x7528; DM &#x5DE5;&#x5177;&#x5C06;&#x7EBF;&#x4E0A;&#x5206;&#x5E93;&#x5206;&#x8868;&#x6570;&#x636E;&#x540C;&#x6B65;&#x81F3; TiDB &#x4E2D;&#xFF1A;</p>
 <ol>
 <li>&#x89E3;&#x51B3;&#x8DE8;&#x4E1A;&#x52A1;&#x8DE8;&#x5E93;&#x7684;&#x6570;&#x636E;&#x67E5;&#x8BE2;&#x5206;&#x6790;</li>
@@ -2831,7 +2831,7 @@
 </ol>
 <p>&#x6709;&#x90E8;&#x5206;&#x7684;&#x5206;&#x5E93;&#x5206;&#x8868;&#x4F7F;&#x7528;&#x4E86;&#x81EA;&#x589E;&#x957F;&#x4E3B;&#x952E; ID&#xFF0C;&#x4F7F;&#x7528; DM &#x7684;&#x81EA;&#x589E;&#x957F;&#x4E3B;&#x952E;&#x91CD;&#x7B97;&#x673A;&#x5236;&#xFF0C;&#x89E3;&#x51B3;&#x4E86;&#x4E0A;&#x6E38;&#x5206;&#x5E93;&#x5206;&#x8868;&#x5408;&#x5E76;&#x5230;&#x4E0B;&#x6E38;&#x5355;&#x8868;&#x65F6;&#x7684;&#x4E3B;&#x952E;&#x51B2;&#x7A81;&#x95EE;&#x9898;&#x3002;&#x8981;&#x8BF4;&#x660E;&#x7684;&#x662F;&#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#x8FD8;&#x662F;&#x6709;&#x6240;&#x9650;&#x5236;&#xFF0C;&#x4E0A;&#x6E38;&#x5728;&#x8BBE;&#x8BA1;&#x81EA;&#x589E;&#x4E3B;&#x952E;&#x7684;&#x65F6;&#x5019;&#x6700;&#x597D;&#x8FD8;&#x662F;&#x4F7F;&#x7528;&#x5168;&#x5C40;&#x81EA;&#x589E;&#x670D;&#x52A1;&#x7EC4;&#x4EF6;&#x6765;&#x505A;&#x6BD4;&#x8F83;&#x597D;&#x3002;</p>
 <p>&#x6B64;&#x5916; dm &#x5728; loader &#x6062;&#x590D;&#x65F6;&#x652F;&#x6301;&#x65AD;&#x70B9;&#x64CD;&#x4F5C;&#xFF0C;&#x652F;&#x6301;&#x5E42;&#x7B49; binlog &#x91CD;&#x505A;&#xFF0C;&#x4E0D;&#x7528;&#x62C5;&#x5FC3;&#x6062;&#x590D;&#x4E2D;&#x610F;&#x5916;&#x800C;&#x524D;&#x529F;&#x5C3D;&#x5F03;&#x3002;</p>
-<h3 id="&#x73AF;&#x5883;&#x8BF4;&#x660E;">&#x73AF;&#x5883;&#x8BF4;&#x660E;</h3>
+<h3 id="1-&#x73AF;&#x5883;&#x8BF4;&#x660E;">1. &#x73AF;&#x5883;&#x8BF4;&#x660E;</h3>
 <p>&#x5B9E;&#x9A8C;&#x73AF;&#x5883;&#x5BBF;&#x4E3B;&#x673A;&#x7684;&#x7528;&#x6237;&#x540D;&#x3001;&#x5BC6;&#x7801;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x7684;&#x7528;&#x6237;&#x540D;&#x3001;&#x5BC6;&#x7801;&#x4E00;&#x81F4;&#x3002;</p>
 <table>
 <thead>
@@ -2888,15 +2888,15 @@
 </tr>
 </tbody>
 </table>
-<h3 id="&#x51C6;&#x5907;&#x5DE5;&#x4F5C;">&#x51C6;&#x5907;&#x5DE5;&#x4F5C;</h3>
-<p><strong>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x4F7F;&#x7528; root &#x6743;&#x9650;&#x767B;&#x5F55;&#x4E2D;&#x63A7;&#x673A; 132 &#x4E0A;&#x5E76;&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x5305;</strong></p>
+<h3 id="2-&#x51C6;&#x5907;&#x5DE5;&#x4F5C;">2. &#x51C6;&#x5907;&#x5DE5;&#x4F5C;</h3>
+<p><strong>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x4F7F;&#x7528; root &#x8D26;&#x53F7;&#x767B;&#x5F55;&#x4E2D;&#x63A7;&#x673A; 192.168.128.132 &#x4E0A;&#x5E76;&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x5305;</strong></p>
 <pre><code>[tidb@dmmaster ~]# yum -y install epel-release git curl sshpass 
 [tidb@dmmaster ~]# yum -y install python-pip
 </code></pre><p><strong>&#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;&#x5728;&#x4E2D;&#x63A7;&#x673A;&#x4E0A;&#x521B;&#x5EFA; tidb &#x7528;&#x6237;&#x5E76;&#x751F;&#x6210; SSH &#x5BC6;&#x94A5;</strong></p>
 <p>1&#x3001;&#x521B;&#x5EFA; tidb &#x7528;&#x6237;</p>
 <pre><code>[tidb@dmmaster ~]# useradd -m -d /home/tidb tidb
 </code></pre><p>2&#x3001;&#x4E3A; tidb &#x7528;&#x6237;&#x8BBE;&#x7F6E;&#x5BC6;&#x7801;</p>
-<pre><code>[tidb@dmmaster ~]# echo &quot;password&quot;|passwd --stdin tidb
+<pre><code>[tidb@dmmaster ~]# echo &quot;password&quot; | passwd --stdin tidb
 </code></pre><p>3&#x3001;&#x4E3A; tidb &#x7528;&#x6237;&#x8BBE;&#x7F6E;&#x514D;&#x5BC6;&#x4F7F;&#x7528; sudo</p>
 <pre><code>[tidb@dmmaster ~]# echo &quot;tidb ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt;/etc/sudoers
 </code></pre><p>4&#x3001;&#x5207;&#x6362;&#x81F3; tidb &#x7528;&#x6237; home &#x76EE;&#x5F55;&#x5E76;&#x751F;&#x6210; SSH &#x5BC6;&#x94A5;</p>
@@ -2952,7 +2952,7 @@ localhost  : ok=13   changed=5    unreachable=0    failed=0
 </code></pre><p><strong>&#x7B2C;&#x516B;&#x6B65;&#xFF1A;&#x4F7F;&#x7528; dmctl &#x52A0;&#x5BC6;&#x4E0A;&#x4E0B;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x767B;&#x5F55;&#x5BC6;&#x7801;</strong></p>
 <pre><code>[tidb@dmmaster bin]$ dmctl -encrypt tidb@2020
 BXTTVvKeWhXgAefaFRNoN0BS4XjZ85uZByE=
-</code></pre><h3 id="&#x90E8;&#x7F72;-dm-worker">&#x90E8;&#x7F72; dm-worker</h3>
+</code></pre><h3 id="3-&#x90E8;&#x7F72;-dm-worker">3. &#x90E8;&#x7F72; dm-worker</h3>
 <p><strong>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x7F16;&#x5199; inventory.ini &#x6587;&#x4EF6;</strong></p>
 <p>&#x6B64;&#x5904;&#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x5B9A;&#x4E49; dm-master &#x548C; dm-worker&#xFF0C;&#x672C;&#x7AE0;&#x91C7;&#x53D6;&#x5355;&#x53F0;&#x90E8;&#x7F72;&#x591A;&#x53F0; dm-worker&#x3002;</p>
 <pre><code>[tidb@dmmaster dm-ansible]$ cat inventory.ini
@@ -3020,7 +3020,7 @@ grafana        : ok=13   changed=1    unreachable=0    failed=0
 localhost      : ok=4    changed=0    unreachable=0    failed=0   
 prometheus     : ok=13   changed=4    unreachable=0    failed=0 
 #&#x51FA;&#x73B0;&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x8868;&#x793A; dm &#x542F;&#x52A8;&#x6210;&#x529F;&#xFF0C;&#x6B64;&#x65F6;&#x5DF2;&#x7ECF;&#x5F00;&#x59CB;&#x540C;&#x6B65;&#x4E0A;&#x6E38; binlog &#x81F3; dm &#x673A;&#x5668;&#x4E2D;&#x3002;
-</code></pre><h3 id="&#x914D;&#x7F6E;&#x542F;&#x52A8;-task">&#x914D;&#x7F6E;&#x542F;&#x52A8; task</h3>
+</code></pre><h3 id="4-&#x914D;&#x7F6E;--&#x542F;&#x52A8;-task">4. &#x914D;&#x7F6E; &amp; &#x542F;&#x52A8; task</h3>
 <p><strong>&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x7ED3;&#x6784;&#x5408;&#x5E76;&#x81F3;&#x4E0B;&#x6E38; TiDB &#x8BF4;&#x660E;</strong></p>
 <table>
 <thead>
@@ -3081,24 +3081,24 @@ prometheus     : ok=13   changed=4    unreachable=0    failed=0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;&#x5206;&#x5E93;&#x5206;&#x8868;&apos;;
 INSERT INTO shard_db01.shard_tb01 
 (uid,uname,gender,shard,mobile) VALUES
-(&apos;10001&apos;,&apos;tb01001&apos;,&apos;0&apos;,&apos;shard_db01_tb01&apos;,&apos;13678189817&apos;),(&apos;10002&apos;,&apos;tb01002&apos;,&apos;1&apos;,&apos;shard_db01_tb01&apos;,&apos;13675222817&apos;);
+(&apos;10001&apos;,&apos;tb01001&apos;,&apos;0&apos;,&apos;shard_db01_tb01&apos;,&apos;136******17&apos;),(&apos;10002&apos;,&apos;tb01002&apos;,&apos;1&apos;,&apos;shard_db01_tb01&apos;,&apos;136******17&apos;);
 INSERT INTO shard_db02.shard_tb02 
-(uid,uname,gender,shard,mobile) VALUES (&apos;20001&apos;,&apos;tb02001&apos;,&apos;1&apos;,&apos;shard_db02_tb02&apos;,&apos;13675222333&apos;), (&apos;20002&apos;,&apos;tb02002&apos;,&apos;0&apos;,&apos;shard_db02_tb02&apos;,&apos;13985222363&apos;);
+(uid,uname,gender,shard,mobile) VALUES (&apos;20001&apos;,&apos;tb02001&apos;,&apos;1&apos;,&apos;shard_db02_tb02&apos;,&apos;136******33&apos;), (&apos;20002&apos;,&apos;tb02002&apos;,&apos;0&apos;,&apos;shard_db02_tb02&apos;,&apos;139******63&apos;);
 INSERT INTO shard_db03.shard_tb03 
-(uid,uname,gender,shard,mobile) VALUES (&apos;30001&apos;,&apos;tb03001&apos;,&apos;0&apos;,&apos;shard_db03_tb03&apos;,&apos;13585392373&apos;),
-(&apos;30002&apos;,&apos;tb03002&apos;,&apos;0&apos;,&apos;shard_db03_tb03&apos;,&apos;13913150046&apos;);
+(uid,uname,gender,shard,mobile) VALUES (&apos;30001&apos;,&apos;tb03001&apos;,&apos;0&apos;,&apos;shard_db03_tb03&apos;,&apos;135******73&apos;),
+(&apos;30002&apos;,&apos;tb03002&apos;,&apos;0&apos;,&apos;shard_db03_tb03&apos;,&apos;139******46&apos;);
 
 INSERT INTO shard_db04.shard_tb04 
-(uid,uname,gender,shard,mobile) VALUES (&apos;40001&apos;,&apos;tb04001&apos;,&apos;0&apos;,&apos;shard_db04_tb04&apos;,&apos;13713850891&apos;),(&apos;40002&apos;,&apos;tb04002&apos;,&apos;1&apos;,&apos;shard_db04_tb04&apos;,&apos;13813856191&apos;);
+(uid,uname,gender,shard,mobile) VALUES (&apos;40001&apos;,&apos;tb04001&apos;,&apos;0&apos;,&apos;shard_db04_tb04&apos;,&apos;137******91&apos;),(&apos;40002&apos;,&apos;tb04002&apos;,&apos;1&apos;,&apos;shard_db04_tb04&apos;,&apos;138******91&apos;);
 INSERT INTO shard_db05.shard_tb05 
-(uid,uname,gender,shard,mobile) VALUES (&apos;50001&apos;,&apos;tb05001&apos;,&apos;1&apos;,&apos;shard_db05_tb05&apos;,&apos;15813876696&apos;),(&apos;50002&apos;,&apos;tb05002&apos;,&apos;0&apos;,&apos;shard_db05_tb05&apos;,&apos;18813576992&apos;);
+(uid,uname,gender,shard,mobile) VALUES (&apos;50001&apos;,&apos;tb05001&apos;,&apos;1&apos;,&apos;shard_db05_tb05&apos;,&apos;158******96&apos;),(&apos;50002&apos;,&apos;tb05002&apos;,&apos;0&apos;,&apos;shard_db05_tb05&apos;,&apos;188******92&apos;);
 INSERT INTO shard_db06.shard_tb06 
-(uid,uname,gender,shard,mobile) VALUES (&apos;60001&apos;,&apos;tb06001&apos;,&apos;1&apos;,&apos;shard_db06_tb06&apos;,&apos;17813598198&apos;),(&apos;60002&apos;,&apos;tb06002&apos;,&apos;1&apos;,&apos;shard_db06_tb06&apos;,&apos;17513788131&apos;);
+(uid,uname,gender,shard,mobile) VALUES (&apos;60001&apos;,&apos;tb06001&apos;,&apos;1&apos;,&apos;shard_db06_tb06&apos;,&apos;178******98&apos;),(&apos;60002&apos;,&apos;tb06002&apos;,&apos;1&apos;,&apos;shard_db06_tb06&apos;,&apos;175******31&apos;);
 </code></pre><p><strong>&#x5408;&#x5E93;&#x5408;&#x8868; task &#x7684; yaml &#x6587;&#x4EF6;</strong></p>
 <pre><code>[tidb@tidb-dm-4-0-95 task]$ cat shardmysql_to_tidb.yaml
-name: &quot;shard_to_tidb&quot;   #task &#x540D;&#x79F0;&#xFF0C;&#x5FC5;&#x987B;&#x5168;&#x5C40;&#x552F;&#x4E00;
-is-sharding: true    #&#x4E0A;&#x6E38;&#x662F;&#x4E0D;&#x662F;&#x8FDB;&#x884C;&#x4E86;&#x5206;&#x5E93;&#x5206;&#x8868;&#x5E93;
-task-mode: &quot;all&quot;    #&#x8FC1;&#x79FB;&#x540C;&#x6B65;&#x65B9;&#x5F0F; full-&#x5168;&#x91CF;&#x3001;incremental-&#x589E;&#x91CF;&#x3001;all-&#x5168;&#x91CF;+&#x589E;&#x52A0;
+name: &quot;shard_to_tidb&quot;  #task &#x540D;&#x79F0;&#xFF0C;&#x5FC5;&#x987B;&#x5168;&#x5C40;&#x552F;&#x4E00;
+is-sharding: true      #&#x4E0A;&#x6E38;&#x662F;&#x4E0D;&#x662F;&#x8FDB;&#x884C;&#x4E86;&#x5206;&#x5E93;&#x5206;&#x8868;&#x5E93;
+task-mode: &quot;all&quot;       #&#x8FC1;&#x79FB;&#x540C;&#x6B65;&#x65B9;&#x5F0F; full-&#x5168;&#x91CF;&#x3001;incremental-&#x589E;&#x91CF;&#x3001;all-&#x5168;&#x91CF;+&#x589E;&#x52A0;
 meta-schema: &quot;tidb_meta&quot;   #&#x5B9A;&#x4E49;&#x4E0B;&#x6E38;&#x4FDD;&#x7559;&#x8FC1;&#x79FB;&#x70B9;&#x4F4D;&#x4FE1;&#x606F;&#x5E93;&#x540D;&#x79F0;
 remove-meta: false
 target-database:                                   
@@ -3153,7 +3153,7 @@ routes:
     target-schema: &quot;merge_db&quot;
     target-table:  &quot;merge_tb&quot;
 
-#&#x7531;&#x4E8E;&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x4E86;&#x81EA;&#x589E;&#x4E3B;&#x952E;&#xFF0C;&#x6B64;&#x5904;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E0B;&#x6E38;&#x4E3B;&#x952E;&#x91CD;&#x7B97;&#x5904;&#x7406;
+#&#x7531;&#x4E8E;&#x4E0A;&#x6E38;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x4E86;&#x81EA;&#x589E;&#x4E3B;&#x952E;&#xFF0C;&#x6B64;&#x5904;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E0B;&#x6E38;&#x4E3B;&#x952E;&#x91CD;&#x7B97;&#x5904;&#x7406;&#xFF0C;&#x8BE5;&#x529F;&#x80FD;&#x9700;&#x8981;&#x8C28;&#x614E;&#x4F7F;&#x7528;
 #&#x7279;&#x522B;&#x6CE8;&#x610F;&#x4E0A;&#x6E38;&#x7684;&#x81EA;&#x589E;&#x4E3B;&#x952E;&#x4E0D;&#x80FD;&#x6709;&#x4EFB;&#x4F55;&#x4E1A;&#x52A1;&#x5173;&#x7CFB;
 column-mappings:
   cm001:
@@ -3193,7 +3193,7 @@ mydumpers:
     threads:
     chunk-filesize: 64
     skip-tz-utc: true
-    extra-args: &quot;  --no-locks &quot;
+    extra-args: &quot; --no-locks &quot;
 loaders:
   global:
     pool-size: 64
@@ -3234,14 +3234,14 @@ shard_db02-schema-create.sql
 shard_db02.shard_tb02-schema.sql
 shard_db02.shard_tb02.sql
 </code></pre><p><strong>&#x5220;&#x9664;&#x5907;&#x4EFD;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5FC5;&#x987B;&#x4FDD;&#x7559;&#x8868;&#x5E93;&#x7ED3;&#x6784;&#x4FE1;&#x606F;&#x5426;&#x5219;&#x4F1A;&#x51FA;&#x9519;</strong></p>
-<pre><code>[root@dmworker dumped_data.shard_to_tidb]# ls|grep -v schema|xargs rm -f
+<pre><code>[root@dmworker dumped_data.shard_to_tidb]# ls | grep -v schema | xargs rm -f
 [root@dmworker dumped_data.shard_to_tidb]# ls
 shard_db01.shard_tb01-schema.sql    shard_db02.shard_tb02-schema.sql 
 shard_db02-schema-create.sql
 </code></pre><p><strong>&#x67E5;&#x770B;&#x4E0A;&#x6E38;&#x5206;&#x5E93;&#x5206;&#x8868;&#x6570;&#x636E;&#x5DF2;&#x8FC1;&#x79FB;&#x5230;&#x4E0B;&#x6E38; merge_db &#x5E93; merge_tb &#x8868;</strong></p>
-<p><img src="https://uploader.shimo.im/f/XFHFGbCmJRw2EgKu.png!thumbnail" alt="&#x56FE;&#x7247;"></p>
-<h2 id="dm-&#x5E38;&#x7528;&#x7BA1;&#x7406;&#x547D;&#x4EE4;">DM &#x5E38;&#x7528;&#x7BA1;&#x7406;&#x547D;&#x4EE4;</h2>
-<h3 id="dm-worker-&#x90E8;&#x7F72;&#x7BA1;&#x7406;">dm-worker &#x90E8;&#x7F72;&#x7BA1;&#x7406;</h3>
+<p><img src="../../res/session4/chapter5/from-sharding-to-tidb/from-sharding-tidb-1.png" alt="&#x56FE;&#x7247;"></p>
+<h2 id="5122-dm-&#x5E38;&#x7528;&#x7BA1;&#x7406;&#x547D;&#x4EE4;">5.1.2.2 DM &#x5E38;&#x7528;&#x7BA1;&#x7406;&#x547D;&#x4EE4;</h2>
+<h3 id="1-dm-worker-&#x90E8;&#x7F72;&#x7BA1;&#x7406;">1. dm-worker &#x90E8;&#x7F72;&#x7BA1;&#x7406;</h3>
 <p><strong>&#x90E8;&#x7F72;&#x547D;&#x4EE4; deploy.yml</strong></p>
 <pre><code>#&#x90E8;&#x7F72;&#x6240;&#x6709;inventory.ini&#x4E2D;&#x6240;&#x6709;&#x9009;&#x9879;&#x4E2D;&#x7684;&#x4E3B;&#x673A;&#x670D;&#x52A1;
 [tidb@dmmaster dm-ansible]$ ansible-playbook deploy.yml
@@ -3258,8 +3258,8 @@ shard_db02-schema-create.sql
 #&#x6EDA;&#x52A8;&#x66F4;&#x65B0; dm &#x96C6;&#x7FA4;
 [tidb@dmmaster dm-ansible]$ ansible-playbook rolling_update.yml
 *&#x6B64;&#x4E09;&#x4E2A;yml&#x547D;&#x4EE4;&#x4E5F;&#x53EF;&#x4EE5;&#x914D;&#x5408;-l&#x3001;--tags&#x4E00;&#x8D77;&#x4F7F;&#x7528;&#x3002;
-</code></pre><h3 id="dm-worker-task-&#x7BA1;&#x7406;">dm-worker task &#x7BA1;&#x7406;</h3>
-<p><strong>&#x7BA1;&#x7406; Tas k&#x9700;&#x8981;&#x4F7F;&#x7528; dmctl &#x8FDE;&#x63A5;&#x4E0A;&#x4E2D;&#x63A7;&#x673A;&#xFF0C;&#x8F93;&#x5165; help &#x67E5;&#x770B;&#x6240;&#x6709;&#x547D;&#x4EE4;&#x4FE1;&#x606F;</strong></p>
+</code></pre><h3 id="2-dm-worker-task-&#x7BA1;&#x7406;">2. dm-worker task &#x7BA1;&#x7406;</h3>
+<p><strong>&#x7BA1;&#x7406; task &#x9700;&#x8981;&#x4F7F;&#x7528; dmctl &#x8FDE;&#x63A5;&#x4E0A;&#x4E2D;&#x63A7;&#x673A;&#xFF0C;&#x8F93;&#x5165; help &#x67E5;&#x770B;&#x6240;&#x6709;&#x547D;&#x4EE4;&#x4FE1;&#x606F;</strong></p>
 <pre><code>#&#x8FDE;&#x63A5;&#x4E2D;&#x63A7;
 [tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
 &#xBB;help
@@ -3283,7 +3283,7 @@ shard_db02-schema-create.sql
 <pre><code>[tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
 #&#x67E5;&#x770B; shard_to_tidb &#x4EFB;&#x52A1;&#x5F53;&#x524D;&#x72B6;&#x6001;
 &#xBB;query-error shard_to_tidb
-</code></pre><p><strong>skip_sql &#x8DF3;&#x8FC7;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;sql&#x8BED;&#x53E5;</strong></p>
+</code></pre><p><strong>skip_sql &#x8DF3;&#x8FC7;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684; SQL &#x8BED;&#x53E5;</strong></p>
 <pre><code>#&#x67E5;&#x770B;&#x51FA;&#x9519;&#x7684; binlog &#x4F4D;&#x7F6E;(failedBinlogPosition)&#xFF0C;&#x786E;&#x5B9A;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x8DEF;&#x8FC7;&#x9519;&#x8BEF;
 query-error shard_to_tidb
 #&#x8DF3;&#x8FC7;&#x5F53;&#x524D;&#x9519;&#x8BEF;&#x7684; binlog
@@ -3335,7 +3335,7 @@ query-error shard_to_tidb
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践","level":"5.5.1.2","depth":3,"next":{"title":"5.2 Oracle 到 TiDB （OGG）","level":"5.5.2","depth":2,"path":"session4/chapter5/from-oracle-to-tidb.md","ref":"session4/chapter5/from-oracle-to-tidb.md","articles":[]},"previous":{"title":"5.1.1 DM 同步单机 MySQL 到 TiDB 的实践","level":"5.5.1.1","depth":3,"path":"session4/chapter5/from-single-mysql-to-tidb.md","ref":"session4/chapter5/from-single-mysql-to-tidb.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter5/from-sharding-to-tidb.md","mtime":"2020-03-13T12:46:04.769Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T12:46:52.346Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践","level":"5.5.1.2","depth":3,"next":{"title":"5.2 Oracle 到 TiDB （OGG）","level":"5.5.2","depth":2,"path":"session4/chapter5/from-oracle-to-tidb.md","ref":"session4/chapter5/from-oracle-to-tidb.md","articles":[]},"previous":{"title":"5.1.1 DM 同步单机 MySQL 到 TiDB 的实践","level":"5.5.1.1","depth":3,"path":"session4/chapter5/from-single-mysql-to-tidb.md","ref":"session4/chapter5/from-single-mysql-to-tidb.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter5/from-sharding-to-tidb.md","mtime":"2020-03-13T12:46:50.601Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T12:47:38.995Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
