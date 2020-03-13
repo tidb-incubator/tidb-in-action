@@ -197,7 +197,7 @@ CREATE TABLE `t1` (
 
 也就是一个事务里面，默认最多包含 5000 条 SQL statement，在不超过上面 RocksDB 层的几个限制的前提下，这个参数可以修改 TiDB 的配置文件进行调整。
 
-2、另外在某些场景下，例如执行 Insert into select 的时候，可能会遇到下面的报错
+2、另外在某些场景下，例如执行 Insert Into Select 的时候，可能会遇到下面的报错
 
 >ERROR 1105 (HY000): BatchInsert failed with error: [try again later]: con:3877 **txn takes too much time**, start: 405023027269206017, commit: 405023312534306817
 
@@ -208,24 +208,24 @@ CREATE TABLE `t1` (
 >\# The max time a Txn may use (in seconds) from its startTS to commitTS.  
 >\# We use it to guarantee GC worker will not influence any active txn. Please make sure that this# Value is less than gc_life_time - 10s.
 
-所以我们要尽量保证一个事务在这个 gc_life_time - 10s 的时间内完成，也可以通过调整 gc 时间 + 修改这个参数来避免这个问题，可能 TiDB 的配置文件中没有放出这个参数，可以手动编辑加入这个值。当然，更好的办法应该是开启 TiDB_batch_Insert 参数来规避单个事务过大的问题。
+所以我们要尽量保证一个事务在这个 gc_life_time - 10s 的时间内完成，也可以通过调整 gc 时间 + 修改这个参数来避免这个问题，可能 TiDB 的配置文件中没有放出这个参数，可以手动编辑加入这个值。当然，更好的办法应该是开启 tidb_batch_insert 参数来规避单个事务过大的问题。
 
 ## 如何绕开大事务的限制
 
-官方提供内部 batch 的方法来绕过大事务的限制，分别由三个参数来控制：
+官方提供内部 Batch 的方法来绕过大事务的限制，分别由三个参数来控制：
 
-TiDB_batch_Insert
+tidb_batch_insert
 
-> 作用域: SESSION 默认值: 0 这个变量用来设置是否自动切分插入数据。仅在 autocommit 开启时有效。 当插入大量数据时，可以将其设置为 true，这样插入数据会被自动切分为多个 batch，每个 batch 使用一个单独的事务进行插入。
+> 作用域: SESSION 默认值: 0 这个变量用来设置是否自动切分插入数据。仅在 Autocommit 开启时有效。 当插入大量数据时，可以将其设置为 True，这样插入数据会被自动切分为多个 Batch，每个 Batch 使用一个单独的事务进行插入。
 
-TiDB_batch_Delete
+tidb_batch_delete
 
-> 作用域: SESSION 默认值: 0 这个变量用来设置是否自动切分待删除的数据。仅在 autocommit 开启时有效。 当删除大量数据时，可以将其设置为 true，这样待删除数据会被自动切分为多个 batch，每个 batch 使用一个单独的事务进行删除。
+> 作用域: SESSION 默认值: 0 这个变量用来设置是否自动切分待删除的数据。仅在 Autocommit 开启时有效。 当删除大量数据时，可以将其设置为 True，这样待删除数据会被自动切分为多个 Batch，每个 Batch 使用一个单独的事务进行删除。
 
-TiDB_dml_batch_size
+tidb_dml_batch_size
 
-> 作用域: SESSION 默认值: 20000 这个变量用来设置自动切分插入 / 待删除数据的的 batch 大小。仅在 TiDB_batch_Insert 或 TiDB_batch_Delete 开启时有效。 需要注意的是，当单行总数据大小很大时，20k 行总数据量数据会超过单个事务大小限制。因此在这种情况下，用户应当将其设置为一个较小的值。
+> 作用域: SESSION 默认值: 20000 这个变量用来设置自动切分插入 / 待删除数据的的 Batch 大小。仅在 tidb_batch_insert 或 tidb_batch_delete 开启时有效。 需要注意的是，当单行总数据大小很大时，20k 行总数据量数据会超过单个事务大小限制。因此在这种情况下，用户应当将其设置为一个较小的值。
 
-针对 Update 场景，官方还是建议通过 limit 的方式来循环操作，目前并未提供内部 batch Update 的参数开关。
+针对 Update 场景，官方还是建议通过 limit 的方式来循环操作，目前并未提供内部 Batch Update 的参数开关。
 
-需要注意的是，开启了 batch 功能之后，大事务的完整性就没法保证，只能保证每个批次的事务完整性。当然，数据库的最佳实践依然是由程序或 DBA 来控制事务的大小，尤其是针对分布式数据库，建议每个 batch 控制在 100 条左右，高并发的写入，同时避免热点现象，才能发挥 TiDB 分布式的优势。
+需要注意的是，开启了 Batch 功能之后，大事务的完整性就没法保证，只能保证每个批次的事务完整性。当然，数据库的最佳实践依然是由程序或 DBA 来控制事务的大小，尤其是针对分布式数据库，建议每个 Batch 控制在 100 条左右，高并发的写入，同时避免热点现象，才能发挥 TiDB 分布式的优势。
