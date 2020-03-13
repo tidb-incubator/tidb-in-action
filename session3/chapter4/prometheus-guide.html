@@ -2821,85 +2821,64 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="prometheus-&#x7B80;&#x5355;&#x4ECB;&#x7ECD;">Prometheus &#x7B80;&#x5355;&#x4ECB;&#x7ECD;</h1>
-<h2 id="prometheus-&#x7B80;&#x4ECB;">prometheus &#x7B80;&#x4ECB;</h2>
-<p>TiDB  &#x4F7F;&#x7528;&#x5F00;&#x6E90;&#x65F6;&#x5E8F;&#x6570;&#x636E;&#x5E93;  Prometheus  &#x4F5C;&#x4E3A;&#x76D1;&#x63A7;&#x548C;&#x6027;&#x80FD;&#x6307;&#x6807;&#x4FE1;&#x606F;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#xFF0C;&#x4F7F;&#x7528; Grafana  &#x4F5C;&#x4E3A;&#x53EF;&#x89C6;&#x5316;&#x7EC4;&#x4EF6;&#x8FDB;&#x884C;&#x5C55;&#x793A;&#x3002;</p>
+                                <h1 id="prometheus-&#x5728;-tidb-&#x4E2D;&#x7684;&#x5E94;&#x7528;">Prometheus &#x5728; TiDB &#x4E2D;&#x7684;&#x5E94;&#x7528;</h1>
+<p>&#x672C;&#x8282;&#x5C06;&#x4ECB;&#x7ECD;&#x76D1;&#x63A7;&#x5DE5;&#x5177; Prometheus &#x5728; TiDB &#x4E2D;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x5305;&#x62EC; Prometheus &#x672C;&#x8EAB;&#x7684;&#x4ECB;&#x7ECD;&#x4EE5;&#x53CA;&#x5982;&#x4F55;&#x901A;&#x8FC7; Prometheus &#x67E5;&#x770B; TiDB &#x7684;&#x76D1;&#x63A7;&#x548C;&#x5229;&#x7528; Prometheus &#x7684; alertmanager &#x8FDB;&#x884C;&#x544A;&#x8B66;&#x3002;</p>
+<h2 id="prometheus-&#x7B80;&#x4ECB;">Prometheus &#x7B80;&#x4ECB;</h2>
+<p>TiDB &#x4F7F;&#x7528;&#x5F00;&#x6E90;&#x65F6;&#x5E8F;&#x6570;&#x636E;&#x5E93; Prometheus &#x4F5C;&#x4E3A;&#x76D1;&#x63A7;&#x548C;&#x6027;&#x80FD;&#x6307;&#x6807;&#x4FE1;&#x606F;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#xFF0C;&#x4F7F;&#x7528; Grafana &#x4F5C;&#x4E3A;&#x53EF;&#x89C6;&#x5316;&#x7EC4;&#x4EF6;&#x8FDB;&#x884C;&#x4FE1;&#x606F;&#x7684;&#x5C55;&#x793A;&#x3002;</p>
 <p>Prometheus &#x72ED;&#x4E49;&#x662F;&#x4E0A;&#x8F6F;&#x4EF6;&#x672C;&#x8EAB;&#xFF0C;&#x5373; prometheus server&#xFF0C;&#x5E7F;&#x4E49;&#x4E0A;&#x662F;&#x57FA;&#x4E8E; prometheus server &#x4E3A;&#x6838;&#x5FC3;&#x7684;&#x5404;&#x7C7B;&#x8F6F;&#x4EF6;&#x5DE5;&#x5177;&#x7684;&#x751F;&#x6001;&#x3002;&#x9664; prometheus server &#x548C; grafana &#x5916;&#xFF0C;Prometheus &#x751F;&#x6001;&#x5E38;&#x7528;&#x7684;&#x7EC4;&#x4EF6;&#x8FD8;&#x6709; alertmanager&#x3001;pushgateway &#x548C;&#x975E;&#x5E38;&#x4E30;&#x5BCC;&#x7684;&#x5404;&#x7C7B; exporters&#x3002;</p>
-<p>prometheus server &#x81EA;&#x8EAB;&#x662F;&#x4E00;&#x4E2A;&#x65F6;&#x5E8F;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x76F8;&#x6BD4;&#x4F7F;&#x7528; MySQL &#x505A;&#x4E3A;&#x5E95;&#x5C42;&#x5B58;&#x50A8;&#x7684; zabbix &#x76D1;&#x63A7;&#xFF0C;&#x62E5;&#x6709;&#x975E;&#x5E38;&#x9AD8;&#x6548;&#x7684;&#x63D2;&#x5165;&#x548C;&#x67E5;&#x8BE2;&#x6027;&#x80FD;&#xFF0C;&#x540C;&#x65F6;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x5360;&#x7528;&#x7684;&#x7A7A;&#x95F4;&#x4E5F;&#x975E;&#x5E38;&#x5C0F;&#x3002;&#x53E6;&#x5916;&#x4E0D;&#x540C;&#x4E8E; zabbix&#xFF0C;prometheus server &#x4E2D;&#x7684;&#x6570;&#x636E;&#x662F;&#x4ECE;&#x5404;&#x79CD;&#x6570;&#x636E;&#x6E90;&#x4E3B;&#x52A8;&#x62C9;&#x8FC7;&#x6765;&#x7684;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5BA2;&#x6237;&#x7AEF;&#x4E3B;&#x52A8;&#x63A8;&#x9001;&#x3002;&#x5982;&#x679C;&#x4F7F;&#x7528; prometheus server &#x8981;&#x63A5;&#x6536;&#x63A8;&#x9001;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x6570;&#x636E;&#x6E90;&#x548C; prometheus server &#x4E2D;&#x95F4;&#x9700;&#x8981;&#x4F7F;&#x7528; pushgateway&#x3002;</p>
+<p>prometheus server &#x81EA;&#x8EAB;&#x662F;&#x4E00;&#x4E2A;&#x65F6;&#x5E8F;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x76F8;&#x6BD4;&#x4F7F;&#x7528; MySQL &#x505A;&#x4E3A;&#x5E95;&#x5C42;&#x5B58;&#x50A8;&#x7684; zabbix &#x76D1;&#x63A7;&#xFF0C;&#x62E5;&#x6709;&#x975E;&#x5E38;&#x9AD8;&#x6548;&#x7684;&#x63D2;&#x5165;&#x548C;&#x67E5;&#x8BE2;&#x6027;&#x80FD;&#xFF0C;&#x540C;&#x65F6;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x5360;&#x7528;&#x7684;&#x7A7A;&#x95F4;&#x4E5F;&#x975E;&#x5E38;&#x5C0F;&#x3002;&#x53E6;&#x5916;&#x4E0D;&#x540C;&#x4E8E; zabbix&#xFF0C;prometheus server &#x4E2D;&#x7684;&#x6570;&#x636E;&#x662F;&#x4ECE;&#x5404;&#x79CD;&#x6570;&#x636E;&#x6E90;&#x4E3B;&#x52A8;&#x62C9;&#x8FC7;&#x6765;&#x7684;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5BA2;&#x6237;&#x7AEF;&#x4E3B;&#x52A8;&#x63A8;&#x9001;&#x7684;&#x3002;&#x5982;&#x679C;&#x4F7F;&#x7528; prometheus server &#x8981;&#x63A5;&#x6536;&#x63A8;&#x9001;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x6570;&#x636E;&#x6E90;&#x548C; prometheus server &#x4E2D;&#x95F4;&#x9700;&#x8981;&#x4F7F;&#x7528; pushgateway&#x3002;</p>
 <p>Prometheus &#x76D1;&#x63A7;&#x751F;&#x6001;&#x975E;&#x5E38;&#x5B8C;&#x5584;&#xFF0C;&#x80FD;&#x76D1;&#x63A7;&#x5BF9;&#x8C61;&#x975E;&#x5E38;&#x4E30;&#x5BCC;&#x3002;&#x8BE6;&#x7EC6;&#x7684; exporter &#x652F;&#x6301;&#x5BF9;&#x8C61;&#x53EF;&#x53C2;&#x8003;&#x5B98;&#x65B9;&#x4ECB;&#x7ECD; <a href="https://prometheus.io/docs/instrumenting/exporters/" target="_blank">exporters&#x5217;&#x8868;</a> &#x3002;</p>
 <p>Prometheus &#x53EF;&#x4EE5;&#x76D1;&#x63A7;&#x7684;&#x5BF9;&#x8C61;&#x8FDC;&#x4E0D;&#x6B62;&#x5B98;&#x65B9; exporters &#x5217;&#x8868;&#x4E2D;&#x7684;&#x4EA7;&#x54C1;&#xFF0C;&#x6709;&#x6B64;&#x4EA7;&#x54C1;&#x539F;&#x751F;&#x652F;&#x6301;&#x4E0D;&#x5728;&#x4E0A;&#x9762;&#x5217;&#x8868;&#xFF0C;&#x5982; TiDB; &#x6709;&#x4E9B;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6807;&#x51C6;&#x7684; exporter &#x6765;&#x76D1;&#x63A7;&#x4E00;&#x7C7B;&#x4EA7;&#x54C1;&#xFF0C;&#x5982; snmp_exporter; &#x8FD8;&#x6709;&#x4E9B;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x81EA;&#x5DF1;&#x5199;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x811A;&#x672C;&#x5F80; pushgateway &#x63A8;&#x9001;&#xFF1B;&#x5982;&#x679C;&#x6709;&#x4E00;&#x5B9A;&#x5F00;&#x53D1;&#x80FD;&#x529B;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x81EA;&#x5DF1;&#x5199; exporter &#x6765;&#x89E3;&#x51B3;&#x3002;&#x540C;&#x65F6;&#x6709;&#x4E9B;&#x4EA7;&#x54C1;&#x968F;&#x7740;&#x7248;&#x672C;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x4E0A;&#x9762;&#x5217;&#x8868;&#x4E2D;&#x7684; exporter &#x5C31;&#x53EF;&#x4EE5;&#x652F;&#x6301;&#xFF0C;&#x6BD4;&#x5982; ceph&#x3002;</p>
-<p>&#x968F;&#x7740;&#x5BB9;&#x5668;&#x548C; kurbernetes &#x7684;&#x4E0D;&#x65AD;&#x843D;&#x5730;&#xFF0C;&#x4EE5;&#x53CA;&#x66F4;&#x591A;&#x7684;&#x8F6F;&#x4EF6;&#x539F;&#x751F;&#x652F;&#x6301; Prometheus&#xFF0C;&#x76F8;&#x4FE1;&#x5F88; Prometheus &#x4F1A;&#x6210;&#x4E3A;&#x76D1;&#x63A7;&#x9886;&#x57DF;&#x7684;&#x9886;&#x519B;&#x4EA7;&#x54C1;&#x3002;</p>
-<h2 id="&#x67B6;&#x6784;&#x4ECB;&#x7ECD;">&#x67B6;&#x6784;&#x4ECB;&#x7ECD;</h2>
+<p>&#x968F;&#x7740;&#x5BB9;&#x5668;&#x548C; kurbernetes &#x7684;&#x4E0D;&#x65AD;&#x843D;&#x5730;&#xFF0C;&#x4EE5;&#x53CA;&#x66F4;&#x591A;&#x7684;&#x8F6F;&#x4EF6;&#x539F;&#x751F;&#x652F;&#x6301; Prometheus&#xFF0C;&#x76F8;&#x4FE1;&#x5F88;&#x5FEB; Prometheus &#x4F1A;&#x6210;&#x4E3A;&#x76D1;&#x63A7;&#x9886;&#x57DF;&#x7684;&#x9886;&#x519B;&#x4EA7;&#x54C1;&#x3002;</p>
+<h3 id="&#x67B6;&#x6784;&#x4ECB;&#x7ECD;">&#x67B6;&#x6784;&#x4ECB;&#x7ECD;</h3>
 <p>Prometheus &#x7684;&#x67B6;&#x6784;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;</p>
 <p><img src="../../res/session3/chapter4/prometheus/1.png" alt="1.png"></p>
-<p>Prometheus &#x751F;&#x6001;&#x4E2D; prometheus server &#x8F6F;&#x4EF6;&#x7528;&#x4E8E;&#x76D1;&#x63A7;&#x6570;&#x636E;&#x5E93;&#x7684;&#x5B58;&#x50A8;&#x3001;&#x68C0;&#x7D22;&#xFF0C;&#x4EE5;&#x53CA;&#x544A;&#x8B66;&#x6D88;&#x606F;&#x7684;&#x63A8;&#x9001;&#xFF0C;&#x662F; Prometheus &#x751F;&#x6001;&#x6700;&#x6838;&#x5FC3;&#x7684;&#x90E8;&#x5206;&#x3002;</p>
-<p>Alertmanger &#x8D1F;&#x8D23;&#x63A5;&#x6536; prometheus &#x8F6F;&#x4EF6;&#x63A8;&#x9001;&#x7684;&#x544A;&#x8B66;&#xFF0C;&#x5E76;&#x5C06;&#x544A;&#x8B66;&#x7ECF;&#x8FC7;&#x5206;&#x7EC4;&#x3001;&#x53BB;&#x91CD;&#x3001;&#x7B49;&#x5904;&#x7406;&#x540E;&#xFF0C;&#x6309;&#x544A;&#x8B66;&#x6807;&#x7B7E;&#x5185;&#x5BB9;&#x8DEF;&#x7531;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x90AE;&#x4EF6;&#x3001;&#x77ED;&#x4FE1;&#x3001;&#x4F01;&#x4E1A;&#x5FAE;&#x4FE1;&#x3001;&#x9489;&#x9489;&#x3001;webhook &#x7B49;&#x53D1;&#x9001;&#x7ED9;&#x63A5;&#x6536;&#x8005;&#x3002;     </p>
-<p>&#x5927;&#x90E8;&#x5206;&#x8F6F;&#x4EF6;&#x76D1;&#x63A7;&#x65F6;&#x8FD8;&#x9700;&#x8981;&#x90E8;&#x7F72;&#x4E00;&#x4E2A; exporter &#x505A;&#x4E3A; agent &#x6765;&#x91C7;&#x96C6;&#x6570;&#x636E;&#xFF0C;&#x4F46;&#x662F;&#x6709;&#x90E8;&#x5206;&#x8F6F;&#x4EF6;&#x539F;&#x751F;&#x652F;&#x6301; Prometheus&#xFF0C;&#x6BD4;&#x5982; TiDB &#x7684;&#x90E8;&#x5206;&#x7EC4;&#x4EF6;&#xFF0C;&#x5728;&#x4E0D;&#x7528;&#x90E8;&#x7F72; exporter &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x5C31;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x91C7;&#x96C6;&#x76D1;&#x63A7;&#x6570;&#x636E;&#x3002;</p>
-<p>Prometheus &#x6570;&#x636E;&#x67E5;&#x8BE2;&#x7684;&#x8BED;&#x8A00; PromQL&#xFF0C; &#x53EF;&#x4EE5;&#x901A;&#x8FC7; prometheus server &#x7684; web UI&#xFF0C;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E0A;&#x76F4;&#x63A5;&#x7F16;&#x5199; PromQL &#x68C0;&#x7D22;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5C06; PromQL &#x56FA;&#x5316;&#x5230; grafana &#x7684;&#x62A5;&#x8868;&#x4E2D;&#x505A;&#x52A8;&#x6001;&#x7684;&#x5C55;&#x793A;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; API &#x63A5;&#x53E3;&#x505A;&#x66F4;&#x4E30;&#x5BCC;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x529F;&#x80FD;&#x3002;</p>
-<p>Prometheus &#x9664;&#x4E86;&#x53EF;&#x4EE5;&#x91C7;&#x96C6;&#x9759;&#x6001;&#x7684; exporters &#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x8981;&#x901A;&#x8FC7; Service discover &#x7684;&#x65B9;&#x5F0F;&#x76D1;&#x63A7;&#x5404;&#x79CD;&#x52A8;&#x6001;&#x7684;&#x76EE;&#x6807;&#xFF0C;&#x5982; kubernetes &#x7684; node,pod,service &#x7B49;&#x3002;</p>
-<p>&#x9664; exporter &#x548C; service discovery &#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x5199;&#x811A;&#x672C;&#x505A;&#x4E00;&#x4E9B;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x91C7;&#x96C6;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7; push &#x7684;&#x65B9;&#x5F0F;&#x63A8;&#x9001;&#x5230; pushgateway&#xFF0C;pushgateway &#x5BF9;&#x4E8E; prometheus server &#x6765;&#x8BF4;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684; exporter&#xFF0C;prometheus server &#x53EF;&#x4EE5;&#x50CF;&#x6293;&#x53D6;&#x5176;&#x4ED6; exporters &#x4E00;&#x6837;&#x6293;&#x53D6; pushgateway &#x7684;&#x4FE1;&#x606F;&#x3002;</p>
-<h2 id="&#x5B89;&#x88C5;&#x8FD0;&#x884C;">&#x5B89;&#x88C5;&#x8FD0;&#x884C;</h2>
+<p>Prometheus &#x751F;&#x6001;&#x4E2D; prometheus server &#x8F6F;&#x4EF6;&#x7528;&#x4E8E;&#x76D1;&#x63A7;&#x4FE1;&#x606F;&#x7684;&#x5B58;&#x50A8;&#x3001;&#x68C0;&#x7D22;&#xFF0C;&#x4EE5;&#x53CA;&#x544A;&#x8B66;&#x6D88;&#x606F;&#x7684;&#x63A8;&#x9001;&#xFF0C;&#x662F; Prometheus &#x751F;&#x6001;&#x6700;&#x6838;&#x5FC3;&#x7684;&#x90E8;&#x5206;&#x3002;</p>
+<p>Alertmanger &#x8D1F;&#x8D23;&#x63A5;&#x6536; prometheus server &#x63A8;&#x9001;&#x7684;&#x544A;&#x8B66;&#xFF0C;&#x5E76;&#x5C06;&#x544A;&#x8B66;&#x7ECF;&#x8FC7;&#x5206;&#x7EC4;&#x3001;&#x53BB;&#x91CD;&#x7B49;&#x5904;&#x7406;&#x540E;&#xFF0C;&#x6309;&#x544A;&#x8B66;&#x6807;&#x7B7E;&#x5185;&#x5BB9;&#x8DEF;&#x7531;&#xFF0C;&#x901A;&#x8FC7;&#x90AE;&#x4EF6;&#x3001;&#x77ED;&#x4FE1;&#x3001;&#x4F01;&#x4E1A;&#x5FAE;&#x4FE1;&#x3001;&#x9489;&#x9489;&#x3001;webhook &#x7B49;&#x53D1;&#x9001;&#x7ED9;&#x63A5;&#x6536;&#x8005;&#x3002;     </p>
+<p>&#x5927;&#x90E8;&#x5206;&#x8F6F;&#x4EF6;&#x5728;&#x7528; Prometheus &#x4F5C;&#x4E3A;&#x76D1;&#x63A7;&#x65F6;&#x8FD8;&#x9700;&#x8981;&#x90E8;&#x7F72;&#x4E00;&#x4E2A; exporter &#x505A;&#x4E3A; agent &#x6765;&#x91C7;&#x96C6;&#x6570;&#x636E;&#xFF0C;&#x4F46;&#x662F;&#x6709;&#x90E8;&#x5206;&#x8F6F;&#x4EF6;&#x539F;&#x751F;&#x652F;&#x6301; Prometheus&#xFF0C;&#x6BD4;&#x5982; TiDB &#x7684;&#x7EC4;&#x4EF6;&#xFF0C;&#x5728;&#x4E0D;&#x7528;&#x90E8;&#x7F72; exporter &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x5C31;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x91C7;&#x96C6;&#x76D1;&#x63A7;&#x6570;&#x636E;&#x3002;</p>
+<p>PromQL &#x662F; Prometheus &#x6570;&#x636E;&#x67E5;&#x8BE2;&#x8BED;&#x8A00;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; prometheus server &#x7684; web UI&#xFF0C;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E0A;&#x76F4;&#x63A5;&#x7F16;&#x5199; PromQL &#x6765;&#x68C0;&#x7D22;&#x76D1;&#x63A7;&#x4FE1;&#x606F;&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x5C06; PromQL &#x56FA;&#x5316;&#x5230; grafana &#x7684;&#x62A5;&#x8868;&#x4E2D;&#x505A;&#x52A8;&#x6001;&#x7684;&#x5C55;&#x793A;&#xFF0C;&#x53E6;&#x5916;&#x7528;&#x6237;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; API &#x63A5;&#x53E3;&#x505A;&#x66F4;&#x4E30;&#x5BCC;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x529F;&#x80FD;&#x3002;</p>
+<p>Prometheus &#x9664;&#x4E86;&#x53EF;&#x4EE5;&#x91C7;&#x96C6;&#x9759;&#x6001;&#x7684; exporters &#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x8981;&#x901A;&#x8FC7; service discovery &#x7684;&#x65B9;&#x5F0F;&#x76D1;&#x63A7;&#x5404;&#x79CD;&#x52A8;&#x6001;&#x7684;&#x76EE;&#x6807;&#xFF0C;&#x5982; kubernetes &#x7684; node,pod,service &#x7B49;&#x3002;</p>
+<p>&#x9664; exporter &#x548C; service discovery &#x4E4B;&#x5916;&#xFF0C;&#x7528;&#x6237;&#x8FD8;&#x53EF;&#x4EE5;&#x5199;&#x811A;&#x672C;&#x505A;&#x4E00;&#x4E9B;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x4FE1;&#x606F;&#x91C7;&#x96C6;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7; push &#x7684;&#x65B9;&#x5F0F;&#x63A8;&#x9001;&#x5230; pushgateway&#xFF0C;pushgateway &#x5BF9;&#x4E8E; prometheus server &#x6765;&#x8BF4;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684; exporter&#xFF0C;prometheus server &#x53EF;&#x4EE5;&#x50CF;&#x6293;&#x53D6;&#x5176;&#x4ED6; exporters &#x4E00;&#x6837;&#x6293;&#x53D6; pushgateway &#x7684;&#x4FE1;&#x606F;&#x3002;</p>
+<h3 id="&#x5B89;&#x88C5;&#x8FD0;&#x884C;">&#x5B89;&#x88C5;&#x8FD0;&#x884C;</h3>
 <p>Prometheus &#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#x5728; kubernetes &#x4E2D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#x4E2D;&#x865A;&#x62DF;&#x673A;&#x4E2D;&#x3002;Prometheus &#x7684;&#x5927;&#x90E8;&#x5206;&#x7EC4;&#x4EF6;&#x90FD;&#x5DF2;&#x7ECF;&#x6709;&#x7F16;&#x8BD1;&#x597D;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x548C; docker &#x955C;&#x50CF;&#x3002;&#x5BF9;&#x4E8E;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#xFF0C;&#x4ECE;&#x5B98;&#x65B9;&#x7F51;&#x7AD9;&#x4E0B;&#x8F7D;&#x89E3;&#x538B;&#x540E;&#x5C31;&#x53EF;&#x4EE5;&#x542F;&#x52A8;&#x8FD0;&#x884C;&#xFF0C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;</p>
 <p>prometheus --config.file=conf/prometheus.yml</p>
 <p>&#x5EFA;&#x8BAE;&#x5C06;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x505A;&#x6210; systemd &#x7684;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#xFF0C;&#x8FD9;&#x90E8;&#x5206;&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://pingcap.com/docs-cn/stable/how-to/monitor/monitor-a-cluster/#%E9%83%A8%E7%BD%B2-prometheus-%E5%92%8C-grafana" target="_blank">TiDB &#x4E0A;&#x8FD0;&#x884C; prometheus &#x7684;&#x65B9;&#x5F0F;</a> &#x3002;</p>
-<h3 id="prometheus-server-&#x914D;&#x7F6E;&#x6587;&#x4EF6;"><strong>Prometheus server**</strong> <strong>**&#x914D;&#x7F6E;&#x6587;&#x4EF6;</strong></h3>
-<p>prometheus server &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x662F; yaml &#x683C;&#x5F0F;&#xFF0C;&#x7531;&#x53C2;&#x6570; --config.file &#x53BB;&#x6307;&#x5B9A;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E00;&#x822C;&#x547D;&#x540D;&#x4E3A; prometheus.yml</p>
-<p><strong>&#x5E38;&#x7528;&#x914D;&#x7F6E;</strong></p>
-<p>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x793A;&#x4F8B;&#xFF1A;</p>
+<h3 id="prometheus-server-&#x914D;&#x7F6E;&#x6587;&#x4EF6;">Prometheus server &#x914D;&#x7F6E;&#x6587;&#x4EF6;</h3>
+<p>prometheus server &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x662F; yaml &#x683C;&#x5F0F;&#xFF0C;&#x7531;&#x53C2;&#x6570; --config.file &#x6307;&#x5B9A;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E00;&#x822C;&#x547D;&#x540D;&#x4E3A; prometheus.yml&#x3002;</p>
+<p><strong>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x793A;&#x4F8B;</strong></p>
 <pre><code>global:    
-
   scrape_interval: 15s
-
     scrape_timeout: 10s
-
   external_labels:
-
     monitor: &apos;codelab-monitor&apos;
 
 rule_files:
-
   - rules/centos7.rules.yml
-
   - rules/mariadb.rules.yml
 
-
-
 alerting:
-
   alertmanagers:
-
   - static_configs:
-
     - targets:
-
       - 21.129.127.3:9093
 
 scrape_configs:
-
    - job_name: &apos;prometheus&apos;
-
     scrape_interval: 5s
-
-
-
     static_configs:
-
       - targets: [&apos;localhost:9090&apos;]
 
-    - job_name: node
-
+    - job_name: &apos;node&apos;
     file_sd_configs:
-
       - files:
-
         - conf.d/centos.yml
 </code></pre><p>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8BF4;&#x660E;&#xFF1A;</p>
 <ul>
-<li>global:  &#x6307;&#x7684;&#x662F;&#x5168;&#x5C40;&#x53D8;&#x66F4;</li>
+<li>global:  &#x6307;&#x7684;&#x662F;&#x5168;&#x5C40;&#x914D;&#x7F6E;</li>
 <li>scrape_interval: &#x6293;&#x53D6;&#x76EE;&#x6807;&#x76D1;&#x63A7;&#x4FE1;&#x606F;&#x7684;&#x95F4;&#x9694;&#xFF0C;&#x9ED8;&#x8BA4; 15 &#x79D2;</li>
 <li>scrape_timeout: &#x6293;&#x53D6;&#x65F6;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4; 10 &#x79D2;</li>
 <li>external_labels: &#x989D;&#x5916;&#x6DFB;&#x52A0;&#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x8FD9;&#x4E2A;&#x6807;&#x7B7E;&#x53EF;&#x4EE5;&#x5728;&#x591A;&#x4E2A;&#x5916;&#x90E8;&#x7CFB;&#x7EDF;&#x6D41;&#x8F6C;&#xFF0C;&#x5982;&#xFF1A;federation, remote storage, Alertmanager</li>
-<li>rule_files:  &#x8FD9;&#x4E2A;&#x5199;&#x7684;&#x662F;&#x751F;&#x6210;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5177;&#x4F53;&#x5199;&#x6CD5;&#x4F1A;&#x5728;&#x540E; alertmanger &#x7AE0;&#x8282;&#x4ECB;&#x7ECD; </li>
+<li>rule_files:  &#x8FD9;&#x4E2A;&#x5199;&#x7684;&#x662F;&#x751F;&#x6210;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5177;&#x4F53;&#x5199;&#x6CD5;&#x89C1; alertmanger &#x7AE0;&#x8282;&#x7684;&#x4ECB;&#x7ECD; </li>
 <li>alerting:  &#x8FD9;&#x4E2A;&#x662F;&#x7528;&#x6765;&#x914D;&#x7F6E; alertmanager &#x5730;&#x5740;&#xFF0C;&#x53EF;&#x4EE5;&#x5199;&#x591A;&#x4E2A; alertmanager &#x7684;&#x5730;&#x5740;</li>
 <li>scrape_configs&#xFF1A; &#x4ECE;&#x8FD9;&#x5F00;&#x59CB;&#xFF0C;&#x540E;&#x9762;&#x662F;&#x91C7;&#x96C6;&#x5BF9;&#x8C61;&#x7684;&#x914D;&#x7F6E;</li>
 <li>job_name&#xFF1A;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x591A;&#x4E2A; job&#xFF0C;&#x6BCF;&#x4E2A; job &#x91CC;&#x6709;&#x4E00;&#x7C7B;&#x7684;&#x91C7;&#x96C6;&#x5BF9;&#x8C61;</li>
@@ -2907,209 +2886,170 @@ scrape_configs:
 <li>targets&#xFF1A; &#x8981;&#x6293;&#x53D6;&#x7684;&#x5177;&#x4F53;&#x5BF9;&#x8C61;&#xFF08;instance)</li>
 <li>file_sd_configs: &#x5982;&#x679C;&#x76D1;&#x63A7;&#x5BF9;&#x8C61;&#x8FC7;&#x591A;&#xFF0C;&#x53EF;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x5199;&#x5230;&#x72EC;&#x7ACB;&#x7684;&#x6587;&#x4EF6;&#x4E2D;</li>
 </ul>
-<p><strong>&#x544A;&#x8B66;&#x89C4;&#x5219;&#x914D;&#x7F6E;</strong></p>
-<p>&#x544A;&#x8B66;&#x89C4;&#x5212;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x793A;&#x4F8B;&#xFF1A;</p>
+<p><strong>&#x544A;&#x8B66;&#x89C4;&#x5219;&#x914D;&#x7F6E;&#x793A;&#x4F8B;</strong></p>
 <pre><code>groups:
-
 - name: alert.rules
-
   rules:
-
    - alert: InstanceDown
-
     expr: up == 0
-
     for: 1s
-
     labels:
-
       level: emergency
-
     annotations:
-
       summary: &quot;&#x8BE5;&#x5B9E;&#x4F8B;&#x6293;&#x53D6;&#x6570;&#x636E;&#x8D85;&#x65F6;&quot;
-
       description: &quot;&#x9879;&#x76EE;&#xFF1A; , service: &quot; &#x5F53;&#x524D;&#x503C;
-</code></pre><p><strong>&#x8BF4;&#x660E;</strong>&#xFF1A;</p>
+</code></pre><p>&#x544A;&#x8B66;&#x914D;&#x7F6E;&#x8BF4;&#x660E;&#xFF1A;</p>
 <ul>
 <li>groups&#xFF1A; &#x6807;&#x8BB0;&#x5F53;&#x524D;&#x6240;&#x6709;&#x7684;&#x544A;&#x8B66;&#x89C4;&#x5212;&#x4E3A;&#x540C;&#x4E00;&#x7EC4;</li>
 <li>name: &#x8FD9;&#x544A;&#x8B66;&#x7EC4;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x540D;&#x79F0;</li>
 <li>alert&#xFF1A;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x7684;&#x540D;&#x79F0;</li>
 <li>expr&#xFF1A;&#x544A;&#x8B66;&#x7684;&#x8868;&#x8FBE;&#x5F0F;</li>
-<li>for: &#x95EE;&#x9898;&#x53D1;&#x751F;&#x540E;&#x4FDD;&#x6301;&#x591A;&#x957F;&#x65F6;&#x95F4;&#x518D;&#x63A8;&#x9001;&#x7ED9;</li>
-<li>alertmanager&#xFF0C;&#x8C03;&#x4F4E;&#x65F6;&#x95F4;&#x53EF;&#x4EE5;&#x589E;&#x52A0;&#x544A;&#x8B66;&#x7684;&#x654F;&#x611F;&#x5EA6;&#xFF0C;&#x8C03;&#x9AD8;&#x4F1A;&#x51CF;&#x5C11;&#x544A;&#x8B66;&#x6BDB;&#x523A;&#x3002;</li>
+<li>for: &#x95EE;&#x9898;&#x53D1;&#x751F;&#x540E;&#x4FDD;&#x6301;&#x591A;&#x957F;&#x65F6;&#x95F4;&#x518D;&#x63A8;&#x9001;&#x7ED9;&#xFF0C;&#x8C03;&#x4F4E;&#x8BE5;&#x503C;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8;&#x544A;&#x8B66;&#x7684;&#x654F;&#x611F;&#x5EA6;&#xFF0C;&#x8C03;&#x9AD8;&#x4F1A;&#x51CF;&#x5C11;&#x544A;&#x8B66;&#x6BDB;&#x523A;</li>
 <li>labels&#xFF1A; &#x53EF;&#x4EE5;&#x52A0;&#x4E00;&#x4E9B;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x6807;&#x7B7E;</li>
 <li>annotations: &#x53EF;&#x4EE5;&#x52A0;&#x4E00;&#x4E9B;&#x63CF;&#x8FF0;&#x4FE1;&#x606F;</li>
 </ul>
-<h1 id="prometheus-&#x5728;-tidb-&#x7684;&#x90E8;&#x7F72;&#x67B6;&#x6784;">Prometheus &#x5728; TiDB &#x7684;&#x90E8;&#x7F72;&#x67B6;&#x6784;</h1>
-<h2 id="&#x90E8;&#x7F72;&#x67B6;&#x6784;&#x4ECB;&#x7ECD;">&#x90E8;&#x7F72;&#x67B6;&#x6784;&#x4ECB;&#x7ECD;</h2>
-<p>TiDB &#x5DF2;&#x7ECF;&#x539F;&#x751F;&#x652F;&#x6301; Prometheus&#xFF0C; &#x5728; TiDB &#x65E7;&#x7248;&#x672C;&#x4E2D;&#xFF0C;TiDB &#x7684;&#x76D1;&#x63A7;&#x4FE1;&#x606F;&#x662F;&#x7531;&#x5404; TiDB &#x7684;&#x5404;&#x4E2A;&#x7EC4;&#x4EF6;&#x4E3B;&#x52A8;&#x4E0A;&#x62A5;&#x7ED9; pushgateway&#xFF0C;&#x518D;&#x7531; prometheus server &#x53BB; pushgateway &#x4E0A;&#x4E3B;&#x52A8;&#x6293;&#x53D6;&#x76D1;&#x63A7;&#x4FE1;&#x606F;&#x3002;</p>
-<p>&#x4ECE; TiDB 2.1 &#x7248;&#x672C;&#x5F00;&#x59CB;&#x7531;&#x4E3B;&#x52A8;&#x4E0A;&#x62A5;&#x53D8;&#x6210;&#x4E3B;&#x52A8;&#x66B4;&#x9732; <a href="https://pingcap.com/docs-cn/stable/how-to/monitor/monitor-a-cluster/#%E4%BD%BF%E7%94%A8-metrics-%E6%8E%A5%E5%8F%A3" target="_blank">Metrics &#x63A5;&#x53E3;</a> &#xFF0C;&#x7531; prometheus server &#x4E3B;&#x52A8;&#x6293;&#x53D6;&#x4FE1;&#x606F;&#xFF0C; &#x8FD9;&#x6837;&#x7684;&#x67B6;&#x6784;&#x66F4;&#x7B26;&#x5408; Prometheus &#x7684;&#x8BBE;&#x8BA1;&#x601D;&#x60F3;&#xFF0C;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x8DEF;&#x5F84;&#x5C11;&#x4E00;&#x5C42; pushgateway&#x3002; &#x6570;&#x636E;&#x91C7;&#x96C6;&#x5B8C;&#x6210;&#x540E;&#x7531;&#x4E8E; grafana &#x505A;&#x62A5;&#x8868;&#x5C55;&#x793A;&#xFF0C;&#x540C;&#x65F6;&#x544A;&#x8B66;&#x4FE1;&#x606F;&#x4E3B;&#x52A8;&#x63A8;&#x52A8; alertmanager&#xFF0C;&#x518D; altermanager &#x5C06;&#x544A;&#x8B66;&#x63A8;&#x9001;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x6D88;&#x606F;&#x6E20;&#x9053;&#x3002;</p>
+<h2 id="prometheus-&#x5728;-tidb-&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x5E94;&#x7528;">Prometheus &#x5728; TiDB &#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x5E94;&#x7528;</h2>
+<p>&#x672C;&#x8282;&#x4ECB;&#x7ECD; Promethues &#x5728; TiDB &#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x4E3B;&#x8981;&#x5305;&#x62EC;&#x901A;&#x8FC7; Prometheus PromQL &#x8BED;&#x8A00;&#x67E5;&#x770B; TiDB &#x7684;&#x76D1;&#x63A7;&#xFF0C;&#x4EE5;&#x53CA;&#x544A;&#x8B66;&#x914D;&#x7F6E;&#x7684;&#x8BB2;&#x89E3;&#x3002;</p>
+<h3 id="tidb-&#x96C6;&#x7FA4;&#x4E2D;-prometheus-&#x7684;&#x90E8;&#x7F72;&#x67B6;&#x6784;">TiDB &#x96C6;&#x7FA4;&#x4E2D; Prometheus &#x7684;&#x90E8;&#x7F72;&#x67B6;&#x6784;</h3>
+<p>TiDB &#x5DF2;&#x7ECF;&#x539F;&#x751F;&#x652F;&#x6301; Prometheus&#xFF0C;&#x5728; 2.1 &#x4E4B;&#x524D;&#x7684;&#x7248;&#x672C;&#xFF0C;TiDB &#x7684;&#x76D1;&#x63A7;&#x4FE1;&#x606F;&#x662F;&#x7531;&#x5404; TiDB &#x7684;&#x5404;&#x4E2A;&#x7EC4;&#x4EF6;&#x4E3B;&#x52A8;&#x4E0A;&#x62A5;&#x7ED9; pushgateway&#xFF0C;&#x518D;&#x7531; prometheus server &#x53BB; pushgateway &#x4E0A;&#x4E3B;&#x52A8;&#x6293;&#x53D6;&#x76D1;&#x63A7;&#x4FE1;&#x606F;&#x3002;&#x4ECE; 2.1 &#x7248;&#x672C;&#x5F00;&#x59CB;&#xFF0C;TiDB &#x66B4;&#x9732; <a href="https://pingcap.com/docs-cn/stable/how-to/monitor/monitor-a-cluster/#%E4%BD%BF%E7%94%A8-metrics-%E6%8E%A5%E5%8F%A3" target="_blank">Metrics &#x63A5;&#x53E3;</a> &#xFF0C;&#x7531; prometheus server &#x4E3B;&#x52A8;&#x6293;&#x53D6;&#x4FE1;&#x606F;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x67B6;&#x6784;&#x66F4;&#x7B26;&#x5408; Prometheus &#x7684;&#x8BBE;&#x8BA1;&#x601D;&#x60F3;&#xFF0C;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x8DEF;&#x5F84;&#x5C11;&#x4E86;&#x4E00;&#x5C42; pushgateway&#x3002;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x5B8C;&#x6210;&#x540E;&#x7531; grafana &#x505A;&#x62A5;&#x8868;&#x5C55;&#x793A;&#xFF0C;&#x540C;&#x65F6;&#x544A;&#x8B66;&#x4FE1;&#x606F;&#x4E3B;&#x52A8;&#x63A8;&#x9001;&#x7ED9; alertmanager&#xFF0C;&#x518D;&#x7531; altermanager &#x5C06;&#x544A;&#x8B66;&#x63A8;&#x9001;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x6D88;&#x606F;&#x6E20;&#x9053;&#x3002;</p>
 <p><img src="../../res/session3/chapter4/prometheus/2.png" alt="2.png"></p>
-<h1 id="prometheus-&#x8868;&#x8FBE;&#x5F0F;&#x5728;-tidb-&#x7684;&#x5E94;&#x7528;">Prometheus &#x8868;&#x8FBE;&#x5F0F;&#x5728; TiDB &#x7684;&#x5E94;&#x7528;</h1>
-<h2 id="promql">PromQL</h2>
-<p>PromQL (Prometheus Query Language)&#x662F; Promehteus &#x63D0;&#x4F9B;&#x7684;&#x51FD;&#x6570;&#x67E5;&#x8BE2;&#x8BED;&#x8A00;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x5B9E;&#x65F6;&#x67E5;&#x8BE2;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x51FD;&#x6570;&#x505A;&#x805A;&#x5408;&#x8FD0;&#x7B97;&#x3002;</p>
-<h3 id="&#x6570;&#x636E;&#x7C7B;&#x578B;">&#x6570;&#x636E;&#x7C7B;&#x578B;</h3>
+<h3 id="&#x901A;&#x8FC7;-prometheus-promql-&#x8BED;&#x8A00;&#x67E5;&#x770B;-tidb-&#x7684;&#x76D1;&#x63A7;">&#x901A;&#x8FC7; Prometheus PromQL &#x8BED;&#x8A00;&#x67E5;&#x770B; TiDB &#x7684;&#x76D1;&#x63A7;</h3>
+<p>PromQL(Prometheus Query Language) &#x662F; Promehteus &#x63D0;&#x4F9B;&#x7684;&#x51FD;&#x6570;&#x67E5;&#x8BE2;&#x8BED;&#x8A00;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x5B9E;&#x65F6;&#x67E5;&#x8BE2;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x51FD;&#x6570;&#x505A;&#x805A;&#x5408;&#x8FD0;&#x7B97;&#x3002;&#x672C;&#x8282;&#x4ECB;&#x7ECD;&#x4E0B;&#x5982;&#x4F55;&#x901A;&#x8FC7; PromQL &#x5BF9; TiDB &#x7684;&#x76D1;&#x63A7;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x67E5;&#x8BE2;&#x3002;</p>
+<h4 id="&#x6570;&#x636E;&#x7C7B;&#x578B;">&#x6570;&#x636E;&#x7C7B;&#x578B;</h4>
 <p>Promethes &#x4E2D;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x5206; 4 &#x7C7B;&#xFF1A;</p>
 <ul>
 <li>Instant vector - &#x4E00;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x7684;&#x65F6;&#x5E8F;&#x6570;&#x636E;;</li>
 <li>Range vector - &#x4E00;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x65F6;&#x5E8F;&#x6570;&#x636E;;</li>
-<li>Scalar** -&#x6570;&#x5B57;&#xFF0C;&#x6D6E;&#x70B9;&#x503C;;</li>
-<li>String** - &#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5F53;&#x524D;&#x8FD8;&#x6CA1;&#x6709;&#x7528;&#x3002;</li>
+<li>Scalar - &#x6570;&#x5B57;&#xFF0C;&#x6D6E;&#x70B9;&#x503C;;</li>
+<li>String - &#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5F53;&#x524D;&#x8FD8;&#x6CA1;&#x6709;&#x7528;&#x3002;</li>
 </ul>
-<h3 id="prometheus-&#x6570;&#x636E;&#x683C;&#x5F0F;">prometheus &#x6570;&#x636E;&#x683C;&#x5F0F;</h3>
-<p>&#x4E0B;&#x9762;&#x770B;&#x770B; prometheus &#x91CC;&#x5B58;&#x50A8;&#x7684;&#x8BB0;&#x5F55;&#x662F;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF0C;&#x8FD9;&#x662F;&#x4F7F;&#x7528; web UI ( <a href="http://21.129.127.3:9090/graph" target="_blank">http://prometheus-server:9090/graph)</a> &#x67E5;&#x8BE2;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#x4EE5; Table &#x683C;&#x5F0F;&#x5C55;&#x793A;&#x7684;&#x5185;&#x5BB9;&#xFF1A;</p>
-<p>up{alert_lev=&quot;0&quot;,,instance=&quot;21.129.14.103:2998&quot;,job=&quot;hadoop&quot;,project=&quot;dtl&quot;,service=&quot;hadoop&quot;}  1</p>
+<h4 id="&#x901A;&#x8FC7;-web-ui-&#x6267;&#x884C;&#x67E5;&#x8BE2;">&#x901A;&#x8FC7; web UI &#x6267;&#x884C;&#x67E5;&#x8BE2;</h4>
+<p>&#x4E0B;&#x56FE;&#x662F;&#x5728; web UI (<a href="http://prometheus-server:9090/graph" target="_blank">http://prometheus-server:9090/graph)</a> &#x4E0A;&#x6267;&#x884C; up{instance=&quot;21.129.14.103:2998&quot;} &#x8868;&#x8FBE;&#x5F0F;&#x67E5;&#x8BE2;&#x5230;&#x7684;&#x67D0;&#x4E2A;&#x5B9E;&#x4F8B;&#x7684;&#x5B58;&#x6D3B;&#x72B6;&#x6001;&#x3002;</p>
 <p><img src="../../res/session3/chapter4/prometheus/3.png" alt="3.png"></p>
-<p><strong>&#x8BF4;&#x660E;&#xFF1A;</strong></p>
-<p>up: &#x662F;&#x4E00;&#x6761;&#x5177;&#x4F53;&#x7684;&#x65F6;&#x5E8F;&#x8BB0;&#x5F55;&#x540D;&#x5B57;&#xFF0C;&#x540C;&#x65F6; up &#x53C8;&#x662F;&#x4E00;&#x6761;&#x7279;&#x6B8A;&#x7684;&#x65F6;&#x5E8F;&#x540D;&#x79F0;&#xFF0C;&#x4ED6;&#x662F; Prometheus &#x5BF9;&#x6BCF;&#x4E2A;&#x76D1;&#x63A7;&#x5BF9;&#x8C61;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#xFF0C;&#x6307;&#x793A;&#x8BE5;&#x5BF9;&#x8C61;&#x4E00;&#x8D77;&#x505C;&#x72B6;&#x6001;&#xFF0C;1 &#x662F;&#x53EF;&#x8FDE;&#x901A;&#xFF0C;0 &#x662F;&#x4E0D;&#x53EF;&#x80FD;&#x8FDE;&#x901A;&#xFF08;&#x6CE8;&#x610F;&#xFF0C;0 &#x4E0D;&#x4E00;&#x5B9A;&#x662F;&#x670D;&#x52A1;&#x6302;&#x4E86;&#xFF0C;&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x662F;&#x83B7;&#x53D6;&#x8BB0;&#x5F55;&#x7684;&#x65F6;&#x5019;&#x8D85;&#x65F6;&#x4E86;&#xFF09;&#x3002;</p>
-<p>instance,job,project,service,alert_lev &#x90FD;&#x662F;&#x8BE5;&#x6761;&#x7684;&#x8BB0;&#x5F55;&#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x76F8;&#x5BF9;&#x4E8E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x5B57;&#x6BB5;&#x3002;&#x5176;&#x4E2D; instance &#x548C; job &#x662F;&#x57FA;&#x4E8E; prometheus.yaml &#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#xFF0C;project,service,alert_lev &#x662F;&#x7528;&#x6237;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x6807;&#x7B7E;&#x3002;instance &#x4E00;&#x822C;&#x662F; prometheus &#x91CC;&#x7684; target&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x6807;&#x7B7E;&#x91CC;&#x91CD;&#x5199;&#x3002;</p>
-<p>&#x6700;&#x540E;&#x7684; 1 &#x662F;&#x8FD9;&#x6761;&#x8BB0;&#x5F55;&#x5728;&#x67E5;&#x8BE2;&#x7684;&#x65F6;&#x95F4;&#x7684;&#x7ED3;&#x679C;</p>
-<h3 id="instant-vector-&#x67E5;&#x8BE2;">Instant vector &#x67E5;&#x8BE2;</h3>
-<p>&#x8FD9;&#x79CD;&#x67E5;&#x8BE2;&#x76F4;&#x63A5;&#x5199;&#x65F6;&#x5E8F;&#x540D;&#x79F0;&#x5C31;&#x53EF;&#x67E5;&#x51FA;&#x6570;&#x636E;&#xFF0C;</p>
-<p>http_requests_total</p>
-<p>&#x540C;&#x65F6;&#x8FD8;&#x53EF;&#x4EE5;&#x5728;{}&#x4E2D;&#x52A0;&#x4E00;&#x4E9B;&#x6807;&#x7B7E;&#x505A;&#x4E3A;&#x6761;&#x4EF6;</p>
-<p>http_requests_total{job=&quot;prometheus&quot;,group=&quot;canary&quot;}</p>
-<p>&#x4E00;&#x4E2A;&#x6807;&#x7B7E;&#x8FD8;&#x53EF;&#x4EE5;&#x5339;&#x914D;&#x591A;&#x4E2A;&#x503C; </p>
-<p>http_requests_total{job=~&quot;prometheus|node&quot;,group=&quot;canary&quot;}</p>
-<p>&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5339;&#x914D;&#x4E0D;&#x9700;&#x8981;&#x7684;</p>
-<p>http_requests_total{job!~&quot;prometheus|node&quot;,group!=&quot;canary&quot;}</p>
-<p>&#x53EF;&#x4EE5;&#x5339;&#x914D;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;</p>
-<p>up{mysql=~&quot;.+&quot;}  #&#x5339;&#x914D;&#x6240;&#x4EE5;&#x5305;&#x542B; mysql &#x7684; up &#x65F6;&#x5E8F;&#x6570;&#x636E;</p>
-<p>&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7B97;&#x672F;&#x8FD0;&#x7B97;&#x548C;&#x6BD4;&#x8F83;&#x8FD0;&#x7B97;&#x8FDB;&#x4E00;&#x6B65;&#x8FC7;&#x6EE4;&#x7ED3;&#x679C;</p>
-<p>Hadoop_DataNode_BytesWritten{job=&quot;hadoop&quot;}/1024/1024 &gt; 500</p>
-<h3 id="range-vector-&#x67E5;&#x8BE2;">Range vector &#x67E5;&#x8BE2;</h3>
-<p>Range vector &#x67E5;&#x8BE2;&#x7C7B;&#x4F3C;&#x4E8E; instance vector &#x67E5;&#x8BE2; &#xFF0C;&#x4F46;&#x662F;&#x52A0;&#x901A;&#x8FC7;[]&#x52A0;&#x4E0A;&#x9650;&#x5B9A;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#xFF0C;&#x65F6;&#x95F4;&#x5355;&#x4F4D;&#x6709;&#x4EE5;&#x4E0B;&#x7EA7;&#x522B;&#xFF1A;</p>
-<p>&#xB7; s - seconds</p>
-<p>&#xB7; m - minutes</p>
-<p>&#xB7; h - hours</p>
-<p>&#xB7; d - days</p>
-<p>&#xB7; w - weeks</p>
-<p>&#xB7; y - years</p>
-<p>&#x793A;&#x4F8B;&#x5982;&#x4E0B;</p>
-<p>Hadoop_DataNode_BlocksRead{ instance=&quot;21.129.14.104:2998&quot;}[1m]</p>
-<p>&#x901A;&#x5E38;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x67E5;&#x8BE2;&#x65F6;&#x4F1A;&#x548C;&#x51FD;&#x6570;&#x4E00;&#x8D77;&#x4F7F;&#x7528;&#xFF0C;&#x6BD4;&#x5982; rate() &#x51FD;&#x6570;</p>
-<p>rate(node_cpu_seconds_total{mode=&apos;user&apos;,instance=&apos;21.129.20.161:9100&apos;}[5m])
-<img src="../../res/session3/chapter4/prometheus/4.png" alt="4.png"></p>
-<h3 id="offset-&#x67E5;&#x8BE2;">Offset &#x67E5;&#x8BE2;</h3>
-<p>&#x4F7F;&#x7528;&#x7684; offset &#x67E5;&#x8BE2;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x663E;&#x793A;&#x7684;&#x65F6;&#x5E8F;&#x5F80;&#x524D;&#x504F;&#x79FB;&#x7684;&#x503C;,&#x793A;&#x4F8B;&#x5982;&#x4E0B;</p>
-<p>sum((tidb_server_query_total{result=&quot;OK&quot;}  offset 1d)) </p>
-<h3 id="tidb-&#x76D1;&#x63A7;&#x4E2D;&#x5E38;&#x7528;&#x51FD;&#x6570;">TiDB &#x76D1;&#x63A7;&#x4E2D;&#x5E38;&#x7528;&#x51FD;&#x6570;</h3>
-<p><strong>rate() &#x548C; irate()</strong></p>
-<p>&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x7528;&#x4E8E;&#x8BA1;&#x6570;&#x5668;&#xFF08;counter&#xFF09;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x7C7B;&#x6570;&#x636E;&#x4F1A;&#x4E00;&#x76F4;&#x589E;&#x52A0;&#xFF0C;&#x4F7F;&#x7528;&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x540E;&#xFF0C;&#x5C06;&#x5C55;&#x793A;&#x4E00;&#x5B9A;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#x7684;&#x53D8;&#x5316;&#x60C5;&#x51B5;&#xFF0C;&#x4F46;&#x5B83;&#x4FE9;&#x7684;&#x8BA1;&#x7B97;&#x65B9;&#x5F0F;&#x6709;&#x5DEE;&#x5F02;&#xFF0C;irate()&#x57FA;&#x4E8E;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#x8FDE;&#x7EED;&#x7684;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x3002;&#x800C; rate()&#x662F;&#x57FA;&#x4E8E;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#x7684;&#x6240;&#x6709;&#x65F6;&#x95F4;&#x70B9;&#xFF0C;&#x6240;&#x4EE5; irate()&#x5C55;&#x793A;&#x7684;&#x6570;&#x636E;&#x66F4;&#x4E3A;&#x7CBE;&#x786E;&#x4E9B;&#xFF0C;&#x505A;&#x56FE;&#x6BDB;&#x523A;&#x4F1A;&#x66F4;&#x660E;&#x663E;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
-<p>irate(node_cpu_seconds_total{mode=&apos;user&apos;,instance=&apos;21.129.20.161:9100&apos;}[5m])</p>
+<p>&#x4E0B;&#x9762;&#x7B80;&#x5355;&#x4ECB;&#x7ECD;&#x4E0B;&#x7ED3;&#x679C;&#x4E2D;&#x5404;&#x4E2A;&#x5B57;&#x6BB5;&#x7684;&#x610F;&#x4E49;&#xFF1A;</p>
+<ul>
+<li>up: &#x662F;&#x4E00;&#x6761;&#x5177;&#x4F53;&#x7684;&#x65F6;&#x5E8F;&#x8BB0;&#x5F55;&#x540D;&#x5B57;&#xFF0C;&#x540C;&#x65F6; up &#x53C8;&#x662F;&#x4E00;&#x6761;&#x7279;&#x6B8A;&#x7684;&#x65F6;&#x5E8F;&#x540D;&#x79F0;&#xFF0C;&#x4ED6;&#x662F; Prometheus &#x5BF9;&#x6BCF;&#x4E2A;&#x76D1;&#x63A7;&#x5BF9;&#x8C61;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#xFF0C;&#x6307;&#x793A;&#x8BE5;&#x5BF9;&#x8C61;&#x7684;&#x8D77;&#x505C;&#x72B6;&#x6001;&#xFF0C;1 &#x8868;&#x793A;&#x53EF;&#x8FDE;&#x901A;&#xFF0C;0 &#x8868;&#x793A;&#x4E0D;&#x53EF;&#x80FD;&#x8FDE;&#x901A;&#xFF08;&#x6CE8;&#x610F;&#xFF0C;0 &#x4E0D;&#x4E00;&#x5B9A;&#x662F;&#x670D;&#x52A1;&#x6302;&#x4E86;&#xFF0C;&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x662F;&#x83B7;&#x53D6;&#x8BB0;&#x5F55;&#x7684;&#x65F6;&#x5019;&#x8D85;&#x65F6;&#x4E86;&#xFF09;&#x3002;</li>
+<li>&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7684; instance, job, project, service, alert_lev &#x90FD;&#x662F;&#x8BE5;&#x6761;&#x7684;&#x8BB0;&#x5F55;&#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x76F8;&#x5BF9;&#x4E8E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x5B57;&#x6BB5;&#x3002;&#x5176;&#x4E2D; instance &#x548C; job &#x662F;&#x57FA;&#x4E8E; prometheus.yaml &#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#xFF0C;project, service, alert_lev &#x662F;&#x7528;&#x6237;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x6807;&#x7B7E;&#x3002;instance &#x4E00;&#x822C;&#x662F; prometheus &#x91CC;&#x7684; target&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x6807;&#x7B7E;&#x91CC;&#x91CD;&#x5199;&#x3002;</li>
+<li>&#x6700;&#x540E;&#x7684; 1 &#x662F;&#x8FD9;&#x6761;&#x8BB0;&#x5F55;&#x5728;&#x67E5;&#x8BE2;&#x65F6;&#x7684;&#x7ED3;&#x679C;&#x3002;</li>
+</ul>
+<h4 id="instant-vector-&#x67E5;&#x8BE2;">Instant vector &#x67E5;&#x8BE2;</h4>
+<p>&#x4E0B;&#x9762;&#x5217;&#x4E3E;&#x4E0B;&#x51E0;&#x79CD; Instant vector &#x67E5;&#x8BE2;&#x7684;&#x5E38;&#x89C1;&#x7528;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li>&#x76F4;&#x63A5;&#x5199;&#x65F6;&#x5E8F;&#x540D;&#x79F0;&#xFF0C;&#x4F8B;&#x5982;: server_query_total</li>
+<li>&#x5728; {} &#x4E2D;&#x52A0;&#x4E00;&#x4E9B;&#x6807;&#x7B7E;&#x4F5C;&#x4E3A;&#x8FC7;&#x6EE4;&#x6761;&#x4EF6;&#xFF0C;&#x4F8B;&#x5982;: server_query_total{job=&quot;tikv&quot;}</li>
+<li>&#x4E00;&#x4E2A;&#x6807;&#x7B7E;&#x5339;&#x914D;&#x591A;&#x4E2A;&#x503C;&#xFF0C;&#x4F8B;&#x5982;: server_query_total{job=~&quot;tikv|tidb&quot;}</li>
+<li>&#x6307;&#x5B9A;&#x9700;&#x8981;&#x8FC7;&#x6EE4;&#x6389;&#x503C;&#xFF0C;&#x4F8B;&#x5982;: server_query_total{job!~&quot;tikv|pd&quot;}</li>
+<li>&#x5339;&#x914D;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x4F8B;&#x5982;: up{tidb=~&quot;.+&quot;}&#xFF0C;&#x53EF;&#x4EE5;&#x5339;&#x914D;&#x6240;&#x4EE5;&#x5305;&#x542B; tidb &#x7684; up &#x65F6;&#x5E8F;&#x6570;&#x636E;</li>
+<li>&#x4F7F;&#x7528;&#x7B97;&#x672F;&#x8FD0;&#x7B97;&#x548C;&#x6BD4;&#x8F83;&#x8FD0;&#x7B97;&#x8FC7;&#x6EE4;&#x7ED3;&#x679C;: tikv_engine_bytes_written{instance=&quot;21.129.14.104:21910&quot;}/1024/1024 &gt; 500</li>
+</ul>
+<h4 id="range-vector-&#x67E5;&#x8BE2;">Range vector &#x67E5;&#x8BE2;</h4>
+<p>Range vector &#x67E5;&#x8BE2;&#x7C7B;&#x4F3C;&#x4E8E; instance vector &#x67E5;&#x8BE2;&#xFF0C;&#x4E0D;&#x540C;&#x4E4B;&#x5904;&#x5728;&#x4E8E;&#x901A;&#x8FC7; [] &#x52A0;&#x4E0A;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x9650;&#x5236;&#xFF0C;&#x65F6;&#x95F4;&#x5355;&#x4F4D;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x4E3A;&#xFF1A;</p>
+<ul>
+<li>s - seconds</li>
+<li>m - minutes</li>
+<li>h - hours</li>
+<li>d - days</li>
+<li>w - weeks</li>
+<li>y - years</li>
+</ul>
+<p>&#x4E0B;&#x9762;&#x770B;&#x770B;&#x76D1;&#x63A7; TiDB QPS &#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x5C55;&#x793A;&#x7684;&#x662F; 172.16.4.51:10080 &#x8FD9;&#x53F0; TiDB &#x5B9E;&#x4F8B;&#x7684; QPS &#x60C5;&#x51B5;&#xFF1A;</p>
+<p><img src="../../res/session3/chapter4/prometheus/4.png" alt="4.png"></p>
+<h4 id="offset-&#x67E5;&#x8BE2;">offset &#x67E5;&#x8BE2;</h4>
+<p>&#x901A;&#x8FC7; offset &#x80FD;&#x591F;&#x67E5;&#x8BE2;&#x8FC7;&#x53BB;&#x67D0;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x7684;&#x76D1;&#x63A7;&#x7ED3;&#x679C;&#xFF0C;&#x5982;&#x4E0B;&#x67E5;&#x8BE2;&#x7684;&#x662F;&#x4E00;&#x5929;&#x524D; TiDB &#x7684;&#x8BF7;&#x6C42;&#x6570;&#x603B;&#x91CF;&#xFF1A;</p>
+<p>sum((tidb_server_query_total{result=&quot;OK&quot;}  offset 1d))</p>
+<h4 id="tidb-&#x76D1;&#x63A7;&#x4E2D;&#x5E38;&#x7528;&#x51FD;&#x6570;">TiDB &#x76D1;&#x63A7;&#x4E2D;&#x5E38;&#x7528;&#x51FD;&#x6570;</h4>
+<p>&#x672C;&#x8282;&#x7ED3;&#x5408;&#x5B9E;&#x9645;&#x4F8B;&#x5B50;&#xFF0C;&#x4ECB;&#x7ECD;&#x4E0B; TiDB &#x76D1;&#x63A7;&#x4E2D;&#x7ECF;&#x5E38;&#x7528;&#x5230;&#x7684;&#x4E00;&#x4E9B;&#x51FD;&#x6570;&#x3002;</p>
+<p><strong>rate &#x548C; irate</strong></p>
+<p>&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x4E00;&#x822C;&#x4F5C;&#x7528;&#x4E8E;&#x8BA1;&#x6570;&#x5668; counter &#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x7C7B;&#x6570;&#x636E;&#x4F1A;&#x4E00;&#x76F4;&#x589E;&#x52A0;&#xFF0C;&#x4F7F;&#x7528;&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x540E;&#xFF0C;&#x5C55;&#x793A;&#x7684;&#x662F;&#x4E00;&#x5B9A;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#x7684;&#x53D8;&#x5316;&#x60C5;&#x51B5;&#x3002;&#x4F46;&#x5B83;&#x4FE9;&#x7684;&#x8BA1;&#x7B97;&#x65B9;&#x5F0F;&#x662F;&#x6709;&#x5DEE;&#x5F02;&#xFF0C;irate() &#x662F;&#x57FA;&#x4E8E;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#x8FDE;&#x7EED;&#x7684;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#xFF0C;&#x800C; rate() &#x662F;&#x57FA;&#x4E8E;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#x7684;&#x6240;&#x6709;&#x65F6;&#x95F4;&#x70B9;&#xFF0C;&#x6240;&#x4EE5; irate() &#x5C55;&#x793A;&#x7684;&#x6570;&#x636E;&#x66F4;&#x4E3A;&#x7CBE;&#x786E;&#x4E9B;&#xFF0C;&#x505A;&#x56FE;&#x6BDB;&#x523A;&#x4E5F;&#x4F1A;&#x66F4;&#x660E;&#x663E;&#x3002;&#x4E0B;&#x56FE;&#x5C55;&#x793A;&#x7684;&#x662F; TiDB &#x96C6;&#x7FA4;&#x4E2D;&#x8282;&#x70B9;&#x7684; CPU &#x4F7F;&#x7528;&#x7387;&#x7684;&#x76D1;&#x63A7;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x662F; rate(process_cpu_seconds_total{job=&quot;tidb&quot;}[1m])&#x3002;</p>
 <p><img src="../../res/session3/chapter4/prometheus/5.png" alt="5.png"></p>
-<p><strong>increase()</strong></p>
-<p>&#x5C06;&#x4F1A;&#x8BA1;&#x7B97;&#x51FA;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#x7684;&#x53D8;&#x5316;&#x91CF;&#xFF0C;&#x7528;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
-<p>increase(http_requests_total{job=&quot;api-server&quot;}[5m])</p>
-<p><strong>histogram_quantile()</strong></p>
-<p>&#x7D2F;&#x79EF;&#x76F4;&#x65B9;&#x56FE;&#x767E;&#x5206;&#x4F4D;&#x6570;&#xFF0C; &#x7528;&#x6CD5; histogram_quantile(&#x3C6; float, b instant-vector)&#xFF0C;&#x767E;&#x5206;&#x4F4D;&#x662F;&#x4ECB;&#x4E8E;0&#x548C;1&#x4E4B;&#x95F4;&#x3002;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x8BA1;&#x7B97;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x76F4;&#x65B9;&#x56FE;&#x4E2D;&#x6307;&#x5B9A;&#x767E;&#x5206;&#x6BD4;&#x7684;&#x6700;&#x5927;&#x503C;&#x3002;&#x6BD4;&#x5982;0.95&#x7684;&#x767E;&#x5206;&#x4F4D;&#x7684;&#x7ED3;&#x679C;&#x662F;200,&#x8BF4;&#x660E;&#x6240;&#x6709;&#x6570;&#x636E;&#x4E2D;&#xFF0C;&#x5C0F;&#x4E8E;200&#x7684;&#x5360;&#x603B;&#x6570;&#x636E;&#x7684;&#x6BD4;&#x4F8B;&#x4E3A;95%&#x3002;&#x4F7F;&#x7528;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
-<p>histogram_quantile(0.95, sum(rate(tidb_server_handle_query_duration_seconds_bucket[1m])) by (le, instance))</p>
-<p><strong>sum(),avg()</strong></p>
-<p>&#x805A;&#x5408;&#x51FD;&#x6570;&#xFF0C;&#x4F7F;&#x7528;&#x793A;&#x4F8B;</p>
-<p>sum(tikv_store_size_bytes{instance=~&quot;$instance&quot;, type=&quot;available&quot;}) by (instance)</p>
-<h3 id="rate-&#x51FD;&#x6570;&#x5E94;&#x7528;">rate() &#x51FD;&#x6570;&#x5E94;&#x7528;</h3>
-<p>&#x663E;&#x793A; 1 &#x5206;&#x949F;&#x8303;&#x56F4;&#x5185; IO &#x4F7F;&#x7528;&#x7387;&#xFF0C;&#x7531;&#x4E8E; node_disk_io_time_ms &#x662F;&#x4E2A; counter &#x7C7B;&#x578B;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4F7F;&#x7528; rate()&#x51FD;&#x6570;</p>
-<p>rate(node_disk_io_time_ms[1m]) / 1000</p>
+<p><strong>sum &#x548C; avg</strong></p>
+<p>sum &#x662F;&#x6C42;&#x548C;&#x51FD;&#x6570;&#xFF0C;avg &#x662F;&#x6C42;&#x5747;&#x503C;&#x51FD;&#x6570;&#x3002;&#x8868;&#x8FBE;&#x5F0F; sum(tikv_store_size_bytes{instance=~&quot;$instance&quot;}) by (instance) &#x67E5;&#x8BE2;&#x7684;&#x662F;&#x5404;&#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x7684;&#x5BB9;&#x91CF;&#x603B;&#x548C;&#x3002;</p>
 <p><img src="../../res/session3/chapter4/prometheus/6.png" alt="6.png"></p>
-<h3 id="increase-&#x51FD;&#x6570;&#x5E94;&#x7528;">increase() &#x51FD;&#x6570;&#x5E94;&#x7528;</h3>
-<p>&#x4EE5; bypte &#x4E3A;&#x805A;&#x5408;&#x6761;&#x4EF6;&#xFF0C;&#x663E;&#x793A; 1 &#x5206;&#x949F;&#x5185; Failed Query OPM &#x603B;&#x6570;</p>
-<p>sum(increase(tidb_server_execute_error_total[1m])) by (type)</p>
+<p><strong>increase</strong></p>
+<p>increase &#x51FD;&#x6570;&#x8BA1;&#x7B97;&#x7684;&#x662F;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185;&#x7684;&#x53D8;&#x5316;&#x91CF;&#xFF0C;&#x4F8B;&#x5982;&#x8868;&#x8FBE;&#x5F0F; sum(increase(tidb_server_execute_error_total[1m])) by (type) &#x662F;&#x4EE5; type &#x4E3A;&#x805A;&#x5408;&#x6761;&#x4EF6;&#xFF0C;&#x663E;&#x793A; 1 &#x5206;&#x949F;&#x5185; Failed Query OPM &#x603B;&#x6570;</p>
 <p><img src="../../res/session3/chapter4/prometheus/7.png" alt="7.png"></p>
-<h3 id="histogramquantile-&#x5728;-tidb-&#x4E2D;&#x7684;&#x5E94;&#x7528;">histogram_quantile &#x5728; TiDB &#x4E2D;&#x7684;&#x5E94;&#x7528;</h3>
-<p>&#x76D1;&#x63A7; duration &#x7684;&#x767E;&#x5206;&#x4F4D;&#xFF0C;&#x767E;&#x5206;&#x4EEC;&#x662F; 0.99&#xFF0C;&#x76F4;&#x65B9;&#x56FE;&#x7684;&#x6876;&#x662F;&#x4EE5; le,instance &#x7EC4;&#x5408;&#x4E3A;&#x5355;&#x4F4D;&#x3002;</p>
+<p><strong>histogram_quantile</strong></p>
+<p>histogram_quantile &#x662F;&#x7D2F;&#x79EF;&#x76F4;&#x65B9;&#x56FE;&#x767E;&#x5206;&#x4F4D;&#x51FD;&#x6570;&#xFF0C;&#x7528;&#x6CD5; histogram_quantile(&#x3C6; float, b instant-vector)&#xFF0C;&#x5176;&#x4E2D;&#x767E;&#x5206;&#x4F4D; &#x3C6; &#x662F;&#x4ECB;&#x4E8E; 0 &#x548C; 1 &#x4E4B;&#x95F4;&#x7684;&#x503C;&#x3002;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x8BA1;&#x7B97;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x76F4;&#x65B9;&#x56FE;&#x4E2D;&#x6307;&#x5B9A;&#x767E;&#x5206;&#x6BD4;&#x7684;&#x6700;&#x5927;&#x503C;&#xFF0C;&#x4F8B;&#x5982; 0.95 &#x7684;&#x767E;&#x5206;&#x4F4D;&#x7684;&#x7ED3;&#x679C;&#x662F; 200&#xFF0C;&#x8BF4;&#x660E;&#x6240;&#x6709;&#x6570;&#x636E;&#x4E2D;&#xFF0C;&#x5C0F;&#x4E8E; 200 &#x7684;&#x5360;&#x603B;&#x6570;&#x636E;&#x7684;&#x6BD4;&#x4F8B;&#x4E3A; 95%&#x3002;&#x4E0B;&#x9762;&#x8868;&#x8FBE;&#x5F0F;&#x662F;&#x5C55;&#x793A;&#x5404;&#x4E2A; tidb-server &#x8BF7;&#x6C42;&#x7684; 99% &#x5EF6;&#x8FDF;&#x60C5;&#x51B5;&#x3002;</p>
 <p>histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_bucket[1m])) by (le, instance))</p>
 <p><img src="../../res/session3/chapter4/prometheus/8.png" alt="8.png"></p>
-<h3 id="&#x805A;&#x5408;&#x51FD;&#x6570;&#x5E94;&#x7528;">&#x805A;&#x5408;&#x51FD;&#x6570;&#x5E94;&#x7528;</h3>
-<p>&#x663E;&#x793A; cpu &#x7684;&#x4F7F;&#x7528;&#x7387;&#xFF0C;&#x8BA1;&#x7B97;&#x65B9;&#x5F0F;&#x662F;&#x5148;&#x6C42; idle &#x7A7A;&#x95F4; CPU &#x7684;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x540C; 100 &#x6C42;&#x5DEE;&#x5F02;&#xFF0C;&#x805A;&#x5408;&#x5355;&#x4EEC;&#x662F; instance &#x6807;&#x7B7E;&#x3002;</p>
-<p>100 - avg by (instance) (irate(node_cpu{mode=&quot;idle&quot;}[1m]) ) * 100</p>
-<p><img src="../../res/session3/chapter4/prometheus/9.png" alt="9.png"></p>
-<h2 id="prometheus-&#x62A5;&#x8B66;&#x5728;-tidb-&#x7684;&#x5E94;&#x7528;-"><strong>Prometheus &#x62A5;&#x8B66;&#x5728; TiDB &#x7684;&#x5E94;&#x7528; </strong></h2>
-<h2 id="tidb-&#x62A5;&#x8B66;&#x89C4;&#x5219;">TiDB &#x62A5;&#x8B66;&#x89C4;&#x5219;</h2>
-<p>&#x672C;&#x8282;&#x4ECB;&#x7ECD;&#x4E86; TiDB &#x7EC4;&#x4EF6;&#x7684;&#x62A5;&#x8B66;&#x9879;&#x3002;&#x6839;&#x636E;&#x4E25;&#x91CD;&#x7EA7;&#x522B;&#xFF0C;&#x62A5;&#x8B66;&#x9879;&#x53EF;&#x5206;&#x4E3A;&#x4E09;&#x7C7B;&#xFF0C;&#x6309;&#x7167;&#x4E25;&#x91CD;&#x7A0B;&#x5EA6;&#x7531;&#x9AD8;&#x5230;&#x4F4E;&#x4F9D;&#x6B21;&#x4E3A;&#xFF1A;&#x7D27;&#x6025;&#x7EA7;&#x522B;&#x3001;&#x91CD;&#x8981;&#x7EA7;&#x522B;&#x3001;&#x8B66;&#x544A;&#x7EA7;&#x522B;&#x3002;</p>
-<h3 id="&#x7D27;&#x6025;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;">&#x7D27;&#x6025;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;</h3>
-<p>&#x7D27;&#x6025;&#x7EA7;&#x522B;&#x7684;&#x62A5;&#x8B66;&#x901A;&#x5E38;&#x7531;&#x4E8E;&#x670D;&#x52A1;&#x505C;&#x6B62;&#x6216;&#x8282;&#x70B9;&#x6545;&#x969C;&#x5BFC;&#x81F4;&#xFF0C;&#x6B64;&#x65F6;&#x9700;&#x8981;&#x9A6C;&#x4E0A;&#x8FDB;&#x884C;&#x4EBA;&#x5DE5;&#x5E72;&#x9884;&#x64CD;&#x4F5C;&#x3002;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x91CC;&#x7684;&#x6807;&#x7B7E; level: emergency&#xFF0C;&#x544A;&#x8B66;&#x793A;&#x4F8B;&#xFF1A;</p>
-<blockquote>
-<p>TiDB_schema_error</p>
-<p>&#x62A5;&#x8B66;&#x89C4;&#x5219;&#xFF1A;</p>
-<p>increase(tidb_session_schema_lease_error_total{type=&quot;outdated&quot;}[15m]) &gt; 0</p>
-<p>&#x89C4;&#x5219;&#x63CF;&#x8FF0;&#xFF1A;</p>
-<p>TiDB &#x5728;&#x4E00;&#x4E2A; Lease &#x65F6;&#x95F4;&#x5185;&#x6CA1;&#x6709;&#x91CD;&#x8F7D;&#x5230;&#x6700;&#x65B0;&#x7684; Schema &#x4FE1;&#x606F;&#x3002;&#x5982;&#x679C; TiDB &#x65E0;&#x6CD5;&#x7EE7;&#x7EED;&#x5BF9;&#x5916;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#xFF0C;&#x5219;&#x62A5;&#x8B66;&#x3002;</p>
-<p>&#x5904;&#x7406;&#x65B9;&#x6CD5;&#xFF1A;</p>
-<p>&#x8BE5;&#x95EE;&#x9898;&#x901A;&#x5E38;&#x7531;&#x4E8E; TiKV Region &#x4E0D;&#x53EF;&#x7528;&#x6216;&#x8D85;&#x65F6;&#x5BFC;&#x81F4;&#xFF0C;&#x9700;&#x8981;&#x770B; TiKV &#x7684;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x3002;</p>
-</blockquote>
-<h3 id="&#x91CD;&#x8981;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;">&#x91CD;&#x8981;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;</h3>
-<p>&#x5BF9;&#x4E8E;&#x91CD;&#x8981;&#x7EA7;&#x522B;&#x7684;&#x62A5;&#x8B66;&#xFF0C;&#x9700;&#x8981;&#x5BC6;&#x5207;&#x5173;&#x6CE8;&#x5F02;&#x5E38;&#x6307;&#x6807;&#x3002;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x91CC;&#x7684;&#x6807;&#x7B7E; level: critical&#xFF0C;&#x544A;&#x8B66;&#x793A;&#x4F8B;&#xFF1A;</p>
-<blockquote>
-<p>TiDB_server_panic_total</p>
-<p>&#x62A5;&#x8B66;&#x89C4;&#x5219;&#xFF1A;</p>
-<p>increase(tidb_server_panic_total[10m]) &gt; 0</p>
-<p>&#x89C4;&#x5219;&#x63CF;&#x8FF0;&#xFF1A;</p>
-<p>&#x53D1;&#x751F;&#x5D29;&#x6E83;&#x7684; TiDB &#x7EBF;&#x7A0B;&#x7684;&#x6570;&#x91CF;&#x3002;&#x5F53;&#x51FA;&#x73B0;&#x5D29;&#x6E83;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x62A5;&#x8B66;&#x3002;&#x8BE5;&#x7EBF;&#x7A0B;&#x901A;&#x5E38;&#x4F1A;&#x88AB;&#x6062;&#x590D;&#xFF0C;&#x5426;&#x5219; TiDB &#x4F1A;&#x9891;&#x7E41;&#x91CD;&#x542F;&#x3002;</p>
-<p>&#x5904;&#x7406;&#x65B9;&#x6CD5;&#xFF1A;</p>
-<p>&#x6536;&#x96C6; panic &#x65E5;&#x5FD7;&#xFF0C;&#x5B9A;&#x4F4D;&#x539F;&#x56E0;&#x3002;</p>
-</blockquote>
-<h3 id="&#x8B66;&#x544A;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;">&#x8B66;&#x544A;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;</h3>
-<p>&#x8B66;&#x544A;&#x7EA7;&#x522B;&#x7684;&#x62A5;&#x8B66;&#x662F;&#x5BF9;&#x67D0;&#x4E00;&#x95EE;&#x9898;&#x6216;&#x9519;&#x8BEF;&#x7684;&#x63D0;&#x9192;&#x3002;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x91CC;&#x7684;&#x6807;&#x7B7E; level: warning&#xFF0C;</p>
-<p>&#x544A;&#x8B66;&#x793A;&#x4F8B;&#xFF1A;</p>
-<blockquote>
-<p>TiDB_memory_abnormal</p>
-<p>&#x62A5;&#x8B66;&#x89C4;&#x5219;&#xFF1A;</p>
-<p>go_memstats_heap_inuse_bytes{job=&quot;tidb&quot;} &gt; 1e+10</p>
-<p>&#x89C4;&#x5219;&#x63CF;&#x8FF0;&#xFF1A;</p>
-<p>&#x5BF9; TiDB &#x5185;&#x5B58;&#x4F7F;&#x7528;&#x91CF;&#x7684;&#x76D1;&#x63A7;&#x3002;&#x5982;&#x679C;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x5927;&#x4E8E; 10 G&#xFF0C;&#x5219;&#x62A5;&#x8B66;&#x3002;</p>
-<p>&#x5904;&#x7406;&#x65B9;&#x6CD5;&#xFF1A;</p>
-<p>&#x901A;&#x8FC7; HTTP API &#x6765;&#x6392;&#x67E5; goroutine &#x6CC4;&#x9732;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
-</blockquote>
-<p>&#x66F4;&#x591A;&#x5173;&#x4E8E; TiDB &#x62A5;&#x8B66;&#x89C4;&#x5212;&#xFF0C;&#x4EE5;&#x53CA; TiDB &#x8BE6;&#x7EC6;&#x544A;&#x8B66;&#x7684;&#x5904;&#x7406;&#x65B9;&#x6CD5;&#xFF0C;&#x8BF7;&#x53C2;&#x8003;<a href="https://pingcap.com/docs-cn/stable/reference/alert-rules/" target="_blank"> &#x5B98;&#x7F51;&#x4ECB;&#x7ECD;</a> &#x3002;</p>
-<h2 id="alertmanager-&#x544A;&#x8B66;&#x8DEF;&#x7531;">alertmanager &#x544A;&#x8B66;&#x8DEF;&#x7531;</h2>
-<p>&#x7531;&#x4E8E;&#x5F80;&#x5916;&#x53D1;&#x9001;&#x544A;&#x8B66;&#x9700;&#x8981;&#x90AE;&#x7BB1;&#x3001;&#x77ED;&#x4FE1;&#x3001;&#x4F01;&#x4E1A;&#x5FAE;&#x4FE1;&#x7B49;&#x5916;&#x90E8;&#x6D88;&#x606F;&#x901A;&#x9053;&#x6253;&#x901A;&#xFF0C;&#x4E00;&#x822C;&#x4F01;&#x4E1A;&#x5185;&#x90E8;&#x90FD;&#x6709;&#x5404;&#x81EA;&#x4E0D;&#x540C;&#x7684;&#x5B89;&#x5168;&#x8981;&#x6C42;&#x548C;&#x64CD;&#x4F5C;&#x89C4;&#x8303;&#x3002;&#x53E6;&#x5916;&#x50CF;&#x77ED;&#x4FE1;&#x63A5;&#x53E3;&#x5E76;&#x4E0D;&#x662F;&#x7EDF;&#x4E00;&#x6807;&#x51C6;&#x7684;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x4E5F;&#x4E0D;&#x662F;&#x539F;&#x751F;&#x652F;&#x6301; prometheus &#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x7F16;&#x5199;&#x9002;&#x914D;&#x811A;&#x672C;&#xFF0C;&#x4EE5; webhook &#x7684;&#x65B9;&#x5F0F;&#x4E0E; alertmanger &#x9002;&#x914D;&#x3002;</p>
-<p>&#x5EFA;&#x8BAE;&#x4F7F;&#x7528; TiDB &#x65F6;&#xFF0C;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x72EC;&#x7ACB;&#x7684; alertmanager&#xFF0C;&#x7528;&#x4E8E;&#x63A5;&#x6536;&#x6765;&#x81EA;&#x4E0D;&#x540C; prometheus server &#x7684;&#x544A;&#x8B66;&#xFF0C;&#x7EDF;&#x4E00;&#x96C6;&#x4E2D;&#x8DEF;&#x7531;&#x53D1;&#x9001;&#xFF0C;&#x5373;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x5B89;&#x5168;&#x7BA1;&#x7406;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x7684;&#x90E8;&#x7F72;&#x64CD;&#x4F5C;&#x3002;</p>
-<p><strong>alertmanager &#x914D;&#x7F6E; TiDB &#x8DEF;&#x7531;&#x793A;&#x4F8B;</strong></p>
-<p>&#x8DEF;&#x7531;&#x90E8;&#x7F72;&#x914D;&#x7F6E;&#xFF1A;  </p>
-<pre><code>- match:
-
-      env: test-cluster
-
-      level: emergency
-
-    receiver: tidb-emergency
-
-    group_by: [alertname, cluster, service]
-</code></pre><p>&#x8BF4;&#x660E;&#xFF1A;</p>
+<h3 id="&#x901A;&#x8FC7;&#x914D;&#x7F6E;-alertmanager-&#x5BF9;-tidb-&#x6545;&#x969C;&#x8FDB;&#x884C;&#x62A5;&#x8B66;">&#x901A;&#x8FC7;&#x914D;&#x7F6E; alertmanager &#x5BF9; TiDB &#x6545;&#x969C;&#x8FDB;&#x884C;&#x62A5;&#x8B66;</h3>
+<p>&#x672C;&#x8282;&#x4ECB;&#x7ECD;&#x4E0B; TiDB &#x4E2D;&#x662F;&#x5982;&#x4F55;&#x914D;&#x7F6E; Promethues &#x7684;&#x62A5;&#x8B66;&#x7684;&#x3002;&#x5982;&#x679C;&#x662F;&#x901A;&#x8FC7; tidb-ansible &#x65B9;&#x5F0F;&#x90E8;&#x7F72;&#x7684;&#x96C6;&#x7FA4;&#xFF0C;Promethues &#x7684;&#x62A5;&#x8B66;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5BF9;&#x5E94;&#x7684;&#x8DEF;&#x5F84;&#x662F; tidb-ansbile/roles/prometheus/files/tidb.rules.yml&#x3002;</p>
+<h4 id="tidb-&#x544A;&#x8B66;&#x7EA7;&#x522B;">TiDB &#x544A;&#x8B66;&#x7EA7;&#x522B;</h4>
+<p>TiDB &#x7EC4;&#x4EF6;&#x7684;&#x62A5;&#x8B66;&#x9879;&#xFF0C;&#x6839;&#x636E;&#x4E25;&#x91CD;&#x7EA7;&#x522B;&#x53EF;&#x5206;&#x4E3A;&#x4E09;&#x7C7B;&#xFF0C;&#x6309;&#x7167;&#x4E25;&#x91CD;&#x7A0B;&#x5EA6;&#x7531;&#x9AD8;&#x5230;&#x4F4E;&#x4F9D;&#x6B21;&#x4E3A;&#xFF1A;&#x7D27;&#x6025;&#x7EA7;&#x522B;&#x3001;&#x91CD;&#x8981;&#x7EA7;&#x522B;&#x3001;&#x8B66;&#x544A;&#x7EA7;&#x522B;&#x3002;</p>
+<p><strong>&#x7D27;&#x6025;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;</strong></p>
+<p>&#x7D27;&#x6025;&#x7EA7;&#x522B;&#x7684;&#x62A5;&#x8B66;&#x901A;&#x5E38;&#x7531;&#x4E8E;&#x670D;&#x52A1;&#x505C;&#x6B62;&#x6216;&#x8282;&#x70B9;&#x6545;&#x969C;&#x5BFC;&#x81F4;&#xFF0C;&#x6B64;&#x65F6;&#x9700;&#x8981;&#x9A6C;&#x4E0A;&#x8FDB;&#x884C;&#x4EBA;&#x5DE5;&#x5E72;&#x9884;&#x64CD;&#x4F5C;&#x3002;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x91CC;&#x7684;&#x6807;&#x7B7E; level: emergency&#x3002;&#x4E0B;&#x9762;&#x5C55;&#x793A;&#x7684;&#x662F; TiDB_schema_error &#x7684;&#x544A;&#x8B66;&#x793A;&#x4F8B;&#xFF1A;TiDB &#x5728;&#x4E00;&#x4E2A; Lease &#x65F6;&#x95F4;&#x5185;&#x6CA1;&#x6709;&#x91CD;&#x8F7D;&#x5230;&#x6700;&#x65B0;&#x7684; Schema &#x4FE1;&#x606F;&#xFF0C;&#x5BFC;&#x81F4; TiDB &#x65E0;&#x6CD5;&#x7EE7;&#x7EED;&#x5BF9;&#x5916;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#xFF0C;&#x9700;&#x8981;&#x62A5;&#x8B66;&#x3002;&#x8BE5;&#x95EE;&#x9898;&#x901A;&#x5E38;&#x7531;&#x4E8E; TiKV Region &#x4E0D;&#x53EF;&#x7528;&#x6216;&#x8D85;&#x65F6;&#x5BFC;&#x81F4;&#xFF0C;&#x9700;&#x8981;&#x770B; TiKV &#x7684;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#xFF0C;&#x6BD4;&#x5982;&#x786E;&#x8BA4; TiKV &#x5B9E;&#x4F8B;&#x662F;&#x5426;&#x8FD8;&#x5B58;&#x6D3B;&#x7740;&#x3002;</p>
+<pre><code>- alert: TiDB_schema_error
+   expr: increase(tidb_session_schema_lease_error_total{type=&quot;outdated&quot;}[15m]) &gt; 0
+   for: 1m
+   labels:
+     env: ENV_LABELS_ENV
+     level: emergency
+     expr:  increase(tidb_session_schema_lease_error_total{type=&quot;outdated&quot;}[15m]) &gt; 0
+   annotations:
+     description: &apos;cluster: ENV_LABELS_ENV, instance: , values:&apos;
+     value: &apos;&apos;
+     summary: TiDB schema error
+</code></pre><p><strong>&#x91CD;&#x8981;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;</strong></p>
+<p>&#x5BF9;&#x4E8E;&#x91CD;&#x8981;&#x7EA7;&#x522B;&#x7684;&#x62A5;&#x8B66;&#xFF0C;&#x9700;&#x8981;&#x5BC6;&#x5207;&#x5173;&#x6CE8;&#x5F02;&#x5E38;&#x7684;&#x6307;&#x6807;&#x3002;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x91CC;&#x7684;&#x6807;&#x7B7E; level: critical&#x3002;&#x4E0B;&#x9762;&#x793A;&#x4F8B;&#x5C55;&#x793A;&#x7684;&#x662F; tidb-server &#x8FDB;&#x7A0B;&#x53D1;&#x751F;&#x5D29;&#x6E83;&#x7684;&#x65F6;&#x5019;&#x8FDB;&#x884C;&#x62A5;&#x8B66;&#x3002;&#x6536;&#x5230;&#x8BE5;&#x62A5;&#x8B66;&#x7684;&#x4E00;&#x822C;&#x5904;&#x7406;&#x65B9;&#x5F0F;&#x662F;&#x6536;&#x96C6; TiDB &#x7684; panic &#x65E5;&#x5FD7;&#xFF0C;&#x5B9A;&#x4F4D; panic &#x7684;&#x539F;&#x56E0;&#xFF0C;&#x6BD4;&#x5982;&#x662F;&#x5426;&#x662F; tidb-server &#x5B9E;&#x4F8B; OOM &#x5BFC;&#x81F4;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<pre><code>- alert: TiDB_server_panic_total
+  expr: increase(tidb_server_panic_total[10m]) &gt; 0
+  for: 1m
+  labels:
+    env: ENV_LABELS_ENV
+    level: critical
+    expr:  increase(tidb_server_panic_total[10m]) &gt; 0
+  annotations:
+    description: &apos;cluster: ENV_LABELS_ENV, instance: , values:&apos;
+    value: &apos;&apos;
+    summary: TiDB server panic total
+</code></pre><p><strong>&#x8B66;&#x544A;&#x7EA7;&#x522B;&#x62A5;&#x8B66;&#x9879;</strong></p>
+<p>&#x8B66;&#x544A;&#x7EA7;&#x522B;&#x7684;&#x62A5;&#x8B66;&#x662F;&#x5BF9;&#x67D0;&#x4E00;&#x95EE;&#x9898;&#x6216;&#x9519;&#x8BEF;&#x7684;&#x63D0;&#x9192;&#x3002;&#x544A;&#x8B66;&#x89C4;&#x5219;&#x91CC;&#x7684;&#x6807;&#x7B7E; level: warning&#x3002;&#x4E0B;&#x9762;&#x5C55;&#x793A;&#x7684;&#x662F;&#x5BF9;&#x4E8E; tidb-server &#x5B9E;&#x4F8B;&#x5185;&#x5B58;&#x5F02;&#x5E38;&#x7684;&#x62A5;&#x8B66;&#xFF0C;&#x5F53; tidb-server &#x5B9E;&#x4F8B;&#x7684;&#x5185;&#x5B58;&#x5360;&#x7528;&#x5927;&#x4E8E; 10GB &#x7684;&#x65F6;&#x5019;&#x8FDB;&#x884C;&#x62A5;&#x8B66;&#x3002;&#x6536;&#x5230;&#x8BE5;&#x62A5;&#x8B66;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x662F;&#x5426;&#x6709;&#x5927;&#x67E5;&#x8BE2;&#x5728;&#x6267;&#x884C;&#xFF0C;&#x6BD4;&#x5982;&#x5927;&#x8868;&#x7684; Join &#x67E5;&#x8BE2;&#x3002;</p>
+<pre><code>- alert: TiDB_memory_abnormal
+  expr: go_memstats_heap_inuse_bytes{job=&quot;tidb&quot;} &gt; 1e+10
+  for: 1m
+  labels:
+    env: ENV_LABELS_ENV
+    level: warning
+    expr: go_memstats_heap_inuse_bytes{job=&quot;tidb&quot;} &gt; 1e+10
+  annotations:
+    description: &apos;cluster: ENV_LABELS_ENV, instance: , values:&apos;
+    value: &apos;&apos;
+    summary: TiDB heap memory usage is over 10 GB
+</code></pre><p>&#x66F4;&#x591A;&#x5173;&#x4E8E; TiDB &#x62A5;&#x8B66;&#x89C4;&#x5212;&#xFF0C;&#x4EE5;&#x53CA; TiDB &#x8BE6;&#x7EC6;&#x544A;&#x8B66;&#x7684;&#x5904;&#x7406;&#x65B9;&#x6CD5;&#xFF0C;&#x8BF7;&#x53C2;&#x8003;<a href="https://pingcap.com/docs-cn/stable/reference/alert-rules/" target="_blank"> &#x5B98;&#x7F51;&#x4ECB;&#x7ECD;</a> &#x3002;</p>
+<h4 id="&#x4E3A;-tidb-&#x96C6;&#x7FA4;&#x914D;&#x7F6E;-alertmanager-&#x544A;&#x8B66;&#x8DEF;&#x7531;">&#x4E3A; TiDB &#x96C6;&#x7FA4;&#x914D;&#x7F6E; alertmanager &#x544A;&#x8B66;&#x8DEF;&#x7531;</h4>
+<p>&#x7531;&#x4E8E;&#x5F80;&#x5916;&#x53D1;&#x9001;&#x544A;&#x8B66;&#x9700;&#x8981;&#x90AE;&#x7BB1;&#x3001;&#x77ED;&#x4FE1;&#x3001;&#x4F01;&#x4E1A;&#x5FAE;&#x4FE1;&#x7B49;&#x5916;&#x90E8;&#x6D88;&#x606F;&#x901A;&#x9053;&#x6253;&#x901A;&#xFF0C;&#x4E00;&#x822C;&#x4F01;&#x4E1A;&#x5185;&#x90E8;&#x90FD;&#x6709;&#x5404;&#x81EA;&#x4E0D;&#x540C;&#x7684;&#x5B89;&#x5168;&#x8981;&#x6C42;&#x548C;&#x64CD;&#x4F5C;&#x89C4;&#x8303;&#x3002;&#x53E6;&#x5916;&#x50CF;&#x77ED;&#x4FE1;&#x63A5;&#x53E3;&#x5E76;&#x4E0D;&#x662F;&#x7EDF;&#x4E00;&#x6807;&#x51C6;&#x7684;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x4E5F;&#x4E0D;&#x662F;&#x539F;&#x751F;&#x652F;&#x6301; Prometheus &#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x7F16;&#x5199;&#x9002;&#x914D;&#x811A;&#x672C;&#xFF0C;&#x4EE5; webhook &#x7684;&#x65B9;&#x5F0F;&#x4E0E; alertmanger &#x8FDB;&#x884C;&#x9002;&#x914D;&#x3002;</p>
+<p>&#x5EFA;&#x8BAE;&#x4F7F;&#x7528; TiDB &#x65F6;&#xFF0C;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x72EC;&#x7ACB;&#x7684; alertmanager&#xFF0C;&#x7528;&#x4E8E;&#x63A5;&#x6536;&#x6765;&#x81EA;&#x4E0D;&#x540C; prometheus server &#x7684;&#x544A;&#x8B66;&#xFF0C;&#x7EDF;&#x4E00;&#x96C6;&#x4E2D;&#x8DEF;&#x7531;&#x53D1;&#x9001;&#xFF0C;&#x65E2;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x5B89;&#x5168;&#x7BA1;&#x7406;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x7684;&#x90E8;&#x7F72;&#x64CD;&#x4F5C;&#x3002;&#x5982;&#x679C;&#x7528;&#x6237;&#x91C7;&#x7528;&#x7684;&#x662F; tidb-ansible &#x65B9;&#x5F0F;&#x90E8;&#x7F72;&#x7684; TiDB &#x96C6;&#x7FA4;&#xFF0C;alertmanager &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4F4D;&#x4E8E; tidb-ansible/conf/alertmanager.yml&#x3002;</p>
+<p><strong>&#x544A;&#x8B66;&#x8DEF;&#x7531;&#x914D;&#x7F6E;</strong> </p>
+<pre><code>routes:
+- match:
+    env: test-cluster
+    level: emergency
+  receiver: tidb-emergency
+  group_by: [alertname, cluster, service]
+</code></pre><p>&#x4E0B;&#x9762;&#x7B80;&#x5355;&#x89E3;&#x91CA;&#x4E0B;&#x5404;&#x4E2A;&#x5B57;&#x6BB5;&#x7684;&#x542B;&#x4E49;&#xFF1A;</p>
 <ul>
-<li>match: &#x662F;&#x4E00;&#x6761;&#x8DEF;&#x7531;&#x89C4;&#x5212;</li>
-<li>env: test-cluster&#xFF0C;level: emergency&#xFF1A; &#x8FD9;&#x662F;&#x4ECE; Prometheus &#x8FC7;&#x6765;&#x7684;&#x8BB0;&#x5F55;&#x6240;&#x643A;&#x5E26;&#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x5982;&#x679C;&#x80FD;&#x591F;&#x5339;&#x914D;&#x8BE5;&#x6807;&#x7B7E;&#xFF0C;&#x5219;&#x7B26;&#x5408;&#x5F53;&#x524D;&#x8FD9;&#x6761;&#x8DEF;&#x7531;&#x89C4;&#x5219;</li>
-<li>receiver&#xFF1A; &#x63A5;&#x6536;&#x4EBA;&#xFF0C;&#x548C;&#x540E;&#x9762;&#x63A5;&#x6536;&#x90E8;&#x5206;&#x7684; name &#x4E00;&#x81F4;</li>
-<li>group_by: &#x544A;&#x8B66;&#x505A;&#x5206;&#x7EC4;&#x805A;&#x5408;&#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x540E;&#x9762;&#x62EC;&#x53F7;&#x5185;&#x7684;&#x662F; prometheus &#x8BB0;&#x5F55;&#x6240;&#x643A;&#x5E26;&#x7684;&#x6807;&#x7B7E;&#x3002;</li>
+<li>match &#x662F;&#x4E00;&#x6761;&#x8DEF;&#x7531;&#x89C4;&#x5212;&#x3002;</li>
+<li>env &#x548C; level &#x662F;&#x4ECE; Prometheus &#x53D1;&#x9001;&#x8FC7;&#x6765;&#x7684;&#x8BB0;&#x5F55;&#x6240;&#x643A;&#x5E26;&#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x5982;&#x679C;&#x80FD;&#x591F;&#x5339;&#x914D;&#x8BE5;&#x6807;&#x7B7E;&#xFF0C;&#x5219;&#x7B26;&#x5408;&#x5F53;&#x524D;&#x8FD9;&#x6761;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3002;</li>
+<li>receiver &#x8868;&#x793A;&#x63A5;&#x6536;&#x4EBA;&#xFF0C;&#x548C;&#x540E;&#x9762;&#x63A5;&#x6536;&#x90E8;&#x5206;&#x7684; name &#x4E00;&#x81F4;&#x3002;</li>
+<li>group_by &#x91CC;&#x9762;&#x7684;&#x5185;&#x5BB9;&#x662F;&#x5206;&#x7EC4;&#x805A;&#x5408;&#x7684;&#x6807;&#x7B7E;&#x3002;</li>
 </ul>
-<p>&#x63A5;&#x6536;&#x90E8;&#x5206;&#x793A;&#x4F8B;</p>
-<pre><code>- name: &apos;tidb-emergency&apos; 
-
+<p><strong>&#x544A;&#x8B66;&#x63A5;&#x6536;&#x914D;&#x7F6E;</strong></p>
+<pre><code>receivers:
+- name: &apos;tidb-emergency&apos; 
   webhook_configs:
-
   - url: &apos;xxxx&apos;
-
   wechat_configs:
-
   - corp_id: &apos;xxxxx&apos;
-
     to_party: &apos;xxx&apos;
-
     agent_id: &apos;xxxx&apos;
-
     api_url: &apos;https://qyapi.weixin.qq.com/cgi-bin/&apos;
-
     api_secret: &apos;xxxxxx&apos;
-</code></pre><p>&#x8BF4;&#x660E;&#xFF1A;</p>
-<ul>
-<li>name&#xFF1A; &#x548C;&#x4E0A;&#x9762;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x7684; receiver &#x5BF9;&#x5E94;&#x4E00;&#x81F4;</li>
-<li>webhook_configs&#xFF1A; &#x4EE5; webhook &#x7684;&#x65B9;&#x5F0F;&#x53D1;&#x9001;</li>
-<li>wechat_configs&#xFF1A; &#x4EE5;&#x4F01;&#x4E1A;&#x5FAE;&#x4FE1;&#x7684;&#x65B9;&#x5F0F;&#x53D1;&#x9001;&#xFF0C;&#x5177;&#x4F53;&#x8981;&#x6C42;&#x53C2;&#x8003; <a href="https://work.weixin.qq.com" target="_blank">&#x4F01;&#x4E1A;&#x5FAE;&#x4FE1;</a> &#x6587;&#x6863;&#xFF1B;</li>
+</code></pre><ul>
+<li>name&#xFF1A;&#x548C;&#x4E0A;&#x9762;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x7684; receiver &#x5BF9;&#x5E94;&#x3002;</li>
+<li>webhook_configs&#xFF1A;&#x4EE5; webhook &#x7684;&#x65B9;&#x5F0F;&#x53D1;&#x9001;&#x3002;</li>
+<li>wechat_configs&#xFF1A;&#x4EE5;&#x4F01;&#x4E1A;&#x5FAE;&#x4FE1;&#x7684;&#x65B9;&#x5F0F;&#x53D1;&#x9001;&#xFF0C;&#x5177;&#x4F53;&#x8981;&#x6C42;&#x53C2;&#x8003; <a href="https://work.weixin.qq.com" target="_blank">&#x4F01;&#x4E1A;&#x5FAE;&#x4FE1;</a> &#x6587;&#x6863;&#xFF1B;</li>
 <li>&#x7531;&#x4E8E;&#x9ED8;&#x8BA4;&#x7684;&#x544A;&#x8B66;&#x53D1;&#x9001;&#x7684;&#x5185;&#x5BB9;&#x8FC7;&#x591A;&#xFF0C;&#x5305;&#x542B;&#x6CE8;&#x91CA;&#x7B49;&#x4FE1;&#x606F;&#xFF0C;&#x5F71;&#x54CD;&#x53EF;&#x8BFB;&#x6027;&#x3002;&#x5EFA;&#x8BAE;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x5199; webhook &#x7684;&#x65B9;&#x5F0F;&#x53D1;&#x9001;&#x544A;&#x8B66;&#x3002;</li>
 </ul>
-<p>&#x544A;&#x8B66;&#x793A;&#x4F8B;&#xFF1A;
-<img src="../../res/session3/chapter4/prometheus/10.jpg" alt="10.png"></p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
@@ -3153,7 +3093,7 @@ scrape_configs:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"4.4 Prometheus 使用指南","level":"4.4.3","depth":2,"next":{"title":"5 灾难快速恢复","level":"4.5","depth":1,"path":"session3/chapter5/disaster-recovery.md","ref":"session3/chapter5/disaster-recovery.md","articles":[{"title":"5.1 利用 GC 快照读恢复数据","level":"4.5.1","depth":2,"path":"session3/chapter5/recover-data-gc.md","ref":"session3/chapter5/recover-data-gc.md","articles":[]},{"title":"5.2 利用 Recover/Flashback 命令秒恢复误删表","level":"4.5.2","depth":2,"path":"session3/chapter5/recover-statements.md","ref":"session3/chapter5/recover-statements.md","articles":[]},{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"path":"session3/chapter5/recover-quorum.md","ref":"session3/chapter5/recover-quorum.md","articles":[]}]},"previous":{"title":"4.2 TiDB 读写流程相关监控原理解析","level":"4.4.2","depth":2,"path":"session3/chapter4/read-write-metrics.md","ref":"session3/chapter4/read-write-metrics.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter4/prometheus-guide.md","mtime":"2020-03-13T12:49:44.698Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T12:50:31.488Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"4.4 Prometheus 使用指南","level":"4.4.3","depth":2,"next":{"title":"5 灾难快速恢复","level":"4.5","depth":1,"path":"session3/chapter5/disaster-recovery.md","ref":"session3/chapter5/disaster-recovery.md","articles":[{"title":"5.1 利用 GC 快照读恢复数据","level":"4.5.1","depth":2,"path":"session3/chapter5/recover-data-gc.md","ref":"session3/chapter5/recover-data-gc.md","articles":[]},{"title":"5.2 利用 Recover/Flashback 命令秒恢复误删表","level":"4.5.2","depth":2,"path":"session3/chapter5/recover-statements.md","ref":"session3/chapter5/recover-statements.md","articles":[]},{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"path":"session3/chapter5/recover-quorum.md","ref":"session3/chapter5/recover-quorum.md","articles":[]}]},"previous":{"title":"4.2 TiDB 读写流程相关监控原理解析","level":"4.4.2","depth":2,"path":"session3/chapter4/read-write-metrics.md","ref":"session3/chapter4/read-write-metrics.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter4/prometheus-guide.md","mtime":"2020-03-13T12:51:37.020Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T12:52:26.719Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
