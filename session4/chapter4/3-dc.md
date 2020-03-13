@@ -207,11 +207,11 @@ Storage:
      capacity: “1G”
 ```
 
-    + 启用grpc消息压缩
+ + 启用grpc消息压缩
 	由于涉及到集群中的数据在网络中传输，需要开启 gRPC 消息压缩，降低网络流量。
 	```
 	server:
-  grpc-compression-type: gzip
+	grpc-compression-type: gzip
 	```
 
 + pd.yml 中相关参数优化
