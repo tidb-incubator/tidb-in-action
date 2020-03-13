@@ -179,7 +179,7 @@ cp /usr/share/tiops/topology.yaml.example topology.yaml
 vim topology.yaml
 ```
 
-将 PD、TiDB、TiKV 的部署节点改为提前准备好的 IP 地址（备注：请填自己真实的 IP 地址），详细信息如下：
+将 pd_servers、tidb_servers、tikv_servers、monitoring_server、grafana_server 填上提前准备好的 IP 地址，详细信息如下：
 
 ```yaml
 ---
@@ -255,10 +255,10 @@ mysql -h 10.9.1.1 -P4000 -u root
 #### 参数说明:
 
 ```sh
--c|--cluster_name name 必选参数，集群名称
--T|--topology 必选参数，集群拓扑信息文件
--t|--tidb-version 可选参数，TiDB 的版本号，默认： 3.0.5
--d |--deploy-user  必选参数，目标机器上运行 TiDB 服务的用户
+-c | --cluster_name name 必选参数，集群名称
+-T | --topology 必选参数，集群拓扑信息文件
+-t | --tidb-version 可选参数，TiDB 的版本号，默认： 3.0.5
+-d | --deploy-user  必选参数，目标机器上运行 TiDB 服务的用户
 --enable-check-cpu 可选参数，检查 CPU vcores 数量是否符合要求，默认：disable
 --enable-check-mem 可选参数，检查 Memory Size 是否符合要求，默认：disable
 --enable-check-disk 可选参数，检查 Disk Available Space 是否符合要求 ，默认：disable
