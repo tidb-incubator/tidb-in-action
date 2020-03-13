@@ -26,7 +26,7 @@
 
 以上信息显示 TiDB Cluster 部署正常。
 
-(3) 观察 TiDB 的 POD 状态
+(3) 观察 TiDB Cluster 所有 Pod 状态
 
 ```
 
@@ -47,7 +47,7 @@
 
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
-(4) 访问 TiDB 集群
+(4) 访问 TiDB Cluster
 
 ```
 
