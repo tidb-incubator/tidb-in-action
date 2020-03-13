@@ -7,17 +7,42 @@ IBM 公司为 DB2 的数据同步做了一套完整的工具，初期这款工�
 ## CDC 简介
 * IIDR-CDC 是一种数据库复制解决方案，它捕获源数据库发生的更改，并将其交付给目标数据库或消息队列中。它的表映射关系的配置都是由图化的控制管理平台上完成的。 CDC 可以用在对源系统几乎没有任何影响的前提下捕捉数据变更并快速应用到下游。其架构特点如下
 
-其中的一些关键组件如下图所示：
+其软件架构如下图所示：
 
 ![图片](/res/session4/chapter5/from-db2-to-tidb/cdc.png)
 
+* CDC 官方支持列表
+参考：https://www.ibm.com/support/knowledgecenter/SSTRGZ_11.4.0/com.ibm.cdcdoc.sysreq.doc/concepts/supportedsourceandtargets.html
+| Supported source databases   | Supported target databases and middleware applications   | 
+|:----|:----|
+| IBM® Db2® for Linux, UNIX and Windows (LUW)   | IBM Db2 for Linux, UNIX and Windows (LUW)   | 
+| IBM Db2 for i   | IBM Db2 for i   | 
+| IBM Db2 for z/OS®   | IBM Db2 for z/OS   | 
+| IMS   | IBM InfoSphere® DataStage®   | 
+| Microsoft SQL Server   | Microsoft SQL Server   | 
+| Oracle   | CDC Replication Engine for FlexRep   | 
+| Sybase 1   | Netezza®   | 
+| Informix® 1   | Oracle   | 
+| Db2 on Cloud (formerly dashDB® for Transactions) 2   | Sybase 1   | 
+| VSAM   | Informix 1   | 
+| PostgreSQL   | CDC Replication Engine for Event Server 1   | 
+| Db2 Warehouse on Cloud (formerly dashDB for Analytics) 3   | IBM Cloudant®   | 
+| Db2 Warehouse (formerly dashDB Local) 3   | Apache™ Hadoop   | 
+| MySQL   | Apache Kafka   | 
+|    | Db2 Warehouse on Cloud (formerly dashDB for Analytics)   | 
+|    | Db2 on Cloud (formerly dashDB for Transactions) 2   | 
+|    | Db2 Warehouse (formerly dashDB Local)   | 
+|    | IBM MQ for z/OS (using Classic CDC for z/OS)   | 
+|    | Teradata   | 
+|    | Microsoft Azure SQL Database   | 
+|    | Microsoft Azure SQL Database Managed Instance   | 
+|    | IBM Integrated Analytics System   | 
 
 * CDC 对接 TiDB 时可以通过配置使用 mysql-JDBC 驱动，通过 JDBC 的方式将数据存放到 TiDB 中.
 
-
 ## 数据同步
 
-我们以一个实际案例来介绍如何将 DB2 for i 中的数据同步到 TiDB 上。
+下面我们以一个实际案例来介绍如何将 DB2 for i 中的数据同步到 TiDB 上。
 
 ### 部署架构
 ![图片](/res/session4/chapter5/from-db2-to-tidb/cdc-tidb-1.png)
@@ -58,7 +83,7 @@ IIDR 需要借助 MySQL 驱动通过 JDBC 的方式将数据写入 TiDB 中，�
 
 * 数据类型转换对照表
 
-IIDR 在同步全量数据之前，需要在 TiDB 侧创建好表结构，表字段对应关系如下表：
+IIDR 在同步全量数据之前，需要在 TiDB 侧创建好表结构，下表是 DB2 for i 到 TiDB 时表字段对应关系：
 
 | DB2字段类型   | TiDB字段类型   | 
 |:----|:----:|
@@ -69,6 +94,12 @@ IIDR 在同步全量数据之前，需要在 TiDB 侧创建好表结构，表字
 | P   | Decimal   | 
 | S   | decimal   | 
 | O   | varchar   | 
+
+
+### 使用限制
+* CDC 基于解析 DB2 的日志，调用的是 DB2 的日志解析的接口，所以只要数据库操作写了事务日志，才可能同步到下游 TiDB，类似 load、alter table xxx no log init 之类的都不会被同步。
+* CDC 在安装配置时，在选择 datastage type 时必须选择 FlexRep 才能顺利的将数据同步到 TiDB 中。
+
 
 ## 总结
 数据源是 DB2 for LUW 可以使用 CDC 或 OGG 做同步工具，数据源是 DB2 for i 或 DB2 for z 时，只能用 CDC 做同步工具
