@@ -15,7 +15,7 @@
 2. Docker 17.03+
 3. net.ipv4.ip_forward 设置为1
 
-## 第一部分 通过 kind 部署 K8s 集群
+## 通过 kind 部署 K8s 集群
 
 #### 一、下载自动化部署程序
 
@@ -73,7 +73,7 @@ To start using your cluster, run:
 
 输出以上信息，则说明 Helm 客户端与服务端都符合要求
 
-## 第二部分 在 K8s 集群上部署 TiDB Operator
+## 在 K8s 集群上部署 TiDB Operator
 
 #### 一、通过 helm 安装 TiDB Operator
 
@@ -133,7 +133,7 @@ To start using your cluster, run:
 
 以上信息显示 Operator 运行正常
 
-## 第三部分 在 K8s 集群中部署 TiDB 集群
+## 在 K8s 集群中部署 TiDB 集群
 
 #### 一、下载 TiDB Cluster 的 helm chart 文件
 
