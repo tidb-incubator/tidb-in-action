@@ -208,7 +208,7 @@ Storage:
 ```
 
  + 启用grpc消息压缩
-	由于涉及到集群中的数据在网络中传输，需要开启 gRPC 消息压缩，降低网络流量。
+ 由于涉及到集群中的数据在网络中传输，需要开启 gRPC 消息压缩，降低网络流量。
 	```
 	server:
 	grpc-compression-type: gzip
@@ -218,20 +218,20 @@ Storage:
 文件路径：<tidb_ansible_path>/tidb-ansible/conf/pd.yml
 需要在集群安装前进行设置。
 
-调整 PD balance 缓冲区大小，提高 PD 容忍度，因为 PD 会根据节点情况计算出各个对象的 score 作为调度的一句，当两个 store 的 leader 或 Region 的得分差距小于指定倍数的 Region size 时，PD 会认为此时 balance 达到均衡状态。。
-```
-schedule:
-  tolerant-size-ratio: 20.0
-```
+调整 PD balance 缓冲区大小，提高 PD 容忍度，因为 PD 会根据节点情况计算出各个对象的 score 作为调度的一句，当两个 store 的 leader 或 Region 的得分差距小于指定倍数的 Region size 时，PD 会认为此时 balance 达到均衡状态。
+	```
+	schedule:
+	  tolerant-size-ratio: 20.0
+	```
 + DC3 TiKV 网络优化
 文件路径：<tidb_cluster_path>/tikv/conf/tikv.toml
 
 修改此参数，拉长了异地副本参与选举的时间，尽量避免异地 TiKV 中的副本参与 raft 选举。建议在集群部署完毕后，为 DC3 的 TiKV 增加额外配置后重启 DC3 的TiKV。
-```
-raftstore: 
- raft-min-election-timeout-ticks= 1000 
- raft-max-election-timeout-ticks= 1020
-```
+	```
+	raftstore: 
+	 raft-min-election-timeout-ticks= 1000 
+	 raft-max-election-timeout-ticks= 1020
+	```
 
 + 调度设置
 在集群启动后，通过 PD control 工具进行调度策略修改。
