@@ -93,7 +93,7 @@ IIDR 在同步全量数据之前，需要在 TiDB 侧创建好表结构，下表
 |:----|:----:|
 | L   | date   | 
 | T   | time   | 
-| Z   | timestamp（6）   | 
+| Z   | timestamp(6)   | 
 | A   | varchar   | 
 | P   | Decimal   | 
 | S   | decimal   | 
