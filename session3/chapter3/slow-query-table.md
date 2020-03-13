@@ -88,6 +88,7 @@ Slow Query 基础信息：
 * Cop_wait_addr：等待时间最长的 cop-task 所在地址。
 
 ## 慢查询系统表
+
 通过查询 INFORMATION_SCHEMA.SLOW_QUERY 表来查询 **当前 TiDB 节点** 的慢查询日志中的内容，表中列名和慢日志中字段名一一对应，表结构可查看 Information Schema 中关于 SLOW_QUERY 表的介绍。
 
 TiDB 4.0 中新增了 CLUSTER_SLOW_QUERY 系统表，用来查询 **所有 TiDB 节点** 的 SLOW_QUERY 数据，使用上和 SLOW_QUERY 是一样的。

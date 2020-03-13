@@ -1,6 +1,6 @@
 # 3.6 processlist 
 
-processlist 用来查看 TiDB 服务器的当前会话信息，可以用以下 3 种方式可以用来查看 processlist 信息：
+processlist 用来查看 TiDB 服务器的当前会话信息，可以用以下 3 种方式查看 processlist 信息：
 
 查看当前 TiDB 服务器节点的会话信息，其中 `Info` 列包含查询文本，除非指定可选关键字 `FULL`，否则文本会被截断。
 
@@ -17,7 +17,9 @@ SHOW [FULL] PROCESSLIST
 SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST 
 ```
 
-查询所有 TiDB 服务器节点的会话信息
+查询 TiDB 的 `PROCESSLIST` 系统表时，用户一定会遇到的问题是：系统表只包含了当前 TiDB 节点的数据，而不是所有节点的数据。
+
+TiDB 4.0 中新增了 `CLUSTER_PROCESSLIST` 系统表，用来查询 **所有** TiDB 节点的 `PROCESSLIST` 数据，使用上和 `PROCESSLIST` 是一样的。`CLUSTER_PROCESSLIST` 表会比 `PROCESSLIST` 多一个 `INSTANCE` 列。`INSTANCE` 用来表示该条数据属于哪一个 TiDB 节点。
 
 ```sql
 SELECT * FROM INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
@@ -59,7 +61,6 @@ Query OK, 0 rows affected (0.00 sec)
 ```
 
 再次查看发现 ID 为 5 的 查询已经被 kill 掉了
-
 
 ## 查询 PROCESSLIST 示例
 
@@ -178,11 +179,7 @@ order by time desc
 +------+--------+--------+------+-----------+--------+---------+--------+-------+------------+
 ```
 
-## INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
-
-查询 TiDB 的 `PROCESSLIST` 系统表时，用户一定会遇到的问题是：系统表只包含了当前 TiDB 节点的数据，而不是所有节点的数据。
-
-TiDB 4.0 中新增了 `CLUSTER_PROCESSLIST` 系统表，用来查询 **所有** TiDB 节点的 `PROCESSLIST` 数据，使用上和 `PROCESSLIST` 是一样的。`CLUSTER_PROCESSLIST` 表会比 `PROCESSLIST` 多一个 `INSTANCE` 列。`INSTANCE` 用来表示该条数据属于哪一个 TiDB 节点。
+## 查询 INFORMATION_SCHEMA.CLUSTER_PROCESSLIST 示例
 
 ```sql
 select * from INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
