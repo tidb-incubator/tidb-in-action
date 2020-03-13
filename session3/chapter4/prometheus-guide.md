@@ -177,9 +177,9 @@ Range vector 查询类似于 instance vector 查询，不同之处在于通过 [
 
 ![4.png](/res/session3/chapter4/prometheus/4.png)
 
-#### Offset 查询
+#### offset 查询
 
-offset 查询的是过去某个时间点的监控结果，如下查询的是一天前 TiDB 的请求数总量：
+通过 offset 能够查询过去某个时间点的监控结果，如下查询的是一天前 TiDB 的请求数总量：
 
 sum((tidb_server_query_total{result="OK"}  offset 1d))
 
@@ -187,25 +187,25 @@ sum((tidb_server_query_total{result="OK"}  offset 1d))
 
 本节结合实际例子，介绍下 TiDB 监控中经常用到的一些函数。
 
-**rate() 和 irate()**
+**rate 和 irate**
 
 这两个函数一般作用于计数器 counter 类型的数据，这类数据会一直增加，使用这两个函数后，展示的是一定时间范围内的变化情况。但它俩的计算方式是有差异，irate() 是基于时间范围内连续的两个时间点，而 rate() 是基于时间范围内的所有时间点，所以 irate() 展示的数据更为精确些，做图毛刺也会更明显。下图展示的是 TiDB 集群中节点的 CPU 使用率的监控，对应的表达式是 rate(process_cpu_seconds_total{job="tidb"}[1m])。
 
 ![5.png](/res/session3/chapter4/prometheus/5.png)
 
-**sum(),avg()**
+**sum 和 avg**
 
 sum 是求和函数，avg 是求均值函数。表达式 sum(tikv_store_size_bytes{instance=~"$instance"}) by (instance) 查询的是各个 TiKV 实例的容量总和。
 
 ![6.png](/res/session3/chapter4/prometheus/6.png)
 
-**increase()**
+**increase**
 
 increase 函数计算的是指定时间范围内的变化量，例如表达式 sum(increase(tidb_server_execute_error_total[1m])) by (type) 是以 type 为聚合条件，显示 1 分钟内 Failed Query OPM 总数
 
 ![7.png](/res/session3/chapter4/prometheus/7.png)
 
-**histogram_quantile()**
+**histogram_quantile**
 
 histogram_quantile 是累积直方图百分位函数，用法 histogram_quantile(φ float, b instant-vector)，其中百分位 φ 是介于 0 和 1 之间的值。这个函数计算的结果是直方图中指定百分比的最大值，例如 0.95 的百分位的结果是 200，说明所有数据中，小于 200 的占总数据的比例为 95%。下面表达式是展示各个 tidb-server 请求的 99% 延迟情况。
 
