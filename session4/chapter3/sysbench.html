@@ -2822,10 +2822,10 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x6982;&#x8981;">&#x6982;&#x8981;</h1>
-<p>TiDB &#x517C;&#x5BB9; MySQL&#xFF0C;&#x652F;&#x6301;&#x65E0;&#x9650;&#x7684;&#x6C34;&#x5E73;&#x6269;&#x5C55;&#xFF0C;&#x5177;&#x5907;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x91D1;&#x878D;&#x7EA7;&#x9AD8;&#x53EF;&#x7528;&#x6027;&#xFF0C;&#x4E3A; OLTP &#x548C; OLAP &#x573A;&#x666F;&#x63D0;&#x4F9B;&#x4E00;&#x7AD9;&#x5F0F;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x5F88;&#x9999;&#x3002;&#x4F46;&#x60F3;&#x8981;&#x4F7F;&#x7528;&#x4F7F;&#x7528; TiDB &#x65F6;&#xFF0C;&#x5C0F;&#x4F19;&#x4F34;&#x90FD;&#x4F1A;&#x88AB;&#x8981;&#x6C42;&#x505A;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5E76;&#x4E0E; MySQL &#x5BF9;&#x6BD4;&#xFF0C;&#x672C;&#x6587;&#x57FA;&#x4E8E; Sysbench &#x6D4B;&#x8BD5;&#x505A;&#x7B80;&#x8981;&#x8BF4;&#x660E;&#x3002;</p>
+<p>TiDB &#x517C;&#x5BB9; MySQL&#xFF0C;&#x652F;&#x6301;&#x65E0;&#x9650;&#x7684;&#x6C34;&#x5E73;&#x6269;&#x5C55;&#xFF0C;&#x5177;&#x5907;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x91D1;&#x878D;&#x7EA7;&#x9AD8;&#x53EF;&#x7528;&#x6027;&#xFF0C;&#x4E3A; OLTP &#x548C; OLAP &#x573A;&#x666F;&#x63D0;&#x4F9B;&#x4E00;&#x7AD9;&#x5F0F;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;&#x4F46;&#x60F3;&#x8981;&#x4F7F;&#x7528; TiDB &#x65F6;&#xFF0C;&#x90FD;&#x4F1A;&#x88AB;&#x8981;&#x6C42;&#x505A;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5E76;&#x4E0E; MySQL &#x5BF9;&#x6BD4;&#xFF0C;&#x672C;&#x6587;&#x57FA;&#x4E8E; sysbench &#x5DE5;&#x5177;&#x8FDB;&#x884C;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x505A;&#x7B80;&#x8981;&#x8BF4;&#x660E;&#x3002;</p>
 <h1 id="&#x5DE5;&#x5177;&#x96C6;&#x65B9;&#x6848;">&#x5DE5;&#x5177;&#x96C6;&#x65B9;&#x6848;</h1>
 <ul>
-<li>Sysbench &#x5B89;&#x88C5;<pre><code>mkdir -p /tmp/sysbench
+<li>sysbench &#x5B89;&#x88C5;<pre><code>mkdir -p /tmp/sysbench
 cd /tmp/sysbench
 wget https://github.com/akopytov/sysbench/archive/1.0.14.tar.gz
 yum -y install make automake libtool pkgconfig libaio-devel
@@ -2850,13 +2850,13 @@ sysbench --version
 <tbody>
 <tr>
 <td style="text-align:center">TiDB &amp; PD</td>
-<td style="text-align:left">CPU&#xFF1A;2*E5-2650 v4@2.20GHz  &#x5185;&#x5B58;&#xFF1A;128G  &#x786C;&#x76D8;&#xFF1A;2*800G &#x56FA;&#x6001;&#x3001;3*1.6T SSD  &#x7F51;&#x5361;: 2 * &#x4E07;&#x5146; &#x505A; bond-1</td>
+<td style="text-align:left">CPU&#xFF1A;2*E5-2650 v4@2.20GHz <br> &#x5185;&#x5B58;&#xFF1A;128G <br> &#x786C;&#x76D8;&#xFF1A;2*800G &#x56FA;&#x6001;&#x3001;3*1.6T SSD <br> &#x7F51;&#x5361;&#xFF1A;2 * &#x4E07;&#x5146; &#x505A; bond-1 <br></td>
 <td style="text-align:center">3</td>
 <td style="text-align:left">TiDB &#x548C; PD &#x5E94;&#x7528;&#x90E8;&#x7F72;&#xFF0C;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; ext4</td>
 </tr>
 <tr>
 <td style="text-align:center">TiKV</td>
-<td style="text-align:left">CPU&#xFF1A;2*E5-2650 v4@2.20GHz  &#x5185;&#x5B58;&#xFF1A;256G  &#x786C;&#x76D8;&#xFF1A;2*480G &#x56FA;&#x6001;&#x3001;4*1.92T NVMe SSD  &#x7F51;&#x5361;&#xFF1A;2 * &#x4E07;&#x5146; &#x505A; bond-1</td>
+<td style="text-align:left">CPU&#xFF1A;2*E5-2650 v4@2.20GHz <br> &#x5185;&#x5B58;&#xFF1A;256G <br> &#x786C;&#x76D8;&#xFF1A;2*480G &#x56FA;&#x6001;&#x3001;4*1.92T NVMe SSD <br> &#x7F51;&#x5361;&#xFF1A;2 * &#x4E07;&#x5146; &#x505A; bond-1 <br></td>
 <td style="text-align:center">3</td>
 <td style="text-align:left">TiKV &#x5E94;&#x7528;&#x90E8;&#x7F72;&#xFF0C;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; ext4&#xFF0C;PCIe &#x76D8;&#x76F4;&#x63A5;&#x6302;&#x8F7D;&#x5230;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x76EE;&#x5F55;</td>
 </tr>
@@ -2885,7 +2885,7 @@ sysbench --version
 </tr>
 <tr>
 <td style="text-align:left">TiDB &#x7248;&#x672C;</td>
-<td style="text-align:left">5.7.25-TiDB-v3.0.5</td>
+<td style="text-align:left">TiDB-v3.0.5</td>
 </tr>
 <tr>
 <td style="text-align:left">TiDB &amp; PD</td>
@@ -2906,9 +2906,9 @@ sysbench --version
 </tbody>
 </table>
 <h1 id="&#x6D4B;&#x8BD5;&#x5B9E;&#x64CD;">&#x6D4B;&#x8BD5;&#x5B9E;&#x64CD;</h1>
-<h2 id="&#x6D4B;&#x8BD5;&#x51C6;&#x5907;">&#x6D4B;&#x8BD5;&#x51C6;&#x5907;</h2>
+<h2 id="&#x6D4B;&#x8BD5;&#x51C6;&#x5907;&#x5DE5;&#x4F5C;">&#x6D4B;&#x8BD5;&#x51C6;&#x5907;&#x5DE5;&#x4F5C;</h2>
 <ul>
-<li>Sysbench &#x914D;&#x7F6E;<pre><code>mysql-host=192.168.xxx.xxx
+<li>sysbench &#x914D;&#x7F6E;<pre><code>mysql-host=192.168.xxx.xxx
 mysql-port=4000
 mysql-user=sysbench
 mysql-password=******
@@ -2918,14 +2918,14 @@ threads=16
 report-interval=10
 db-driver=mysql
 </code></pre></li>
-<li>&#x5173;&#x952E;&#x53C2;&#x6570;&#x8BF4;&#x660E;<pre><code>--threads=8 &#x8868;&#x793A;&#x53D1;&#x8D77; 8 &#x4E2A;&#x5E76;&#x53D1;&#x8FDE;&#x63A5;
+<li>sysbench &#x5173;&#x952E;&#x53C2;&#x6570;&#x8BF4;&#x660E;<pre><code>--threads=8 &#x8868;&#x793A;&#x53D1;&#x8D77; 8 &#x4E2A;&#x5E76;&#x53D1;&#x8FDE;&#x63A5;
 --report-interval=10 &#x8868;&#x793A;&#x6BCF; 10 &#x79D2;&#x8F93;&#x51FA;&#x4E00;&#x6B21;&#x6D4B;&#x8BD5;&#x8FDB;&#x5EA6;&#x62A5;&#x544A;
---rand-type=uniform &#x8868;&#x793A;&#x968F;&#x673A;&#x7C7B;&#x578B;&#x4E3A;&#x56FA;&#x5B9A;&#x6A21;&#x5F0F;&#xFF0C;&#x5176;&#x4ED6;&#x51E0;&#x4E2A;&#x53EF;&#x9009;&#x968F;&#x673A;&#x6A21;&#x5F0F;&#xFF1A;uniform (&#x56FA;&#x5B9A;),gaussian (&#x9AD8;&#x65AF;),special (&#x7279;&#x5B9A;&#x7684;),pareto (&#x5E15;&#x7D2F;&#x6258;)
+--rand-type=uniform &#x8868;&#x793A;&#x968F;&#x673A;&#x7C7B;&#x578B;&#x4E3A;&#x56FA;&#x5B9A;&#x6A21;&#x5F0F;&#xFF0C;&#x5176;&#x4ED6;&#x51E0;&#x4E2A;&#x53EF;&#x9009;&#x968F;&#x673A;&#x6A21;&#x5F0F;&#xFF1A;uniform (&#x56FA;&#x5B9A;)&#xFF0C;gaussian (&#x9AD8;&#x65AF;)&#xFF0C;special (&#x7279;&#x5B9A;&#x7684;)&#xFF0C;pareto (&#x5E15;&#x7D2F;&#x6258;)
 --time=120 &#x8868;&#x793A;&#x6700;&#x5927;&#x6267;&#x884C;&#x65F6;&#x957F;&#x4E3A; 120 &#x79D2;
 --events=0 &#x8868;&#x793A;&#x603B;&#x8BF7;&#x6C42;&#x6570;&#x4E3A; 0&#xFF0C;&#x56E0;&#x4E3A;&#x4E0A;&#x9762;&#x5DF2;&#x7ECF;&#x5B9A;&#x4E49;&#x4E86;&#x603B;&#x6267;&#x884C;&#x65F6;&#x957F;&#xFF0C;&#x6240;&#x4EE5;&#x603B;&#x8BF7;&#x6C42;&#x6570;&#x53EF;&#x4EE5;&#x8BBE;&#x5B9A;&#x4E3A; 0&#xFF1B;&#x4E5F;&#x53EF;&#x4EE5;&#x53EA;&#x8BBE;&#x5B9A;&#x603B;&#x8BF7;&#x6C42;&#x6570;&#xFF0C;&#x4E0D;&#x8BBE;&#x5B9A;&#x6700;&#x5927;&#x6267;&#x884C;&#x65F6;&#x957F;
 --percentile=99 &#x8868;&#x793A;&#x8BBE;&#x5B9A;&#x91C7;&#x6837;&#x6BD4;&#x4F8B;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 95%&#xFF0C;&#x5373;&#x4E22;&#x5F03; 1% &#x7684;&#x957F;&#x8BF7;&#x6C42;&#xFF0C;&#x5728;&#x5269;&#x4F59;&#x7684; 99% &#x91CC;&#x53D6;&#x6700;&#x5927;&#x503C;
 </code></pre></li>
-<li>&#x7ED3;&#x679C;&#x89E3;&#x8BFB;</li>
+<li>sysbench &#x7ED3;&#x679C;&#x89E3;&#x8BFB;</li>
 </ul>
 <pre><code>sysbench 1.0.14 (using bundled LuaJIT 2.1.0-beta2)
 Running the test with following options:
@@ -2934,7 +2934,7 @@ Report intermediate results every 10 second(s)
 Initializing random number generator from current time
 Initializing worker threads...
 Threads started!
-#  &#x6BCF;10&#x79D2;&#x949F;&#x62A5;&#x544A;&#x4E00;&#x6B21;&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF0C;tps&#x3001;&#x6BCF;&#x79D2;&#x8BFB;&#x3001;&#x6BCF;&#x79D2;&#x5199;&#x3001;99%&#x4EE5;&#x4E0A;&#x7684;&#x54CD;&#x5E94;&#x65F6;&#x957F;&#x7EDF;&#x8BA1;
+# &#x6BCF; 10 &#x79D2;&#x949F;&#x62A5;&#x544A;&#x4E00;&#x6B21;&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF0C;tps&#x3001;&#x6BCF;&#x79D2;&#x8BFB;&#x3001;&#x6BCF;&#x79D2;&#x5199;&#x3001;95% &#x4EE5;&#x4E0A;&#x7684;&#x54CD;&#x5E94;&#x65F6;&#x957F;&#x7EDF;&#x8BA1;
 [ 10s ] thds: 16 tps: 21532.38 qps: 21532.38 (r/w/o: 21532.38/0.00/0.00) lat (ms,95%): 1.04 err/s: 0.00 reconn/s: 0.00
 [ 20s ] thds: 16 tps: 21617.20 qps: 21617.20 (r/w/o: 21617.20/0.00/0.00) lat (ms,95%): 1.01 err/s: 0.00 reconn/s: 0.00
 [ 30s ] thds: 16 tps: 21550.98 qps: 21550.98 (r/w/o: 21550.98/0.00/0.00) lat (ms,95%): 1.03 err/s: 0.00 reconn/s: 0.00
@@ -2943,43 +2943,38 @@ Threads started!
 [ 60s ] thds: 16 tps: 21597.56 qps: 21597.56 (r/w/o: 21597.56/0.00/0.00) lat (ms,95%): 1.01 err/s: 0.00 reconn/s: 0.00
 SQL statistics:
     queries performed:
-        read:                            1294886 # &#x8BFB;&#x603B;&#x6570;
-        write:                           0       # &#x5199;&#x603B;&#x6570;
-        other:                           0       # &#x5176;&#x4ED6;&#x64CD;&#x4F5C;&#x603B;&#x6570;(COMMIT&#x7B49;)
-        total:                           1294886 # &#x5168;&#x90E8;&#x603B;&#x6570;
-    transactions:                        1294886 (21579.74 per sec.) 
-                                                 # &#x603B;&#x4E8B;&#x52A1;&#x6570;(&#x6BCF;&#x79D2;&#x4E8B;&#x52A1;&#x6570;)
-    queries:                             1294886 (21579.74 per sec.)
-                                                 # &#x8BFB;&#x603B;&#x6570;(&#x6BCF;&#x79D2;&#x8BFB;&#x6B21;&#x6570;)
-    ignored errors:                      0      (0.00 per sec.)
-                                                 # &#x5FFD;&#x7565;&#x9519;&#x8BEF;&#x6570;(&#x6BCF;&#x79D2;&#x5FFD;&#x7565;&#x9519;&#x8BEF;&#x6570;)
-    reconnects:                          0      (0.00 per sec.)
-                                                 # &#x91CD;&#x8FDE;&#x6B21;&#x6570;(&#x6BCF;&#x79D2;&#x91CD;&#x8FDE;&#x6B21;&#x6570;)
+        read:                            1294886                        # &#x8BFB;&#x603B;&#x6570;
+        write:                           0                              # &#x5199;&#x603B;&#x6570;
+        other:                           0                              # &#x5176;&#x4ED6;&#x64CD;&#x4F5C;&#x603B;&#x6570; (COMMIT &#x7B49;)
+        total:                           1294886                        # &#x5168;&#x90E8;&#x603B;&#x6570;
+    transactions:                        1294886 (21579.74 per sec.)    # &#x603B;&#x4E8B;&#x52A1;&#x6570; ( &#x6BCF;&#x79D2;&#x4E8B;&#x52A1;&#x6570; )
+    queries:                             1294886 (21579.74 per sec.)    # &#x8BFB;&#x603B;&#x6570; ( &#x6BCF;&#x79D2;&#x8BFB;&#x6B21;&#x6570; )
+    ignored errors:                      0      (0.00 per sec.)         # &#x5FFD;&#x7565;&#x9519;&#x8BEF;&#x6570; ( &#x6BCF;&#x79D2;&#x5FFD;&#x7565;&#x9519;&#x8BEF;&#x6570; )
+    reconnects:                          0      (0.00 per sec.)         # &#x91CD;&#x8FDE;&#x6B21;&#x6570; ( &#x6BCF;&#x79D2;&#x91CD;&#x8FDE;&#x6B21;&#x6570; )
 General statistics:
-    total time:                          60.0029s # &#x603B;&#x8017;&#x65F6;
-    total number of events:              1294886  # &#x5171;&#x53D1;&#x751F;&#x591A;&#x5C11;&#x4E8B;&#x52A1;&#x6570;
+    total time:                          60.0029s                       # &#x603B;&#x5171;&#x8017;&#x65F6;
+    total number of events:              1294886                        # &#x603B;&#x5171;&#x53D1;&#x751F;&#x591A;&#x5C11;&#x4E8B;&#x52A1;&#x6570;
 
 Latency (ms):
-         min:                                    0.36 # &#x6700;&#x5C0F;&#x5EF6;&#x65F6; 
-         avg:                                    0.74 # &#x5E73;&#x5747;&#x5EF6;&#x65F6;
-         max:                                    8.90 # &#x6700;&#x5927;&#x5EF6;&#x65F6;
-         95th percentile:                        1.01 # &#x8D85;&#x8FC7;95%&#x5E73;&#x5747;&#x8017;&#x65F6;
+         min:                                    0.36                   # &#x6700;&#x5C0F;&#x5EF6;&#x65F6; 
+         avg:                                    0.74                   # &#x5E73;&#x5747;&#x5EF6;&#x65F6;
+         max:                                    8.90                   # &#x6700;&#x5927;&#x5EF6;&#x65F6;
+         95th percentile:                        1.01                   # &#x8D85;&#x8FC7; 95% &#x5E73;&#x5747;&#x8017;&#x65F6;
          sum:                               959137.19 
 Threads fairness:
-    events (avg/stddev):           80930.3750/440.48 
-    # &#x5E73;&#x5747;&#x6BCF;&#x7EBF;&#x7A0B;&#x5B8C;&#x6210; 80930.3750 &#x6B21; event&#xFF0C;&#x6807;&#x51C6;&#x5DEE;&#x4E3A; 440.48
-    execution time (avg/stddev):   59.9461/0.00
-    # &#x6BCF;&#x4E2A;&#x7EBF;&#x7A0B;&#x5E73;&#x5747;&#x8017;&#x65F6; 59.9 &#x79D2;&#xFF0C;&#x6807;&#x51C6;&#x5DEE;&#x4E3A; 0
+    events (avg/stddev):           80930.3750/440.48                    # &#x5E73;&#x5747;&#x6BCF;&#x7EBF;&#x7A0B;&#x5B8C;&#x6210; 80930.3750 &#x6B21; event&#xFF0C;&#x6807;&#x51C6;&#x5DEE;&#x4E3A; 440.48
+    execution time (avg/stddev):   59.9461/0.00                         # &#x6BCF;&#x4E2A;&#x7EBF;&#x7A0B;&#x5E73;&#x5747;&#x8017;&#x65F6; 59.9 &#x79D2;&#xFF0C;&#x6807;&#x51C6;&#x5DEE;&#x4E3A; 0
 </code></pre><ul>
 <li>&#x51C6;&#x5907;&#x6570;&#x636E;<pre><code>sysbench --config-file=sysbench-thread-16.cfg oltp_point_select --tables=32 --table-size=10000000 prepare
 </code></pre></li>
 <li>&#x6570;&#x636E;&#x9884;&#x70ED;&#x4E0E;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x6536;&#x96C6;</li>
 </ul>
-<p>&#x6570;&#x636E;&#x9884;&#x70ED;&#x53EF;&#x5C06;&#x78C1;&#x76D8;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x7684; block cache &#x4E2D;&#xFF0C;&#x9884;&#x70ED;&#x540E;&#x7684;&#x6570;&#x636E;&#x5BF9;&#x7CFB;&#x7EDF;&#x6574;&#x4F53;&#x7684;&#x6027;&#x80FD;&#x6709;&#x8F83;&#x5927;&#x7684;&#x6539;&#x5584;&#xFF0C;&#x5EFA;&#x8BAE;&#x5728;&#x6BCF;&#x6B21;&#x91CD;&#x542F;&#x96C6;&#x7FA4;&#x540E;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x6570;&#x636E;&#x9884;&#x70ED;&#x3002;Sysbench &#x4E2D;&#x67D0;&#x5F20;&#x8868; sbtest1 &#x4E3A;&#x4F8B;&#xFF0C;&#x6267;&#x884C;&#x5982;&#x4E0B; SQL &#x8BED;&#x53E5; &#x8FDB;&#x884C;&#x6570;&#x636E;&#x9884;&#x70ED;&#xFF1A;</p>
-<pre><code>SELECT COUNT(pad) FROM sbtest7 USE INDEX (k_7);
-</code></pre><p>&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x6536;&#x96C6;&#x6709;&#x52A9;&#x4E8E;&#x4F18;&#x5316;&#x5668;&#x9009;&#x62E9;&#x66F4;&#x4E3A;&#x51C6;&#x786E;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; analyze &#x547D;&#x4EE4;&#x6765;&#x6536;&#x96C6;&#x8868; sbtest &#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#xFF0C;&#x6BCF;&#x4E2A;&#x8868;&#x90FD;&#x9700;&#x8981;&#x7EDF;&#x8BA1;&#x3002;</p>
-<pre><code>ANALYZE TABLE sbtest7;
-</code></pre><ul>
+<p>&#x6570;&#x636E;&#x9884;&#x70ED;&#x53EF;&#x5C06;&#x78C1;&#x76D8;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x7684; block cache &#x4E2D;&#xFF0C;&#x9884;&#x70ED;&#x540E;&#x7684;&#x6570;&#x636E;&#x5BF9;&#x7CFB;&#x7EDF;&#x6574;&#x4F53;&#x7684;&#x6027;&#x80FD;&#x6709;&#x8F83;&#x5927;&#x7684;&#x6539;&#x5584;&#xFF0C;&#x5EFA;&#x8BAE;&#x5728;&#x6BCF;&#x6B21;&#x91CD;&#x542F;&#x96C6;&#x7FA4;&#x540E;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x6570;&#x636E;&#x9884;&#x70ED;&#x3002;&#x4EE5;&#x8868; sbtest1 &#x4E3A;&#x4F8B;&#xFF0C;&#x6267;&#x884C;&#x5982;&#x4E0B; SQL &#x8BED;&#x53E5; &#x8FDB;&#x884C;&#x6570;&#x636E;&#x9884;&#x70ED;&#xFF0C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>SELECT COUNT(pad) FROM sbtest1 USE INDEX(k_1);
+</code></pre><p>&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x6536;&#x96C6;&#x6709;&#x52A9;&#x4E8E;&#x4F18;&#x5316;&#x5668;&#x9009;&#x62E9;&#x66F4;&#x4E3A;&#x51C6;&#x786E;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; analyze &#x547D;&#x4EE4;&#x6765;&#x6536;&#x96C6;&#x7CFB;&#x5217;&#x8868; sbtest* &#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#xFF0C;&#x6BCF;&#x4E2A;&#x8868;&#x90FD;&#x9700;&#x8981;&#x6536;&#x96C6;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#xFF0C;&#x4EE5;&#x8868; sbtest1 &#x4E3A;&#x4F8B;&#xFF0C;&#x547D;&#x4EE4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>ANALYZE TABLE sbtest1;
+</code></pre><h2 id="&#x6D4B;&#x8BD5;&#x547D;&#x4EE4;&#x4E3E;&#x4F8B;">&#x6D4B;&#x8BD5;&#x547D;&#x4EE4;&#x4E3E;&#x4F8B;</h2>
+<ul>
 <li>Point select &#x6D4B;&#x8BD5;&#x547D;&#x4EE4;<pre><code>sysbench --config-file=sysbench-thread-16.cfg oltp_point_select --tables=32 --table-size=10000000 run
 </code></pre></li>
 <li>Update index &#x6D4B;&#x8BD5;&#x547D;&#x4EE4;<pre><code>sysbench --config-file=sysbench-thread-16.cfg oltp_update_index --tables=32 --table-size=10000000 run
@@ -2990,8 +2985,8 @@ Threads fairness:
 </code></pre></li>
 <li><p>Read-Write &#x6D4B;&#x8BD5;&#x547D;&#x4EE4;</p>
 <pre><code>sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --table-size=10000000 run
-</code></pre><h2 id="&#x6D4B;&#x8BD5;&#x62A5;&#x544A;">&#x6D4B;&#x8BD5;&#x62A5;&#x544A;</h2>
-<p>&#x7B14;&#x8005;&#x6D4B;&#x8BD5;&#x6570;&#x636E; 32 &#x5F20;&#x8868;&#xFF0C;&#x6BCF;&#x5F20;&#x8868;&#x6709; 10M &#x6570;&#x636E;&#x3002;&#x5BF9;&#x96C6;&#x7FA4;&#x6240;&#x6709; tidb-server &#x90FD;&#x8FDB;&#x884C; Sysbench &#x6D4B;&#x8BD5;&#xFF0C;&#x5C06;&#x7ED3;&#x679C;&#x76F8;&#x52A0;&#xFF0C;&#x5F97;&#x51FA;&#x6700;&#x7EC8;&#x7ED3;&#x679C;&#xFF1A;</p>
+</code></pre><h2 id="&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#x4E3E;&#x4F8B;">&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#x4E3E;&#x4F8B;</h2>
+<p>&#x7B14;&#x8005;&#x6D4B;&#x8BD5;&#x6570;&#x636E; 32 &#x5F20;&#x8868;&#xFF0C;&#x6BCF;&#x5F20;&#x8868;&#x6709; 10MB &#x6570;&#x636E;&#x3002;&#x5BF9;&#x96C6;&#x7FA4;&#x6240;&#x6709; tidb-server &#x90FD;&#x540C;&#x65F6;&#x8FDB;&#x884C; sysbench &#x6D4B;&#x8BD5;&#xFF0C;&#x5C06;&#x7ED3;&#x679C;&#x76F8;&#x52A0;&#xFF0C;&#x5F97;&#x51FA;&#x6700;&#x7EC8;&#x7ED3;&#x679C;&#xFF1A;</p>
 </li>
 <li><p>oltp_point_select</p>
 </li>
@@ -3000,13 +2995,13 @@ Threads fairness:
 <thead>
 <tr>
 <th style="text-align:left">type</th>
-<th style="text-align:right"><strong>thread</strong></th>
-<th style="text-align:center"><strong>tps</strong></th>
-<th style="text-align:right"><strong>qps</strong></th>
-<th style="text-align:center"><strong>min latency</strong></th>
-<th style="text-align:right"><strong>avg latency</strong></th>
-<th style="text-align:center"><strong>95th latency</strong></th>
-<th style="text-align:right"><strong>max latency</strong></th>
+<th style="text-align:right">thread</th>
+<th style="text-align:center">tps</th>
+<th style="text-align:center">qps</th>
+<th style="text-align:center">min latency</th>
+<th style="text-align:right">avg latency</th>
+<th style="text-align:center">95th latency</th>
+<th style="text-align:right">max latency</th>
 </tr>
 </thead>
 <tbody>
@@ -3014,7 +3009,7 @@ Threads fairness:
 <td style="text-align:left">point_select</td>
 <td style="text-align:right">64</td>
 <td style="text-align:center">148098.00</td>
-<td style="text-align:right">148098.00</td>
+<td style="text-align:center">148098.00</td>
 <td style="text-align:center">0.26</td>
 <td style="text-align:right">0.43</td>
 <td style="text-align:center">0.52</td>
@@ -3024,7 +3019,7 @@ Threads fairness:
 <td style="text-align:left">point_select</td>
 <td style="text-align:right">128</td>
 <td style="text-align:center">257760.00</td>
-<td style="text-align:right">257760.00</td>
+<td style="text-align:center">257760.00</td>
 <td style="text-align:center">0.27</td>
 <td style="text-align:right">0.50</td>
 <td style="text-align:center">0.65</td>
@@ -3034,7 +3029,7 @@ Threads fairness:
 <td style="text-align:left">point_select</td>
 <td style="text-align:right">256</td>
 <td style="text-align:center">343215.00</td>
-<td style="text-align:right">343215.00</td>
+<td style="text-align:center">343215.00</td>
 <td style="text-align:center">0.28</td>
 <td style="text-align:right">0.75</td>
 <td style="text-align:center">1.89</td>
@@ -3044,7 +3039,7 @@ Threads fairness:
 <td style="text-align:left">point_select</td>
 <td style="text-align:right">512</td>
 <td style="text-align:center">448683.00</td>
-<td style="text-align:right">448683.00</td>
+<td style="text-align:center">448683.00</td>
 <td style="text-align:center">0.29</td>
 <td style="text-align:right">1.14</td>
 <td style="text-align:center">3.55</td>
@@ -3054,7 +3049,7 @@ Threads fairness:
 <td style="text-align:left">point_select</td>
 <td style="text-align:right">1024</td>
 <td style="text-align:center">567063.00</td>
-<td style="text-align:right">567063.00</td>
+<td style="text-align:center">567063.00</td>
 <td style="text-align:center">0.30</td>
 <td style="text-align:right">1.80</td>
 <td style="text-align:center">5.57</td>
@@ -3064,7 +3059,7 @@ Threads fairness:
 <td style="text-align:left">point_select</td>
 <td style="text-align:right">2048</td>
 <td style="text-align:center">663217.00</td>
-<td style="text-align:right">663217.00</td>
+<td style="text-align:center">663217.00</td>
 <td style="text-align:center">0.29</td>
 <td style="text-align:right">3.08</td>
 <td style="text-align:center">8.90</td>
@@ -3074,7 +3069,7 @@ Threads fairness:
 <td style="text-align:left">point_select</td>
 <td style="text-align:right">4096</td>
 <td style="text-align:center">736094.00</td>
-<td style="text-align:right">736094.00</td>
+<td style="text-align:center">736094.00</td>
 <td style="text-align:center">0.33</td>
 <td style="text-align:right">5.55</td>
 <td style="text-align:center">15.00</td>
@@ -3090,13 +3085,13 @@ Threads fairness:
 <thead>
 <tr>
 <th style="text-align:left">type</th>
-<th style="text-align:right"><strong>thread</strong></th>
-<th style="text-align:center"><strong>tps</strong></th>
-<th style="text-align:right"><strong>qps</strong></th>
-<th style="text-align:center"><strong>min latency</strong></th>
-<th style="text-align:right"><strong>avg latency</strong></th>
-<th style="text-align:center"><strong>95th latency</strong></th>
-<th style="text-align:right"><strong>max latency</strong></th>
+<th style="text-align:right">thread</th>
+<th style="text-align:center">tps</th>
+<th style="text-align:center">qps</th>
+<th style="text-align:center">min latency</th>
+<th style="text-align:right">avg latency</th>
+<th style="text-align:center">95th latency</th>
+<th style="text-align:right">max latency</th>
 </tr>
 </thead>
 <tbody>
@@ -3104,7 +3099,7 @@ Threads fairness:
 <td style="text-align:left">read_only</td>
 <td style="text-align:right">64</td>
 <td style="text-align:center">5984.48</td>
-<td style="text-align:right">95751.60</td>
+<td style="text-align:center">95751.60</td>
 <td style="text-align:center">7.87</td>
 <td style="text-align:right">10.69</td>
 <td style="text-align:center">14.21</td>
@@ -3114,7 +3109,7 @@ Threads fairness:
 <td style="text-align:left">read_only</td>
 <td style="text-align:right">128</td>
 <td style="text-align:center">9741.39</td>
-<td style="text-align:right">155862.00</td>
+<td style="text-align:center">155862.00</td>
 <td style="text-align:center">7.64</td>
 <td style="text-align:right">13.14</td>
 <td style="text-align:center">18.28</td>
@@ -3124,7 +3119,7 @@ Threads fairness:
 <td style="text-align:left">read_only</td>
 <td style="text-align:right">256</td>
 <td style="text-align:center">13080.20</td>
-<td style="text-align:right">209284.00</td>
+<td style="text-align:center">209284.00</td>
 <td style="text-align:center">9.22</td>
 <td style="text-align:right">19.56</td>
 <td style="text-align:center">28.16</td>
@@ -3134,7 +3129,7 @@ Threads fairness:
 <td style="text-align:left">read_only</td>
 <td style="text-align:right">512</td>
 <td style="text-align:center">15678.40</td>
-<td style="text-align:right">250854.00</td>
+<td style="text-align:center">250854.00</td>
 <td style="text-align:center">10.40</td>
 <td style="text-align:right">32.62</td>
 <td style="text-align:center">49.34</td>
@@ -3144,7 +3139,7 @@ Threads fairness:
 <td style="text-align:left">read_only</td>
 <td style="text-align:right">1024</td>
 <td style="text-align:center">17691.40</td>
-<td style="text-align:right">283063.00</td>
+<td style="text-align:center">283063.00</td>
 <td style="text-align:center">10.87</td>
 <td style="text-align:right">57.73</td>
 <td style="text-align:center">87.56</td>
@@ -3154,7 +3149,7 @@ Threads fairness:
 <td style="text-align:left">read_only</td>
 <td style="text-align:right">2048</td>
 <td style="text-align:center">19086.60</td>
-<td style="text-align:right">305386.00</td>
+<td style="text-align:center">305386.00</td>
 <td style="text-align:center">7.68</td>
 <td style="text-align:right">107.12</td>
 <td style="text-align:center">164.45</td>
@@ -3170,13 +3165,13 @@ Threads fairness:
 <thead>
 <tr>
 <th style="text-align:left">type</th>
-<th style="text-align:right"><strong>thread</strong></th>
-<th style="text-align:center"><strong>tps</strong></th>
-<th style="text-align:right"><strong>qps</strong></th>
-<th style="text-align:center"><strong>min latency</strong></th>
-<th style="text-align:right"><strong>avg latency</strong></th>
-<th style="text-align:center"><strong>95th latency</strong></th>
-<th style="text-align:right"><strong>max latency</strong></th>
+<th style="text-align:right">thread</th>
+<th style="text-align:center">tps</th>
+<th style="text-align:center">qps</th>
+<th style="text-align:center">min latency</th>
+<th style="text-align:right">avg latency</th>
+<th style="text-align:center">95th latency</th>
+<th style="text-align:right">max latency</th>
 </tr>
 </thead>
 <tbody>
@@ -3184,7 +3179,7 @@ Threads fairness:
 <td style="text-align:left">update_index</td>
 <td style="text-align:right">64</td>
 <td style="text-align:center">19232.10</td>
-<td style="text-align:right">19232.10</td>
+<td style="text-align:center">19232.10</td>
 <td style="text-align:center">1.75</td>
 <td style="text-align:right">3.33</td>
 <td style="text-align:center">4.74</td>
@@ -3194,7 +3189,7 @@ Threads fairness:
 <td style="text-align:left">update_index</td>
 <td style="text-align:right">128</td>
 <td style="text-align:center">25898.20</td>
-<td style="text-align:right">25898.20</td>
+<td style="text-align:center">25898.20</td>
 <td style="text-align:center">1.67</td>
 <td style="text-align:right">4.94</td>
 <td style="text-align:center">7.98</td>
@@ -3204,7 +3199,7 @@ Threads fairness:
 <td style="text-align:left">update_index</td>
 <td style="text-align:right">256</td>
 <td style="text-align:center">31214.00</td>
-<td style="text-align:right">31214.00</td>
+<td style="text-align:center">31214.00</td>
 <td style="text-align:center">1.67</td>
 <td style="text-align:right">8.20</td>
 <td style="text-align:center">14.73</td>
@@ -3214,7 +3209,7 @@ Threads fairness:
 <td style="text-align:left">update_index</td>
 <td style="text-align:right">512</td>
 <td style="text-align:center">36213.50</td>
-<td style="text-align:right">36213.50</td>
+<td style="text-align:center">36213.50</td>
 <td style="text-align:center">1.74</td>
 <td style="text-align:right">14.13</td>
 <td style="text-align:center">27.66</td>
@@ -3224,7 +3219,7 @@ Threads fairness:
 <td style="text-align:left">update_index</td>
 <td style="text-align:right">1024</td>
 <td style="text-align:center">40731.20</td>
-<td style="text-align:right">40731.20</td>
+<td style="text-align:center">40731.20</td>
 <td style="text-align:center">1.74</td>
 <td style="text-align:right">25.12</td>
 <td style="text-align:center">52.89</td>
@@ -3234,7 +3229,7 @@ Threads fairness:
 <td style="text-align:left">update_index</td>
 <td style="text-align:right">2048</td>
 <td style="text-align:center">44423.50</td>
-<td style="text-align:right">44423.50</td>
+<td style="text-align:center">44423.50</td>
 <td style="text-align:center">1.77</td>
 <td style="text-align:right">46.04</td>
 <td style="text-align:center">99.33</td>
@@ -3250,13 +3245,13 @@ Threads fairness:
 <thead>
 <tr>
 <th style="text-align:left">type</th>
-<th style="text-align:right"><strong>thread</strong></th>
-<th style="text-align:center"><strong>tps</strong></th>
-<th style="text-align:right"><strong>qps</strong></th>
-<th style="text-align:center"><strong>min latency</strong></th>
-<th style="text-align:right"><strong>avg latency</strong></th>
-<th style="text-align:center"><strong>95th latency</strong></th>
-<th style="text-align:right"><strong>max latency</strong></th>
+<th style="text-align:right">thread</th>
+<th style="text-align:center">tps</th>
+<th style="text-align:center">qps</th>
+<th style="text-align:center">min latency</th>
+<th style="text-align:right">avg latency</th>
+<th style="text-align:center">95th latency</th>
+<th style="text-align:right">max latency</th>
 </tr>
 </thead>
 <tbody>
@@ -3264,7 +3259,7 @@ Threads fairness:
 <td style="text-align:left">write_only</td>
 <td style="text-align:right">64</td>
 <td style="text-align:center">7882.92</td>
-<td style="text-align:right">47297.50</td>
+<td style="text-align:center">47297.50</td>
 <td style="text-align:center">3.05</td>
 <td style="text-align:right">8.12</td>
 <td style="text-align:center">12.52</td>
@@ -3274,7 +3269,7 @@ Threads fairness:
 <td style="text-align:left">write_only</td>
 <td style="text-align:right">128</td>
 <td style="text-align:center">9780.01</td>
-<td style="text-align:right">58680.10</td>
+<td style="text-align:center">58680.10</td>
 <td style="text-align:center">3.07</td>
 <td style="text-align:right">13.08</td>
 <td style="text-align:center">21.50</td>
@@ -3284,7 +3279,7 @@ Threads fairness:
 <td style="text-align:left">write_only</td>
 <td style="text-align:right">256</td>
 <td style="text-align:center">11450.20</td>
-<td style="text-align:right">68701.20</td>
+<td style="text-align:center">68701.20</td>
 <td style="text-align:center">3.12</td>
 <td style="text-align:right">22.34</td>
 <td style="text-align:center">36.89</td>
@@ -3294,7 +3289,7 @@ Threads fairness:
 <td style="text-align:left">write_only</td>
 <td style="text-align:right">512</td>
 <td style="text-align:center">13330.00</td>
-<td style="text-align:right">79979.20</td>
+<td style="text-align:center">79979.20</td>
 <td style="text-align:center">3.04</td>
 <td style="text-align:right">38.39</td>
 <td style="text-align:center">65.65</td>
@@ -3304,7 +3299,7 @@ Threads fairness:
 <td style="text-align:left">write_only</td>
 <td style="text-align:right">1024</td>
 <td style="text-align:center">14761.20</td>
-<td style="text-align:right">88567.40</td>
+<td style="text-align:center">88567.40</td>
 <td style="text-align:center">3.30</td>
 <td style="text-align:right">68.39</td>
 <td style="text-align:center">118.92</td>
@@ -3314,7 +3309,7 @@ Threads fairness:
 <td style="text-align:left">write_only</td>
 <td style="text-align:right">2048</td>
 <td style="text-align:center">16825.20</td>
-<td style="text-align:right">100951.00</td>
+<td style="text-align:center">100951.00</td>
 <td style="text-align:center">3.25</td>
 <td style="text-align:right">121.50</td>
 <td style="text-align:center">223.34</td>
@@ -3330,13 +3325,13 @@ Threads fairness:
 <thead>
 <tr>
 <th style="text-align:left">type</th>
-<th style="text-align:right"><strong>thread</strong></th>
-<th style="text-align:center"><strong>tps</strong></th>
-<th style="text-align:right"><strong>qps</strong></th>
-<th style="text-align:center"><strong>min latency</strong></th>
-<th style="text-align:right"><strong>avg latency</strong></th>
-<th style="text-align:center"><strong>95th latency</strong></th>
-<th style="text-align:right"><strong>max latency</strong></th>
+<th style="text-align:right">thread</th>
+<th style="text-align:center">tps</th>
+<th style="text-align:center">qps</th>
+<th style="text-align:center">min latency</th>
+<th style="text-align:right">avg latency</th>
+<th style="text-align:center">95th latency</th>
+<th style="text-align:right">max latency</th>
 </tr>
 </thead>
 <tbody>
@@ -3344,7 +3339,7 @@ Threads fairness:
 <td style="text-align:left">read_write</td>
 <td style="text-align:right">64</td>
 <td style="text-align:center">2698.01</td>
-<td style="text-align:right">53960.20</td>
+<td style="text-align:center">53960.20</td>
 <td style="text-align:center">13.91</td>
 <td style="text-align:right">23.72</td>
 <td style="text-align:center">29.72</td>
@@ -3354,7 +3349,7 @@ Threads fairness:
 <td style="text-align:left">read_write</td>
 <td style="text-align:right">128</td>
 <td style="text-align:center">4066.40</td>
-<td style="text-align:right">81328.10</td>
+<td style="text-align:center">81328.10</td>
 <td style="text-align:center">12.19</td>
 <td style="text-align:right">31.47</td>
 <td style="text-align:center">42.85</td>
@@ -3364,7 +3359,7 @@ Threads fairness:
 <td style="text-align:left">read_write</td>
 <td style="text-align:right">256</td>
 <td style="text-align:center">4915.23</td>
-<td style="text-align:right">98304.50</td>
+<td style="text-align:center">98304.50</td>
 <td style="text-align:center">12.94</td>
 <td style="text-align:right">52.06</td>
 <td style="text-align:center">70.55</td>
@@ -3374,7 +3369,7 @@ Threads fairness:
 <td style="text-align:left">read_write</td>
 <td style="text-align:right">512</td>
 <td style="text-align:center">5988.96</td>
-<td style="text-align:right">119779.00</td>
+<td style="text-align:center">119779.00</td>
 <td style="text-align:center">12.99</td>
 <td style="text-align:right">85.42</td>
 <td style="text-align:center">121.08</td>
@@ -3384,7 +3379,7 @@ Threads fairness:
 <td style="text-align:left">read_write</td>
 <td style="text-align:right">1024</td>
 <td style="text-align:center">7260.19</td>
-<td style="text-align:right">145204.00</td>
+<td style="text-align:center">145204.00</td>
 <td style="text-align:center">13.25</td>
 <td style="text-align:right">140.67</td>
 <td style="text-align:center">196.89</td>
@@ -3394,7 +3389,7 @@ Threads fairness:
 <td style="text-align:left">read_write</td>
 <td style="text-align:right">2048</td>
 <td style="text-align:center">8228.84</td>
-<td style="text-align:right">164577.00</td>
+<td style="text-align:center">164577.00</td>
 <td style="text-align:center">13.96</td>
 <td style="text-align:right">248.19</td>
 <td style="text-align:center">376.49</td>
@@ -3404,7 +3399,8 @@ Threads fairness:
 </table>
 <p><img src="../../res/session4/chapter3/sysbench/oltp_read_write.png" alt="oltp_read_write.png"></p>
 <h1 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h1>
-<p>&#x7531;&#x4E8E; TiDB &#x4E0E; MySQL &#x67B6;&#x6784;&#x4E0A;&#x5DEE;&#x522B;&#x975E;&#x5E38;&#x5927;&#xFF0C;&#x5F88;&#x591A;&#x65B9;&#x9762;&#x662F;&#x5F88;&#x96BE;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x5171;&#x540C;&#x7684;&#x57FA;&#x51C6;&#x70B9;&#xFF0C;&#x5927;&#x5BB6;&#x4E0D;&#x8981;&#x7528;&#x8FC7;&#x591A;&#x7CBE;&#x529B;&#x7EA0;&#x7ED3;&#x8FD9;&#x7C7B;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x4E0A;&#xFF0C;&#x5E94;&#x8BE5;&#x66F4;&#x591A;&#x5173;&#x6CE8; TiDB &#x548C; MySQL &#x5728;&#x5E94;&#x7528;&#x573A;&#x666F;&#x4E0A;&#x7684;&#x533A;&#x522B;&#x3002;MySQL &#x8BFB;&#x6269;&#x5BB9;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x4ECE;&#x5E93;&#x8FDB;&#x884C;&#x6269;&#x5C55;&#xFF0C;&#x4F46;&#x5355;&#x8282;&#x70B9;&#x5199;&#x5165;&#x4E0D;&#x5177;&#x5907;&#x6269;&#x5C55;&#x80FD;&#x529B;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x5206;&#x5E93;&#x5206;&#x8868;&#xFF0C;&#x800C;&#x5206;&#x5E93;&#x5206;&#x8868;&#x4F1A;&#x589E;&#x52A0;&#x5F00;&#x53D1;&#x7EF4;&#x62A4;&#x65B9;&#x9762;&#x6210;&#x672C;&#x3002;TiDB &#x4E0D;&#x7BA1;&#x662F;&#x8BFB;&#x6D41;&#x91CF;&#x8FD8;&#x662F;&#x5199;&#x6D41;&#x91CF;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x8282;&#x70B9;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x5FEB;&#x901F;&#x65B9;&#x4FBF;&#x7684;&#x6269;&#x5C55;&#x3002;TiDB &#x8BBE;&#x8BA1;&#x7684;&#x76EE;&#x6807;&#x5C31;&#x662F;&#x9488;&#x5BF9; MySQL &#x5355;&#x53F0;&#x5BB9;&#x91CF;&#x9650;&#x5236;&#x800C;&#x88AB;&#x8FEB;&#x505A;&#x51FA;&#x5206;&#x5E93;&#x5206;&#x8868;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x6216;&#x8005;&#x9700;&#x8981;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x5B8C;&#x6574;&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;&#x7684;&#x573A;&#x666F;&#x3002;&#x5B83;&#x7684;&#x4F18;&#x52BF;&#x662F;&#x901A;&#x8FC7;&#x5C3D;&#x91CF;&#x5C06;&#x5E76;&#x884C;&#x8BA1;&#x7B97;&#x4E0B;&#x63A8;&#x5230;&#x5404;&#x4E2A;&#x5B58;&#x50A8;&#x8282;&#x70B9;&#x3002;&#x5BF9;&#x4E8E;&#x5C0F;&#x8868;&#xFF08;&#x6BD4;&#x5982;&#x5343;&#x4E07;&#x7EA7;&#x4EE5;&#x4E0B;&#xFF09;&#x4E0D;&#x9002;&#x5408; TiDB&#xFF1A;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x91CF;&#x5C11; region &#x6570;&#x6709;&#x9650;&#xFF0C;&#x53D1;&#x6325;&#x4E0D;&#x4E86;&#x5E76;&#x884C;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x6700;&#x6781;&#x7AEF;&#x7684;&#x5C31;&#x662F;&#x8BA1;&#x6570;&#x5668;&#x8868;&#x51E0;&#x884C;&#x8BB0;&#x5F55;&#x9AD8;&#x9891;&#x66F4;&#x65B0;&#xFF0C;&#x4F1A;&#x53D8;&#x6210;&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x4E0A;&#x7684;&#x51E0;&#x4E2A; KV&#xFF0C;&#x7136;&#x540E;&#x53EA;&#x843D;&#x5728;&#x4E00;&#x4E2A; region &#x91CC;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A; region &#x53EA;&#x843D;&#x5728;&#x4E00;&#x4E2A;&#x8BA1;&#x7B97;&#x8282;&#x70B9;&#x4E0A;&#xFF0C;&#x52A0;&#x4E0A;&#x540E;&#x53F0;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x590D;&#x5236;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x4EE5;&#x53CA; TiDB &#x5F15;&#x64CE;&#x5230; TiKV &#x5F15;&#x64CE;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x6700;&#x540E;&#x8868;&#x73B0;&#x51FA;&#x6765;&#x7684;&#x5C31;&#x662F;&#x6CA1;&#x6709;&#x5355;&#x4E2A; MySQL &#x597D;&#x3002;</p>
+<p>&#x7531;&#x4E8E; TiDB &#x4E0E; MySQL &#x5728;&#x4F53;&#x7CFB;&#x67B6;&#x6784;&#x4E0A;&#x7684;&#x5DEE;&#x522B;&#x975E;&#x5E38;&#x5927;&#xFF0C;&#x5F88;&#x591A;&#x65B9;&#x9762;&#x90FD;&#x5F88;&#x96BE;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x5171;&#x540C;&#x7684;&#x57FA;&#x51C6;&#x70B9;&#xFF0C;&#x6240;&#x4EE5;&#x5927;&#x5BB6;&#x4E0D;&#x8981;&#x6D88;&#x8017;&#x8FC7;&#x591A;&#x7CBE;&#x529B;&#x5728;&#x8FD9;&#x7C7B;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x4E0A;&#xFF0C;&#x5E94;&#x8BE5;&#x66F4;&#x591A;&#x5173;&#x6CE8; TiDB &#x548C; MySQL &#x5728;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4F7F;&#x7528;&#x573A;&#x666F;&#x4E0A;&#x7684;&#x533A;&#x522B;&#x3002;MySQL &#x8BFB;&#x6269;&#x5BB9;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x4ECE;&#x5E93;&#x8FDB;&#x884C;&#x6269;&#x5C55;&#xFF0C;&#x4F46;&#x5355;&#x8282;&#x70B9;&#x5199;&#x5165;&#x4E0D;&#x5177;&#x5907;&#x6269;&#x5C55;&#x80FD;&#x529B;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x5206;&#x5E93;&#x5206;&#x8868;&#xFF0C;&#x800C;&#x5206;&#x5E93;&#x5206;&#x8868;&#x4F1A;&#x589E;&#x52A0;&#x5F00;&#x53D1;&#x7EF4;&#x62A4;&#x65B9;&#x9762;&#x6210;&#x672C;&#x3002;TiDB &#x4E0D;&#x7BA1;&#x662F;&#x8BFB;&#x6D41;&#x91CF;&#x8FD8;&#x662F;&#x5199;&#x6D41;&#x91CF;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x8282;&#x70B9;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x5FEB;&#x901F;&#x65B9;&#x4FBF;&#x7684;&#x6269;&#x5C55;&#x3002;</p>
+<p>TiDB &#x8BBE;&#x8BA1;&#x7684;&#x76EE;&#x6807;&#x5C31;&#x662F;&#x9488;&#x5BF9; MySQL &#x5355;&#x53F0;&#x5BB9;&#x91CF;&#x9650;&#x5236;&#x800C;&#x88AB;&#x8FEB;&#x505A;&#x51FA;&#x5206;&#x5E93;&#x5206;&#x8868;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x6216;&#x8005;&#x9700;&#x8981;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x5B8C;&#x6574;&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;&#x7684;&#x573A;&#x666F;&#x3002;&#x5B83;&#x7684;&#x4F18;&#x52BF;&#x662F;&#x901A;&#x8FC7;&#x5C3D;&#x91CF;&#x5C06;&#x5E76;&#x884C;&#x8BA1;&#x7B97;&#x4E0B;&#x63A8;&#x5230;&#x5404;&#x4E2A;&#x5B58;&#x50A8;&#x8282;&#x70B9;&#x3002;&#x5BF9;&#x4E8E;&#x5C0F;&#x8868;&#xFF08;&#x6BD4;&#x5982;&#x5343;&#x4E07;&#x7EA7;&#x4EE5;&#x4E0B;&#xFF09;&#x4E0D;&#x9002;&#x5408; TiDB&#x3002;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x91CF;&#x5C11;&#x5BFC;&#x81F4;&#x8868;&#x7684; region &#x6570;&#x91CF;&#x6709;&#x9650;&#xFF0C;&#x53D1;&#x6325;&#x4E0D;&#x4E86;&#x5E76;&#x884C;&#x8BA1;&#x7B97;&#x7684;&#x4F18;&#x52BF;&#x3002;&#x6700;&#x6781;&#x7AEF;&#x7684;&#x5C31;&#x662F;&#x8BA1;&#x6570;&#x5668;&#x8868;&#xFF0C;&#x51E0;&#x884C;&#x8BB0;&#x5F55;&#x9AD8;&#x9891;&#x66F4;&#x65B0;&#xFF0C;&#x4F1A;&#x53D8;&#x6210;&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x4E0A;&#x7684;&#x51E0;&#x4E2A; KV &#x9AD8;&#x9891;&#x66F4;&#x65B0;&#xFF0C;&#x7136;&#x540E;&#x6570;&#x636E;&#x90FD;&#x5B58;&#x50A8;&#x5728;&#x4E00;&#x4E2A; region &#x91CC;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A; region &#x7684;&#x6D41;&#x91CF;&#x90FD;&#x5728;&#x4E00;&#x4E2A;&#x8BA1;&#x7B97;&#x8282;&#x70B9;&#x4E0A;&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x540E;&#x53F0;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x590D;&#x5236;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x4EE5;&#x53CA; TiDB &#x5230; TiKV &#x7684;&#x5F00;&#x9500;&#xFF0C;&#x6700;&#x540E;&#x8868;&#x73B0;&#x51FA;&#x6765;&#x7684;&#x5C31;&#x662F;&#x6CA1;&#x6709;&#x5355;&#x4E2A; MySQL &#x597D;&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
@@ -3448,7 +3444,7 @@ Threads fairness:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"next":{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"path":"session4/chapter3/tpc-c.md","ref":"session4/chapter3/tpc-c.md","articles":[]},"previous":{"title":"3 常见性能压测","level":"5.3","depth":1,"path":"session4/chapter3/common-benchmarks.md","ref":"session4/chapter3/common-benchmarks.md","articles":[{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"path":"session4/chapter3/sysbench.md","ref":"session4/chapter3/sysbench.md","articles":[]},{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"path":"session4/chapter3/tpc-c.md","ref":"session4/chapter3/tpc-c.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter3/sysbench.md","mtime":"2020-03-13T09:59:52.553Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T10:00:38.603Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"next":{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"path":"session4/chapter3/tpc-c.md","ref":"session4/chapter3/tpc-c.md","articles":[]},"previous":{"title":"3 常见性能压测","level":"5.3","depth":1,"path":"session4/chapter3/common-benchmarks.md","ref":"session4/chapter3/common-benchmarks.md","articles":[{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"path":"session4/chapter3/sysbench.md","ref":"session4/chapter3/sysbench.md","articles":[]},{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"path":"session4/chapter3/tpc-c.md","ref":"session4/chapter3/tpc-c.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter3/sysbench.md","mtime":"2020-03-13T10:01:32.700Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T10:02:18.035Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

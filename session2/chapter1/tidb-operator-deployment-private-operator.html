@@ -2836,7 +2836,30 @@
 <li>&#x8DE8;&#x591A;&#x53EF;&#x7528;&#x533A;&#x7684;&#x7F51;&#x7EDC;&#x5377;&#x9700;&#x8981; Kubernetes v1.12 &#x6216;&#x8005;&#x66F4;&#x9AD8;&#x7248;&#x672C;&#x3002;</li>
 </ul>
 </blockquote>
-<h2 id="2-&#x5B89;&#x88C5;-tidb-operator">2. &#x5B89;&#x88C5; TiDB Operator</h2>
+<h3 id="&#x5B89;&#x88C5;-helm-&#x670D;&#x52A1;&#x7AEF;">&#x5B89;&#x88C5; Helm &#x670D;&#x52A1;&#x7AEF;</h3>
+<p>&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x5E94;&#x7528; helm &#x670D;&#x52A1;&#x7AEF;&#x7EC4;&#x4EF6; <code>tiller</code> &#x6240;&#x9700;&#x7684; <code>RBAC</code> &#x89C4;&#x5219;&#x5E76;&#x5B89;&#x88C5; <code>tiller</code>&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifeststiller-rbac.yaml &amp;&amp; \
+helm init --service-account=tiller --upgrade
+</code></pre>
+<p>&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x547D;&#x4EE4;&#x786E;&#x8BA4; <code>tiller</code> Pod &#x8FDB;&#x5165; running &#x72B6;&#x6001;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl get po -n kube-system -l name=tiller
+</code></pre>
+<p>&#x5982;&#x679C; Kubernetes &#x96C6;&#x7FA4;&#x6CA1;&#x6709;&#x542F;&#x7528; <code>RBAC</code>&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E0B;&#x5217;&#x547D;&#x4EE4;&#x5B89;&#x88C5; <code>tiller</code>&#xFF1A;</p>
+<pre><code class="lang-shell">helm init --upgrade
+</code></pre>
+<p>Kubernetes &#x5E94;&#x7528;&#x5728; Helm &#x4E2D;&#x88AB;&#x6253;&#x5305;&#x4E3A; chart&#x3002;PingCAP &#x7EF4;&#x62A4;&#x7684; helm chart &#x4ED3;&#x5E93;&#x662F; <code>https://charts.pingcap.org/</code>&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x6DFB;&#x52A0;&#x8BE5;&#x4ED3;&#x5E93;&#xFF1A;</p>
+<pre><code class="lang-shell">helm repo add pingcap https://charts.pingcap.org/
+</code></pre>
+<p>&#x6DFB;&#x52A0;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>helm search</code> &#x641C;&#x7D22; PingCAP &#x63D0;&#x4F9B;&#x7684; chart&#xFF1A;</p>
+<pre><code class="lang-shell">helm search pingcap -l
+</code></pre>
+<pre><code>NAME                    CHART VERSION   APP VERSION DESCRIPTION
+pingcap/tidb-backup     v1.0.0                      A Helm chart for TiDB Backup or Restore
+pingcap/tidb-cluster    v1.0.0                      A Helm chart for TiDB Cluster
+pingcap/tidb-operator   v1.0.0                      tidb-operator Helm chart for Kubernetes
+</code></pre><p>&#x5F53;&#x65B0;&#x7248;&#x672C;&#x7684; chart &#x53D1;&#x5E03;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>helm repo update</code> &#x547D;&#x4EE4;&#x66F4;&#x65B0;&#x672C;&#x5730;&#x5BF9;&#x4E8E;&#x4ED3;&#x5E93;&#x7684;&#x7F13;&#x5B58;&#xFF1A;</p>
+<pre><code>helm repo update
+</code></pre><h2 id="2-&#x5B89;&#x88C5;-tidb-operator">2. &#x5B89;&#x88C5; TiDB Operator</h2>
 <p>TiDB Operator &#x4F7F;&#x7528; <a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/" target="_blank">CRD (Custom Resource Definition)</a> &#x6269;&#x5C55; Kubernetes&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x4F7F;&#x7528; TiDB Operator&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x521B;&#x5EFA; <code>TidbCluster</code> &#x81EA;&#x5B9A;&#x4E49;&#x8D44;&#x6E90;&#x7C7B;&#x578B;&#x3002;&#x53EA;&#x9700;&#x8981;&#x5728;&#x4F60;&#x7684; Kubernetes &#x96C6;&#x7FA4;&#x4E0A;&#x521B;&#x5EFA;&#x4E00;&#x6B21;&#x5373;&#x53EF;&#xFF1A;</p>
 <pre><code class="lang-shell">kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifests/crd.yaml &amp;&amp; \
 kubectl get crd tidbclusters.pingcap.com
@@ -2924,7 +2947,7 @@ tidb-scheduler-7c67d6c77b-qd54r            2/2     Running   0          19s
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"next":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},"previous":{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","mtime":"2020-03-13T09:59:52.549Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T10:00:38.603Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"next":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},"previous":{"title":"1.2.3.2.2 PV 配置","level":"3.1.2.3.2.2","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-pv.md","ref":"session2/chapter1/tidb-operator-deployment-private-pv.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","mtime":"2020-03-13T10:01:32.696Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T10:02:18.035Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
