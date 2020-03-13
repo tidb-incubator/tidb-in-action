@@ -13,7 +13,7 @@
 > 键值对的总大小不超过 100MB
 >
 
-** 详见 [PingCAP 官方文档 - 大事务](https://pingcap.com/docs-cn/v2.1/reference/transactions/overview/# 大事务)**
+**详见 [PingCAP 官方文档 - 大事务](https://pingcap.com/docs-cn/v2.1/reference/transactions/overview/#大事务)**
 
 键值对应该比较容易理解，毕竟 TiDB 底层存储选用的是 RocksDB 引擎，一种基于 Key-Value 的存储结构。而每个键值对的大小和总大小限制分别是 6MB 和 100MB，这个应该也比较容易理解。关键在于每个事物包含键值对的总数不超过 30W，这个经常会引起一些误解，下面做一些详细说明。
 
