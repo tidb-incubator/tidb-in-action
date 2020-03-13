@@ -3,23 +3,22 @@
 
 ## 背景介绍
 
-本小节介绍如何使用 kind 部署 TiDB Operator，将通过 kind 快速部署一套 Cloud TiDB 集群，为大家梳理三个关键环节：
+本小结介绍如何在个人电脑（Linux 或 MacOS）上采用 kind 方式在 Kubernetes 上部署 TiDB Operator 和 TiDB 集群。部署包含三个关键环节：
 
-1. 基于 kind 部署一套 K8s 集群
-2. 基于 K8s 部署 TiDB Operator
-3. 基于 TiDB Operator 部署 TiDB 集群
+1. 通过 kind 部署 K8s 集群
+2. 在 K8s 集群上部署 TiDB Operator
+3. 在 K8s 集群中部署 TiDB 集群
 
-## 第一部分 基于 kind 部署一套 K8s 集群
-
-这个小节的内容已基本做到全自动化，部署前请按以下要求准备环境：
+在部署前，请确认资源满足以下要求：
 
 1. 内存 4GB+、CPU 2核心+
 2. Docker 17.03+
+4. Go 1.10+
 3. net.ipv4.ip_forward 设置为1
 
-### 操作步骤如下
+## 通过 kind 部署 K8s 集群
 
-### 一、下载自动化部署程序
+#### 一、下载自动化部署程序
 
 ```
 
@@ -27,7 +26,7 @@
 
 ```
 
-### 二、通过程序创建集群
+#### 二、通过程序创建集群
 
 ```
 
@@ -45,7 +44,7 @@ To start using your cluster, run:
 
 ```
 
-### 三、将 K8s 集群相关命令路径加入PATH路径
+#### 三、将 K8s 集群相关命令路径加入PATH路径
 
 ```
 
@@ -53,7 +52,7 @@ To start using your cluster, run:
 
 ```
 
-### 四、验证 K8s 环境是否符合要求
+#### 四、验证 K8s 环境是否符合要求
 
 ```
 
@@ -75,9 +74,9 @@ To start using your cluster, run:
 
 输出以上信息，则说明 Helm 客户端与服务端都符合要求
 
-## 第二部分 基于 K8s 部署 TiDB Operator
+## 在 K8s 集群上部署 TiDB Operator
 
-### 一、通过 helm 安装 TiDB Operator
+#### 一、通过 helm 安装 TiDB Operator
 
 创建 TiDB CRD
 
@@ -107,13 +106,13 @@ To start using your cluster, run:
 
 ```
 
-将 /root/charts/tidb-operator/values.yaml 文件内的 scheduler.kubeSchedulerImageName 值修改为 registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler 以加快镜像拉取速度。
+将 /root/tidb-operator/charts/tidb-operator/values.yaml 文件内的 scheduler.kubeSchedulerImageName 值修改为 registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler 以加快镜像拉取速度。
 
 安装 TiDB Operator
 
 ```
 
-    # helm install --namespace=tidb-admin  --name=tidb-operator /root/charts/tidb-operator -f /root/charts/tidb-operator/values.yaml
+    # helm install --namespace=tidb-admin  --name=tidb-operator /root/tidb-operator/charts/tidb-operator -f /root/tidb-operator/charts/tidb-operator/values.yaml
     NAME:   tidb-operator
     LAST DEPLOYED: Fri Mar  6 14:24:09 2020
     NAMESPACE: tidb-admin
@@ -122,7 +121,7 @@ To start using your cluster, run:
 
 ```
 
-### 二、验证 Operator 运行状态
+#### 二、验证 Operator 运行状态
 
 ```
 
@@ -135,11 +134,9 @@ To start using your cluster, run:
 
 以上信息显示 Operator 运行正常
 
-## 第三部分 基于 TiDB Operator 部署 TiDB 集群
+## 在 K8s 集群中部署 TiDB 集群
 
-### 操作步骤
-
-### 一、下载 TiDB Cluster 的 helm chart 文件
+#### 一、下载 TiDB Cluster 的 helm chart 文件
 
 ```
 
@@ -148,12 +145,12 @@ To start using your cluster, run:
 
 ```
 
-### 二、安装 TiDB Cluster
+#### 二、安装 TiDB Cluster
 
 ```
 
     # cd /root/chart/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
-    # helm install --namespace dba-test --name=test /root/charts/tidb-cluster -f /root/charts/tidb-cluster/values.yaml
+    # helm install --namespace dba-test --name=test /root/tidb-operator/charts/tidb-cluster -f /root/tidb-operator/charts/tidb-cluster/values.yaml
     NAME:   test
     LAST DEPLOYED: Fri Mar  6 14:50:25 2020
     NAMESPACE: dba-test
@@ -163,7 +160,7 @@ To start using your cluster, run:
 
 以上信息显示 TiDB Cluster 部署正常
 
-### 三、观察 TiDB 的 POD 状态
+#### 三、观察 TiDB 的 POD 状态
 
 ```
 
@@ -184,7 +181,7 @@ To start using your cluster, run:
 
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
-### 四、访问 TiDB 集群
+#### 四、访问 TiDB 集群
 
 ```
 
