@@ -153,20 +153,20 @@ tiup update --nightly --all
 ```
 tiup update --self
 ```
-(4) 运行组件：tiup run
+(4) 运行组件：tiup <component>
 
-安装完成之后可以利用 run 这项命令启动相应的组件。相关的命令和参数如下：
+安装完成之后可以利用 tiup 启动相应的组件。相关的命令和参数如下：
 
 ```
-tiup run -h
+tiup [component] [flags]
 Usage:
-  tiup run <component1>:[version] [flags]
+  tiup <component1>:[version] [flags]
 Flags:
   -h, --help         help for run
       --rm           Remove data directory on finish
   -n, --tag string   Specify a tag for this task
 ```
-该子命令需要提供一个组件的名字以及可选的版本，若不提供版本，则使用该组件的最新稳定版。
+该命令需要提供一个组件的名字以及可选的版本，若不提供版本，则使用该组件已安装的最新稳定版。
 TiUP 将组件启动之前会为它建立一个目录，然后将组件放到该目录中运行，组件应该将所有数据生成在该目录中，目录的名字就是该组件运行时指定的 tag 名称，若未指定，则生成一个随机的 tag。
 
 run 命令有两个 flag:
@@ -179,15 +179,15 @@ run 命令有两个 flag:
 示例一：运行 3.0.8 版本的 TiDB：
 
 ```
-tiup run tidb:v3.0.8
+tiup tidb:v3.0.8
 ```
 示例二：通过 tag 运行 TiKV：
 ```
-tiup run --tag=experiment tikv
+tiup --tag=experiment tikv
 ```
 示例三：TiUP在组件运行结束时自动删除数据：
 ```
-tiup run --rm tidb
+tiup --rm tidb
 ```
 (5) 删除组件：tiup uninstall 参数
 
