@@ -94,7 +94,7 @@ tidb> select VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME='new_collation_e
 
 ### 系统时区
 
-在 MySQL 中，系统时区 `system_time_zone` 在 MySQL 服务启动时通过[环境变量 `TZ` 或 命令行参数` --timezone` 指定]([https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html)。
+在 MySQL 中，系统时区 `system_time_zone` 在 MySQL 服务启动时通过[环境变量 `TZ` 或命令行参数` --timezone`](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html) 指定。
 
 对于 TiDB 而言，作为一个分布式数据库，TiDB 需要保证整个集群的系统时区始终一致。因此 TiDB 的系统时区在集群初始化时，由负责初始化的 TiDB 节点环境变量 `TZ` 决定。集群初始化后，固定在集群状态表 `mysql`.`tidb` 中：
 
