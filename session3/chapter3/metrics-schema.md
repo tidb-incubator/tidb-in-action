@@ -89,15 +89,15 @@ metrics_schema> desc select * from tidb_query_duration where value is not null a
 
 > **补充知识点：**
 >
-> range query是 prometheus 非常常见的一种query，看看它有哪些参数：
+> range query 是 prometheus 非常常见的一种 query，以下是它的参数：
 > * query=<string>: PromQL 表达式
 > * start=<rfc3339 | unix_timestamp>: 时间范围的开始
 > * end=<rfc3339 | unix_timestamp>: 时间范围的结束
 > * step=<duration | float>: 查询解析度（query resolution）
 > * timeout=<duration>: 执行超时，这个参数是可选的
 >
-> prometheus 在对PromQL表达式求值的逻辑是这样的：
-> * 对于[start, end]时间区间，从start开始，以step为长度，把时间区间分成若干段
+> prometheus 在对 PromQL 表达式求值的逻辑是这样的：
+> * 对于 [start, end] 时间区间，从 start 开始，以 step 为长度，把时间区间分成若干段
 > * 对每个段进行求值
 > 举例：start=10，end=20，step=2，那么就会有 ts=10，ts=12，ts=14，ts=16，ts=18，ts=206 共 6 段，然后为这 6 个段进行求值。
 
