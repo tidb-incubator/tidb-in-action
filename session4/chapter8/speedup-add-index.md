@@ -12,9 +12,10 @@
 | tidb_ddl_reorg_priority | PRIORITY_LOW | 调整创建索引优先级。参数有 PRIORITY_LOW/PRIORITY_NORMAL/PRIORITY_HIGH |
 | tidb_ddl_error_count_limit | 512 | 失败重试次数，如果超过该次数创建索引会失败 |
   
-目前主要使用 `tidb_ddl_reorg_worker_cnt` 和 `tidb_ddl_reorg_batch_size` 这两个参数来动态调整索引创建速度，通常来说它们的值越小对系统影响越小，但是执行时间越长。一般来说，可以先将值保持为默认的 4 和 256 ，再观察系统资源使用情况、响应速度等监控，再逐渐调大 `tidb_ddl_reorg_worker_cnt` 参数来增加并发，观察监控如果系统没有发生明显的抖动，再逐渐调大 `tidb_ddl_reorg_batch_size` 参数，但如果索引涉及的列更新很频繁的话就会造成大量冲突造成失败重试。  
-另外还可以通过调整 `tidb_ddl_reorg_priority` 为 PRIORITY_HIGH 来让创建索引的任务保持高优先级来提升速度，但在通用 OLTP 系统上，一般建议保持默认。   
-
+参数调整：  
+目前主要使用 `tidb_ddl_reorg_worker_cnt` 和 `tidb_ddl_reorg_batch_size` 这两个参数来动态调整索引创建速度，通常来说它们的值越小对系统影响越小，但是执行时间越长。  
+一般情况下，先将值保持为默认的 4 和 256 ，观察集群资源使用情况和响应速度，再逐渐调大 `tidb_ddl_reorg_worker_cnt` 参数来增加并发，观察监控如果系统没有发生明显的抖动，再逐渐调大 `tidb_ddl_reorg_batch_size` 参数，但如果索引涉及的列更新很频繁的话就会造成大量冲突造成失败重试。  
+另外还可以通过调整 `tidb_ddl_reorg_priority` 为 PRIORITY_HIGH 来让创建索引的任务保持高优先级来提升速度，但在通用 OLTP 系统上，一般建议保持默认。    
 如何评估创建索引的速度：  
 1. 使用 `admin show ddl` 命令来查询 RowCount 和 START_TIME 字段，记录当前 ddl 已经更新了的行数 r1 ，利用开始时间计算出已执行时间 t1 。
 2. 再使用 `show stats_meta` 命令来查看 Row_count 字段，查看表数据的总行数 r0 。
