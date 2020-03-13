@@ -2821,32 +2821,25 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="102-rbac">10.2 RBAC</h1>
+                                <h2 id="102-rbac">10.2 RBAC</h2>
+<p>&#x4E0A;&#x4E00;&#x8282;&#x4ECB;&#x7ECD;&#x4E86; TiDB &#x7684;&#x57FA;&#x672C;&#x6743;&#x9650;&#x529F;&#x80FD;&#xFF0C;&#x672C;&#x5C0F;&#x8282;&#x5C06;&#x4ECB;&#x7ECD;&#x53E6;&#x4E00;&#x4E2A;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x529F;&#x80FD;-- RBAC&#x3002;</p>
 <p>Role-based access control&#xFF0C;RBAC &#x57FA;&#x4E8E;&#x89D2;&#x8272;&#x7684;&#x6743;&#x9650;&#x8BBF;&#x95EE;&#x63A7;&#x5236;&#x3002;</p>
 <p>&#x533A;&#x522B;&#x4E8E; MAC (Mandatory access control) &#x4EE5;&#x53CA; DAC (Discretionary Access Control)&#xFF0C;RBAC &#x66F4;&#x4E3A;&#x4E2D;&#x6027;&#x4E14;&#x66F4;&#x5177;&#x7075;&#x6D3B;&#x6027;&#x3002;</p>
 <p>TiDB &#x7684;&#x57FA;&#x4E8E;&#x89D2;&#x8272;&#x7684;&#x8BBF;&#x95EE;&#x63A7;&#x5236; (RBAC) &#x7CFB;&#x7EDF;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x4F3C;&#x4E8E; MySQL 8.0 &#x7684; RBAC &#x7CFB;&#x7EDF;&#xFF0C;&#x517C;&#x5BB9;&#x5927;&#x90E8;&#x5206; <a href="https://dev.mysql.com/doc/refman/8.0/en/roles.html" target="_blank">MySQL RBAC &#x7CFB;&#x7EDF;&#x7684;&#x8BED;&#x6CD5;</a>&#x3002;</p>
-<p>&#x4E3B;&#x8981;&#x5305;&#x62EC;4&#x4E2A;&#x5C0F;&#x8282;&#xFF0C;&#x6240;&#x6709;&#x63D0;&#x5230;&#x7684;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x53CA;&#x8BF4;&#x660E;&#x57FA;&#x4E8E; TiDB 4.0 &#x7248;&#x672C;</p>
+<h3 id="1021-rbac-&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;">10.2.1 RBAC &#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;</h3>
 <ul>
-<li><a href="#rbac-&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;">RBAC &#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;</a></li>
-<li><a href="#rbac-&#x5B9E;&#x73B0;&#x539F;&#x7406;">RBAC &#x5B9E;&#x73B0;&#x539F;&#x7406;</a></li>
-<li><a href="#rbac-&#x64CD;&#x4F5C;&#x793A;&#x4F8B;">RBAC &#x64CD;&#x4F5C;&#x793A;&#x4F8B;</a></li>
-<li><a href="#&#x770B;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x4F8B;&#x5B50;">&#x770B;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x4F8B;&#x5B50;</a></li>
-<li><a href="#&#x5176;&#x4ED6;">&#x5176;&#x4ED6;</a></li>
-</ul>
-<h2 id="rbac-&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;">RBAC &#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;</h2>
-<ul>
-<li><p>&#x6839;&#x636E;&#x4E1A;&#x52A1;&#x573A;&#x666F;&#x8BBE;&#x7F6E;&#x89D2;&#x8272;&#xFF0C;&#x96C6;&#x5408;&#x591A;&#x4E2A;&#x6743;&#x9650;</p>
+<li><p>&#x6839;&#x636E;&#x4E1A;&#x52A1;&#x573A;&#x666F;&#x8BBE;&#x7F6E;&#x89D2;&#x8272;&#xFF0C;&#x96C6;&#x5408;&#x591A;&#x4E2A;&#x6743;&#x9650;&#x3002;</p>
 </li>
-<li><p>&#x65B9;&#x4FBF;&#x7528;&#x6237;&#x6743;&#x9650;&#x7BA1;&#x7406;&#xFF0C;&#x540C;&#x65F6;&#x4FEE;&#x6539;&#x591A;&#x4E2A;&#x7528;&#x6237;&#x7684;&#x6743;&#x9650;</p>
+<li><p>&#x65B9;&#x4FBF;&#x7528;&#x6237;&#x6743;&#x9650;&#x7BA1;&#x7406;&#xFF0C;&#x540C;&#x65F6;&#x4FEE;&#x6539;&#x591A;&#x4E2A;&#x7528;&#x6237;&#x7684;&#x6743;&#x9650;&#x3002;</p>
 </li>
-<li><p>&#x7528;&#x6237;&#x5173;&#x6CE8;&#x573A;&#x666F;&#xFF0C;&#x89D2;&#x8272;&#x5173;&#x6CE8;&#x6743;&#x9650;</p>
+<li><p>&#x7528;&#x6237;&#x5173;&#x6CE8;&#x573A;&#x666F;&#xFF0C;&#x89D2;&#x8272;&#x5173;&#x6CE8;&#x6743;&#x9650;&#x3002;</p>
 </li>
-<li><p>&#x8FDB;&#x884C;&#x7EE7;&#x627F;&#xFF0C;&#x89D2;&#x8272;&#x53EF;&#x4EE5;&#x6388;&#x4E88;&#x7ED9;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x89D2;&#x8272;</p>
+<li><p>&#x8FDB;&#x884C;&#x7EE7;&#x627F;&#xFF0C;&#x89D2;&#x8272;&#x53EF;&#x4EE5;&#x6388;&#x4E88;&#x7ED9;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x3002;</p>
 </li>
-<li><p>&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x62E5;&#x6709;&#x591A;&#x4E2A;&#x89D2;&#x8272;&#xFF0C;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x4F7F;&#x7528;&#x8FD9;&#x4E9B;&#x89D2;&#x8272;&#x62E5;&#x6709;&#x7684;&#x6743;&#x9650;</p>
+<li><p>&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x62E5;&#x6709;&#x591A;&#x4E2A;&#x89D2;&#x8272;&#xFF0C;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x4F7F;&#x7528;&#x8FD9;&#x4E9B;&#x89D2;&#x8272;&#x62E5;&#x6709;&#x7684;&#x6743;&#x9650;&#x3002;</p>
 </li>
 </ul>
-<h2 id="rbac-&#x5B9E;&#x73B0;&#x539F;&#x7406;">RBAC &#x5B9E;&#x73B0;&#x539F;&#x7406;</h2>
+<h3 id="1022-rbac-&#x5B9E;&#x73B0;&#x539F;&#x7406;">10.2.2 RBAC &#x5B9E;&#x73B0;&#x539F;&#x7406;</h3>
 <ul>
 <li><p>TiDB &#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x5668;&#xFF0C;&#x6784;&#x5EFA;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x90BB;&#x63A5;&#x8868;&#x6765;&#x8BB0;&#x5F55;&#x56FE;&#x7ED3;&#x6784;&#x3002;
 &#x5728;&#x9274;&#x6743;&#x65F6;&#xFF0C;&#x4ECE;&#x7528;&#x6237;&#x62E5;&#x6709;&#x7684;&#x89D2;&#x8272;&#x51FA;&#x53D1;&#xFF0C;&#x8FDB;&#x884C;&#x6DF1;&#x5EA6;&#x4F18;&#x5148;&#x641C;&#x7D22;&#xFF0C;&#x627E;&#x5230;&#x6240;&#x6709;&#x4E0E;&#x4E4B;&#x76F8;&#x5173;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x5C06;&#x8FD9;&#x4E9B;&#x89D2;&#x8272;&#x7684;&#x6743;&#x9650;&#x6C47;&#x603B;&#x8D77;&#x6765;&#xFF0C;&#x5C31;&#x5F97;&#x5230;&#x4E86;&#x7528;&#x6237;&#x7684;&#x89D2;&#x8272;&#x6743;&#x9650;&#x3002;</p>
@@ -2869,8 +2862,8 @@
 </code></pre>
 <ul>
 <li>mysql.role_edges
-&#x63CF;&#x8FF0;&#x4E86;&#x89D2;&#x8272;&#x548C;&#x89D2;&#x8272;&#xFF0C;&#x89D2;&#x8272;&#x548C;&#x7528;&#x6237;&#x4E4B;&#x95F4;&#x7684;&#x6388;&#x4E88;&#x5173;&#x7CFB;
-&#x4F8B;&#x5982;&#x5C06;&#x89D2;&#x8272; r1 &#x6388;&#x4E88;&#x7ED9; test &#x540E;&#xFF0C;&#x4F1A;&#x51FA;&#x73B0;&#x8FD9;&#x6837;&#x4E00;&#x6761;&#x8BB0;&#x5F55;</li>
+&#x63CF;&#x8FF0;&#x4E86;&#x89D2;&#x8272;&#x548C;&#x89D2;&#x8272;&#xFF0C;&#x89D2;&#x8272;&#x548C;&#x7528;&#x6237;&#x4E4B;&#x95F4;&#x7684;&#x6388;&#x4E88;&#x5173;&#x7CFB;&#x3002;
+&#x4F8B;&#x5982;&#x5C06;&#x89D2;&#x8272; r1 &#x6388;&#x4E88;&#x7ED9; test &#x540E;&#xFF0C;&#x4F1A;&#x51FA;&#x73B0;&#x8FD9;&#x6837;&#x4E00;&#x6761;&#x8BB0;&#x5F55;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql">+<span class="hljs-comment">-----------+-----------+---------+---------+-------------------+</span>
 | FROM_HOST | FROM_USER | TO_HOST | TO_USER | WITH_ADMIN_OPTION |
@@ -2880,7 +2873,7 @@
 </code></pre>
 <ul>
 <li>mysql.default_roles
-&#x8BB0;&#x5F55;&#x6BCF;&#x4E2A;&#x7528;&#x6237;&#x9ED8;&#x8BA4;&#x542F;&#x7528;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x542F;&#x7528;&#x540E;&#x7684;&#x89D2;&#x8272;&#x624D;&#x80FD;&#x751F;&#x6548;</li>
+&#x8BB0;&#x5F55;&#x6BCF;&#x4E2A;&#x7528;&#x6237;&#x9ED8;&#x8BA4;&#x542F;&#x7528;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x542F;&#x7528;&#x540E;&#x7684;&#x89D2;&#x8272;&#x624D;&#x80FD;&#x751F;&#x6548;&#x3002;</li>
 </ul>
 <pre><code class="lang-sql">+<span class="hljs-comment">------+------+-------------------+-------------------+</span>
 | HOST | USER | DEFAULT_ROLE_HOST | DEFAULT_ROLE_USER |
@@ -2888,39 +2881,39 @@
 | %    | test | %                 | r_1               |
 +<span class="hljs-comment">------+------+-------------------+-------------------+</span>
 </code></pre>
-<h2 id="rbac-&#x64CD;&#x4F5C;&#x793A;&#x4F8B;">RBAC &#x64CD;&#x4F5C;&#x793A;&#x4F8B;</h2>
+<h3 id="1023-rbac-&#x64CD;&#x4F5C;&#x793A;&#x4F8B;">10.2.3 RBAC &#x64CD;&#x4F5C;&#x793A;&#x4F8B;</h3>
 <ul>
-<li>&#x521B;&#x5EFA;&#x89D2;&#x8272; r_1&#xFF0C;r_2&#xFF0C;&#x53EF;&#x4EE5;&#x4E00;&#x6B21;&#x521B;&#x5EFA;&#x591A;&#x4E2A;</li>
+<li>&#x521B;&#x5EFA;&#x89D2;&#x8272; r_1&#xFF0C;r_2&#xFF0C;&#x53EF;&#x4EE5;&#x4E00;&#x6B21;&#x521B;&#x5EFA;&#x591A;&#x4E2A;&#xFF0C;&#x793A;&#x4F8B;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">ROLE</span> <span class="hljs-string">`r_1`</span>@<span class="hljs-string">`%`</span>, <span class="hljs-string">`r_2`</span>@<span class="hljs-string">`%`</span>;
 </code></pre>
 <ul>
-<li>&#x8BBE;&#x7F6E; r_1 &#x4E3A;&#x53EA;&#x8BFB;&#x89D2;&#x8272;</li>
+<li>&#x8BBE;&#x7F6E; r_1 &#x4E3A;&#x53EA;&#x8BFB;&#x89D2;&#x8272;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql"><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> db_1.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&apos;r_1&apos;</span>@<span class="hljs-string">&apos;%&apos;</span>;
 </code></pre>
 <ul>
-<li>&#x5C06; r_1 &#x89D2;&#x8272;&#x6388;&#x4E88;&#x7528;&#x6237; test@&apos;%&apos;</li>
+<li>&#x5C06; r_1 &#x89D2;&#x8272;&#x6388;&#x4E88;&#x7528;&#x6237; test@&apos;%&apos;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql"><span class="hljs-keyword">grant</span> r_1 <span class="hljs-keyword">to</span> <span class="hljs-keyword">test</span>@<span class="hljs-string">&apos;%&apos;</span>;
 </code></pre>
 <ul>
-<li>&#x542F;&#x7528;&#x9ED8;&#x8BA4;&#x89D2;&#x8272;&#xFF0C;&#x5728;&#x767B;&#x9646;&#x65F6;&#xFF0C;&#x9ED8;&#x8BA4;&#x542F;&#x7528;&#x7684;&#x89D2;&#x8272;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x542F;&#x7528;</li>
+<li>&#x542F;&#x7528;&#x9ED8;&#x8BA4;&#x89D2;&#x8272;&#xFF0C;&#x5728;&#x767B;&#x9646;&#x65F6;&#xFF0C;&#x9ED8;&#x8BA4;&#x542F;&#x7528;&#x7684;&#x89D2;&#x8272;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x542F;&#x7528;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql"><span class="hljs-keyword">SET</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">ROLE</span> <span class="hljs-string">&apos;r_1&apos;</span>;
 </code></pre>
 <ul>
-<li>&#x542F;&#x7528;&#x5F53;&#x524D;session&#x89D2;&#x8272;&#xFF0C;&#x4EC5;&#x5BF9;&#x5F53;&#x524D;session&#x751F;&#x6548;</li>
+<li>&#x542F;&#x7528;&#x5F53;&#x524D;session&#x89D2;&#x8272;&#xFF0C;&#x4EC5;&#x5BF9;&#x5F53;&#x524D;session&#x751F;&#x6548;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql"><span class="hljs-keyword">SET</span> <span class="hljs-keyword">ROLE</span> <span class="hljs-string">&apos;r_1&apos;</span>;
 </code></pre>
 <ul>
-<li>&#x67E5;&#x770B;&#x7528;&#x6237;&#x89D2;&#x8272;</li>
+<li>&#x67E5;&#x770B;&#x7528;&#x6237;&#x89D2;&#x8272;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> CURRENT_ROLE();
 </code></pre>
 <ul>
-<li>&#x67E5;&#x770B;&#x7528;&#x6237;&#x89D2;&#x8272;&#x6743;&#x9650;</li>
+<li>&#x67E5;&#x770B;&#x7528;&#x6237;&#x89D2;&#x8272;&#x6743;&#x9650;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql">TiDB &gt; SHOW GRANTS FOR &apos;test&apos;@&apos;%&apos; USING &apos;r_1&apos;;
 +--------------------------------------+
@@ -2932,11 +2925,11 @@
 +--------------------------------------+
 </code></pre>
 <ul>
-<li>&#x6536;&#x56DE;&#x89D2;&#x8272;</li>
+<li>&#x6536;&#x56DE;&#x89D2;&#x8272;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-sql"><span class="hljs-keyword">REVOKE</span> <span class="hljs-string">&apos;r_1&apos;</span> <span class="hljs-keyword">FROM</span> <span class="hljs-string">&apos;test&apos;</span>@<span class="hljs-string">&apos;%&apos;</span>, <span class="hljs-string">&apos;root&apos;</span>@<span class="hljs-string">&apos;%&apos;</span>;
 </code></pre>
-<h2 id="&#x770B;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x4F8B;&#x5B50;">&#x770B;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x4F8B;&#x5B50;</h2>
+<h3 id="1024-&#x770B;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x4F8B;&#x5B50;">10.2.4 &#x770B;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x4F8B;&#x5B50;</h3>
 <p>&#x8D26;&#x6237; bi_user &#x767B;&#x5F55;&#xFF0C;&#x542F;&#x7528;&#x53EA;&#x8BFB;&#x89D2;&#x8272;&#x540E;&#xFF0C;&#x624D;&#x53EF;&#x4EE5;&#x67E5;&#x8BE2;&#x6307;&#x5B9A;&#x5E93;&#x8868;&#x6743;&#x9650;&#xFF0C;&#x4F1A;&#x8BDD;&#x7ED3;&#x675F;&#xFF0C;&#x6743;&#x9650;&#x5931;&#x6548;&#x3002;</p>
 <pre><code class="lang-sql">#&#x521B;&#x5EFA;&#x89D2;&#x8272; reader
 root@127.0.0.1:(none)&gt;create role reader@&apos;%&apos;;
@@ -3006,14 +2999,8 @@ ERROR 1142 (42000): SELECT command denied to user &apos;bi_user&apos;@&apos;127.
 bi_user@127.0.0.1(none)&gt;use mysql
 ERROR 1044 (42000): Access denied for user &apos;bi_user&apos;@&apos;%&apos; to database &apos;mysql&apos;
 </code></pre>
-<h2 id="&#x5176;&#x4ED6;">&#x5176;&#x4ED6;</h2>
-<p>&#x7531;&#x4E8E;&#x57FA;&#x4E8E;&#x89D2;&#x8272;&#x7684;&#x8BBF;&#x95EE;&#x63A7;&#x5236;&#x6A21;&#x5757;&#x548C;&#x7528;&#x6237;&#x7BA1;&#x7406;&#x4EE5;&#x53CA;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7ED3;&#x5408;&#x5341;&#x5206;&#x7D27;&#x5BC6;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x53C2;&#x8003;&#x4E00;&#x4E9B;&#x64CD;&#x4F5C;&#x7684;&#x7EC6;&#x8282;&#xFF1A;</p>
-<ul>
-<li><p><a href="http://pingcap.com/docs-cn/stable/reference/security/privilege-system/" target="_blank">TiDB &#x6743;&#x9650;&#x7BA1;&#x7406;</a></p>
-</li>
-<li><p><a href="https://pingcap.com/docs-cn/stable/reference/security/user-account-management/" target="_blank">TiDB &#x7528;&#x6237;&#x8D26;&#x6237;&#x7BA1;&#x7406;</a></p>
-</li>
-</ul>
+<h3 id="1025-&#x5C0F;&#x7ED3;">10.2.5 &#x5C0F;&#x7ED3;</h3>
+<p>&#x672C;&#x5C0F;&#x8282;&#x4ECB;&#x7ECD;&#x4E86; RBAC &#x7684;&#x539F;&#x7406;&#x548C;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#xFF0C;&#x4F01;&#x4E1A;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x7528; RBAC &#x6784;&#x5EFA;&#x51FA;&#x4E00;&#x5957;&#x7075;&#x6D3B;&#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x673A;&#x5236;&#x3002;&#x4E0B;&#x4E00;&#x8282;&#x4E2D;&#x5C06;&#x4ECB;&#x7ECD; TiDB &#x7684;&#x53E6;&#x4E00;&#x79CD;&#x8EAB;&#x4EFD;&#x9A8C;&#x8BC1;&#x65B9;&#x5F0F;&#x2014;&#x2014;&#x8BC1;&#x4E66;&#x9A8C;&#x8BC1;&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
@@ -3057,7 +3044,7 @@ ERROR 1044 (42000): Access denied for user &apos;bi_user&apos;@&apos;%&apos; to 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"10.2 RBAC","level":"2.10.2","depth":2,"next":{"title":"10.3 证书管理与数据加密","level":"2.10.3","depth":2,"path":"session1/chapter10/cert-management-data-encryption.md","ref":"session1/chapter10/cert-management-data-encryption.md","articles":[]},"previous":{"title":"10.1 权限管理","level":"2.10.1","depth":2,"path":"session1/chapter10/privilege-management.md","ref":"session1/chapter10/privilege-management.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter10/rbac.md","mtime":"2020-03-13T09:10:45.453Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T09:11:32.873Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"10.2 RBAC","level":"2.10.2","depth":2,"next":{"title":"10.3 证书管理与数据加密","level":"2.10.3","depth":2,"path":"session1/chapter10/cert-management-data-encryption.md","ref":"session1/chapter10/cert-management-data-encryption.md","articles":[]},"previous":{"title":"10.1 权限管理","level":"2.10.1","depth":2,"path":"session1/chapter10/privilege-management.md","ref":"session1/chapter10/privilege-management.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter10/rbac.md","mtime":"2020-03-13T09:11:37.384Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T09:12:25.611Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
