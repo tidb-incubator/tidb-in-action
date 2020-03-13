@@ -193,7 +193,8 @@ location_labels = ["dc","rack","zone","host"]
 在两地三中心的架构部署中，从性能优化的角度，建议对集群中相关组件参数进行调整。
 
 
-+ tikv.ym l中相关参数优化
++ tikv.yml 中相关参数优化
+
 文件路径：<tidb_ansible_path>/tidb-ansible/conf/tikv.yml
 需要在集群安装前进行设置。
 
@@ -257,7 +258,6 @@ capacity = MEM_TOTAL * 0.5 / TiKV 实例数量
 	member leader_priority PD-13 5
 	member leader_priority PD-14 1
 	```
-
 
 
 
