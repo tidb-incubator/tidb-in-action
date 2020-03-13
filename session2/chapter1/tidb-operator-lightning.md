@@ -1,4 +1,4 @@
-# 在 Kubernetes 集群上使用 Lightning 导入数据
+# 1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据
 
 ## 1. 背景介绍
 
