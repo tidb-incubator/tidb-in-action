@@ -18,7 +18,7 @@
 另外还可以通过调整 `tidb_ddl_reorg_priority` 为 PRIORITY_HIGH 来让创建索引的任务保持高优先级来提升速度，但在通用 OLTP 系统上，一般建议保持默认。  
   
 **如何评估创建索引的速度：**  
-1. 使用 `admin show ddl` 命令来查询 RowCount 和 START_TIME 字段，记录当前 ddl 已经更新了的行数 r1 ，利用开始时间计算出已执行时间 t1 。
+1. 使用 `admin show ddl` 命令来查询 RowCount 和 START_TIME 字段，记录当前 DDL 已经更新了的行数 r1 ，利用开始时间计算出已执行时间 t1 。
 2. 再使用 `show stats_meta` 命令来查看 RowCount 字段，查看表数据的总行数 r0 。
 3. 此时就可以用：t1/(r1/r2) - t1 来估算剩余执行时间，再根据系统集群使用情况及响应速度来评估是否动态调整参数。  
   
