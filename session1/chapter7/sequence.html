@@ -2821,7 +2821,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="sequence">Sequence</h1>
+                                <h3 id="173-sequence">1.7.3 Sequence</h3>
 <p>Sequence &#x662F;&#x6570;&#x636E;&#x5E93;&#x7CFB;&#x7EDF;&#x6309;&#x7167;&#x4E00;&#x5B9A;&#x89C4;&#x5219;&#x81EA;&#x589E;&#x7684;&#x6570;&#x5B57;&#x5E8F;&#x5217;&#xFF0C;&#x5177;&#x6709;&#x552F;&#x4E00;&#x548C;&#x5355;&#x8C03;&#x9012;&#x589E;&#x7684;&#x7279;&#x6027;&#x3002;&#x5728;&#x5B98;&#x65B9; SQL 2003 &#x6807;&#x51C6;&#x4E2D;&#xFF0C;&#x5176;&#x88AB;&#x5B9A;&#x4E49;&#x4E3A;&#x201C;&#x751F;&#x6210;&#x8FDE;&#x7EED;&#x6570;&#x503C;&#x7684;&#x4E00;&#x79CD;&#x673A;&#x5236;&#xFF0C;Sequence &#x65E2;&#x53EF;&#x4EE5;&#x662F;&#x5185;&#x90E8;&#x5BF9;&#x8C61;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x5916;&#x90E8;&#x5BF9;&#x8C61;&#x201D;&#x3002;&#x56E0;&#x539F;&#x751F; MySQL &#x4E2D;&#x5E76;&#x672A;&#x652F;&#x6301; Sequence&#xFF0C;TiDB Sequence &#x8BED;&#x6CD5;&#x53C2;&#x8003; MariaDB&#x3001;Oracle &#x548C; IBM Db2&#x3002;</p>
 <ul>
 <li>Create Sequence &#x8BED;&#x6CD5;</li>
@@ -2863,18 +2863,17 @@
 </ul>
 <pre><code class="lang-SQL"><span class="hljs-keyword">SELECT</span> SETVAL(sequence_name,<span class="hljs-number">100</span>)&#xFF1B;
 </code></pre>
-<p>&#x672C;&#x7AE0;&#x5C06;&#x4F1A;&#x901A;&#x8FC7;&#x4E00;&#x4E9B;&#x6848;&#x4F8B;&#x4ECB;&#x7ECD; TiDB Sequence &#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF1A;</p>
-<ol>
+<h4 id="1731-&#x7528;&#x4F8B;&#x4ECB;&#x7ECD;">1.7.3.1 &#x7528;&#x4F8B;&#x4ECB;&#x7ECD;</h4>
+<p>&#x672C;&#x90E8;&#x5206;&#x5C06;&#x4F1A;&#x901A;&#x8FC7;&#x4E00;&#x4E9B;&#x6848;&#x4F8B;&#x4ECB;&#x7ECD; TiDB Sequence &#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ul>
 <li>&#x5E76;&#x53D1;&#x7684;&#x5E94;&#x7528;&#x9700;&#x8981;&#x83B7;&#x53D6;&#x5355;&#x8C03;&#x9012;&#x589E;&#x7684;&#x6D41;&#x6C34;&#x53F7;</li>
-</ol>
+</ul>
 <p>&#x5728;&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x7684;&#x573A;&#x666F;&#x91CC;&#xFF0C;&#x901A;&#x5E38;&#x5E94;&#x7528;&#x4E5F;&#x662F;&#x5206;&#x5E03;&#x5F0F;&#x67B6;&#x6784;&#xFF0C;&#x8FD9;&#x6837;&#x591A;&#x4E2A;&#x5E94;&#x7528;&#x8282;&#x70B9;&#x4E4B;&#x95F4;&#x5982;&#x4F55;&#x83B7;&#x53D6;&#x552F;&#x4E00;&#x4E14;&#x9012;&#x589E;&#x7684;&#x5E8F;&#x5217;&#x53F7;&#x5C31;&#x6210;&#x4E3A;&#x4E00;&#x4E2A;&#x96BE;&#x9898;&#x3002;&#x5728;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#x6CA1;&#x6709; Sequence &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5E94;&#x7528;&#x57FA;&#x672C;&#x901A;&#x8FC7;<code>&#x96EA;&#x82B1;&#x7B97;&#x6CD5;</code>&#x3001;<code>&#x6570;&#x636E;&#x5E93;&#x4E3B;&#x952E;&#x81EA;&#x589E;</code>&#x7B49;&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#xFF0C;&#x4E1A;&#x754C;&#x4E5F;&#x6709;&#x4E00;&#x4E9B;&#x8F83;&#x4E3A;&#x6210;&#x719F;&#x7684;&#x65B9;&#x6848;&#xFF0C;&#x6BD4;&#x5982; <a href="https://tech.meituan.com/2017/04/21/mt-leaf.html" target="_blank">Leaf - &#x7F8E;&#x56E2;&#x70B9;&#x8BC4;&#x5206;&#x5E03;&#x5F0F; ID</a>&#x3001;<a href="https://github.com/baidu/uid-generator" target="_blank">&#x767E;&#x5EA6;&#x7684; uid-generator</a> &#x7B49;&#xFF0C;&#x4E0A;&#x8FF0;&#x65B9;&#x6848;&#x4E2D;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x5355;&#x8C03;&#x9012;&#x589E;&#x4E14;&#x4E0D;&#x91CD;&#x590D;&#x7684;&#x95EE;&#x9898;&#x5F15;&#x5165;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x7CFB;&#x7EDF;&#x3001;&#x6A21;&#x5757;&#xFF0C;&#x6781;&#x5927;&#x7684;&#x63D0;&#x9AD8;&#x4E86;&#x5E94;&#x7528;&#x7CFB;&#x7EDF;&#x7684;&#x590D;&#x6742;&#x5EA6;&#x3002;&#x8FD9;&#x91CC;&#x901A;&#x8FC7;&#x7B80;&#x5355;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A; <code>Sequence</code> &#x770B;&#x770B; TiDB &#x5982;&#x4F55;&#x89E3;&#x51B3;&#x4E0A;&#x8FF0;&#x95EE;&#x9898;&#x3002;</p>
-<p>1.1. &#x9996;&#x5148;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A; Sequence</p>
+<p>(1) &#x9996;&#x5148;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A; Sequence</p>
 <pre><code class="lang-SQL"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SEQUENCE</span> seq_for_unique <span class="hljs-keyword">START</span> <span class="hljs-keyword">WITH</span> <span class="hljs-number">1</span> <span class="hljs-keyword">INCREMENT</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span> <span class="hljs-keyword">CACHE</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">NOCYCLE</span>;
 </code></pre>
-<p>1.2. &#x4ECE;&#x4E0D;&#x540C;&#x7684; TiDB &#x8282;&#x70B9;&#x83B7;&#x53D6;&#x5230;&#x7684; Sequence &#x503C;&#x987A;&#x5E8F;&#x6709;&#x6240;&#x4E0D;&#x540C;</p>
-<ol>
-<li>&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x5E94;&#x7528;&#x8282;&#x70B9;&#x540C;&#x65F6;&#x8FDE;&#x63A5;&#x81F3;&#x540C;&#x4E00;&#x4E2A; TiDB &#x8282;&#x70B9;&#xFF0C;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x95F4;&#x53D6;&#x5230;&#x7684;&#x5219;&#x4E3A;&#x8FDE;&#x7EED;&#x9012;&#x589E;&#x7684;&#x503C;</li>
-</ol>
+<p>(2) &#x4ECE;&#x4E0D;&#x540C;&#x7684; TiDB &#x8282;&#x70B9;&#x83B7;&#x53D6;&#x5230;&#x7684; Sequence &#x503C;&#x987A;&#x5E8F;&#x6709;&#x6240;&#x4E0D;&#x540C;</p>
+<p>&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x5E94;&#x7528;&#x8282;&#x70B9;&#x540C;&#x65F6;&#x8FDE;&#x63A5;&#x81F3;&#x540C;&#x4E00;&#x4E2A; TiDB &#x8282;&#x70B9;&#xFF0C;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x95F4;&#x53D6;&#x5230;&#x7684;&#x5219;&#x4E3A;&#x8FDE;&#x7EED;&#x9012;&#x589E;&#x7684;&#x503C;</p>
 <pre><code class="lang-SQL">&#x8282;&#x70B9; A&#xFF1A;tidb[test]&gt; SELECT NEXT VALUE FOR seq_for_unique;
 +-------------------------------+
 | NEXT VALUE FOR seq_for_unique |
@@ -2891,9 +2890,7 @@
 +-------------------------------+
 1 row in set (0.00 sec)
 </code></pre>
-<ol>
-<li>&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x5E94;&#x7528;&#x8282;&#x70B9;&#x5206;&#x522B;&#x8FDE;&#x63A5;&#x81F3;&#x4E0D;&#x540C;<code>TiDB</code>&#x8282;&#x70B9;&#xFF0C;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x95F4;&#x53D6;&#x5230;&#x7684;&#x5219;&#x4E3A;&#x533A;&#x95F4;&#x9012;&#x589E;&#xFF08;&#x6BCF;&#x4E2A; TiDB &#x4E0A;&#x4E3A;&#x8FDE;&#x7EED;&#x9012;&#x589E;&#xFF09;&#x4F46;&#x4E0D;&#x8FDE;&#x7EED;&#x7684;&#x503C;</li>
-</ol>
+<p>(3) &#x5982;&#x679C;&#x4E24;&#x4E2A;&#x5E94;&#x7528;&#x8282;&#x70B9;&#x5206;&#x522B;&#x8FDE;&#x63A5;&#x81F3;&#x4E0D;&#x540C;<code>TiDB</code>&#x8282;&#x70B9;&#xFF0C;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x95F4;&#x53D6;&#x5230;&#x7684;&#x5219;&#x4E3A;&#x533A;&#x95F4;&#x9012;&#x589E;&#xFF08;&#x6BCF;&#x4E2A; TiDB &#x4E0A;&#x4E3A;&#x8FDE;&#x7EED;&#x9012;&#x589E;&#xFF09;&#x4F46;&#x4E0D;&#x8FDE;&#x7EED;&#x7684;&#x503C;</p>
 <pre><code class="lang-SQL">&#x8282;&#x70B9; A&#xFF1A;tidb[test]&gt; SELECT NEXT VALUE FOR seq_for_unique;
 +-------------------------------+
 | NEXT VALUE FOR seq_for_unique |
@@ -2910,15 +2907,15 @@
 +-------------------------------+
 1 row in set (0.00 sec)
 </code></pre>
-<ol>
+<ul>
 <li>&#x5728;&#x4E00;&#x5F20;&#x8868;&#x91CC;&#x9762;&#x9700;&#x8981;&#x6709;&#x591A;&#x4E2A;&#x81EA;&#x589E;&#x5B57;&#x6BB5;</li>
-</ol>
+</ul>
 <p>MySQL &#x8BED;&#x6CD5;&#x4E2D;&#x6BCF;&#x5F20;&#x8868;&#x4EC5;&#x80FD;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A; <code>auto_increment</code> &#x5B57;&#x6BB5;&#xFF0C;&#x4E14;&#x8BE5;&#x5B57;&#x6BB5;&#x5FC5;&#x987B;&#x5B9A;&#x4E49;&#x5728;&#x4E3B;&#x952E;&#x6216;&#x662F;&#x552F;&#x4E00;&#x7D22;&#x5F15;&#x5217;&#x4E0A;&#x3002;&#x5728;&#x5E94;&#x7528;&#x8BBE;&#x8BA1;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E3B;&#x952E;&#x901A;&#x5E38;&#x6709;&#x4E1A;&#x52A1;&#x610F;&#x4E49;&#x7684;&#x5B57;&#x6BB5;&#x8868;&#x793A;&#xFF0C;&#x4F8B;&#x5982;&#x7528;&#x6237;&#x540D;&#x3001;&#x4E3B;&#x673A;&#x540D;&#x7B49;&#xFF0C;&#x4F46;&#x901A;&#x8FC7; Sequence &#x548C;&#x751F;&#x6210;&#x5217;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x591A;&#x81EA;&#x589E;&#x5B57;&#x6BB5;&#x9700;&#x6C42;&#x3002;</p>
-<p>2.1. &#x9996;&#x5148;&#x65B0;&#x5EFA;&#x5982;&#x4E0B;&#x4E24;&#x4E2A; Sequence</p>
+<p>(1) &#x9996;&#x5148;&#x65B0;&#x5EFA;&#x5982;&#x4E0B;&#x4E24;&#x4E2A; Sequence</p>
 <pre><code class="lang-SQL"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SEQUENCE</span> seq_for_autoid <span class="hljs-keyword">START</span> <span class="hljs-keyword">WITH</span> <span class="hljs-number">1</span> <span class="hljs-keyword">INCREMENT</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">2</span> <span class="hljs-keyword">CACHE</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">NOCYCLE</span>;
 <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SEQUENCE</span> seq_for_logid <span class="hljs-keyword">START</span> <span class="hljs-keyword">WITH</span> <span class="hljs-number">100</span> <span class="hljs-keyword">INCREMENT</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span> <span class="hljs-keyword">CACHE</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">NOCYCLE</span>;
 </code></pre>
-<p>2.2. &#x5728;&#x65B0;&#x5EFA;&#x8868;&#x7684;&#x65F6;&#x5019;&#x901A;&#x8FC7; <code>default nextval(seq_name)</code> &#x8BBE;&#x7F6E;&#x5217;&#x7684;&#x9ED8;&#x8BA4;&#x503C;</p>
+<p>(2) &#x5728;&#x65B0;&#x5EFA;&#x8868;&#x7684;&#x65F6;&#x5019;&#x901A;&#x8FC7; <code>default nextval(seq_name)</code> &#x8BBE;&#x7F6E;&#x5217;&#x7684;&#x9ED8;&#x8BA4;&#x503C;</p>
 <pre><code class="lang-SQL"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`user`</span> (
     <span class="hljs-string">`userid`</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">32</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
     <span class="hljs-string">`autoid`</span> <span class="hljs-built_in">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&apos;nextval(`test`.`seq_for_autoid`)&apos;</span>,
@@ -2926,12 +2923,12 @@
     PRIMARY <span class="hljs-keyword">KEY</span> (<span class="hljs-string">`userid`</span>)
 )
 </code></pre>
-<p>2.3. &#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x63D2;&#x5165;&#x51E0;&#x4E2A;&#x7528;&#x6237;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#xFF1A;</p>
+<p>(3) &#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x63D2;&#x5165;&#x51E0;&#x4E2A;&#x7528;&#x6237;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#xFF1A;</p>
 <pre><code class="lang-SQL"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">user</span> (userid) <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&apos;usera&apos;</span>);
 <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">user</span> (userid) <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&apos;userb&apos;</span>);
 <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">user</span> (userid) <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&apos;userc&apos;</span>);
 </code></pre>
-<p>2.4. &#x67E5;&#x8BE2; <code>user</code> &#x8868;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0; <code>autoid</code> &#x548C; <code>logid</code> &#x5B57;&#x6BB5;&#x7684;&#x503C;&#x6309;&#x7167;&#x4E0D;&#x540C;&#x7684;&#x6B65;&#x957F;&#x8FDB;&#x884C;&#x81EA;&#x589E;&#xFF0C;&#x4E14;&#x4E3B;&#x952E;&#x4ECD;&#x7136;&#x5728;&#x5217; <code>userid</code> &#x4E0A;&#xFF1A;</p>
+<p>(4) &#x67E5;&#x8BE2; <code>user</code> &#x8868;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0; <code>autoid</code> &#x548C; <code>logid</code> &#x5B57;&#x6BB5;&#x7684;&#x503C;&#x6309;&#x7167;&#x4E0D;&#x540C;&#x7684;&#x6B65;&#x957F;&#x8FDB;&#x884C;&#x81EA;&#x589E;&#xFF0C;&#x4E14;&#x4E3B;&#x952E;&#x4ECD;&#x7136;&#x5728;&#x5217; <code>userid</code> &#x4E0A;&#xFF1A;</p>
 <pre><code class="lang-SQL">tidb[test]&gt; select * from user;
 +--------+--------+-------+
 | userid | autoid | logid |
@@ -2942,19 +2939,19 @@
 +--------+--------+-------+
 3 rows in set (0.01 sec)
 </code></pre>
-<ol>
+<ul>
 <li>&#x66F4;&#x65B0;&#x6570;&#x636E;&#x8868;&#x4E2D;&#x5176;&#x4E2D;&#x4E00;&#x5217;&#x503C;&#x4E3A;&#x8FDE;&#x7EED;&#x81EA;&#x589E;&#x7684;&#x503C;</li>
-</ol>
+</ul>
 <p>&#x5047;&#x8BBE;&#x6211;&#x4EEC;&#x6709;&#x4E00;&#x5F20;&#x6570;&#x636E;&#x8868;&#xFF0C;&#x8868;&#x4E2D;&#x6709; 20 &#x4E07;&#x884C;&#x6570;&#x636E;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x5176;&#x4E2D;&#x4E00;&#x5217;&#x7684;&#x503C;&#x4E3A;&#x8FDE;&#x7EED;&#x81EA;&#x589E;&#x4E14;&#x552F;&#x4E00;&#x7684;&#x6574;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709; Sequence&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x5E94;&#x7528;&#x4E00;&#x6761;&#x6761;&#x8BFB;&#x5199;&#x8BB0;&#x5F55;&#xFF0C;&#x5E76;&#x7528; <code>update</code> &#x66F4;&#x65B0;&#x503C;&#xFF0C;&#x5E76;&#x4E14;&#x8FD8;&#x9700;&#x8981;&#x6309;&#x7167;&#x56FA;&#x5B9A;&#x6279;&#x6B21;&#x63D0;&#x4EA4;&#xFF0C;&#x4F46;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6709;&#x4E86; Sequence&#xFF0C;&#x4E00;&#x5207;&#x90FD;&#x4F1A;&#x53D8;&#x7684;&#x7279;&#x522B;&#x7B80;&#x5355;&#x3002;</p>
-<p>3.1. &#x65B0;&#x5EFA;&#x4E00;&#x5F20;&#x6D4B;&#x8BD5;&#x8868;</p>
+<p>(1) &#x65B0;&#x5EFA;&#x4E00;&#x5F20;&#x6D4B;&#x8BD5;&#x8868;</p>
 <pre><code class="lang-SQL">tidb[test]&gt; CREATE TABLE t( a int, name varchar(32));
 Query OK, 0 rows affected (0.01 sec)
 </code></pre>
-<p>3.2. &#x65B0;&#x5EFA;&#x4E00;&#x4E2A; Sequence</p>
+<p>(2) &#x65B0;&#x5EFA;&#x4E00;&#x4E2A; Sequence</p>
 <pre><code class="lang-SQL">tidb[test]&gt; CREATE SEQUENCE test;
 Query OK, 0 rows affected (0.00 sec)
 </code></pre>
-<p>3.3. &#x63D2;&#x5165; 1 &#x4E07;&#x6761;&#x8BB0;&#x5F55;</p>
+<p>(3) &#x63D2;&#x5165; 1 &#x4E07;&#x6761;&#x8BB0;&#x5F55;</p>
 <pre><code class="lang-bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(seq 1 10000)
 <span class="hljs-keyword">do</span>
    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;insert into t values(<span class="hljs-variable">$(($RANDOM%1000)</span>),&apos;user<span class="hljs-variable">${i}</span>&apos;);&quot;</span> &gt;&gt; user.sql
@@ -2984,12 +2981,12 @@ tidb[test]&gt; select * from t;
 |  496 | user11    |
 ...
 </code></pre>
-<p>3.4. &#x66F4;&#x65B0;&#x4E3A;&#x8FDE;&#x7EED;&#x7684;&#x503C;</p>
+<p>(4) &#x66F4;&#x65B0;&#x4E3A;&#x8FDE;&#x7EED;&#x7684;&#x503C;</p>
 <pre><code class="lang-SQL">tidb[test]&gt; update t set a=nextval(test);
 Query OK, 10000 rows affected (0.20 sec)
 Rows matched: 10000  Changed: 10000  Warnings: 0
 </code></pre>
-<p>3.5. &#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x96C6;,&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B57;&#x6BB5; <code>a</code> &#x7684;&#x503C;&#x5DF2;&#x7ECF;&#x8FDE;&#x7EED;&#x81EA;&#x589E;&#x4E14;&#x552F;&#x4E00;</p>
+<p>(5) &#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x96C6;,&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B57;&#x6BB5; <code>a</code> &#x7684;&#x503C;&#x5DF2;&#x7ECF;&#x8FDE;&#x7EED;&#x81EA;&#x589E;&#x4E14;&#x552F;&#x4E00;</p>
 <pre><code class="lang-SQL">tidb[test]&gt; select * from t;
 +-------+-----------+
 | a     | name      |
@@ -3016,8 +3013,8 @@ Rows matched: 10000  Changed: 10000  Warnings: 0
 |    20 | user20    |
 ...
 </code></pre>
-<h2 id="&#x6CE8;&#x610F;&#x4E8B;&#x9879;">&#x6CE8;&#x610F;&#x4E8B;&#x9879;</h2>
-<p>&#x5728;&#x5206;&#x5E03;&#x5F0F;&#x67B6;&#x6784;&#x7684;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x5B9E;&#x73B0;&#x5B8C;&#x6210;&#x8FDE;&#x7EED;&#x9012;&#x589E;&#x7684;&#x5E8F;&#x5217;&#x662F;&#x6BD4;&#x8F83;&#x6709;&#x96BE;&#x5EA6;&#x7684;&#xFF0C;&#x800C;<code>Sequence</code>&#x628A;<code>&#x4E25;&#x683C;&#x9012;&#x589E;</code>&#x548C;<code>&#x6027;&#x80FD;</code>&#x4E24;&#x65B9;&#x9762;&#x4EA4;&#x7ED9;&#x4E86;&#x4F7F;&#x7528;&#x8005;&#xFF0C;&#x5728;&#x65B0;&#x5EFA; <code>Sequence</code> &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7EC4;&#x5408; <code>Order/No Order</code>&#xFF08;&#x76EE;&#x524D;&#x5C1A;&#x672A;&#x5B9E;&#x73B0;&#xFF09;&#x548C; <code>Cache/No Cache</code> &#x6765;&#x9009;&#x62E9;&#x65B0;&#x5EFA;&#x9AD8;&#x6027;&#x80FD;&#x7684; <code>Sequence</code>&#xFF0C;&#x4EA6;&#x6216;&#x662F;&#x6027;&#x80FD;&#x8F83;&#x5DEE;&#x4F46;&#x9012;&#x589E;&#x8F83;&#x4E3A;&#x4E25;&#x683C;&#x7684; <code>Sequence</code>&#x3002;</p>
+<h4 id="1732-&#x6CE8;&#x610F;&#x4E8B;&#x9879;">1.7.3.2 &#x6CE8;&#x610F;&#x4E8B;&#x9879;</h4>
+<p>&#x5728;&#x5206;&#x5E03;&#x5F0F;&#x67B6;&#x6784;&#x7684;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x5B9E;&#x73B0;&#x5B8C;&#x6210;&#x8FDE;&#x7EED;&#x9012;&#x589E;&#x7684;&#x5E8F;&#x5217;&#x662F;&#x6BD4;&#x8F83;&#x6709;&#x96BE;&#x5EA6;&#x7684;&#xFF0C;&#x800C; <code>Sequence</code> &#x628A;<code>&#x4E25;&#x683C;&#x9012;&#x589E;</code>&#x548C;<code>&#x6027;&#x80FD;</code>&#x4E24;&#x65B9;&#x9762;&#x4EA4;&#x7ED9;&#x4E86;&#x4F7F;&#x7528;&#x8005;&#xFF0C;&#x5728;&#x65B0;&#x5EFA; <code>Sequence</code> &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7EC4;&#x5408; <code>Order/No Order</code>&#xFF08;&#x76EE;&#x524D;&#x5C1A;&#x672A;&#x5B9E;&#x73B0;&#xFF09;&#x548C; <code>Cache/No Cache</code> &#x6765;&#x9009;&#x62E9;&#x65B0;&#x5EFA;&#x9AD8;&#x6027;&#x80FD;&#x7684; <code>Sequence</code>&#xFF0C;&#x4EA6;&#x6216;&#x662F;&#x6027;&#x80FD;&#x8F83;&#x5DEE;&#x4F46;&#x9012;&#x589E;&#x8F83;&#x4E3A;&#x4E25;&#x683C;&#x7684; <code>Sequence</code>&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
@@ -3061,7 +3058,7 @@ Rows matched: 10000  Changed: 10000  Warnings: 0
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"7.3 Sequence","category":"TiDB DDL","level":"2.7.3","depth":2,"next":{"title":"7.4 Auto Random","level":"2.7.4","depth":2,"path":"session1/chapter7/autorandom.md","ref":"session1/chapter7/autorandom.md","articles":[]},"previous":{"title":"7.2 如何查看 DDL 状态","level":"2.7.2","depth":2,"path":"session1/chapter7/tidb-ddl-status.md","ref":"session1/chapter7/tidb-ddl-status.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter7/sequence.md","mtime":"2020-03-13T12:40:45.832Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T12:41:31.175Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"7.3 Sequence","level":"2.7.3","depth":2,"next":{"title":"7.4 Auto Random","level":"2.7.4","depth":2,"path":"session1/chapter7/autorandom.md","ref":"session1/chapter7/autorandom.md","articles":[]},"previous":{"title":"7.2 如何查看 DDL 状态","level":"2.7.2","depth":2,"path":"session1/chapter7/tidb-ddl-status.md","ref":"session1/chapter7/tidb-ddl-status.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter7/sequence.md","mtime":"2020-03-13T12:41:17.856Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T12:42:05.438Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
