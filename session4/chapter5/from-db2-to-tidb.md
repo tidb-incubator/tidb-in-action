@@ -5,34 +5,39 @@ IBM 公司为 DB2 的数据同步做了一套完整的工具，初期这款工�
 
 
 ## CDC 简介
-IIDR-CDC 是一种数据库复制解决方案，它捕获源数据库发生的更改，并将其交付给目标数据库或消息队列中。它的表映射关系的配置都是由图化的控制管理平台上完成的。 CDC 可以用在对源系统几乎没有任何影响的前提下捕捉数据变更并快速应用到下游。其架构特点如下
+* IIDR-CDC 是一种数据库复制解决方案，它捕获源数据库发生的更改，并将其交付给目标数据库或消息队列中。它的表映射关系的配置都是由图化的控制管理平台上完成的。 CDC 可以用在对源系统几乎没有任何影响的前提下捕捉数据变更并快速应用到下游。其架构特点如下
 
 其中的一些关键组件如下图所示：
 
 ![图片](/res/session4/chapter5/from-db2-to-tidb/cdc.png)
 
 
+* CDC 对接 TiDB 时可以通过配置使用 mysql-JDBC 驱动，通过 JDBC 的方式将数据存放到 TiDB 中.
 
 
-## 部署架构
-![图片](https://uploader.shimo.im/f/uTQkVjDBsG0uHb01.png!thumbnail)
+## 数据同步
+
+我们以一个实际案例来介绍如何将 DB2 for i 中的数据同步到 TiDB 上。
+
+### 部署架构
+![图片](/res/session4/chapter5/from-db2-to-tidb/cdc-tidb-1.png)
 
 以上图的生产环境架构为例，上游是一个核心系统，使用的是IBM商业平台，生产和备份平台之间使用了 OMS 同步，IIDR 同步的源端为备机数据库，目标端为 TiDB 。为保证高可用，在下游的另外一台服务器上部署了 IIDR 软件作为备用节点。
 
-## 关键参数和配置项
+### 关键参数和配置项
 关于 IIDR 的部署安装大家可以参考官网，本文不做重点介绍。这里主要说明一下 IIDR 的下游为 TiDB 时，在部署和使用过程中需要注意的点。
 
 * IIDR 安装选项选择 FlexRep
 
 因为 TiDB 并不在 IIDR 官方的支持列表中，所以在下游安装时，我们要选择 **FlexRep 如下图所示：**
 
-![图片](https://uploader.shimo.im/f/KJyEsAItPqISf8o0.png!thumbnail)
+![图片](/res/session4/chapter5/from-db2-to-tidb/cdc-tidb-2.png)
 
 * 创建预定需要借助 MySQL 驱动
 
 IIDR 需要借助 MySQL 驱动通过 JDBC 的方式将数据写入 TiDB 中，需要提前下载 MySQL 驱动，并在创建订阅时选择该驱动，如下图所示：
 
-![图片](https://uploader.shimo.im/f/pk4owBXHWvgGZ2ST.png!thumbnail)
+![图片](/res/session4/chapter5/from-db2-to-tidb/cdc-tidb-3.png)
 
 * IIDR 下游软件参数配置
 
