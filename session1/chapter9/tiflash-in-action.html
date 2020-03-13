@@ -2830,10 +2830,8 @@ TiSpark &#x9002;&#x5408;&#x5927;&#x89C4;&#x6A21;&#x7684; OLAP &#x8BA1;&#x7B97;&#
 </code></pre><p>count &#x8868;&#x793A;&#x526F;&#x672C;&#x6570;&#xFF0C;0 &#x5219;&#x8868;&#x793A;&#x5220;&#x9664;</p>
 <p>&#x5BF9;&#x4E8E;&#x76F8;&#x540C;&#x8868;&#x7684;&#x591A;&#x6B21; DDL &#x547D;&#x4EE4;&#xFF0C;&#x4EC5;&#x4FDD;&#x8BC1;&#x6700;&#x540E;&#x4E00;&#x6B21;&#x80FD;&#x751F;&#x6548;
 &#x4F8B;&#x5982;:
-&#x4E3A;&#x8868;&#x5EFA;&#x7ACB;1&#x4E2A; TiFlash &#x526F;&#x672C;</p>
-<pre><code>ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 1
-</code></pre><p>&#x4E3A;&#x8868;&#x5EFA;&#x7ACB;2&#x4E2A;&#x526F;&#x672C;&#xFF0C;&#x65E0; locationlabel</p>
-<pre><code>ALTER TABLE `tpch50`.`partsupp` SET TIFLASH REPLICA 2
+&#x4E3A;&#x8868;&#x5EFA;&#x7ACB; 2 &#x4E2A; TiFlash &#x526F;&#x672C;</p>
+<pre><code>ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 2
 </code></pre><p>&#x5220;&#x9664;&#x526F;&#x672C;</p>
 <pre><code>ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 0
 </code></pre><p>&#x53EF;&#x901A;&#x8FC7;&#x5982;&#x4E0B; SQL &#x8BED;&#x53E5;&#x67E5;&#x770B;&#x7279;&#x5B9A;&#x8868;(&#x901A;&#x8FC7; WHERE &#x8BED;&#x53E5;&#x6307;&#x5B9A;&#xFF0C;&#x53BB;&#x6389; WHERE &#x8BED;&#x53E5;&#x5219;&#x67E5;&#x770B;&#x6240;&#x6709;&#x8868;)&#x7684; TiFlash &#x526F;&#x672C;&#x7684;&#x72B6;&#x6001;:</p>
@@ -2850,53 +2848,28 @@ TiSpark &#x9002;&#x5408;&#x5927;&#x89C4;&#x6A21;&#x7684; OLAP &#x8BA1;&#x7B97;&#
 <h2 id="engine-&#x9694;&#x79BB;">Engine &#x9694;&#x79BB;</h2>
 <p>Engine &#x9694;&#x79BB;&#x662F;&#x901A;&#x8FC7;&#x914D;&#x7F6E;&#x53D8;&#x91CF;&#x6765;&#x6307;&#x5B9A;&#x6240;&#x6709;&#x7684;&#x67E5;&#x8BE2;&#x5747;&#x4F7F;&#x7528;&#x6307;&#x5B9A; engine &#x7684;&#x526F;&#x672C;&#xFF0C;&#x53EF;&#x9009; engine &#x4E3A; tikv &#x548C; tiflash&#xFF0C;&#x5206;&#x522B;&#x6709;3&#x4E2A;&#x914D;&#x7F6E;&#x7EA7;&#x522B;:</p>
 <ol>
-<li>&#x5168;&#x5C40;&#x914D;&#x7F6E;&#x7EA7;&#x522B;&#xFF0C;&#x5373; GLOBAL &#x7EA7;&#x522B;&#x3002;</li>
-</ol>
-<pre><code>set @@global.tidb_isolation_read_engines = &quot;&#x9017;&#x53F7;&#x5206;&#x9694;&#x7684; engine list&quot;;
-</code></pre><p>&#x6216;&#x8005;</p>
-<pre><code>set GLOBAL tidb_isolation_read_engines = &quot;&#x9017;&#x53F7;&#x5206;&#x9694;&#x7684; engine list&quot;;
-</code></pre><p>&#x4F8B;&#x5982;&#xFF1A;</p>
-<pre><code>set GLOBAL tidb_isolation_read_engines = &quot;tiflash,tikv&quot;;
-</code></pre><ol>
 <li>&#x4F1A;&#x8BDD;&#x7EA7;&#x522B;&#xFF0C;&#x5373; SESSION &#x7EA7;&#x522B;&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#xFF0C;&#x4F1A;&#x7EE7;&#x627F; GLOBAL &#x7684;&#x914D;&#x7F6E;&#x3002;</li>
 </ol>
 <pre><code>set@@session.tidb_isolation_read_engines=&quot;&#x9017;&#x53F7;&#x5206;&#x9694;&#x7684;enginelist&quot;;
 </code></pre><p>&#x6216;&#x8005;
 <code>set SESSION tidb_isolation_read_engines = &quot;&#x9017;&#x53F7;&#x5206;&#x9694;&#x7684; engine list&quot;;</code></p>
+<p>&#x4F8B;&#x5982;&#x8BA9; TiDB &#x81EA;&#x7531;&#x9009;&#x62E9;&#x884C;&#x5B58;&#x548C;&#x5217;&#x5B58;&#xFF0C;&#x53EF;&#x6309;&#x5982;&#x4E0B;&#x914D;&#x7F6E;&#xFF1A;
+<code>set SESSION tidb_isolation_read_engines = &quot;tikv,tiflash&quot;;</code></p>
+<p>&#x5982;&#x5E0C;&#x671B;&#x53EA;&#x8BFB;&#x53D6; TiFlash &#x7684;&#x6570;&#x636E;&#xFF08;&#x9694;&#x79BB;&#x6A21;&#x5F0F;&#xFF09;&#xFF0C;&#x5219;&#x6309;&#x5982;&#x4E0B;&#x914D;&#x7F6E;&#xFF1A;
+<code>set SESSION tidb_isolation_read_engines = &quot;tiflash&quot;;</code></p>
 <ol>
 <li>TiDB &#x5B9E;&#x4F8B;&#x7EA7;&#x522B;&#xFF0C;&#x5373; INSTANCE &#x7EA7;&#x522B;&#xFF0C;&#x548C;&#x4EE5;&#x4E0A;&#x914D;&#x7F6E;&#x662F;&#x200B;&#x4EA4;&#x96C6;&#x200B;&#x5173;&#x7CFB;&#x3002;&#x6BD4;&#x5982; INSTANCE &#x914D;&#x7F6E;&#x4E86;&quot;tikv,tiflash&quot;&#xFF0C;&#x800C; SESSION &#x914D;&#x7F6E;&#x4E86;&quot;tikv&quot;&#xFF0C;&#x5219;&#x53EA;&#x4F1A;&#x8BFB;&#x53D6; tikv&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#xFF0C;&#x9ED8;&#x8BA4;&#x7EE7;&#x627F;&#x4F1A;&#x8BDD;&#x7EA7;&#x522B;&#x914D;&#x7F6E;&#x3002;&#x5728; TiDB &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x914D;&#x7F6E;&#x9879;</li>
 </ol>
 <pre><code>[isolation-read]
 engines = [&quot;tikv&quot;, &quot;tiflash&quot;]
-</code></pre><p>&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;&quot;tikv,tiflash&quot;&#xFF0C;&#x5373;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x8BFB;&#x53D6; tikv &#x548C; tiflash &#x526F;&#x672C;&#xFF0C;CBO &#x4F1A;&#x81EA;&#x52A8;&#x9009;&#x62E9;&#x3002;
+</code></pre><p>&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;&quot;tikv,tiflash&quot;&#xFF0C;&#x5373;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x8BFB;&#x53D6; tikv &#x548C; tiflash &#x526F;&#x672C;&#xFF0C;&#x4F18;&#x5316;&#x5668;&#x4F1A;&#x81EA;&#x52A8;&#x9009;&#x62E9;&#x3002;
 &#x6307;&#x5B9A;&#x4E86; engine &#x540E;&#xFF0C;&#x5BF9;&#x4E8E;&#x67E5;&#x8BE2;&#x4E2D;&#x7684;&#x8868;&#x6CA1;&#x6709;&#x5BF9;&#x5E94; engine &#x526F;&#x672C;&#x7684;&#x60C5;&#x51B5;(&#x56E0;&#x4E3A; tikv &#x526F;&#x672C;&#x662F;&#x5FC5;&#x5B9A;&#x5B58;&#x5728;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x53EA;&#x6709;&#x914D;&#x7F6E;&#x4E86; engine &#x4E3A; tiflash &#x800C; tiflash &#x526F;&#x672C;&#x4E0D;&#x5B58;&#x5728;&#x8FD9;&#x4E00;&#x79CD;&#x60C5;&#x51B5;)&#xFF0C;&#x67E5;&#x8BE2;&#x4F1A;&#x62A5;&#x8BE5;&#x8868;&#x4E0D;&#x5B58;&#x5728;&#x8BE5; engine &#x526F;&#x672C;&#x7684;&#x9519;&#x3002;
-Engine &#x9694;&#x79BB;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x9AD8;&#x4E8E; CBO &#xFF0C;&#x5373; CBO &#x4EC5;&#x4F1A;&#x9009;&#x53D6;&#x6307;&#x5B9A; engine &#x7684;&#x526F;&#x672C;&#x3002;</p>
+Engine &#x9694;&#x79BB;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x9AD8;&#x4E8E;&#x4F18;&#x5316;&#x5668;&#x9009;&#x62E9;&#xFF0C;&#x5373;&#x4F18;&#x5316;&#x5668;&#x4EC5;&#x4F1A;&#x9009;&#x53D6;&#x6307;&#x5B9A; engine &#x7684;&#x526F;&#x672C;&#x3002;</p>
 <h2 id="&#x624B;&#x5DE5;hint">&#x624B;&#x5DE5;Hint</h2>
 <p>&#x624B;&#x5DE5; hint &#x53EF;&#x4EE5;&#x5F3A;&#x5236; TiDB &#x5BF9;&#x4E8E;&#x67D0;&#x5F20;&#x6216;&#x67D0;&#x51E0;&#x5F20;&#x8868;&#x4F7F;&#x7528; TiFlash &#x526F;&#x672C;&#xFF0C;&#x5176;&#x4F18;&#x5148;&#x7EA7;&#x9AD8;&#x4E8E; CBO &#x548C;
  engine &#x9694;&#x79BB;&#xFF0C;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x4E3A;:</p>
 <pre><code>select /*+ read_from_storage(tiflash[t]) */ * from t;
 </code></pre><p>&#x540C;&#x6837;&#x7684;&#xFF0C;&#x5BF9;&#x4E8E;&#x6307;&#x5B9A; hint &#x7684;&#x8868;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709; tiflash &#x526F;&#x672C;&#xFF0C;&#x67E5;&#x8BE2;&#x4F1A;&#x62A5;&#x8BE5;&#x8868;&#x4E0D;&#x5B58;&#x5728;&#x8BE5; tiflash &#x526F;&#x672C;&#x7684;&#x9519;&#x3002;</p>
-<h2 id="tispark-&#x8BFB;&#x53D6;-tiflash">TiSpark &#x8BFB;&#x53D6; TiFlash</h2>
-<p>TiSpark &#x76EE;&#x524D;&#x63D0;&#x4F9B;&#x7C7B;&#x4F3C; TiDB &#x4E2D; engine &#x9694;&#x79BB;&#x7684;&#x65B9;&#x5F0F;&#x8BFB;&#x53D6; TiFlash&#xFF0C;&#x65B9;&#x5F0F;&#x662F;&#x901A;&#x8FC7;&#x914D;&#x7F6E;&#x53C2;&#x6570;:</p>
-<pre><code>spark.tispark.use.tiflash &#x4E3A; true (&#x6216; false )
-</code></pre><p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x4EFB;&#x610F;&#x4E00;&#x79CD;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;:</p>
-<ol>
-<li>&#x5728; spark-defaults.conf &#x6587;&#x4EF6;&#x4E2D;&#x6DFB;&#x52A0; </li>
-</ol>
-<pre><code>spark.tispark.use.tiflash = true
-</code></pre><ol>
-<li>&#x5728;&#x542F;&#x52A8; sparkshell &#x6216; thriftserver &#x65F6;&#xFF0C;&#x542F;&#x52A8;&#x547D;&#x4EE4;&#x4E2D;&#x6DFB;&#x52A0; </li>
-</ol>
-<pre><code>--conf spark.tispark.use.tiflash = true
-</code></pre><ol>
-<li>Sparkshell &#x4E2D;&#x5B9E;&#x65F6;&#x8BBE;&#x7F6E;: </li>
-</ol>
-<pre><code>spark.conf.set(&quot;spark.tispark.use.tiflash&quot;, true)
-</code></pre><ol>
-<li>Thriftserver &#x901A;&#x8FC7; beeline &#x8FDE;&#x63A5;&#x540E;&#x5B9E;&#x65F6;&#x8BBE;&#x7F6E;: </li>
-</ol>
-<pre><code>setspark.tispark.use.tiflash = true;
-</code></pre><p>&#x6CE8;&#x610F;&#xFF0C;&#x8BBE;&#x4E3A; true &#x65F6;&#xFF0C;&#x6240;&#x6709;&#x67E5;&#x8BE2;&#x7684;&#x8868;&#x90FD;&#x4F1A;&#x53EA;&#x8BFB;&#x53D6; TiFlash &#x526F;&#x672C;&#xFF0C;&#x8BBE;&#x4E3A; false &#x5219;&#x53EA;&#x8BFB;&#x53D6; TiKV &#x526F;&#x672C;&#x3002;&#x8BBE;&#x4E3A; true &#x65F6;&#xFF0C;&#x8981;&#x6C42;&#x67E5;&#x8BE2;&#x6240;&#x7528;&#x5230;&#x7684;&#x8868;&#x90FD;&#x5FC5;&#x987B;&#x5DF2;&#x521B;&#x5EFA;&#x4E86; TiFlash &#x526F;&#x672C;&#xFF0C;&#x5BF9;&#x4E8E;&#x672A;&#x521B;&#x5EFA; TiFlash &#x526F;&#x672C;&#x7684;&#x8868;&#x7684;&#x67E5;&#x8BE2;&#x4F1A;&#x62A5;&#x9519;&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
@@ -2940,7 +2913,7 @@ Engine &#x9694;&#x79BB;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x9AD8;&#x4E8E; CBO &#xF
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"9.3 TiFlash 的使用","level":"2.9.3","depth":2,"next":{"title":"10 TiDB 安全","level":"2.10","depth":1,"path":"session1/chapter10/tidb-security.md","ref":"session1/chapter10/tidb-security.md","articles":[{"title":"10.1 权限管理","level":"2.10.1","depth":2,"path":"session1/chapter10/privilege-management.md","ref":"session1/chapter10/privilege-management.md","articles":[]},{"title":"10.2 RBAC","level":"2.10.2","depth":2,"path":"session1/chapter10/rbac.md","ref":"session1/chapter10/rbac.md","articles":[]},{"title":"10.3 证书管理与数据加密","level":"2.10.3","depth":2,"path":"session1/chapter10/cert-management-data-encryption.md","ref":"session1/chapter10/cert-management-data-encryption.md","articles":[]}]},"previous":{"title":"9.2 TiFlash 架构与原理","level":"2.9.2","depth":2,"path":"session1/chapter9/tiflash-architecture.md","ref":"session1/chapter9/tiflash-architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter9/tiflash-in-action.md","mtime":"2020-03-13T03:25:41.753Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T03:26:26.772Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"9.3 TiFlash 的使用","level":"2.9.3","depth":2,"next":{"title":"10 TiDB 安全","level":"2.10","depth":1,"path":"session1/chapter10/tidb-security.md","ref":"session1/chapter10/tidb-security.md","articles":[{"title":"10.1 权限管理","level":"2.10.1","depth":2,"path":"session1/chapter10/privilege-management.md","ref":"session1/chapter10/privilege-management.md","articles":[]},{"title":"10.2 RBAC","level":"2.10.2","depth":2,"path":"session1/chapter10/rbac.md","ref":"session1/chapter10/rbac.md","articles":[]},{"title":"10.3 证书管理与数据加密","level":"2.10.3","depth":2,"path":"session1/chapter10/cert-management-data-encryption.md","ref":"session1/chapter10/cert-management-data-encryption.md","articles":[]}]},"previous":{"title":"9.2 TiFlash 架构与原理","level":"2.9.2","depth":2,"path":"session1/chapter9/tiflash-architecture.md","ref":"session1/chapter9/tiflash-architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter9/tiflash-in-action.md","mtime":"2020-03-13T03:28:50.933Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T03:29:38.181Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
