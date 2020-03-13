@@ -2824,24 +2824,24 @@
                                 <h1 id="&#x7EF4;&#x62A4;-tidb-&#x96C6;&#x7FA4;&#x6240;&#x5728;&#x7684;-kubernetes-&#x8282;&#x70B9;">&#x7EF4;&#x62A4; TiDB &#x96C6;&#x7FA4;&#x6240;&#x5728;&#x7684; Kubernetes &#x8282;&#x70B9;</h1>
 <h2 id="tidb-&#x4E0E;-pd-&#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;">TiDB &#x4E0E; PD &#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;</h2>
 <p>&#x7531;&#x4E8E;&#x8282;&#x70B9;&#x7EF4;&#x62A4;&#x9700;&#x8981;&#x81F3;&#x5C11; 4 &#x53F0;&#x670D;&#x52A1;&#x5668;&#x624D;&#x80FD;&#x64CD;&#x4F5C;&#x5B8C;&#x6210;&#xFF0C;&#x672C;&#x8282;&#x57FA;&#x4E8E; kind &#x6A21;&#x62DF; 5 &#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x8BB2;&#x89E3;&#x7B2C; 5 &#x4E2A; node &#x670D;&#x52A1;&#x5668;&#x6545;&#x969C;&#x65F6;&#x7684;&#x7EF4;&#x62A4;&#x65B9;&#x6CD5;&#x3002;</p>
-<p>PD &#x548C; TiDB &#x5B9E;&#x4F8B;&#x7684;&#x8FC1;&#x79FB;&#x8F83;&#x5FEB;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x53D6;&#x4E3B;&#x52A8;&#x9A71;&#x9010;&#x5B9E;&#x4F8B;&#x5230;&#x5176;&#x5B83;&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x7B56;&#x7565;&#x8FDB;&#x884C;&#x8282;&#x70B9;&#x7EF4;&#x62A4;</p>
+<p>PD &#x548C; TiDB &#x5B9E;&#x4F8B;&#x7684;&#x8FC1;&#x79FB;&#x8F83;&#x5FEB;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x53D6;&#x4E3B;&#x52A8;&#x9A71;&#x9010;&#x5B9E;&#x4F8B;&#x5230;&#x5176;&#x5B83;&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x7B56;&#x7565;&#x8FDB;&#x884C;&#x8282;&#x70B9;&#x7EF4;&#x62A4;&#xFF1A;</p>
 <pre><code>
 # kubectl get pod --all-namespaces -o wide | grep worker5|grep dba-test
 dba-test      test-pd-2                                    1/1     Running   0          5m18s   10.244.5.4   kind-worker5         &lt;none&gt;           &lt;none&gt;
-</code></pre><p>&#x4EE5;&#x4E0A;&#x663E;&#x793A; kind-worker5 &#x8282;&#x70B9;&#x8FD0;&#x884C;&#x4E86;&#x4E00;&#x4E2A; PD &#x5B9E;&#x4F8B;&#xFF0C;&#x4F7F;&#x7528; kubectl cordon &#x547D;&#x4EE4;&#x9632;&#x6B62;&#x65B0;&#x7684; Pod &#x8C03;&#x5EA6;&#x5230;&#x5F85;&#x7EF4;&#x62A4;&#x8282;&#x70B9;&#x4E0A;&#xFF1A;</p>
+</code></pre><p>&#x4EE5;&#x4E0A;&#x663E;&#x793A; kind-worker5 &#x8282;&#x70B9;&#x8FD0;&#x884C;&#x4E86;&#x4E00;&#x4E2A; PD &#x5B9E;&#x4F8B;&#xFF0C;&#x4F7F;&#x7528; <code>kubectl cordon</code> &#x547D;&#x4EE4;&#x9632;&#x6B62;&#x65B0;&#x7684; Pod &#x8C03;&#x5EA6;&#x5230;&#x5F85;&#x7EF4;&#x62A4;&#x8282;&#x70B9;&#x4E0A;&#xFF1A;</p>
 <pre><code>
 # kubectl cordon kind-worker5
 node/kind-worker5 cordoned
-</code></pre><p>&#x4F7F;&#x7528; kubectl drain &#x547D;&#x4EE4;&#x5C06;&#x5F85;&#x7EF4;&#x62A4;&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#x8FC1;&#x79FB;&#x5230;&#x5176;&#x5B83;&#x8282;&#x70B9;&#x4E0A;&#xFF1A;</p>
+</code></pre><p>&#x4F7F;&#x7528; <code>kubectl drain</code> &#x547D;&#x4EE4;&#x5C06;&#x5F85;&#x7EF4;&#x62A4;&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#x8FC1;&#x79FB;&#x5230;&#x5176;&#x5B83;&#x8282;&#x70B9;&#x4E0A;&#xFF1A;</p>
 <pre><code>
 # kubectl drain kind-worker5 --ignore-daemonsets --delete-local-data
 node/kind-worker5 already cordoned
 WARNING: ...
 pod/test-pd-2 evicted
-</code></pre><p>&#x7B49;&#x5F85;&#x4E00;&#x4F1A;&#x513F;&#xFF0C;&#x68C0;&#x67E5; kind-worker5 &#x8282;&#x70B9;&#x4E0A;&#x7684; POD</p>
+</code></pre><p>&#x7B49;&#x5F85;&#x4E00;&#x4F1A;&#x513F;&#xFF0C;&#x68C0;&#x67E5; kind-worker5 &#x8282;&#x70B9;&#x4E0A;&#x7684; Pod&#xFF1A;</p>
 <pre><code>
 # kubectl get pods -n dba-test|grep kind-worker5
-</code></pre><p>&#x65E0;&#x8F93;&#x51FA;&#xFF0C;&#x8868;&#x660E; kind-worker5 &#x8282;&#x70B9;&#x4E0A;&#x7684; POD &#x5DF2;&#x5168;&#x90E8;&#x8FC1;&#x79FB;&#x8D70;&#x51FA;&#x53BB;&#x3002;&#x518D;&#x89C2;&#x5BDF; TiDB &#x96C6;&#x7FA4;&#x7684; POD &#x72B6;&#x6001;&#xFF1A;</p>
+</code></pre><p>&#x65E0;&#x8F93;&#x51FA;&#xFF0C;&#x8868;&#x660E; kind-worker5 &#x8282;&#x70B9;&#x4E0A;&#x7684; Pod &#x5DF2;&#x5168;&#x90E8;&#x8FC1;&#x79FB;&#x8D70;&#x51FA;&#x53BB;&#x3002;&#x518D;&#x89C2;&#x5BDF; TiDB &#x96C6;&#x7FA4;&#x7684; Pod &#x72B6;&#x6001;&#xFF1A;</p>
 <pre><code>
 # kubectl get pods -n dba-test
 NAME                              READY   STATUS    RESTARTS   AGE
@@ -2855,23 +2855,23 @@ test-tidb-1                       2/2     Running   0          19m
 test-tikv-0                       1/1     Running   0          20m
 test-tikv-1                       1/1     Running   0          20m
 test-tikv-2                       1/1     Running   0          20m
-</code></pre><p>&#x96C6;&#x7FA4;&#x6240;&#x6709; POD &#x5DF2;&#x5728;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#xFF0C;&#x96C6;&#x7FA4;&#x5DF2;&#x6062;&#x590D;&#x6B63;&#x5E38;&#x3002;</p>
-<p>&#x6B64;&#x65F6;&#xFF0C;&#x5206;&#x4E24;&#x79CD;&#x60C5;&#x51B5;:</p>
+</code></pre><p>&#x96C6;&#x7FA4;&#x6240;&#x6709; Pod &#x5DF2;&#x5728;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#xFF0C;&#x96C6;&#x7FA4;&#x5DF2;&#x6062;&#x590D;&#x6B63;&#x5E38;&#x3002;</p>
+<p>&#x6B64;&#x65F6;&#xFF0C;&#x5206;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
 <ol>
-<li>&#x77ED;&#x671F;&#x7EF4;&#x62A4;&#xFF08;&#x5BF9;&#x8282;&#x70B9;&#x65E0;&#x7834;&#x574F;&#x6027;&#xFF09;&#x3002;</li>
+<li>&#x77ED;&#x671F;&#x7EF4;&#x62A4;&#xFF08;&#x5BF9;&#x8282;&#x70B9;&#x65E0;&#x7834;&#x574F;&#x6027;&#xFF09;&#xFF1B;</li>
 <li>&#x957F;&#x671F;&#x7EF4;&#x62A4;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x9700;&#x8981;&#x957F;&#x65F6;&#x95F4;&#x4FEE;&#x590D;&#xFF0C;&#x751A;&#x81F3;&#x9700;&#x8981;&#x91CD;&#x88C5;&#x7CFB;&#x7EDF;&#x3002;</li>
 </ol>
-<p>&#x77ED;&#x671F;&#x7EF4;&#x62A4;&#x573A;&#x666F;&#xFF0C;&#x7EF4;&#x62A4;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x89E3;&#x9664;&#x8C03;&#x5EA6;&#x9650;&#x5236;&#x5373;&#x53EF;:</p>
+<p>&#x77ED;&#x671F;&#x7EF4;&#x62A4;&#x573A;&#x666F;&#x4E0B;&#xFF0C;&#x7EF4;&#x62A4;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x89E3;&#x9664;&#x8C03;&#x5EA6;&#x9650;&#x5236;&#x5373;&#x53EF;&#xFF1A;</p>
 <pre><code>
 # kubectl uncordon kind-worker5
-</code></pre><p>&#x957F;&#x671F;&#x7EF4;&#x62A4;&#x573A;&#x666F;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x4E0B;&#x7EBF;&#xFF0C;&#x4FEE;&#x590D;&#x4E4B;&#x540E;&#xFF0C;&#x518D;&#x7531; K8s &#x8FD0;&#x7EF4;&#x4E13;&#x5BB6;&#x5C06;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7EBF;&#x5230; K8s &#x96C6;&#x7FA4;:</p>
+</code></pre><p>&#x957F;&#x671F;&#x7EF4;&#x62A4;&#x573A;&#x666F;&#x4E0B;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x4E0B;&#x7EBF;&#xFF0C;&#x4FEE;&#x590D;&#x4E4B;&#x540E;&#xFF0C;&#x518D;&#x7531; K8s &#x8FD0;&#x7EF4;&#x4E13;&#x5BB6;&#x5C06;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7EBF;&#x5230; K8s &#x96C6;&#x7FA4;&#xFF1A;</p>
 <pre><code>
 # kubectl delete node kind-worker5
 node &quot;kind-worker5&quot; deleted
-</code></pre><h2 id="tikv&#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;">TiKV&#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;</h2>
-<p>&#x672C;&#x8282;&#x8BB2;&#x89E3;&#x4E00;&#x4E2A; TiKV node &#x9700;&#x8981;&#x4E0B;&#x7EBF;&#x7EF4;&#x62A4;&#x7684;&#x573A;&#x666F;&#x3002;
-&#x6CE8;&#x610F;&#xFF1A; &#x81F3;&#x5C11;&#x8981;&#x786E;&#x4FDD;&#x6709; 4 &#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x624D;&#x80FD;&#x64CD;&#x4F5C;&#x6210;&#x529F;&#xFF08;&#x9ED8;&#x8BA4;&#x526F;&#x672C;&#x6570;&#x4E3A;3&#xFF09;&#x3002;</p>
-<p>&#x4F7F;&#x7528; kubectl cordon &#x547D;&#x4EE4;&#x9632;&#x6B62;&#x65B0;&#x7684; Pod &#x8C03;&#x5EA6;&#x5230;&#x5F85;&#x7EF4;&#x62A4;&#x8282;&#x70B9;&#x4E0A;&#xFF1A;</p>
+</code></pre><h2 id="tikv-&#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;">TiKV &#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;</h2>
+<p>&#x672C;&#x8282;&#x8BB2;&#x89E3; TiKV node &#x9700;&#x8981;&#x4E0B;&#x7EBF;&#x7EF4;&#x62A4;&#x7684;&#x573A;&#x666F;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A; &#x81F3;&#x5C11;&#x8981;&#x786E;&#x4FDD;&#x6709; 4 &#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x624D;&#x80FD;&#x64CD;&#x4F5C;&#x6210;&#x529F;&#xFF08;&#x9ED8;&#x8BA4;&#x526F;&#x672C;&#x6570;&#x4E3A;3&#xFF09;&#x3002;</p>
+<p>&#x4F7F;&#x7528; <code>kubectl cordon</code> &#x547D;&#x4EE4;&#x9632;&#x6B62;&#x65B0;&#x7684; Pod &#x8C03;&#x5EA6;&#x5230;&#x5F85;&#x7EF4;&#x62A4;&#x8282;&#x70B9;&#x4E0A;&#xFF1A;</p>
 <pre><code>
 # kubectl cordon kind-worker4
 node/kind-worker4 cordoned
@@ -2879,28 +2879,28 @@ node/kind-worker4 cordoned
 <pre><code>
 # kubectl get pods -n dba-test -owide|grep tikv|grep kind-worker4
 test-tikv-2                       1/1     Running   0          5m28s   10.244.1.7   kind-worker4   &lt;none&gt;           &lt;none&gt;
-</code></pre><p>&#x67E5;&#x770B; TiKV &#x5B9E;&#x4F8B;&#x7684; store-id&#xFF1A;</p>
+</code></pre><p>&#x67E5;&#x770B; TiKV &#x5B9E;&#x4F8B;&#x7684; <code>store-id</code>&#xFF1A;</p>
 <pre><code>
 # kubectl get tc test -ojson -n dba-test| jq &apos;.status.tikv.stores | .[] | select ( .podName == &quot;test-tikv-2&quot; ) | .id&apos;
 &quot;115&quot;
-</code></pre><p>&#x5F00;&#x542F; PD &#x8BBF;&#x95EE;:</p>
+</code></pre><p>&#x5F00;&#x542F; PD &#x8BBF;&#x95EE;&#xFF1A;</p>
 <pre><code>
 # nohup kubectl port-forward svc/test-pd 2379:2379 -n dba-test &amp;
 [1] 8968
-</code></pre><p>&#x4E0B;&#x7EBF; TiKV &#x5B9E;&#x4F8B;:</p>
+</code></pre><p>&#x4F7F;&#x7528; <code>pd-ctl</code> &#x4E0B;&#x7EBF; TiKV &#x5B9E;&#x4F8B;&#xFF1A;</p>
 <pre><code>
 # pd-ctl -d store delete 115
 Success!
-</code></pre><p>&#x7B49;&#x5F85; TiKV store &#x72B6;&#x6001;&#xFF08;state_name&#xFF09;&#x8F6C;&#x79FB;&#x4E3A; Tombstone&#xFF1A;</p>
+</code></pre><p>&#x7B49;&#x5F85; TiKV store &#x72B6;&#x6001;&#xFF08;<code>state_name</code>&#xFF09;&#x8F6C;&#x5316;&#x4E3A; <code>Tombstone</code>&#xFF1A;</p>
 <pre><code>
 # pd-ctl -d store 115|grep state_name
     &quot;state_name&quot;: &quot;Tombstone&quot;
-</code></pre><p>&#x89E3;&#x9664; TiKV &#x5B9E;&#x4F8B;&#x4E0E;&#x8282;&#x70B9;&#x672C;&#x5730;&#x76D8;&#x7684;&#x7ED1;&#x5B9A;:</p>
-<p>&#x67E5;&#x8BE2; Pod &#x4F7F;&#x7528;&#x7684; PVC &#xFF1A;</p>
+</code></pre><p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x8FD8;&#x9700;&#x8981;&#x89E3;&#x9664; TiKV &#x5B9E;&#x4F8B;&#x4E0E;&#x8282;&#x70B9;&#x672C;&#x5730;&#x76D8;&#x7684;&#x7ED1;&#x5B9A;&#xFF1A;</p>
+<p>&#x67E5;&#x8BE2; Pod &#x4F7F;&#x7528;&#x7684; PVC&#xFF1A;</p>
 <pre><code>
 # kubectl get -n dba-test pod test-tikv-2 -ojson | jq &apos;.spec.volumes | .[] | select (.name == &quot;tikv&quot;) | .persistentVolumeClaim.claimName&apos;
 &quot;tikv-test-tikv-2&quot;
-</code></pre><p>&#x5220;&#x9664;&#x8BE5; PVC :</p>
+</code></pre><p>&#x5220;&#x9664;&#x8BE5; PVC&#xFF1A;</p>
 <pre><code>
 # kubectl delete pvc/tikv-test-tikv-2 -n dba-test
 persistentvolumeclaim &quot;tikv-test-tikv-2&quot; deleted
@@ -2918,13 +2918,13 @@ test-tikv-3                       1/1     Running   0          25m   10.244.3.5 
 </code></pre><p>&#x6B64;&#x65F6;&#xFF0C; test-tikv-2 &#x5DF2;&#x7ECF;&#x4ECE; kind-worker4 &#x8FC1;&#x79FB;&#x5230; kind-worker&#x4E86;&#x3002;</p>
 <p>&#x6B64;&#x65F6;&#xFF0C;&#x5206;&#x4E24;&#x79CD;&#x60C5;&#x51B5;:</p>
 <ol>
-<li>&#x77ED;&#x671F;&#x7EF4;&#x62A4;&#xFF08;&#x5BF9;&#x8282;&#x70B9;&#x65E0;&#x7834;&#x574F;&#x6027;&#xFF09;&#x3002;</li>
+<li>&#x77ED;&#x671F;&#x7EF4;&#x62A4;&#xFF08;&#x5BF9;&#x8282;&#x70B9;&#x65E0;&#x7834;&#x574F;&#x6027;&#xFF09;&#xFF1B;</li>
 <li>&#x957F;&#x671F;&#x7EF4;&#x62A4;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x9700;&#x8981;&#x957F;&#x65F6;&#x95F4;&#x4FEE;&#x590D;&#xFF0C;&#x751A;&#x81F3;&#x9700;&#x8981;&#x91CD;&#x88C5;&#x7CFB;&#x7EDF;&#x3002;</li>
 </ol>
-<p>&#x77ED;&#x671F;&#x7EF4;&#x62A4;&#x573A;&#x666F;&#xFF0C;&#x7EF4;&#x62A4;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x89E3;&#x9664;&#x8C03;&#x5EA6;&#x9650;&#x5236;&#x5373;&#x53EF;:</p>
+<p>&#x77ED;&#x671F;&#x7EF4;&#x62A4;&#x573A;&#x666F;&#xFF0C;&#x7EF4;&#x62A4;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x89E3;&#x9664;&#x8C03;&#x5EA6;&#x9650;&#x5236;&#x5373;&#x53EF;&#xFF1A;</p>
 <pre><code>
 # kubectl uncordon kind-worker4
-</code></pre><p>&#x957F;&#x671F;&#x7EF4;&#x62A4;&#x573A;&#x666F;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x4E0B;&#x7EBF;&#xFF0C;&#x4FEE;&#x590D;&#x4E4B;&#x540E;&#xFF0C;&#x518D;&#x7531; K8s &#x8FD0;&#x7EF4;&#x4E13;&#x5BB6;&#x5C06;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7EBF;&#x5230; K8s &#x96C6;&#x7FA4;:</p>
+</code></pre><p>&#x957F;&#x671F;&#x7EF4;&#x62A4;&#x573A;&#x666F;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x4E0B;&#x7EBF;&#xFF0C;&#x4FEE;&#x590D;&#x4E4B;&#x540E;&#xFF0C;&#x518D;&#x7531; K8s &#x8FD0;&#x7EF4;&#x4E13;&#x5BB6;&#x5C06;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7EBF;&#x5230; K8s &#x96C6;&#x7FA4;&#xFF1A;</p>
 <pre><code>
 # kubectl delete node kind-worker4
 node &quot;kind-worker4&quot; deleted
@@ -2971,7 +2971,7 @@ node &quot;kind-worker4&quot; deleted
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"next":{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]},"previous":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-node.md","mtime":"2020-03-13T09:42:35.071Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T09:43:18.778Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"next":{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]},"previous":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-node.md","mtime":"2020-03-13T09:46:06.219Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T09:46:54.390Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
