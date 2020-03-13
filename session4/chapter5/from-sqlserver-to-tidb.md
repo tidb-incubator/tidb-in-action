@@ -1,4 +1,6 @@
-# 5.3.1 迁移背景
+## 5.3 SQL Server 迁移到 TiDB
+
+### 5.3.1 迁移背景
 
 随着业务不断地增长，数据不断地递增，当线上场景的 SQL server 主库有十亿级数据，每天有千万级 DAU、亿级的访问量，接口日均调用量 1000000000+ 次，很可能会触达 SQL server 集群的一些瓶颈。以至于用户不得不寻找一个新的数据库产品替换现有的架构，那么可能会遇到一下的问题：
 
@@ -8,7 +10,7 @@
 
 至此本节将介绍如何实现从 SQL Server 到 TiDB 的整体迁移流程，包括全量与增量同步，数据校验及注意事项等内容，希望本节可以帮助想要将 SQL Server 迁移到 TiDB 的用户提供上手操作指导。
 
-# 5.3.2 流程介绍
+### 5.3.2 流程介绍
 
 下图为在线迁移数据库的基本流程，供读者对整体流程有个大致的认识：
 
@@ -22,15 +24,15 @@
 | 增量同步 |1. 读取CDC记录，持续写入 TiDB；<br>2. 检查增量数据一致性 | 
 | 切换数据库 |1. 停止 SQL Server 写入；<br>2. 等待 CDC 消费完成，检查数据一致性；<br>3. 业务数据写入 TiDB| 
 
-# 5.3.3 全量同步
+### 5.3.3 全量同步
 
-## 1. 迁移工具
+#### 1. 迁移工具
 
 迁移工具采用 yugong。yugong 是阿里开发的一款去Oracle数据迁移同步工具，[https://github.com/alswl/yugong](https://github.com/alswl/yugong) 版本基于阿里的版本增加了对SQL Server数据源的支持。
 
-## 2. 操作步骤
+#### 2. 操作步骤
 
-### (1) 下载 yugong
+##### (1) 下载 yugong
 
 ```shell
 # 方法一：直接下载可执行文件 jar 包
@@ -42,7 +44,7 @@ cd yugong
 mvn clean package
 ```
 
-### (2) 修改配置
+##### (2) 修改配置
 
 运行 yugong 需要用到两个配置文件 `yugong.properties` 和 `yugong.yaml`。
 
@@ -127,7 +129,7 @@ wget https://raw.githubusercontent.com/alswl/yugong/feature/sql-server-to-mysql-
 mv yugong.yaml.sample yugong.yaml
 ```
 
-### (3) 运行 yugong
+##### (3) 运行 yugong
 
 - 执行 yugong 的运行命令
 
@@ -170,7 +172,7 @@ com.taobao.yugong.controller.YuGongController - check source database connection
 > 
 > 通过以上日志可以判定任务是否成功启动和结束，如运行当中出现错误会有详细的堆栈信息打印出来，可进一步检查日志来判定问题。
 
-### (4) 检查日志
+##### (4) 检查日志
 
 - 日志记录在 logs 目录下，结构如下：
 
@@ -190,15 +192,15 @@ positioner_data
 >
 >主要观察 table.log 中的运行日志，查看是否有 `ERROR` 如重新同步数据，需删除相关表的日志和同步进度文件。
 
-# 5.3.4 增量同步
+### 5.3.4 增量同步
 
-## 1. 增量同步的原理
+#### 1. 增量同步的原理
 
 增量同步需要开启 SQL Server 的 CDC。什么是 SQL Server CDC？ CDC 全称 Change Data Capture，设计目的就是用来解决增量数据。CDC 持续读取增量记录，将增量数据发送至消息队列中，以供消费程序解析并写入 TiDB。当数据库表发生变化，Capture process 会从 transaction log 里面获取数据变化， 然后将这些数据记录到 Change Table 里面。 可以通过特定的 CDC 查询函数将这些变化数据查出来。
 
-## 2. 实操流程
+#### 2. 实操流程
 
-### (1) 开启 SQL Server CDC
+##### (1) 开启 SQL Server CDC
 
 ```sql
 -- 开启CDC
@@ -212,7 +214,7 @@ EXEC sys.sp_cdc_enable_table @source_schema = N'dbo', @source_name = N'example',
 SELECT name, is_cdc_enabled from sys.databases where is_cdc_enabled = 1;
 ```
 
-### (2) CDC 开启后，系统会生成一张 `Change Table` 的表，表名为： `cdc.dbo_example_CT`
+##### (2) CDC 开启后，系统会生成一张 `Change Table` 的表，表名为： `cdc.dbo_example_CT`
 
 ```sql
 .schema cdc.dbo_example_CT
@@ -231,7 +233,7 @@ name            null     YES       varchar(255)  255     NO
 >
 >其中 _ _ 开头的为系统字段，id 和 name 为 example 表中原始字段。
 
-### (3) 读取 CDC 日志
+##### (3) 读取 CDC 日志
 
 - 对 example 表做一些添删改的操作，而后通过系统函数查询 CDC 记录。
 
@@ -272,7 +274,7 @@ __$start_lsn          __$end_lsn  __$seqval             __$operation  __$update_
 >* 更新前
 >* 更新后
 
-### (4) 消费 CDC 日志
+##### (4) 消费 CDC 日志
 
 确认 CDC 正确开启，且得到了变更数据后，编写一个程序，采用定时任务的方式，设定时间间隔，通过上述 SQL 语句持续读取 Change Table 中的记录，并根据 `__$operation` 将数据转换为对应添删改操作的 SQL 语句写入 TiDB。
 
@@ -286,7 +288,7 @@ __$start_lsn          __$end_lsn  __$seqval             __$operation  __$update_
 >
 >  4. 因为全量同步之前 CDC 已经开启，所以增量同步时，可能会存在插入数据时出现主键冲突导致程序异常，推荐使用 `insert ignore` 的方式编写 SQL。
 
-# 5.3.5 检查数据一致性
+### 5.3.5 检查数据一致性
 
 在 ETL 之后，需要有一个流程来确认数据迁移前后是否一致。 虽然理论上不会有差异，但是如果中间有程序异常，或者数据库在迁移过程中发生操作，数据就会不一致。
 
@@ -296,7 +298,7 @@ __$start_lsn          __$end_lsn  __$seqval             __$operation  __$update_
 
 在增量同步时，还有另一个方式来实现数据校验功能，再增加一个消费程序，延迟 5 秒消费同一队列，并通过提取主键（或索引）的方式从 TiDB 中查出该条已经写入的数据，将两侧的整行数据做比较（本实践中去除主键后比较），如果有问题会进行尝试重新写入，如出现异常则向相关人员发送报警。
 
-# 5.3.6 迁移注意事项
+### 5.3.6 迁移注意事项
 
 在迁移过程中需要注意的一些点：
 
@@ -312,6 +314,6 @@ __$start_lsn          __$end_lsn  __$seqval             __$operation  __$update_
 
 6. 通常为了保证数据的顺序性，增量同步时只能有一个程序在消费。所以要多考虑程序健壮性、日志的完善程度以及报警机制，方便技术人员监控和追溯问题。
 
-# 5.3.7 总结
+### 5.3.7 总结
 
 这套迁移流程，综合考虑了开发成本、迁移效率和数据一致性而设计。TiDB 兼容 MySQL 的特性，使得在迁移过程中有许多“轮子”可以拿起来就用，让开发人员可以将更多关注放在数据本身。在下一章节中我们还会介绍另外一种 SQL Server 迁移到 TiDB 的方案，相信大家会有新的思考和体会。
