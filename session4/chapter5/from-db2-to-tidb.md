@@ -1,3 +1,4 @@
+# DB2 到 TiDB （CDC）
 在数同步场景中，上游数据库可能是任何关系型数据库，异构数据库之间的同步目前还没有一款通用的工具能够很好的适配所有的关系型数据库。异构数据库之间的同步也有比较多的数据同步工具。DB2 目前的用户数比较多，当这些用于在考虑数据迁移到 TiDB 上时如何选择合适的工具是本章的主要内容。DB2 根据运行平台的不同被分为 DB2 for LUW、DB2 for i、DB2 for z/os 。当数据源是 DB2 for LUW 时，可以使用 IBM CDC 或 OGG 做同步工具；当数据源是 DB2 for i（AS/400）或 DB2 for z/OS（Mainframe） 时，只能用 IBM CDC 做同步工具。本章节描述的是 DB2 for i 作为数据源时，使用 CDC 同步数据到 TiDB 的案例，可供所有计划使用 IBM CDC 工具同步数据到 TiDB 的用户参考。
 
 IBM 公司为 DB2 的数据同步做了一套完整的工具，初期这款工具被命名为 InfoSphere Data Replication 简称 IIDR ，IIDR 有多个引擎，包括 Change data capture (CDC) Replication 、 Q Replication 和 SQL Replication ，在 DB2 for i 同步数据到 TiDB 的场景中，主要用到的是它的 Change data capture (CDC) Replication 引擎，所以文中前面提到的 IBM CDC 等价于 IIDR。
@@ -6,7 +7,9 @@ IBM 公司为 DB2 的数据同步做了一套完整的工具，初期这款工�
 ## CDC 简介
 IIDR-CDC 是一种数据库复制解决方案，它捕获源数据库发生的更改，并将其交付给目标数据库或消息队列中。它的表映射关系的配置都是由图化的控制管理平台上完成的。 CDC 可以用在对源系统几乎没有任何影响的前提下捕捉数据变更并快速应用到下游。其架构特点如下
 
-其中的一些关键组件如下：
+其中的一些关键组件如下图所示：
+
+![图片](/res/session4/chapter5/from-db2-to-tidb/cdc.png)
 
 
 
