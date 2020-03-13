@@ -13,6 +13,8 @@ IBM 公司为 DB2 的数据同步做了一套完整的工具，初期这款工�
 
 * CDC 官方支持列表
 参考：https://www.ibm.com/support/knowledgecenter/SSTRGZ_11.4.0/com.ibm.cdcdoc.sysreq.doc/concepts/supportedsourceandtargets.html
+
+
 | Supported source databases   | Supported target databases and middleware applications   | 
 |:----|:----|
 | IBM® Db2® for Linux, UNIX and Windows (LUW)   | IBM Db2 for Linux, UNIX and Windows (LUW)   | 
