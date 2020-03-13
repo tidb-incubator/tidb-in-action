@@ -2821,13 +2821,14 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x5FEB;&#x901F;&#x5F00;&#x59CB;">&#x5FEB;&#x901F;&#x5F00;&#x59CB;</h1>
+                                <h1 id="2221-tidb-lightning-&#x5FEB;&#x901F;&#x5F00;&#x59CB;">2.2.2.1 TiDB Lightning &#x5FEB;&#x901F;&#x5F00;&#x59CB;</h1>
 <h2 id="&#x8B66;&#x544A;"><strong>&#x8B66;&#x544A;</strong></h2>
 <ul>
 <li>TiDB Lightning &#x8FD0;&#x884C;&#x540E;&#xFF0C;TiDB &#x96C6;&#x7FA4;&#x5C06;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x5BF9;&#x5916;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x3002;</li>
 <li><p>&#x82E5; <code>tidb-lightning</code> &#x5D29;&#x6E83;&#xFF0C;&#x96C6;&#x7FA4;&#x4F1A;&#x7559;&#x5728;&#x201C;&#x5BFC;&#x5165;&#x6A21;&#x5F0F;&#x201D;&#x3002;&#x82E5;&#x5FD8;&#x8BB0;&#x8F6C;&#x56DE;&#x201C;&#x666E;&#x901A;&#x6A21;&#x5F0F;&#x201D;&#xFF0C;&#x96C6;&#x7FA4;&#x4F1A;&#x4EA7;&#x751F;&#x5927;&#x91CF;&#x672A;&#x538B;&#x7F29;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x7EE7;&#x800C;&#x6D88;&#x8017; CPU &#x5E76;&#x5BFC;&#x81F4;&#x5EF6;&#x8FDF;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x4F7F;&#x7528; <code>tidb-lightning-ctl</code> &#x624B;&#x52A8;&#x5C06;&#x96C6;&#x7FA4;&#x8F6C;&#x56DE;&#x201C;&#x666E;&#x901A;&#x6A21;&#x5F0F;&#x201D;&#xFF1A;</p>
-<pre><code>.../tidb-ansible/resouce/bin/tidb-lightning-ctl -switch-mode=normal
-</code></pre></li>
+<pre><code class="lang-shell">.../tidb-ansible/resouce/bin/tidb-lightning-ctl -switch-mode=normal
+</code></pre>
+</li>
 </ul>
 <h2 id="&#x6570;&#x636E;&#x5E93;&#x6743;&#x9650;&#x8981;&#x6C42;"><strong>&#x6570;&#x636E;&#x5E93;&#x6743;&#x9650;&#x8981;&#x6C42;</strong></h2>
 <p>TiDB Lightning &#x9700;&#x8981;&#x4E0B;&#x6E38; TiDB &#x5177;&#x6709;&#x5982;&#x4E0B;&#x6743;&#x9650;&#xFF1A;</p>
@@ -2858,9 +2859,8 @@
 </tbody>
 </table>
 <p>  &#x5982;&#x679C;&#x914D;&#x7F6E;&#x9879; <code>checksum = true</code>&#xFF0C;&#x5219; TiDB Lightning &#x9700;&#x8981;&#x6709;&#x4E0B;&#x6E38; TiDB admin &#x7528;&#x6237;&#x6743;&#x9650;&#x3002;</p>
-<h2 id=""> </h2>
 <h2 id="&#x786C;&#x4EF6;&#x9700;&#x6C42;">&#x786C;&#x4EF6;&#x9700;&#x6C42;</h2>
-<p>tidb-lightning<code>&#x548C;</code>tikv-importer` &#x8FD9;&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x7686;&#x4E3A;&#x8D44;&#x6E90;&#x5BC6;&#x96C6;&#x7A0B;&#x5E8F;&#xFF0C;&#x5EFA;&#x8BAE;&#x5404;&#x81EA;&#x5355;&#x72EC;&#x90E8;&#x7F72;&#x3002;</p>
+<p><code>tidb-lightning</code> &#x548C; <code>tikv-importer</code> &#x8FD9;&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x7686;&#x4E3A;&#x8D44;&#x6E90;&#x5BC6;&#x96C6;&#x7A0B;&#x5E8F;&#xFF0C;&#x5EFA;&#x8BAE;&#x5404;&#x81EA;&#x5355;&#x72EC;&#x90E8;&#x7F72;&#x3002;</p>
 <p>&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x5BFC;&#x5165;&#x6548;&#x80FD;&#xFF0C;&#x5EFA;&#x8BAE;&#x6700;&#x4F4E;&#x786C;&#x4EF6;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</p>
 <p><code>tidb-lightning</code></p>
 <ul>
@@ -2873,18 +2873,16 @@
 <ul>
 <li>32+ &#x903B;&#x8F91;&#x6838; CPU</li>
 <li>40 GB+ &#x5185;&#x5B58;</li>
-<li><p>1 TB+ SSD &#x786C;&#x76D8;&#xFF0C;IOPS &#x8D8A;&#x9AD8;&#x8D8A;&#x597D;&#xFF08;&#x8981;&#x6C42; &#x2265;8000&#xFF09;</p>
-<pre><code>* &#x786C;&#x76D8;&#x5FC5;&#x987B;&#x5927;&#x4E8E;&#x6700;&#x5927;&#x7684; N &#x4E2A;&#x8868;&#x7684;&#x5927;&#x5C0F;&#x603B;&#x548C;&#xFF0C;&#x5176;&#x4E2D; N = max(index-concurrency, table-concurrency)&#x3002;
-</code></pre></li>
-<li><p>&#x4F7F;&#x7528;&#x4E07;&#x5146;&#x7F51;&#x5361;&#xFF0C;&#x5E26;&#x5BBD;&#x9700; 300 MB/s &#x4EE5;&#x4E0A;</p>
-</li>
+<li>1 TB+ SSD &#x786C;&#x76D8;&#xFF0C;IOPS &#x8D8A;&#x9AD8;&#x8D8A;&#x597D;&#xFF08;&#x8981;&#x6C42; &#x2265;8000&#xFF09;</li>
+<li>&#x786C;&#x76D8;&#x5FC5;&#x987B;&#x5927;&#x4E8E;&#x6700;&#x5927;&#x7684; N &#x4E2A;&#x8868;&#x7684;&#x5927;&#x5C0F;&#x603B;&#x548C;&#xFF0C;&#x5176;&#x4E2D; N = max(index-concurrency, table-concurrency)&#x3002;</li>
+<li>&#x4F7F;&#x7528;&#x4E07;&#x5146;&#x7F51;&#x5361;&#xFF0C;&#x5E26;&#x5BBD;&#x9700; 300 MB/s &#x4EE5;&#x4E0A;</li>
 <li>&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D; CPU&#x3001;I/O &#x548C;&#x7F51;&#x7EDC;&#x5E26;&#x5BBD;&#x90FD;&#x53EF;&#x80FD;&#x5360;&#x6EE1;&#xFF0C;&#x5EFA;&#x8BAE;&#x5355;&#x72EC;&#x90E8;&#x7F72;&#x3002;</li>
 </ul>
 <p>&#x5982;&#x679C;&#x673A;&#x5668;&#x5145;&#x88D5;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x90E8;&#x7F72;&#x591A;&#x5957; <code>tidb-lightning</code> + <code>tikv-importer</code>&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x6E90;&#x6570;&#x636E;&#x4EE5;&#x8868;&#x4E3A;&#x7C92;&#x5EA6;&#x8FDB;&#x884C;&#x5207;&#x5206;&#xFF0C;&#x5E76;&#x53D1;&#x5BFC;&#x5165;&#x3002;</p>
-<h2 id="&#x4F7F;&#x7528;-tidb-ansible-&#x90E8;&#x7F72;-lightning">&#x4F7F;&#x7528; TiDB-Ansible &#x90E8;&#x7F72; Lightning</h2>
+<h2 id="&#x4F7F;&#x7528;-tidb-ansible-&#x90E8;&#x7F72;-tidb-lightning">&#x4F7F;&#x7528; TiDB-Ansible &#x90E8;&#x7F72; TiDB Lightning</h2>
 <p>&#x6B64;&#x65B9;&#x6CD5;&#x64CD;&#x4F5C;&#x7B80;&#x5355;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x8FC7;&#x591A;&#x7684;&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;&#x9700;&#x5B8C;&#x6210; TiDB-Ansible &#x7528;&#x6237;&#x7684;&#x521B;&#x5EFA;&#x3001;&#x4E92;&#x4FE1;&#x3001; sudo &#x64CD;&#x4F5C;&#x3002;</p>
-<p><strong>Step1&#xFF1A;</strong> &#x7F16;&#x8F91; inventory.ini&#xFF0C;&#x5206;&#x522B;&#x914D;&#x7F6E;&#x4E00;&#x4E2A; IP &#x6765;&#x90E8;&#x7F72; tidb-lightning &#x548C; tikv-importer&#x3002;</p>
-<pre><code>...
+<p>(1) &#x7F16;&#x8F91; inventory.ini&#xFF0C;&#x5206;&#x522B;&#x914D;&#x7F6E;&#x4E00;&#x4E2A; IP &#x6765;&#x90E8;&#x7F72; tidb-lightning &#x548C; tikv-importer&#x3002;</p>
+<pre><code class="lang-conf">...
 [importer_server]
 # import_dir &#x4E3A;&#x8F6C;&#x6362;&#x7684;&#x4E2D;&#x95F4;&#x6570;&#x636E;&#x5B58;&#x653E;&#x8DEF;&#x5F84;
 IS1 ansible_host=172.16.4.1 deploy_dir=/data/deploy tikv_importer_port=8287 import_dir=/data/import
@@ -2892,8 +2890,9 @@ IS1 ansible_host=172.16.4.1 deploy_dir=/data/deploy tikv_importer_port=8287 impo
 # data_source_dir &#x4E3A;&#x9700;&#x5BFC;&#x5165;&#x7684;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x8DEF;&#x5F84; 
 LS1 ansible_host=172.16.4.2 deploy_dir=/data/deploy tidb_lightning_pprof_port=8289 data_source_dir=/data/wanted
 ...
-</code></pre><p><strong>Step2&#xFF1A;</strong> &#x51C6;&#x5907;&#x9700;&#x8981;&#x5BFC;&#x5165;&#x7684;&#x6570;&#x636E;&#x653E;&#x5230;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; data_source_dir &#x6307;&#x5B9A;&#x7684;&#x8DEF;&#x5F84;&#x3002;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x662F; mydumper &#x5907;&#x4EFD;&#x7684; sql &#x6587;&#x4EF6;&#x6216;&#x8005;&#x662F; csv &#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x662F; csv &#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x505A;&#x989D;&#x5916;&#x914D;&#x7F6E;&#x3002;&#x4FEE;&#x6539; conf/tidb-lightning.yml</p>
-<pre><code>...
+</code></pre>
+<p>(2) &#x51C6;&#x5907;&#x9700;&#x8981;&#x5BFC;&#x5165;&#x7684;&#x6570;&#x636E;&#x653E;&#x5230;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; data_source_dir &#x6307;&#x5B9A;&#x7684;&#x8DEF;&#x5F84;&#x3002;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x662F; mydumper &#x5907;&#x4EFD;&#x7684; sql &#x6587;&#x4EF6;&#x6216;&#x8005;&#x662F; csv &#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x662F; csv &#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x505A;&#x989D;&#x5916;&#x914D;&#x7F6E;&#x3002;&#x4FEE;&#x6539; conf/tidb-lightning.yml</p>
+<pre><code class="lang-conf">...
 [mydumper]
 no-schema: true
 [mydumper.csv]
@@ -2915,13 +2914,16 @@ backslash-escape = true
 # &#x662F;&#x5426;&#x79FB;&#x9664;&#x4EE5;&#x5206;&#x9694;&#x7B26;&#x7ED3;&#x675F;&#x7684;&#x884C;&#x3002;
 trim-last-separator = false
 ...
-</code></pre><p><strong>Step3&#xFF1A;</strong> &#x521D;&#x59CB;&#x5316; Lightning &#x548C; Importer</p>
-<pre><code>$ ansible-playbook bootsrap.yml -l IS1&#xFF0C;LS
-</code></pre><p><strong>Step4&#xFF1A;</strong> &#x90E8;&#x7F72; Lightning &#x548C; Importer</p>
-<pre><code>$ ansible-playbook deploy.yml -l IS1&#xFF0C;LS
+</code></pre>
+<p>(3) &#x521D;&#x59CB;&#x5316; Lightning &#x548C; Importer</p>
+<pre><code class="lang-shell">$ ansible-playbook bootsrap.yml -l IS1&#xFF0C;LS
+</code></pre>
+<p>(4) &#x90E8;&#x7F72; Lightning &#x548C; Importer</p>
+<pre><code class="lang-shell">$ ansible-playbook deploy.yml -l IS1&#xFF0C;LS
 &#x6216;&#x8005;
 $ ansible-playbook deploy.yml --tags=lightning
-</code></pre><p><strong>Step5&#xFF1A;</strong> &#x542F;&#x52A8; Importer &#x4EE5;&#x53CA; Lightning</p>
+</code></pre>
+<p>(5) &#x542F;&#x52A8; Importer &#x4EE5;&#x53CA; Lightning</p>
 <p>&#x6CE8;&#x610F;&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x542F;&#x52A8; Importer &#xFF0C;&#x518D;&#x542F;&#x52A8; Lightning &#xFF0C;&#x987A;&#x5E8F;&#x4E0D;&#x80FD;&#x6362;&#x3002;</p>
 <ol>
 <li>&#x767B;&#x5F55;&#x5230;&#x90E8;&#x7F72; Importer &#x4EE5;&#x53CA; Lightning &#x7684;&#x670D;&#x52A1;&#x5668;</li>
@@ -2929,17 +2931,17 @@ $ ansible-playbook deploy.yml --tags=lightning
 <li>&#x5728; Importer &#x76EE;&#x5F55;&#x4E0B;&#x6267;&#x884C; <em>scripts/start_importer.sh</em>&#xFF0C;&#x542F;&#x52A8; Importer</li>
 <li>&#x5728; Lightning &#x76EE;&#x5F55;&#x4E0B;&#x6267;&#x884C; <em>scripts/start_lightning.sh</em>&#xFF0C;&#x5F00;&#x59CB;&#x5BFC;&#x5165;&#x6570;&#x636E;</li>
 </ol>
-<p><strong>Step6&#xFF1A;</strong> &#x67E5;&#x770B;&#x5BFC;&#x5165;&#x72B6;&#x6001;</p>
+<p>(6) &#x67E5;&#x770B;&#x5BFC;&#x5165;&#x72B6;&#x6001;</p>
 <ul>
 <li>&#x4F7F;&#x7528; grafana &#x76D1;&#x63A7;&#x67E5;&#x770B;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#x3002;</li>
 <li>&#x4F7F;&#x7528;&#x65E5;&#x5FD7;&#x67E5;&#x770B;</li>
 </ul>
 <p>&#x82E5;&#x6570;&#x636E;&#x987A;&#x5229;&#x5BFC;&#x5165;&#x5B8C;&#x6210;&#xFF0C;lightning &#x65E5;&#x5FD7;&#x4F1A;&#x663E;&#x793A;[&quot;the whole procedure completed&quot;] &#xFF0C;[&quot;tidb lightning exit&quot;]&#x7B49;&#x5173;&#x952E;&#x4FE1;&#x606F;&#x3002;</p>
-<p><strong>Step7&#xFF1A;</strong> &#x5173;&#x95ED; Importer</p>
-<p>&#x6570;&#x636E;&#x5BFC;&#x5165;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x5728; Importer &#x76EE;&#x5F55;&#x4E0B;&#x6267;&#x884C; <em> scripts/stop_importer.sh  </em></p>
-<h2 id="&#x624B;&#x52A8;&#x90E8;&#x7F72;-tidb-lightning">&#x624B;&#x52A8;&#x90E8;&#x7F72; TiDB Lightning</h2>
+<p>(7) &#x5173;&#x95ED; Importer</p>
+<p>&#x6570;&#x636E;&#x5BFC;&#x5165;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x5728; Importer &#x76EE;&#x5F55;&#x4E0B;&#x6267;&#x884C; <em>scripts/stop_importer.sh</em></p>
+<h1 id="2222-&#x624B;&#x52A8;&#x90E8;&#x7F72;-tidb-lightning">2.2.2.2 &#x624B;&#x52A8;&#x90E8;&#x7F72; TiDB Lightning</h1>
 <p>&#x4ECE;&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;&#x4E0E; TiDB &#x7248;&#x672C;&#x4E00;&#x76F4;&#x7684; Lightning &#x5B89;&#x88C5;&#x5305;&#xFF0C;&#x5E76;&#x5C06;&#x5B89;&#x88C5;&#x5305;&#x4E0A;&#x4F20;&#x81F3;&#x6EE1;&#x8DB3;&#x786C;&#x4EF6;&#x8981;&#x6C42;&#x7684;&#x670D;&#x52A1;&#x5668;&#x3002;&#x89E3;&#x538B;&#x5B89;&#x88C5;&#x5305;&#x540E;&#x5728; bin &#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x5EFA; tikv-importer.toml&#xFF0C;tidb-lightning.toml&#xFF0C;&#x8BE6;&#x7EC6;&#x914D;&#x7F6E;&#x8BF4;&#x660E;&#x89C1;&#x540E;&#x9762;&#x5C0F;&#x8282;&#xFF0C;TiDB Lightning &#x542F;&#x505C;&#x7B49;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x4E0E; ansible &#x90E8;&#x7F72;&#x4E00;&#x81F4;&#x3002;</p>
-<p>TiDB Lightning TiDB-Backend</p>
+<h1 id="2223-tidb-lightning-tidb-backend">2.2.2.3 TiDB Lightning TiDB-Backend</h1>
 <h2 id="importer-backend-&#x548C;-tidb-backend-&#x7684;&#x533A;&#x522B;">Importer-backend &#x548C; TiDB-backend &#x7684;&#x533A;&#x522B;</h2>
 <p>TiDB Lightning &#x7684;&#x540E;&#x7AEF;&#x51B3;&#x5B9A; tidb-lightning &#x5C06;&#x5982;&#x4F55;&#x628A;&#x5C06;&#x6570;&#x636E;&#x5BFC;&#x5165;&#x5230;&#x76EE;&#x6807;&#x96C6;&#x7FA4;&#x4E2D;&#x3002;&#x76EE;&#x524D;&#xFF0C;TiDB Lightning &#x652F;&#x6301; Importer-backend&#xFF08;&#x9ED8;&#x8BA4;&#xFF09;&#x548C; TiDB-backend &#x4E24;&#x79CD;&#x540E;&#x7AEF;&#xFF0C;&#x4E24;&#x8005;&#x5BFC;&#x5165;&#x6570;&#x636E;&#x7684;&#x533A;&#x522B;&#x5982;&#x4E0B;&#xFF1A;</p>
 <ul>
@@ -2988,27 +2990,29 @@ $ ansible-playbook deploy.yml --tags=lightning
 <ul>
 <li>16 &#x903B;&#x8F91;&#x6838; CPU</li>
 <li>&#x8DB3;&#x591F;&#x50A8;&#x5B58;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x7684; SSD &#x786C;&#x76D8;&#xFF0C;&#x8BFB;&#x53D6;&#x901F;&#x5EA6;&#x8D8A;&#x5FEB;&#x8D8A;&#x597D;</li>
-<li><p>&#x5343;&#x5146;&#x7F51;&#x5361;</p>
+<li>&#x5343;&#x5146;&#x7F51;&#x5361;</li>
+</ul>
 <h2 id="&#x90E8;&#x7F72;-tidb-backend">&#x90E8;&#x7F72; TiDB-backend</h2>
 <p>&#x4F7F;&#x7528; TiDB-backend &#x65F6;&#xFF0C;&#x4F60;&#x65E0;&#x9700;&#x90E8;&#x7F72; tikv-importer&#x3002;&#x4E0E;&#x4E4B;&#x524D;&#x7684;&#x90E8;&#x7F72;&#x76F8;&#x6BD4;&#xFF0C;&#x90E8;&#x7F72; TiDB-backend &#x65F6;&#x6709;&#x5982;&#x4E0B;&#x4E0D;&#x540C;&#xFF1A;</p>
-</li>
-<li><p>&#x53EF;&#x4EE5;&#x8DF3;&#x8FC7;&#x6240;&#x6709;&#x6D89;&#x53CA; tikv-importer &#x7684;&#x6B65;&#x9AA4;&#x3002;</p>
-</li>
+<ul>
+<li>&#x53EF;&#x4EE5;&#x8DF3;&#x8FC7;&#x6240;&#x6709;&#x6D89;&#x53CA; tikv-importer &#x7684;&#x6B65;&#x9AA4;&#x3002;</li>
 <li>&#x5FC5;&#x987B;&#x66F4;&#x6539;&#x76F8;&#x5E94;&#x914D;&#x7F6E;&#x7533;&#x660E;&#x4F7F;&#x7528;&#x7684;&#x662F; TiDB-backend&#x3002;</li>
 </ul>
-<p><strong>Step1&#xFF1A;</strong> &#x7F16;&#x8F91; inventory.ini&#xFF0C;[importer_server] &#x90E8;&#x5206;&#x53EF;&#x4EE5;&#x7559;&#x7A7A;&#x3002;</p>
-<pre><code>...
+<p>(1) &#x7F16;&#x8F91; inventory.ini&#xFF0C;[importer_server] &#x90E8;&#x5206;&#x53EF;&#x4EE5;&#x7559;&#x7A7A;&#x3002;</p>
+<pre><code class="lang-conf">...
 [importer_server]
 # keep empty
 [lightning_server]
 # data_source_dir &#x4E3A;&#x9700;&#x5BFC;&#x5165;&#x7684;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x8DEF;&#x5F84; 
 LS1 ansible_host=172.16.4.2 deploy_dir=/data/deploy tidb_lightning_pprof_port=8289 data_source_dir=/data/wante
 ...
-</code></pre><p><strong>Step2&#xFF1A;</strong> &#x51C6;&#x5907;&#x9700;&#x8981;&#x5BFC;&#x5165;&#x7684;&#x6570;&#x636E;&#x653E;&#x5230;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; data_source_dir &#x6307;&#x5B9A;&#x7684;&#x8DEF;&#x5F84;&#x3002;&#x540C;&#x65F6;&#x4FEE;&#x6539; conf/tidb-lightning.yml &#x4E2D;&#x7684; backend &#x53C2;&#x6570;</p>
-<pre><code>tikv_importer:
+</code></pre>
+<p>(2) &#x51C6;&#x5907;&#x9700;&#x8981;&#x5BFC;&#x5165;&#x7684;&#x6570;&#x636E;&#x653E;&#x5230;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D; data_source_dir &#x6307;&#x5B9A;&#x7684;&#x8DEF;&#x5F84;&#x3002;&#x540C;&#x65F6;&#x4FEE;&#x6539; conf/tidb-lightning.yml &#x4E2D;&#x7684; backend &#x53C2;&#x6570;</p>
+<pre><code class="lang-conf">tikv_importer:
 backend: &quot;tidb&quot; # &lt;-- &#x6539;&#x6210; &#x201C;tidb&#x201D;
-</code></pre><p>&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x662F; mydumper &#x5907;&#x4EFD;&#x7684; sql &#x6587;&#x4EF6;&#x6216;&#x8005;&#x662F; csv &#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x662F; csv &#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x505A;&#x989D;&#x5916;&#x914D;&#x7F6E;&#x3002;&#x4FEE;&#x6539; conf/tidb-lightning.yml</p>
-<pre><code>...
+</code></pre>
+<p>&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x662F; mydumper &#x5907;&#x4EFD;&#x7684; sql &#x6587;&#x4EF6;&#x6216;&#x8005;&#x662F; csv &#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x662F; csv &#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x505A;&#x989D;&#x5916;&#x914D;&#x7F6E;&#x3002;&#x4FEE;&#x6539; conf/tidb-lightning.yml</p>
+<pre><code class="lang-conf">...
 [mydumper]
 no-schema: true
 [mydumper.csv]
@@ -3030,36 +3034,45 @@ backslash-escape = true
 # &#x662F;&#x5426;&#x79FB;&#x9664;&#x4EE5;&#x5206;&#x9694;&#x7B26;&#x7ED3;&#x675F;&#x7684;&#x884C;&#x3002;
 trim-last-separator = false
 ...
-</code></pre><p><strong>Step3&#xFF1A;</strong> &#x521D;&#x59CB;&#x5316; Lightning</p>
-<pre><code>$ ansible-playbook bootsrap.yml -l LS
-</code></pre><p><strong>Step4&#xFF1A;</strong> &#x90E8;&#x7F72; Lightning</p>
-<pre><code>$ ansible-playbook deploy.yml -l LS
+</code></pre>
+<p>(3) &#x521D;&#x59CB;&#x5316; Lightning</p>
+<pre><code class="lang-shell">$ ansible-playbook bootsrap.yml -l LS
+</code></pre>
+<p>(4) &#x90E8;&#x7F72; Lightning</p>
+<pre><code class="lang-shell">$ ansible-playbook deploy.yml -l LS
 &#x6216;&#x8005;
 $ ansible-playbook deploy.yml --tags=lightning
-</code></pre><p><strong>Step5&#xFF1A;</strong> &#x542F;&#x52A8; Lightning</p>
+</code></pre>
+<p>(5) &#x542F;&#x52A8; Lightning</p>
 <ol>
 <li>&#x767B;&#x5F55;&#x5230; Lightning &#x7684;&#x670D;&#x52A1;&#x5668;</li>
 <li>&#x8FDB;&#x5165;&#x90E8;&#x7F72;&#x76EE;&#x5F55;</li>
 <li>&#x5728; Lightning &#x76EE;&#x5F55;&#x4E0B;&#x6267;&#x884C; <em>scripts/start_lightning.sh</em>&#xFF0C;&#x5F00;&#x59CB;&#x5BFC;&#x5165;&#x6570;&#x636E;</li>
 </ol>
-<p><strong>Step6&#xFF1A;</strong> &#x67E5;&#x770B;&#x5BFC;&#x5165;&#x72B6;&#x6001;</p>
+<p>(6) &#x67E5;&#x770B;&#x5BFC;&#x5165;&#x72B6;&#x6001;</p>
 <p>&#x4F7F;&#x7528; gafana &#x76D1;&#x63A7;&#x67E5;&#x770B;</p>
 <p>&#x4F7F;&#x7528;&#x65E5;&#x5FD7;&#x67E5;&#x770B;</p>
-<h1 id="tidb-lightning-web-&#x754C;&#x9762;">TiDB Lightning Web &#x754C;&#x9762;</h1>
+<h1 id="2224-tidb-lightning-web-&#x754C;&#x9762;">2.2.2.4 TiDB Lightning Web &#x754C;&#x9762;</h1>
 <p>TiDB Lightning &#x652F;&#x6301;&#x5728;&#x7F51;&#x9875;&#x4E0A;&#x67E5;&#x770B;&#x5BFC;&#x5165;&#x8FDB;&#x5EA6;&#x6216;&#x6267;&#x884C;&#x4E00;&#x4E9B;&#x7B80;&#x5355;&#x4EFB;&#x52A1;&#x7BA1;&#x7406;&#xFF0C;&#x8FD9;&#x5C31;&#x662F; TiDB Lightning &#x7684;&#x670D;&#x52A1;&#x5668;&#x6A21;&#x5F0F;&#x3002;&#x672C;&#x6587;&#x5C06;&#x4ECB;&#x7ECD;&#x670D;&#x52A1;&#x5668;&#x6A21;&#x5F0F;&#x4E0B;&#x7684; Web &#x754C;&#x9762;&#x548C;&#x4E00;&#x4E9B;&#x5E38;&#x89C1;&#x64CD;&#x4F5C;&#x3002;</p>
 <h2 id="&#x6CE8;&#x610F;">&#x6CE8;&#x610F;</h2>
 <p>&#x670D;&#x52A1;&#x5668;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;TiDB Lightning &#x4E0D;&#x4F1A;&#x7ACB;&#x5373;&#x5F00;&#x59CB;&#x8FD0;&#x884C;&#xFF0C;&#x800C;&#x662F;&#x901A;&#x8FC7;&#x7528;&#x6237;&#x5728; web &#x9875;&#x9762;&#x63D0;&#x4EA4;&#xFF08;&#x591A;&#x4E2A;&#xFF09;&#x4EFB;&#x52A1;&#x6765;&#x5BFC;&#x5165;&#x6570;&#x636E;&#x3002;</p>
 <h2 id="&#x542F;&#x52A8;&#x65B9;&#x5F0F;">&#x542F;&#x52A8;&#x65B9;&#x5F0F;</h2>
 <p>&#x542F;&#x7528;&#x670D;&#x52A1;&#x5668;&#x6A21;&#x5F0F;&#x7684;&#x65B9;&#x5F0F;&#x6709;&#x5982;&#x4E0B;&#x51E0;&#x79CD;&#xFF1A;</p>
 <ul>
-<li>&#x5728;&#x542F;&#x52A8; tidb-lightning &#x65F6;&#x52A0;&#x4E0A;&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570; --server-mode&#x3002;<pre><code>./tidb-lightning --server-mode --status-addr :8289
-</code></pre></li>
-<li>&#x5728; tidb-lightning.toml &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x8BBE;&#x7F6E; lightning.server-mode&#x3002;<pre><code>[lightning]
+<li>&#x5728;&#x542F;&#x52A8; tidb-lightning &#x65F6;&#x52A0;&#x4E0A;&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570; --server-mode&#x3002;</li>
+</ul>
+<pre><code class="lang-shell">./tidb-lightning --server-mode --status-addr :8289
+</code></pre>
+<ul>
+<li>&#x5728; tidb-lightning.toml &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x8BBE;&#x7F6E; lightning.server-mode&#x3002;</li>
+</ul>
+<pre><code class="lang-conf">[lightning]
 server-mode = true
 status-addr = &apos;:8289&apos;
-</code></pre>TiDB Lightning &#x542F;&#x52A8;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE; <a href="http://127.0.0.1:8289" target="_blank">http://127.0.0.1:8289</a> &#x6765;&#x7BA1;&#x7406;&#x7A0B;&#x5E8F;&#xFF08;&#x5B9E;&#x9645;&#x7684; URL &#x53D6;&#x51B3;&#x4E8E;&#x4F60;&#x7684; status-addr &#x8BBE;&#x7F6E;&#xFF09;&#x3002;<h2 id="tidb-lightning-web-&#x9996;&#x9875;">TiDB Lightning Web &#x9996;&#x9875;</h2>
-<img src="../../res/session2/chapter2/lightning-in-action/1.png" alt="1.png"></li>
-</ul>
+</code></pre>
+<p>TiDB Lightning &#x542F;&#x52A8;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE; <a href="http://127.0.0.1:8289" target="_blank">http://127.0.0.1:8289</a> &#x6765;&#x7BA1;&#x7406;&#x7A0B;&#x5E8F;&#xFF08;&#x5B9E;&#x9645;&#x7684; URL &#x53D6;&#x51B3;&#x4E8E;&#x4F60;&#x7684; status-addr &#x8BBE;&#x7F6E;&#xFF09;&#x3002;</p>
+<h2 id="tidb-lightning-web-&#x9996;&#x9875;">TiDB Lightning Web &#x9996;&#x9875;</h2>
+<p><img src="../../res/session2/chapter2/lightning-in-action/1.png" alt="1.png"></p>
 <p>&#x6807;&#x9898;&#x680F;&#x4E0A;&#x56FE;&#x6807;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x4F9D;&#x6B21;&#x4E3A;&#xFF1A;</p>
 <table>
 <thead>
@@ -3117,17 +3130,20 @@ status-addr = &apos;:8289&apos;
 <p><img src="../../res/session2/chapter2/lightning-in-action/4.png" alt="4.png"></p>
 <p>&#x6BCF;&#x4E2A;&#x4EFB;&#x52A1;&#x90FD;&#x662F;&#x4F9D;&#x636E;&#x63D0;&#x4EA4;&#x65F6;&#x95F4;&#x6765;&#x6807;&#x8BB0;&#x3002;&#x70B9;&#x51FB;&#x8BE5;&#x4EFB;&#x52A1;&#x5C06;&#x663E;&#x793A; JSON &#x683C;&#x5F0F;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;</p>
 <p>&#x70B9;&#x51FB;&#x4EFB;&#x52A1;&#x4E0A;&#x7684; &#x22EE; &#x53EF;&#x4EE5;&#x5BF9;&#x8BE5;&#x4EFB;&#x52A1;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x7ACB;&#x5373;&#x505C;&#x6B62;&#x4EFB;&#x52A1;&#xFF0C;&#x6216;&#x91CD;&#x65B0;&#x6392;&#x5E8F;&#x961F;&#x5217;&#x4E2D;&#x7684;&#x4EFB;&#x52A1;&#x3002;</p>
-<h1 id="&#x5E93;&#x8868;&#x8FC7;&#x6EE4;">&#x5E93;&#x8868;&#x8FC7;&#x6EE4;</h1>
+<h1 id="2225-&#x5E93;&#x8868;&#x8FC7;&#x6EE4;">2.2.2.5 &#x5E93;&#x8868;&#x8FC7;&#x6EE4;</h1>
 <p>TiDB Lightning&#x901A;&#x8FC7;&#x914D;&#x7F6E;&#x9ED1;&#x767D;&#x540D;&#x5355;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x8FC7;&#x6EE4;&#x6389;&#x67D0;&#x4E9B;&#x6570;&#x636E;&#x5E93;&#x548C;&#x8868;&#x3002;</p>
 <h2 id="&#x5E93;&#x8FC7;&#x6EE4;">&#x5E93;&#x8FC7;&#x6EE4;</h2>
-<pre><code>[black-white-list]
+<pre><code class="lang-conf">[black-white-list]
 do-dbs = [&quot;pattern1&quot;, &quot;pattern2&quot;, &quot;pattern3&quot;]
 ignore-dbs = [&quot;pattern4&quot;, &quot;pattern5&quot;]
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#x5982;&#x679C; [black-white-list] &#x4E0B;&#x7684; do-dbs &#x5217;&#x8868;&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x540D;&#x79F0;&#x5339;&#x914D; do-dbs &#x5217;&#x8868;&#x4E2D;&#x4EFB;&#x4F55;&#x4E00;&#x9879;&#xFF0C;&#x5219;&#x6570;&#x636E;&#x5E93;&#x4F1A;&#x88AB;&#x5BFC;&#x5165;&#x3002;&#x5426;&#x5219;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x4F1A;&#x88AB;&#x7565;&#x8FC7;&#x3002;</li>
 <li>&#x5982;&#x679C;do-dbs &#x5217;&#x8868;&#x4E3A;&#x7A7A;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x540D;&#x79F0;&#x5339;&#x914D; ignore-dbs &#x5217;&#x8868;&#x4E2D;&#x4EFB;&#x4F55;&#x4E00;&#x9879;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x4F1A;&#x88AB;&#x7565;&#x8FC7;&#x3002;</li>
-<li>&#x5982;&#x679C;&#x6570;&#x636E;&#x5E93;&#x540D;&#x79F0;&#x540C;&#x65F6;&#x5339;&#x914D; do-dbs &#x548C; ignore-dbs &#x5217;&#x8868;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x4F1A;&#x88AB;&#x5BFC;&#x5165;&#x3002;<h2 id="&#x8868;&#x8FC7;&#x6EE4;">&#x8868;&#x8FC7;&#x6EE4;</h2>
-<pre><code>[[black-white-list.do-tables]]
+<li>&#x5982;&#x679C;&#x6570;&#x636E;&#x5E93;&#x540D;&#x79F0;&#x540C;&#x65F6;&#x5339;&#x914D; do-dbs &#x548C; ignore-dbs &#x5217;&#x8868;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x4F1A;&#x88AB;&#x5BFC;&#x5165;&#x3002;</li>
+</ul>
+<h2 id="&#x8868;&#x8FC7;&#x6EE4;">&#x8868;&#x8FC7;&#x6EE4;</h2>
+<pre><code class="lang-conf">[[black-white-list.do-tables]]
 db-name = &quot;db-pattern-1&quot;
 tbl-name = &quot;table-pattern-1&quot;
 #&#x53EF;&#x5B9A;&#x4E49;&#x591A;&#x79CD;&#x5339;&#x914D;&#x89C4;&#x5219;
@@ -3140,7 +3156,8 @@ tbl-name = &quot;table-pattern-3&quot;
 [[black-white-list.ignore-tables]]
 db-name = &quot;db-pattern-4&quot;
 tbl-name = &quot;table-pattern-4&quot;
-</code></pre></li>
+</code></pre>
+<ul>
 <li>&#x5982;&#x679C; do-tables &#x5217;&#x8868;&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x8868;&#x7684;&#x9650;&#x5B9A;&#x540D;&#x79F0;&#x5339;&#x914D; do-tables &#x5217;&#x8868;&#x4E2D;&#x4EFB;&#x4F55;&#x4E00;&#x5BF9;&#xFF0C;&#x5219;&#x8868;&#x4F1A;&#x88AB;&#x5BFC;&#x5165;&#xFF0C;&#x5426;&#x5219;&#xFF0C;&#x8868;&#x4F1A;&#x88AB;&#x7565;&#x8FC7;&#x3002;</li>
 <li>&#x5982;&#x679C; do-tables &#x5217;&#x8868;&#x4E0D;&#x7A7A;&#xFF0C;&#x8868;&#x7684;&#x9650;&#x5B9A;&#x540D;&#x79F0;&#x5339;&#x914D; ignore-tables &#x5217;&#x8868;&#x4E2D;&#x4EFB;&#x4F55;&#x4E00;&#x5BF9;&#xFF0C;&#x8868;&#x4F1A;&#x88AB;&#x7565;&#x8FC7;&#x3002;</li>
 <li>&#x5982;&#x679C;&#x8868;&#x7684;&#x9650;&#x5B9A;&#x540D;&#x79F0;&#x540C;&#x65F6;&#x5339;&#x914D; do-tables &#x548C; ignore-tables &#x5217;&#x8868;&#xFF0C;&#x8868;&#x4F1A;&#x88AB;&#x5BFC;&#x5165;&#x3002;</li>
@@ -3181,7 +3198,7 @@ tbl-name = &quot;table-pattern-4&quot;
 </tbody>
 </table>
 <p>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code>[black-white-list]
+<pre><code class="lang-conf">[black-white-list]
 do-dbs = [
     &quot;forum_backup_2018&quot;,  # &#x89C4;&#x5219; A
     &quot;~^(logs|forum)$&quot;,    # &#x89C4;&#x5219; B&#xFF0C;&#x9996;&#x5B57;&#x7B26; ~ &#x4F1A;&#x88AB;&#x89E3;&#x6790;&#x4E3A; Go &#x8BED;&#x8A00;&#x7684;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x3002;
@@ -3200,7 +3217,8 @@ tbl-name = &quot;~^messages.*&quot;
 [[black-white-list.do-tables]]      # &#x89C4;&#x5219; F
 db-name = &quot;~^forum.*&quot;
 tbl-name = &quot;messages&quot;
-</code></pre><p>&#x9996;&#x5148;&#x8FDB;&#x884C;&#x5E93;&#x8FC7;&#x6EE4;&#xFF1A;
+</code></pre>
+<p>&#x9996;&#x5148;&#x8FDB;&#x884C;&#x5E93;&#x8FC7;&#x6EE4;&#xFF1A;
 | &#x6570;&#x636E;&#x5E93; | &#x7ED3;&#x679C; | 
 |:----:|:----:|
 | <code>logs</code> | &#x5BFC;&#x5165;&#xFF08;&#x89C4;&#x5219; B&#xFF09; | 
@@ -3248,10 +3266,10 @@ tbl-name = &quot;messages&quot;
 </tr>
 </tbody>
 </table>
-<h1 id="&#x65AD;&#x70B9;&#x7EED;&#x4F20;">&#x65AD;&#x70B9;&#x7EED;&#x4F20;</h1>
+<h1 id="2226-&#x65AD;&#x70B9;&#x7EED;&#x4F20;">2.2.2.6 &#x65AD;&#x70B9;&#x7EED;&#x4F20;</h1>
 <p>&#x5728;&#x6570;&#x636E;&#x91CF;&#x5F88;&#x5927;&#x7684;&#x8FC1;&#x79FB;&#x65F6;&#xFF0C;&#x6570;&#x636E;&#x5BFC;&#x5165;&#x65F6;&#x95F4;&#x8F83;&#x957F;&#xFF0C;&#x957F;&#x65F6;&#x95F4;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x6709;&#x53EF;&#x80FD;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;&#x3002;&#x82E5;&#x6B64;&#x65F6;&#x6BCF;&#x6B21;&#x91CD;&#x542F;&#x90FD;&#x4ECE;&#x5934;&#x5F00;&#x59CB;&#x5BFC;&#x5165;&#xFF0C; &#x4F1A;&#x6D6A;&#x8D39;&#x5927;&#x91CF;&#x65F6;&#x95F4;&#x3002;Lightning&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x91CD;&#x542F;&#x65F6;&#x4ECD;&#x7136;&#x63A5;&#x7740;&#x4E4B;&#x524D;&#x7684;&#x8FDB;&#x5EA6;&#x7EE7;&#x7EED;&#x5DE5;&#x4F5C;&#x3002;</p>
 <h2 id="&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x7684;&#x542F;&#x7528;">&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x7684;&#x542F;&#x7528;</h2>
-<pre><code>[checkpoint]
+<pre><code class="lang-conf">[checkpoint]
 # &#x542F;&#x7528;&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x3002;
 # &#x5BFC;&#x5165;&#x65F6;&#xFF0C;Lightning &#x4F1A;&#x8BB0;&#x5F55;&#x5F53;&#x524D;&#x8FDB;&#x5EA6;&#x3002;
 enable = true
@@ -3271,35 +3289,43 @@ driver = &quot;file&quot;
   dsn = &quot;/tmp/tidb_lightning_checkpoint.pb&quot;
 # &#x5BFC;&#x5165;&#x6210;&#x529F;&#x540E;&#x662F;&#x5426;&#x4FDD;&#x7559;&#x65AD;&#x70B9;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A;&#x5220;&#x9664;&#x3002;
 # keep-after-success = false
-</code></pre><p>TiDB Lightning &#x652F;&#x6301;&#x4E24;&#x79CD;&#x5B58;&#x50A8;&#x65B9;&#x5F0F;&#xFF1A;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x6216; MySQL &#x6570;&#x636E;&#x5E93;&#x3002;</p>
+</code></pre>
+<p>TiDB Lightning &#x652F;&#x6301;&#x4E24;&#x79CD;&#x5B58;&#x50A8;&#x65B9;&#x5F0F;&#xFF1A;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x6216; MySQL &#x6570;&#x636E;&#x5E93;&#x3002;</p>
 <ul>
 <li>&#x82E5; driver = &quot;file&quot;&#xFF0C;&#x65AD;&#x70B9;&#x4F1A;&#x5B58;&#x653E;&#x5728;&#x4E00;&#x4E2A;&#x672C;&#x5730;&#x6587;&#x4EF6;&#xFF0C;&#x5176;&#x8DEF;&#x5F84;&#x7531; dsn &#x53C2;&#x6570;&#x6307;&#x5B9A;&#x3002;&#x7531;&#x4E8E;&#x65AD;&#x70B9;&#x4F1A;&#x9891;&#x7E41;&#x66F4;&#x65B0;&#xFF0C;&#x5EFA;&#x8BAE;&#x5C06;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x653E;&#x5230;&#x5199;&#x5165;&#x6B21;&#x6570;&#x4E0D;&#x53D7;&#x9650;&#x5236;&#x7684;&#x76D8;&#x4E0A;&#xFF0C;&#x4F8B;&#x5982; RAM disk&#x3002;</li>
-<li>&#x82E5; driver = &quot;mysql&quot;&#xFF0C;&#x65AD;&#x70B9;&#x53EF;&#x4EE5;&#x5B58;&#x653E;&#x5728;&#x4EFB;&#x4F55;&#x517C;&#x5BB9; MySQL 5.7 &#x6216;&#x4EE5;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#xFF0C;&#x5305;&#x62EC; MariaDB &#x548C; TiDB&#x3002;&#x5728;&#x6CA1;&#x6709;&#x9009;&#x62E9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x9ED8;&#x8BA4;&#x4F1A;&#x5B58;&#x5728;&#x76EE;&#x6807;&#x6570;&#x636E;&#x5E93;&#x91CC;(&#x4E0D;&#x5EFA;&#x8BAE;)&#xFF0C;&#x5EFA;&#x8BAE;&#x53E6;&#x5916;&#x90E8;&#x7F72;&#x4E00;&#x53F0;&#x517C;&#x5BB9; MySQL &#x7684;&#x4E34;&#x65F6;&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#x5668;&#x3002;&#x6B64;&#x6570;&#x636E;&#x5E93;&#x4E5F;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;&#x5728; tidb-lightning &#x7684;&#x4E3B;&#x673A;&#x4E0A;&#x3002;&#x5BFC;&#x5165;&#x5B8C;&#x6BD5;&#x540E;&#x53EF;&#x4EE5;&#x5220;&#x9664;&#x3002;<h2 id="&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x7684;&#x63A7;&#x5236;">&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x7684;&#x63A7;&#x5236;</h2>
-</li>
+<li>&#x82E5; driver = &quot;mysql&quot;&#xFF0C;&#x65AD;&#x70B9;&#x53EF;&#x4EE5;&#x5B58;&#x653E;&#x5728;&#x4EFB;&#x4F55;&#x517C;&#x5BB9; MySQL 5.7 &#x6216;&#x4EE5;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#xFF0C;&#x5305;&#x62EC; MariaDB &#x548C; TiDB&#x3002;&#x5728;&#x6CA1;&#x6709;&#x9009;&#x62E9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x9ED8;&#x8BA4;&#x4F1A;&#x5B58;&#x5728;&#x76EE;&#x6807;&#x6570;&#x636E;&#x5E93;&#x91CC;(&#x4E0D;&#x5EFA;&#x8BAE;)&#xFF0C;&#x5EFA;&#x8BAE;&#x53E6;&#x5916;&#x90E8;&#x7F72;&#x4E00;&#x53F0;&#x517C;&#x5BB9; MySQL &#x7684;&#x4E34;&#x65F6;&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#x5668;&#x3002;&#x6B64;&#x6570;&#x636E;&#x5E93;&#x4E5F;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;&#x5728; tidb-lightning &#x7684;&#x4E3B;&#x673A;&#x4E0A;&#x3002;&#x5BFC;&#x5165;&#x5B8C;&#x6BD5;&#x540E;&#x53EF;&#x4EE5;&#x5220;&#x9664;&#x3002;</li>
+</ul>
+<h2 id="&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x7684;&#x63A7;&#x5236;">&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x7684;&#x63A7;&#x5236;</h2>
+<ul>
 <li><p>&#x82E5; tidb-lightning &#x56E0;&#x4E0D;&#x53EF;&#x6062;&#x590D;&#x7684;&#x9519;&#x8BEF;&#x800C;&#x9000;&#x51FA;&#xFF08;&#x4F8B;&#x5982;&#x6570;&#x636E;&#x51FA;&#x9519;&#xFF09;&#xFF0C;&#x91CD;&#x542F;&#x65F6;&#x4E0D;&#x4F1A;&#x4F7F;&#x7528;&#x65AD;&#x70B9;&#xFF0C;&#x800C;&#x662F;&#x76F4;&#x63A5;&#x62A5;&#x9519;&#x79BB;&#x5F00;&#x3002;&#x4E3A;&#x4FDD;&#x8BC1;&#x5DF2;&#x5BFC;&#x5165;&#x7684;&#x6570;&#x636E;&#x5B89;&#x5168;&#xFF0C;&#x8FD9;&#x4E9B;&#x9519;&#x8BEF;&#x5FC5;&#x987B;&#x5148;&#x89E3;&#x51B3;&#x6389;&#x624D;&#x80FD;&#x7EE7;&#x7EED;&#x3002;&#x4F7F;&#x7528; tidb-lightning-ctl &#x5DE5;&#x5177;&#x53EF;&#x4EE5;&#x6807;&#x793A;&#x5DF2;&#x7ECF;&#x6062;&#x590D;&#x3002;
 &#x4F20;&#x5165;&#x6307;&#x5B9A;&#x8868;&#x6E05;&#x9664;&#x9519;&#x8BEF;&#x6570;&#x636E;</p>
-<pre><code># &#x82E5;&#x5BFC;&#x5165; `schema`.`table` &#x8FD9;&#x4E2A;&#x8868;&#x66FE;&#x7ECF;&#x51FA;&#x9519;&#xFF0C;&#x6B64;&#x547D;&#x4EE4;&#x4F1A;&#x4ECE;&#x76EE;&#x6807;&#x6570;&#x636E;&#x5E93;DROP&#x8FD9;&#x4E2A;&#x8868;&#xFF0C;&#x6E05;&#x9664;&#x5DF2;&#x5BFC;&#x5165;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5C06;&#x65AD;&#x70B9;&#x91CD;&#x8BBE;&#x5230;&#x201C;&#x672A;&#x5F00;&#x59CB;&#x201D;&#x7684;&#x72B6;&#x6001;
+<pre><code class="lang-conf"># &#x82E5;&#x5BFC;&#x5165; `schema`.`table` &#x8FD9;&#x4E2A;&#x8868;&#x66FE;&#x7ECF;&#x51FA;&#x9519;&#xFF0C;&#x6B64;&#x547D;&#x4EE4;&#x4F1A;&#x4ECE;&#x76EE;&#x6807;&#x6570;&#x636E;&#x5E93;DROP&#x8FD9;&#x4E2A;&#x8868;&#xFF0C;&#x6E05;&#x9664;&#x5DF2;&#x5BFC;&#x5165;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5C06;&#x65AD;&#x70B9;&#x91CD;&#x8BBE;&#x5230;&#x201C;&#x672A;&#x5F00;&#x59CB;&#x201D;&#x7684;&#x72B6;&#x6001;
 # &#x5982;&#x679C; `schema`.`table` &#x6CA1;&#x6709;&#x51FA;&#x9519;&#xFF0C;&#x5219;&#x65E0;&#x64CD;&#x4F5C;
 $ tidb-lightning-ctl --checkpoint-error-destroy=&apos;`schema`.`table`&apos;
-</code></pre></li>
+</code></pre>
+</li>
 <li><p>&#x4F20;&#x5165; &#x201C;all&#x201D; &#x4F1A;&#x5BF9;&#x6240;&#x6709;&#x8868;&#x8FDB;&#x884C;&#x4E0A;&#x8FF0;&#x64CD;&#x4F5C;&#x3002;&#x8FD9;&#x662F;&#x6700;&#x65B9;&#x4FBF;&#x3001;&#x5B89;&#x5168;&#x4F46;&#x4FDD;&#x5B88;&#x7684;&#x65AD;&#x70B9;&#x9519;&#x8BEF;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#x3002;</p>
-<pre><code>$ tidb-lightning-ctl --checkpoint-error-destroy=all
-</code></pre></li>
+<pre><code class="lang-shell">$ tidb-lightning-ctl --checkpoint-error-destroy=all
+</code></pre>
+</li>
 <li><p>&#x5982;&#x679C;&#x5BFC;&#x5165; <code>schema</code>.<code>table</code> &#x8FD9;&#x4E2A;&#x8868;&#x5BFC;&#x5165;&#x51FA;&#x9519;&#xFF0C;&#x53D1;&#x73B0;&#x6B64;&#x9519;&#x8BEF;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#xFF0C;&#x8FD9;&#x6761;&#x547D;&#x4EE4;&#x4F1A;&#x6E05;&#x9664;&#x51FA;&#x9519;&#x72B6;&#x6001;&#xFF0C;&#x4F20;&#x5165; &#x201C;all&#x201D; &#x4F1A;&#x5BF9;&#x6240;&#x6709;&#x8868;&#x8FDB;&#x884C;&#x4E0A;&#x8FF0;&#x64CD;&#x4F5C;&#x3002;</p>
-<pre><code>$ tidb-lightning-ctl --checkpoint-error-ignore=&apos;`schema`.`table`&apos; &amp;&amp;
+<pre><code class="lang-shell">$ tidb-lightning-ctl --checkpoint-error-ignore=&apos;`schema`.`table`&apos; &amp;&amp;
 $ tidb-lightning-ctl --checkpoint-error-ignore=all
-</code></pre><p>&#x6CE8;&#x610F;&#xFF1A;&#x9664;&#x975E;&#x786E;&#x5B9A;&#x9519;&#x8BEF;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#xFF0C;&#x5426;&#x5219;&#x4E0D;&#x8981;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x3002;&#x5982;&#x679C;&#x9519;&#x8BEF;&#x662F;&#x771F;&#x5B9E;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x6570;&#x636E;&#x4E0D;&#x5B8C;&#x5168;&#x3002;&#x542F;&#x7528;&#x6821;&#x9A8C;&#x548C; (CHECKSUM) &#x53EF;&#x4EE5;&#x9632;&#x6B62;&#x6570;&#x636E;&#x51FA;&#x9519;&#x88AB;&#x5FFD;&#x7565;&#x3002;</p>
+</code></pre>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x9664;&#x975E;&#x786E;&#x5B9A;&#x9519;&#x8BEF;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#xFF0C;&#x5426;&#x5219;&#x4E0D;&#x8981;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x3002;&#x5982;&#x679C;&#x9519;&#x8BEF;&#x662F;&#x771F;&#x5B9E;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x6570;&#x636E;&#x4E0D;&#x5B8C;&#x5168;&#x3002;&#x542F;&#x7528;&#x6821;&#x9A8C;&#x548C; (CHECKSUM) &#x53EF;&#x4EE5;&#x9632;&#x6B62;&#x6570;&#x636E;&#x51FA;&#x9519;&#x88AB;&#x5FFD;&#x7565;&#x3002;</p>
 </li>
 <li><p>&#x65E0;&#x8BBA;&#x662F;&#x5426;&#x51FA;&#x9519;&#xFF0C;&#x628A;&#x65AD;&#x70B9;&#x6E05;&#x9664;&#xFF0C;&#x4F7F;&#x7528;--checkpoint-remove&#x3002;</p>
-<pre><code>$ tidb-lightning-ctl --checkpoint-remove=&apos;`schema`.`table`&apos; &amp;&amp;
+<pre><code class="lang-shell">$ tidb-lightning-ctl --checkpoint-remove=&apos;`schema`.`table`&apos; &amp;&amp;
 $ tidb-lightning-ctl --checkpoint-remove=all
-</code></pre></li>
+</code></pre>
+</li>
 <li><p>&#x5C06;&#x6240;&#x6709;&#x65AD;&#x70B9;&#x5907;&#x4EFD;&#x5230;&#x4F20;&#x5165;&#x7684;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x4F7F;&#x7528;--checkpoint-dump</p>
-<pre><code>#&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x6280;&#x672F;&#x652F;&#x6301;&#x3002;&#x6B64;&#x9009;&#x9879;&#x4EC5;&#x4E8E; driver = &quot;mysql&quot; &#x65F6;&#x6709;&#x6548;
+<pre><code class="lang-shell">#&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x6280;&#x672F;&#x652F;&#x6301;&#x3002;&#x6B64;&#x9009;&#x9879;&#x4EC5;&#x4E8E; driver = &quot;mysql&quot; &#x65F6;&#x6709;&#x6548;
 $ tidb-lightning-ctl --checkpoint-dump=output/directory
-</code></pre></li>
+</code></pre>
+</li>
 </ul>
-<h1 id="csv-&#x652F;&#x6301;">CSV &#x652F;&#x6301;</h1>
+<h1 id="2227-csv-&#x652F;&#x6301;">2.2.2.7 CSV &#x652F;&#x6301;</h1>
 <p>TiDB Lightning &#x652F;&#x6301;&#x8BFB;&#x53D6; CSV&#xFF08;&#x9017;&#x53F7;&#x5206;&#x9694;&#x503C;&#xFF09;&#x7684;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x4EE5;&#x53CA;&#x5176;&#x4ED6;&#x5B9A;&#x754C;&#x7B26;&#x683C;&#x5F0F;&#x5982; TSV&#xFF08;&#x5236;&#x8868;&#x7B26;&#x5206;&#x9694;&#x503C;&#xFF09;&#x3002;</p>
 <h2 id="&#x6587;&#x4EF6;&#x540D;">&#x6587;&#x4EF6;&#x540D;</h2>
 <p>&#x5305;&#x542B;&#x6574;&#x5F20;&#x8868;&#x7684; CSV &#x6587;&#x4EF6;&#x9700;&#x547D;&#x540D;&#x4E3A; db_name.table_name.csv&#xFF0C;&#x8BE5;&#x6587;&#x4EF6;&#x4F1A;&#x88AB;&#x89E3;&#x6790;&#x4E3A;&#x6570;&#x636E;&#x5E93; db_name &#x91CC;&#x540D;&#x4E3A; table_name &#x7684;&#x8868;&#x3002;</p>
@@ -3313,7 +3339,7 @@ $ tidb-lightning-ctl --checkpoint-dump=output/directory
 </ul>
 <h2 id="&#x914D;&#x7F6E;">&#x914D;&#x7F6E;</h2>
 <p>CSV &#x683C;&#x5F0F;&#x53EF;&#x5728; tidb-lightning.toml &#x6587;&#x4EF6;&#x4E2D; [mydumper.csv] &#x4E0B;&#x914D;&#x7F6E;&#x3002; &#x5927;&#x90E8;&#x5206;&#x8BBE;&#x7F6E;&#x9879;&#x5728; MySQL <a href="https://dev.mysql.com/doc/refman/8.0/en/load-data.html" target="_blank">LOAD DATA</a> &#x8BED;&#x53E5;&#x4E2D;&#x90FD;&#x6709;&#x5BF9;&#x5E94;&#x7684;&#x9879;&#x76EE;&#x3002;</p>
-<pre><code>[mydumper.csv]
+<pre><code class="lang-conf">[mydumper.csv]
 # &#x5B57;&#x6BB5;&#x5206;&#x9694;&#x7B26;&#xFF0C;&#x5FC5;&#x987B;&#x4E3A; ASCII &#x5B57;&#x7B26;&#x3002;
 separator = &apos;,&apos;
 # &#x5F15;&#x7528;&#x5B9A;&#x754C;&#x7B26;&#xFF0C;&#x53EF;&#x4EE5;&#x4E3A; ASCII &#x5B57;&#x7B26;&#x6216;&#x7A7A;&#x5B57;&#x7B26;&#x3002;
@@ -3331,13 +3357,14 @@ null = &apos;\N&apos;
 backslash-escape = true
 # &#x662F;&#x5426;&#x79FB;&#x9664;&#x4EE5;&#x5206;&#x9694;&#x7B26;&#x7ED3;&#x675F;&#x7684;&#x884C;&#x3002;
 trim-last-separator = false
-</code></pre><h3 id="separator">separator</h3>
+</code></pre>
+<h3 id="separator">separator</h3>
 <ul>
 <li>&#x6307;&#x5B9A;&#x5B57;&#x6BB5;&#x5206;&#x9694;&#x7B26;&#x3002;</li>
 <li>&#x5FC5;&#x987B;&#x4E3A;&#x5355;&#x4E2A; ASCII &#x5B57;&#x7B26;&#x3002;</li>
 <li>&#x5E38;&#x7528;&#x503C;&#xFF1A;<ul>
 <li>CSV &#x7528; &apos;,&apos;</li>
-<li>TSV &#x7528; &quot;\t&quot;</li>
+<li>TSV &#x7528; &quot;\t&quot; </li>
 </ul>
 </li>
 <li>&#x5BF9;&#x5E94; LOAD DATA &#x8BED;&#x53E5;&#x4E2D;&#x7684; FIELDS TERMINATED BY &#x9879;&#x3002;</li>
@@ -3365,9 +3392,10 @@ trim-last-separator = false
 </ul>
 <p>&#x5F15;&#x7528;&#x4E0D;&#x5F71;&#x54CD;&#x5B57;&#x6BB5;&#x662F;&#x5426;&#x4E3A;&#x7A7A;&#x3002;</p>
 <p>&#x4F8B;&#x5982;&#x6709;&#x5982;&#x4E0B; CSV &#x6587;&#x4EF6;&#xFF1A;</p>
-<pre><code>A,B,C
+<pre><code class="lang-text">A,B,C
 \N,&quot;\N&quot;,
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>&#x5728;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#xFF08;not-null = false; null = &apos;\N&apos;&#xFF09;&#x4E0B;&#xFF0C;&#x5217; A and B &#x5BFC;&#x5165; TiDB &#x540E;&#x90FD;&#x5C06;&#x4F1A;&#x8F6C;&#x6362;&#x4E3A; NULL&#x3002;&#x5217; C &#x662F;&#x7A7A;&#x5B57;&#x7B26;&#x4E32; &apos;&apos;&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x4F1A;&#x89E3;&#x6790;&#x4E3A; NULL&#x3002;</li>
 </ul>
 <h3 id="backslash-escape">backslash-escape</h3>
@@ -3385,8 +3413,9 @@ trim-last-separator = false
 </li>
 <li><p>&#x5176;&#x4ED6;&#x60C5;&#x51B5;&#x4E0B;&#xFF08;&#x5982; \&quot;&#xFF09;&#x53CD;&#x659C;&#x7EBF;&#x4F1A;&#x88AB;&#x79FB;&#x9664;&#xFF0C;&#x4EC5;&#x5728;&#x5B57;&#x6BB5;&#x4E2D;&#x4FDD;&#x7559;&#x5176;&#x540E;&#x9762;&#x7684;&#x5B57;&#x7B26;&#xFF08;&quot;&#xFF09;&#x3002;&#x5F15;&#x7528;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x53CD;&#x659C;&#x7EBF;&#x8F6C;&#x4E49;&#x7B26;&#x7684;&#x89E3;&#x6790;&#x4E0E;&#x5426;&#x3002;</p>
 </li>
+<li><p>&#x5BF9;&#x5E94; LOAD DATA &#x8BED;&#x53E5;&#x4E2D;&#x7684; FIELDS ESCAPED BY &apos;\&apos; &#x9879;&#x3002;</p>
+</li>
 </ul>
-<p>*&#x5BF9;&#x5E94; LOAD DATA &#x8BED;&#x53E5;&#x4E2D;&#x7684; FIELDS ESCAPED BY &apos;\&apos; &#x9879;&#x3002;</p>
 <h3 id="trim-last-separator">trim-last-separator</h3>
 <p>&#x5C06; separator &#x5B57;&#x6BB5;&#x5F53;&#x4F5C;&#x7EC8;&#x6B62;&#x7B26;&#xFF0C;&#x5E76;&#x79FB;&#x9664;&#x5C3E;&#x90E8;&#x6240;&#x6709;&#x5206;&#x9694;&#x7B26;&#x3002;</p>
 <p>&#x4F8B;&#x5982;&#x6709;&#x5982;&#x4E0B; CSV &#x6587;&#x4EF6;&#xFF1A;</p>
@@ -3406,7 +3435,7 @@ trim-last-separator = false
 <h2 id="&#x901A;&#x7528;&#x914D;&#x7F6E;">&#x901A;&#x7528;&#x914D;&#x7F6E;</h2>
 <h3 id="csv">CSV</h3>
 <p>&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x5DF2;&#x6309;&#x7167; RFC 4180 &#x8C03;&#x6574;&#x3002;</p>
-<pre><code>[mydumper.csv]
+<pre><code class="lang-conf">[mydumper.csv]
 separator = &apos;,&apos;
 delimiter = &apos;&quot;&apos;
 header = true
@@ -3414,14 +3443,16 @@ not-null = false
 null = &apos;\N&apos;
 backslash-escape = true
 trim-last-separator = false
-</code></pre><p>&#x793A;&#x4F8B;&#x5185;&#x5BB9;</p>
-<pre><code>ID,Region,Count
+</code></pre>
+<p>&#x793A;&#x4F8B;&#x5185;&#x5BB9;</p>
+<pre><code class="lang-text">ID,Region,Count
 1,&quot;East&quot;,32
 2,&quot;South&quot;,\N
 3,&quot;West&quot;,10
 4,&quot;Nor
-</code></pre><h3 id="tsv">TSV</h3>
-<pre><code>[mydumper.csv]
+</code></pre>
+<h3 id="tsv">TSV</h3>
+<pre><code class="lang-conf">[mydumper.csv]
 separator = &quot;\t&quot;
 delimiter = &apos;&apos;
 header = true
@@ -3429,31 +3460,35 @@ not-null = false
 null = &apos;NULL&apos;
 backslash-escape = false
 trim-last-separator = false
-</code></pre><p>&#x793A;&#x4F8B;&#x5185;&#x5BB9;&#xFF1A;</p>
-<pre><code>ID Region Count
+</code></pre>
+<p>&#x793A;&#x4F8B;&#x5185;&#x5BB9;&#xFF1A;</p>
+<pre><code class="lang-text">ID Region Count
 1 East 32
 2 South NULL
 3 West 10
 4 North 39
-</code></pre><h3 id="tpc-h-dbgen">TPC-H DBGEN</h3>
-<pre><code>[mydumper.csv]
+</code></pre>
+<h3 id="tpc-h-dbgen">TPC-H DBGEN</h3>
+<pre><code class="lang-conf">[mydumper.csv]
 separator = &apos;|&apos;
 delimiter = &apos;&apos;
 header = false
 not-null = true
 backslash-escape = false
 trim-last-separator = true
-</code></pre><p>&#x793A;&#x4F8B;&#x5185;&#x5BB9;&#xFF1A;</p>
-<pre><code>1|East|32|
+</code></pre>
+<p>&#x793A;&#x4F8B;&#x5185;&#x5BB9;&#xFF1A;</p>
+<pre><code class="lang-text">1|East|32|
 2|South|0|
 3|West|10|
 4|North|39|
-</code></pre><h1 id="tidb-lightning-&#x914D;&#x7F6E;&#x53C2;&#x6570;">TiDB Lightning &#x914D;&#x7F6E;&#x53C2;&#x6570;</h1>
+</code></pre>
+<h1 id="2228-tidb-lightning-&#x914D;&#x7F6E;&#x53C2;&#x6570;">2.2.2.8 TiDB Lightning &#x914D;&#x7F6E;&#x53C2;&#x6570;</h1>
 <p>&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x6216;&#x547D;&#x4EE4;&#x884C;&#x914D;&#x7F6E; TiDB Lightning&#x3002;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD; TiDB Lightning &#x7684;&#x5168;&#x5C40;&#x914D;&#x7F6E;&#x3001;&#x4EFB;&#x52A1;&#x914D;&#x7F6E;&#x548C; TiKV Importer &#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x4EE5;&#x53CA;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x8FDB;&#x884C;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x3002;</p>
 <h2 id="&#x914D;&#x7F6E;&#x6587;&#x4EF6;">&#x914D;&#x7F6E;&#x6587;&#x4EF6;</h2>
 <p>TiDB Lightning &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5206;&#x4E3A;&#x201C;&#x5168;&#x5C40;&#x201D;&#x548C;&#x201C;&#x4EFB;&#x52A1;&#x201D;&#x4E24;&#x79CD;&#x7C7B;&#x522B;&#xFF0C;&#x4E8C;&#x8005;&#x5728;&#x7ED3;&#x6784;&#x4E0A;&#x517C;&#x5BB9;&#x3002;&#x53EA;&#x6709;&#x5F53;<a href="https://pingcap.com/docs-cn/stable/reference/tools/tidb-lightning/web" target="_blank">&#x670D;&#x52A1;&#x5668;&#x6A21;&#x5F0F;</a>&#x5F00;&#x542F;&#x65F6;&#xFF0C;&#x5168;&#x5C40;&#x914D;&#x7F6E;&#x548C;&#x4EFB;&#x52A1;&#x914D;&#x7F6E;&#x624D;&#x4F1A;&#x6709;&#x533A;&#x522B;&#xFF1B;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x6A21;&#x5F0F;&#x4E3A;&#x7981;&#x7528;&#x72B6;&#x6001;&#xFF0C;&#x6B64;&#x65F6; TiDB Lightning &#x53EA;&#x4F1A;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x4EFB;&#x52A1;&#xFF0C;&#x4E14;&#x5168;&#x5C40;&#x548C;&#x4EFB;&#x52A1;&#x914D;&#x7F6E;&#x4F7F;&#x7528;&#x540C;&#x4E00;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;</p>
 <h3 id="tidb-lightning-&#x5168;&#x5C40;&#x914D;&#x7F6E;">TiDB Lightning &#x5168;&#x5C40;&#x914D;&#x7F6E;</h3>
-<pre><code>### tidb-lightning &#x5168;&#x5C40;&#x914D;&#x7F6E;
+<pre><code class="lang-conf">### tidb-lightning &#x5168;&#x5C40;&#x914D;&#x7F6E;
 
 [lightning]
 # &#x7528;&#x4E8E;&#x62C9;&#x53D6; web &#x754C;&#x9762;&#x548C; Prometheus &#x76D1;&#x63A7;&#x9879;&#x7684; HTTP &#x7AEF;&#x53E3;&#x3002;&#x8BBE;&#x7F6E;&#x4E3A; 0 &#x65F6;&#x4E3A;&#x7981;&#x7528;&#x72B6;&#x6001;&#x3002;
@@ -3469,8 +3504,9 @@ file = &quot;tidb-lightning.log&quot;
 max-size = 128 # MB
 max-days = 28
 max-backups = 14
-</code></pre><h3 id="tidb-lightning-&#x4EFB;&#x52A1;&#x914D;&#x7F6E;">TiDB Lightning &#x4EFB;&#x52A1;&#x914D;&#x7F6E;</h3>
-<pre><code>### tidb-lightning &#x4EFB;&#x52A1;&#x914D;&#x7F6E;
+</code></pre>
+<h3 id="tidb-lightning-&#x4EFB;&#x52A1;&#x914D;&#x7F6E;">TiDB Lightning &#x4EFB;&#x52A1;&#x914D;&#x7F6E;</h3>
+<pre><code class="lang-conf">### tidb-lightning &#x4EFB;&#x52A1;&#x914D;&#x7F6E;
 
 [lightning]
 # &#x542F;&#x52A8;&#x4E4B;&#x524D;&#x68C0;&#x67E5;&#x96C6;&#x7FA4;&#x662F;&#x5426;&#x6EE1;&#x8DB3;&#x6700;&#x4F4E;&#x9700;&#x6C42;&#x3002;
@@ -3632,8 +3668,9 @@ log-progress = &quot;5m&quot;
 # &#x8BBE;&#x7F6E;&#x8868;&#x5E93;&#x8FC7;&#x6EE4;&#x3002;&#x8BE6;&#x60C5;&#x53C2;&#x89C1;&#x201C;TiDB Lightning &#x8868;&#x5E93;&#x8FC7;&#x6EE4;&#x201D;&#x6587;&#x6863;&#x3002;
 # [black-white-list]
 # ...
-</code></pre><h3 id="tikv-importer-&#x914D;&#x7F6E;&#x53C2;&#x6570;">TiKV Importer &#x914D;&#x7F6E;&#x53C2;&#x6570;</h3>
-<pre><code># TiKV Importer &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x6A21;&#x7248;
+</code></pre>
+<h3 id="tikv-importer-&#x914D;&#x7F6E;&#x53C2;&#x6570;">TiKV Importer &#x914D;&#x7F6E;&#x53C2;&#x6570;</h3>
+<pre><code class="lang-conf"># TiKV Importer &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x6A21;&#x7248;
 
 # &#x65E5;&#x5FD7;&#x6587;&#x4EF6;
 log-file = &quot;tikv-importer.log&quot;
@@ -3696,7 +3733,8 @@ max-open-engines = 8
 # &#x5982;&#x679C;&#x76EE;&#x6807;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#x7684;&#x53EF;&#x7528;&#x6BD4;&#x7387;&#x4F4E;&#x4E8E;&#x8BE5;&#x503C;&#xFF0C;Importer &#x5C06;&#x4F1A;&#x6682;&#x505C;&#x4E0A;&#x4F20; SST
 # &#x6765;&#x4E3A; PD &#x63D0;&#x4F9B;&#x8DB3;&#x591F;&#x65F6;&#x95F4;&#x8FDB;&#x884C; Regions &#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x3002;
 min-available-ratio = 0.05
-</code></pre><h2 id="&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570;">&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570;</h2>
+</code></pre>
+<h2 id="&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570;">&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570;</h2>
 <h3 id="tidb-lightning">tidb-lightning</h3>
 <p>&#x4F7F;&#x7528; tidb-lightning &#x53EF;&#x4EE5;&#x5BF9;&#x4E0B;&#x5217;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#xFF1A;</p>
 <table>
@@ -3870,15 +3908,16 @@ min-available-ratio = 0.05
 </tr>
 </tbody>
 </table>
-<h1 id="tidb-lightning-&#x76D1;&#x63A7;&#x544A;&#x8B66;">TiDB Lightning &#x76D1;&#x63A7;&#x544A;&#x8B66;</h1>
+<h1 id="2229-tidb-lightning-&#x76D1;&#x63A7;&#x544A;&#x8B66;">2.2.2.9 TiDB Lightning &#x76D1;&#x63A7;&#x544A;&#x8B66;</h1>
 <p>tidb-lightning &#x548C; tikv-importer &#x90FD;&#x652F;&#x6301;&#x4F7F;&#x7528; <a href="https://prometheus.io/" target="_blank">Prometheus</a> &#x91C7;&#x96C6;&#x76D1;&#x63A7;&#x6307;&#x6807; (metrics)&#x3002;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD; TiDB Lightning &#x7684;&#x76D1;&#x63A7;&#x914D;&#x7F6E;&#x4E0E;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x3002;</p>
 <h2 id="&#x76D1;&#x63A7;&#x914D;&#x7F6E;">&#x76D1;&#x63A7;&#x914D;&#x7F6E;</h2>
 <ul>
 <li>&#x5982;&#x679C;&#x662F;&#x4F7F;&#x7528; TiDB Ansible &#x90E8;&#x7F72; Lightning&#xFF0C;&#x53EA;&#x8981;&#x5C06;&#x670D;&#x52A1;&#x5668;&#x5730;&#x5740;&#x52A0;&#x5230; inventory.ini &#x6587;&#x4EF6;&#x91CC;&#x7684; [monitored_servers] &#x90E8;&#x5206;&#x5373;&#x53EF;&#x3002;</li>
-<li>&#x5982;&#x679C;&#x662F;&#x624B;&#x52A8;&#x90E8;&#x7F72; Lightning&#xFF0C;&#x5219;&#x53C2;&#x7167;&#x4EE5;&#x4E0B;&#x6B65;&#x9AA4;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002;<h3 id="tikv-importer">tikv-importer</h3>
-tikv-importer v2.1 &#x4F7F;&#x7528; <a href="https://github.com/prometheus/pushgateway" target="_blank">Pushgateway</a> &#x6765;&#x63A8;&#x9001;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x3002;&#x9700;&#x8981;&#x914D;&#x7F6E; tikv-importer.toml &#x6765;&#x8FDE;&#x63A5; Pushgateway&#xFF1A;</li>
+<li>&#x5982;&#x679C;&#x662F;&#x624B;&#x52A8;&#x90E8;&#x7F72; Lightning&#xFF0C;&#x5219;&#x53C2;&#x7167;&#x4EE5;&#x4E0B;&#x6B65;&#x9AA4;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002;</li>
 </ul>
-<pre><code>[metric]
+<h3 id="tikv-importer">tikv-importer</h3>
+<p>tikv-importer v2.1 &#x4F7F;&#x7528; <a href="https://github.com/prometheus/pushgateway" target="_blank">Pushgateway</a> &#x6765;&#x63A8;&#x9001;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x3002;&#x9700;&#x8981;&#x914D;&#x7F6E; tikv-importer.toml &#x6765;&#x8FDE;&#x63A5; Pushgateway&#xFF1A;</p>
+<pre><code class="lang-conf">[metric]
 
 # &#x7ED9; Prometheus &#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x63A8;&#x9001;&#x4EFB;&#x52A1;&#x540D;&#x79F0;&#x3002;
 job = &quot;tikv-importer&quot;
@@ -3888,20 +3927,22 @@ interval = &quot;15s&quot;
 
 # Prometheus Pushgateway &#x5730;&#x5740;&#x3002;
 address = &quot;&quot;
-</code></pre><p>&#x53EA;&#x8981; Prometheus &#x80FD;&#x53D1;&#x73B0; tidb-lightning &#x7684;&#x76D1;&#x63A7;&#x5730;&#x5740;&#xFF0C;&#x5C31;&#x80FD;&#x6536;&#x96C6;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x3002;
+</code></pre>
+<p>&#x53EA;&#x8981; Prometheus &#x80FD;&#x53D1;&#x73B0; tidb-lightning &#x7684;&#x76D1;&#x63A7;&#x5730;&#x5740;&#xFF0C;&#x5C31;&#x80FD;&#x6536;&#x96C6;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x3002;
 &#x76D1;&#x63A7;&#x7684;&#x7AEF;&#x53E3;&#x53EF;&#x5728; tidb-lightning.toml &#x4E2D;&#x914D;&#x7F6E;&#xFF1A;</p>
-<pre><code>[lightning]
+<pre><code class="lang-conf">[lightning]
 # &#x7528;&#x4E8E;&#x8C03;&#x8BD5;&#x548C; Prometheus &#x76D1;&#x63A7;&#x7684; HTTP &#x7AEF;&#x53E3;&#x3002;&#x8F93;&#x5165; 0 &#x5173;&#x95ED;&#x3002;
 pprof-port = 8289
-
 ...
-</code></pre><p>&#x8981;&#x8BA9; Prometheus &#x53D1;&#x73B0; Lightning&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x5730;&#x5740;&#x76F4;&#x63A5;&#x5199;&#x5165;&#x5176;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
-<pre><code>...
+</code></pre>
+<p>&#x8981;&#x8BA9; Prometheus &#x53D1;&#x73B0; Lightning&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x5730;&#x5740;&#x76F4;&#x63A5;&#x5199;&#x5165;&#x5176;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-conf">...
 scrape_configs:
   - job_name: &apos;tidb-lightning&apos;
     static_configs:
       - targets: [&apos;192.168.20.10:8289&apos;]
-</code></pre><h2 id="grafana-&#x9762;&#x677F;">Grafana &#x9762;&#x677F;</h2>
+</code></pre>
+<h2 id="grafana-&#x9762;&#x677F;">Grafana &#x9762;&#x677F;</h2>
 <p><a href="https://grafana.com/" target="_blank">Grafana</a> &#x7684;&#x53EF;&#x89C6;&#x5316;&#x9762;&#x677F;&#x53EF;&#x4EE5;&#x8BA9;&#x4F60;&#x5728;&#x7F51;&#x9875;&#x4E0A;&#x76D1;&#x63A7; Prometheus &#x6307;&#x6807;&#x3002;</p>
 <p>&#x4F7F;&#x7528; TiDB Ansible &#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;&#x65F6;&#xFF0C;&#x4F1A;&#x540C;&#x65F6;&#x90E8;&#x7F72;&#x4E00;&#x5957; Grafana + Prometheus &#x7684;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;&#x3002;</p>
 <p>&#x5982;&#x679C;&#x4F7F;&#x7528;&#x5176;&#x4ED6;&#x65B9;&#x5F0F;&#x90E8;&#x7F72; TiDB Lightning&#xFF0C;&#x9700;&#x5148;&#x5BFC;&#x5165;<a href="https://raw.githubusercontent.com/pingcap/tidb-ansible/master/scripts/lightning.json" target="_blank">&#x9762;&#x677F;&#x7684; JSON &#x6587;&#x4EF6;</a>&#x3002;</p>
@@ -4239,9 +4280,10 @@ scrape_configs:
 </ul>
 <p>tikv_import_upload_chunk_duration&#xFF08;&#x76F4;&#x65B9;&#x56FE;&#xFF09;</p>
 <ul>
-<li>&#x4E0A;&#x4F20;&#x5230; TiKV &#x7684;&#x6BCF;&#x4E2A;&#x533A;&#x5757;&#x6240;&#x9700;&#x65F6;&#x95F4;&#x7684;&#x76F4;&#x65B9;&#x56FE;&#x3002;<h3 id="tidb-lightning">tidb-lightning</h3>
-tidb-lightning &#x7684;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x7686;&#x4EE5; lightning_* &#x4E3A;&#x524D;&#x7F00;&#x3002;</li>
+<li>&#x4E0A;&#x4F20;&#x5230; TiKV &#x7684;&#x6BCF;&#x4E2A;&#x533A;&#x5757;&#x6240;&#x9700;&#x65F6;&#x95F4;&#x7684;&#x76F4;&#x65B9;&#x56FE;&#x3002;</li>
 </ul>
+<h3 id="tidb-lightning">tidb-lightning</h3>
+<p>tidb-lightning &#x7684;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x7686;&#x4EE5; lightning_* &#x4E3A;&#x524D;&#x7F00;&#x3002;</p>
 <p>lightning_importer_engine&#xFF08;&#x8BA1;&#x6570;&#x5668;&#xFF09;</p>
 <ul>
 <li>&#x8BA1;&#x7B97;&#x5DF2;&#x5F00;&#x542F;&#x53CA;&#x5173;&#x95ED;&#x7684;&#x5F15;&#x64CE;&#x6587;&#x4EF6;&#x6570;&#x91CF;&#x3002;&#x6807;&#x7B7E;&#xFF1A;<ul>
@@ -4422,7 +4464,7 @@ tidb-lightning &#x7684;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x7686;&#x4EE5; lightnin
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"2.2.2 Lightning 实操指南","level":"3.2.2.2","depth":3,"next":{"title":"2.3 4.0 分布式备份恢复工具 BR","level":"3.2.3","depth":2,"path":"session2/chapter2/br.md","ref":"session2/chapter2/br.md","articles":[{"title":"2.3.1 BR 工作原理","level":"3.2.3.1","depth":3,"path":"session2/chapter2/br-internal.md","ref":"session2/chapter2/br-internal.md","articles":[]},{"title":"2.3.2 BR 实操指南","level":"3.2.3.2","depth":3,"path":"session2/chapter2/br-in-action.md","ref":"session2/chapter2/br-in-action.md","articles":[]}]},"previous":{"title":"2.2.1 Lightning 工作原理","level":"3.2.2.1","depth":3,"path":"session2/chapter2/lightning-internal.md","ref":"session2/chapter2/lightning-internal.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter2/lightning-in-action.md","mtime":"2020-03-13T09:54:02.636Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T09:54:50.541Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"2.2.2 Lightning 实操指南","level":"3.2.2.2","depth":3,"next":{"title":"2.3 4.0 分布式备份恢复工具 BR","level":"3.2.3","depth":2,"path":"session2/chapter2/br.md","ref":"session2/chapter2/br.md","articles":[{"title":"2.3.1 BR 工作原理","level":"3.2.3.1","depth":3,"path":"session2/chapter2/br-internal.md","ref":"session2/chapter2/br-internal.md","articles":[]},{"title":"2.3.2 BR 实操指南","level":"3.2.3.2","depth":3,"path":"session2/chapter2/br-in-action.md","ref":"session2/chapter2/br-in-action.md","articles":[]}]},"previous":{"title":"2.2.1 Lightning 工作原理","level":"3.2.2.1","depth":3,"path":"session2/chapter2/lightning-internal.md","ref":"session2/chapter2/lightning-internal.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter2/lightning-in-action.md","mtime":"2020-03-13T09:58:11.525Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T09:58:58.341Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
