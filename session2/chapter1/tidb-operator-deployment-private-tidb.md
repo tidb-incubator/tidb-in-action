@@ -1,20 +1,20 @@
 
-# 部署 TiDB 集群
+##### 1.2.3.2.4 部署 TiDB 集群
 
-## 一、下载 TiDB Cluster 的 helm chart 文件
-
-```
-
-    # mkdir -p /root/chart/
-    从 https://github.com/pingcap/tidb-operator/releases 下载 tidb-cluster-chart-v1.0.6.tgz 文件放到 /root/chart/ 路径下
+(1) 下载 TiDB Cluster 的 helm chart 文件
 
 ```
 
-## 二、安装 TiDB Cluster
+    # mkdir -p /root/charts/
+    从 https://github.com/pingcap/tidb-operator/releases 下载 tidb-cluster-chart-v1.0.6.tgz 文件放到 /root/charts/ 路径下
 
 ```
 
-    # cd /root/chart/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
+(2) 安装 TiDB Cluster
+
+```
+
+    # cd /root/charts/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
     # helm install --namespace dba-test --name=test /root/charts/tidb-cluster -f /root/charts/tidb-cluster/values.yaml
     NAME:   test
     LAST DEPLOYED: Sat Mar  7 05:27:57 2020
@@ -26,7 +26,7 @@
 
 以上信息显示 TiDB Cluster 部署正常。
 
-## 三、观察 TiDB 的 POD 状态
+(3) 观察 TiDB Cluster 所有 Pod 状态
 
 ```
 
@@ -47,7 +47,7 @@
 
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
-## 四、访问 TiDB 集群
+(4) 访问 TiDB Cluster
 
 ```
 
@@ -65,7 +65,7 @@
 
 ```
 
-找到 test-tidb 这个 Service 的 CLUSTER-IP，通过其访问 TiDB 集群：
+找到 test-tidb 这个 Service 的 CLUSTER-IP，通过其访问 TiDB Cluster：
 
 ```
 
@@ -81,8 +81,8 @@
 
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-    mysql> 
+    mysql>
 
 ```
 
-访问 TiDB 成功。
+访问 TiDB Cluster 成功。
