@@ -40,7 +40,9 @@ IBM 公司为 DB2 的数据同步做了一套完整的工具，初期这款工�
 |    | Microsoft Azure SQL Database Managed Instance   | 
 |    | IBM Integrated Analytics System   | 
 
-* CDC 对接 TiDB 时可以通过配置使用 mysql-JDBC 驱动，通过 JDBC 的方式将数据存放到 TiDB 中.
+
+* 由于在官方列表中并没有列出 TiDB ，但是它可以选择 CDC Replication Engine for FlexRep 这种方式支持 JDBC 引擎，因为 TiDB 兼容 MySQL 协议，同时 MySQL 也提供了 JDBC driver，所以这里可以使用它将数据写入到 TiDB 中。
+* CDC 在实例配置时可以选择支持 datastage type，选择 FlexRep 后再配置 JDBC driver 驱动后就可以成功向 TiDB 中同步数据。
 
 ## 数据同步
 
@@ -104,5 +106,4 @@ IIDR 在同步全量数据之前，需要在 TiDB 侧创建好表结构，下表
 
 
 ## 总结
-数据源是 DB2 for LUW 可以使用 CDC 或 OGG 做同步工具，数据源是 DB2 for i 或 DB2 for z 时，只能用 CDC 做同步工具
-IIDR 是目前能够找到的唯一一款能够比较好的将 DB2 的数据同步到 TiDB 的工具，在同步过程中如遇到上述配置还解决不了的问题，请联系 IIDR 官方或者 TiDB 官方，具体问题具体分析解决。
+IIDR 是目前能够找到的唯一一款能够比较好的将 DB2 for i 的数据同步到 TiDB 的工具，在同步过程中如遇到上述配置还解决不了的问题，请联系 IIDR 官方或者 TiDB 官方，具体问题具体分析解决。
