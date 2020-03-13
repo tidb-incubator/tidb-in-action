@@ -150,7 +150,7 @@ To start using your cluster, run:
 ```
 
     # cd /root/chart/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
-    # helm install --namespace dba-test --name=test /root/tidb-cluster/charts/tidb-cluster -f /root/tidb-cluster/charts/tidb-cluster/values.yaml
+    # helm install --namespace dba-test --name=test /root/tidb-operator/charts/tidb-cluster -f /root/tidb-operator/charts/tidb-cluster/values.yaml
     NAME:   test
     LAST DEPLOYED: Fri Mar  6 14:50:25 2020
     NAMESPACE: dba-test
