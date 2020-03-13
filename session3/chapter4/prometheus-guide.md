@@ -1,6 +1,6 @@
-# Prometheus 简单介绍 
+# Prometheus 在 TiDB 中的应用 
 
-本节将介绍监控工具 Promethues 的基本信息，包括架构和常见配置等。
+本节将介绍监控工具 Prometheus 在 TiDB 中的应用，包括 Prometheus 本身的介绍以及如何通过 Prometheus 查看 TiDB 的监控和利用 Prometheus 的 alertmanager 进行告警。
 
 ## Prometheus 简介
 
@@ -16,7 +16,7 @@ Prometheus 可以监控的对象远不止官方 exporters 列表中的产品，�
 
 随着容器和 kurbernetes 的不断落地，以及更多的软件原生支持 Prometheus，相信很快 Prometheus 会成为监控领域的领军产品。
 
-## 架构介绍
+### 架构介绍
 
 Prometheus 的架构图如下：
 
@@ -34,20 +34,18 @@ Prometheus 除了可以采集静态的 exporters 之外，还可要通过 servic
 
 除 exporter 和 service discovery 之外，用户还可以写脚本做一些自定义的信息采集，然后通过 push 的方式推送到 pushgateway，pushgateway 对于 prometheus server 来说就是一个特殊的 exporter，prometheus server 可以像抓取其他 exporters 一样抓取 pushgateway 的信息。
 
-## 安装运行
+### 安装运行
 Prometheus 可以运行在 kubernetes 中，也可以运行中虚拟机中。Prometheus 的大部分组件都已经有编译好的二进制文件和 docker 镜像。对于二进制文件，从官方网站下载解压后就可以启动运行，命令如下：
 
 prometheus --config.file=conf/prometheus.yml
 
 建议将二进制文件做成 systemd 的一个服务，这部分可以参考 [TiDB 上运行 prometheus 的方式](https://pingcap.com/docs-cn/stable/how-to/monitor/monitor-a-cluster/#%E9%83%A8%E7%BD%B2-prometheus-%E5%92%8C-grafana) 。
 
-## Prometheus server 配置文件
+### Prometheus server 配置文件
 
 prometheus server 的配置文件是 yaml 格式，由参数 --config.file 指定需要使用的配置文件。配置文件一般命名为 prometheus.yml。
 
-**常用配置**
-
-配置文件示例：
+**配置文件示例**
 
 ```
 global:    
@@ -92,9 +90,7 @@ scrape_configs:
 - targets： 要抓取的具体对象（instance)
 - file_sd_configs: 如果监控对象过多，可使用这种方式写到独立的文件中
 
-**告警规则配置**
-
-告警规划配置文件示例：
+**告警规则配置示例**
 
 ```
 groups:
@@ -110,7 +106,7 @@ groups:
       description: "项目：{{ $labels.project }} , service: {{ $labels.service}}" 当前值{{ $value }}
 ```
 
-**说明**：
+告警配置说明：
 
 - groups： 标记当前所有的告警规划为同一组
 - name: 这告警组的自定义名称
@@ -120,21 +116,21 @@ groups:
 - labels： 可以加一些自定义的键值对标签
 - annotations: 可以加一些描述信息
 
-# Prometheus 在 TiDB 集群中的应用
+## Prometheus 在 TiDB 集群中的应用
 
-本节介绍 Promethues 在 TiDB 集群中的应用，包括如何监控数据库的性能变化，以及如何进行故障报警。
+本节介绍 Promethues 在 TiDB 集群中的应用，主要包括通过 Prometheus PromQL 语言查看 TiDB 的监控，以及告警配置的讲解。
 
-## TiDB 集群中 Prometheus 的部署架构
+### TiDB 集群中 Prometheus 的部署架构
 
 TiDB 已经原生支持 Prometheus，在 2.1 之前的版本，TiDB 的监控信息是由各 TiDB 的各个组件主动上报给 pushgateway，再由 prometheus server 去 pushgateway 上主动抓取监控信息。从 2.1 版本开始，TiDB 暴露 [Metrics 接口](https://pingcap.com/docs-cn/stable/how-to/monitor/monitor-a-cluster/#%E4%BD%BF%E7%94%A8-metrics-%E6%8E%A5%E5%8F%A3) ，由 prometheus server 主动抓取信息，这样的架构更符合 Prometheus 的设计思想，整个数据采集路径少了一层 pushgateway。数据采集完成后由 grafana 做报表展示，同时告警信息主动推送给 alertmanager，再由 altermanager 将告警推送到不同的消息渠道。
 
 ![2.png](/res/session3/chapter4/prometheus/2.png)
 
-## Prometheus 表达式在 TiDB 的应用 
+### 通过 Prometheus PromQL 语言查看 TiDB 的监控 
 
-PromQL (Prometheus Query Language)是 Promehteus 提供的函数查询语言，可以进行实时查询，也可以通过函数做聚合运算。本节介绍下如何通过 PromQL 对 TiDB 的监控信息进行查询。
+PromQL(Prometheus Query Language) 是 Promehteus 提供的函数查询语言，可以进行实时查询，也可以通过函数做聚合运算。本节介绍下如何通过 PromQL 对 TiDB 的监控信息进行查询。
 
-### 数据类型
+#### 数据类型
 
 Promethes 中的数据类型分 4 类：
 
@@ -143,7 +139,7 @@ Promethes 中的数据类型分 4 类：
 - Scalar - 数字，浮点值;
 - String - 字符串，当前还没有用。
 
-### web UI 查询结果展示
+#### 通过 web UI 执行查询
 
 下图是在 web UI ([http://prometheus-server:9090/graph)](http://prometheus-server:9090/graph) 上执行 up{instance="21.129.14.103:2998"} 表达式查询到的某个实例的存活状态。
 
@@ -155,7 +151,7 @@ Promethes 中的数据类型分 4 类：
 - 表达式中的 instance, job, project, service, alert_lev 都是该条的记录的标签，相对于关系型数据库中的字段。其中 instance 和 job 是基于 prometheus.yaml 中的内容自动生成的，project, service, alert_lev 是用户自定义的标签。instance 一般是 prometheus 里的 target，但是也可以在标签里重写。
 - 最后的 1 是这条记录在查询时的结果。
 
-### Instant vector 查询
+#### Instant vector 查询
 
 下面列举下几种 Instant vector 查询的常见用法：
 
@@ -163,10 +159,10 @@ Promethes 中的数据类型分 4 类：
 - 在 {} 中加一些标签作为过滤条件，例如: server_query_total{job="tikv"}
 - 一个标签匹配多个值，例如: server_query_total{job=~"tikv|tidb"}
 - 指定需要过滤掉值，例如: server_query_total{job!~"tikv|pd"}
-- 匹配正则表达式，例如: up{tidb=~".+"}  #匹配所以包含 tidb 的 up 时序数据
+- 匹配正则表达式，例如: up{tidb=~".+"}，可以匹配所以包含 tidb 的 up 时序数据
 - 使用算术运算和比较运算过滤结果: tikv_engine_bytes_written{instance="21.129.14.104:21910"}/1024/1024 > 500
 
-### Range vector 查询
+#### Range vector 查询
 
 Range vector 查询类似于 instance vector 查询，不同之处在于通过 [] 加上时间范围限制，时间单位可以设置为：
 
@@ -177,21 +173,17 @@ Range vector 查询类似于 instance vector 查询，不同之处在于通过 [
 - w - weeks
 - y - years
 
-下面看看监控 TiDB QPS 的例子：
-
-sum(rate(tidb_server_query_total{instance="172.16.4.51:10080"}[1m])) by (result)
-
-展示的是 172.16.4.51:10080 这台 TiDB 实例的 QPS 情况：
+下面看看监控 TiDB QPS 的例子，展示的是 172.16.4.51:10080 这台 TiDB 实例的 QPS 情况：
 
 ![4.png](/res/session3/chapter4/prometheus/4.png)
 
-### Offset 查询
+#### Offset 查询
 
 offset 查询的是过去某个时间点的监控结果，如下查询的是一天前 TiDB 的请求数总量：
 
 sum((tidb_server_query_total{result="OK"}  offset 1d))
 
-### TiDB 监控中常用函数
+#### TiDB 监控中常用函数
 
 本节结合实际例子，介绍下 TiDB 监控中经常用到的一些函数。
 
@@ -221,65 +213,71 @@ histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_buck
 
 ![8.png](/res/session3/chapter4/prometheus/8.png)
 
-## Prometheus 报警在 TiDB 中的应用
+### 通过配置 alertmanager 对 TiDB 故障进行报警
 
 本节介绍下 TiDB 中是如何配置 Promethues 的报警的。如果是通过 tidb-ansible 方式部署的集群，Promethues 的报警配置文件对应的路径是 tidb-ansbile/roles/prometheus/files/tidb.rules.yml。
 
-###  TiDB 报警规则
+####  TiDB 告警级别
 
 TiDB 组件的报警项，根据严重级别可分为三类，按照严重程度由高到低依次为：紧急级别、重要级别、警告级别。
 
-#### 紧急级别报警项
+**紧急级别报警项**
 
 紧急级别的报警通常由于服务停止或节点故障导致，此时需要马上进行人工干预操作。告警规则里的标签 level: emergency。下面展示的是 TiDB_schema_error 的告警示例：TiDB 在一个 Lease 时间内没有重载到最新的 Schema 信息，导致 TiDB 无法继续对外提供服务，需要报警。该问题通常由于 TiKV Region 不可用或超时导致，需要看 TiKV 的监控指标定位问题，比如确认 TiKV 实例是否还存活着。
 
-> - alert: TiDB_schema_error
->    expr: increase(tidb_session_schema_lease_error_total{type="outdated"}[15m]) > 0
->    for: 1m
->    labels:
->      env: ENV_LABELS_ENV
->      level: emergency
->      expr:  increase(tidb_session_schema_lease_error_total{type="outdated"}[15m]) > 0
->    annotations:
->      description: 'cluster: ENV_LABELS_ENV, instance: {{ $labels.instance }}, values:{{ $value }}'
->      value: '{{ $value }}'
->      summary: TiDB schema error
+```
+- alert: TiDB_schema_error
+   expr: increase(tidb_session_schema_lease_error_total{type="outdated"}[15m]) > 0
+   for: 1m
+   labels:
+     env: ENV_LABELS_ENV
+     level: emergency
+     expr:  increase(tidb_session_schema_lease_error_total{type="outdated"}[15m]) > 0
+   annotations:
+     description: 'cluster: ENV_LABELS_ENV, instance: {{ $labels.instance }}, values:{{ $value }}'
+     value: '{{ $value }}'
+     summary: TiDB schema error
+```
 
-#### 重要级别报警项
+**重要级别报警项**
 
 对于重要级别的报警，需要密切关注异常的指标。告警规则里的标签 level: critical。下面示例展示的是 tidb-server 进程发生崩溃的时候进行报警。收到该报警的一般处理方式是收集 TiDB 的 panic 日志，定位 panic 的原因，比如是否是 tidb-server 实例 OOM 导致的问题。
 
-> - alert: TiDB_server_panic_total
->   expr: increase(tidb_server_panic_total[10m]) > 0
->   for: 1m
->   labels:
->     env: ENV_LABELS_ENV
->     level: critical
->     expr:  increase(tidb_server_panic_total[10m]) > 0
->   annotations:
->     description: 'cluster: ENV_LABELS_ENV, instance: {{ $labels.instance }}, values:{{ $value }}'
->     value: '{{ $value }}'
->     summary: TiDB server panic total
+```
+- alert: TiDB_server_panic_total
+  expr: increase(tidb_server_panic_total[10m]) > 0
+  for: 1m
+  labels:
+    env: ENV_LABELS_ENV
+    level: critical
+    expr:  increase(tidb_server_panic_total[10m]) > 0
+  annotations:
+    description: 'cluster: ENV_LABELS_ENV, instance: {{ $labels.instance }}, values:{{ $value }}'
+    value: '{{ $value }}'
+    summary: TiDB server panic total
+```
 
-#### 警告级别报警项
+**警告级别报警项**
 
 警告级别的报警是对某一问题或错误的提醒。告警规则里的标签 level: warning。下面展示的是对于 tidb-server 实例内存异常的报警，当 tidb-server 实例的内存占用大于 10GB 的时候进行报警。收到该报警的时候，需要注意是否有大查询在执行，比如大表的 Join 查询。
 
-> - alert: TiDB_memory_abnormal
->   expr: go_memstats_heap_inuse_bytes{job="tidb"} > 1e+10
->   for: 1m
->   labels:
->     env: ENV_LABELS_ENV
->     level: warning
->     expr: go_memstats_heap_inuse_bytes{job="tidb"} > 1e+10
->   annotations:
->     description: 'cluster: ENV_LABELS_ENV, instance: {{ $labels.instance }}, values:{{ $value }}'
->     value: '{{ $value }}'
->     summary: TiDB heap memory usage is over 10 GB
+```
+- alert: TiDB_memory_abnormal
+  expr: go_memstats_heap_inuse_bytes{job="tidb"} > 1e+10
+  for: 1m
+  labels:
+    env: ENV_LABELS_ENV
+    level: warning
+    expr: go_memstats_heap_inuse_bytes{job="tidb"} > 1e+10
+  annotations:
+    description: 'cluster: ENV_LABELS_ENV, instance: {{ $labels.instance }}, values:{{ $value }}'
+    value: '{{ $value }}'
+    summary: TiDB heap memory usage is over 10 GB
+```
 
 更多关于 TiDB 报警规划，以及 TiDB 详细告警的处理方法，请参考[ 官网介绍](https://pingcap.com/docs-cn/stable/reference/alert-rules/) 。
 
-### alertmanager 告警路由在 TiDB 集群的应用
+#### 为 TiDB 集群配置 alertmanager 告警路由
 
 由于往外发送告警需要邮箱、短信、企业微信等外部消息通道打通，一般企业内部都有各自不同的安全要求和操作规范。另外像短信接口并不是统一标准的，大部分也不是原生支持 Prometheus 的，所以需要用户自己编写适配脚本，以 webhook 的方式与 alertmanger 进行适配。
 
@@ -287,12 +285,14 @@ TiDB 组件的报警项，根据严重级别可分为三类，按照严重程度
 
 **告警路由配置** 
 
-> routes:
-> - match:
->     env: test-cluster
->     level: emergency
->   receiver: tidb-emergency
->   group_by: [alertname, cluster, service]
+```
+routes:
+- match:
+    env: test-cluster
+    level: emergency
+  receiver: tidb-emergency
+  group_by: [alertname, cluster, service]
+```
 
 下面简单解释下各个字段的含义：
 
@@ -303,16 +303,18 @@ TiDB 组件的报警项，根据严重级别可分为三类，按照严重程度
 
 **告警接收配置**
 
-> receivers:
-> - name: 'tidb-emergency' 
->   webhook_configs:
->   - url: 'xxxx'
->   wechat_configs:
->   - corp_id: 'xxxxx'
->     to_party: 'xxx'
->     agent_id: 'xxxx'
->     api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
->     api_secret: 'xxxxxx'
+```
+receivers:
+- name: 'tidb-emergency' 
+  webhook_configs:
+  - url: 'xxxx'
+  wechat_configs:
+  - corp_id: 'xxxxx'
+    to_party: 'xxx'
+    agent_id: 'xxxx'
+    api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
+    api_secret: 'xxxxxx'
+```
 
 - name：和上面路由规则的 receiver 对应。
 - webhook_configs：以 webhook 的方式发送。
