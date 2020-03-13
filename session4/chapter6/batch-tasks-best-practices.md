@@ -1,7 +1,8 @@
+#  6.3 TiDB + TiSpark 跑批最佳实践
 TiSpark 是 PingCAP 为解决用户复杂 OLAP 需求而推出的产品。在借助 Spark 平台在计算及生态等方面优势的同时也融合了 TiKV 分布式集群的优势，为大数据环境下的批量任务提供了一种解决方案。在本节将介绍如何在已有TiDB集群基础上引入 TiSpark 进行批量任务开发。本节假设你对 Spark 有基本认知。你可以参阅  [Apache Spark 官网](https://spark.apache.org/) 了解 Spark 相关信息。
 
 ---
-#  TiSpark 概述
+#  6.3.1 TiSpark 概述
 TiSpark 是将 Spark SQL 直接运行在 TiDB 存储引擎 TiKV 上的 OLAP 解决方案。TiSpark 架构图如下：
 
 ![tispark.png](/res/session4/chapter6/batch-tasks-best-practices/tispark.png)
@@ -15,36 +16,36 @@ TiSpark 是将 Spark SQL 直接运行在 TiDB 存储引擎 TiKV 上的 OLAP 解�
 * 除此之外，用户借助 TiSpark 项目可以在 TiDB 上使用 Spark 生态圈提供的多种工具进行数据处理。例如使用 TiSpark 进行数据分析和 ETL；使用 TiKV 作为机器学习的数据源；借助调度系统产生定时报表等等。
 
 ---
-# 环境准备
+#  6.3.2 环境准备
 
-## TiSpark 依赖包
+## (1) TiSpark 依赖包
 当前，TiSpark 2.1.8 是最新的稳定版本，官方强烈建议使用。它与 Spark 2.3.0+ 和 Spark 2.4.0+ 兼容。它还与 TiDB-2.x 和 TiDB-3.x 兼容。可以前往  TiSpark 在 GitHub 上的[首页](https://github.com/pingcap/tispark)查看更详细的版本兼容情况并下载。
 
-## Spark
+## (2) Spark
 根据现有 TiDB 版本确定兼容的 TiSpark 依赖以后，便可以从 Spark 官网下载支持的版本，这里推荐[下载](https://archive.apache.org/dist/spark/)自带 Hadoop 环境的预编译版。
 
-## JDK
+## (3) JDK
 TiSpark 需要 JDK 1.8+ 以及 Scala 2.11（Spark2.0+ 默认 Scala 版本）。
 
 ---
-# TiSpark 集群部署配置
+# 6.3.3 TiSpark 集群部署配置
 TiSpark 可以在 YARN，Mesos，Standalone 等任意 Spark 模式下运行。这里使用 Saprk Standalone 方式部署。关于 Saprk Standalone 的具体配置方式请参考官方说明，下面给出的是与 TiSpark 相关的配置范例。
 
-##  spark-env.sh 配置
+##  (1) spark-env.sh 配置
 ```
 SPARK_EXECUTOR_MEMORY=10g
 SPARK_EXECUTOR_CORES=5
 SPARK_WORKER_MEMORY=40g
 SPARK_WORKER_CORES=20
 ```
-## spark-defaults.conf 配置
+## (2) spark-defaults.conf 配置
 ```
 spark.sql.extensions  org.apache.spark.sql.TiExtensions
 spark.tispark.pd.addresses  127.0.0.1:2379
 ```
 其中 PD 格式为地址:端口号，多个 PD 使用逗号间隔。
 
-## 部署 TiSpark
+## (3) 部署 TiSpark
 将 TiSpark 组件部署到 Spark 集群有两种方式，如果不想重启现有集群，可以使用 Spark 的 --jars 参数将 TiSpark 作为依赖引入:
 
 sh spark-shell --jars $TISPARK_FOLDER/tispark-${name_with_version}.jar
@@ -53,7 +54,7 @@ sh spark-shell --jars $TISPARK_FOLDER/tispark-${name_with_version}.jar
 
 ${SPARK_HOME}/jars
 
-## 启动 TiSpark 集群
+## (4) 启动 TiSpark 集群
 在选中的 Spark Master 节点执行如下命令：
 
 ```
@@ -63,10 +64,10 @@ cd ${SPARK_HOME}
 命令执行以后，控制台会输出 master 和 slave 的启动信息并指出相应 log 文件。检查 log 文件确认集群各个节点是否启动成功。可以打开 [http://spark-master-hostname:8080](http://spark-master-hostname:8080) 查看集群信息（Spark-Master 默认的 web 端口号）。
 
 ---
-# 使用范例
+# 6.3.4 使用范例
 假设你已经按照上面的步骤成功部署并启动了 TiSpark 集群，下面分别介绍使用 Spark-Shell 和 Spark-Submit 两种方式来作 OLAP 分析。
 
-## Spark-Shell
+## (1) Spark-Shell
 如果你的 TiSpark 版本是 2.0 以上，那么在 Spark-Shell 中你可以直接调用 Spark SQL 与 TiDB 数据库交互：
 
 ```
@@ -82,7 +83,7 @@ ti.tidbMapDatabase("test")
 ```
 之后便可以像上面那样调用 Spark SQL，不过建议尽量使用 2.0 以上版本的 TiSpark。
 
-## Spark-Submit
+## (2) Spark-Submit
 在实际开发中，Spark-Shell 多用于测试，更多时候需要将代码打包后使用 Spark-Submit 命令提交到 TiSpark 集群。
 
 如果你的工程是采用 Maven 构建的，需要在 POM 文件中引入 Spark 及 TiSpark 依赖，由于这些依赖在 Spark 集群上已经存在，需要将他们的依赖范围设置为 Provided。
@@ -179,7 +180,7 @@ cd ${SPARK_HOME}
 关于 Spark-Submit 命令的更多参数，请参考 Spark 官网。
 
 ---
-# 小结
+# 6.3.5 小结
 本节介绍了如何在现有 TiDB 集群基础上部署和配置 TiSpark 集群，并通过一些简单案例展示了如何使用 TiSpark 组件进行批量任务开发。你应该发现了，使用 TiSpark 开发与原生 Spark 相比没有什么差别，如果你本就熟悉 Spark 的话会很快上手，这正如 TiSpark 官方所说的那样，TiSpark 只是 Spark 之上的一个薄层。
 
 如果你想使用 TiSpark 支撑批量任务的话，目前为止还是不够完善的，至少还有两个方面的问题需要解决。
