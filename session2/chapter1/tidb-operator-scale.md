@@ -4,7 +4,7 @@
 
 ## 1. 环境准备
 
-- 参考[本地测试环境](/session2/chapter1/tidb-operator-local-deployment.md)或[生产环境](/session2/chapter1/tidb-operator-deployment.md)的部署指引，使用 TiDB Operator 部署 TiDB 集群。
+- 参考[本地测试环境](/session2/chapter1/tidb-operator-local-deployment.md)或[生产环境](/session2/chapter1/tidb-operator-deployment-private-tidb.md)的部署指引，使用 TiDB Operator 部署 TiDB 集群。
 
 - 在本例中，release 的名称为 `test`，在 `dba-test` 命名空间下，chart 文件放置在 `/home/charts/tidb-cluster` 路径下。初始 TiDB 集群配置：
   - 3 个 PD 节点
