@@ -1,6 +1,7 @@
 # 8.3.1 TiDB 增加索引原理
 
-在普通关系型数据库中增加索引通常会有时间过长、锁表等风险，特别是在一张频繁更新数据的表上增加索引的时候，风险变得很大且不可控。 TiDB 的 DDL 通过实现  Google F1 的在线异步 schema 变更算法，来完成在分布式场景下的无锁，在线 schema 变更。从 TiDB 2.1 开始实现了并行 DDL ，新增了增加索引队列 (add index job queue) 以及增加索引线程 (add index worker) 用以加速增加索引的执行速度，整个增加索引流程如下图：
+在普通关系型数据库中增加索引通常会有时间过长、锁表等风险，特别是在一张频繁更新数据的表上增加索引的时候，风险变得很大且不可控。 TiDB 的 DDL 通过实现  Google F1 的在线异步 schema 变更算法，来完成在分布式场景下的无锁，在线 schema 变更。从 TiDB 2.1 开始实现了并行 DDL ，新增了增加索引队列 (add index job queue) 以及增加索引线程 (add index worker) 用以加速增加索引的执行速度。  
+**整个增加索引流程如下图：**
 
 
 ![1.png](/res/session4/chapter8/add-index-internal.png)
