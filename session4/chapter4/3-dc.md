@@ -10,7 +10,7 @@ TiDB两地三中心架构基于Raft算法，保证集群数据一致性和高可
 3）生产集群采用5副本模式，其中IDC和IDC2分别放2个副本，IDC3放1个副本；TiKV按机柜打Label，既每个机柜上有一份副本。
 4）从集群与主集群直接通过binlog同步采用消息缓存服务器Kafka完成中间数据存储与传输工作。
 
-![P1.md](/res/session4/chapter4/3-dc/1.png)
+![P1.md](/res/session4/chapter4/3-dc/p1.png)
 图1 两地三中心集群架构图
 
 该架构具备高可用和容灾备份能力。相比于三数据中心方案优势如下：
@@ -22,7 +22,7 @@ TiDB两地三中心架构基于Raft算法，保证集群数据一致性和高可
 ## 1.2 部署说明
 下面具体介绍两地三中心架构部署详情。
 
-![P2.md](/res/session4/chapter4/3-dc/2.png)
+![P2.md](/res/session4/chapter4/3-dc/p2.png)
 图2 两地三中心配置详图
 
 北京、西安两地三中心配置详解：
@@ -184,7 +184,7 @@ location_labels = ["dc","rack","zone","host"]
 ## 2.3 Labels设计
 在两地三中心部署方式下，对于Labels的设计也需要充分考虑到系统的可用性和容灾能力，建议根据部署的物理结构来定义DC、AZ、RACK、HOST四个等级。
 
-![P3.md](/res/session4/chapter4/3-dc/3.png)
+![P3.md](/res/session4/chapter4/3-dc/p3.png)
 图3 label逻辑定义图
 
 ## 2.4 参数配置
