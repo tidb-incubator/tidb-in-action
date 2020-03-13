@@ -61,7 +61,7 @@ $ cdc cli capture list --pd=http://10.1.1.10:2379
 运行以下命令创建一个同步任务：
 
 ```
-$ cdc cli changefeed create --pd=http://10.1.1.10:2379 --sink-uri="user:password@tcp(10.3.1.30:4000)/"  --config=~/cdc-config.toml --start-ts=0
+$ cdc cli changefeed create --pd=http://10.1.1.10:2379 --sink-uri="mysql://user:password@10.3.1.30:4000/" --config=~/cdc-config.toml --start-ts=0
 ```
 
 命令参数说明：
