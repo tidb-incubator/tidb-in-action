@@ -1,5 +1,5 @@
 # DB2 到 TiDB （CDC）
-在数同步场景中，上游数据库可能是任何关系型数据库，异构数据库之间的同步目前还没有一款通用的工具能够很好的适配所有的关系型数据库。异构数据库之间的同步也有比较多的数据同步工具。传统数据库市场中， DB2 有一定的占有率，当这些用户在考虑数据迁移到 TiDB 上时如何选择合适的工具是本章的主要内容。DB2 根据运行平台的不同被分为 DB2 for LUW、DB2 for i（AS/4000）、DB2 for z/OS 。当数据源是 DB2 for LUW 时，可以使用 IBM CDC 或 OGG 做同步工具；当数据源是 DB2 for i（AS/400）或 DB2 for z/OS（Mainframe） 时，只能用 IBM CDC 做同步工具。本章节描述的是 DB2 for i 作为数据源时，使用 CDC 同步数据到 TiDB 的案例，可供所有计划使用 IBM CDC 工具同步数据到 TiDB 的用户参考。
+在数同步场景中，上游数据库可能是任何关系型数据库，异构数据库之间的同步目前还没有一款通用的工具能够很好的适配所有的关系型数据库。异构数据库之间的同步也有比较多的数据同步工具。传统数据库市场中， DB2 有一定的占有率，当这些用户在考虑数据迁移到 TiDB 上时如何选择合适的工具是本章的主要内容。DB2 根据运行平台的不同被分为 DB2 for LUW、DB2 for i（AS/400）、DB2 for z/OS（Mainframe） 。当数据源是 DB2 for LUW 时，可以使用 IBM CDC 或 OGG 做同步工具；当数据源是 DB2 for i（AS/400）或 DB2 for z/OS（Mainframe） 时，只能用 IBM CDC 做同步工具。本章节描述的是 DB2 for i 作为数据源时，使用 CDC 同步数据到 TiDB 的案例，可供所有计划使用 IBM CDC 工具同步数据到 TiDB 的用户参考。
 
 IBM 公司为 DB2 的数据同步做了一套完整的工具，初期这款工具被命名为 InfoSphere Data Replication 简称 IIDR ，IIDR 有多个引擎，包括 Change data capture (CDC) Replication 、 Q Replication 和 SQL Replication ，在 DB2 for i 同步数据到 TiDB 的场景中，主要用到的是它的 Change data capture (CDC) Replication 引擎，所以文中前面提到的 IBM CDC 等价于 IIDR。
 
