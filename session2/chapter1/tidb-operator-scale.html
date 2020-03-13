@@ -2821,11 +2821,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x57FA;&#x4E8E;-tidb-operator-&#x7684;&#x96C6;&#x7FA4;&#x6269;&#x7F29;&#x5BB9;">&#x57FA;&#x4E8E; TiDB-Operator &#x7684;&#x96C6;&#x7FA4;&#x6269;&#x7F29;&#x5BB9;</h1>
-<p>&#x672C;&#x8282;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x5BF9;&#x57FA;&#x4E8E; TiDB-Operator &#x90E8;&#x7F72;&#x7684; TiDB &#x96C6;&#x7FA4;&#x8FDB;&#x884C;&#x6C34;&#x5E73;&#x548C;&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x3002;</p>
-<h2 id="&#x5F00;&#x59CB;&#x4E4B;&#x524D;">&#x5F00;&#x59CB;&#x4E4B;&#x524D;</h2>
+                                <h1 id="132-&#x57FA;&#x4E8E;-tidb-operator-&#x7684;&#x96C6;&#x7FA4;&#x6269;&#x7F29;&#x5BB9;">1.3.2 &#x57FA;&#x4E8E; TiDB Operator &#x7684;&#x96C6;&#x7FA4;&#x6269;&#x7F29;&#x5BB9;</h1>
+<p>&#x672C;&#x8282;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x5BF9;&#x57FA;&#x4E8E; TiDB Operator &#x90E8;&#x7F72;&#x7684; TiDB &#x96C6;&#x7FA4;&#x8FDB;&#x884C;&#x6C34;&#x5E73;&#x548C;&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x3002;</p>
+<h2 id="1-&#x73AF;&#x5883;&#x51C6;&#x5907;">1. &#x73AF;&#x5883;&#x51C6;&#x5907;</h2>
 <ul>
-<li><p>&#x53C2;&#x8003;<a href="https://github.com/pingcap-incubator/tidb-in-action/blob/master/session2/chapter1/tidb-operator-local-deployment.md" target="_blank">&#x672C;&#x5730;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;</a>&#x6216;<a href="https://github.com/pingcap-incubator/tidb-in-action/blob/master/session2/chapter1/tidb-operator-deployment.md" target="_blank">&#x751F;&#x4EA7;&#x73AF;&#x5883;</a>&#x7684;&#x90E8;&#x7F72;&#x6307;&#x5F15;&#xFF0C;&#x4F7F;&#x7528; TiDB-Operator &#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;&#x3002;</p>
+<li><p>&#x53C2;&#x8003;<a href="tidb-operator-local-deployment.html">&#x672C;&#x5730;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;</a>&#x6216;<a href="tidb-operator-deployment-private-tidb.html">&#x751F;&#x4EA7;&#x73AF;&#x5883;</a>&#x7684;&#x90E8;&#x7F72;&#x6307;&#x5F15;&#xFF0C;&#x4F7F;&#x7528; TiDB Operator &#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;&#x3002;</p>
 </li>
 <li><p>&#x5728;&#x672C;&#x4F8B;&#x4E2D;&#xFF0C;release &#x7684;&#x540D;&#x79F0;&#x4E3A; <code>test</code>&#xFF0C;&#x5728; <code>dba-test</code> &#x547D;&#x540D;&#x7A7A;&#x95F4;&#x4E0B;&#xFF0C;chart &#x6587;&#x4EF6;&#x653E;&#x7F6E;&#x5728; <code>/home/charts/tidb-cluster</code> &#x8DEF;&#x5F84;&#x4E0B;&#x3002;&#x521D;&#x59CB; TiDB &#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#xFF1A;</p>
 <ul>
@@ -2835,42 +2835,42 @@
 </ul>
 </li>
 </ul>
-<h2 id="&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;">&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;</h2>
+<h2 id="2-&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;">2. &#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;</h2>
 <h3 id="&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x539F;&#x7406;">&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x539F;&#x7406;</h3>
-<p>TiDB &#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6307;&#x7684;&#x662F;&#x901A;&#x8FC7;&#x589E;&#x52A0;&#x6216;&#x51CF;&#x5C11;&#x8282;&#x70B9;&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x6765;&#x8FBE;&#x5230;&#x96C6;&#x7FA4;&#x6269;&#x7F29;&#x5BB9;&#x7684;&#x76EE;&#x7684;&#x3002;&#x6269;&#x7F29;&#x5BB9; TiDB &#x96C6;&#x7FA4;&#x65F6;&#xFF0C;&#x4F1A;&#x6309;&#x7167;&#x586B;&#x5165;&#x7684; <code>replicas</code> &#x503C;&#xFF0C;&#x5BF9; PD&#x3001;TiKV&#x3001;TiDB &#x8FDB;&#x884C;&#x987A;&#x5E8F;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x3002;&#x6269;&#x5BB9;&#x64CD;&#x4F5C;&#x6309;&#x7167;&#x8282;&#x70B9;&#x7F16;&#x53F7;&#x7531;&#x5C0F;&#x5230;&#x5927;&#x589E;&#x52A0;&#x8282;&#x70B9;&#xFF0C;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6309;&#x7167;&#x8282;&#x70B9;&#x7F16;&#x53F7;&#x7531;&#x5927;&#x5230;&#x5C0F;&#x5220;&#x9664;&#x8282;&#x70B9;&#x3002;</p>
+<p>TiDB &#x96C6;&#x7FA4;&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6307;&#x7684;&#x662F;&#x901A;&#x8FC7;&#x589E;&#x52A0;&#x6216;&#x51CF;&#x5C11;&#x8282;&#x70B9;&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x6765;&#x8FBE;&#x5230;&#x96C6;&#x7FA4;&#x6269;&#x7F29;&#x5BB9;&#x7684;&#x76EE;&#x7684;&#x3002;&#x6269;&#x7F29;&#x5BB9; TiDB &#x96C6;&#x7FA4;&#x65F6;&#xFF0C;&#x4F1A;&#x6309;&#x7167;&#x586B;&#x5165;&#x7684; <code>replicas</code> &#x503C;&#xFF0C;&#x5BF9; PD&#x3001;TiKV&#x3001;TiDB &#x8FDB;&#x884C;&#x987A;&#x5E8F;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x3002;&#x6269;&#x5BB9;&#x64CD;&#x4F5C;&#x6309;&#x7167;&#x8282;&#x70B9;&#x7F16;&#x53F7;&#x7531;&#x5C0F;&#x5230;&#x5927;&#x589E;&#x52A0;&#x8282;&#x70B9;&#xFF0C;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6309;&#x7167;&#x8282;&#x70B9;&#x7F16;&#x53F7;&#x7531;&#x5927;&#x5230;&#x5C0F;&#x5220;&#x9664;&#x8282;&#x70B9;&#x3002;</p>
 <h3 id="&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;">&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;</h3>
-<ol>
-<li><p>&#x4FEE;&#x6539;&#x96C6;&#x7FA4;&#x7684; <code>value.yaml</code> &#x6587;&#x4EF6;&#x4E2D;&#x7684; <code>pd.replicas</code>&#x3001;<code>tidb.replicas</code>&#x3001;<code>tikv.replicas</code> &#x81F3;&#x671F;&#x671B;&#x503C;&#xFF08;&#x672C;&#x4F8B;&#x4E2D;&#x4E3A; 3&#x3001;3&#x3001;4&#xFF09;&#x3002;</p>
-</li>
-<li><p>&#x6267;&#x884C; <code>helm upgrade</code> &#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x6269;&#x7F29;&#x5BB9;&#xFF1A;</p>
-<pre><code class="lang-shell"> # helm upgrade test /home/charts/tidb-cluster -f /home/charts/tidb-cluster/values.yaml
- Release &quot;test&quot; has been upgraded. Happy Helming!
- LAST DEPLOYED: Sun Mar  8 15:39:57 2020
- NAMESPACE: dba-test
- STATUS: DEPLOYED
-</code></pre>
-</li>
-<li><p>&#x67E5;&#x770B;&#x96C6;&#x7FA4;&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x72B6;&#x6001;&#xFF1A;</p>
-<pre><code class="lang-shell"> # watch kubectl get po -n dba-test
-</code></pre>
-<p> &#x5F53;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x7684; Pod &#x6570;&#x91CF;&#x90FD;&#x8FBE;&#x5230;&#x4E86;&#x9884;&#x8BBE;&#x503C;&#xFF08;&#x672C;&#x4F8B;&#x4E2D;&#x4E3A; 3 &#x4E2A; PD &#x8282;&#x70B9;&#x3001;3 &#x4E2A; TiDB &#x8282;&#x70B9;&#x3001;4 &#x4E2A; TiKV &#x8282;&#x70B9;&#xFF09;&#xFF0C;&#x5E76;&#x4E14;&#x90FD;&#x8FDB;&#x5165;  <code>Running</code> &#x72B6;&#x6001;&#x540E;&#xFF0C;&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x5B8C;&#x6210;&#x3002;</p>
-<pre><code class="lang-shell"> NAME                              READY   STATUS    RESTARTS   AGE
- test-discovery-668b48577c-zw4jh   1/1     Running   0          116m
- test-monitor-86797cd996-9ggfh     3/3     Running   0          116m
- test-pd-0                         1/1     Running   0          116m
- test-pd-1                         1/1     Running   0          116m
- test-pd-2                         1/1     Running   1          116m
- test-tidb-0                       2/2     Running   0          112m
- test-tidb-1                       2/2     Running   0          112m
- test-tidb-2                       2/2     Running   0          2m52s
- test-tikv-0                       1/1     Running   0          114m
- test-tikv-1                       1/1     Running   0          114m
- test-tikv-2                       1/1     Running   0          114m
- test-tikv-3                       1/1     Running   0          2m52s
-</code></pre>
-</li>
-</ol>
-<blockquote>
+<p>(1) &#x4FEE;&#x6539;&#x96C6;&#x7FA4;&#x7684; <code>value.yaml</code> &#x6587;&#x4EF6;&#x4E2D;&#x7684; <code>pd.replicas</code>&#x3001;<code>tidb.replicas</code>&#x3001;<code>tikv.replicas</code> &#x81F3;&#x671F;&#x671B;&#x503C;&#xFF08;&#x672C;&#x4F8B;&#x4E2D;&#x4E3A; 3&#x3001;3&#x3001;4&#xFF09;&#x3002;</p>
+<p>(2) &#x6267;&#x884C; <code>helm upgrade</code> &#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x6269;&#x7F29;&#x5BB9;&#xFF1A;</p>
+<pre><code>```shell
+# helm upgrade test /home/charts/tidb-cluster -f /home/charts/tidb-cluster/values.yaml
+Release &quot;test&quot; has been upgraded. Happy Helming!
+LAST DEPLOYED: Sun Mar  8 15:39:57 2020
+NAMESPACE: dba-test
+STATUS: DEPLOYED
+```
+</code></pre><p>(3) &#x67E5;&#x770B;&#x96C6;&#x7FA4;&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x72B6;&#x6001;&#xFF1A;</p>
+<pre><code>```shell
+# watch kubectl get po -n dba-test
+```
+
+&#x5F53;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x7684; Pod &#x6570;&#x91CF;&#x90FD;&#x8FBE;&#x5230;&#x4E86;&#x9884;&#x8BBE;&#x503C;&#xFF08;&#x672C;&#x4F8B;&#x4E2D;&#x4E3A; 3 &#x4E2A; PD &#x8282;&#x70B9;&#x3001;3 &#x4E2A; TiDB &#x8282;&#x70B9;&#x3001;4 &#x4E2A; TiKV &#x8282;&#x70B9;&#xFF09;&#xFF0C;&#x5E76;&#x4E14;&#x90FD;&#x8FDB;&#x5165;  `Running` &#x72B6;&#x6001;&#x540E;&#xFF0C;&#x6C34;&#x5E73;&#x6269;&#x7F29;&#x5BB9;&#x5B8C;&#x6210;&#x3002;
+
+```shell
+NAME                              READY   STATUS    RESTARTS   AGE
+test-discovery-668b48577c-zw4jh   1/1     Running   0          116m
+test-monitor-86797cd996-9ggfh     3/3     Running   0          116m
+test-pd-0                         1/1     Running   0          116m
+test-pd-1                         1/1     Running   0          116m
+test-pd-2                         1/1     Running   1          116m
+test-tidb-0                       2/2     Running   0          112m
+test-tidb-1                       2/2     Running   0          112m
+test-tidb-2                       2/2     Running   0          2m52s
+test-tikv-0                       1/1     Running   0          114m
+test-tikv-1                       1/1     Running   0          114m
+test-tikv-2                       1/1     Running   0          114m
+test-tikv-3                       1/1     Running   0          2m52s
+```
+</code></pre><blockquote>
 <p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
 <ul>
 <li>PD&#x3001;TiKV &#x7EC4;&#x4EF6;&#x5728;&#x6EDA;&#x52A8;&#x5347;&#x7EA7;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x4E0D;&#x4F1A;&#x89E6;&#x53D1;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x3002;</li>
@@ -2879,28 +2879,26 @@
 <li>TiKV &#x7EC4;&#x4EF6;&#x4E0D;&#x652F;&#x6301;&#x5728;&#x7F29;&#x5BB9;&#x8FC7;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#x6269;&#x5BB9;&#x64CD;&#x4F5C;&#xFF0C;&#x5F3A;&#x5236;&#x6267;&#x884C;&#x6B64;&#x64CD;&#x4F5C;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#x5F02;&#x5E38;&#x3002;&#x5047;&#x5982;&#x5F02;&#x5E38;&#x5DF2;&#x7ECF;&#x53D1;&#x751F;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/troubleshoot#tikv-store-&#x5F02;&#x5E38;&#x8FDB;&#x5165;-tombstone-&#x72B6;&#x6001;" target="_blank">TiKV Store &#x5F02;&#x5E38;&#x8FDB;&#x5165; Tombstone &#x72B6;&#x6001;</a> &#x8FDB;&#x884C;&#x89E3;&#x51B3;&#x3002;</li>
 </ul>
 </blockquote>
-<h2 id="&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;">&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;</h2>
+<h2 id="3-&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;">3. &#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;</h2>
 <h3 id="&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x539F;&#x7406;">&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x539F;&#x7406;</h3>
 <p>&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6307;&#x7684;&#x662F;&#x901A;&#x8FC7;&#x589E;&#x52A0;&#x6216;&#x51CF;&#x5C11;&#x8282;&#x70B9;&#x7684;&#x8D44;&#x6E90;&#x9650;&#x5236;&#xFF0C;&#x6765;&#x8FBE;&#x5230;&#x96C6;&#x7FA4;&#x6269;&#x7F29;&#x5BB9;&#x7684;&#x76EE;&#x7684;&#x3002;&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x6309;&#x7167;&#x8282;&#x70B9;&#x7F16;&#x53F7;&#x7531;&#x5927;&#x5230;&#x5C0F;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x6EDA;&#x52A8;&#x5347;&#x7EA7;&#x8282;&#x70B9;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
 <h3 id="&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;">&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;</h3>
-<ol>
-<li><p>&#x4FEE;&#x6539; <code>values.yaml</code> &#x6587;&#x4EF6;&#x4E2D;&#x7684; <code>tidb.resources</code>&#x3001;<code>tikv.resources</code>&#x3001;<code>pd.resources</code> &#x81F3;&#x671F;&#x671B;&#x503C;&#x3002;</p>
-</li>
-<li><p>&#x6267;&#x884C; <code>helm upgrade</code> &#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x5347;&#x7EA7;&#xFF1A;</p>
-<pre><code class="lang-shell"> # helm upgrade test /home/charts/tidb-cluster -f /home/charts/tidb-cluster/values.yaml
- Release &quot;test&quot; has been upgraded. Happy Helming!
- LAST DEPLOYED: Sun Mar  8 15:57:03 2020
- NAMESPACE: dba-test
- STATUS: DEPLOYED
-</code></pre>
-</li>
-<li><p>&#x67E5;&#x770B;&#x5347;&#x7EA7;&#x8FDB;&#x5EA6;&#xFF1A;</p>
-<pre><code class="lang-shell"> # watch kubectl -n &lt;namespace&gt; get pod -o wide
-</code></pre>
-<p> &#x5F53;&#x6240;&#x6709; Pod &#x90FD;&#x91CD;&#x5EFA;&#x5B8C;&#x6BD5;&#x8FDB;&#x5165; <code>Running</code> &#x72B6;&#x6001;&#x540E;&#xFF0C;&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x5B8C;&#x6210;&#x3002;</p>
-</li>
-</ol>
-<blockquote>
+<p>(1) &#x4FEE;&#x6539; <code>values.yaml</code> &#x6587;&#x4EF6;&#x4E2D;&#x7684; <code>tidb.resources</code>&#x3001;<code>tikv.resources</code>&#x3001;<code>pd.resources</code> &#x81F3;&#x671F;&#x671B;&#x503C;&#x3002;</p>
+<p>(2) &#x6267;&#x884C; <code>helm upgrade</code> &#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x5347;&#x7EA7;&#xFF1A;</p>
+<pre><code>```shell
+# helm upgrade test /home/charts/tidb-cluster -f /home/charts/tidb-cluster/values.yaml
+Release &quot;test&quot; has been upgraded. Happy Helming!
+LAST DEPLOYED: Sun Mar  8 15:57:03 2020
+NAMESPACE: dba-test
+STATUS: DEPLOYED
+```
+</code></pre><p>(3) &#x67E5;&#x770B;&#x5347;&#x7EA7;&#x8FDB;&#x5EA6;&#xFF1A;</p>
+<pre><code>```shell
+# watch kubectl -n &lt;namespace&gt; get pod -o wide
+```
+
+&#x5F53;&#x6240;&#x6709; Pod &#x90FD;&#x91CD;&#x5EFA;&#x5B8C;&#x6BD5;&#x8FDB;&#x5165; `Running` &#x72B6;&#x6001;&#x540E;&#xFF0C;&#x5782;&#x76F4;&#x6269;&#x7F29;&#x5BB9;&#x5B8C;&#x6210;&#x3002;
+</code></pre><blockquote>
 <p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
 <ul>
 <li>&#x5982;&#x679C;&#x5728;&#x5782;&#x76F4;&#x6269;&#x5BB9;&#x65F6;&#x4FEE;&#x6539;&#x4E86;&#x8D44;&#x6E90;&#x7684; <code>requests</code> &#x5B57;&#x6BB5;&#xFF0C;&#x7531;&#x4E8E; PD&#x3001;TiKV &#x4F7F;&#x7528;&#x4E86; <code>Local PV</code>&#xFF0C;&#x5347;&#x7EA7;&#x540E;&#x8FD8;&#x9700;&#x8981;&#x8C03;&#x5EA6;&#x56DE;&#x539F;&#x8282;&#x70B9;&#xFF0C;&#x5982;&#x679C;&#x539F;&#x8282;&#x70B9;&#x8D44;&#x6E90;&#x4E0D;&#x591F;&#xFF0C;&#x5219;&#x4F1A;&#x5BFC;&#x81F4; Pod &#x4E00;&#x76F4;&#x5904;&#x4E8E; <code>Pending</code> &#x72B6;&#x6001;&#x800C;&#x5F71;&#x54CD;&#x670D;&#x52A1;&#x3002;</li>
@@ -2950,7 +2948,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.3.2 基于 TiDB-Operator 的集群扩缩容","level":"3.1.3.2","depth":3,"next":{"title":"1.4 集群版本升级","level":"3.1.4","depth":2,"path":"session2/chapter1/tidb-upgrade.md","ref":"session2/chapter1/tidb-upgrade.md","articles":[{"title":"1.4.1 基于 TiOps 的集群滚动更新","level":"3.1.4.1","depth":3,"path":"session2/chapter1/tiops-rolling-upgrade.md","ref":"session2/chapter1/tiops-rolling-upgrade.md","articles":[]},{"title":"1.4.2 基于 TiDB-Operator 的集群滚动更新","level":"3.1.4.2","depth":3,"path":"session2/chapter1/tidb-operator-rolling-upgrade.md","ref":"session2/chapter1/tidb-operator-rolling-upgrade.md","articles":[]}]},"previous":{"title":"1.3.1 基于 TiOps 的集群扩缩容","level":"3.1.3.1","depth":3,"path":"session2/chapter1/tiops-scale.md","ref":"session2/chapter1/tiops-scale.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-scale.md","mtime":"2020-03-13T12:46:50.677Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T12:47:38.995Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.3.2 基于 TiDB-Operator 的集群扩缩容","level":"3.1.3.2","depth":3,"next":{"title":"1.4 集群版本升级","level":"3.1.4","depth":2,"path":"session2/chapter1/tidb-upgrade.md","ref":"session2/chapter1/tidb-upgrade.md","articles":[{"title":"1.4.1 基于 TiOps 的集群滚动更新","level":"3.1.4.1","depth":3,"path":"session2/chapter1/tiops-rolling-upgrade.md","ref":"session2/chapter1/tiops-rolling-upgrade.md","articles":[]},{"title":"1.4.2 基于 TiDB-Operator 的集群滚动更新","level":"3.1.4.2","depth":3,"path":"session2/chapter1/tidb-operator-rolling-upgrade.md","ref":"session2/chapter1/tidb-operator-rolling-upgrade.md","articles":[]}]},"previous":{"title":"1.3.1 基于 TiOps 的集群扩缩容","level":"3.1.3.1","depth":3,"path":"session2/chapter1/tiops-scale.md","ref":"session2/chapter1/tiops-scale.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-scale.md","mtime":"2020-03-13T12:47:56.417Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-13T12:48:40.929Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
