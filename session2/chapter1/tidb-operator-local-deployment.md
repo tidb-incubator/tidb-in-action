@@ -13,6 +13,7 @@
 
 1. 内存 4GB+、CPU 2核心+
 2. Docker 17.03+
+4. Go 1.10+
 3. net.ipv4.ip_forward 设置为1
 
 ## 通过 kind 部署 K8s 集群
@@ -105,13 +106,13 @@ To start using your cluster, run:
 
 ```
 
-将 /root/charts/tidb-operator/values.yaml 文件内的 scheduler.kubeSchedulerImageName 值修改为 registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler 以加快镜像拉取速度。
+将 /root/tidb-operator/charts/tidb-operator/values.yaml 文件内的 scheduler.kubeSchedulerImageName 值修改为 registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler 以加快镜像拉取速度。
 
 安装 TiDB Operator
 
 ```
 
-    # helm install --namespace=tidb-admin  --name=tidb-operator /root/charts/tidb-operator -f /root/charts/tidb-operator/values.yaml
+    # helm install --namespace=tidb-admin  --name=tidb-operator /root/tidb-operator/charts/tidb-operator -f /root/tidb-operator/charts/tidb-operator/values.yaml
     NAME:   tidb-operator
     LAST DEPLOYED: Fri Mar  6 14:24:09 2020
     NAMESPACE: tidb-admin
@@ -149,7 +150,7 @@ To start using your cluster, run:
 ```
 
     # cd /root/chart/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
-    # helm install --namespace dba-test --name=test /root/charts/tidb-cluster -f /root/charts/tidb-cluster/values.yaml
+    # helm install --namespace dba-test --name=test /root/tidb-operator/charts/tidb-cluster -f /root/tidb-operator/charts/tidb-cluster/values.yaml
     NAME:   test
     LAST DEPLOYED: Fri Mar  6 14:50:25 2020
     NAMESPACE: dba-test
