@@ -201,11 +201,11 @@ location_labels = ["dc","rack","zone","host"]
 	在 TiKV 单机多实例环境下，需要按照以下公式调整该值。
 capacity = MEM_TOTAL * 0.5 / TiKV 实例数量
 示例如下:
-```
-Storage:
-  block-cache:
-     capacity: “1G”
-```
+	```
+	Storage:
+  	block-cache:
+	     capacity: “1G”
+	```
 
  + 启用grpc消息压缩
  由于涉及到集群中的数据在网络中传输，需要开启 gRPC 消息压缩，降低网络流量。
