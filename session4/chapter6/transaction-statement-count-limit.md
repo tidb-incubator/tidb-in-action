@@ -116,6 +116,7 @@
 
 | Key: Index (UK) + TSO | Value: Null | Flag: Del |
 |----|----|----|
+
 | Key: Index (UK) + TSO | Value: PK | Flag: Put |
 |----|----|----|
 
@@ -132,9 +133,9 @@
 ### 4.6.3 30W 键值对的转换
 
 总结如下：
-
-| Insert | 30W/Idx_Count |
+|操作|键值对转换公式|
 |:----:|:----:|
+| Insert | 30W/Idx_Count |
 | Delete | 30W/Idx_Count |
 | Update_On_PK | 30W/((1+Non_UK)\*2+UK\*1)   |
 | Update_non_PK | 30W/(1+Involved_Idx_Count*2) |
@@ -157,8 +158,9 @@ CREATE TABLE `t1` (
 
 以上面的简单表结构为例，该表有自增主键，外加 1 个普通索引，那么上面的事务限制对应的记录数为 ：
 
-| Insert | 30W/Idx_Count | 15W |
+|操作|键值对转换公式|最大操作行数|
 |:----:|:----:|:----:|
+| Insert | 30W/Idx_Count | 15W |
 | Delete | 30W/Idx_Count | 15W |
 | Update_On_id | 30W/((1+1)*2 + 0)   | 7.5W |
 | Update_On_name | 30W/(1+Involved_Idx_Count*2) | 10W |
@@ -182,8 +184,9 @@ CREATE TABLE `t1` (
 
 那么，该表有一个隐藏主键，外加 1 个唯一索引 (用户定义的主键)，外加 1 个普通索引，那么上面的事务限制对应的记录数为：
 
-| Insert   | 30W/Idx_Count   | 10W   |
+|操作|键值对转换公式|最大操作行数|
 |:----|:----|:----|
+| Insert   | 30W/Idx_Count   | 10W   |
 | Delete   | 30W/Idx_Count   | 10W   |
 | Update_On_id   | 30W/(1+Involved_Idx_Count*2)   | 10W   |
 | Update_On_name   | 30W/(1+Involved_Idx_Count*2)   | 10W   |
