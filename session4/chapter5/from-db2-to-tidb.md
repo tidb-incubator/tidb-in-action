@@ -9,7 +9,7 @@ IBM 公司为 Db2 的数据同步做了一套完整的工具，初期这款工�
 
 其软件架构如下图所示：
 
-![图片](/res/session4/chapter5/from-DB2-to-tidb/cdc.png)
+![图片](/res/session4/chapter5/from-db2-to-tidb/cdc.png)
 
 * CDC 官方支持列表
 参考：https://www.ibm.com/support/knowledgecenter/SSTRGZ_11.4.0/com.ibm.cdcdoc.sysreq.doc/concepts/supportedsourceandtargets.html
@@ -49,7 +49,7 @@ IBM 公司为 Db2 的数据同步做了一套完整的工具，初期这款工�
 下面我们以一个实际案例来介绍如何将 Db2 for i 中的数据同步到 TiDB 上。
 
 ### 部署架构
-![图片](/res/session4/chapter5/from-DB2-to-tidb/cdc-tidb-1.png)
+![图片](/res/session4/chapter5/from-db2-to-tidb/cdc-tidb-1.png)
 
 以上图的生产环境架构为例，上游是一个核心系统，使用的是IBM商业平台，生产和备份平台之间使用了 OMS 同步，IIDR 同步的源端为备机数据库，目标端为 TiDB 。为保证高可用，在下游的另外一台服务器上部署了 IIDR 软件作为备用节点。
 
@@ -60,13 +60,13 @@ IBM 公司为 Db2 的数据同步做了一套完整的工具，初期这款工�
 
 因为 TiDB 并不在 IIDR 官方的支持列表中，所以在下游安装时，我们要选择 **FlexRep 如下图所示：**
 
-![图片](/res/session4/chapter5/from-DB2-to-tidb/cdc-tidb-2.png)
+![图片](/res/session4/chapter5/from-db2-to-tidb/cdc-tidb-2.png)
 
 * 创建预定需要借助 MySQL 驱动
 
 IIDR 需要借助 MySQL 驱动通过 JDBC 的方式将数据写入 TiDB 中，需要提前下载 MySQL 驱动，并在创建订阅时选择该驱动，如下图所示：
 
-![图片](/res/session4/chapter5/from-DB2-to-tidb/cdc-tidb-3.png)
+![图片](/res/session4/chapter5/from-db2-to-tidb/cdc-tidb-3.png)
 
 * IIDR 下游软件参数配置
 
