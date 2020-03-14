@@ -26,7 +26,7 @@ TiDB 仍处在快速发展的道路上，对 MySQL 功能和行为的支持方�
 | JSON   | 支持   | 不支持部分 MySQL 8.0 新增的函数   |
 | 外键约束   | 支持   | 忽略外键约束   |
 | 字符集   |    | 只支持 ascii、latin1、binary、utf8、utf8mb4   |
-| 增加/删除主键   | 支持   | 通过 ["alter-primary-key"](https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key) 配置开关提供   |
+| 增加/删除主键   | 支持   | 通过 [alter-primary-key](https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key) 配置开关提供   |
 | CREATE TABLE tblName AS SELECT stmt   | 支持   | 不支持   |
 | CREATE TEMPORARY TABLE   | 支持   | TiDB 忽略 TEMPORARY 关键字，按照普通表创建   |
 | DML affected rows   | 支持   | 不支持   |
