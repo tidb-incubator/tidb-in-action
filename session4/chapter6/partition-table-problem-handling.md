@@ -1,6 +1,6 @@
 ## 6.4.4 TiDB 分区表问题处理
 
-1. TiDB 4.0 Fix 了不少普遍且重要的 Bug ，如果遇到以下问题，建议升级到最新的 GA 版本。
+1. TiDB 4.0 Fixed 了不少普遍且重要的 Bug ，如果遇到以下问题，建议升级到最新的 GA 版本。
 
    * 唯一索引不能创建 [详情](https://github.com/pingcap/tidb/pull/11946)。
 
