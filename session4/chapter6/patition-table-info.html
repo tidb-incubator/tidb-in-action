@@ -2208,7 +2208,7 @@
                 <a href="partition-table-practices.html">
             
                     
-                    6.4.3 TiDB分区表问题处理
+                    6.4.3 TiDB分区表最佳实践
             
                 </a>
             
@@ -2216,9 +2216,9 @@
             
         </li>
     
-        <li class="chapter " data-level="5.6.4.4" data-path="partition-table-best-practices.html">
+        <li class="chapter " data-level="5.6.4.4" data-path="partition-table-problem-handling.html">
             
-                <a href="partition-table-best-practices.html">
+                <a href="partition-table-problem-handling.html">
             
                     
                     6.4.4 TiDB分区表问题处理
@@ -2821,7 +2821,68 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <script src="../../gitbook_plugin_analytics.js"></script>
+                                <h2 id="641-tidb-&#x5206;&#x533A;&#x8868;&#x7B80;&#x4ECB;">6.4.1 TiDB &#x5206;&#x533A;&#x8868;&#x7B80;&#x4ECB;</h2>
+<p>TiDB &#x662F;&#x4ECE; 2.1 &#x7248;&#x672C;&#x5F00;&#x59CB;&#x652F;&#x6301;&#x5206;&#x533A;&#x8868;&#xFF0C; 3.0 &#x7248;&#x672C;&#x5F00;&#x59CB;&#x6210;&#x719F;&#x4F7F;&#x7528;&#xFF0C;&#x6700;&#x65B0;&#x7684; 4.0 &#x7248;&#x672C;&#x5728; Bug Fixed &#x4EE5;&#x53CA;&#x5206;&#x533A;&#x88C1;&#x526A;&#x65B9;&#x9762;&#x90FD;&#x505A;&#x4E86;&#x589E;&#x5F3A;&#x548C;&#x4F18;&#x5316;&#x3002;</p>
+<ol>
+<li><p>TiDB &#x5206;&#x533A;&#x8868;&#x652F;&#x6301;&#x7684;&#x5206;&#x533A;&#x7C7B;&#x578B;</p>
+<p> &#x76EE;&#x524D;&#x5F53;&#x524D;&#x652F;&#x6301;&#x7684;&#x7C7B;&#x578B;&#x5305;&#x62EC; Range &#x5206;&#x533A;&#x548C; Hash &#x5206;&#x533A;&#xFF0C;&#x4E0D;&#x652F;&#x6301;  MySQL &#x7684; List &#x5206;&#x533A;&#x548C; Key &#x5206;&#x533A;&#x3002;</p>
+<p> Range &#x5206;&#x533A;&#x662F;&#x6307;&#x5C06;&#x6570;&#x636E;&#x884C;&#x6309;&#x5206;&#x533A;&#x8868;&#x8FBE;&#x5F0F;&#x8BA1;&#x7B97;&#x7684;&#x503C;&#x90FD;&#x843D;&#x5728;&#x7ED9;&#x5B9A;&#x7684;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x5728; Range &#x5206;&#x533A;&#x4E2D;&#x5FC5;&#x987B;&#x4E3A;&#x6BCF;&#x4E2A;&#x5206;&#x533A;&#x6307;&#x5B9A;&#x503C;&#x7684;&#x8303;&#x56F4;&#xFF0C;&#x5E76;&#x4E14;&#x4E0D;&#x80FD;&#x6709;&#x91CD;&#x53E0;&#xFF0C;&#x901A;&#x8FC7;&#x4F7F;&#x7528; VALUES LESS THAN &#x64CD;&#x4F5C;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#xFF0C;&#x76EE;&#x524D;&#x53EA;&#x652F;&#x6301;&#x5355;&#x5217;&#x7684; Range &#x5206;&#x533A;&#x8868;&#x3002;</p>
+<p> Hash &#x5206;&#x533A;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x5747;&#x5300;&#x5730;&#x5206;&#x6563;&#x5230;&#x4E00;&#x5B9A;&#x6570;&#x91CF;&#x7684;&#x5206;&#x533A;&#x91CC;&#x9762;&#x3002;&#x5728; Hash &#x5206;&#x533A;&#x4E2D;&#xFF0C;&#x4F60;&#x53EA;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x5206;&#x533A;&#x7684;&#x6570;&#x91CF;&#x3002;&#x4F7F;&#x7528; Hash &#x5206;&#x533A;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x5728; CREATE TABLE &#x540E;&#x9762;&#x6DFB;&#x52A0; PARTITION BY HASH (expr) PARTITIONS num &#xFF0C;&#x5176;&#x4E2D; expr &#x662F;&#x4E00;&#x4E2A;&#x8FD4;&#x56DE;&#x6574;&#x6570;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x3002;&#x5F53;&#x8FD9;&#x4E00;&#x5217;&#x7684;&#x7C7B;&#x578B;&#x662F;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x65F6;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x5217;&#x540D;&#xFF0C;&#x5176;&#x4E2D; num &#x662F;&#x4E00;&#x4E2A;&#x6B63;&#x6574;&#x6570;&#xFF0C;&#x8868;&#x793A;&#x5C06;&#x8868;&#x5212;&#x5206;&#x591A;&#x5C11;&#x5206;&#x533A;&#x3002;</p>
+</li>
+<li><p>&#x7EA6;&#x675F;&#x548C;&#x9650;&#x5236;</p>
+<ul>
+<li><p>&#x5EFA;&#x8868;&#x9650;&#x5236;&#xFF1A;&#x5EFA;&#x7ACB;&#x4E3B;&#x952E;&#x548C;&#x552F;&#x4E00;&#x952E;&#x65F6;&#x5FC5;&#x987B;&#x5305;&#x542B;&#x5206;&#x533A;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7528;&#x5230;&#x7684;&#x6240;&#x6709;&#x5217;&#xFF0C;&#x4EE5; Range &#x5206;&#x533A;&#x4E3E;&#x4F8B;&#x8BF4;&#x660E;&#xFF1A;</p>
+<pre><code>   CREATE TABLE employees_attendance  (
+       id INT NOT NULL AUTO_INCREMENT,
+       uid INT NOT NULL,
+       name VARCHAR(25) NOT NULL,
+       login_date date NOT NULL,
+       create_time timestamp NOT NULL COMMENT &apos;&#x6253;&#x5361;&#x65F6;&#x95F4;&apos;,
+       type tinyint NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;0:&#x4E0A;&#x73ED;&#xFF0C;1:&#x4E0B;&#x73ED;&apos;,
+       PRIMARY KEY (`id`,`login_date`),
+       UNIQUE KEY `idx_attendance` (`uid`,`login_date`,`type`)
+   )
+       PARTITION BY RANGE COLUMNS(login_date)  (
+       PARTITION p20200306 VALUES LESS THAN (&apos;20200307&apos;),
+       PARTITION p20200307 VALUES LESS THAN (&apos;20200308&apos;),
+       PARTITION pmax VALUES LESS THAN MAXVALUE
+   );
+</code></pre><p>   &#x4E0A;&#x8868;&#x4E2D;&#x4E3B;&#x952E;&#x548C;&#x552F;&#x4E00;&#x5065;&#x4E2D;&#x90FD;&#x5305;&#x62EC;&#x4E86;&#x5206;&#x533A; login_date &#x5B57;&#x6BB5;&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x4F1A;&#x62A5;&#x5982;&#x4E0B;&#x7684;&#x9519;&#x8BEF;&#xFF1A;</p>
+<blockquote>
+<p>ERROR 1503 (HY000): A (PRIMARY KEY/UNIQUE INDEX) must include all columns in the table&apos;s partitioning function</p>
+</blockquote>
+</li>
+<li><p>&#x5206;&#x533A;&#x7BA1;&#x7406;&#x548C;&#x4F7F;&#x7528;&#x65B9;&#x9762;&#x9650;&#x5236;</p>
+<p>   &#x53EA;&#x8981;&#x5E95;&#x5C42;&#x5B9E;&#x73B0;&#x53EF;&#x80FD;&#x4F1A;&#x6D89;&#x53CA;&#x6570;&#x636E;&#x632A;&#x5230;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;TiDB &#x76EE;&#x524D;&#x90FD;&#x6682;&#x4E0D;&#x652F;&#x6301;&#x3002;&#x5305;&#x62EC;&#x4E14;&#x4E0D;&#x9650;&#x4E8E;&#xFF1A;&#x8C03;&#x6574; Hash &#x5206;&#x533A;&#x8868;&#x7684;&#x5206;&#x533A;&#x6570;&#x91CF;&#xFF0C;&#x4FEE;&#x6539; Range &#x5206;&#x533A;&#x8868;&#x7684;&#x8303;&#x56F4;&#xFF0C;&#x5408;&#x5E76;&#x5206;&#x533A;&#xFF0C;&#x4EA4;&#x6362;&#x5206;&#x533A;&#x7B49;&#x3002;</p>
+<p>   &#x4F7F;&#x7528;&#x9650;&#x5236;: Load Data &#x4E0D;&#x652F;&#x6301;&#x6307;&#x5B9A;&#x5206;&#x533A; load &#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<p>   <code>load local data infile &quot;xxx&quot; into t partition (p1)</code></p>
+</li>
+</ul>
+</li>
+<li><p>TiDB 4.0 &#x5BF9;&#x5206;&#x533A;&#x8868;&#x7684;&#x4F18;&#x5316;&#x70B9;</p>
+<p> TiDB 4.0 &#x7684;&#x7248;&#x672C;&#x5BF9;&#x5206;&#x533A;&#x8868;&#x8FDB;&#x884C;&#x4E86;&#x8F83;&#x591A;&#x7684; Bug &#x3001;&#x529F;&#x80FD;&#x589E;&#x5F3A;&#x548C;&#x6027;&#x80FD;&#x63D0;&#x5347;&#xFF0C;&#x4E3B;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x65B9;&#x9762;&#xFF1A;</p>
+<ul>
+<li><p>&#x7A33;&#x5B9A;&#x6027;</p>
+<p>   &#x4FEE;&#x590D;&#x4E86;&#x5F88;&#x591A; Bugs&#x3002;</p>
+</li>
+<li><p>&#x6613;&#x7528;&#x6027;&#x63D0;&#x5347;</p>
+<p>   &#x4F8B;&#x5982;&#xFF0C;&#x652F;&#x6301; INFORMATION_SCHEMA.PARTITION &#x8868;&#xFF0C; &#x8FD0;&#x7EF4;&#x4EBA;&#x5458;&#x4E00;&#x822C;&#x90FD;&#x4F1A;&#x57FA;&#x4E8E;&#x8FD9;&#x4E2A;&#x8868;&#x6765;&#x83B7;&#x53D6;&#x5206;&#x533A;&#x8868;&#x4FE1;&#x606F;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x521B;&#x5EFA;&#x65B0;&#x5206;&#x533A;&#x548C;&#x5220;&#x9664;&#x8001;&#x5206;&#x533A;&#x3002;</p>
+</li>
+<li><p>&#x6027;&#x80FD;&#x63D0;&#x5347;</p>
+<p>   &#x4E3B;&#x8981;&#x5728;&#x4E24;&#x65B9;&#x9762;&#x7684;&#x6027;&#x80FD;&#x63D0;&#x5347;&#xFF1A;</p>
+<ul>
+<li>&#x5206;&#x533A;&#x88C1;&#x526A;&#x7684;&#x4F18;&#x5316;&#xFF0C;&#x6240;&#x8C13;&#x5206;&#x533A;&#x88C1;&#x526A;&#x5C31;&#x662F;&#x4E0D;&#x9700;&#x8981;&#x626B;&#x63CF;&#x90A3;&#x4E9B;&#x5339;&#x914D;&#x4E0D;&#x4E0A;&#x7684;&#x5206;&#x533A;</li>
+<li><p>&#x70B9;&#x67E5;&#x4F18;&#x5316;&#xFF0C;&#x4E0B;&#x9762;&#x5206;&#x522B;&#x5BF9; Range &#x548C; hash &#x5206;&#x533A;&#x8868;&#x505A;&#x7684;&#x5177;&#x4F53;&#x4F18;&#x5316;&#x8FDB;&#x884C;&#x8BF4;&#x660E;</p>
+<p>&#x5BF9;&#x4E8E; Range Partition &#x5728;&#x5F53;&#x524D;&#x7684; Expression &#x6846;&#x67B6;&#x4E0B;&#xFF0C;&#x505A;&#x5206;&#x533A;&#x88C1;&#x526A;&#x4E0D;&#x592A;&#x9AD8;&#x6548;&#xFF0C;&#x4EE5;&#x524D;&#x505A;&#x88C1;&#x526A;&#x7684;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x4F1A;&#x751F;&#x6210;&#x5F88;&#x591A;&#x4E2D;&#x95F4;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x8BA1;&#x7B97;&#x6548;&#x7387;&#x4F4E;&#x3002; &#x73B0;&#x5728;&#x57FA;&#x672C;&#x76F4;&#x63A5;&#x7ED5;&#x5F00;&#x4E86; Expression &#xFF0C;&#x53EA;&#x6709;&#x5E38;&#x91CF;&#x6BD4;&#x8F83;&#x64CD;&#x4F5C;&#xFF0C;&#x76F4;&#x63A5;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E; int &#x6BD4;&#x8F83;&#xFF0C;&#x4EE5;&#x524D;&#x6BCF;&#x6B21;&#x6BCF;&#x4E2A; Partition &#x90FD;&#x4F1A; Constant Propagate&#xFF0C;&#x73B0;&#x5728;&#x53EA; Constant Propagate &#x4E00;&#x6B21;&#xFF0C;&#x53EA;&#x628A;&#x7B26;&#x5408; Pattern &#x7684; Expr &#x9009;&#x51FA;&#x6765;&#xFF0C;&#x4ECE;&#x800C;&#x63D0;&#x5347;&#x4E86; Range Partition &#x7684;&#x6027;&#x80FD;&#x3002;</p>
+<p>&#x5728; 4.0 &#x4E4B;&#x524D;&#x7684; Hash Partition &#xFF0C;&#x4EE5;&#x524D;&#x5B9E;&#x73B0;&#x662F;&#x8F6C;&#x6210; Range &#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x5176;&#x4E3B;&#x8981;&#x7684;&#x95EE;&#x9898;&#x662F;&#x8868;&#x8FBE;&#x5F0F;&#x8BA1;&#x7B97;&#x7684;&#x5F00;&#x9500;&#x5F88;&#x5927;&#xFF0C;&#x800C;&#x4E14;&#x4F1A;&#x968F;&#x7740; Partition &#x7684;&#x589E;&#x591A;&#xFF0C;&#x5F00;&#x9500;&#x7EBF;&#x6027;&#x589E;&#x957F;&#x3002;</p>
+<p>&#x5728;&#x7ECF;&#x8FC7;&#x4F18;&#x5316;&#x4E4B;&#x540E;&#xFF0C; Hash Partition &#x4F1A;&#x6839;&#x636E;&#x7ED9;&#x51FA;&#x7684;&#x67E5;&#x8BE2;&#x6761;&#x4EF6;&#xFF0C;&#x76F4;&#x63A5;&#x5BF9;&#x5206;&#x533A;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x8F6C;&#x5316;&#x6210; Range Partition &#x3002;&#x8FD9;&#x6837;&#x53EA;&#x7ECF;&#x8FC7;&#x4E00;&#x6B21;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x5C31;&#x53EF;&#x4EE5;&#x7B97;&#x51FA;&#x5206;&#x533A;&#x3002;&#x540C;&#x65F6;&#xFF0C;&#x4F18;&#x5316;&#x4E4B;&#x540E;&#x7684; Hash Partition &#x4E5F;&#x652F;&#x6301;&#x4E86; PointGet &#x67E5;&#x8BE2;&#x8BA1;&#x5212;&#x3002;&#x5BF9;&#x4E8E;&#x53EA;&#x6709;&#x4E00;&#x5217;&#x4E14;&#x5305;&#x542B;&#x5728;&#x552F;&#x4E00;&#x7D22;&#x5F15;&#x4E2D;&#x7684;&#x7684; Hash Partition &#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x4F8B;&#x5982; partition by hash(id)&#xFF0C;id &#x662F;&#x552F;&#x4E00;&#x7D22;&#x5F15;&#x4E2D;&#x7684;&#x4E00;&#x5217;&#xFF0C;&#x4F1A;&#x4F7F;&#x7528; PointGet &#x4F5C;&#x4E3A;&#x67E5;&#x8BE2;&#x8BA1;&#x5212;&#x3002;&#x4F18;&#x5316;&#x540E;&#x7684; Hash Partition &#x53EA;&#x652F;&#x6301;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x8BA1;&#x7B97;&#xFF0C;&#x6700;&#x597D;&#x53EA;&#x7528;&#x4E00;&#x5217;&#x4F5C;&#x4E3A; Hash Partition &#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x8868;&#x8FBE;&#x5F0F;&#x8BA1;&#x7B97;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x4ECE;&#x800C;&#x63D0;&#x5347;&#x6027;&#x80FD;&#x3002;</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
                             
@@ -2864,7 +2925,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"6.4.1 TiDB分区表简介","level":"5.6.4.1","depth":3,"next":{"title":"6.4.2 TiDB分区表使用场景","level":"5.6.4.2","depth":3,"path":"session4/chapter6/patition-table-scenarios.md","ref":"session4/chapter6/patition-table-scenarios.md","articles":[]},"previous":{"title":"6.4 分区表实践及问题处理","level":"5.6.4","depth":2,"path":"session4/chapter6/partition-table-best-practices.md","ref":"session4/chapter6/partition-table-best-practices.md","articles":[{"title":"6.4.1 TiDB分区表简介","level":"5.6.4.1","depth":3,"path":"session4/chapter6/patition-table-info.md","ref":"session4/chapter6/patition-table-info.md","articles":[]},{"title":"6.4.2 TiDB分区表使用场景","level":"5.6.4.2","depth":3,"path":"session4/chapter6/patition-table-scenarios.md","ref":"session4/chapter6/patition-table-scenarios.md","articles":[]},{"title":"6.4.3 TiDB分区表问题处理","level":"5.6.4.3","depth":3,"path":"session4/chapter6/partition-table-practices.md","ref":"session4/chapter6/partition-table-practices.md","articles":[]},{"title":"6.4.4 TiDB分区表问题处理","level":"5.6.4.4","depth":3,"path":"session4/chapter6/partition-table-best-practices.md","ref":"session4/chapter6/partition-table-best-practices.md","articles":[]}]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter6/patition-table-info.md","mtime":"2020-03-14T01:13:47.413Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-14T01:14:34.363Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"6.4.1 TiDB分区表简介","level":"5.6.4.1","depth":3,"next":{"title":"6.4.2 TiDB分区表使用场景","level":"5.6.4.2","depth":3,"path":"session4/chapter6/patition-table-scenarios.md","ref":"session4/chapter6/patition-table-scenarios.md","articles":[]},"previous":{"title":"6.4 分区表实践及问题处理","level":"5.6.4","depth":2,"path":"session4/chapter6/partition-table-best-practices.md","ref":"session4/chapter6/partition-table-best-practices.md","articles":[{"title":"6.4.1 TiDB分区表简介","level":"5.6.4.1","depth":3,"path":"session4/chapter6/patition-table-info.md","ref":"session4/chapter6/patition-table-info.md","articles":[]},{"title":"6.4.2 TiDB分区表使用场景","level":"5.6.4.2","depth":3,"path":"session4/chapter6/patition-table-scenarios.md","ref":"session4/chapter6/patition-table-scenarios.md","articles":[]},{"title":"6.4.3 TiDB分区表最佳实践","level":"5.6.4.3","depth":3,"path":"session4/chapter6/partition-table-practices.md","ref":"session4/chapter6/partition-table-practices.md","articles":[]},{"title":"6.4.4 TiDB分区表问题处理","level":"5.6.4.4","depth":3,"path":"session4/chapter6/partition-table-problem-handling.md","ref":"session4/chapter6/partition-table-problem-handling.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter6/patition-table-info.md","mtime":"2020-03-14T05:08:38.604Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-14T05:09:24.206Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

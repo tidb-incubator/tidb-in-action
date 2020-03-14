@@ -2208,7 +2208,7 @@
                 <a href="partition-table-practices.html">
             
                     
-                    6.4.3 TiDB分区表问题处理
+                    6.4.3 TiDB分区表最佳实践
             
                 </a>
             
@@ -2216,9 +2216,9 @@
             
         </li>
     
-        <li class="chapter " data-level="5.6.4.4" data-path="partition-table-best-practices.html">
+        <li class="chapter " data-level="5.6.4.4" data-path="partition-table-problem-handling.html">
             
-                <a href="partition-table-best-practices.html">
+                <a href="partition-table-problem-handling.html">
             
                     
                     6.4.4 TiDB分区表问题处理
@@ -2821,7 +2821,29 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <script src="../../gitbook_plugin_analytics.js"></script>
+                                <h2 id="642-tidb-&#x5206;&#x533A;&#x8868;&#x4F7F;&#x7528;&#x573A;&#x666F;">6.4.2 TiDB &#x5206;&#x533A;&#x8868;&#x4F7F;&#x7528;&#x573A;&#x666F;</h2>
+<p>&#x5BF9;&#x4E8E;&#x4E1A;&#x52A1;&#x6765;&#x8BB2;&#xFF0C;&#x5728;&#x5927;&#x6570;&#x636E;&#x91CF;(&#x81F3;&#x5C11;&#x8FC7;&#x5343;&#x4E07;)&#xFF0C;&#x5E76;&#x4E14;&#x8868;&#x6570;&#x636E;&#x9009;&#x62E9;&#x6027;&#x67E5;&#x8BE2;&#xFF0C;&#x4F7F;&#x7528;&#x5206;&#x533A;&#x8868;&#x7684;&#x573A;&#x666F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li><p>Range &#x5206;&#x533A;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x89E3;&#x51B3;&#x4E1A;&#x52A1;&#x4E2D;&#x5927;&#x91CF;&#x5220;&#x9664;&#x5E26;&#x6765;&#x7684;&#x6027;&#x80FD;&#x95EE;&#x9898;&#xFF0C;&#x652F;&#x6301;&#x5FEB;&#x901F;&#x5220;&#x9664;&#x5206;&#x533A;&#xFF0C;TiDB 4.0 &#x867D;&#x7136;&#x4E8B;&#x52A1;&#x9650;&#x5236;&#x653E;&#x5F00;&#xFF0C;&#x4F46;&#x662F; DELETE &#x6570;&#x636E;&#x8FD8;&#x662F;&#x6CA1;&#x6709;&#x76F4;&#x63A5; DDL &#x8FD9;&#x79CD;&#x76F4;&#x63A5;&#x5220;&#x9664;&#x5E95;&#x5C42;&#x7684; SST &#x6587;&#x4EF6;&#x6765;&#x66F4;&#x5FEB;&#x901F;&#x3002;</p>
+</li>
+<li><p>&#x4F7F;&#x7528; Hash &#x5206;&#x533A;&#x8868;&#x6765;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x89E3;&#x51B3;&#x5199;&#x70ED;&#x70B9;&#x95EE;&#x9898;&#xFF1A;Hash &#x5206;&#x533A;&#x5219;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x5927;&#x91CF;&#x5199;&#x5165;&#x573A;&#x666F;&#x4E0B;&#x7684;&#x6570;&#x636E;&#x6253;&#x6563;&#x3002;</p>
+</li>
+<li><p>&#x5BF9;&#x4E8E;&#x4E1A;&#x52A1;&#x900F;&#x660E;&#xFF0C;&#x907F;&#x514D;&#x4E86;&#x5206;&#x5E93;&#x5206;&#x8868;&#xFF0C;&#x8FD8;&#x662F;&#x64CD;&#x4F5C;&#x4E00;&#x5F20;&#x8868;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x901A;&#x8FC7;&#x5206;&#x533A;&#x8868;&#x7684;&#x65B9;&#x5F0F;&#x5C06;&#x6570;&#x636E;&#x5206;&#x5E03;&#x5230;&#x4E0D;&#x540C;&#x5206;&#x533A;&#xFF0C;&#x4E5F;&#x80FD;&#x5728;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x4FDD;&#x8BC1; SQL &#x6027;&#x80FD;&#x3002;</p>
+</li>
+<li><p>&#x8FD0;&#x7EF4;&#x7BA1;&#x7406;&#x4FBF;&#x5229;&#xFF0C;&#x53EF;&#x4EE5;&#x5355;&#x72EC;&#x7EF4;&#x62A4;&#x5177;&#x4F53;&#x5206;&#x533A;&#x3002;</p>
+</li>
+<li><p>&#x5178;&#x578B;&#x573A;&#x666F;&#x4E3E;&#x4F8B;&#xFF1A;</p>
+<ul>
+<li><p>&#x5546;&#x4E1A;&#x6570;&#x636E;&#x5206;&#x6790;&#x573A;&#x666F;&#xFF1A;&#x7ECF;&#x5E38;&#x6709;&#x4E00;&#x4E9B;&#x6309;&#x65F6;&#x95F4;&#x5B9E;&#x65F6;&#x5199;&#x5165;&#x7684;&#x5E7F;&#x544A;&#x7684;&#x70B9;&#x51FB;/&#x66DD;&#x5149;&#x65E5;&#x5FD7;&#xFF0C;&#x7528;&#x6237;&#x8D26;&#x6237;&#x5B9E;&#x65F6;&#x6D88;&#x8D39;&#x62A5;&#x8868;&#xFF0C;&#x6307;&#x6807;&#x6570;&#x636E;&#x5B9E;&#x65F6;&#x76D1;&#x63A7;&#x8868;&#x3002;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x91CF;&#x8F83;&#x5927;&#xFF0C;TiDB &#x4E2D;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x4FDD;&#x7559;&#x4E00;&#x4E2A;&#x6708;&#x6216;&#x8005;&#x534A;&#x5E74;&#xFF0C;&#x4E1A;&#x52A1;&#x7A0B;&#x5E8F;&#x7ECF;&#x5E38;&#x4F1A;&#x8BBF;&#x95EE;&#x5F53;&#x5929;&#x5206;&#x65F6;&#x6570;&#x636E;&#x7EDF;&#x8BA1;&#xFF0C;&#x540C;&#x6BD4;&#x4E0A;&#x4E2A;&#x6708;&#x7684;&#x5F53;&#x5929;&#xFF0C;&#x4EE5;&#x53CA;&#x53BB;&#x5E74;&#x5F53;&#x5929;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x53EA;&#x9700;&#x8981;&#x6839;&#x636E;&#x65F6;&#x95F4;&#x5B57;&#x6BB5;&#x521B;&#x5EFA; Range &#x5206;&#x533A;&#x8868;&#xFF0C;&#x5BF9;&#x4E8E;&#x4EE5;&#x4E0A;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x8BBF;&#x95EE; 3 &#x4E2A;&#x5206;&#x533A;&#x5C31;&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x5B9E;&#x73B0;&#x7EDF;&#x8BA1;&#xFF0C;&#x56E0;&#x4E3A;&#x5206;&#x533A;&#x88C1;&#x526A;&#x529F;&#x80FD;&#x907F;&#x514D;&#x4E86;&#x626B;&#x63CF;&#x5176;&#x4ED6;&#x5206;&#x533A;&#x6570;&#x636E;&#x3002;</p>
+</li>
+<li><p>&#x5BA1;&#x6838;&#x4E1A;&#x52A1;&#xFF1A;&#x5BA1;&#x6838;&#x65E5;&#x5FD7;&#x8868;&#x8FD9;&#x4E9B;&#x90FD;&#x53EF;&#x4EE5;&#x6309;&#x5929;&#x505A; Range &#x5206;&#x533A;&#x3002;&#x5BA1;&#x6838; Log &#x8868;&#x6570;&#x636E;&#x7528;&#x6765;&#x7EDF;&#x8BA1;&#x5206;&#x6790;&#x6BCF;&#x4E2A;&#x5BA1;&#x6838;&#x4EBA;&#x5458;&#x7684;&#x5DE5;&#x4F5C;&#x91CF;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x4F5C;&#x7EE9;&#x6548;&#x7B49;&#x65B9;&#x9762;&#x7684;&#x53C2;&#x8003;&#x3002;</p>
+</li>
+<li><p>&#x57FA;&#x7840;&#x4FE1;&#x606F;&#x4E1A;&#x52A1;&#xFF1A;&#x6BD4;&#x5982;&#x4E00;&#x4E9B;&#x8D26;&#x6237;&#x8868;&#x3002;&#x7531;&#x4E8E;&#x7528;&#x6237;&#x4FE1;&#x606F;&#x592A;&#x5E9E;&#x5927;&#x4E86;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x660E;&#x663E;&#x53EF;&#x4EE5;&#x5206;&#x533A;&#x7684;&#x7279;&#x5F81;&#x5B57;&#x6BB5;&#x3002;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x8868;&#x4E2D; BIGINT &#x7C7B;&#x578B;&#x7684; UID &#x5B57;&#x6BB5;&#x505A; Hash &#x5206;&#x533A;&#xFF0C;&#x7ED3;&#x5408;&#x5206;&#x533A;&#x65F6;&#x914D;&#x7F6E;&#x7684;&#x5206;&#x533A;&#x6570;&#x91CF;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x628A; UID &#x6253;&#x6563;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x5206;&#x533A;&#xFF0C; Hash &#x5206;&#x533A;&#x53EA;&#x80FD;&#x9488;&#x5BF9;&#x6574;&#x6570;&#x8FDB;&#x884C; Hash &#xFF0C;&#x4ECE;&#x800C;&#x63D0;&#x9AD8;&#x67E5;&#x8BE2;&#x7684;&#x6027;&#x80FD;&#x3002;</p>
+</li>
+</ul>
+</li>
+</ul>
+<script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
                             
@@ -2853,7 +2875,7 @@
                 </a>
                 
                 
-                <a href="partition-table-practices.html" class="navigation navigation-next " aria-label="Next page: 6.4.3 TiDB分区表问题处理">
+                <a href="partition-table-practices.html" class="navigation navigation-next " aria-label="Next page: 6.4.3 TiDB分区表最佳实践">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -2864,7 +2886,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"6.4.2 TiDB分区表使用场景","level":"5.6.4.2","depth":3,"next":{"title":"6.4.3 TiDB分区表问题处理","level":"5.6.4.3","depth":3,"path":"session4/chapter6/partition-table-practices.md","ref":"session4/chapter6/partition-table-practices.md","articles":[]},"previous":{"title":"6.4.1 TiDB分区表简介","level":"5.6.4.1","depth":3,"path":"session4/chapter6/patition-table-info.md","ref":"session4/chapter6/patition-table-info.md","articles":[]},"dir":"neutral"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter6/patition-table-scenarios.md","mtime":"2020-03-14T01:13:47.413Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-14T01:14:34.363Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"6.4.2 TiDB分区表使用场景","level":"5.6.4.2","depth":3,"next":{"title":"6.4.3 TiDB分区表最佳实践","level":"5.6.4.3","depth":3,"path":"session4/chapter6/partition-table-practices.md","ref":"session4/chapter6/partition-table-practices.md","articles":[]},"previous":{"title":"6.4.1 TiDB分区表简介","level":"5.6.4.1","depth":3,"path":"session4/chapter6/patition-table-info.md","ref":"session4/chapter6/patition-table-info.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter6/patition-table-scenarios.md","mtime":"2020-03-14T05:08:38.604Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-14T05:09:24.206Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
