@@ -1,41 +1,40 @@
 DataX 是阿里巴巴集团内被广泛使用的离线数据同步工具/平台，支持包括 MySQL、SQL Server、Oracle、PostgreSQL、HDFS、Hive、HBase、OTS、ODPS 等各种异构数据源之间高效的数据同步功能。DataX 采用了框架 + 插件 的模式。目前已开源，代码托管在 GitHub。
 
-DataX 数据同步效率较高，可以满足大多数场景下的异构数据库间的数据同步。同时其配置灵活，支持字段级别的配置，可以轻松应对因迁移到 TiDB 而产生的一些改动。
+DataX 数据同步效率较高，满足大多数场景下的异构数据库间的数据同步需求。同时其配置灵活，支持字段级别的配置，可以轻松应对因异构数据库迁移到 TiDB 而产生的一些改动。
 
 方案设计如图所示
 
-<img src="https://raw.githubusercontent.com/AllenShen-CN/tidb-in-action/master/session4/chapter5/sqlserver%20to%20tidb.png">
+![](3phase.png)
 
-第一阶段：切换支持 TiDB 的应用上线之前，把 SQLServer 数据库中的全量数据用 DataX 同步到 TiDB 库中。为避免对线上业务产生影响，可以选择备份库，或者在业务低峰期操作。
+第一阶段：切换支持 TiDB 的应用上线之前，把 SQL Server 数据库中的全量数据用 DataX 同步到 TiDB 库中。为避免对线上业务产生影响，可以选择备份库，或者在业务低峰期操作。
 
 第二阶段：把全量同步改为增量同步，利用 UpdateTime 字段（或其它条件，根据实际业务灵活调整）作为同步 Where 条件，进行增量覆盖式同步。 t_sync_record 表中记录每张表上次增量任务的执行时间。
 
-第三阶段：支持 TiDB 的应用上线以后，增量同步切换读写数据源改为逆向增量同步，将新数据近实时写回 SQLServer 数据库。一旦上线之后出现需要回退的情况，可随时切回 SQLServer，待修复之后再次上线。
+第三阶段：支持 TiDB 的应用上线以后，增量同步切换读写数据源改为逆向增量同步，将新数据近实时地写回 SQL Server 数据库。一旦上线之后出现需要回退的情况，可随时切回 SQL Server，待修复之后再次上线。
 
 具体操作步骤：
 
 第一步：部署 DataX
 
 下载
-
+```
 wget http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz
-
+```
 解压
-
+```
 tar -zxvf datax.tar.gz
-
+```
 自检
-
+```
 python {YOUR_DATAX_HOME}/bin/datax.py {YOUR_DATAX_HOME}/job/job.json
-
+```
 第二步：编写 DataX 数据同步 Job（Json格式）
 
 （1）全量同步Job
 
 vi full.json
 
-代码块：
-
+```
 {
 
     "job": {
@@ -147,13 +146,13 @@ vi full.json
     }
 
 }
+```
 
 （2）增量同步 Job
 
 vi increase.json
 
-代码块：
-
+```
 {
 
     "job": {
@@ -269,22 +268,22 @@ vi increase.json
     }
 
 }
-
+```
 （3）编写运行DataX Job的Shell执行脚本
 
 vi datax_excute_job.sh
 
-代码块：
 
+```
 #!/bin/bash
 
 source /etc/profile
 
-srcUrl="Reader SqlServer 地址"
+srcUrl="Reader Sql Server 地址"
 
-srcUserName="SqlServer 账号"
+srcUserName="Sql Server 账号"
 
-srcPassword="SqlServer 密码"
+srcPassword="Sql Server 密码"
 
 desUrl="Writer TiDB 地址"
 
@@ -343,11 +342,11 @@ do
         sleep $sleepTime
 
 done
-
+```
 （4）执行 Shell 脚本
-
+```
 chmod +x datax_excute_job.sh
 
 nohup ./datax_excute_job.sh > info.file 2>&1 &
-
+```
 至此，核心脚本和操作都已完成，可通过修改参数配置，达到自己不同的需求，还可以配合数据对比服务，以期达到将应用程序从 SQL Server 顺利迁移到 TiDB 的目的。

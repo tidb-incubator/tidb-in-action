@@ -63,11 +63,11 @@ Value: null
 
 ```
 tablePrefix     = []byte{'t'}
-recordPrefixSep = []byte("_r")
-indexPrefixSep  = []byte("_i")
+recordPrefixSep = []byte{'r'}
+indexPrefixSep  = []byte{'i'}
 ```
 
-另外请注意，上述方案中，无论是表数据还是索引数据的 Key 编码方案，一个表内所有的行都有相同的 Key 前缀，一个索引的所有数据也都有相同的前缀。这样具有相同的前缀的数据，在 TiKV 的 Key 空间内，是排列在一起的，只要小心地设计后缀部分的编码方案，保证编码前和编码后的比较关系不变，那么就可以将表数据或者索引数据有序地保存在 TiKV 中。采用这种编码后，一个表的所所有表数据会按照行 ID 顺序的排列在 TiKV 的 Key 空间中，某一个索引的数据也会按照索引数据的具体的值（编码方案中的 `indexedColumnsValue` ）顺序的排列在 Key 空间内。
+另外请注意，上述方案中，无论是表数据还是索引数据的 Key 编码方案，一个表内所有的行都有相同的 Key 前缀，一个索引的所有数据也都有相同的前缀。这样具有相同的前缀的数据，在 TiKV 的 Key 空间内，是排列在一起的，只要小心地设计后缀部分的编码方案，保证编码前和编码后的比较关系不变，那么就可以将表数据或者索引数据有序地保存在 TiKV 中。采用这种编码后，一个表的所有行数据会按照 `RowID` 顺序地排列在 TiKV 的 Key 空间中，某一个索引的数据也会按照索引数据的具体的值（编码方案中的 `indexedColumnsValue` ）顺序地排列在 Key 空间内。
 
 ## Key-Value 映射关系的一个例子
 
@@ -80,7 +80,7 @@ CREATE TABLE User {
 	Role varchar(20),
 	Age int,
 	PRIMARY KEY (ID),
-	Key idxAge (age)
+	KEY idxAge (Age)
 };
 ```
 
@@ -100,7 +100,7 @@ t10_r2 --> ["TiKV", "KV Engine", 20]
 t10_r3 --> ["PD", "Manager", 30]
 ```
 
-除了主键外，该表还有一个二级索引 `idxAge`，假设这个索引的 `IndexID` 为 1，则其存储在 TiKV 上的索引数据为：
+除了主键外，该表还有一个非唯一的普通二级索引 `idxAge`，假设这个索引的 `IndexID` 为 1，则其存储在 TiKV 上的索引数据为：
 
 ```
 t10_i1_10_1 --> null
