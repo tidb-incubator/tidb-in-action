@@ -32,7 +32,7 @@ TiDB DBA 认证项目自 2018 年 10 月启动、2019 年 1 月正式落地，�
 **(4) 原厂权威认证：**
 PCTA 基础认证注重实践，PCTP 进阶认证注重深度原理，严格的考试体系保障原厂背书价值，打开高起点职场大门。
 
-### 2.6.3 TiDB DBA 认证项目课程内容
+### 2.6.2 TiDB DBA 认证项目课程内容
 
 随着 TiDB 产品的持续迭代、用户场景的不断丰富，PingCAP University 在实践中保持与学员的沟通，持续打磨课程，TiDB DBA 认证项目的课程内容不断升级。TiDB DBA 认证项目 2.0 于 2019 年6月推出，在保留高密度干货、理论和实操相结合的一贯特点之外，本次升级有以下方面的优化：
 
@@ -69,7 +69,7 @@ PingCAP University TiDB DBA 认证项目 [官方网校](https://university.pingc
 
 ![TiDB DBA Students](/res/session5/chapter2/pingcap-university/tidb-dba-students.png)
 
-### 2.6.3. TiDB DBA 认证考试
+### 2.6.3 TiDB DBA 认证考试
 
 PCTA 和 PCTP 是对于即将或已经从事 DBA 、架构师等职位的人员掌握和使用 TiDB 的能力进行测试和评定，并由 PingCAP 公司作为唯一权威机构向考核通过的人才颁发相应证书。
 
