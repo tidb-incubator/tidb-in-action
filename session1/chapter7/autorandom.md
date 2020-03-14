@@ -106,4 +106,4 @@ tidb> select last_insert_id();
 
 参考文献：
 
-参阅 [`AUTO_RANDOM` 的详细说明](/reference/sql/attributes/auto-random.md)
+参阅 [`AUTO_RANDOM` 的详细说明](https://github.com/pingcap/docs/blob/master/reference/sql/attributes/auto-random.md)
