@@ -16,7 +16,7 @@ TiDB 仍处在快速发展的道路上，对 MySQL 功能和行为的支持方�
 
 |    | MySQL   | TiDB   |
 |:----|:----|:----|
-| 隔离级别   | 支持读未提交、读已提交、可重复读、串行化，默认为可重复读   | 乐观事务支持快照隔离  悲观事务支持快照隔离和读已提交   |
+| 隔离级别   | 支持读未提交、读已提交、可重复读、串行化，默认为可重复读   | 乐观事务支持快照隔离，悲观事务支持快照隔离和读已提交   |
 | 锁机制   | 悲观锁   | 乐观锁、悲观锁   |
 | 存储过程   | 支持   | 不支持   |
 | 触发器   | 支持   | 不支持   |
@@ -26,7 +26,7 @@ TiDB 仍处在快速发展的道路上，对 MySQL 功能和行为的支持方�
 | JSON   | 支持   | 不支持部分 MySQL 8.0 新增的函数   |
 | 外键约束   | 支持   | 忽略外键约束   |
 | 字符集   |    | 只支持 ascii、latin1、binary、utf8、utf8mb4   |
-| 增加/删除主键   | 支持   | 通过 [`alter-primary-key` 配置开关](https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key)提供   |
+| 增加/删除主键   | 支持   | 通过 ["alter-primary-key"](https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key) 配置开关提供   |
 | CREATE TABLE tblName AS SELECT stmt   | 支持   | 不支持   |
 | CREATE TEMPORARY TABLE   | 支持   | TiDB 忽略 TEMPORARY 关键字，按照普通表创建   |
 | DML affected rows   | 支持   | 不支持   |
@@ -50,7 +50,6 @@ tidb> SHOW CHARACTER SET;
 | latin1  | Latin1        | latin1_bin        |      1 |
 | binary  | binary        | binary            |      1 |
 +---------|---------------|-------------------|--------+
-
 5 rows in set (0.00 sec)
 ```
 
@@ -96,12 +95,12 @@ tidb> select VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME='new_collation_e
 
 (2) 系统时区
 
-在 MySQL 中，系统时区 `system_time_zone` 在 MySQL 服务启动时通过[环境变量 `TZ` 或命令行参数 `--timezone`](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html) 指定。
+在 MySQL 中，系统时区 `system_time_zone` 在 MySQL 服务启动时通过 [环境变量 `TZ` 或命令行参数 `--timezone`](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html) 指定。
 
 对于 TiDB 而言，作为一个分布式数据库，TiDB 需要保证整个集群的系统时区始终一致。因此 TiDB 的系统时区在集群初始化时，由负责初始化的 TiDB 节点环境变量 `TZ` 决定。集群初始化后，固定在集群状态表 `mysql`.`tidb` 中：
 
 ```sql
-tidb> SELECT VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME='system_tz';
+tidb> select VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME='system_tz';
 +----------------+
 | VARIABLE_VALUE |
 +----------------+

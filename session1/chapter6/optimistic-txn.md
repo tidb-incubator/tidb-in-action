@@ -17,8 +17,8 @@
 #### 6.1.1.2 并发控制
 数据库有多种并发控制方法，这里只介绍以下两种：
 
-* 乐观并发控制（OCC）：在事务提交阶段检测冲突。
-* 悲观并发控制（PCC）：在事务执行阶段检测冲突。
+* 乐观并发控制（OCC）：在事务提交阶段检测冲突
+* 悲观并发控制（PCC）：在事务执行阶段检测冲突
 
 乐观并发控制期望事务间数据冲突不多，只在提交阶段检测冲突能够获取更高的性能。悲观并发控制更适合数据冲突较多的场景，能够避免乐观事务在这类场景下事务因冲突而回滚的问题，但相比乐观并发控制，在没有数据冲突的场景下，性能相对要差。
 
@@ -28,12 +28,12 @@ TiDB 基于 Google [Percolator](https://storage.googleapis.com/pub-tools-public-
 #### 6.1.2.1 Snapshot Isolation
 Percolator 使用多版本并发控制（MVCC）来实现快照隔离级别，与可重复读的区别在于整个事务是在一个一致的快照上执行。TiDB 使用 [PD](https://github.com/pingcap/pd) 作为全局授时服务（TSO）来提供单调递增的版本号：
 
-* 事务开始时获取 start timestamp，也是快照的版本号；事务提交时获取 commit timestamp，同时也是数据的版本号。
-* 事务只能读到在事务 start timestamp 之前最新已提交的数据。
-* 事务在提交时会根据 timestamp 来检测数据冲突。
+* 事务开始时获取 start timestamp，也是快照的版本号；事务提交时获取 commit timestamp，同时也是数据的版本号
+* 事务只能读到在事务 start timestamp 之前最新已提交的数据
+* 事务在提交时会根据 timestamp 来检测数据冲突
 
 #### 6.1.2.2 两阶段提交（2PC）
-TiDB 使用两阶段提交(Two-phase commit）来保证分布式事务的原子性，分为 Prewrite 和 Commit：
+TiDB 使用两阶段提交(Two-Phase Commit）来保证分布式事务的原子性，分为 Prewrite 和 Commit 两个阶段：
 
 * Prewrite：对事务修改的每个 Key 检测冲突并写入 lock 防止其他事务修改。对于每个事务，TiDB 会从涉及到改动的所有 Key 中选中一个作为当前事务的 Primary Key，事务提交或回滚都需要先修改 Primary Key，以它的提交与否作为整个事务执行结果的标识。
 * Commit：Prewrite 全部成功后，先同步提交 Primary Key，成功后事务提交成功，其他 Secondary Keys 会异步提交。
