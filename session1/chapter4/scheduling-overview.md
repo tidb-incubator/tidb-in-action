@@ -52,7 +52,7 @@
 
 **每个 TiKV 节点会定期向 PD 汇报节点的整体信息**
 
-TiKV 节点（Store）与 PD 之间存在心跳包，一方面 PD 通过心跳包检测每个 Store 是否存活，以及是否有新加入的 Store；另一方面，心跳包中也会携带这个 [Store 的状态信息](https://github.com/pingcap/kvproto/blob/master/proto/pdpb.proto#L294)，主要包括：
+TiKV 节点（Store）与 PD 之间存在心跳包，一方面 PD 通过心跳包检测每个 Store 是否存活，以及是否有新加入的 Store；另一方面，心跳包中也会携带这个 [Store 的状态信息](https://github.com/pingcap/kvproto/blob/release-3.1/proto/pdpb.proto#L421)，主要包括：
 
 * 总磁盘容量
 * 可用磁盘容量
@@ -64,11 +64,11 @@ TiKV 节点（Store）与 PD 之间存在心跳包，一方面 PD 通过心跳�
 
 **每个 Raft Group 的 Leader 会定期向 PD 汇报信息。**
 
-每个 Raft Group 的 Leader 和 PD 之间存在心跳包，用于汇报这个[ Region 的状态](https://github.com/pingcap/kvproto/blob/master/proto/pdpb.proto#L207)，主要包括下面几点信息：
+每个 Raft Group 的 Leader 和 PD 之间存在心跳包，用于汇报这个[ Region 的状态](https://github.com/pingcap/kvproto/blob/release-3.1/proto/pdpb.proto#L271)，主要包括下面几点信息：
 
 * Leader 的位置
-* Followers 的位置掉线
-* Replica 的个数
+* Followers 的位置
+* 掉线 Replica 的个数
 * 数据写入/读取的速度
 
 PD 不断的通过这两类心跳消息收集整个集群的信息，再以这些信息作为决策的依据。除此之外，PD 还可以通过管理接口接受额外的信息，用来做更准确的决策。比如当某个 Store 的心跳包中断的时候，PD 并不能判断这个节点是临时失效还是永久失效，只能经过一段时间的等待（默认是 30 分钟），如果一直没有心跳包，就认为是 Store 已经下线，再决定需要将这个 Store 上面的 Region 都调度走。但是有的时候，是运维人员主动将某台机器下线，这个时候，可以通过 PD 的管理接口通知 PD 该 Store 不可用，PD 就可以马上判断需要将这个 Store 上面的 Region 都调度走。
@@ -82,7 +82,7 @@ PD 收集了这些信息后，还需要一些策略来制定具体的调度计�
 
 * 某个节点掉线，上面的数据全部丢失，导致一些 Region 的 Replica 数量不足
 * 某个掉线节点又恢复服务，自动接入集群，这样之前已经补足了 Replica 的 Region 的 Replica 数量多过，需要删除某个 Replica
-* 管理员调整了副本策略，修改了 [max-replicas](https://github.com/pingcap/pd/blob/release-4.0/conf/config.toml#L95) 的配置
+* 管理员调整了副本策略，修改了 [max-replicas](https://github.com/pingcap/pd/blob/v4.0.0-beta/conf/config.toml#L95) 的配置
 
 **一个 Raft Group 中的多个 Replica 不在同一个位置**
 
@@ -92,15 +92,15 @@ PD 收集了这些信息后，还需要一些策略来制定具体的调度计�
 * TiKV 节点分布在多个机架上，希望单个机架掉电时，也能保证系统可用性
 * TiKV 节点分布在多个 IDC 中，希望单个机房掉电时，也能保证系统可用性
 
-这些需求本质上都是某一个节点具备共同的位置属性，构成一个最小的容错单元，我们希望这个单元内部不会存在一个 Region 的多个 Replica。这个时候，可以给节点配置 [lables](https://github.com/tikv/tikv/blob/release-4.0/etc/config-template.toml#L162) 并且通过在 PD 上配置 [location-labels](https://github.com/pingcap/pd/blob/release-4.0/conf/config.toml#L100) 来指名哪些 lable 是位置标识，需要在 Replica 分配的时候尽量保证不会有一个 Region 的多个 Replica 所在结点有相同的位置标识。
+这些需求本质上都是某一个节点具备共同的位置属性，构成一个最小的『容错单元』，我们希望这个单元内部不会存在一个 Region 的多个 Replica。这个时候，可以给节点配置 [lables](https://github.com/tikv/tikv/blob/v4.0.0-beta/etc/config-template.toml#L140) 并且通过在 PD 上配置 [location-labels](https://github.com/pingcap/pd/blob/v4.0.0-beta/conf/config.toml#L100) 来指名哪些 lable 是位置标识，需要在 Replica 分配的时候尽量保证一个 Region 的多个 Replica 不会分布在具有相同的位置标识的节点上。
 
 **副本在 Store 之间的分布均匀分配**
 
-前面说过，每个副本中存储的数据容量上限是固定的，所以我们维持每个节点上面，副本数量的均衡，会使得总体的负载更均衡。
+前面说过，每个副本中存储的数据容量上限是固定的，所以我们维持每个节点上面副本数量的均衡，使得总体的负载更均衡。
 
 **Leader 数量在 Store 之间均匀分配**
 
-Raft 协议要读取核写入都通过 Leader 进行，所以计算的负载主要在 Leader 上面，PD 会尽可能将 Leader 在节点间分散开。
+Raft 协议要求读取和写入都通过 Leader 进行，所以计算的负载主要在 Leader 上面，PD 会尽可能将 Leader 在节点间分散开。
 
 **访问热点数量在 Store 之间均匀分配**
 
@@ -112,14 +112,14 @@ Raft 协议要读取核写入都通过 Leader 进行，所以计算的负载主�
 
 **控制调度速度，避免影响在线服务**
 
-调度操作需要耗费 CPU、内存、磁盘 IO 以及网络带宽，我们需要避免对线上服务造成太大影响。PD 会对当前正在进行的操作数量进行控制，默认的速度控制是比较保守的，如果希望加快调度（比如已经停服务升级，增加新节点，希望尽快调度），那么可以通过调节 PD 参数动加快调度速度。
+调度操作需要耗费 CPU、内存、磁盘 IO 以及网络带宽，我们需要避免对线上服务造成太大影响。PD 会对当前正在进行的操作数量进行控制，默认的速度控制是比较保守的，如果希望加快调度（比如停服务升级或者增加新节点，希望尽快调度），那么可以通过调节 PD 参数动加快调度速度。
 
 ## 调度的实现
-了解了上面这些信息后，接下来我们看一下整个调度的流程。
+了解上面这些信息后，接下来我们看一下整个调度的流程。
 
-PD 不断的通过 Store 或者 Leader 的心跳包收集信息，获得整个集群的详细数据，并且根据这些信息以及调度策略生成调度操作序列，每次收到 Region Leader 发来的心跳包时，PD 都会检查是否有对这个 Region 待进行的操作，通过心跳包的回复消息，将需要进行的操作返回给 Region Leader，并在后面的心跳包中监测执行结果。注意这里的操作只是给 Region Leader 的建议，并不保证一定能得到执行，具体是否会执行以及什么时候执行，由 Region Leader 自己根据当前自身状态来定。
+PD 不断的通过 Store 或者 Leader 的心跳包收集信息，获得整个集群的详细数据，并且根据这些信息以及调度策略生成调度操作序列。每次收到 Region Leader 发来的心跳包时，PD 都会检查这个 Region 是否有待进行的操作，然后通过心跳包的回复消息，将需要进行的操作返回给 Region Leader，并在后面的心跳包中监测执行结果。注意这里的操作只是给 Region Leader 的建议，并不保证一定能得到执行，具体是否会执行以及什么时候执行，由 Region Leader 自己根据当前自身状态来定。
 
 ## 总结
-本篇文章讲的东西，大家可能平时很少会在其他文章中看到，每一个设计都有背后的考量，希望大家能了解到一个分布式存储系统在做调度的时候，需要考虑哪些东西，如何将策略、实现进行解耦，更灵活的支持策略的扩展。
+本篇文章讲的东西，大家可能平时很少会在其他文章中看到，每一个设计都有背后的考量，希望大家能了解到一个分布式存储系统在做调度的时候，需要考虑哪些东西，如何将策略和实现进行解耦，更灵活地支持策略的扩展。
 
 
