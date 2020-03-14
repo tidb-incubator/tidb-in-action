@@ -102,19 +102,19 @@ CREATE TABLE t (a INT, b INT, INDEX idx1(a)) SHARD_ROW_ID_BITS = 4 PRE_SPLIT_REG
 
 Split Region 是 TiDB 的预切分 Region 的功能，可以根据指定的参数，预先为某个表切分出多个 Region，并打散到各个 TiKV 上去。语法有两种：
 
-* 均匀切分：BETWEEN lower_value AND upper_value REGIONS region_num 语法是通过指定上、下边界和 Region 数量，然后在上、下边界之间均匀切分出 region_num 个 Region。
+* 均匀切分：BETWEEN lower_value AND upper_value REGIONS region_num 语法是通过指定上、下边界和 Region 数量，然后在上、下边界之间均匀切分出 region_num 个 Region
 ```
 SPLIT TABLE table_name [INDEX index_name] BETWEEN (lower_value) AND (upper_value) REGIONS region_num
 ```
 
-* 不均匀切分：BY value_list… 语法将手动指定一系列的点，然后根据这些指定的点切分 Region，适用于数据不均匀分布的场景。
+* 不均匀切分：BY value_list… 语法将手动指定一系列的点，然后根据这些指定的点切分 Region，适用于数据不均匀分布的场景
 ```
 SPLIT TABLE table_name [INDEX index_name] BY (value_list) [, (value_list)] ...
 ```
 
 不过需要注意的是，如果线上打开了 Region Merge 功能，通过以上两种方式 split 的 Region，在 split 超过 split-merge-interval 时间（默认一个小时）后，如果 Region 数据量还是比较小，满足 Region Merge 的条件，就会触发 Region Merge，再次导致热点问题。
 
-所以想彻底解决这个问题，TiDB 4.0 以下版本可以通过分区表的方式，将热点数据根据分区键打散到各个分区来解决。在未来的 TiDB 4.0 中，PD 会提供 Load Based Splitting 策略，除了根据 Region 的大小进行 split 之外，还会根据访问 QPS 负载自动分裂频繁访问的小表的 Region。
+所以想彻底解决这个问题，TiDB 4.0 以下版本可以通过分区表的方式，将热点数据根据分区键打散到各个分区来解决。在未来的 TiDB 4.0 中，PD 会提供 Load Based Splitting 策略，除了根据 Region 的大小进行分裂之外，还会根据访问 QPS 负载自动分裂频繁访问的小表的 Region。
 
 #### 3.普通表清理大量数据相关问题
 ##### 场景描述
@@ -135,15 +135,15 @@ SPLIT TABLE table_name [INDEX index_name] BY (value_list) [, (value_list)] ...
 
 这样就减少了 TiDB 和 TiKV 的数据交互，既避免了往 TiKV写入大量的 delete 记录，又避免了 TiKV 的 RocksDB 的 compaction 引起的性能抖动问题，从而彻底的解决了清理数据慢影响大的问题。
 
-分区表的使用和限制见[官方文档](https://pingcap.com/docs-cn/dev/reference/sql/partitioning/)。
+分区表的使用和限制见 [官方文档](https://pingcap.com/docs-cn/dev/reference/sql/partitioning/)。
 
 #### 4.其它
 受限于篇幅问题，以下的一些 case 就不做详细介绍了，简单总结下：
 
-- 高并发写入的表上存在顺序写入的二级索引，也会造成写入热点，并且暂时没有较好的解决方案
-- 提前确认 [TiDB 和 MySQL 相比不同或不支持的特性](session1/chapter5/mysql-compatibility.md)，比如不允许降低字段长度、不允许修改 DECIMAL 的精度等。如果上线后发现必需要进行相关操作，那只能通过重建表迁移数据的方式，对业务影响很大，风险也很大
+- 避免高并发写入的表上存在顺序写入的二级索引，因为这样会造成写入热点，并且暂时没有较好的解决方案
+- 提前确认 [TiDB 和 MySQL 相比不同或不支持的特性](session1/chapter5/mysql-compatibility.md)，比如不允许降低字段长度、不允许修改 DECIMAL 的精度等，如果上线后发现必需要进行相关操作，那只能通过重建表迁移数据的方式，对业务影响很大，风险也很大
 - 不要在线上搞过大的宽表以及大量索引
 - 线上遇到一个 case 是，一个类似数据中台的服务，把从其它存储获取的数据写入到 TiDB 的一张宽表（70 个字段）上，迁移过来的时候基本每个字段都带有索引，业务解释多个索引是为了兼顾业务多样性的需求，最后业务上线后 TP99 线直接飙升到 130ms，业务无法接受延迟，最后在推进优化为 7 个组合索引后，TP99 恢复到 60ms，达到业务预期。
   
 ### 7.1.4 总结
-以上 case 是在线上遇到的一些常见的表设计相关的问题，主要是热点、GC 或者功能相关的问题。这些问题可能会对线上稳定性造成比较严重的冲击，希望大家在线上可以根据不同场景采用不同的解决方案，规避掉这些风险，保障线上数据库的正常服务。
+以上 case 是在线上遇到的一些常见的表设计相关的问题，主要是热点、GC 或者功能相关的问题。这些问题可能会对线上稳定性造成比较严重的冲击，希望大家在线上可以根据不同场景采用不同的解决方案，规避掉这些风险，保障线上数据库服务的正常运行。
