@@ -65,4 +65,4 @@ TiDB 是从 2.1 版本开始支持分区表， 3.0 版本开始成熟使用，�
 
         在 4.0 之前的 Hash Partition ，以前实现是转成 Range 实现的，其主要的问题是表达式计算的开销很大，而且会随着 Partition 的增多，开销线性增长。
 
-        在经过优化之后， Hash Partition 会根据给出的查询条件，直接对分区表达式进行求值，而不是转化成 Range Partition 。这样只经过一次表达式求值就可以算出分区。同时，优化之后的 Hash Partition 也支持了 PointGet 查询计划。对于只有一列且包含在唯一索引中的的 Hash Partition 表达式，例如 partition by hash(id)，id 是唯一索引中的一列，会使用 PointGet 作为查询计划。优化后的 Hash Partition 只支持非常简单的表达式计算，最好只用一列作为 Hash Partition 的 表达式，可以减少表达式计算的开销，从而提升性能。
+        在经过优化之后， Hash Partition 会根据给出的查询条件，直接对分区表达式进行求值，而不是转化成 Range Partition 。这样只经过一次表达式求值就可以算出分区。同时，优化之后的 Hash Partition 也支持了 PointGet 查询计划。对于只有一列且包含在唯一索引中的的 Hash Partition 表达式，例如 partition by hash(id)，id 是唯一索引中的一列，会使用 PointGet 作为查询计划。优化后的 Hash Partition 只支持非常简单的表达式计算，最好只用一列作为 Hash Partition 的表达式，可以减少表达式计算的开销，从而提升性能。
