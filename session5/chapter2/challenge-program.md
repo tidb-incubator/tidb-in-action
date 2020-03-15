@@ -2,6 +2,7 @@
 
 ### 2.4.1 起源
 
+
 TiDB 产品的每一次微小进步都离不开社区小伙伴的支持和帮助，在产品不断迭代的过程中，越来越多的小伙伴不断的参与到 TiDB 开源社区的建设当中，越来越多的小伙伴在 TiDB 开源社区用自己的方式表达着对于开源的热情和对于技术的追求，TiDB 也在社区小伙伴的推动下，不断地刷新着过去的成绩。
 
 为了让 TiDB 产品在稳定性、性能、易用性等方面更上一层楼，PingCAP 推出一个中长期的挑战计划 —— TiDB Challenge Program。每一期的挑战赛都会在 TiDB 产品线的各个代码仓库中开放一些 Issue 出来供社区小伙伴探讨和解决。每一个 Issue 都会对应一定的积分，参赛选手可在每个赛季结束后用获得的积分兑换社区礼品。
@@ -14,6 +15,7 @@ TiDB 产品的每一次微小进步都离不开社区小伙伴的支持和帮助
 | [Challenge Program season 1](https://github.com/pingcap/community/blob/master/challenge-programs/challenge-program-season-1.md) | 2019.11~2020.02 |
 
 ### 2.4.2 第一季：性能
+
 
 ![Performance Challenge Program](/res/session5/chapter2/challenge-prigram/performanc-challenge-program.jpeg)
 
@@ -28,6 +30,7 @@ TiDB 产品的每一次微小进步都离不开社区小伙伴的支持和帮助
 更多精彩内容可查看 [性能挑战赛回顾](https://mp.weixin.qq.com/s/E4snu0C6J1feg5piC5ewqg)。
 
 ### 2.4.3 第二季：易用性
+
 
 ![Usaribility Challenge Program](/res/session5/chapter2/challenge-prigram/usaribility-challenge-program.svg)
 
