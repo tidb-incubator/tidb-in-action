@@ -15,7 +15,7 @@ TiDB 的 SQL层，即 tidb-server，跟 Google 的 [F1](https://dbdb.io/db/googl
 3. 过滤数据：对于读到的每一行数据，计算 `name = "TiDB"` 这个表达式，如果为真，则向上返回这一行，否则丢弃这一行数据
 4. 计算 `Count(*)`：对符合要求的每一行，累计到 `Count(*)` 的结果上面
 
-整个流程示意图如下：
+**整个流程示意图如下：**
 
 ![naive sql flow](http://img.mp.sohu.com/upload/20170524/cbd683354f5a4a03b1ff70e1cee4a520_th.png)
 
@@ -29,7 +29,7 @@ TiDB 的 SQL层，即 tidb-server，跟 Google 的 [F1](https://dbdb.io/db/googl
 
 如何避免上述缺陷也是显而易见的，我们需要将计算尽量靠近存储节点，以避免大量的 RPC 调用。首先，我们需要将 SQL 中的谓词条件下推到存储节点进行计算，这样只需要返回有效的行，避免无意义的网络传输。然后，我们还可以将聚合函数 `Count(*)` 也下推到存储节点，进行预聚合，每个节点只需要返回一个 `Count(*)` 的结果即可，再由 SQL 层将各个节点返回的 `Count(*)` 的结果累加求和。
 
-这里有一个数据逐层返回的示意图：
+**这里有一个数据逐层返回的示意图：**
 
 ![dist sql flow](http://img.mp.sohu.com/upload/20170524/8cbf1c1e550c46688093afcfce6bbdb6_th.png)
 

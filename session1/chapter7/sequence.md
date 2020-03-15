@@ -1,4 +1,4 @@
-### 1.7.3 Sequence
+## 7.3 Sequence
 
 Sequence 是数据库系统按照一定规则自增的数字序列，具有唯一和单调递增的特性。在官方 SQL 2003 标准中，其被定义为“生成连续数值的一种机制，Sequence 既可以是内部对象，也可以是外部对象”。因原生 MySQL 中并未支持 Sequence，TiDB Sequence 语法参考 MariaDB、Oracle 和 IBM Db2。
 
@@ -48,7 +48,7 @@ SELECT LASTVAL(sequence_name);
 SELECT SETVAL(sequence_name,100)；
 ```
 
-#### 1.7.3.1 用例介绍
+### 7.3.1 用例介绍
 
 本部分将会通过一些案例介绍 TiDB Sequence 的使用方法：
 
@@ -239,6 +239,6 @@ tidb[test]> select * from t;
 ...
 ```
 
-#### 1.7.3.2 注意事项
+### 7.3.2 注意事项
 
 在分布式架构的数据库中实现完成连续递增的序列是比较有难度的，而 `Sequence` 把`严格递增`和`性能`两方面交给了使用者，在新建 `Sequence` 的时候，可以通过组合 `Order/No Order`（目前尚未实现）和 `Cache/No Cache` 来选择新建高性能的 `Sequence`，亦或是性能较差但递增较为严格的 `Sequence`。

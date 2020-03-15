@@ -1,8 +1,8 @@
-### 1.7.4 AutoRandom
+## 7.4 AutoRandom
 
 AutoRandom 是 TiDB 4.0 提供的一种扩展语法，用于解决整数类型主键通过 AutoIncrement 属性隐式分配 ID 时的写热点问题。
 
-#### 1.7.4.1 AutoRandom 功能介绍
+### 7.4.1 AutoRandom 功能介绍
 
 在前面的章节提到过，TiDB 的每一行数据都包含一个隐式的 `_tidb_rowid`。`_tidb_rowid` 会被编码到存储引擎的 Key 上，在 TiKV 中，这决定了数据在 TiKV 中的 Region 位置。
 
@@ -16,7 +16,7 @@ AutoRandom 提供以下的功能：
 * 高性能：TiDB 能够以较高的吞吐分配数据，并保证数据的随机分布以配合 `PRE_SPLIT_REGION` 语法共同使用，避免大量写入时的写热点问题。
 * 支持隐式分配和显式写入：类似列的 AutoIncrement 属性，列的值既可以由 TiDB Server 自动分配，也可以由客户端直接指定写入。该需求来自于使用 Binlog 进行集群间同步时，保证上下游数据始终一致。
 
-#### 1.7.4.2 AutoRandom 语法介绍
+### 7.4.2 AutoRandom 语法介绍
 
 在建表时，`AUTO_RANDOM` 关键字可以作为列属性，指定在 TiDB 主键列上。TiDB 4.0 中，列属性语法定义被更新为：
 
@@ -31,7 +31,7 @@ column_definition:
 
 注意，AutoRandom 仅支持主键列，唯一索引列尚不支持，目前也没有支持计划。`AUTO_RANDOM` 关键字后可以指定 Shard Bits 数量，默认为 5。
 
-#### 1.7.4.3 AutoRandom 使用示例
+### 7.4.3 AutoRandom 使用示例
 
 使用 AUTO_RANDOM 功能前，须在 TiDB 配置文件 `experimental` 部分设置 `allow-auto-random = true`。该参数详情可参见 [allow-auto-random](https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file#allow-auto-random)。
 
@@ -87,7 +87,7 @@ tidb> select last_insert_id();
 * 如果该 INSERT 语句显式指定了整型主键列的值，和 AutoIncrement 属性类似，TiDB 会保存该值。
 * 若在单条 INSERT 语句中写入多个值，AutoRandom 属性会保证分配 ID 的连续性，同时 `LAST_INSERT_ID()` 返回第一个分配的值，这使得可以通过 `LAST_INSERT_ID()` 结果推断出所有被分配的 ID。 
 
-#### 1.7.4.5 AutoRandom 与其它方案的比较
+### 7.4.5 AutoRandom 与其它方案的比较
 
 与 AutoRandom 相比，TiDB 还可以通过其他的方式避免主键自动分配时的写热点问题：
 
