@@ -177,8 +177,8 @@
     * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智辉 @王英杰 @[朱博帅](https://github.com/zhuboshuai) @戚铮
     * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
     * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md) @代晓磊 @高振娇
-        * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
-        * [6.4.2 TiDB分区表使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
+        * [6.4.1 TiDB分区表简介](session4/chapter6/partition-table-info.md) @代晓磊
+        * [6.4.2 TiDB分区表使用场景](session4/chapter6/partition-table-scenarios.md) @代晓磊
         * [6.4.3 TiDB分区表最佳实践](session4/chapter6/partition-table-practices.md) @代晓磊
         * [6.4.4 TiDB分区表问题处理](session4/chapter6/partition-table-problem-handling.md) @代晓磊
     * [6.5 TiDB 在企业数据分级存储中的应用实践](session4/chapter6/tidb-in-enterprise-practices.md) @白鳝
