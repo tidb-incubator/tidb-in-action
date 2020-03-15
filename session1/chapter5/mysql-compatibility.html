@@ -2855,7 +2855,7 @@
 <tr>
 <td style="text-align:left">&#x9694;&#x79BB;&#x7EA7;&#x522B;</td>
 <td style="text-align:left">&#x652F;&#x6301;&#x8BFB;&#x672A;&#x63D0;&#x4EA4;&#x3001;&#x8BFB;&#x5DF2;&#x63D0;&#x4EA4;&#x3001;&#x53EF;&#x91CD;&#x590D;&#x8BFB;&#x3001;&#x4E32;&#x884C;&#x5316;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x53EF;&#x91CD;&#x590D;&#x8BFB;</td>
-<td style="text-align:left">&#x4E50;&#x89C2;&#x4E8B;&#x52A1;&#x652F;&#x6301;&#x5FEB;&#x7167;&#x9694;&#x79BB;  &#x60B2;&#x89C2;&#x4E8B;&#x52A1;&#x652F;&#x6301;&#x5FEB;&#x7167;&#x9694;&#x79BB;&#x548C;&#x8BFB;&#x5DF2;&#x63D0;&#x4EA4;</td>
+<td style="text-align:left">&#x4E50;&#x89C2;&#x4E8B;&#x52A1;&#x652F;&#x6301;&#x5FEB;&#x7167;&#x9694;&#x79BB;&#xFF0C;&#x60B2;&#x89C2;&#x4E8B;&#x52A1;&#x652F;&#x6301;&#x5FEB;&#x7167;&#x9694;&#x79BB;&#x548C;&#x8BFB;&#x5DF2;&#x63D0;&#x4EA4;</td>
 </tr>
 <tr>
 <td style="text-align:left">&#x9501;&#x673A;&#x5236;</td>
@@ -2905,7 +2905,7 @@
 <tr>
 <td style="text-align:left">&#x589E;&#x52A0;/&#x5220;&#x9664;&#x4E3B;&#x952E;</td>
 <td style="text-align:left">&#x652F;&#x6301;</td>
-<td style="text-align:left">&#x901A;&#x8FC7; <a href="https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key" target="_blank"><code>alter-primary-key</code> &#x914D;&#x7F6E;&#x5F00;&#x5173;</a>&#x63D0;&#x4F9B;</td>
+<td style="text-align:left">&#x901A;&#x8FC7; <a href="https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key" target="_blank">alter-primary-key</a> &#x914D;&#x7F6E;&#x5F00;&#x5173;&#x63D0;&#x4F9B;</td>
 </tr>
 <tr>
 <td style="text-align:left">CREATE TABLE tblName AS SELECT stmt</td>
@@ -2947,7 +2947,6 @@
 | latin1  | Latin1        | latin1_bin        |      1 |
 | binary  | binary        | binary            |      1 |
 +---------|---------------|-------------------|--------+
-
 5 rows in set (0.00 sec)
 </code></pre>
 <p>&#x6CE8;&#x610F;&#xFF1A;TiDB &#x7684;&#x9ED8;&#x8BA4;&#x5B57;&#x7B26;&#x96C6;&#x4E3A; <code>utf8mb4</code>&#xFF0C;MySQL 5.7 &#x4E2D;&#x4E3A; <code>latin1</code>&#xFF0C;MySQL 8.0 &#x4E2D;&#x4FEE;&#x6539;&#x4E3A; <code>utf8mb4</code>&#x3002;
@@ -3016,9 +3015,9 @@ Query OK, 1 row affected // MySQL &#x4E2D;&#xFF0C;&#x7531;&#x4E8E;&#x8865;&#x9F5
 </code></pre>
 <p>&#x5728;&#x65B0; Collation &#x542F;&#x7528;&#x540E;&#xFF0C;TiDB &#x4FEE;&#x6B63;&#x4E86; <code>utf8mb4_general_bin</code> &#x548C; <code>utf8_general_bin</code> &#x7684; <code>PADDING</code> &#x884C;&#x4E3A;&#xFF0C;&#x4F1A;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x8865;&#x9F50;&#x7A7A;&#x683C;&#x540E;&#x6BD4;&#x8F83;&#xFF1B;&#x540C;&#x65F6;&#x652F;&#x6301;&#x4E86; <code>utf8mb4_general_ci</code> &#x548C; <code>utf8_general_ci</code>&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A; Collation &#x4E0E; MySQL &#x4FDD;&#x6301;&#x517C;&#x5BB9;&#x3002;</p>
 <p>(2) &#x7CFB;&#x7EDF;&#x65F6;&#x533A;</p>
-<p>&#x5728; MySQL &#x4E2D;&#xFF0C;&#x7CFB;&#x7EDF;&#x65F6;&#x533A; <code>system_time_zone</code> &#x5728; MySQL &#x670D;&#x52A1;&#x542F;&#x52A8;&#x65F6;&#x901A;&#x8FC7;<a href="https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html" target="_blank">&#x73AF;&#x5883;&#x53D8;&#x91CF; <code>TZ</code> &#x6216;&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570; <code>--timezone</code></a> &#x6307;&#x5B9A;&#x3002;</p>
+<p>&#x5728; MySQL &#x4E2D;&#xFF0C;&#x7CFB;&#x7EDF;&#x65F6;&#x533A; <code>system_time_zone</code> &#x5728; MySQL &#x670D;&#x52A1;&#x542F;&#x52A8;&#x65F6;&#x901A;&#x8FC7; <a href="https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html" target="_blank">&#x73AF;&#x5883;&#x53D8;&#x91CF; <code>TZ</code> &#x6216;&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570; <code>--timezone</code></a> &#x6307;&#x5B9A;&#x3002;</p>
 <p>&#x5BF9;&#x4E8E; TiDB &#x800C;&#x8A00;&#xFF0C;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#xFF0C;TiDB &#x9700;&#x8981;&#x4FDD;&#x8BC1;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x7684;&#x7CFB;&#x7EDF;&#x65F6;&#x533A;&#x59CB;&#x7EC8;&#x4E00;&#x81F4;&#x3002;&#x56E0;&#x6B64; TiDB &#x7684;&#x7CFB;&#x7EDF;&#x65F6;&#x533A;&#x5728;&#x96C6;&#x7FA4;&#x521D;&#x59CB;&#x5316;&#x65F6;&#xFF0C;&#x7531;&#x8D1F;&#x8D23;&#x521D;&#x59CB;&#x5316;&#x7684; TiDB &#x8282;&#x70B9;&#x73AF;&#x5883;&#x53D8;&#x91CF; <code>TZ</code> &#x51B3;&#x5B9A;&#x3002;&#x96C6;&#x7FA4;&#x521D;&#x59CB;&#x5316;&#x540E;&#xFF0C;&#x56FA;&#x5B9A;&#x5728;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#x8868; <code>mysql</code>.<code>tidb</code> &#x4E2D;&#xFF1A;</p>
-<pre><code class="lang-sql">tidb&gt; SELECT VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME=&apos;system_tz&apos;;
+<pre><code class="lang-sql">tidb&gt; select VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME=&apos;system_tz&apos;;
 +----------------+
 | VARIABLE_VALUE |
 +----------------+
@@ -3082,7 +3081,7 @@ Query OK, 0 rows affected (0.00 sec)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"5 TiDB 和 MySQL 的区别","level":"2.5","depth":1,"next":{"title":"6 TiDB 事务模型","level":"2.6","depth":1,"path":"session1/chapter6/tidb-transaction-mode.md","ref":"session1/chapter6/tidb-transaction-mode.md","articles":[{"title":"6.1 乐观事务","level":"2.6.1","depth":2,"path":"session1/chapter6/optimistic-txn.md","ref":"session1/chapter6/optimistic-txn.md","articles":[]},{"title":"6.2 悲观事务","level":"2.6.2","depth":2,"path":"session1/chapter6/pessimistic-txn.md","ref":"session1/chapter6/pessimistic-txn.md","articles":[]},{"title":"6.3 4.0 的大事务支持","level":"2.6.3","depth":2,"path":"session1/chapter6/big-txn-in-4.0.md","ref":"session1/chapter6/big-txn-in-4.0.md","articles":[]}]},"previous":{"title":"4.2 弹性调度","level":"2.4.2","depth":2,"path":"session1/chapter4/elastic-scheduling.md","ref":"session1/chapter4/elastic-scheduling.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter5/mysql-compatibility.md","mtime":"2020-03-14T15:35:13.790Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-14T15:36:00.651Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"5 TiDB 和 MySQL 的区别","level":"2.5","depth":1,"next":{"title":"6 TiDB 事务模型","level":"2.6","depth":1,"path":"session1/chapter6/tidb-transaction-mode.md","ref":"session1/chapter6/tidb-transaction-mode.md","articles":[{"title":"6.1 乐观事务","level":"2.6.1","depth":2,"path":"session1/chapter6/optimistic-txn.md","ref":"session1/chapter6/optimistic-txn.md","articles":[]},{"title":"6.2 悲观事务","level":"2.6.2","depth":2,"path":"session1/chapter6/pessimistic-txn.md","ref":"session1/chapter6/pessimistic-txn.md","articles":[]},{"title":"6.3 4.0 的大事务支持","level":"2.6.3","depth":2,"path":"session1/chapter6/big-txn-in-4.0.md","ref":"session1/chapter6/big-txn-in-4.0.md","articles":[]}]},"previous":{"title":"4.2 弹性调度","level":"2.4.2","depth":2,"path":"session1/chapter4/elastic-scheduling.md","ref":"session1/chapter4/elastic-scheduling.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter5/mysql-compatibility.md","mtime":"2020-03-15T04:05:26.784Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-15T04:06:14.759Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
