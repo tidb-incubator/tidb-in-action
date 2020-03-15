@@ -2821,7 +2821,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="173-sequence">1.7.3 Sequence</h3>
+                                <h2 id="73-sequence">7.3 Sequence</h2>
 <p>Sequence &#x662F;&#x6570;&#x636E;&#x5E93;&#x7CFB;&#x7EDF;&#x6309;&#x7167;&#x4E00;&#x5B9A;&#x89C4;&#x5219;&#x81EA;&#x589E;&#x7684;&#x6570;&#x5B57;&#x5E8F;&#x5217;&#xFF0C;&#x5177;&#x6709;&#x552F;&#x4E00;&#x548C;&#x5355;&#x8C03;&#x9012;&#x589E;&#x7684;&#x7279;&#x6027;&#x3002;&#x5728;&#x5B98;&#x65B9; SQL 2003 &#x6807;&#x51C6;&#x4E2D;&#xFF0C;&#x5176;&#x88AB;&#x5B9A;&#x4E49;&#x4E3A;&#x201C;&#x751F;&#x6210;&#x8FDE;&#x7EED;&#x6570;&#x503C;&#x7684;&#x4E00;&#x79CD;&#x673A;&#x5236;&#xFF0C;Sequence &#x65E2;&#x53EF;&#x4EE5;&#x662F;&#x5185;&#x90E8;&#x5BF9;&#x8C61;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x5916;&#x90E8;&#x5BF9;&#x8C61;&#x201D;&#x3002;&#x56E0;&#x539F;&#x751F; MySQL &#x4E2D;&#x5E76;&#x672A;&#x652F;&#x6301; Sequence&#xFF0C;TiDB Sequence &#x8BED;&#x6CD5;&#x53C2;&#x8003; MariaDB&#x3001;Oracle &#x548C; IBM Db2&#x3002;</p>
 <ul>
 <li>Create Sequence &#x8BED;&#x6CD5;</li>
@@ -2863,7 +2863,7 @@
 </ul>
 <pre><code class="lang-SQL"><span class="hljs-keyword">SELECT</span> SETVAL(sequence_name,<span class="hljs-number">100</span>)&#xFF1B;
 </code></pre>
-<h4 id="1731-&#x7528;&#x4F8B;&#x4ECB;&#x7ECD;">1.7.3.1 &#x7528;&#x4F8B;&#x4ECB;&#x7ECD;</h4>
+<h3 id="731-&#x7528;&#x4F8B;&#x4ECB;&#x7ECD;">7.3.1 &#x7528;&#x4F8B;&#x4ECB;&#x7ECD;</h3>
 <p>&#x672C;&#x90E8;&#x5206;&#x5C06;&#x4F1A;&#x901A;&#x8FC7;&#x4E00;&#x4E9B;&#x6848;&#x4F8B;&#x4ECB;&#x7ECD; TiDB Sequence &#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF1A;</p>
 <ul>
 <li>&#x5E76;&#x53D1;&#x7684;&#x5E94;&#x7528;&#x9700;&#x8981;&#x83B7;&#x53D6;&#x5355;&#x8C03;&#x9012;&#x589E;&#x7684;&#x6D41;&#x6C34;&#x53F7;</li>
@@ -3013,7 +3013,7 @@ Rows matched: 10000  Changed: 10000  Warnings: 0
 |    20 | user20    |
 ...
 </code></pre>
-<h4 id="1732-&#x6CE8;&#x610F;&#x4E8B;&#x9879;">1.7.3.2 &#x6CE8;&#x610F;&#x4E8B;&#x9879;</h4>
+<h3 id="732-&#x6CE8;&#x610F;&#x4E8B;&#x9879;">7.3.2 &#x6CE8;&#x610F;&#x4E8B;&#x9879;</h3>
 <p>&#x5728;&#x5206;&#x5E03;&#x5F0F;&#x67B6;&#x6784;&#x7684;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x5B9E;&#x73B0;&#x5B8C;&#x6210;&#x8FDE;&#x7EED;&#x9012;&#x589E;&#x7684;&#x5E8F;&#x5217;&#x662F;&#x6BD4;&#x8F83;&#x6709;&#x96BE;&#x5EA6;&#x7684;&#xFF0C;&#x800C; <code>Sequence</code> &#x628A;<code>&#x4E25;&#x683C;&#x9012;&#x589E;</code>&#x548C;<code>&#x6027;&#x80FD;</code>&#x4E24;&#x65B9;&#x9762;&#x4EA4;&#x7ED9;&#x4E86;&#x4F7F;&#x7528;&#x8005;&#xFF0C;&#x5728;&#x65B0;&#x5EFA; <code>Sequence</code> &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7EC4;&#x5408; <code>Order/No Order</code>&#xFF08;&#x76EE;&#x524D;&#x5C1A;&#x672A;&#x5B9E;&#x73B0;&#xFF09;&#x548C; <code>Cache/No Cache</code> &#x6765;&#x9009;&#x62E9;&#x65B0;&#x5EFA;&#x9AD8;&#x6027;&#x80FD;&#x7684; <code>Sequence</code>&#xFF0C;&#x4EA6;&#x6216;&#x662F;&#x6027;&#x80FD;&#x8F83;&#x5DEE;&#x4F46;&#x9012;&#x589E;&#x8F83;&#x4E3A;&#x4E25;&#x683C;&#x7684; <code>Sequence</code>&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
@@ -3058,7 +3058,7 @@ Rows matched: 10000  Changed: 10000  Warnings: 0
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"7.3 Sequence","level":"2.7.3","depth":2,"next":{"title":"7.4 AutoRandom","level":"2.7.4","depth":2,"path":"session1/chapter7/autorandom.md","ref":"session1/chapter7/autorandom.md","articles":[]},"previous":{"title":"7.2 如何查看 DDL 状态","level":"2.7.2","depth":2,"path":"session1/chapter7/tidb-ddl-status.md","ref":"session1/chapter7/tidb-ddl-status.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter7/sequence.md","mtime":"2020-03-15T11:23:51.588Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-15T11:24:35.187Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"7.3 Sequence","level":"2.7.3","depth":2,"next":{"title":"7.4 AutoRandom","level":"2.7.4","depth":2,"path":"session1/chapter7/autorandom.md","ref":"session1/chapter7/autorandom.md","articles":[]},"previous":{"title":"7.2 如何查看 DDL 状态","level":"2.7.2","depth":2,"path":"session1/chapter7/tidb-ddl-status.md","ref":"session1/chapter7/tidb-ddl-status.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter7/sequence.md","mtime":"2020-03-15T16:30:30.937Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-15T16:31:16.111Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
