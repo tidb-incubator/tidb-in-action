@@ -4,6 +4,7 @@
 ### 4.2.1 需求背景
 在云环境中的弹性调度可极大节省机器资源，节约成本。传统上，将 TiDB 集群部署在 IDC 环境中，即将集群部署在相同或不同机房，在这种环境下，通常希望各台机器的利率用比较平均，并且需要预留足够的机器资源以应对高峰期，如下图（红色为已用资源，绿色为未用资源）：
 
+
 ![host_utilization_avg.png](/res/session1/chapter4/elastic-scheduling/host_utilization_avg.png)
 
 但大部分时间业务流量比较平均，机器的利用率相对于高峰期处在一个比较低的水平，从而造成机器资源的浪费。而在云环境下，机器资源可以按需分配，并且云厂商能够支持秒级或分钟级交付，那么在平常的大部分时间，就不需要让每台机器预留资源，而是尽可能地利用每台机器资源，如下图：
@@ -17,9 +18,9 @@
 ### 4.2.2 自动伸缩
 自动伸缩（Auto-Scale）包含两方面的内容，一是弹性扩缩容节点，二是在扩缩容节点后自动均衡集群负载。
 
-和[ Aurora](https://www.youtube.com/watch?v=mali0B4wus0) 做法类似，弹性伸缩节点可通过对指标，或者某种资源的利用率来设置一个阈值，比如CPU利用率（TiDB Server 或 TiKV Server）、QPS（TiKV Server）等，当集群在处于平衡状态下，目标指标等于或者超过阈值一段时间以后，自动触发水平的弹性伸缩。
+和[ Aurora](https://www.youtube.com/watch?v=mali0B4wus0) 做法类似，弹性伸缩节点可通过对指标或者某种资源的利用率来设置一个阈值，比如CPU利用率（TiDB Server 或 TiKV Server）、QPS（TiKV Server）等，当集群在平衡状态下目标指标等于或者超过阈值一段时间以后，就会自动触发水平的弹性伸缩。
 
-TiDB 借助 TiDB Operator 和 PD 来实现 Auto-Scale。目前由 TiDB Operator 组件定期获取 TiDB / TiKV 的 metrics 信息后，通过 API 的方式暴露出期望的 TiDB/TiKV numbers，然后由 TiDB Operator 定期拉取 PD API 信息后，通过内部的 Auto-scaling 算法对 TidbCluster.Spec.Replicas  进行调整，从而实现Auto-scaling。在TiDB Operator中，新增了Autoscaler API 和 Autoscaler Controller，下面是一个 Autoscaler API 的例子：
+TiDB 借助 TiDB Operator 和 PD 来实现 Auto-Scale。目前由 TiDB Operator 组件定期获取 TiDB / TiKV 的 metrics 信息后，通过 API 的方式暴露出期望的 TiDB / TiKV numbers，然后由 TiDB Operator 定期拉取 PD API 信息，通过内部的 Auto-Scaling 算法对 TidbCluster.Spec.Replicas 进行调整，从而实现 Auto-Scaling。在 TiDB Operator 中，新增了 Autoscaler API 和 Autoscaler Controller，下面是一个 Autoscaler API 的例子：
 
 ```
 apiVersion: pingcap.com/v1alpha1
@@ -59,24 +60,24 @@ spec:
             type: "Utilization"
             averageUtilization: 70
 ```
-minReplicas：最小的实例数
-maxReplicas：最大的实例数
 
-scaleOutIntervalSecondss：每次触发 scale-out 的间隔时间
+其中：
+* minReplicas：最小实例数
+* maxReplicas：最大实例数
+* scaleOutIntervalSeconds：每次触发 scale-out 的间隔时间
+* scaleInIntervalSeconds： 每次触发 scale-in 的间隔时间
 
-scaleInIntervalSeconds： 每次触发 scale-in 的间隔时间
-
-当集群的资源发生了变化之后，还需要进行快速的负载均衡。对于 TiDB  的负载均衡，需要客户端或者 LB 层具备自动重新调整长连接的能力，使建立到 TiDB 上的链接能够均衡。而对于TiKV，弹性节点的目的主要是快速的分摊压力，因此调度主要是 PD 来发起对热点 Region 的调度，这样能以最小的调度代价来提高弹性伸缩的速度。
+当集群的资源发生了变化之后，还需要进行快速的负载均衡。对于 TiDB  的负载均衡，需要客户端或者 LB 层具备自动重新调整长连接的能力，使建立到 TiDB 上的连接能够均衡。而对于 TiKV，弹性节点的目的主要是快速地分摊压力，因此调度主要是 PD 来发起对热点 Region 的调度，这样能以最小的调度代价来提高弹性伸缩的速度。
 
 ### 4.2.3 动态调度
 在上面也提到了 TiDB Operator 通过扩缩容节点后，弹性节点需要尽快的分担压力，而这一环节主要的工作在于存储层 TiKV 数据的调度。前面已经讲过对于 TiKV 的负载均衡主要是通过热点调度，因此如何能处理热点的调度是需要 PD 来考虑的。一般来说分为以下几种情况：
 
 1. 请求分布相对平均，区域广
 2. 请求分布相对平均，区域小
-3. 请求分布不平均，集中在有多个点
+3. 请求分布不平均，集中在多个点
 4. 请求分布不平均，集中在单个点
 
-对于第一种情况，相当于没有热点的数据，访问平均分布在集群的大部分 Region 中，这种情况一般不会出现突然的业务流量爆发，目前调度不会对其做相关的特殊处理，建议根据情况进行扩容。对于第三种情况，现有的热点调度器已经能够识别并且对其进行调度。下面来介绍下对于第 2 种和第 4 种情况如何去做动态调整：
+对于第一种情况，相当于没有热点的情况，访问平均分布在集群的大部分 Region 中，这种情况一般不会出现突然的业务流量爆发，目前调度不会对其做相关的特殊处理，建议根据情况进行扩容。对于第三种情况，现有的热点调度器已经能够识别并且对其进行调度。下面来介绍下对于第 2 种和第 4 种情况如何去做动态调整：
 
 1. 根据负载动态分裂 ( Load Base Splitting)
 对于上述第二种情况，会出现小区域的热点问题。特别是在 TiDB 实践中经常遇到的热点小表问题，热点数据集中在几个 Region 中，造成无法利用多台机器的资源。 4.0 中引入了根据负载动态分裂特性，即根据负载自动拆分 Region。其主要的思路借鉴了 CRDB 的[实现](https://www.cockroachlabs.com/docs/stable/load-based-splitting.html)，会根据设定的 QPS 阈值来进行自动的分裂。其主要原理是，若对该  Region 的请求 QPS 超过阈值则进行采样，对采样的请求分布进行判断。采样的方法是通过蓄水池采样出请求中的 20 个 key，然后统计请求在这些 key 的左右区域的分布来进行判断，如果分布比较平均并能找到合适的 key 进行分裂，则自动地对该 Region 进行分裂。

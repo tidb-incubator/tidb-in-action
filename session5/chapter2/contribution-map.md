@@ -1,4 +1,6 @@
-# Contribution Map 的由来
+## 2.8 Contribution Map
+
+## 2.8.1 Contribution Map 的由来
 
 TiDB 是一个开源的分布式数据库，目前（2020.3.7）在 GitHub 上有 22.7K 个 star，是分布式数据库领域关注度非常高的一个项目，目前有 400 多个 contributors 参与了该项目的贡献，可以说 TiDB 是一个在大家的共同努力下成长起来了项目。为了能让更多的人方便地参与 TiDB 及其周边的项目，我们制作了 [Contribution Map](https://github.com/pingcap/tidb-map/blob/master/maps/contribution-map.md)。Contribution Map 致力于解决下面几个潜在 contributor 经常会碰到的问题：
 
@@ -7,7 +9,7 @@ TiDB 是一个开源的分布式数据库，目前（2020.3.7）在 GitHub 上�
 * 暂时不具备贡献所需要的技能，该学习哪些资料？Contribution Map 的 Learning Materials 列列出了如果 contributor 不具备相关的技能可以通过学习哪些资料来提升自己的技能，以达到能够贡献的水平。
 * 如何在特定的领域进行进阶提升？可以参考 Contribution Map 的 SIG（Special Interest Group）一节，加入特定的兴趣小组，和兴趣相投的一批人来一起在某个领域进行提升。每个 SIG 会有对应的 tech-lead 和 mentors 来维护和更新每个 SIG 的任务，并帮助大家进行提升。大家可以在 TiDB community 和 TiKV community 来查看各个 SIG 的详细信息。
 
-## Contribution Map 解读
+### 2.8.2 Contribution Map 解读
 
 下面我们来看下 Contribution Map 的大概结构。开头部分是各个项目的索引，包含了各个项目的简单说明，比如 TiDB 是一个开源的兼容 MySQL 协议的分布式 HTAP 数据库，TiKV 是分布式的事务 KV 数据库等等。
 

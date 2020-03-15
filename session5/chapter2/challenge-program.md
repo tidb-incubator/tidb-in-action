@@ -1,6 +1,7 @@
-# Challenge Program
+## 2.4 Challenge Program
 
-## 起源
+### 2.4.1 起源
+
 
 TiDB 产品的每一次微小进步都离不开社区小伙伴的支持和帮助，在产品不断迭代的过程中，越来越多的小伙伴不断的参与到 TiDB 开源社区的建设当中，越来越多的小伙伴在 TiDB 开源社区用自己的方式表达着对于开源的热情和对于技术的追求，TiDB 也在社区小伙伴的推动下，不断地刷新着过去的成绩。
 
@@ -13,7 +14,8 @@ TiDB 产品的每一次微小进步都离不开社区小伙伴的支持和帮助
 | [Challenge Program season 2](https://github.com/pingcap/community/blob/master/challenge-programs/challenge-program-season-2.md) | 2020.03~2020.05 |
 | [Challenge Program season 1](https://github.com/pingcap/community/blob/master/challenge-programs/challenge-program-season-1.md) | 2019.11~2020.02 |
 
-## 第一季：性能
+### 2.4.2 第一季：性能
+
 
 ![Performance Challenge Program](/res/session5/chapter2/challenge-prigram/performanc-challenge-program.jpeg)
 
@@ -27,7 +29,8 @@ TiDB 产品的每一次微小进步都离不开社区小伙伴的支持和帮助
 
 更多精彩内容可查看 [性能挑战赛回顾](https://mp.weixin.qq.com/s/E4snu0C6J1feg5piC5ewqg)。
 
-## 第二季：易用性
+### 2.4.3 第二季：易用性
+
 
 ![Usaribility Challenge Program](/res/session5/chapter2/challenge-prigram/usaribility-challenge-program.svg)
 
@@ -41,10 +44,10 @@ TiDB 产品的每一次微小进步都离不开社区小伙伴的支持和帮助
 
 相比于上一季，第二季首次面向了海外，首次在 TiDB、TiKV、PD 以外的代码仓库开启了挑战赛活动，几乎覆盖了 TiDB 产品线上所有的开源代码仓库。
 
-## 比赛规则
+### 2.4.4 比赛规则
 
 TiDB Challenge Program 全流程包括：查看任务->领取任务->实现任务->提交任务->评估任务->获得积分->积分兑换，其中“获得积分”之前的步骤都将在 GitHub 上实现。详细的比赛规则可查看 [这里](https://github.com/pingcap/community/blob/master/challenge-programs/challenge-program-season-2-cn.md)。
 
-## 学习资料
+### 2.4.5 学习资料
 
 PingCAP 提供了 [TiDB 精选技术讲解文章](https://github.com/pingcap/presentations/blob/master/hackathon-2019/reference-document-of-hackathon-2019.md)，帮助大家轻松掌握 TiDB 各核心组件的原理及功能。此外还有 [数据库小课堂](https://github.com/pingcap/awesome-database-learning)，帮助选手快速熟悉数据库知识，点击以上链接即可轻松获取。
