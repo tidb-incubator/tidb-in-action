@@ -1,4 +1,4 @@
-# 滚动升级 Kubernetes 上的 TiDB 集群
+## 1.4.2 基于 TiDB-Operator 的集群滚动更新
 
 滚动更新 TiDB 集群时，会按 PD、TiKV、TiDB 的顺序，串行删除 Pod，并创建新版本的 Pod，当新版本的 Pod 正常运行后，再处理下一个 Pod。
 
@@ -8,7 +8,7 @@
 
 滚动更新可以用于升级 TiDB 版本，也可以用于更新集群配置。
 
-## 升级 TiDB 版本
+### 1.4.2.1 升级 TiDB 版本
 
 1. 修改集群的 `values.yaml` 文件中的 `tidb.image`、`tikv.image`、`pd.image` 的值为新版本镜像；
 2. 执行 `helm upgrade` 命令进行升级：
@@ -25,7 +25,7 @@
 
     当所有 Pod 都重建完毕进入 `Running` 状态后，升级完成。
 
-## 更新 TiDB 集群配置
+### 1.4.2.2 更新 TiDB 集群配置
 
 默认条件下，修改配置文件不会自动应用到 TiDB 集群中，只有在实例重启时，才会重新加载新的配置文件。
 
@@ -51,7 +51,7 @@
 >
 > - 将 `enableConfigMapRollout` 特性从关闭状态打开时，即使没有配置变更，也会触发一次 PD、TiKV、TiDB 的滚动更新。
 
-## 强制升级 TiDB 集群
+### 1.4.2.3 强制升级 TiDB 集群
 
 如果 PD 集群因为 PD 配置错误、PD 镜像 tag 错误、NodeAffinity 等原因不可用，[TiDB 集群扩缩容](/tidb-in-kubernetes/scale-in-kubernetes.md)、[升级 TiDB 版本](#升级-tidb-版本)和[更新 TiDB 集群配置](#更新-tidb-集群配置)这三种操作都无法成功执行。
 
