@@ -1,7 +1,7 @@
 
-# TiDB-Operator 部署本地测试环境
+## 1.2.2 TiDB-Operator 部署本地测试环境
 
-## 背景介绍
+## 1.2.2.1 背景介绍
 
 本小结介绍如何在个人电脑（Linux 或 MacOS）上采用 kind 方式在 Kubernetes 上部署 TiDB Operator 和 TiDB 集群。部署包含三个关键环节：
 
@@ -16,15 +16,15 @@
 * Go 1.10+
 * net.ipv4.ip_forward 设置为 1
 
-## 通过 kind 部署 K8s 集群
+## 1.2.2.2 通过 kind 部署 K8s 集群
 
-### 下载自动化部署程序
+1. 下载自动化部署程序
 
 ```
 # cd /root & git clone --depth=1 https://github.com/pingcap/tidb-operator && cd tidb-operator
 ```
 
-### 通过程序创建集群
+2. 通过程序创建集群
 
 ```
 # cd /root/tidb-operator && hack/kind-cluster-build.sh
@@ -38,13 +38,13 @@ To start using your cluster, run:
     kubectl config use-context kind-kind
 ```
 
-### 将 K8s 集群相关命令路径加入 PATH 路径
+3. 将 K8s 集群相关命令路径加入 PATH 路径
 
 ```
     # export PATH=$PATH:/root/tidb-operator/output/bin/
 ```
 
-### 验证 K8s 环境是否符合要求
+4. 验证 K8s 环境是否符合要求
 
 ```
     # kubectl cluster-info
@@ -62,9 +62,9 @@ To start using your cluster, run:
 
 输出以上信息，则说明 Helm 客户端与服务端都符合要求。
 
-## 在 K8s 集群上部署 TiDB Operator
+## 1.2.2.3 在 K8s 集群上部署 TiDB Operator
 
-### 通过 helm 安装 TiDB Operator
+1. 通过 helm 安装 TiDB Operator
 
 创建 TiDB CRD
 
@@ -93,7 +93,7 @@ To start using your cluster, run:
 
 将 /root/tidb-operator/charts/tidb-operator/values.yaml 文件内的 scheduler.kubeSchedulerImageName 值修改为 registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler 以加快镜像拉取速度。
 
-安装 TiDB Operator
+2. 安装 TiDB Operator
 
 ```
     # helm install --namespace=tidb-admin  --name=tidb-operator /root/tidb-operator/charts/tidb-operator -f /root/tidb-operator/charts/tidb-operator/values.yaml
@@ -104,7 +104,7 @@ To start using your cluster, run:
     ...
 ```
 
-### 验证 Operator 运行状态
+3. 验证 Operator 运行状态
 
 ```
     # kubectl get pods -n tidb-admin
@@ -115,16 +115,16 @@ To start using your cluster, run:
 
 以上信息显示 Operator 运行正常。
 
-## 在 K8s 集群中部署 TiDB 集群
+## 1.2.2.4 在 K8s 集群中部署 TiDB 集群
 
-### 下载 TiDB Cluster 的 helm chart 文件
+1. 下载 TiDB Cluster 的 helm chart 文件
 
 ```
     # mkdir -p /root/chart/
     从 https://github.com/pingcap/tidb-operator/releases 下载 tidb-cluster-chart-v1.0.6.tgz 文件放到 /root/chart/ 路径下
 ```
 
-### 安装 TiDB Cluster
+2. 安装 TiDB Cluster
 
 ```
     # cd /root/chart/ && tar xvf tidb-cluster-chart-v1.0.6.tgz
@@ -137,7 +137,7 @@ To start using your cluster, run:
 
 以上信息显示 TiDB Cluster 部署正常
 
-### 观察 TiDB 的 POD 状态
+3. 观察 TiDB 的 POD 状态
 
 ```
     # kubectl get pods -n dba-test
@@ -156,7 +156,7 @@ To start using your cluster, run:
 
 以上信息显示 TiDB Cluster 所有 Pod 全部运行正常。
 
-### 访问 TiDB 集群
+4. 访问 TiDB 集群
 
 ```
     # nohup kubectl port-forward svc/test-tidb 4000:4000 --namespace=dba-test &
