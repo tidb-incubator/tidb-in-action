@@ -12,7 +12,7 @@
 |:----------------|:----------------------------------------------------------------------------------------------------------|
 | id            | 算子的 ID，在整个执行计划中唯一的标识一个算子。在 TiDB 2.1 中，ID 会格式化的显示算子的树状结构。数据从孩子结点流向父亲结点，每个算子的父亲结点有且仅有一个。                                                                                       |
 | estRows       | 预计当前算子将会输出的数据条数，基于统计信息以及算子的执行逻辑估算而来。在 4.0 之前叫 count。 |
-| task          | 当前这个算子属于什么 task。目前的执行计划分成为两种 task，一种叫 **root** task，在 tidb-server 上执行，一种叫 **cop** task，并行的在 TiKV 或者 TiFlash 上执行。当前的执行计划在 task 级别的拓扑关系是一个 root task 后面可以跟许多 cop task，root task 使用 cop task 的输出结果作为输入。cop task 中执行的也即是 TiDB 下推到 TiKV 或者 TiFlash 上的任务，每个 cop task 分散在 TiKV 或者 TiFlash 集群中，由多个进程共同执行。 |
+| task          | 当前这个算子属于什么 task。目前的执行计划分成为两种 task，一种叫 **root** task，在 TiDB 节点上执行，一种叫 **cop** task，并行的在 TiKV 或者 TiFlash 上执行。当前的执行计划在 task 级别的拓扑关系是一个 root task 后面可以跟许多 cop task，root task 使用 cop task 的输出结果作为输入。cop task 中执行的也即是 TiDB 下推到 TiKV 或者 TiFlash 上的任务，每个 cop task 分散在 TiKV 或者 TiFlash 集群中，由多个进程共同执行。 |
 | operator info | 每个算子的详细信息。各个算子的 operator info 各有不同，可参考下面的示例解读。                   |
 
 ## 1.1.2 EXPLAIN ANALYZE 输出格式
@@ -21,8 +21,8 @@
 
 | 属性名          | 含义 |
 |:----------------|:---------------------------------|
-| estRows       | 当前算子实际输出的数据条数。 |
-| execution info  | time 显示从进入算子到离开算子的全部 wall time，包括所有子算子操作的全部执行时间。如果该算子被父算子多次调用 (loops)，这个时间就是累积的时间。loops 是当前算子被父算子调用的次数。 rows 是当前算子返回的行的总数。|
+| actRows       | 当前算子实际输出的数据条数。 |
+| execution info  | time 显示从进入算子到离开算子的全部时间，包括所有子算子操作的全部执行时间。如果该算子被父算子多次调用 (loops)，这个时间就是累积的时间。loops 是当前算子被父算子调用的次数。 rows 是当前算子返回的行的总数。|
 | memory  | 当前算子占用内存大小 |
 | disk  | 当前算子占用磁盘大小 |
 
@@ -40,7 +40,7 @@ mysql> explain analyze select * from t where a < 10;
 3 rows in set (0.00 sec)
 ```
 
-从上述例子中可以看出，优化器估算的 `estRows` 和实际执行中统计得到的 `actRows` 几乎是相等的，说明优化器估算误差很小。同时 `IndexLookUp_10` 算子在实际执行过程中使用了约 `9 KB` 的内存，该 `SQL` 在执行过程中，没有触发过任何算子的落盘操作。
+从上述例子中可以看出，优化器估算的 `estRows` 和实际执行中统计得到的 `actRows` 几乎是相等的，说明优化器估算的行数与实际行数的误差很小。同时 `IndexLookUp_10` 算子在实际执行过程中使用了约 `9 KB` 的内存，该 `SQL` 在执行过程中，没有触发过任何算子的落盘操作。
 
 ## 1.1.3 如何阅读算子的执行顺序
 
@@ -66,7 +66,7 @@ TiDB(root@127.0.0.1:test) > explain select * from t use index(idx_a) where a = 1
 3 rows in set (0.00 sec)
 ```
 
-这里 `IndexLookUp_7` 算子有两个孩子结点：`IndexRangeScan_5(Build)` 和 `TableRowIDScan_6(Probe)`。可以看到，`IndexRangeScan_5(Build)` 是第一个出现的，并且基于上面这条规则，要得到一条数据，需要先执行它得到一个 `RowID` 以后再由 `TableRowIDScan_6(Probe)` 根据前者读上来的 `RowID` 去获取完整的一行数据。
+这里 `IndexLookUp_7` 算子有两个孩子结点：`IndexRangeScan_5(Build)` 和 `TableRowIDScan_6(Probe)`。可以看到，`IndexRangeScan_5(Build)` 是第一个出现的，并且基于上面这条规则，要得到一条数据，需要先执行它得到一个 `RowID` 以后，再由 `TableRowIDScan_6(Probe)` 根据前者读上来的 `RowID` 去获取完整的一行数据。
 
 这种规则隐含的另一个信息是：出现在最前面的算子可能是最先被执行的，而出现在最末尾的算子可能是最后被执行的。比如下面这个例子：
 
@@ -300,7 +300,7 @@ mysql> explain select /*+ INL_MERGE_JOIN(t1) */ * from t t1 where  t1.a  in ( se
 **Apply 示例：**
 
 ```
-mysql> explain select /*+ INL_MERGE_JOIN(t1) */ * from t t1 where  t1.a  in ( select avg(t2.a) from t2 where t2.b < t1.b);
+mysql> explain select  * from t t1 where  t1.a  in ( select avg(t2.a) from t2 where t2.b < t1.b);
 +----------------------------------+----------+-----------+-------------------------------------------------------------------------------+
 | id                               | estRows  | task      | operator info                                                                 |
 +----------------------------------+----------+-----------+-------------------------------------------------------------------------------+
