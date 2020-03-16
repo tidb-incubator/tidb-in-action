@@ -14,6 +14,52 @@ TiDB Operator 部署前，请确认以下软件需求：
 > - 尽管 TiDB Operator 可以使用网络卷持久化 TiDB 数据，TiDB 数据自身会存多副本，再走额外的网络卷性能会受到很大影响。强烈建议搭建[本地卷](https://kubernetes.io/docs/concepts/storage/volumes/#local)以提高性能。
 > - 跨多可用区的网络卷需要 Kubernetes v1.12 或者更高版本。
 
+### 安装 Helm 服务端
+
+在集群中应用 helm 服务端组件 `tiller` 所需的 `RBAC` 规则并安装 `tiller`：
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/pingcap/tidb-operator/master/manifeststiller-rbac.yaml && \
+helm init --service-account=tiller --upgrade
+```
+
+通过下面命令确认 `tiller` Pod 进入 running 状态：
+
+```shell
+kubectl get po -n kube-system -l name=tiller
+```
+
+如果 Kubernetes 集群没有启用 `RBAC`，那么可以直接使用下列命令安装 `tiller`：
+
+```shell
+helm init --upgrade
+```
+
+Kubernetes 应用在 Helm 中被打包为 chart。PingCAP 维护的 helm chart 仓库是 `https://charts.pingcap.org/`，可以通过下面的命令添加该仓库：
+
+```shell
+helm repo add pingcap https://charts.pingcap.org/
+```
+
+添加完成后，可以使用 `helm search` 搜索 PingCAP 提供的 chart：
+
+```shell
+helm search pingcap -l
+```
+
+```
+NAME                    CHART VERSION   APP VERSION DESCRIPTION
+pingcap/tidb-backup     v1.0.0                      A Helm chart for TiDB Backup or Restore
+pingcap/tidb-cluster    v1.0.0                      A Helm chart for TiDB Cluster
+pingcap/tidb-operator   v1.0.0                      tidb-operator Helm chart for Kubernetes
+```
+
+当新版本的 chart 发布后，可以使用 `helm repo update` 命令更新本地对于仓库的缓存：
+
+```
+helm repo update
+```
+
 ## 2. 安装 TiDB Operator
 
 TiDB Operator 使用 [CRD (Custom Resource Definition)](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/) 扩展 Kubernetes，所以要使用 TiDB Operator，必须先创建 `TidbCluster` 自定义资源类型。只需要在你的 Kubernetes 集群上创建一次即可：

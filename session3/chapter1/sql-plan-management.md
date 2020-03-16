@@ -1,10 +1,10 @@
-# SQL Plan Management
+# 1.3 SQL Plan Management
 
-## 背景
+## 1.3.1 背景
 
 执行计划是影响 SQL 执行性能的一个非常关键的因素，SQL 执行计划的稳定性也对整个集群的效率有着非常大的影响。然而，当出现类似统计信息过时、添加或者删除了索引等情况时，优化器并不能确保一定生成一个很好的执行计划。此时执行计划可能发生预期外的改变，导致执行时间过长。因此 TiDB 提供了 SQL Plan Management 功能，用于为某些类型的 SQL 绑定执行计划，并且被绑定的执行计划会根据数据的变化而不断地演进。
 
-## SQL Bind
+## 1.3.2 SQL Bind
 
 SQL Bind 是 SQL Plan Management 的第一步，在 TiDB 3.0 中 GA。使用它，用户可以为某一类型的 SQL 绑定执行计划。当出现执行计划不优时，可以使用 SQL Bind 在不更改业务的情况下快速地对执行计划进行修复。
 
@@ -47,7 +47,7 @@ TiDB(root@127.0.0.1:test) > show bindings;
 Empty set (0.00 sec)
 ```
 
-## Baseline Evolution
+## 1.3.3 Baseline Evolution
 
 为了解决只能手动创建 Binding 的问题，4.0 中 TiDB 提供了自动创建 Binding 功能，通过将 `tidb_capture_plan_baselines` 变量的值设置为 `on`，就可以自动为某一段时间内出现多次的 SQL 去创建绑定。TiDB 会为那些出现了至少两次的 SQL 创建绑定，统计 SQL 的出现次数依赖 TiDB 4.0 提供的 Statements Summary 功能。可通过如下方法打开自动为出现了两次以上的 SQL 创建绑定的开关：
 

@@ -1,5 +1,7 @@
-## 背景介绍
-如果做一个调研，在开发或 DBA 日常使用 TiDB 的过程中，最经常遇到的问题或报错是啥，我相信有一个肯定会让大家咬牙切齿，那就是 transaction too large。
+## 6.3 4.0 的大事务支持
+
+### 6.3.1 背景
+如果做一个调研，在开发或 DBA 日常使用 TiDB 的过程中，最经常遇到的问题或报错是啥，我相信有一个肯定会让大家咬牙切齿，那就是 `transaction too large`。
 
 我们来检索一下 PingCAP 官网文档，以下引用官网 FAQ：
 
@@ -21,27 +23,27 @@
 
 当然更具体的原因和解决办法在 asktug、简书等上面大家可以自行搜索，这里不作赘述。不过好消息是，4.0 版本重大改进，TiDB 终于支持大事务了，下面就带大家一起来探索和体验一下。
 
-## 实现原理
+### 6.3.2 大事务实现原理
 在 4.0 版本之前对于事务的严格限制的原因有很多，但影响最大的是这两点：
 
 * Prewrite 写下的锁会阻塞其他事务的读，大事务的 Prewrite 时间长，阻塞的时间也就长。
-* 大事务  Prewrite 时间长，可能会被其他事务终止导致提交失败。
+* 大事务 Prewrite 时间长，可能会被其他事务终止导致提交失败。
 
 4.0 大事务实际上是对事务机制的优化，适用于所有事务模型。
 
-### Min Commit Timestamp
+#### 6.3.2.1 Min Commit Timestamp
 
 以乐观事务为例，TiDB 支持的是 Snapshot Isolation，每个事务只能读到在事务 `start timestamp` 之前最新已提交的数据。在这种隔离级别下如果一个事务读到了锁需要等到锁被释放才能读到值，原因是有可能这个锁所属的事务已经获取了 `commit timestamp` 且比读到锁的事务 `start timestamp` 小，读事务应该读到写事务提交的新值。
 
 为了实现写不阻塞读，TiDB 在事务的 Primary Lock 里保存了 `minCommitTs`，即事务提交时满足隔离级别的最小的 `commit timestamp`。读事务读到锁时会使用自己的 `start timestamp` 来更新锁对应事务的 Primary Lock 里的该字段，从而将读写事务进行了强制排序，保证了读事务读不到写事务提交的值，从而实现了写不阻塞读。
 
-### Time to live(TTL)
+#### 6.3.2.2 Time to live(TTL)
 
 从前面乐观事务部分得知，Percolator 将事务的所有状态都保存在底层存储系统中，Prewrite 也会写下锁用于避免写写冲突，但如果事务在提交过程中 TiDB 挂掉会导致事务遗留下大量的锁阻塞其他事务的执行。TiDB 使用 TTL 来限制锁的存在时间，当锁超时时就会终止对应的事务并清理掉锁，从而当前事务可以继续执行。
 
 在 v4.0 之前，锁的 TTL 是根据事务大小计算得来的，无法反应事务真实的运行情况，有可能运行中事务的锁超时并被其他事务清理掉，最终导致事务提交失败。在 v4.0 中将会使用 `TTL Manager` 实时更新事务 Primary Lock 中的 TTL，从而保证运行中的事务不会被其他事务终止掉。
 
-## 实践
+### 6.3.3 实践
 大事务这个功能该如何使用呢？其实大事务是对事务机制的优化，唯一需要修改的是 TiDB 的配置文件，找到这一处配置：
 
 ```toml
@@ -70,7 +72,9 @@ mysql> select count(1) from t1;
 mysql> insert into t1 (name, age) select name, age from t1;
 ERROR 8004 (HY000): transaction too large, len:300001
 ```
+
 4.0 版本：
+
 ```sql
 MySQL [test]> select count(1) from t1;
 +----------+
@@ -99,12 +103,13 @@ MySQL [test]> insert into t2 select * from t1;
 Query OK, 524288 rows affected (17.61 sec)
 Records: 524288  Duplicates: 0  Warnings: 0
 ```
-在4.0 之前版本，如果执行几十万条数据的插入或复制操作，需要用特殊方法来才绕过事务限制，比如开启 `tidb_batch_insert` 等，但是这些操作是受限且不安全的，未来版本中会被逐渐废弃掉。而在新版本中，可以直接通过大事务支持的特性，来解决老版本中事务限制的问题。
 
-## 限制和改进
+在 4.0 之前版本，如果执行几十万条数据的插入或复制操作，需要用特殊方法来才绕过事务限制，比如开启 `tidb_batch_insert` 等，但是这些操作是受限且不安全的，未来版本中会被逐渐废弃掉。而在新版本中，可以直接通过大事务支持的特性，来解决老版本中事务限制的问题。
+
+### 6.3.4 限制和改进
 当然在新版本中这个功能依然会有一些受限，具体如下：
 
 * 单个 kv 大小限制 6MB 的限制还在，这是存储引擎层的限制，也就是依然不建议类似 `Blob` 等超长字段存放在 TiDB 中。
 * 目前单个事务大小限制在 10GB，超过 10GB 的事务依然会报错，不过 10GB 的事务已经能够覆盖大多数场景了。
-* 内部评估，支持 10GB 大小的事务，对于内存的占用可能会有 5~6 倍的放大，如果需要执行如此大的事务，需要提前做好内存的规划，避免对业务产生影响。
-* 目前内部测试，2~3G 的事务大小执行耗时大概在 10min，而 TiDB 内部的 GC 执行策略是 10min 执行一次，如果事务执行时间太长会遇到 gc_life_time 相关的报错，需要提前调整 gc 时间，具体见 [https://pingcap.com/docs-cn/stable/faq/tidb/#917-error-9006-hy000--gc-life-time-is-shorter-than-transaction-duration](https://pingcap.com/docs-cn/stable/faq/tidb/#917-error-9006-hy000--gc-life-time-is-shorter-than-transaction-duration)
+* 内部评估，支持 10GB 大小的事务，对于内存的占用可能会有 3~4 倍的放大，如果需要执行如此大的事务，需要提前做好内存的规划，避免对业务产生影响。
+* 目前内部测试，10G 的事务大小执行耗时大概在 10 分钟，而 TiDB 内部的 GC 执行策略是 10min 执行一次，如果事务执行时间太长会遇到 `gc_life_time` 相关的报错，需要提前调整 GC 时间，具体见 [https://pingcap.com/docs-cn/stable/faq/tidb/#917-error-9006-hy000--gc-life-time-is-shorter-than-transaction-duration](https://pingcap.com/docs-cn/stable/faq/tidb/#917-error-9006-hy000--gc-life-time-is-shorter-than-transaction-duration)

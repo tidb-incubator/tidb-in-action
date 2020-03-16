@@ -1,8 +1,8 @@
-# 执行计划概览
+# 1.1 执行计划概览
 
 阅读和理解执行计划对于 `SQL` 调优非常重要。本小结将向大家介绍如何查看 `SQL` 执行计划。
 
-## 使用 EXPLAIN 语句查看执行计划
+## 1.1.1 使用 EXPLAIN 语句查看执行计划
 
 执行计划由一系列的算子构成。和其他数据库一样，在 TiDB 中可通过 `EXPLAIN` 语句返回的结果查看某条 `SQL` 的执行计划。
 
@@ -15,7 +15,7 @@
 | task          | 当前这个算子属于什么 task。目前的执行计划分成为两种 task，一种叫 **root** task，在 tidb-server 上执行，一种叫 **cop** task，并行的在 TiKV 或者 TiFlash 上执行。当前的执行计划在 task 级别的拓扑关系是一个 root task 后面可以跟许多 cop task，root task 使用 cop task 的输出结果作为输入。cop task 中执行的也即是 TiDB 下推到 TiKV 或者 TiFlash 上的任务，每个 cop task 分散在 TiKV 或者 TiFlash 集群中，由多个进程共同执行。 |
 | operator info | 每个算子的详细信息。各个算子的 operator info 各有不同，可参考下面的示例解读。                   |
 
-## EXPLAIN ANALYZE 输出格式
+## 1.1.2 EXPLAIN ANALYZE 输出格式
 
 和 `EXPLAIN` 不同，`EXPLAIN ANALYZE` 会执行对应的 `SQL` 语句，记录其运行时信息，和执行计划一并返回出来，可以视为 `EXPLAIN` 语句的扩展。`EXPLAIN ANALYZE` 语句的返回结果中增加了 `actRows`, `execution info`,`memory`,`disk` 这几列信息：
 
@@ -42,7 +42,7 @@ mysql> explain analyze select * from t where a < 10;
 
 从上述例子中可以看出，优化器估算的 `estRows` 和实际执行中统计得到的 `actRows` 几乎是相等的，说明优化器估算误差很小。同时 `IndexLookUp_10` 算子在实际执行过程中使用了约 `9 KB` 的内存，该 `SQL` 在执行过程中，没有触发过任何算子的落盘操作。
 
-## 如何阅读算子的执行顺序
+## 1.1.3 如何阅读算子的执行顺序
 
 TiDB 的执行计划是一个树形结构，树中每个节点即是算子。考虑到每个算子内多线程并发执行的情况，在一条 `SQL` 执行的过程中，如果能够有一个手术刀把这棵树切开看看，大家可能会发现所有的算子都正在消耗 `CPU` 和内存处理数据，从这个角度来看，算子是没有执行顺序的。
 
@@ -88,7 +88,7 @@ TiDB(root@127.0.0.1:test) > explain select * from t t1 use index(idx_a) join t t
 
 要完成 `HashLeftJoin_22`，需要先执行 `TableReader_26(Build)` 再执行 `IndexLookUp_29(Probe)`。而在执行 `IndexLookUp_29(Probe)` 的时候，又需要先执行 `IndexFullScan_27(Build)` 再执行 `TableRowIDScan_28(Probe)`。所以从整条执行链路来看，`TableRowIDScan_28(Probe)` 是最后被唤起执行的。
 
-## 如何阅读扫表的执行计划
+## 1.1.4 如何阅读扫表的执行计划
 
 真正执行扫表（读盘或者读 TiKV Block Cache）操作的算子有如下几类：
 
@@ -160,7 +160,7 @@ mysql> explain select * from t use index(idx_a, idx_b) where a > 1 or b > 1;
 
 `IndexMerge` 使得数据库在扫描表数据时可以使用多个索引。这里 `IndexMerge_16` 算子有三个孩子结点，其中 `IndexRangeScan_13` 和 `IndexRangeScan_14` 根据范围扫描得到符合条件的所有 `RowID`，再由 `TableRowIDScan_15` 算子根据这些 `RowID` 精确的读取所有满足条件的数据。
 
-## 如何阅读聚合的执行计划
+## 1.1.5 如何阅读聚合的执行计划
 
 **Hash Aggregate 示例：**
 
@@ -200,7 +200,7 @@ TiDB(root@127.0.0.1:test) > explain select /*+ STREAM_AGG() */ count(*) from t;
 
 和 `Hash Aggregate` 类似，一般而言 TiDB 的 `Stream Aggregate` 也会分成两个阶段执行，一个在 TiKV/TiFlash 的 `Coprocessor` 上，计算聚合函数的中间结果。另一个在 TiDB 层，汇总所有 `Coprocessor` Task 的中间结果后，得到最终结果。
 
-## 如何阅读 Join 的执行计划
+## 1.1.6 如何阅读 Join 的执行计划
 
 TiDB 的 Join 算法包括如下几类：
 

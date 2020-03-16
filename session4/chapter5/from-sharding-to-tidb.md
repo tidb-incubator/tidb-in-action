@@ -1,6 +1,6 @@
 # 5.1.2 DM 同步分库分表 MySQL 到 TiDB 的实践
 
-## DM 分库分表安装部署实战
+## 5.1.2.1 DM 分库分表安装部署实战
 
 本实战模拟企业生产环境阿里云 DRDS 中间件对业务表进行分库分表后，这边使用 DM 工具将线上分库分表数据同步至 TiDB 中：
 1. 解决跨业务跨库的数据查询分析
@@ -11,22 +11,22 @@
 
 此外 dm 在 loader 恢复时支持断点操作，支持幂等 binlog 重做，不用担心恢复中意外而前功尽弃。
 
-### 环境说明
+### 1. 环境说明
 
 实验环境宿主机的用户名、密码与数据库的用户名、密码一致。
 
-| 主机 IP| 操作系统| 应用部署|说明|帐号密码| 
+| 主机 IP| 操作系统| 应用部署|说明|帐号密码|
 |----|----|----|----|----|
-| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3306 端口   | root/password   | 
-| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3307 端口   | root/password   | 
-| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3308 端口   | root/password   | 
-| 192.168.128.132   | centos7.3 x86_64   | dm-master/dmctl   | 中控机   | root/password   | 
-| 192.168.128.133   | centos7.3 x86_64   | dm-worker   | dm-worker   | root/password   | 
-| 192.168.206.28   | centos7.3 x86_64   | TiDB 库   | 4000 端口   | root/password   | 
+| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3306 端口   | root/password   |
+| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3307 端口   | root/password   |
+| 192.168.128.131   | centos7.3 x86_64   | MySQL5.7   | 3308 端口   | root/password   |
+| 192.168.128.132   | centos7.3 x86_64   | dm-master/dmctl   | 中控机   | root/password   |
+| 192.168.128.133   | centos7.3 x86_64   | dm-worker   | dm-worker   | root/password   |
+| 192.168.206.28   | centos7.3 x86_64   | TiDB 库   | 4000 端口   | root/password   |
 
-### 准备工作
+### 2. 准备工作
 
-**第一步：使用 root 权限登录中控机 132 上并安装依赖包**
+**第一步：使用 root 账号登录中控机 192.168.128.132 上并安装依赖包**
 
 ```
 [tidb@dmmaster ~]# yum -y install epel-release git curl sshpass 
@@ -41,7 +41,7 @@
 ```
 2、为 tidb 用户设置密码
 ```
-[tidb@dmmaster ~]# echo "password"|passwd --stdin tidb
+[tidb@dmmaster ~]# echo "password" | passwd --stdin tidb
 ```
 3、为 tidb 用户设置免密使用 sudo
 ```
@@ -124,7 +124,7 @@ root@localhost >grant Reload,Replication slave, Replication client,select on *.*
 [tidb@dmmaster bin]$ dmctl -encrypt tidb@2020
 BXTTVvKeWhXgAefaFRNoN0BS4XjZ85uZByE=
 ```
-### 部署 dm-worker
+### 3. 部署 dm-worker
 **第一步：编写 inventory.ini 文件**
 
 此处我们主要定义 dm-master 和 dm-worker，本章采取单台部署多台 dm-worker。
@@ -205,17 +205,17 @@ localhost      : ok=4    changed=0    unreachable=0    failed=0
 prometheus     : ok=13   changed=4    unreachable=0    failed=0 
 #出现以上信息表示 dm 启动成功，此时已经开始同步上游 binlog 至 dm 机器中。
 ```
-### 配置启动 task
+### 4. 配置 & 启动 task
 **上游数据库结构合并至下游 TiDB 说明**
 
-|上游分库|上游分表|下游合并库名|下游合并表名| 
+|上游分库|上游分表|下游合并库名|下游合并表名|
 |----|----|----|----|
-| shard_db01   | shard_tb01   | merge_db   | merge_tb   | 
-| shard_db02   | shard_tb02   |    |    | 
-| shard_db03   | shard_tb03   |    |    | 
-| shard_db04   | shard_tb04   |    |    | 
-| shard_db05   | shard_tb05   |    |    | 
-| shard_db06   | shard_tb06   |    |    | 
+| shard_db01   | shard_tb01   | merge_db   | merge_tb   |
+| shard_db02   | shard_tb02   |    |    |
+| shard_db03   | shard_tb03   |    |    |
+| shard_db04   | shard_tb04   |    |    |
+| shard_db05   | shard_tb05   |    |    |
+| shard_db06   | shard_tb06   |    |    |
 
 **上游数据库准备**
 
@@ -231,28 +231,28 @@ CREATE TABLE shard_tb01~06 (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分库分表';
 INSERT INTO shard_db01.shard_tb01 
 (uid,uname,gender,shard,mobile) VALUES
-('10001','tb01001','0','shard_db01_tb01','13678189817'),('10002','tb01002','1','shard_db01_tb01','13675222817');
+('10001','tb01001','0','shard_db01_tb01','136******17'),('10002','tb01002','1','shard_db01_tb01','136******17');
 INSERT INTO shard_db02.shard_tb02 
-(uid,uname,gender,shard,mobile) VALUES ('20001','tb02001','1','shard_db02_tb02','13675222333'), ('20002','tb02002','0','shard_db02_tb02','13985222363');
+(uid,uname,gender,shard,mobile) VALUES ('20001','tb02001','1','shard_db02_tb02','136******33'), ('20002','tb02002','0','shard_db02_tb02','139******63');
 INSERT INTO shard_db03.shard_tb03 
-(uid,uname,gender,shard,mobile) VALUES ('30001','tb03001','0','shard_db03_tb03','13585392373'),
-('30002','tb03002','0','shard_db03_tb03','13913150046');
+(uid,uname,gender,shard,mobile) VALUES ('30001','tb03001','0','shard_db03_tb03','135******73'),
+('30002','tb03002','0','shard_db03_tb03','139******46');
 
 INSERT INTO shard_db04.shard_tb04 
-(uid,uname,gender,shard,mobile) VALUES ('40001','tb04001','0','shard_db04_tb04','13713850891'),('40002','tb04002','1','shard_db04_tb04','13813856191');
+(uid,uname,gender,shard,mobile) VALUES ('40001','tb04001','0','shard_db04_tb04','137******91'),('40002','tb04002','1','shard_db04_tb04','138******91');
 INSERT INTO shard_db05.shard_tb05 
-(uid,uname,gender,shard,mobile) VALUES ('50001','tb05001','1','shard_db05_tb05','15813876696'),('50002','tb05002','0','shard_db05_tb05','18813576992');
+(uid,uname,gender,shard,mobile) VALUES ('50001','tb05001','1','shard_db05_tb05','158******96'),('50002','tb05002','0','shard_db05_tb05','188******92');
 INSERT INTO shard_db06.shard_tb06 
-(uid,uname,gender,shard,mobile) VALUES ('60001','tb06001','1','shard_db06_tb06','17813598198'),('60002','tb06002','1','shard_db06_tb06','17513788131');
+(uid,uname,gender,shard,mobile) VALUES ('60001','tb06001','1','shard_db06_tb06','178******98'),('60002','tb06002','1','shard_db06_tb06','175******31');
 ```
 
 **合库合表 task 的 yaml 文件**
 
 ```
 [tidb@tidb-dm-4-0-95 task]$ cat shardmysql_to_tidb.yaml
-name: "shard_to_tidb"   #task 名称，必须全局唯一
-is-sharding: true    #上游是不是进行了分库分表库
-task-mode: "all"    #迁移同步方式 full-全量、incremental-增量、all-全量+增加
+name: "shard_to_tidb"  #task 名称，必须全局唯一
+is-sharding: true      #上游是不是进行了分库分表库
+task-mode: "all"       #迁移同步方式 full-全量、incremental-增量、all-全量+增加
 meta-schema: "tidb_meta"   #定义下游保留迁移点位信息库名称
 remove-meta: false
 target-database:                                   
@@ -307,7 +307,7 @@ routes:
     target-schema: "merge_db"
     target-table:  "merge_tb"
     
-#由于上游数据库使用了自增主键，此处我们需要定义下游主键重算处理
+#由于上游数据库使用了自增主键，此处我们需要定义下游主键重算处理，该功能需要谨慎使用
 #特别注意上游的自增主键不能有任何业务关系
 column-mappings:
   cm001:
@@ -347,7 +347,7 @@ mydumpers:
     threads:
     chunk-filesize: 64
     skip-tz-utc: true
-    extra-args: "  --no-locks "
+    extra-args: " --no-locks "
 loaders:
   global:
     pool-size: 64
@@ -396,18 +396,18 @@ shard_db02.shard_tb02.sql
 ```
 **删除备份的数据，必须保留表库结构信息否则会出错**
 ```
-[root@dmworker dumped_data.shard_to_tidb]# ls|grep -v schema|xargs rm -f
+[root@dmworker dumped_data.shard_to_tidb]# ls | grep -v schema | xargs rm -f
 [root@dmworker dumped_data.shard_to_tidb]# ls
 shard_db01.shard_tb01-schema.sql    shard_db02.shard_tb02-schema.sql 
 shard_db02-schema-create.sql
 ```
 **查看上游分库分表数据已迁移到下游 merge_db 库 merge_tb 表**
 
-![图片](https://uploader.shimo.im/f/XFHFGbCmJRw2EgKu.png!thumbnail)
+![图片](/res/session4/chapter5/from-sharding-to-tidb/from-sharding-tidb-1.png)
 
 
-## DM 常用管理命令
-### dm-worker 部署管理
+## 5.1.2.2 DM 常用管理命令
+### 1. dm-worker 部署管理
 **部署命令 deploy.yml**
 
 ```
@@ -431,8 +431,8 @@ shard_db02-schema-create.sql
 [tidb@dmmaster dm-ansible]$ ansible-playbook rolling_update.yml
 *此三个yml命令也可以配合-l、--tags一起使用。
 ```
-### dm-worker task 管理
-**管理 Tas k需要使用 dmctl 连接上中控机，输入 help 查看所有命令信息**
+### 2. dm-worker task 管理
+**管理 task 需要使用 dmctl 连接上中控机，输入 help 查看所有命令信息**
 
 ```
 #连接中控
@@ -472,7 +472,7 @@ shard_db02-schema-create.sql
 #查看 shard_to_tidb 任务当前状态
 »query-error shard_to_tidb
 ```
-**skip_sql 跳过正在执行的sql语句**
+**skip_sql 跳过正在执行的 SQL 语句**
 
 ```
 #查看出错的 binlog 位置(failedBinlogPosition)，确定是否可以路过错误
