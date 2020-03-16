@@ -691,7 +691,7 @@
                 <a href="tiops-intro.html">
             
                     
-                    1.1.4 TiOps 简介
+                    1.1.3 TiOps 简介
             
                 </a>
             
@@ -704,7 +704,7 @@
                 <a href="tiops-deployment.html">
             
                     
-                    1.1.5 TiOps 部署生产环境集群
+                    1.1.4 TiOps 部署生产环境集群
             
                 </a>
             
@@ -2821,8 +2821,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x7EF4;&#x62A4;-tidb-&#x96C6;&#x7FA4;&#x6240;&#x5728;&#x7684;-kubernetes-&#x8282;&#x70B9;">&#x7EF4;&#x62A4; TiDB &#x96C6;&#x7FA4;&#x6240;&#x5728;&#x7684; Kubernetes &#x8282;&#x70B9;</h1>
-<h2 id="tidb-&#x4E0E;-pd-&#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;">TiDB &#x4E0E; PD &#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;</h2>
+                                <h2 id="12325-&#x7EF4;&#x62A4;-tidb-&#x96C6;&#x7FA4;&#x6240;&#x5728;&#x7684;-kubernetes-&#x8282;&#x70B9;">1.2.3.2.5 &#x7EF4;&#x62A4; TiDB &#x96C6;&#x7FA4;&#x6240;&#x5728;&#x7684; Kubernetes &#x8282;&#x70B9;</h2>
+<h2 id="1-tidb-&#x4E0E;-pd-&#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;">1. TiDB &#x4E0E; PD &#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;</h2>
 <p>&#x7531;&#x4E8E;&#x8282;&#x70B9;&#x7EF4;&#x62A4;&#x9700;&#x8981;&#x81F3;&#x5C11; 4 &#x53F0;&#x670D;&#x52A1;&#x5668;&#x624D;&#x80FD;&#x64CD;&#x4F5C;&#x5B8C;&#x6210;&#xFF0C;&#x672C;&#x8282;&#x57FA;&#x4E8E; kind &#x6A21;&#x62DF; 5 &#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x8BB2;&#x89E3;&#x7B2C; 5 &#x4E2A; node &#x670D;&#x52A1;&#x5668;&#x6545;&#x969C;&#x65F6;&#x7684;&#x7EF4;&#x62A4;&#x65B9;&#x6CD5;&#x3002;</p>
 <p>PD &#x548C; TiDB &#x5B9E;&#x4F8B;&#x7684;&#x8FC1;&#x79FB;&#x8F83;&#x5FEB;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x53D6;&#x4E3B;&#x52A8;&#x9A71;&#x9010;&#x5B9E;&#x4F8B;&#x5230;&#x5176;&#x5B83;&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x7B56;&#x7565;&#x8FDB;&#x884C;&#x8282;&#x70B9;&#x7EF4;&#x62A4;&#xFF1A;</p>
 <pre><code>
@@ -2868,7 +2868,7 @@ test-tikv-2                       1/1     Running   0          20m
 <pre><code>
 # kubectl delete node kind-worker5
 node &quot;kind-worker5&quot; deleted
-</code></pre><h2 id="tikv-&#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;">TiKV &#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;</h2>
+</code></pre><h2 id="2-tikv-&#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;">2. TiKV &#x6240;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;</h2>
 <p>&#x672C;&#x8282;&#x8BB2;&#x89E3; TiKV node &#x9700;&#x8981;&#x4E0B;&#x7EBF;&#x7EF4;&#x62A4;&#x7684;&#x573A;&#x666F;&#x3002;</p>
 <p>&#x6CE8;&#x610F;&#xFF1A; &#x81F3;&#x5C11;&#x8981;&#x786E;&#x4FDD;&#x6709; 4 &#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x624D;&#x80FD;&#x64CD;&#x4F5C;&#x6210;&#x529F;&#xFF08;&#x9ED8;&#x8BA4;&#x526F;&#x672C;&#x6570;&#x4E3A;3&#xFF09;&#x3002;</p>
 <p>&#x4F7F;&#x7528; <code>kubectl cordon</code> &#x547D;&#x4EE4;&#x9632;&#x6B62;&#x65B0;&#x7684; Pod &#x8C03;&#x5EA6;&#x5230;&#x5F85;&#x7EF4;&#x62A4;&#x8282;&#x70B9;&#x4E0A;&#xFF1A;</p>
@@ -2971,7 +2971,7 @@ node &quot;kind-worker4&quot; deleted
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"next":{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]},"previous":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-node.md","mtime":"2020-03-16T08:58:40.379Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T08:59:27.343Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"next":{"title":"1.2.3.2.6 删除 TiDB 集群","level":"3.1.2.3.2.6","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-delete.md","ref":"session2/chapter1/tidb-operator-deployment-private-delete.md","articles":[]},"previous":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","ref":"session2/chapter1/tidb-operator-deployment-private-tidb.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-node.md","mtime":"2020-03-16T16:12:27.228Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T16:13:19.062Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

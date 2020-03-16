@@ -691,7 +691,7 @@
                 <a href="../../session2/chapter1/tiops-intro.html">
             
                     
-                    1.1.4 TiOps 简介
+                    1.1.3 TiOps 简介
             
                 </a>
             
@@ -704,7 +704,7 @@
                 <a href="../../session2/chapter1/tiops-deployment.html">
             
                     
-                    1.1.5 TiOps 部署生产环境集群
+                    1.1.4 TiOps 部署生产环境集群
             
                 </a>
             
@@ -2824,7 +2824,7 @@
                                 <h1 id="35-sql-&#x6162;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;">3.5 SQL &#x6162;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;</h1>
 <p>TiDB &#x4F1A;&#x5C06;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x8D85;&#x8FC7; slow-threshold&#xFF08;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; 300 &#x6BEB;&#x79D2;&#xFF09;&#x7684;&#x8BED;&#x53E5;&#x8BB0;&#x5F55;&#x5230; slow-query-file&#xFF08;&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;&quot;tidb-slow.log&quot;&#xFF09;&#x65E5;&#x5FD7;&#x4E2D;&#xFF0C;&#x7528;&#x4E8E;&#x5E2E;&#x52A9;&#x5B9A;&#x4F4D;&#x6162;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#xFF0C;&#x5206;&#x6790;&#x548C;&#x89E3;&#x51B3; SQL &#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x95EE;&#x9898;&#x3002;</p>
 <p>TiDB &#x9ED8;&#x8BA4;&#x542F;&#x7528;&#x6162;&#x67E5;&#x8BE2;&#x65E5;&#x5FD7;&#xFF0C;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x914D;&#x7F6E; enable-slow-log &#x6765;&#x542F;&#x7528;&#x6216;&#x7981;&#x7528;&#x5B83;&#x3002;</p>
-<h2 id="&#x65E5;&#x5FD7;&#x793A;&#x4F8B;">&#x65E5;&#x5FD7;&#x793A;&#x4F8B;</h2>
+<h2 id="1-&#x65E5;&#x5FD7;&#x793A;&#x4F8B;">1. &#x65E5;&#x5FD7;&#x793A;&#x4F8B;</h2>
 <pre><code># Time: 2019-08-14T09:26:59.487776265+08:00
 # Txn_start_ts: 410450924122144769
 # User: root@127.0.0.1
@@ -2845,12 +2845,12 @@
 # Plan_digest: e5f9d9746c756438a13c75ba3eedf601eecf555cdb7ad327d7092bdd041a83e7
 # Plan: tidb_decode_plan(&apos;ZJAwCTMyXzcJMAkyMAlkYXRhOlRhYmxlU2Nhbl82CjEJMTBfNgkxAR0AdAEY1Dp0LCByYW5nZTpbLWluZiwraW5mXSwga2VlcCBvcmRlcjpmYWxzZSwgc3RhdHM6cHNldWRvCg==&apos;)
 insert into t select * from t;
-</code></pre><h2 id="&#x5B57;&#x6BB5;&#x542B;&#x4E49;&#x8BF4;&#x660E;">&#x5B57;&#x6BB5;&#x542B;&#x4E49;&#x8BF4;&#x660E;</h2>
+</code></pre><h2 id="2-&#x5B57;&#x6BB5;&#x542B;&#x4E49;&#x8BF4;&#x660E;">2. &#x5B57;&#x6BB5;&#x542B;&#x4E49;&#x8BF4;&#x660E;</h2>
 <blockquote>
 <p>&#x6CE8;&#x610F;&#xFF1A;
 &#x6162;&#x67E5;&#x8BE2;&#x65E5;&#x5FD7;&#x4E2D;&#x6240;&#x6709;&#x65F6;&#x95F4;&#x76F8;&#x5173;&#x5B57;&#x6BB5;&#x7684;&#x5355;&#x4F4D;&#x90FD;&#x662F; &#x201C;&#x79D2;&#x201D;</p>
 </blockquote>
-<p>Slow Query &#x57FA;&#x7840;&#x4FE1;&#x606F;&#xFF1A;</p>
+<p>(1) Slow Query &#x57FA;&#x7840;&#x4FE1;&#x606F;&#xFF1A;</p>
 <ul>
 <li>Time&#xFF1A;&#x8868;&#x793A;&#x65E5;&#x5FD7;&#x6253;&#x5370;&#x65F6;&#x95F4;&#x3002;</li>
 <li>Query_time&#xFF1A;&#x8868;&#x793A;&#x6267;&#x884C;&#x8FD9;&#x4E2A;&#x8BED;&#x53E5;&#x82B1;&#x8D39;&#x7684;&#x65F6;&#x95F4;&#x3002;</li>
@@ -2867,7 +2867,7 @@ insert into t select * from t;
 <li>Plan&#xFF1A;&#x8868;&#x793A;&#x8BED;&#x53E5;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#xFF0C;&#x7528; select tidb_decode_plan(&apos;xxx...&apos;) SQL &#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x89E3;&#x6790;&#x51FA;&#x5177;&#x4F53;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x3002;</li>
 <li>Query&#xFF1A;&#x8868;&#x793A; SQL &#x8BED;&#x53E5;&#x3002;&#x6162;&#x65E5;&#x5FD7;&#x91CC;&#x9762;&#x4E0D;&#x4F1A;&#x6253;&#x5370; Query &#x5B57;&#x6BB5;&#x540D;&#xFF0C;&#x4F46;&#x6620;&#x5C04;&#x5230;&#x5185;&#x5B58;&#x8868;&#x540E;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x5B57;&#x6BB5;&#x53EB; Query&#x3002;</li>
 </ul>
-<p>&#x548C;&#x4E8B;&#x52A1;&#x6267;&#x884C;&#x76F8;&#x5173;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
+<p>(2) &#x548C;&#x4E8B;&#x52A1;&#x6267;&#x884C;&#x76F8;&#x5173;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
 <ul>
 <li>Prewrite_time&#xFF1A;&#x8868;&#x793A;&#x4E8B;&#x52A1;&#x4E24;&#x9636;&#x6BB5;&#x63D0;&#x4EA4;&#x4E2D;&#x7B2C;&#x4E00;&#x9636;&#x6BB5;&#xFF08;prewrite &#x9636;&#x6BB5;&#xFF09;&#x7684;&#x8017;&#x65F6;&#x3002;</li>
 <li>Commit_time&#xFF1A;&#x8868;&#x793A;&#x4E8B;&#x52A1;&#x4E24;&#x9636;&#x6BB5;&#x63D0;&#x4EA4;&#x4E2D;&#x7B2C;&#x4E8C;&#x9636;&#x6BB5;&#xFF08;commit &#x9636;&#x6BB5;&#xFF09;&#x7684;&#x8017;&#x65F6;&#x3002;</li>
@@ -2877,17 +2877,17 @@ insert into t select * from t;
 <li>Write_size&#xFF1A;&#x8868;&#x793A;&#x4E8B;&#x52A1;&#x63D0;&#x4EA4;&#x65F6;&#x5199; key &#x548C; value &#x7684;&#x603B;&#x5927;&#x5C0F;&#x3002;</li>
 <li>Prewrite_region&#xFF1A;&#x8868;&#x793A;&#x4E8B;&#x52A1;&#x4E24;&#x9636;&#x6BB5;&#x63D0;&#x4EA4;&#x4E2D;&#x7B2C;&#x4E00;&#x9636;&#x6BB5;&#xFF08;prewrite &#x9636;&#x6BB5;&#xFF09;&#x6D89;&#x53CA;&#x7684; TiKV Region &#x6570;&#x91CF;&#x3002;&#x6BCF;&#x4E2A; Region &#x4F1A;&#x89E6;&#x53D1;&#x4E00;&#x6B21;&#x8FDC;&#x7A0B;&#x8FC7;&#x7A0B;&#x8C03;&#x7528;&#x3002;</li>
 </ul>
-<p>&#x548C;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x76F8;&#x5173;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
+<p>(3) &#x548C;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x76F8;&#x5173;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
 <ul>
 <li>Memory_max&#xFF1A;&#x8868;&#x793A;&#x6267;&#x884C;&#x671F;&#x95F4; TiDB &#x4F7F;&#x7528;&#x7684;&#x6700;&#x5927;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#x4E3A; byte&#x3002;</li>
 </ul>
-<p>&#x548C; SQL &#x6267;&#x884C;&#x7684;&#x7528;&#x6237;&#x76F8;&#x5173;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
+<p>(4) &#x548C; SQL &#x6267;&#x884C;&#x7684;&#x7528;&#x6237;&#x76F8;&#x5173;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
 <ul>
 <li>User&#xFF1A;&#x8868;&#x793A;&#x6267;&#x884C;&#x8BED;&#x53E5;&#x7684;&#x7528;&#x6237;&#x540D;&#x3002;</li>
 <li>Conn_ID&#xFF1A;&#x8868;&#x793A;&#x7528;&#x6237;&#x7684;&#x8FDE;&#x63A5; ID&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x7C7B;&#x4F3C; con:3 &#x7684;&#x5173;&#x952E;&#x5B57;&#x5728; TiDB &#x65E5;&#x5FD7;&#x4E2D;&#x67E5;&#x627E;&#x8BE5;&#x94FE;&#x63A5;&#x76F8;&#x5173;&#x7684;&#x5176;&#x4ED6;&#x65E5;&#x5FD7;&#x3002;</li>
 <li>DB&#xFF1A;&#x8868;&#x793A;&#x6267;&#x884C;&#x8BED;&#x53E5;&#x65F6;&#x4F7F;&#x7528;&#x7684; database&#x3002;</li>
 </ul>
-<p>&#x548C; TiKV Coprocessor Task &#x76F8;&#x5173;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
+<p>(5) &#x548C; TiKV Coprocessor Task &#x76F8;&#x5173;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
 <ul>
 <li>Process_time&#xFF1A;&#x6267;&#x884C; SQL &#x5728; TiKV &#x7684;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x4E4B;&#x548C;&#xFF0C;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x4F1A;&#x5E76;&#x884C;&#x7684;&#x53D1;&#x5230; TiKV &#x6267;&#x884C;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x53EF;&#x80FD;&#x4F1A;&#x8D85;&#x8FC7; Query_time&#x3002;</li>
 <li>Wait_time&#xFF1A;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x8BED;&#x53E5;&#x5728; TiKV &#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x4E4B;&#x548C;&#xFF0C;&#x56E0;&#x4E3A; TiKV &#x7684; Coprocessor &#x7EBF;&#x7A0B;&#x6570;&#x662F;&#x6709;&#x9650;&#x7684;&#xFF0C;&#x5F53;&#x6240;&#x6709;&#x7684; Coprocessor &#x7EBF;&#x7A0B;&#x90FD;&#x5728;&#x5DE5;&#x4F5C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BF7;&#x6C42;&#x4F1A;&#x6392;&#x961F;&#xFF1B;&#x5F53;&#x961F;&#x5217;&#x4E2D;&#x6709;&#x67D0;&#x4E9B;&#x8BF7;&#x6C42;&#x8017;&#x65F6;&#x5F88;&#x957F;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x540E;&#x9762;&#x7684;&#x8BF7;&#x6C42;&#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x90FD;&#x4F1A;&#x589E;&#x52A0;&#x3002;</li>
@@ -2903,7 +2903,7 @@ insert into t select * from t;
 <li>Cop_wait_max&#xFF1A;cop-task &#x7684;&#x6700;&#x5927;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x3002;</li>
 <li>Cop_wait_addr&#xFF1A;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x6700;&#x957F;&#x7684; cop-task &#x6240;&#x5728;&#x5730;&#x5740;&#x3002;</li>
 </ul>
-<h2 id="&#x6162;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;">&#x6162;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;</h2>
+<h2 id="3-&#x6162;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;">3. &#x6162;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;</h2>
 <p>&#x901A;&#x8FC7;&#x67E5;&#x8BE2; INFORMATION_SCHEMA.SLOW_QUERY &#x8868;&#x6765;&#x67E5;&#x8BE2; <strong>&#x5F53;&#x524D; TiDB &#x8282;&#x70B9;</strong> &#x7684;&#x6162;&#x67E5;&#x8BE2;&#x65E5;&#x5FD7;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x8868;&#x4E2D;&#x5217;&#x540D;&#x548C;&#x6162;&#x65E5;&#x5FD7;&#x4E2D;&#x5B57;&#x6BB5;&#x540D;&#x4E00;&#x4E00;&#x5BF9;&#x5E94;&#xFF0C;&#x8868;&#x7ED3;&#x6784;&#x53EF;&#x67E5;&#x770B; Information Schema &#x4E2D;&#x5173;&#x4E8E; SLOW_QUERY &#x8868;&#x7684;&#x4ECB;&#x7ECD;&#x3002;</p>
 <p>TiDB 4.0 &#x4E2D;&#x65B0;&#x589E;&#x4E86; CLUSTER_SLOW_QUERY &#x7CFB;&#x7EDF;&#x8868;&#xFF0C;&#x7528;&#x6765;&#x67E5;&#x8BE2; <strong>&#x6240;&#x6709; TiDB &#x8282;&#x70B9;</strong> &#x7684; SLOW_QUERY &#x6570;&#x636E;&#xFF0C;&#x4F7F;&#x7528;&#x4E0A;&#x548C; SLOW_QUERY &#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
 <p>TiDB 4.0 &#x4E2D;&#x7684; SLOW_QUERY &#x5DF2;&#x7ECF;&#x652F;&#x6301;&#x67E5;&#x8BE2;&#x4EFB;&#x610F;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6162;&#x65E5;&#x5FD7;&#xFF0C;&#x5373;&#x652F;&#x6301;&#x67E5;&#x8BE2;&#x5DF2;&#x7ECF;&#x88AB; rotate &#x7684;&#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x3002;&#x7528;&#x6237;&#x67E5;&#x8BE2;&#x65F6;&#x53EA;&#x9700;&#x8981;&#x6307;&#x5B9A; TIME &#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5373;&#x53EF;&#x5B9A;&#x4F4D;&#x9700;&#x8981;&#x89E3;&#x6790;&#x7684;&#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x67E5;&#x8BE2;&#x4E0D;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#xFF0C;&#x5219;&#x548C; 4.0 &#x7248;&#x672C;&#x4E4B;&#x524D;&#x884C;&#x4E3A;&#x4E00;&#x81F4;&#xFF0C;&#x53EA;&#x89E3;&#x6790;&#x5F53;&#x524D;&#x7684;&#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x3002;</p>
@@ -2911,8 +2911,8 @@ insert into t select * from t;
 <p>&#x6CE8;&#x610F;&#xFF1A;
 &#x6BCF;&#x6B21;&#x67E5;&#x8BE2; SLOW_QUERY &#x8868;&#x65F6;&#xFF0C;TiDB &#x90FD;&#x4F1A;&#x53BB;&#x8BFB;&#x53D6;&#x548C;&#x89E3;&#x6790;&#x4E00;&#x6B21;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x6162;&#x67E5;&#x8BE2;&#x65E5;&#x5FD7;&#x3002;</p>
 </blockquote>
-<h2 id="&#x67E5;&#x8BE2;-slowquery-&#x793A;&#x4F8B;">&#x67E5;&#x8BE2; SLOW_QUERY &#x793A;&#x4F8B;</h2>
-<h3 id="&#x641C;&#x7D22;-top-n-&#x7684;&#x6162;&#x67E5;&#x8BE2;">&#x641C;&#x7D22; Top N &#x7684;&#x6162;&#x67E5;&#x8BE2;</h3>
+<h2 id="4-&#x67E5;&#x8BE2;-slowquery-&#x793A;&#x4F8B;">4. &#x67E5;&#x8BE2; SLOW_QUERY &#x793A;&#x4F8B;</h2>
+<h3 id="1-&#x641C;&#x7D22;-top-n-&#x7684;&#x6162;&#x67E5;&#x8BE2;">(1) &#x641C;&#x7D22; Top N &#x7684;&#x6162;&#x67E5;&#x8BE2;</h3>
 <p>&#x67E5;&#x8BE2; Top 2 &#x7684;&#x6162;&#x67E5;&#x8BE2;&#x3002;is_internal=false &#x8868;&#x793A;&#x6392;&#x9664; TiDB &#x5185;&#x90E8;&#x7684;&#x6162;&#x67E5;&#x8BE2;&#xFF1A;</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">select</span> query_time, <span class="hljs-keyword">query</span>
 <span class="hljs-keyword">from</span> information_schema.slow_query
@@ -2927,7 +2927,7 @@ insert into t select * from t;
 | 12.77583857  | select * from t_slim, t_wide where t_slim.c0=t_wide.c0;          |
 |  0.734982725 | select t0.c0, t1.c1 from t_slim t0, t_wide t1 where t0.c0=t1.c0; |
 +--------------+------------------------------------------------------------------+
-</code></pre><h3 id="&#x641C;&#x7D22;&#x67D0;&#x4E2A;&#x7528;&#x6237;&#x7684;-top-n-&#x6162;&#x67E5;&#x8BE2;">&#x641C;&#x7D22;&#x67D0;&#x4E2A;&#x7528;&#x6237;&#x7684; Top N &#x6162;&#x67E5;&#x8BE2;</h3>
+</code></pre><h3 id="2-&#x641C;&#x7D22;&#x67D0;&#x4E2A;&#x7528;&#x6237;&#x7684;-top-n-&#x6162;&#x67E5;&#x8BE2;">(2) &#x641C;&#x7D22;&#x67D0;&#x4E2A;&#x7528;&#x6237;&#x7684; Top N &#x6162;&#x67E5;&#x8BE2;</h3>
 <p>&#x4E0B;&#x9762;&#x4F8B;&#x5B50;&#x4E2D;&#x641C;&#x7D22; test &#x7528;&#x6237;&#x6267;&#x884C;&#x7684;&#x6162;&#x67E5;&#x8BE2; SQL&#xFF0C;&#x4E14;&#x6309;&#x6267;&#x884C;&#x6D88;&#x8017;&#x65F6;&#x95F4;&#x9006;&#x5E8F;&#x6392;&#x5E8F;&#x663E;&#x5F0F;&#x524D; 2 &#x6761;&#xFF1A;</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">select</span> query_time, <span class="hljs-keyword">query</span>, <span class="hljs-keyword">user</span>
 <span class="hljs-keyword">from</span> information_schema.cluster_slow_query
@@ -2942,7 +2942,7 @@ insert into t select * from t;
 +-------------+------------------------------------------------------------------+----------------+
 | 0.676408014 | select t0.c0, t1.c1 from t_slim t0, t_wide t1 where t0.c0=t1.c1; | test           |
 +-------------+------------------------------------------------------------------+----------------+
-</code></pre><h3 id="&#x6839;&#x636E;-sql-&#x6307;&#x7EB9;&#x641C;&#x7D22;&#x540C;&#x7C7B;&#x6162;&#x67E5;&#x8BE2;">&#x6839;&#x636E; SQL &#x6307;&#x7EB9;&#x641C;&#x7D22;&#x540C;&#x7C7B;&#x6162;&#x67E5;&#x8BE2;</h3>
+</code></pre><h3 id="3-&#x6839;&#x636E;-sql-&#x6307;&#x7EB9;&#x641C;&#x7D22;&#x540C;&#x7C7B;&#x6162;&#x67E5;&#x8BE2;">(3) &#x6839;&#x636E; SQL &#x6307;&#x7EB9;&#x641C;&#x7D22;&#x540C;&#x7C7B;&#x6162;&#x67E5;&#x8BE2;</h3>
 <p>&#x5728;&#x5F97;&#x5230; Top N &#x7684;&#x6162;&#x67E5;&#x8BE2; SQL &#x540E;&#xFF0C;&#x53EF;&#x901A;&#x8FC7; SQL &#x6307;&#x7EB9;&#x7EE7;&#x7EED;&#x641C;&#x7D22;&#x540C;&#x7C7B;&#x6162;&#x67E5;&#x8BE2; SQL&#x3002;
 &#x5148;&#x83B7;&#x53D6; Top N &#x7684;&#x6162;&#x67E5;&#x8BE2;&#x548C;&#x5BF9;&#x5E94;&#x7684; SQL &#x6307;&#x7EB9;&#xFF1A;</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">select</span> query_time, <span class="hljs-keyword">query</span>, digest
@@ -2969,7 +2969,7 @@ insert into t select * from t;
 | select * from t1 where a=1; | 0.302558006 |
 | select * from t1 where a=2; | 0.401313532 |
 +-----------------------------+-------------+
-</code></pre><h3 id="&#x641C;&#x7D22;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x4E3A;-pseudo-&#x7684;&#x6162;&#x67E5;&#x8BE2;-sql-&#x8BED;&#x53E5;">&#x641C;&#x7D22;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x4E3A; pseudo &#x7684;&#x6162;&#x67E5;&#x8BE2; SQL &#x8BED;&#x53E5;</h3>
+</code></pre><h3 id="4-&#x641C;&#x7D22;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x4E3A;-pseudo-&#x7684;&#x6162;&#x67E5;&#x8BE2;-sql-&#x8BED;&#x53E5;">(4) &#x641C;&#x7D22;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x4E3A; pseudo &#x7684;&#x6162;&#x67E5;&#x8BE2; SQL &#x8BED;&#x53E5;</h3>
 <pre><code class="lang-sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">query</span>, query_time, stats
 <span class="hljs-keyword">from</span> information_schema.cluster_slow_query
 <span class="hljs-keyword">where</span> is_internal = <span class="hljs-literal">false</span>
@@ -2985,7 +2985,7 @@ insert into t select * from t;
 | select * from t1 where a&gt;3; | 0.50077719  | t1:pseudo                       |
 | select * from t1 join t2;   | 0.931260518 | t1:407872303825682445,t2:pseudo |
 +-----------------------------+-------------+---------------------------------+
-</code></pre><h3 id="&#x67E5;&#x8BE2;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x7684;&#x6162;&#x67E5;&#x8BE2;">&#x67E5;&#x8BE2;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x7684;&#x6162;&#x67E5;&#x8BE2;</h3>
+</code></pre><h3 id="5-&#x67E5;&#x8BE2;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x7684;&#x6162;&#x67E5;&#x8BE2;">(5) &#x67E5;&#x8BE2;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x7684;&#x6162;&#x67E5;&#x8BE2;</h3>
 <p>&#x7531;&#x4E8E;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x4E0D;&#x51C6;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x540C;&#x7C7B;&#x578B; SQL &#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x5BFC;&#x81F4;&#x6267;&#x884C;&#x53D8;&#x6162;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x4EE5;&#x4E0B; SQL &#x67E5;&#x8BE2;&#x54EA;&#x4E9B; SQL &#x5177;&#x6709;&#x4E0D;&#x7528;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;&#xFF1A;</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">count</span>(<span class="hljs-keyword">distinct</span> plan_digest) <span class="hljs-keyword">as</span> <span class="hljs-keyword">count</span>, digest,<span class="hljs-keyword">min</span>(<span class="hljs-keyword">query</span>) 
 <span class="hljs-keyword">from</span> cluster_slow_query 
@@ -3023,7 +3023,7 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
           &#x2514;&#x2500;TableReader_13      root    1                       data:HashAgg_8
             &#x2514;&#x2500;HashAgg_8         cop     1                       group by:sbtest.sbtest25.c,
               &#x2514;&#x2500;TableScan_11    cop     1.2440069558121831      table:sbtest25, range:[472745,472844], keep order:false
-</code></pre><h3 id="&#x67E5;&#x8BE2;&#x96C6;&#x7FA4;&#x5404;&#x4E2A;-tidb-&#x8282;&#x70B9;&#x7684;&#x6162;&#x67E5;&#x8BE2;&#x6570;&#x91CF;">&#x67E5;&#x8BE2;&#x96C6;&#x7FA4;&#x5404;&#x4E2A; TIDB &#x8282;&#x70B9;&#x7684;&#x6162;&#x67E5;&#x8BE2;&#x6570;&#x91CF;</h3>
+</code></pre><h3 id="6-&#x67E5;&#x8BE2;&#x96C6;&#x7FA4;&#x5404;&#x4E2A;-tidb-&#x8282;&#x70B9;&#x7684;&#x6162;&#x67E5;&#x8BE2;&#x6570;&#x91CF;">(6) &#x67E5;&#x8BE2;&#x96C6;&#x7FA4;&#x5404;&#x4E2A; TIDB &#x8282;&#x70B9;&#x7684;&#x6162;&#x67E5;&#x8BE2;&#x6570;&#x91CF;</h3>
 <pre><code class="lang-sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">instance</span>, <span class="hljs-keyword">count</span>(*) <span class="hljs-keyword">from</span> information_schema.cluster_slow_query <span class="hljs-keyword">where</span> <span class="hljs-keyword">time</span> &gt;= <span class="hljs-string">&quot;2020-03-06 00:00:00&quot;</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">time</span> &lt; <span class="hljs-keyword">now</span>() <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">instance</span>;
 </code></pre>
 <p>&#x8F93;&#x51FA;&#x6837;&#x4F8B;&#xFF1A;</p>
@@ -3033,7 +3033,7 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
 | 0.0.0.0:10081 | 124      |
 | 0.0.0.0:10080 | 119771   |
 +---------------+----------+
-</code></pre><h3 id="&#x67E5;&#x8BE2;&#x4EC5;&#x51FA;&#x73B0;&#x5728;&#x5F02;&#x5E38;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6162;&#x65E5;&#x5FD7;">&#x67E5;&#x8BE2;&#x4EC5;&#x51FA;&#x73B0;&#x5728;&#x5F02;&#x5E38;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6162;&#x65E5;&#x5FD7;</h3>
+</code></pre><h3 id="7-&#x67E5;&#x8BE2;&#x4EC5;&#x51FA;&#x73B0;&#x5728;&#x5F02;&#x5E38;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6162;&#x65E5;&#x5FD7;">(7) &#x67E5;&#x8BE2;&#x4EC5;&#x51FA;&#x73B0;&#x5728;&#x5F02;&#x5E38;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6162;&#x65E5;&#x5FD7;</h3>
 <p>&#x5047;&#x5982;&#x53D1;&#x73B0; <code>2020-03-10 13:24:00</code> ~ <code>2020-03-10 13:27:00</code> &#x7684; QPS &#x964D;&#x4F4E;&#x6216;&#x8005;&#x5EF6;&#x8FDF;&#x4E0A;&#x5347;&#x7B49;&#x95EE;&#x9898;&#xFF0C;&#x53EF;&#x80FD;&#x662F;&#x7531;&#x4E8E;&#x7A81;&#x7136;&#x51FA;&#x73B0;&#x5927;&#x67E5;&#x8BE2;&#x5BFC;&#x81F4;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x4E0B;&#x9762; SQL &#x67E5;&#x8BE2;&#x4EC5;&#x51FA;&#x73B0;&#x5728;&#x5F02;&#x5E38;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6162;&#x65E5;&#x5FD7;&#xFF0C;&#x5176;&#x4E2D; <code>2020-03-10 13:20:00</code> ~ <code>2020-03-10 13:23:00</code> &#x4E3A;&#x6B63;&#x5E38;&#x65F6;&#x95F4;&#x6BB5;&#x3002;</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span>
     (<span class="hljs-keyword">SELECT</span> <span class="hljs-comment">/*+ AGG_TO_COP(), HASH_AGG() */</span> <span class="hljs-keyword">count</span>(*),
@@ -3076,11 +3076,11 @@ max(Cop_proc_max)  | 0.263
 min(query)         | delete from test.tcs2 limit 5000;
 min(prev_stmt)     |
 digest             | 24bd6d8a9b238086c9b8c3d240ad4ef32f79ce94cf5a468c0b8fe1eb5f8d03df
-</code></pre><h2 id="&#x89E3;&#x6790;&#x5176;&#x4ED6;&#x7684;-tidb-&#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;">&#x89E3;&#x6790;&#x5176;&#x4ED6;&#x7684; TiDB &#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;</h2>
+</code></pre><h2 id="5-&#x89E3;&#x6790;&#x5176;&#x4ED6;&#x7684;-tidb-&#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;">5. &#x89E3;&#x6790;&#x5176;&#x4ED6;&#x7684; TiDB &#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;</h2>
 <p>&#x5728; TiDB 4.0 &#x4E4B;&#x524D;&#xFF0C;&#x7531;&#x4E8E;&#x53EA;&#x652F;&#x6301;&#x89E3;&#x6790; &#x5F53;&#x524D;&#x7684;&#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x89E3;&#x6790;&#x5176;&#x4ED6;&#x7684;&#x6162;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E; session &#x53D8;&#x91CF; tidb_slow_query_file &#x63A7;&#x5236;&#x67E5;&#x8BE2; INFORMATION_SCHEMA.SLOW_QUERY &#x65F6;&#x8981;&#x8BFB;&#x53D6;&#x548C;&#x89E3;&#x6790;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
 <pre><code>set tidb_slow_query_file = &quot;/path-to-log/tidb-slow.log&quot;
 </code></pre><p>&#x7531;&#x4E8E; TiDB 4.0 &#x5DF2;&#x7ECF;&#x652F;&#x6301;&#x89E3;&#x6790;&#x4EFB;&#x610F;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6162;&#x65E5;&#x5FD7;&#xFF0C;&#x6240;&#x4EE5;&#x51E0;&#x4E4E;&#x4E0D;&#x9700;&#x8981;&#x4E0A;&#x9762;&#x7684; session &#x53D8;&#x91CF;&#x4E86;&#x3002;</p>
-<h2 id="&#x7528;-pt-query-digest-&#x5DE5;&#x5177;&#x5206;&#x6790;-tidb-&#x6162;&#x65E5;&#x5FD7;">&#x7528; pt-query-digest &#x5DE5;&#x5177;&#x5206;&#x6790; TiDB &#x6162;&#x65E5;&#x5FD7;</h2>
+<h2 id="6-&#x7528;-pt-query-digest-&#x5DE5;&#x5177;&#x5206;&#x6790;-tidb-&#x6162;&#x65E5;&#x5FD7;">6. &#x7528; pt-query-digest &#x5DE5;&#x5177;&#x5206;&#x6790; TiDB &#x6162;&#x65E5;&#x5FD7;</h2>
 <p>&#x53EF;&#x4EE5;&#x7528; pt-query-digest &#x5DE5;&#x5177;&#x5206;&#x6790; TiDB &#x6162;&#x65E5;&#x5FD7;&#x3002;</p>
 <blockquote>
 <p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong>
@@ -3107,12 +3107,12 @@ digest             | 24bd6d8a9b238086c9b8c3d240ad4ef32f79ce94cf5a468c0b8fe1eb5f8
 # Total keys       636.43k       2 103.16k  652.35  793.42   3.97k  400.73
 # Txn start ts     374.38E       0  16.00E 375.48P   1.25P  89.05T   1.25P
 # Wait time          943ms     1ms    19ms     1ms     2ms     1ms   972us
-.
-.
-.
-</code></pre><h3 id="&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x8BED;&#x53E5;&#x7684;&#x65B9;&#x6CD5;">&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x8BED;&#x53E5;&#x7684;&#x65B9;&#x6CD5;</h3>
-<p>SLOW_QUERY &#x4E2D;&#x7684;&#x8BED;&#x53E5;&#x5E76;&#x4E0D;&#x662F;&#x90FD;&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#x3002;&#x9020;&#x6210;&#x96C6;&#x7FA4;&#x6574;&#x4F53;&#x538B;&#x529B;&#x589E;&#x5927;&#x7684;&#x662F;&#x90A3;&#x4E9B; process_time &#x5F88;&#x5927;&#x7684;&#x8BED;&#x53E5;&#x3002;&#x5982;&#x679C;wait_time &#x5F88;&#x5927;&#xFF0C;&#x4F46; process_time &#x5F88;&#x5C0F;&#x7684;&#x8BED;&#x53E5;&#x901A;&#x5E38;&#x4E0D;&#x662F;&#x95EE;&#x9898;&#x8BED;&#x53E5;&#xFF0C;&#x800C;&#x662F;&#x56E0;&#x4E3A;&#x88AB;&#x95EE;&#x9898;&#x8BED;&#x53E5;&#x963B;&#x585E;&#xFF0C;&#x5728;&#x6267;&#x884C;&#x961F;&#x5217;&#x7B49;&#x5F85;&#x9020;&#x6210;&#x7684;&#x54CD;&#x5E94;&#x65F6;&#x95F4;&#x8FC7;&#x957F;&#x3002;</p>
-<h2 id="admin-show-slow-&#x547D;&#x4EE4;">admin show slow &#x547D;&#x4EE4;</h2>
+</code></pre><ul>
+<li><p>&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x8BED;&#x53E5;&#x7684;&#x65B9;&#x6CD5;</p>
+<p>  SLOW_QUERY &#x4E2D;&#x7684;&#x8BED;&#x53E5;&#x5E76;&#x4E0D;&#x662F;&#x90FD;&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#x3002;&#x9020;&#x6210;&#x96C6;&#x7FA4;&#x6574;&#x4F53;&#x538B;&#x529B;&#x589E;&#x5927;&#x7684;&#x662F;&#x90A3;&#x4E9B; process_time &#x5F88;&#x5927;&#x7684;&#x8BED;&#x53E5;&#x3002;&#x5982;&#x679C;wait_time &#x5F88;&#x5927;&#xFF0C;&#x4F46; process_time &#x5F88;&#x5C0F;&#x7684;&#x8BED;&#x53E5;&#x901A;&#x5E38;&#x4E0D;&#x662F;&#x95EE;&#x9898;&#x8BED;&#x53E5;&#xFF0C;&#x800C;&#x662F;&#x56E0;&#x4E3A;&#x88AB;&#x95EE;&#x9898;&#x8BED;&#x53E5;&#x963B;&#x585E;&#xFF0C;&#x5728;&#x6267;&#x884C;&#x961F;&#x5217;&#x7B49;&#x5F85;&#x9020;&#x6210;&#x7684;&#x54CD;&#x5E94;&#x65F6;&#x95F4;&#x8FC7;&#x957F;&#x3002;</p>
+</li>
+</ul>
+<h2 id="7-admin-show-slow-&#x547D;&#x4EE4;">7. admin show slow &#x547D;&#x4EE4;</h2>
 <p>&#x9664;&#x4E86;&#x57FA;&#x4E8E;TiDB &#x65E5;&#x5FD7;&#xFF0C;&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x5B9A;&#x4F4D;&#x6162;&#x67E5;&#x8BE2;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x901A;&#x8FC7; admin show slow SQL &#x547D;&#x4EE4;&#xFF1A;</p>
 <blockquote>
 <p>&#x6CE8;&#x610F;:
@@ -3247,7 +3247,7 @@ N&#x7684;&#x6700;&#x5927;&#x503C;&#x662F;30&#xFF0C;&#x663E;&#x793A;&#x65F6;&#x95
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3.5 SQL 慢查询内存表","level":"4.3.5","depth":2,"next":{"title":"3.6 Processlist","level":"4.3.6","depth":2,"path":"session3/chapter3/processlist.md","ref":"session3/chapter3/processlist.md","articles":[]},"previous":{"title":"3.4 监控汇总表","level":"4.3.4","depth":2,"path":"session3/chapter3/metrics-summary.md","ref":"session3/chapter3/metrics-summary.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/slow-query-table.md","mtime":"2020-03-16T08:58:40.383Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T08:59:27.343Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3.5 SQL 慢查询内存表","level":"4.3.5","depth":2,"next":{"title":"3.6 Processlist","level":"4.3.6","depth":2,"path":"session3/chapter3/processlist.md","ref":"session3/chapter3/processlist.md","articles":[]},"previous":{"title":"3.4 监控汇总表","level":"4.3.4","depth":2,"path":"session3/chapter3/metrics-summary.md","ref":"session3/chapter3/metrics-summary.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/slow-query-table.md","mtime":"2020-03-16T16:12:27.232Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T16:13:19.062Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

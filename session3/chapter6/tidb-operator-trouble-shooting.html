@@ -691,7 +691,7 @@
                 <a href="../../session2/chapter1/tiops-intro.html">
             
                     
-                    1.1.4 TiOps 简介
+                    1.1.3 TiOps 简介
             
                 </a>
             
@@ -704,7 +704,7 @@
                 <a href="../../session2/chapter1/tiops-deployment.html">
             
                     
-                    1.1.5 TiOps 部署生产环境集群
+                    1.1.4 TiOps 部署生产环境集群
             
                 </a>
             
@@ -2821,10 +2821,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="tidb-operator-&#x6545;&#x969C;&#x8BCA;&#x65AD;">TiDB Operator &#x6545;&#x969C;&#x8BCA;&#x65AD;</h1>
+                                <h1 id="&#x7B2C;6&#x7AE0;-tidb-operator-&#x6545;&#x969C;&#x8BCA;&#x65AD;">&#x7B2C;6&#x7AE0; TiDB Operator &#x6545;&#x969C;&#x8BCA;&#x65AD;</h1>
 <p>&#x672C;&#x6587;&#x5C06;&#x4ECB;&#x7ECD; Kubernetes &#x4E0A; TiDB &#x96C6;&#x7FA4;&#x7684;&#x4E00;&#x4E9B;&#x5E38;&#x89C1;&#x6545;&#x969C;&#x4EE5;&#x53CA;&#x8BCA;&#x65AD;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</p>
-<h2 id="1-&#x521B;&#x5EFA;&#x96C6;&#x7FA4;">1 &#x521B;&#x5EFA;&#x96C6;&#x7FA4;</h2>
-<h3 id="11-&#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5931;&#x8D25;">1.1 &#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5931;&#x8D25;</h3>
+<h2 id="61-&#x521B;&#x5EFA;&#x96C6;&#x7FA4;">6.1 &#x521B;&#x5EFA;&#x96C6;&#x7FA4;</h2>
+<h3 id="611-&#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5931;&#x8D25;">6.1.1 &#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5931;&#x8D25;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <p>&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x9650;&#x5236;&#x8BBF;&#x95EE;&#x76F8;&#x5173;&#x955C;&#x50CF;&#x4ED3;&#x5E93;&#xFF0C;&#x90E8;&#x7F72; Kubernetes &#x65F6;&#x5E38;&#x62C9;&#x53D6;&#x5931;&#x8D25;&#xFF0C;&#x7ED9;&#x4F7F;&#x7528;&#x5E26;&#x6765;&#x4E86;&#x8F83;&#x5927;&#x4E0D;&#x4FBF;&#x3002;</p>
 <h4 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;">&#x89E3;&#x51B3;&#x65B9;&#x6848;</h4>
@@ -2837,7 +2837,7 @@ cd docker-wrapper/
 ...
 -- pull k8s.gcr.io/kube-apiserver:v1.16.0 done --
 </code></pre><p>&#x5982;&#x679C;&#x662F;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#xFF0C;&#x63A8;&#x8350;&#x91C7;&#x7528; Kubernetes &#x7684;&#x4E00;&#x4E9B;&#x7BA1;&#x7406;&#x5E73;&#x53F0;&#x6765;&#x90E8;&#x7F72;&#x548C;&#x7BA1;&#x7406; Kubernetes &#x96C6;&#x7FA4;&#xFF0C;&#x540C;&#x65F6;&#x5728;&#x7BA1;&#x7406;&#x5E73;&#x53F0;&#x4E0A;&#x8BBE;&#x7F6E;&#x955C;&#x50CF;&#x4EE3;&#x7406;&#x3002;&#x5982;&#x679C;&#x91C7;&#x7528;&#x955C;&#x50CF;&#x62C9;&#x53D6;&#x5230;&#x5185;&#x7F51; image registry &#x7684;&#x8BDD;&#xFF0C;TiDB &#x7684; helm chart &#x8981;&#x66F4;&#x6539;&#x5BF9;&#x5E94;&#x7684; image &#x8BBE;&#x7F6E;&#x3002;</p>
-<h3 id="12-pd-&#x5904;&#x4E8E;-running-&#x8FD0;&#x884C;&#x4E2D;&#x72B6;&#x6001;&#xFF0C;&#x4F46;-tikv-&#x672A;&#x5F00;&#x59CB;&#x521B;&#x5EFA;">1.2 PD &#x5904;&#x4E8E; Running &#x8FD0;&#x884C;&#x4E2D;&#x72B6;&#x6001;&#xFF0C;&#x4F46; TiKV &#x672A;&#x5F00;&#x59CB;&#x521B;&#x5EFA;</h3>
+<h3 id="612-pd-&#x5904;&#x4E8E;-running-&#x8FD0;&#x884C;&#x4E2D;&#x72B6;&#x6001;&#xFF0C;&#x4F46;-tikv-&#x672A;&#x5F00;&#x59CB;&#x521B;&#x5EFA;">6.1.2 PD &#x5904;&#x4E8E; Running &#x8FD0;&#x884C;&#x4E2D;&#x72B6;&#x6001;&#xFF0C;&#x4F46; TiKV &#x672A;&#x5F00;&#x59CB;&#x521B;&#x5EFA;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <p>Pod &#x7684;&#x72B6;&#x6001;&#x5904;&#x4E8E; Running&#xFF0C;&#x8868;&#x793A;&#x5BB9;&#x5668;&#x5DF2;&#x7ECF;&#x7ED1;&#x5B9A;&#x5230;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x540C;&#x65F6; Pod &#x4E2D;&#x6240;&#x6709;&#x5BB9;&#x5668;&#x90FD;&#x5DF2;&#x88AB;&#x521B;&#x5EFA;&#x3002;&#x6B64;&#x65F6;&#x5BB9;&#x5668;&#x53EF;&#x80FD;&#x5904;&#x4E8E;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x4E2D;&#x3001;&#x6216;&#x8005;&#x6B63;&#x5904;&#x4E8E;&#x542F;&#x52A8;&#x6216;&#x91CD;&#x542F;&#x4E2D;&#x3002;</p>
 <p>PD &#x542F;&#x52A8;&#x903B;&#x8F91;&#xFF1A; Pod &#x542F;&#x52A8;&#x65F6;&#x4F9D;&#x8D56;&#x542F;&#x52A8;&#x811A;&#x672C; pd_start_script.sh&#xFF0C;&#x901A;&#x8FC7; Service DNS &#x5FAA;&#x73AF;&#x8C03;&#x7528; discovery &#x8FDB;&#x884C;&#x6CE8;&#x518C;&#x53CA;&#x83B7;&#x5F97;&#x542F;&#x52A8;&#x53C2;&#x6570;&#xFF0C;discovery &#x4E5F;&#x901A;&#x8FC7; Service DNS &#x8BBF;&#x95EE; PD &#x83B7;&#x53D6;&#x6700;&#x65B0;&#x7684;&#x96C6;&#x7FA4; members &#x5730;&#x5740;&#x3002;</p>
@@ -2883,7 +2883,7 @@ kubectl exec -it tidb-cluster-pd-0 -n=tidb  -- cat /etc/resolv.conf
 <li>IP &#x7F51;&#x7EDC;&#x662F;&#x5426;&#x8FDE;&#x901A;</li>
 </ul>
 <p>&#x8BE6;&#x89C1; 1.5 Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;</p>
-<h3 id="13-&#x5BB9;&#x5668;&#x5904;&#x4E8E;-crashloopbackoff-&#x72B6;&#x6001;">1.3 &#x5BB9;&#x5668;&#x5904;&#x4E8E; CrashLoopBackOff &#x72B6;&#x6001;</h3>
+<h3 id="613-&#x5BB9;&#x5668;&#x5904;&#x4E8E;-crashloopbackoff-&#x72B6;&#x6001;">6.1.3 &#x5BB9;&#x5668;&#x5904;&#x4E8E; CrashLoopBackOff &#x72B6;&#x6001;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <p>Pod &#x5904;&#x4E8E; CrashLoopBackOff &#x72B6;&#x6001;&#x610F;&#x5473;&#x7740; Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x91CD;&#x590D;&#x5730;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#x3002;&#x53EF;&#x80FD;&#x5BFC;&#x81F4; CrashLoopBackOff &#x7684;&#x539F;&#x56E0;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x6700;&#x6709;&#x6548;&#x7684;&#x5B9A;&#x4F4D;&#x529E;&#x6CD5;&#x662F;&#x67E5;&#x770B; Pod &#x5BB9;&#x5668;&#x7684;&#x65E5;&#x5FD7;</p>
 <h4 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;">&#x89E3;&#x51B3;&#x65B9;&#x6848;</h4>
@@ -2945,7 +2945,7 @@ telnet {ip} {port}
 <p>&#x53EF;&#x89C1; PV &#x66FE;&#x7ECF;&#x88AB;&#x5220;&#x9664;&#x3002;&#x8FD9;&#x662F; pd &#x6570;&#x636E;&#x76EE;&#x5F55;&#x5F02;&#x5E38;&#x7684;&#x539F;&#x56E0;&#x3002;&#x53EF;&#x7EE7;&#x7EED;&#x67E5;&#x770B; kube-apiserver &#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x5BFB;&#x627E;&#x5220;&#x9664; PV &#x64CD;&#x4F5C;&#x7684;&#x89E6;&#x53D1;&#x539F;&#x56E0;&#xFF0C;&#x8FD9;&#x9700;&#x8981; kube-apiserver &#x901A;&#x8FC7;&#x542F;&#x52A8;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF1A;</p>
 <pre><code>--v=4
 </code></pre><p>&#x6B64;&#x65F6;&#x7684; pd &#x96C6;&#x7FA4;&#x9700;&#x8981;&#x901A;&#x8FC7; pd-recover &#x6062;&#x590D;&#x3002;</p>
-<h3 id="14-&#x5BB9;&#x5668;&#x5904;&#x4E8E;-pending-&#x72B6;&#x6001;">1.4 &#x5BB9;&#x5668;&#x5904;&#x4E8E; Pending &#x72B6;&#x6001;</h3>
+<h3 id="614-&#x5BB9;&#x5668;&#x5904;&#x4E8E;-pending-&#x72B6;&#x6001;">6.1.4 &#x5BB9;&#x5668;&#x5904;&#x4E8E; Pending &#x72B6;&#x6001;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <pre><code>kubectl get pod
 NAME  READY   STATUS   RESTARTS   AGE
@@ -2981,7 +2981,7 @@ Warning  FailedScheduling  21s (x4 over 4m28s)  default-scheduler  0/1 nodes are
 <p>&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x5BF9;&#x5E94;&#x7684; PV &#x8D44;&#x6E90;&#x3002;&#x5BF9;&#x4E8E; Local PV&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/reference/configuration/storage-class#%E6%9C%AC%E5%9C%B0-pv-%E9%85%8D%E7%BD%AE" target="_blank">&#x672C;&#x5730; PV &#x914D;&#x7F6E;</a> &#x8FDB;&#x884C;&#x6269;&#x5145;&#x3002;</p>
 </li>
 </ul>
-<h3 id="15-pod-&#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;">1.5 Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;</h3>
+<h3 id="615-pod-&#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;">6.1.5 Pod &#x4E4B;&#x95F4;&#x7F51;&#x7EDC;&#x4E0D;&#x901A;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <p>&#x9488;&#x5BF9; TiDB &#x96C6;&#x7FA4;&#x800C;&#x8A00;&#xFF0C;&#x7EDD;&#x5927;&#x90E8;&#x5206; Pod &#x95F4;&#x7684;&#x8BBF;&#x95EE;&#x5747;&#x901A;&#x8FC7; Pod &#x7684;&#x57DF;&#x540D;&#xFF08;&#x4F7F;&#x7528; Headless Service &#x5206;&#x914D;&#xFF09;&#x8FDB;&#x884C;&#xFF0C;&#x4F8B;&#x5916;&#x7684;&#x60C5;&#x51B5;&#x662F; TiDB Operator &#x5728;&#x6536;&#x96C6;&#x96C6;&#x7FA4;&#x4FE1;&#x606F;&#x6216;&#x4E0B;&#x53D1;&#x63A7;&#x5236;&#x6307;&#x4EE4;&#x65F6;&#xFF0C;&#x4F1A;&#x901A;&#x8FC7; PD Service &#x7684; service-name &#x8BBF;&#x95EE; PD &#x96C6;&#x7FA4;&#x3002;</p>
 <p>&#x5F53;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x6216;&#x76D1;&#x63A7;&#x786E;&#x8BA4; Pod &#x95F4;&#x5B58;&#x5728;&#x7F51;&#x7EDC;&#x8FDE;&#x901A;&#x6027;&#x95EE;&#x9898;&#xFF0C;&#x6216;&#x6839;&#x636E;&#x6545;&#x969C;&#x60C5;&#x51B5;&#x63A8;&#x65AD;&#x51FA; Pod &#x95F4;&#x7F51;&#x7EDC;&#x8FDE;&#x63A5;&#x53EF;&#x80FD;&#x4E0D;&#x6B63;&#x5E38;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x6309;&#x7167;&#x4E0B;&#x9762;&#x7684;&#x6D41;&#x7A0B;&#x8FDB;&#x884C;&#x8BCA;&#x65AD;&#xFF0C;&#x9010;&#x6B65;&#x7F29;&#x5C0F;&#x95EE;&#x9898;&#x8303;&#x56F4;&#x3002;</p>
@@ -3017,7 +3017,7 @@ kubectl -n &lt;namespace&gt; -it exec &lt;pod-name&gt; -- cat /etc/pd/pd.toml | 
 kubectl -n &lt;namespace&gt; -it exec &lt;pod-name&gt; -- cat /etc/tikv/tikv.toml | grep addr
 # TiDB, &#x672A;&#x914D;&#x7F6E;&#x65F6;&#x9ED8;&#x8BA4;&#x4E3A; 4000 &#x7AEF;&#x53E3;
 kubectl -n &lt;namespace&gt; -it exec &lt;pod-name&gt; -- cat /etc/tidb/tidb.toml | grep port
-</code></pre><h3 id="16-&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;-tidb-&#x670D;&#x52A1;">1.6 &#x65E0;&#x6CD5;&#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;</h3>
+</code></pre><h3 id="616-&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;-tidb-&#x670D;&#x52A1;">6.1.6 &#x65E0;&#x6CD5;&#x8BBF;&#x95EE; TiDB &#x670D;&#x52A1;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <p>&#x7531;&#x4E8E;&#x8FDC;&#x7A0B;&#x8BBF;&#x95EE;&#xFF0C;&#x6240;&#x4EE5;&#x4F18;&#x5148;&#x6392;&#x67E5;&#x7F51;&#x7EDC;&#x94FE;&#x8DEF;&#x3002;</p>
 <h4 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;">&#x89E3;&#x51B3;&#x65B9;&#x6848;</h4>
@@ -3061,11 +3061,11 @@ dig &lt;tidb-service-domain&gt;
 </ul>
 </li>
 </ol>
-<h2 id="2-&#x96C6;&#x7FA4;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;">2 &#x96C6;&#x7FA4;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;</h2>
-<h3 id="21-&#x5220;&#x9664;-tikv-&#x6216;-pd&#xFF0C;&#x518D;&#x6B21;&#x521B;&#x5EFA;&#x542F;&#x52A8;&#x4E0D;&#x6210;&#x529F;">2.1 &#x5220;&#x9664; TiKV &#x6216; PD&#xFF0C;&#x518D;&#x6B21;&#x521B;&#x5EFA;&#x542F;&#x52A8;&#x4E0D;&#x6210;&#x529F;</h3>
+<h2 id="62-&#x96C6;&#x7FA4;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;">6.2 &#x96C6;&#x7FA4;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;</h2>
+<h3 id="621-&#x5220;&#x9664;-tikv-&#x6216;-pd&#xFF0C;&#x518D;&#x6B21;&#x521B;&#x5EFA;&#x542F;&#x52A8;&#x4E0D;&#x6210;&#x529F;">6.2.1 &#x5220;&#x9664; TiKV &#x6216; PD&#xFF0C;&#x518D;&#x6B21;&#x521B;&#x5EFA;&#x542F;&#x52A8;&#x4E0D;&#x6210;&#x529F;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <h4 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;">&#x89E3;&#x51B3;&#x65B9;&#x6848;</h4>
-<h3 id="22-&#x5E76;&#x53D1;&#x6269;&#x7F29;&#x5BB9;&#xFF0C;tikv-store-&#x5F02;&#x5E38;&#x8FDB;&#x5165;-tombstone-&#x72B6;&#x6001;">2.2 &#x5E76;&#x53D1;&#x6269;&#x7F29;&#x5BB9;&#xFF0C;TiKV Store &#x5F02;&#x5E38;&#x8FDB;&#x5165; Tombstone &#x72B6;&#x6001;</h3>
+<h3 id="622-&#x5E76;&#x53D1;&#x6269;&#x7F29;&#x5BB9;&#xFF0C;tikv-store-&#x5F02;&#x5E38;&#x8FDB;&#x5165;-tombstone-&#x72B6;&#x6001;">6.2.2 &#x5E76;&#x53D1;&#x6269;&#x7F29;&#x5BB9;&#xFF0C;TiKV Store &#x5F02;&#x5E38;&#x8FDB;&#x5165; Tombstone &#x72B6;&#x6001;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <p>&#x6B63;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5F53; TiKV Pod &#x5904;&#x4E8E;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x65F6;&#xFF08;Pod &#x72B6;&#x6001;&#x4E3A; Running&#xFF09;&#xFF0C;&#x5BF9;&#x5E94;&#x7684; TiKV Store &#x72B6;&#x6001;&#x4E5F;&#x662F;&#x5065;&#x5EB7;&#x7684;&#xFF08;Store &#x72B6;&#x6001;&#x4E3A; UP&#xFF09;&#x3002;&#x4F46;&#x5E76;&#x53D1;&#x8FDB;&#x884C; TiKV &#x7EC4;&#x4EF6;&#x7684;&#x6269;&#x5BB9;&#x548C;&#x7F29;&#x5BB9;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x90E8;&#x5206; TiKV Store &#x5F02;&#x5E38;&#x5E76;&#x8FDB;&#x5165; Tombstone &#x72B6;&#x6001;&#x3002;</p>
 <p>&#x5BF9;&#x6BD4; Store &#x72B6;&#x6001;&#x4E0E; Pod &#x8FD0;&#x884C;&#x72B6;&#x6001;&#x3002;&#x5047;&#x5982;&#x67D0;&#x4E2A; TiKV Pod &#x6240;&#x5BF9;&#x5E94;&#x7684; Store &#x5904;&#x4E8E; Offline &#x72B6;&#x6001;&#xFF0C;&#x5219;&#x8868;&#x660E;&#x8BE5; Pod &#x7684; Store &#x6B63;&#x5728;&#x5F02;&#x5E38;&#x4E0B;&#x7EBF;&#x4E2D;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x53D6;&#x6D88;&#x4E0B;&#x7EBF;&#x8FDB;&#x7A0B;&#xFF0C;&#x8FDB;&#x884C;&#x6062;&#x590D;&#xFF1A;</p>
@@ -3105,7 +3105,7 @@ dig &lt;tidb-service-domain&gt;
 </ol>
 </li>
 </ol>
-<h3 id="23-tidb-&#x957F;&#x8FDE;&#x63A5;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;">2.3 TiDB &#x957F;&#x8FDE;&#x63A5;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;</h3>
+<h3 id="623-tidb-&#x957F;&#x8FDE;&#x63A5;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;">6.2.3 TiDB &#x957F;&#x8FDE;&#x63A5;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;</h3>
 <h4 id="&#x95EE;&#x9898;&#x5206;&#x6790;">&#x95EE;&#x9898;&#x5206;&#x6790;</h4>
 <p>&#x8BB8;&#x591A;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668; (Load Balancer) &#x4F1A;&#x8BBE;&#x7F6E;&#x8FDE;&#x63A5;&#x7A7A;&#x95F2;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;&#x5F53;&#x8FDE;&#x63A5;&#x4E0A;&#x6CA1;&#x6709;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x7684;&#x65F6;&#x95F4;&#x8D85;&#x8FC7;&#x8BBE;&#x5B9A;&#x503C;&#xFF0C;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668;&#x4F1A;&#x4E3B;&#x52A8;&#x5C06;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x3002;&#x82E5;&#x53D1;&#x73B0; TiDB &#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x957F;&#x67E5;&#x8BE2;&#x4F1A;&#x88AB;&#x5F02;&#x5E38;&#x4E2D;&#x65AD;&#xFF0C;&#x53EF;&#x68C0;&#x67E5;&#x5BA2;&#x6237;&#x7AEF;&#x4E0E; TiDB &#x670D;&#x52A1;&#x7AEF;&#x4E4B;&#x95F4;&#x7684;&#x4E2D;&#x95F4;&#x4EF6;&#x7A0B;&#x5E8F;</p>
 <h4 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;">&#x89E3;&#x51B3;&#x65B9;&#x6848;</h4>
@@ -3133,7 +3133,7 @@ dig &lt;tidb-service-domain&gt;
 </code></pre><blockquote>
 <p><strong>&#x6CE8;&#x610F;</strong>&#xFF1A;&#x8FDB;&#x884C;&#x4EE5;&#x4E0A;&#x914D;&#x7F6E;&#x8981;&#x6C42; TiDB Operator 1.1 &#x53CA;&#x4EE5;&#x4E0A;&#x7248;&#x672C;&#x3002;</p>
 </blockquote>
-<h2 id="3-&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;">3 &#x8BCA;&#x65AD;&#x6A21;&#x5F0F;</h2>
+<h2 id="63-&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;">6.3 &#x8BCA;&#x65AD;&#x6A21;&#x5F0F;</h2>
 <p>&#x5F53; Pod &#x5904;&#x4E8E; CrashLoopBackoff &#x72B6;&#x6001;&#x65F6;&#xFF0C;Pod &#x5185;&#x5BB9;&#x5668;&#x4F1A;&#x4E0D;&#x65AD;&#x9000;&#x51FA;&#xFF0C;&#x5BFC;&#x81F4;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x4F7F;&#x7528; kubectl exec &#x6216; tkctl debug&#xFF0C;&#x7ED9;&#x8BCA;&#x65AD;&#x5E26;&#x6765;&#x4E0D;&#x4FBF;&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;TiDB in Kubernetes &#x63D0;&#x4F9B;&#x4E86; PD/TiKV/TiDB Pod &#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x3002;&#x5728;&#x8BCA;&#x65AD;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x542F;&#x52A8;&#x540E;&#x4F1A;&#x76F4;&#x63A5;&#x6302;&#x8D77;&#xFF0C;&#x4E0D;&#x4F1A;&#x518D;&#x8FDB;&#x5165;&#x91CD;&#x590D; Crash &#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x4FBF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; kubectl exec &#x6216; tkctl debug &#x8FDE;&#x63A5; Pod &#x5185;&#x7684;&#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x8BCA;&#x65AD;&#x3002;</p>
 <p>&#x64CD;&#x4F5C;&#x4E4B;&#x524D;&#xFF0C;Pod &#x5904;&#x4E8E;  CrashLoopBackoff &#x72B6;&#x6001;&#xFF1A;</p>
 <pre><code>$ kubectl get pods -n tidbcluster1
@@ -3173,7 +3173,7 @@ kubectl exec -it &lt;pod-name&gt; -n &lt;namespace&gt; -- /bin/sh
 # kubectl delete pod demo-pd-1 -n tidbcluster1
 </code></pre><p>&#x8F93;&#x51FA;&#x4E3A;&#xFF1A;</p>
 <pre><code>pod &quot;demo-pd-1&quot; deleted
-</code></pre><p>Pod &#x91CD;&#x5EFA;&#x540E;&#x4F1A;&#x81EA;&#x52A8;&#x56DE;&#x5230;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x6A21;&#x5F0F;&#x3002;</p>
+</code></pre><p>&#x76D1;&#x63A7;&#xFF1A;Pod &#x91CD;&#x5EFA;&#x540E;&#x4F1A;&#x81EA;&#x52A8;&#x56DE;&#x5230;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x6A21;&#x5F0F;&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
@@ -3217,7 +3217,7 @@ kubectl exec -it &lt;pod-name&gt; -n &lt;namespace&gt; -- /bin/sh
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"6 TiDB-Operator Troubleshooting","level":"4.6","depth":1,"next":{"title":"1 适用场景介绍","level":"5.1","depth":1,"path":"session4/chapter1/scenarios.md","ref":"session4/chapter1/scenarios.md","articles":[]},"previous":{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"path":"session3/chapter5/recover-quorum.md","ref":"session3/chapter5/recover-quorum.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter6/tidb-operator-trouble-shooting.md","mtime":"2020-03-16T08:58:40.383Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T08:59:27.343Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"6 TiDB-Operator Troubleshooting","level":"4.6","depth":1,"next":{"title":"1 适用场景介绍","level":"5.1","depth":1,"path":"session4/chapter1/scenarios.md","ref":"session4/chapter1/scenarios.md","articles":[]},"previous":{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"path":"session3/chapter5/recover-quorum.md","ref":"session3/chapter5/recover-quorum.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter6/tidb-operator-trouble-shooting.md","mtime":"2020-03-16T16:12:27.232Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T16:13:19.062Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

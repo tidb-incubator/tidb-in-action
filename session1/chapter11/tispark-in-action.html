@@ -691,7 +691,7 @@
                 <a href="../../session2/chapter1/tiops-intro.html">
             
                     
-                    1.1.4 TiOps 简介
+                    1.1.3 TiOps 简介
             
                 </a>
             
@@ -704,7 +704,7 @@
                 <a href="../../session2/chapter1/tiops-deployment.html">
             
                     
-                    1.1.5 TiOps 部署生产环境集群
+                    1.1.4 TiOps 部署生产环境集群
             
                 </a>
             
@@ -2821,8 +2821,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p>&#x4E0A;&#x4E00;&#x7AE0;&#x8282;&#x4E2D;&#xFF0C;&#x9488;&#x5BF9; TiSpark &#x7684;&#x67B6;&#x6784;&#x548C;&#x539F;&#x7406;&#x8FDB;&#x884C;&#x4E86;&#x8BE6;&#x7EC6;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x5728;&#x672C;&#x7AE0;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x4ECB;&#x7ECD; TiSpark &#x7684;&#x90E8;&#x7F72;&#x548C;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x3002;</p>
-<p><strong>TiSpark &#x7684;&#x90E8;&#x7F72;</strong></p>
+                                <h2 id="112-tispark-&#x7684;&#x4F7F;&#x7528;">11.2 TiSpark &#x7684;&#x4F7F;&#x7528;</h2>
+<p>&#x4E0A;&#x4E00;&#x8282;&#x4E2D;&#xFF0C;&#x9488;&#x5BF9; TiSpark &#x7684;&#x67B6;&#x6784;&#x548C;&#x539F;&#x7406;&#x8FDB;&#x884C;&#x4E86;&#x8BE6;&#x7EC6;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x5728;&#x672C;&#x8282;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x4ECB;&#x7ECD; TiSpark &#x7684;&#x90E8;&#x7F72;&#x548C;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x3002;</p>
+<h3 id="1121-tispark-&#x7684;&#x90E8;&#x7F72;">11.2.1 TiSpark &#x7684;&#x90E8;&#x7F72;</h3>
 <p>&#x7531;&#x4E8E; TiSpark &#x5E76;&#x6CA1;&#x6709;&#x76F4;&#x63A5;&#x4FEE;&#x6539; Apache Spark &#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x56E0;&#x6B64;&#x53EA;&#x8981;&#x662F; Apache Spark 2.1 &#x4EE5;&#x4E0A;&#x7248;&#x672C;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x517C;&#x5BB9;&#x7684; TiSpark&#x3002;&#x5177;&#x4F53;&#x7248;&#x672C;&#x7684;&#x5BF9;&#x5E94;&#xFF0C;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x5B98;&#x7F51;&#x6587;&#x6863;<a href="https://github.com/pingcap/tispark#how-to-choose-tispark-version" target="_blank">&#x5BF9;&#x5E94;&#x7AE0;&#x8282;</a>&#x3002;&#x65E0;&#x8BBA;&#x662F;&#x901A;&#x8FC7; YARN &#x90E8;&#x7F72;&#x8FD8;&#x662F;&#x901A;&#x8FC7; Standalone &#x90E8;&#x7F72;&#xFF0C;&#x90FD;&#x53EF;&#x4EE5;&#x53C2;&#x8003; Apache Spark &#x5B98;&#x7F51;&#x7684;<a href="https://spark.apache.org/docs/latest/cluster-overview.html" target="_blank">&#x90E8;&#x7F72;&#x73AF;&#x8282;</a>&#x3002;&#x901A;&#x8FC7;&#x5339;&#x914D; Spark &#x7248;&#x672C;&#xFF0C;&#x53EF;&#x4EE5;&#x4ECE; <a href="https://github.com/pingcap/tispark/releases" target="_blank">TiSpark Release &#x680F;&#x76EE;</a> &#x4E0B;&#x8F7D;&#x5BF9;&#x5E94;&#x7684; TiSpark &#x7248;&#x672C;&#x7684; JAR &#x5305;&#x3002;</p>
 <p>&#x5B9E;&#x9645;&#x5F00;&#x542F;&#x548C;&#x90E8;&#x7F72; TiSpark &#x9700;&#x8981;&#x786E;&#x4FDD;&#x5982;&#x4E0B;&#x4E24;&#x70B9;&#xFF1A;</p>
 <ol>
@@ -2837,11 +2838,9 @@ spark.tispark.pd.addresses      pd-host1:port1,pd-host2:port2,pd-host3:port3
 <li>&#x542F;&#x52A8; Spark &#x5E94;&#x7528;&#x65F6;&#x5F15;&#x7528; TiSpark JAR &#x5305;&#x3002;&#x4EE5; spark-shell &#x4E3A;&#x4F8B;&#xFF1A;<pre><code>./spark-shell --jars /path/your-tispark.jar
 </code></pre></li>
 </ol>
-<p><strong>TiSpark &#x7684;&#x57FA;&#x672C;&#x4F7F;&#x7528;</strong></p>
+<h3 id="1122-tispark-&#x7684;&#x57FA;&#x672C;&#x67E5;&#x8BE2;&#x65B9;&#x5F0F;">11.2.2 TiSpark &#x7684;&#x57FA;&#x672C;&#x67E5;&#x8BE2;&#x65B9;&#x5F0F;</h3>
 <p>TiSpark &#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x4E0E;&#x539F;&#x751F; Spark &#x7C7B;&#x4F3C;&#xFF0C;&#x63D0;&#x4F9B;&#x591A;&#x79CD;&#x65B9;&#x5F0F;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x3002;</p>
-<ul>
-<li>&#x901A;&#x8FC7; spark-shell &#x67E5;&#x8BE2;&#x6570;&#x636E;</li>
-</ul>
+<h4 id="11221-&#x901A;&#x8FC7;-spark-shell-&#x67E5;&#x8BE2;&#x6570;&#x636E;">11.2.2.1 &#x901A;&#x8FC7; spark-shell &#x67E5;&#x8BE2;&#x6570;&#x636E;</h4>
 <p>&#x4F7F;&#x7528; spark-shell &#x542F;&#x52A8;&#xFF0C;&#x901A;&#x8FC7; Spark &#x63D0;&#x4F9B;&#x7684; API &#x5373;&#x53EF;&#x8BBF;&#x95EE;&#x6570;&#x636E;&#x3002;</p>
 <p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x5229;&#x7528; spark-shell &#x67E5;&#x8BE2; lineitem &#x8868;&#x7684;&#x6570;&#x636E;</p>
 <pre><code>scala&gt;spark.sql(&quot;use tpch&quot;)
@@ -2887,9 +2886,7 @@ scala&gt;
 |           N|           O|742802.00| 1041502841.45|989737518.6346|
 |           R|           F|381449.00|  534594445.35|507996454.4067|
 +------------+------------+---------+--------------+--------------+
-</code></pre><ul>
-<li>&#x901A;&#x8FC7; Spark SQL &#x67E5;&#x8BE2;&#x6570;&#x636E;</li>
-</ul>
+</code></pre><h4 id="11222-&#x901A;&#x8FC7;-spark-sql-&#x67E5;&#x8BE2;&#x6570;&#x636E;">11.2.2.2 &#x901A;&#x8FC7; Spark SQL &#x67E5;&#x8BE2;&#x6570;&#x636E;</h4>
 <p>TiSpark&#x540C;&#x6837;&#x652F;&#x6301;&#x5229;&#x7528; Spark SQL &#x67E5;&#x8BE2;&#x6570;&#x636E;&#x3002;&#x4F7F;&#x7528; spark-sql &#x547D;&#x4EE4;&#x5373;&#x53EF;&#x8FDB;&#x5165;&#x4EA4;&#x4E92;&#x5F0F;&#x6570;&#x636E;&#x67E5;&#x8BE2;&#x9875;&#x9762;&#xFF0C;&#x63A5;&#x5165;&#x8F93;&#x5165; sql &#x5373;&#x53EF;&#x3002;</p>
 <p>&#x793A;&#x4F8B;&#x4E09;&#xFF1A;&#x5229;&#x7528; spark-sql &#x67E5;&#x8BE2; lineitem &#x8868;&#x7684;&#x6570;&#x636E;</p>
 <pre><code>spark-sql&gt; use tpch;
@@ -2898,9 +2895,7 @@ spark-sql&gt; select count(*) from lineitem;
 &#x67E5;&#x8BE2;lineitem&#x8868;&#x7684;&#x603B;&#x884C;&#x6570;
 2000
 Time taken: 0.673 seconds, Fetched 1 row(s)
-</code></pre><ul>
-<li>&#x5229;&#x7528; JDBC &#x8BBF;&#x95EE; TiSpark</li>
-</ul>
+</code></pre><h4 id="11223-&#x5229;&#x7528;-jdbc-&#x8BBF;&#x95EE;-tispark">11.2.2.3 &#x5229;&#x7528; JDBC &#x8BBF;&#x95EE; TiSpark</h4>
 <p>&#x90E8;&#x7F72;&#x65F6;&#x542F;&#x52A8; Thrift &#x670D;&#x52A1;&#x5668;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; JDBC &#x7684;&#x65B9;&#x5F0F;&#x4F7F;&#x7528; TiSpark&#x3002;</p>
 <p>&#x793A;&#x4F8B;&#x56DB;&#xFF1A;&#x5229;&#x7528; beeline &#x5DE5;&#x5177;&#x4F7F;&#x7528; JDBC &#x7684;&#x65B9;&#x5F0F;&#x8BBF;&#x95EE; TiSpark</p>
 <pre><code>beeline&gt; !connect jdbc:hive2://localhost:10000
@@ -2917,10 +2912,8 @@ select count(*) from account;
 | 1000000   |
 +-----------+--+
 1 row selected (1.97 seconds)
-</code></pre><p><strong>TiSpark &#x7684;&#x591A;&#x8BED;&#x8A00;&#x4F7F;&#x7528;</strong></p>
-<ul>
-<li><strong>&#x4F7F;&#x7528; PySpark &#x8BBF;&#x95EE; TiSpark</strong></li>
-</ul>
+</code></pre><h3 id="1123-tispark-&#x7684;&#x591A;&#x8BED;&#x8A00;&#x4F7F;&#x7528;">11.2.3 TiSpark &#x7684;&#x591A;&#x8BED;&#x8A00;&#x4F7F;&#x7528;</h3>
+<h4 id="11231-&#x4F7F;&#x7528;-pyspark-&#x8BBF;&#x95EE;-tispark">11.2.3.1 &#x4F7F;&#x7528; PySpark &#x8BBF;&#x95EE; TiSpark</h4>
 <p>TiSpark on PySpark &#x662F; TiSpark &#x7528;&#x6765;&#x652F;&#x6301; Python &#x8BED;&#x8A00;&#x800C;&#x6784;&#x5EFA;&#x7684; Python &#x5305;&#x3002;PySpark &#x652F;&#x6301;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; python &#x7684;&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#x6765;&#x5B89;&#x88C5;&#x4F7F;&#x7528;&#x3002;</p>
 <p>&#x793A;&#x4F8B;&#x4E00;&#xFF1A;&#x76F4;&#x63A5;&#x4F7F;&#x7528; PySpark &#x8BBF;&#x95EE; TiSpark</p>
 <pre><code>./bin/pyspark --jars /PATH/tispark-${name_with_version}.jar
@@ -2953,9 +2946,7 @@ spark.sql(&quot;select count(*) from customer&quot;).show()
 +--------+
 |     150|
 +--------+
-</code></pre><ul>
-<li><strong>&#x4F7F;&#x7528; TiSparkR &#x8BBF;&#x95EE; TiSpark</strong></li>
-</ul>
+</code></pre><h4 id="11232-&#x4F7F;&#x7528;-tisparkr-&#x8BBF;&#x95EE;-tispark">11.2.3.2 &#x4F7F;&#x7528; TiSparkR &#x8BBF;&#x95EE; TiSpark</h4>
 <p>TiSparkR &#x662F; TiSpark &#x7528;&#x6765;&#x652F;&#x6301;R&#x8BED;&#x8A00;&#x6765;&#x6784;&#x5EFA;&#x7684; R &#x5305;&#x3002;&#x540C; PySpark &#x7C7B;&#x4F3C;&#xFF0C;TiSparkR &#x540C;&#x6837;&#x652F;&#x6301;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x52A0;&#x8F7D; library &#x7684;&#x65B9;&#x5F0F;&#x4F7F;&#x7528;&#x3002;</p>
 <p>&#x793A;&#x4F8B;&#x4E09;&#xFF1A;&#x76F4;&#x63A5;&#x4F7F;&#x7528; PySpark &#x8BBF;&#x95EE; TiSpark</p>
 <pre><code>./bin/sparkR --jars /PATH/tispark-${name_with_version}.jar
@@ -2968,7 +2959,7 @@ head(count)
 +--------+
 |     150|
 +--------+
-</code></pre><p>&#x793A;&#x4F8B;&#x4E8C;&#xFF1A;&#x5229;&#x7528; SparkR &#x5305;&#x7684;&#x5F62;&#x5F0F;&#x4F7F;&#x7528; TiSpark
+</code></pre><p>&#x793A;&#x4F8B;&#x56DB;&#xFF1A;&#x5229;&#x7528; SparkR &#x5305;&#x7684;&#x5F62;&#x5F0F;&#x4F7F;&#x7528; TiSpark
 &#x9996;&#x5148;&#xFF0C;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7528;&#x4EE5;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x7684; R &#x6587;&#x4EF6; test.R&#xFF0C;&#x6587;&#x4EF6;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
 <pre><code>library(SparkR)
 sparkR.session()
@@ -2983,7 +2974,7 @@ head(count)
 +--------+
 |     150|
 +--------
-</code></pre><p><strong>TiSpark &#x8BBF;&#x95EE; TiFlash</strong></p>
+</code></pre><h4 id="11233-tispark-&#x8BBF;&#x95EE;-tiflash">11.2.3.3 TiSpark &#x8BBF;&#x95EE; TiFlash</h4>
 <p>&#x53C2;&#x89C1; TiSpark &#x8BBF;&#x95EE; TiFlash &#x7AE0;&#x8282;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
@@ -3028,7 +3019,7 @@ head(count)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"11.2 TiSpark 的使用","level":"2.11.2","depth":2,"next":{"title":"11.3 TiSpark on TiFlash","level":"2.11.3","depth":2,"path":"session1/chapter11/tispark-on-tiflash.md","ref":"session1/chapter11/tispark-on-tiflash.md","articles":[]},"previous":{"title":"11.1 TiSpark 架构与原理","level":"2.11.1","depth":2,"path":"session1/chapter11/tispark-architecture.md","ref":"session1/chapter11/tispark-architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter11/tispark-in-action.md","mtime":"2020-03-16T08:58:40.375Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T08:59:27.343Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"11.2 TiSpark 的使用","level":"2.11.2","depth":2,"next":{"title":"11.3 TiSpark on TiFlash","level":"2.11.3","depth":2,"path":"session1/chapter11/tispark-on-tiflash.md","ref":"session1/chapter11/tispark-on-tiflash.md","articles":[]},"previous":{"title":"11.1 TiSpark 架构与原理","level":"2.11.1","depth":2,"path":"session1/chapter11/tispark-architecture.md","ref":"session1/chapter11/tispark-architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session1/chapter11/tispark-in-action.md","mtime":"2020-03-16T16:12:27.224Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T16:13:19.062Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

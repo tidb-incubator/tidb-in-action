@@ -691,7 +691,7 @@
                 <a href="../../session2/chapter1/tiops-intro.html">
             
                     
-                    1.1.4 TiOps 简介
+                    1.1.3 TiOps 简介
             
                 </a>
             
@@ -704,7 +704,7 @@
                 <a href="../../session2/chapter1/tiops-deployment.html">
             
                     
-                    1.1.5 TiOps 部署生产环境集群
+                    1.1.4 TiOps 部署生产环境集群
             
                 </a>
             
@@ -2823,7 +2823,7 @@
                                 
                                 <h1 id="34-&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;">3.4 &#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;</h1>
 <p>&#x7531;&#x4E8E; TiDB &#x96C6;&#x7FA4;&#x7684;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x6570;&#x91CF;&#x8F83;&#x5927;&#xFF0C;&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x4FBF;&#x6377;&#x7684;&#x65B9;&#x5F0F;&#x4ECE;&#x4F17;&#x591A;&#x76D1;&#x63A7;&#x4E2D;&#x627E;&#x51FA;&#x5F02;&#x5E38;&#x7684;&#x76D1;&#x63A7;&#x9879;&#xFF0C;TiDB 4.0 &#x63D0;&#x4F9B;&#x4E86;&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;&#xFF0C;&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868; <code>information_schema.metrics_summary</code> &#x548C; <code>information_schema.metrics_summary_by_label</code> &#x7528;&#x4E8E;&#x6C47;&#x603B;&#x6240;&#x6709;&#x76D1;&#x63A7;&#x6570;&#x636E;&#xFF0C;&#x6765;&#x63D0;&#x5347;&#x7528;&#x6237;&#x5BF9;&#x5404;&#x4E2A;&#x76D1;&#x63A7;&#x6307;&#x6807;&#x8FDB;&#x884C;&#x6392;&#x67E5;&#x7684;&#x6548;&#x7387;&#x3002;&#x4E24;&#x8005;&#x4E0D;&#x540C;&#x5728;&#x4E8E; <code>information_schema.metrics_summary_by_label</code> &#x4F1A;&#x5BF9;&#x4E0D;&#x540C;&#x7684; <code>label</code> &#x4F7F;&#x7528;&#x533A;&#x5206;&#x7EDF;&#x8BA1;&#x3002;</p>
-<h2 id="&#x67E5;&#x8BE2;&#x793A;&#x4F8B;">&#x67E5;&#x8BE2;&#x793A;&#x4F8B;</h2>
+<h2 id="1-&#x67E5;&#x8BE2;&#x793A;&#x4F8B;">1. &#x67E5;&#x8BE2;&#x793A;&#x4F8B;</h2>
 <p>&#x4EE5;&#x67E5;&#x8BE2; <code>[&apos;2020-03-08 13:23:00&apos;, &apos;2020-03-08 13:33:00&apos;)</code> &#x65F6;&#x95F4;&#x8303;&#x56F4;&#x5185; TiDB &#x96C6;&#x7FA4;&#x4E2D;&#x5E73;&#x5747;&#x8017;&#x65F6;&#x6700;&#x9AD8;&#x7684; 3 &#x7EC4;&#x76D1;&#x63A7;&#x9879;&#x4E3A;&#x4F8B;&#x3002;&#x901A;&#x8FC7;&#x76F4;&#x63A5;&#x67E5;&#x8BE2; <code>information_schema.metrics_summary</code> &#x8868;&#xFF0C;&#x5E76;&#x901A;&#x8FC7; <code>/*+ time_range() */</code> &#x8FD9;&#x4E2A; hint &#x6765;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x8303;&#x56F4;&#x6765;&#x6784;&#x9020;&#x4EE5;&#x4E0B; SQL&#xFF1A;</p>
 <pre><code class="lang-sql">mysql&gt; select /*+ time_range(&apos;2020-03-08 13:23:00&apos;,&apos;2020-03-08 13:33:00&apos;) */ *
        from information_schema.`METRICS_SUMMARY`
@@ -2900,7 +2900,7 @@ MAX_VALUE    | 0.008241
 COMMENT      | The quantile of TiDB query durations(second)
 </code></pre>
 <p>&#x524D;&#x6587;&#x63D0;&#x5230; <code>metrics_summary_by_label</code> &#x8868;&#x7ED3;&#x6784;&#x76F8;&#x5BF9;&#x4E8E; <code>metrics_summary</code> &#x591A;&#x4E86;&#x4E00;&#x5217; <code>LABEL</code>, &#x4EE5;&#x4E0A;&#x9762;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x7684;&#x7B2C; 2, 3 &#x884C;&#x4E3A;&#x4F8B;&#xFF1A;&#x5206;&#x522B;&#x8868;&#x793A; <code>tidb_query_duration</code> &#x7684; <code>Select</code>/<code>Rollback</code> &#x7C7B;&#x578B;&#x7684;&#x8BED;&#x53E5;&#x5E73;&#x5747;&#x8017;&#x65F6;&#x975E;&#x5E38;&#x9AD8;&#x3002;</p>
-<h2 id="&#x63A8;&#x8350;&#x7528;&#x6CD5;">&#x63A8;&#x8350;&#x7528;&#x6CD5;</h2>
+<h2 id="2-&#x63A8;&#x8350;&#x7528;&#x6CD5;">2. &#x63A8;&#x8350;&#x7528;&#x6CD5;</h2>
 <p>&#x9664;&#x4EE5;&#x4E0A;&#x793A;&#x4F8B;&#x4E4B;&#x5916;&#xFF0C;&#x76D1;&#x63A7;&#x6C47;&#x603B;&#x8868;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x5168;&#x94FE;&#x8DEF;&#x76D1;&#x63A7;&#x5BF9;&#x6BD4;&#xFF0C;&#x8FC5;&#x901F;&#x627E;&#x51FA;&#x76D1;&#x63A7;&#x6570;&#x636E;&#x53D8;&#x5316;&#x6700;&#x5927;&#x7684;&#x6A21;&#x5757;&#xFF0C;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D;&#x74F6;&#x9888;&#xFF0C;&#x4EE5;&#x4E0B;&#x5BF9;&#x6BD4;&#x4E24;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#x7684;&#x6240;&#x6709;&#x76D1;&#x63A7;&#xFF08;&#x5176;&#x4E2D; t1 &#x4E3A; baseline&#xFF09;&#xFF0C;&#x5E76;&#x6309;&#x7167;&#x5DEE;&#x522B;&#x6700;&#x5927;&#x7684;&#x76D1;&#x63A7;&#x6392;&#x5E8F;&#xFF1A;</p>
 <ul>
 <li>&#x65F6;&#x95F4;&#x6BB5; t1 : (&quot;2020-03-03 17:08:00&quot;, &quot;2020-03-03 17:11:00&quot;)</li>
@@ -3044,7 +3044,7 @@ COMMENT      | The quantile of TiDB query durations(second)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3.4 监控汇总表","level":"4.3.4","depth":2,"next":{"title":"3.5 SQL 慢查询内存表","level":"4.3.5","depth":2,"path":"session3/chapter3/slow-query-table.md","ref":"session3/chapter3/slow-query-table.md","articles":[]},"previous":{"title":"3.3 诊断结果表","level":"4.3.3","depth":2,"path":"session3/chapter3/inspection-tables.md","ref":"session3/chapter3/inspection-tables.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/metrics-summary.md","mtime":"2020-03-16T08:58:40.383Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T08:59:27.343Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3.4 监控汇总表","level":"4.3.4","depth":2,"next":{"title":"3.5 SQL 慢查询内存表","level":"4.3.5","depth":2,"path":"session3/chapter3/slow-query-table.md","ref":"session3/chapter3/slow-query-table.md","articles":[]},"previous":{"title":"3.3 诊断结果表","level":"4.3.3","depth":2,"path":"session3/chapter3/inspection-tables.md","ref":"session3/chapter3/inspection-tables.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/metrics-summary.md","mtime":"2020-03-16T16:12:27.232Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T16:13:19.062Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

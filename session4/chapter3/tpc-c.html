@@ -691,7 +691,7 @@
                 <a href="../../session2/chapter1/tiops-intro.html">
             
                     
-                    1.1.4 TiOps 简介
+                    1.1.3 TiOps 简介
             
                 </a>
             
@@ -704,7 +704,7 @@
                 <a href="../../session2/chapter1/tiops-deployment.html">
             
                     
-                    1.1.5 TiOps 部署生产环境集群
+                    1.1.4 TiOps 部署生产环境集群
             
                 </a>
             
@@ -2821,12 +2821,12 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="tpc-c-&#x57FA;&#x51C6;&#x6027;&#x80FD;&#x6D4B;&#x8BD5;">TPC-C &#x57FA;&#x51C6;&#x6027;&#x80FD;&#x6D4B;&#x8BD5;</h1>
+                                <h1 id="32-tpc-c-&#x57FA;&#x51C6;&#x6027;&#x80FD;&#x6D4B;&#x8BD5;">3.2 TPC-C &#x57FA;&#x51C6;&#x6027;&#x80FD;&#x6D4B;&#x8BD5;</h1>
 <p> &#x672C;&#x6587;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x5BF9; TiDB &#x8FDB;&#x884C; <a href="http://www.tpc.org/tpcc/" target="_blank">TPC-C</a> &#x6D4B;&#x8BD5;&#x3002;</p>
-<h2 id="tpc-c-&#x7B80;&#x4ECB;">TPC-C &#x7B80;&#x4ECB;</h2>
+<h2 id="1-tpc-c-&#x7B80;&#x4ECB;">1. TPC-C &#x7B80;&#x4ECB;</h2>
 <p>TPC &#x662F;&#x4E00;&#x7CFB;&#x5217;&#x4E8B;&#x52A1;&#x5904;&#x7406;&#x548C;&#x6570;&#x636E;&#x5E93;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x7684;&#x89C4;&#x8303;&#x3002;&#x5176;&#x4E2D;TPC-C&#xFF08;Transaction Processing Performance Council&#xFF09;&#x662F;&#x9488;&#x5BF9; OLTP &#x7684;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x6A21;&#x578B;&#x3002;TPC-C &#x6D4B;&#x8BD5;&#x6A21;&#x578B;&#x7ED9;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x7EDF;&#x4E00;&#x7684;&#x6D4B;&#x8BD5;&#x6807;&#x51C6;&#xFF0C;&#x53EF;&#x4EE5;&#x5927;&#x4F53;&#x89C2;&#x5BDF;&#x51FA;&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#x7A33;&#x5B9A;&#x6027;&#x3001;&#x6027;&#x80FD;&#x4EE5;&#x53CA;&#x7CFB;&#x7EDF;&#x6027;&#x80FD;&#x7B49;&#x4E00;&#x7CFB;&#x5217;&#x95EE;&#x9898;&#x3002;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x5C55;&#x5F00; TPC-C &#x57FA;&#x51C6;&#x6027;&#x80FD;&#x6D4B;&#x8BD5;&#xFF0C;&#x4E00;&#x65B9;&#x9762;&#x53EF;&#x4EE5;&#x8861;&#x91CF;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6027;&#x80FD;&#xFF0C;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#x53EF;&#x4EE5;&#x8861;&#x91CF;&#x91C7;&#x7528;&#x4E0D;&#x540C;&#x786C;&#x4EF6;&#x8F6F;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x6027;&#x4EF7;&#x6BD4;&#xFF0C;&#x4E5F;&#x662F;&#x88AB;&#x4E1A;&#x5185;&#x5E7F;&#x6CDB;&#x5E94;&#x7528;&#x5E76;&#x5173;&#x6CE8;&#x7684;&#x4E00;&#x79CD;&#x6D4B;&#x8BD5;&#x6A21;&#x578B;&#x3002;</p>
 <p>&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x4EE5;&#x7ECF;&#x5178;&#x7684;&#x5F00;&#x6E90;&#x6570;&#x636E;&#x5E93;&#x6D4B;&#x8BD5;&#x5DE5;&#x5177; BenchmarkSQL &#x4E3A;&#x4F8B;&#xFF0C;&#x5176;&#x5185;&#x5D4C;&#x4E86; TPCC &#x6D4B;&#x8BD5;&#x811A;&#x672C;&#xFF0C;&#x53EF;&#x4EE5;&#x5BF9; PostgreSQL&#x3001;MySQL&#x3001;Oracle&#x3001;TIDB &#x7B49;&#x884C;&#x4E1A;&#x5185;&#x4E3B;&#x6D41;&#x7684;&#x6570;&#x636E;&#x5E93;&#x4EA7;&#x54C1;&#x76F4;&#x63A5;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#x3002;</p>
-<h2 id="&#x4E00;&#x3001;benchmarksql">&#x4E00;&#x3001;BenchmarkSQL</h2>
+<h2 id="2-benchmarksql">2. BenchmarkSQL</h2>
 <p>TPC-C &#x662F;&#x4E00;&#x4E2A;&#x5BF9; OLTP&#xFF08;&#x8054;&#x673A;&#x4EA4;&#x6613;&#x5904;&#x7406;&#xFF09;&#x7CFB;&#x7EDF;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#x7684;&#x89C4;&#x8303;&#xFF0C;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x5546;&#x54C1;&#x9500;&#x552E;&#x6A21;&#x578B;&#x5BF9; OLTP &#x7CFB;&#x7EDF;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E94;&#x7C7B;&#x4E8B;&#x52A1;&#xFF1A;</p>
 <ul>
 <li>NewOrder &#x2013; &#x65B0;&#x8BA2;&#x5355;&#x7684;&#x751F;&#x6210;</li>
@@ -2844,7 +2844,7 @@
 <li>ORDER &#x8868;&#x4E2D;&#x5E94;&#x6709; W * 10 * 3000 &#x6761;&#x8BB0;&#x5F55;&#xFF08;&#x6BCF;&#x4E2A;&#x5730;&#x533A; 3000 &#x4E2A;&#x8BA2;&#x5355;&#xFF09;&#xFF0C;&#x5E76;&#x4E14;&#x6700;&#x540E;&#x751F;&#x6210;&#x7684; 900 &#x4E2A;&#x8BA2;&#x5355;&#x88AB;&#x6DFB;&#x52A0;&#x5230; NEW-ORDER &#x8868;&#x4E2D;&#xFF0C;&#x6BCF;&#x4E2A;&#x8BA2;&#x5355;&#x968F;&#x673A;&#x751F;&#x6210; 5 ~ 15 &#x6761; ORDER-LINE &#x8BB0;&#x5F55;&#x3002;</li>
 </ul>
 <p>TPC-C &#x4F7F;&#x7528; tpmC &#x503C;&#xFF08;Transactions per Minute&#xFF09;&#x6765;&#x8861;&#x91CF;&#x7CFB;&#x7EDF;&#x6700;&#x5927;&#x6709;&#x6548;&#x541E;&#x5410;&#x91CF;&#xFF08;MQTh&#xFF0C;Max Qualified Throughput&#xFF09;&#xFF0C;&#x5176;&#x4E2D; Transactions &#x4EE5; NewOrder Transaction &#x4E3A;&#x51C6;&#xFF0C;&#x5373;&#x6700;&#x7EC8;&#x8861;&#x91CF;&#x5355;&#x4F4D;&#x4E3A;&#x6BCF;&#x5206;&#x949F;&#x5904;&#x7406;&#x7684;&#x65B0;&#x8BA2;&#x5355;&#x6570;&#x3002;</p>
-<h2 id="&#x4E8C;&#x3001;tidb&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x90E8;&#x7F72;">&#x4E8C;&#x3001;TIDB&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x90E8;&#x7F72;</h2>
+<h2 id="3-tidb&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x90E8;&#x7F72;">3. TIDB&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x90E8;&#x7F72;</h2>
 <p>&#x5BF9;&#x4E8E; 1000 warehous &#x6211;&#x4EEC;&#x5C06;&#x5728; 3 &#x53F0;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x90E8;&#x7F72;&#x96C6;&#x7FA4;&#x3002;</p>
 <p>&#x5728; 3 &#x53F0;&#x670D;&#x52A1;&#x5668;&#x7684;&#x6761;&#x4EF6;&#x4E0B;&#xFF0C;&#x5EFA;&#x8BAE;&#x6BCF;&#x53F0;&#x673A;&#x5668;&#x90E8;&#x7F72; 1 &#x4E2A; TiDB&#xFF0C;1 &#x4E2A; PD &#x548C; 1 &#x4E2A; TiKV &#x5B9E;&#x4F8B;&#x3002;</p>
 <p>&#x6BD4;&#x5982;&#x8FD9;&#x91CC;&#x91C7;&#x7528;&#x7684;&#x673A;&#x5668;&#x786C;&#x4EF6;&#x914D;&#x7F6E;&#x662F;&#xFF1A;</p>
@@ -2913,7 +2913,7 @@ nohup taskset -c 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39 bin/tidb
 </tr>
 </tbody>
 </table>
-<h2 id="&#x4E09;&#x3001;tidb-&#x8C03;&#x4F18;&#x914D;&#x7F6E;">&#x4E09;&#x3001;TIDB &#x8C03;&#x4F18;&#x914D;&#x7F6E;</h2>
+<h2 id="4-tidb-&#x8C03;&#x4F18;&#x914D;&#x7F6E;">4. TIDB &#x8C03;&#x4F18;&#x914D;&#x7F6E;</h2>
 <p>1&#x3001;&#x5347;&#x9AD8;&#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF0C;&#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x6253;&#x5370;&#x65E5;&#x5FD7;&#x6570;&#x91CF;&#xFF0C;&#x5BF9;&#x6027;&#x80FD;&#x6709;&#x79EF;&#x6781;&#x5F71;&#x54CD;&#x3002;       </p>
 <pre><code class="lang-text">[log]
 level = &quot;error&quot;
@@ -2938,7 +2938,7 @@ level = &quot;error&quot;
 # there are lots of conflicts between transactions.
   enabled: true
 </code></pre>
-<h2 id="&#x56DB;&#x3001;tikv&#x8C03;&#x4F18;&#x914D;&#x7F6E;">&#x56DB;&#x3001;TIKV&#x8C03;&#x4F18;&#x914D;&#x7F6E;</h2>
+<h2 id="5-tikv&#x8C03;&#x4F18;&#x914D;&#x7F6E;">5. TIKV&#x8C03;&#x4F18;&#x914D;&#x7F6E;</h2>
 <p>1&#x3001;&#x8C03;&#x6574;&#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF0C;&#x5347;&#x9AD8; TiKV &#x7684;&#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#x540C;&#x6837;&#x6709;&#x5229;&#x4E8E;&#x6027;&#x80FD;&#x8868;&#x73B0;&#x3002;</p>
 <pre><code class="lang-text">global:
   log-level = &quot;error&quot;
@@ -2952,7 +2952,7 @@ sync-log = false
 capacity = &quot;10GB&quot;
 </code></pre>
 <p>3&#x3001;&#x5F00;&#x59CB;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x57FA;&#x672C;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x538B;&#x6D4B;&#x8FD0;&#x884C;&#x540E;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x89C2;&#x5BDF; Grafana &#x5E76;&#x53C2;&#x8003; [TiKV &#x8C03;&#x4F18;&#x8BF4;&#x660E;]&#x8FDB;&#x884C;&#x8C03;&#x6574;&#x3002;&#x5982;&#x51FA;&#x73B0;&#x5355;&#x7EBF;&#x7A0B;&#x6A21;&#x5757;&#x74F6;&#x9888;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6269;&#x5C55; TiKV &#x8282;&#x70B9;&#x6765;&#x8FDB;&#x884C;&#x8D1F;&#x8F7D;&#x5747;&#x644A;&#xFF1B;&#x5982;&#x51FA;&#x73B0;&#x591A;&#x7EBF;&#x7A0B;&#x6A21;&#x5757;&#x74F6;&#x9888;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x589E;&#x52A0;&#x8BE5;&#x6A21;&#x5757;&#x5E76;&#x53D1;&#x5EA6;&#x8FDB;&#x884C;&#x8C03;&#x6574;&#x3002;</p>
-<h2 id="&#x4E94;&#x3001;benchmarksql-&#x914D;&#x7F6E;">&#x4E94;&#x3001;BenchmarkSQL &#x914D;&#x7F6E;</h2>
+<h2 id="6-benchmarksql-&#x914D;&#x7F6E;">6. BenchmarkSQL &#x914D;&#x7F6E;</h2>
 <p>&#x4FEE;&#x6539; benchmarksql/run/props.mysql &#x6587;&#x4EF6;</p>
 <pre><code class="lang-text">conn=jdbc:mysql://{HAPROXY-HOST}:{HAPROXY-PORT}/tpcc?useSSL=false&amp;useServerPrepStmts=true&amp;useConfigs=maxPerformance
 
@@ -2962,7 +2962,7 @@ terminals=500   # &#x4F7F;&#x7528; 500 &#x4E2A;&#x7EC8;&#x7AEF;
 
 loadWorkers=32  # &#x5BFC;&#x5165;&#x6570;&#x636E;&#x7684;&#x5E76;&#x53D1;&#x6570;
 </code></pre>
-<h2 id="&#x516D;&#x3001;&#x5BFC;&#x5165;&#x6570;&#x636E;">&#x516D;&#x3001;&#x5BFC;&#x5165;&#x6570;&#x636E;</h2>
+<h2 id="7-&#x5BFC;&#x5165;&#x6570;&#x636E;">7. &#x5BFC;&#x5165;&#x6570;&#x636E;</h2>
 <p>&#xFF08;&#x5BFC;&#x5165;&#x6570;&#x636E;&#x901A;&#x5E38;&#x662F;&#x6574;&#x4E2A; TPC-C &#x6D4B;&#x8BD5;&#x4E2D;&#x6700;&#x8017;&#x65F6;&#xFF0C;&#x4E5F;&#x662F;&#x6700;&#x5BB9;&#x6613;&#x51FA;&#x95EE;&#x9898;&#x7684;&#x9636;&#x6BB5;&#xFF09;</p>
 <p>1&#x3001;&#x9996;&#x5148;&#x8FDE;&#x63A5;&#x5230; TiDB-Server &#x5E76;&#x6267;&#x884C;&#xFF1A;</p>
 <pre><code class="lang-shell">create database tpcc&#xFF1B;
@@ -3019,7 +3019,7 @@ csv:
 <li>&#x5728; Lightning &#x76EE;&#x5F55;&#x4E0B;&#x6267;&#x884C; <code>scripts/start_lightning.sh</code>&#xFF0C;&#x5F00;&#x59CB;&#x5BFC;&#x5165;&#x6570;&#x636E;&#x3002;</li>
 </ul>
 <p>&#x7531;&#x4E8E;&#x662F;&#x7528; ansible &#x8FDB;&#x884C;&#x90E8;&#x7F72;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x76D1;&#x63A7;&#x9875;&#x9762;&#x770B;&#x5230; Lightning &#x7684;&#x5BFC;&#x5165;&#x8FDB;&#x5EA6;&#xFF0C;&#x6216;&#x8005;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x67E5;&#x770B;&#x5BFC;&#x5165;&#x662F;&#x5426;&#x7ED3;&#x675F;&#x3002;&#x6570;&#x636E;&#x5BFC;&#x5165;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x8FD0;&#x884C; <code>sql.common/test.sql</code> &#x8FDB;&#x884C;&#x6570;&#x636E;&#x6B63;&#x786E;&#x6027;&#x9A8C;&#x8BC1;&#xFF0C;&#x5982;&#x679C;&#x6240;&#x6709; SQL &#x8BED;&#x53E5;&#x90FD;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x4E3A;&#x7A7A;&#xFF0C;&#x5373;&#x4E3A;&#x6570;&#x636E;&#x5BFC;&#x5165;&#x6B63;&#x786E;&#x3002;</p>
-<h2 id="&#x4E03;&#x3001;&#x8FD0;&#x884C;&#x6D4B;&#x8BD5;">&#x4E03;&#x3001;&#x8FD0;&#x884C;&#x6D4B;&#x8BD5;</h2>
+<h2 id="8-&#x8FD0;&#x884C;&#x6D4B;&#x8BD5;">8. &#x8FD0;&#x884C;&#x6D4B;&#x8BD5;</h2>
 <p>&#x6267;&#x884C; BenchmarkSQL &#x6D4B;&#x8BD5;&#x811A;&#x672C;&#xFF1A;</p>
 <pre><code class="lang-shell">nohup ./runBenchmark.sh props.mysql &amp;&gt; test.log &amp;
 </code></pre>
@@ -3078,7 +3078,7 @@ csv:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"next":{"title":"4 跨数据中心方案","level":"5.4","depth":1,"path":"session4/chapter4/multi-data-center-solution.md","ref":"session4/chapter4/multi-data-center-solution.md","articles":[{"title":"4.1 两中心异步复制方案（binlog 复制）","level":"5.4.1","depth":2,"path":"session4/chapter4/two-dc-binlog.md","ref":"session4/chapter4/two-dc-binlog.md","articles":[]},{"title":"4.2 两中心同步复制方案（三副本 Raft）","level":"5.4.2","depth":2,"path":"session4/chapter4/two-dc-raft.md","ref":"session4/chapter4/two-dc-raft.md","articles":[]},{"title":"4.3 两地三中心","level":"5.4.3","depth":2,"path":"session4/chapter4/3-dc.md","ref":"session4/chapter4/3-dc.md","articles":[]},{"title":"4.4 AWS 跨 AZ 部署 TiDB","level":"5.4.4","depth":2,"path":"session4/chapter4/cross-az-in-aws.md","ref":"session4/chapter4/cross-az-in-aws.md","articles":[]}]},"previous":{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"path":"session4/chapter3/sysbench.md","ref":"session4/chapter3/sysbench.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter3/tpc-c.md","mtime":"2020-03-16T08:58:40.383Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T08:59:27.343Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3.2 TPC-C 基准性能测试","level":"5.3.2","depth":2,"next":{"title":"4 跨数据中心方案","level":"5.4","depth":1,"path":"session4/chapter4/multi-data-center-solution.md","ref":"session4/chapter4/multi-data-center-solution.md","articles":[{"title":"4.1 两中心异步复制方案（binlog 复制）","level":"5.4.1","depth":2,"path":"session4/chapter4/two-dc-binlog.md","ref":"session4/chapter4/two-dc-binlog.md","articles":[]},{"title":"4.2 两中心同步复制方案（三副本 Raft）","level":"5.4.2","depth":2,"path":"session4/chapter4/two-dc-raft.md","ref":"session4/chapter4/two-dc-raft.md","articles":[]},{"title":"4.3 两地三中心","level":"5.4.3","depth":2,"path":"session4/chapter4/3-dc.md","ref":"session4/chapter4/3-dc.md","articles":[]},{"title":"4.4 AWS 跨 AZ 部署 TiDB","level":"5.4.4","depth":2,"path":"session4/chapter4/cross-az-in-aws.md","ref":"session4/chapter4/cross-az-in-aws.md","articles":[]}]},"previous":{"title":"3.1 Sysbench 基准性能测试","level":"5.3.1","depth":2,"path":"session4/chapter3/sysbench.md","ref":"session4/chapter3/sysbench.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter3/tpc-c.md","mtime":"2020-03-16T16:12:27.232Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T16:13:19.062Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

@@ -691,7 +691,7 @@
                 <a href="../../session2/chapter1/tiops-intro.html">
             
                     
-                    1.1.4 TiOps 简介
+                    1.1.3 TiOps 简介
             
                 </a>
             
@@ -704,7 +704,7 @@
                 <a href="../../session2/chapter1/tiops-deployment.html">
             
                     
-                    1.1.5 TiOps 部署生产环境集群
+                    1.1.4 TiOps 部署生产环境集群
             
                 </a>
             
@@ -2821,10 +2821,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p>&#x65E5;&#x5E38; TiDB &#x8FD0;&#x7EF4;&#x4E2D;&#xFF0C;&#x4F1A;&#x9047;&#x5230;&#x7EC4;&#x4EF6; OOM &#x7684;&#x95EE;&#x9898;&#xFF0C;&#x901A;&#x5E38;&#x51FA;&#x73B0;&#x5728; TiDB-Server &#x548C; TiKV-Server&#xFF0C;&#x5206;&#x522B;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x51FA;&#x73B0;&#x7684;&#x5E38;&#x89C1;&#x539F;&#x56E0;&#x4EE5;&#x53CA;&#x5904;&#x7406;&#x5EFA;&#x8BAE;&#x3002;</p>
-<h1 id="&#x4E00;&#x3001;tidb-server">&#x4E00;&#x3001;TiDB-Server</h1>
+                                <h2 id="74-tidb-oom-&#x7684;&#x5E38;&#x89C1;&#x539F;&#x56E0;">7.4 TiDB OOM &#x7684;&#x5E38;&#x89C1;&#x539F;&#x56E0;</h2>
+<p>&#x65E5;&#x5E38; TiDB &#x8FD0;&#x7EF4;&#x4E2D;&#xFF0C;&#x4F1A;&#x9047;&#x5230;&#x7EC4;&#x4EF6; OOM &#x7684;&#x95EE;&#x9898;&#xFF0C;&#x901A;&#x5E38;&#x51FA;&#x73B0;&#x5728; TiDB-Server &#x548C; TiKV-Server&#xFF0C;&#x5206;&#x522B;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x51FA;&#x73B0;&#x7684;&#x5E38;&#x89C1;&#x539F;&#x56E0;&#x4EE5;&#x53CA;&#x5904;&#x7406;&#x5EFA;&#x8BAE;&#x3002;</p>
+<h3 id="741-tidb-server">7.4.1 TiDB-Server</h3>
+<h4 id="1-&#x5982;&#x4F55;&#x5FEB;&#x901F;&#x786E;&#x8BA4;-tidb-server-&#x51FA;&#x73B0;&#x4E86;-oom">1. &#x5982;&#x4F55;&#x5FEB;&#x901F;&#x786E;&#x8BA4; TiDB-Server &#x51FA;&#x73B0;&#x4E86; OOM</h4>
 <ul>
-<li>&#x5982;&#x4F55;&#x5FEB;&#x901F;&#x786E;&#x8BA4; TiDB-Server &#x51FA;&#x73B0;&#x4E86; OOM<ul>
 <li>&#x5BA2;&#x6237;&#x7AEF;&#x6536;&#x5230; tidb-server &#x62A5;&#x9519; &quot;ERROR 2013 (HY000): Lost connection to MySQL server during query&quot;</li>
 <li>TiDB grafana &#x9762;&#x677F;&#x4E2D; Server &#x7684; Heap Memory Usage &#x9879;&#xFF0C;&#x51FA;&#x73B0;&#x4E00;&#x6B21;&#x6216;&#x8005;&#x591A;&#x6B21;&#x5185;&#x5B58;&#x4E0A;&#x6DA8;&#x5E76;&#x7A81;&#x7136;&#x4E0B;&#x8DCC;&#x5230;&#x5E95;&#x7684;&#x60C5;&#x51B5;<img src="../../res/session4/chapter7/tidb-oom/oom_example.png" alt="&#x56FE;&#x7247;"></li>
 <li>&#x67E5;&#x770B; TiDB service &#x7684;&#x542F;&#x52A8;&#x65F6;&#x95F4;<pre><code>$ systemctl status tidb-4000.service
@@ -2839,19 +2840,19 @@ Active: active (running) since Fri 2020-02-21 12:30:04 CST; 5 min ago
 </ul>
 </li>
 </ul>
-</li>
-<li>TiDB-Server &#x51FA;&#x73B0; OOM &#x7684;&#x5E38;&#x89C1;&#x539F;&#x56E0;<ul>
+<h4 id="2-tidb-server-&#x51FA;&#x73B0;-oom-&#x7684;&#x5E38;&#x89C1;&#x539F;&#x56E0;">2. TiDB-Server &#x51FA;&#x73B0; OOM &#x7684;&#x5E38;&#x89C1;&#x539F;&#x56E0;</h4>
+<p>&#x5BFC;&#x81F4; TiDB oom &#x7684;&#x672C;&#x8D28;&#x539F;&#x56E0;&#x662F; TiDB &#x73B0;&#x6709;&#x7684;&#x5185;&#x5B58;&#x5C0F;&#x4E8E; TiDB &#x8981;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x3002;</p>
+<ul>
 <li>&#x590D;&#x6742;&#x67E5;&#x8BE2;</li>
-</ul>
-</li>
 </ul>
 <p>SQL &#x6267;&#x884C;&#x8BA1;&#x5212;&#x4E2D;&#x7684; root &#x4EFB;&#x52A1;&#x5360;&#x6BD4;&#x8FC7;&#x9AD8;&#xFF0C;TiDB-Server &#x9700;&#x8981;&#x7F13;&#x5B58;&#x5927;&#x91CF;&#x6570;&#x636E;&#x3002;&#x6BD4;&#x5982;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x4E2D;&#x4F7F;&#x7528;&#x4E86; hash join&#x3001;&#x8FC7;&#x591A;&#x7684;&#x5B50;&#x67E5;&#x8BE2;&#x3001;Update&amp;Delete &#x6D89;&#x53CA;&#x6570;&#x636E;&#x91CF;&#x8FC7;&#x5927;&#x7B49;&#x7B49;&#x3002;</p>
 <ul>
 <li>&#x673A;&#x5668;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#xFF0C;&#x673A;&#x5668;&#x4E0A;&#x90E8;&#x7F72;&#x7684;&#x5176;&#x4ED6;&#x5E94;&#x7528;&#x5360;&#x7528;&#x4E86;&#x8F83;&#x591A;&#x5185;&#x5B58;&#xFF0C;&#x5982; Prometheus</li>
-<li>&#x6D3B;&#x8DC3;&#x7EBF;&#x7A0B;&#x6570;&#x8FC7;&#x591A;&#xFF0C;&#x5BFC;&#x81F4;&#x5185;&#x5B58;&#x7528;&#x5C3D;<ul>
-<li>&#x5982;&#x4F55;&#x7F13;&#x89E3; TiDB-Server OOM &#x95EE;&#x9898;</li>
+<li>&#x6D3B;&#x8DC3;&#x7EBF;&#x7A0B;&#x6570;&#x8FC7;&#x591A;&#xFF0C;&#x5BFC;&#x81F4;&#x5185;&#x5B58;&#x7528;&#x5C3D;</li>
+<li>mydumper&#x5BFC;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x5E76;&#x53D1;&#x91CF;&#x592A;&#x5927;</li>
 </ul>
-</li>
+<h4 id="3-&#x5982;&#x4F55;&#x7F13;&#x89E3;-tidb-server-oom-&#x95EE;&#x9898;">3. &#x5982;&#x4F55;&#x7F13;&#x89E3; TiDB-Server OOM &#x95EE;&#x9898;</h4>
+<ul>
 <li>&#x53C2;&#x7167;&#x672C;&#x4E66; &quot;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D;&#x6162; SQL&quot; &#x7684;&#x7AE0;&#x8282;&#xFF0C;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x7D22;&#x5F15;&#x6216;&#x8005;&#x4F18;&#x5316; SQL &#x8BED;&#x53E5;&#x6765;&#x89E3;&#x51B3;</li>
 <li>&#x914D;&#x5408; tidb_mem_quota_query &#x9650;&#x5236;&#x5355;&#x4E2A; Query &#x7684;&#x5185;&#x5B58;&#x6D88;&#x8017;&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; 32GB<pre><code>global:
 mem-quota-query: 209715200 //&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;&#x5C06;&#x9608;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A; 200MB
@@ -2859,18 +2860,27 @@ oom-action: &quot;cancel&quot;  //&#x8D85;&#x8FC7;&#x9608;&#x503C;&#x7684; SQL &
 </code></pre></li>
 <li>max_execution_time &#x9650;&#x5236;&#x5355;&#x4E2A; SQL &#x6267;&#x884C;&#x65F6;&#x95F4;<pre><code>set @@GLOBAL.max_execution_time=10000; //&#x9650;&#x5236; SQL &#x6267;&#x884C;&#x6700;&#x957F;&#x65F6;&#x95F4;&#x4E3A; 10s
 </code></pre></li>
-<li>&#x5F00;&#x542F; SWAP&#xFF0C;&#x53EF;&#x4EE5;&#x7F13;&#x89E3;&#x7531;&#x4E8E;&#x5927;&#x67E5;&#x8BE2;&#x4F7F;&#x7528;&#x5185;&#x5B58;&#x8FC7;&#x591A;&#x800C;&#x9020;&#x6210;&#x7684; OOM &#x95EE;&#x9898;&#x3002;</li>
+<li>&#x5F00;&#x542F; SWAP&#xFF0C;&#x53EF;&#x4EE5;&#x7F13;&#x89E3;&#x7531;&#x4E8E;&#x5927;&#x67E5;&#x8BE2;&#x4F7F;&#x7528;&#x5185;&#x5B58;&#x8FC7;&#x591A;&#x800C;&#x9020;&#x6210;&#x7684; OOM &#x95EE;&#x9898;&#x3002;<pre><code>&#x4F46;&#x8BE5;&#x65B9;&#x6CD5;&#x4F1A;&#x5728;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;&#x7531;&#x4E8E;&#x5B58;&#x5728; IO &#x5F00;&#x9500;&#xFF0C;&#x56E0;&#x6B64;&#x5927;&#x67E5;&#x8BE2;&#x6027;&#x80FD;&#x9020;&#x6210;&#x4E00;&#x5B9A;&#x5F71;&#x54CD;&#x3002;&#x6027;&#x80FD;&#x56DE;&#x9000;&#x7A0B;&#x5EA6;&#x53D7;&#x5269;&#x4F59;&#x5185;&#x5B58;&#x91CF;&#x3001;&#x8BFB;&#x5199;&#x76D8;&#x901F;&#x5EA6;&#x5F71;&#x54CD;&#x3002;
+</code></pre></li>
+<li>&#x76EE;&#x524D; 4.0 &#x7248;&#x672C;&#x5DF2;&#x7ECF;&#x652F;&#x6301; oom-use-tmp-storage &#x529F;&#x80FD;<pre><code>&#x8BBE;&#x7F6E;&#x4E3A; `true` &#x53EF;&#x4EE5;&#x4F7F;&#x5355;&#x6761; SQL &#x5185;&#x5B58;&#x4F7F;&#x7528;&#x5728;&#x8D85;&#x51FA; `mem-quota-query` &#x65F6;&#x4E3A;&#x67D0;&#x4E9B;&#x7B97;&#x5B50;&#x542F;&#x7528;&#x4E34;&#x65F6;&#x78C1;&#x76D8;
+</code></pre></li>
+<li><p>&#x589E;&#x5927; TiDB &#x73B0;&#x6709;&#x5185;&#x5B58;</p>
+<pre><code>TiDB &#x5B9E;&#x4F8B;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x670D;&#x52A1;&#x5668;&#x5168;&#x90E8;&#x5185;&#x5B58;&#x7684;&#xFF0C;&#x63D0;&#x5347;&#x7269;&#x7406;&#x670D;&#x52A1;&#x5668;&#x5185;&#x5B58;&#x5728;&#x771F;&#x5B9E;&#x573A;&#x666F;&#x4E2D;&#x5E76;&#x4E0D;&#x73B0;&#x5B9E;&#x3002;&#x4F46;&#x5F53;&#x524D;&#x5E02;&#x573A;&#x4E0A;&#x670D;&#x52A1;&#x5668;&#x591A; NUMA &#x67B6;&#x6784;&#xFF0C;TiDB &#x4F7F;&#x7528;&#x5EFA;&#x8BAE;&#x4E2D;&#x5B58;&#x5728;&#x7740; NUMA &#x7ED1;&#x6838;&#x7684;&#x673A;&#x5236;&#x3002;&#x5982;&#x679C;&#x5728;&#x505A;&#x7ED1;&#x6838;&#x52A8;&#x4F5C;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x4E86; membind &#x53C2;&#x6570;&#xFF08;Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above&#xFF09;&#x7ED1;&#x5B9A;&#x5230; NUMA NODE&#x4E0A;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x53EA;&#x80FD;&#x5206;&#x914D;&#x8BE5; NUMA NODES &#x4E0A;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x800C;&#x975E;&#x5168;&#x90E8;&#xFF1B;&#x63A8;&#x8350;&#x4F7F;&#x7528; preferred &#x53C2;&#x6570;&#xFF08;Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above&#xFF09;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#xFF0C;&#x5176;&#x542B;&#x4E49;&#x4E3A;&#x9996;&#x5148;&#x4F7F;&#x7528;&#x5206;&#x914D;&#x7684; NUMA NODE &#x7684;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#xFF0C;&#x4E0D;&#x8DB3;&#x65F6;&#x4F1A;&#x4F7F;&#x7528;&#x5176;&#x4ED6;&#x8282;&#x70B9;&#x7684;&#x5185;&#x5B58;&#x3002;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8; TiDB &#x4F7F;&#x7528;&#x5185;&#x5B58;&#x7684;&#x6C34;&#x4F4D;&#x3002;sudo -s
+</code></pre></li>
+<li><p>&#x51CF;&#x5C11; TiDB &#x4F7F;&#x7528;&#x5185;&#x5B58;&#x3002;</p>
+</li>
 </ul>
-<p>&#x4F46;&#x8BE5;&#x65B9;&#x6CD5;&#x4F1A;&#x5728;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;&#x7531;&#x4E8E;&#x5B58;&#x5728; IO &#x5F00;&#x9500;&#xFF0C;&#x56E0;&#x6B64;&#x5927;&#x67E5;&#x8BE2;&#x6027;&#x80FD;&#x9020;&#x6210;&#x4E00;&#x5B9A;&#x5F71;&#x54CD;&#x3002;&#x6027;&#x80FD;&#x56DE;&#x9000;&#x7A0B;&#x5EA6;&#x53D7;&#x5269;&#x4F59;&#x5185;&#x5B58;&#x91CF;&#x3001;&#x8BFB;&#x5199;&#x76D8;&#x901F;&#x5EA6;&#x5F71;&#x54CD;&#x3002;</p>
-<ul>
-<li>&#x76EE;&#x524D; 4.0 &#x7248;&#x672C;&#x5DF2;&#x7ECF;&#x652F;&#x6301; oom-use-tmp-storage &#x529F;&#x80FD;</li>
-</ul>
-<p>&#x8BBE;&#x7F6E;&#x4E3A; <code>true</code> &#x53EF;&#x4EE5;&#x4F7F;&#x5355;&#x6761; SQL &#x5185;&#x5B58;&#x4F7F;&#x7528;&#x5728;&#x8D85;&#x51FA; <code>mem-quota-query</code> &#x65F6;&#x4E3A;&#x67D0;&#x4E9B;&#x7B97;&#x5B50;&#x542F;&#x7528;&#x4E34;&#x65F6;&#x78C1;&#x76D8;</p>
-<h1 id="&#x4E8C;&#x3001;tikv-server">&#x4E8C;&#x3001;TiKV-Server</h1>
+<pre><code>1&#xFF09;&#x4F18;&#x5316;&#x5355;&#x4E00;&#x5927; SQL
+     &#x5F53;&#x51FA;&#x73B0; TiDB OOM &#x65F6; &#xFF0C;&#x53BB;&#x67E5;&#x770B;&#x5BF9;&#x5E94;&#x7684; tidb_slow_query.log &#x901A;&#x8FC7; Query_time &#x548C; Mem_max &#x503C;&#x5B9A;&#x4F4D;&#x4F7F;&#x7528;&#x5185;&#x5B58;&#x8FC7;&#x591A;&#x7684;&#x6162; SQL &#x3002;
+     &#x5982;&#x679C;&#x662F;&#x67E5;&#x8BE2; SQL &#x53EF;&#x901A;&#x8FC7;&#x5176;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x5B9A;&#x4F4D;&#xFF0C;&#x662F;&#x5426;&#x5B58;&#x5728;&#x7740;&#x4EE5;&#x4E0B;&#x52A8;&#x4F5C;&#xFF1A;
+     &#x5168;&#x8868;&#x626B;&#x63CF; table scan &#x4F18;&#x5316;&#x601D;&#x8DEF;&#xFF1A;&#x8003;&#x8651;&#x65B0;&#x5EFA;&#x7D22;&#x5F15;&#x3002;
+     hash join &#x4F18;&#x5316;&#x601D;&#x8DEF;&#xFF1A;&#x6CE8;&#x610F;&#x8868;&#x4E4B;&#x95F4;&#x7684;&#x6392;&#x5217;&#x987A;&#x5E8F;&#xFF0C;&#x8BA9;&#x7B5B;&#x9009;&#x6027;&#x597D;&#x7684;&#x8868;&#x4F18;&#x5148; join &#xFF1B;&#x8003;&#x8651;&#x4F7F;&#x7528; index loop join &#x4EE3;&#x66FF;&#x3002;
+     &#x5982;&#x679C;&#x662F; delete &#x8BED;&#x53E5;&#xFF0C;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x4F7F;&#x7528; tidb_batch_delete &#x65B9;&#x5F0F;&#xFF0C;&#x6216;&#x4E1A;&#x52A1;&#x4E0A;&#x5206;&#x7247;&#x65B9;&#x5F0F;&#xFF0C;&#x8FBE;&#x5230;&#x5C11;&#x91CF;&#x591A;&#x6B21;&#x7684;&#x6548;&#x679C;&#x3002;
+2&#xFF09;&#x6A2A;&#x5411;&#x6269;&#x5BB9; TiDB 
+     &#x9762;&#x5BF9;&#x6CA1;&#x6709;&#x5355;&#x4E00;&#x5927; SQL &#xFF0C;&#x800C;&#x662F;&#x5E76;&#x53D1;&#x8F83;&#x9AD8;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x6A2A;&#x5411;&#x6269;&#x5C55; TiDB &#x8282;&#x70B9;&#x6765;&#x7F13;&#x89E3;&#x5355;&#x4E00; TiDB &#x5B9E;&#x4F8B;&#x7684;&#x538B;&#x529B;&#xFF0C;&#x4ECE;&#x800C;&#x8D77;&#x5230;&#x7F13;&#x89E3; oom &#x7684;&#x4F5C;&#x7528;&#x3002;
+</code></pre><h3 id="742-tikv-server">7.4.2 TiKV-Server</h3>
 <p>TiKV-Server OOM &#x7684;&#x5E38;&#x89C1;&#x573A;&#x666F;&#x6709;&#x5982;&#x4E0B;&#x51E0;&#x79CD;&#xFF0C;&#x4E0D;&#x540C;&#x573A;&#x666F;&#x7684;&#x5904;&#x7406;&#x5EFA;&#x8BAE;&#x4E5F;&#x6709;&#x4E0D;&#x540C;&#x3002;</p>
-<ul>
-<li>block-cache &#x914D;&#x7F6E;&#x8FC7;&#x5927;</li>
-</ul>
+<h4 id="1-block-cache-&#x914D;&#x7F6E;&#x8FC7;&#x5927;">1. block-cache &#x914D;&#x7F6E;&#x8FC7;&#x5927;</h4>
 <p>&#x5728; TiKV grafana &#x9009;&#x4E2D;&#x5BF9;&#x5E94;&#x7684; instance &#x4E4B;&#x540E;&#x67E5;&#x770B; RocksDB &#x7684; block cache size &#x76D1;&#x63A7;&#x6765;&#x786E;&#x8BA4;&#x662F;&#x5426;&#x662F;&#x8BE5;&#x95EE;&#x9898;&#x3002;&#x540C;&#x65F6;&#x68C0;&#x67E5; &#x53C2;&#x6570;&#x662F;&#x5426;&#x8BBE;&#x7F6E;&#x5408;&#x7406;&#xFF0C;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B; TiKV &#x7684; block-cache &#x8BBE;&#x7F6E;&#x4E3A;&#x673A;&#x5668;&#x603B;&#x5185;&#x5B58;&#x7684; 45%&#xFF0C;&#x5728; container &#x90E8;&#x7F72;&#x7684;&#x65F6;&#x5019;&#x9700;&#x8981;&#x663E;&#x5F0F;&#x6307;&#x5B9A;&#x8BE5;&#x53C2;&#x6570;&#xFF0C;&#x56E0;&#x4E3A; TiKV &#x83B7;&#x53D6;&#x7684;&#x662F;&#x7269;&#x7406;&#x673A;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x8D85;&#x51FA; container &#x7684;&#x5185;&#x5B58;&#x9650;&#x5236;&#x3002;</p>
 <pre><code>[storage.block-cache]
 capacity = &quot;30GB&quot;
@@ -2879,9 +2889,9 @@ capacity = &quot;30GB&quot;
 <ol>
 <li>&#x9002;&#x5F53;&#x589E;&#x5927;&#x673A;&#x5668;&#x5185;&#x5B58;</li>
 <li>&#x9002;&#x5F53;&#x51CF;&#x5C0F; block-cache </li>
-<li>coprocessor &#x6536;&#x5230;&#x5927;&#x91CF;&#x5927;&#x67E5;&#x8BE2;&#xFF0C;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x5927;&#x91CF;&#x7684;&#x6570;&#x636E;</li>
 </ol>
 </blockquote>
+<h4 id="2-coprocessor-&#x6536;&#x5230;&#x5927;&#x91CF;&#x5927;&#x67E5;&#x8BE2;&#xFF0C;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x5927;&#x91CF;&#x7684;&#x6570;&#x636E;">2. coprocessor &#x6536;&#x5230;&#x5927;&#x91CF;&#x5927;&#x67E5;&#x8BE2;&#xFF0C;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x5927;&#x91CF;&#x7684;&#x6570;&#x636E;</h4>
 <p>gRPC &#x53D1;&#x9001;&#x901F;&#x5EA6;&#x8DDF;&#x4E0D;&#x4E0A; coprocessor &#x5F80;&#x5916;&#x5410;&#x6570;&#x636E;&#x7684;&#x901F;&#x5EA6;&#x5BFC;&#x81F4; OOM&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x68C0;&#x67E5; [tikv-detail]-&gt;[Coprocessor Overview]-&gt;[Total Response Size] &#x662F;&#x5426;&#x8D85;&#x8FC7; network outbound &#x6D41;&#x91CF;&#x6765;&#x786E;&#x8BA4;&#x662F;&#x5426;&#x5C5E;&#x4E8E;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x3002;</p>
 <blockquote>
 <p>&#x5904;&#x7406;&#x5EFA;&#x8BAE;&#xFF1A;</p>
@@ -2889,9 +2899,9 @@ capacity = &quot;30GB&quot;
 <li>&#x4F7F;&#x7528;&#x4E07;&#x5146;&#x7F51;&#x5361;&#xFF0C;&#x63D0;&#x9AD8;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x901F;&#x5EA6;</li>
 <li>&#x53C2;&#x7167;&#x672C;&#x4E66; &quot;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D;&#x6162; SQL&quot; &#x7684;&#x7AE0;&#x8282;&#xFF0C;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5B58;&#x5728;&#x5168;&#x8868;&#x626B;&#x63CF;&#x7684;&#x5927;&#x67E5;&#x8BE2;</li>
 <li>&#x68C0;&#x67E5; gRPC poll CPU &#x662F;&#x5426;&#x4E0D;&#x8DB3;</li>
-<li>Raft apply &#x7EBF;&#x7A0B;&#x77ED;&#x65F6;&#x95F4;&#x9700;&#x8981;&#x5904;&#x7406;&#x5927;&#x91CF; raft &#x65E5;&#x5FD7;&#xFF0C;apply log &#x8FC7;&#x7A0B;&#x901F;&#x5EA6;&#x6162; </li>
 </ol>
 </blockquote>
+<h4 id="3-raft-apply-&#x7EBF;&#x7A0B;&#x77ED;&#x65F6;&#x95F4;&#x9700;&#x8981;&#x5904;&#x7406;&#x5927;&#x91CF;-raft-&#x65E5;&#x5FD7;&#xFF0C;apply-log-&#x8FC7;&#x7A0B;&#x901F;&#x5EA6;&#x6162;">3. Raft apply &#x7EBF;&#x7A0B;&#x77ED;&#x65F6;&#x95F4;&#x9700;&#x8981;&#x5904;&#x7406;&#x5927;&#x91CF; raft &#x65E5;&#x5FD7;&#xFF0C;apply log &#x8FC7;&#x7A0B;&#x901F;&#x5EA6;&#x6162;</h4>
 <p>Apply &#x65E5;&#x5FD7;&#x4E0D;&#x53CA;&#x65F6;&#x53EF;&#x80FD;&#x5BFC;&#x81F4; apply channel &#x4E2D;&#x5185;&#x5B58;&#x5806;&#x79EF;&#xFF0C;&#x5806;&#x79EF;&#x4E25;&#x91CD;&#x5BFC;&#x81F4;&#x7CFB;&#x7EDF;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x5219;&#x4F1A;&#x51FA;&#x73B0; oom&#x3002;&#x901A;&#x5E38;&#x662F; apply wait duration &#x548C; apply log duration &#x8FC7;&#x9AD8;&#x3002;&#x76F8;&#x5173;&#x76D1;&#x63A7;&#x4F4D;&#x4E8E;&#xFF1A;</p>
 <ul>
 <li>[tikv-detail]-&gt;[Raft IO]-&gt;[apply log duration]</li>
@@ -2905,38 +2915,6 @@ capacity = &quot;30GB&quot;
 </blockquote>
 </li>
 </ul>
-<p>TiDB oom &#x662F;&#x6307;&#x5728;&#x4F7F;&#x7528; TiDB &#x65F6;&#xFF0C;&#x51FA;&#x73B0;&#x7684;&#x5185;&#x5B58;&#x6EA2;&#x51FA;&#x73B0;&#x8C61;&#xFF08;out of memory &#x7B80;&#x79F0; oom&#xFF09;</p>
-<p>&#x53D1;&#x751F; TiDB oom &#x65F6;&#x7684;&#x73B0;&#x8C61;</p>
-<p>1&#x3001;&#x5E94;&#x7528;&#x7AEF;&#x4F1A;&#x6536;&#x5230;&#x62A5;&#x9519; &#x201C;ERROR 2013 (HY000): Lost connection to MySQL server during query&#x201D;</p>
-<p>2&#x3001;Grafana &#x76D1;&#x63A7;&#x9875;&#x9762;&#x4E0A; --&gt; TiDB &#x9762;&#x677F; --&gt; Server &#x9875;&#x7B7E; --&gt; uptime &#x548C; memory usage &#x76D1;&#x63A7;&#x9879;&#x4F1A;&#x51FA;&#x73B0;&#x6389;&#x5E95;&#x7684;&#x73B0;&#x8C61;&#x3002;</p>
-<p>3&#x3001;os &#x5C42;&#x9762; dmesg &#x6216;&#x8005; /var/log/message &#x4E2D;&#xFF0C;&#x4F1A;&#x51FA;&#x73B0; oom killer &#x5B57;&#x6837;&#x3002;</p>
-<p>4&#x3001;&#x7531;&#x4E8E; TiDB &#x5B9E;&#x4F8B;&#x662F;&#x5B58;&#x5728; systemd &#x6216; supervise &#x5B88;&#x62A4;&#x8FDB;&#x7A0B;&#x7684;&#xFF0C;oom &#x540E; TiDB &#x5B9E;&#x4F8B;&#x4F1A;&#x88AB;&#x62C9;&#x8D77;&#x6765;&#xFF0C;&#x5176;&#x65E5;&#x5FD7; tidb.log &#x4E2D;&#x5B58;&#x5728;&#x542F;&#x52A8;&#x7279;&#x6709;&#x7684; Welcome to TiDB &#x4FE1;&#x606F;&#x3002;</p>
-<p>TiDB oom &#x7684;&#x539F;&#x56E0;</p>
-<p>&#x6211;&#x53F8;&#x6D4B;&#x8BD5;&#x8FC7;&#x7A0B;&#x4E2D;&#x9047;&#x5230;&#x7684; TiDB OOM &#x6709;&#xFF1A;</p>
-<p>1&#x3001;select &#x5927;&#x8868;&#xFF0C;&#x76F4;&#x63A5;&#x628A; TiDB &#x6253;&#x7206;&#x3002;</p>
-<p>2&#x3001;delete &#x5927;&#x8868;&#xFF0C;where &#x6761;&#x4EF6;&#x8FC7;&#x6EE4;&#x51FA;&#x6765;&#x7684;&#x6570;&#x636E;&#x91CF;&#x592A;&#x5927;&#xFF0C;&#x76F4;&#x63A5;&#x628A; TiDB &#x6253;&#x7206;&#x3002;</p>
-<p>3&#x3001;&#x4F18;&#x5316;&#x5668;&#x4E0D;&#x591F;&#x597D;&#xFF0C;&#x5728;&#x6267;&#x884C;&#x6570;&#x636E;&#x8868;&#x548C;&#x4EBA;&#x9020;&#x5E38;&#x91CF;&#x8868;&#x5728; join &#x7684;&#x65F6;&#x5019;&#x76F4;&#x63A5;&#x628A; TiDB &#x6253;&#x7206;&#x3002;&#x8BED;&#x53E5;&#xFF1A;update table_a a,(select 1 id, 2 name) b set a.name = b.name where a.id = b.id;&#x6B64;&#x65F6; a &#x8868;&#x4E2D;&#x5E76;&#x6CA1;&#x6709; id &#x4E3A; 1 &#x7684;&#x6570;&#x636E;&#x3002;</p>
-<p>4&#x3001;mydumper&#x5BFC;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x5E76;&#x53D1;&#x91CF;&#x592A;&#x5927;&#xFF0C;&#x76F4;&#x63A5;&#x628A; TiDB &#x6253;&#x7206;&#x3002;</p>
-<p>&#x5BFC;&#x81F4; TiDB oom &#x7684;&#x672C;&#x8D28;&#x539F;&#x56E0;&#x662F; TiDB &#x73B0;&#x6709;&#x7684;&#x5185;&#x5B58;&#x5C0F;&#x4E8E; TiDB &#x8981;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x3002;</p>
-<p>&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#x7F13;&#x89E3; TiDB oom &#x6709;&#x51E0;&#x79CD;&#x601D;&#x8DEF;&#xFF1A;</p>
-<p>1.&#x589E;&#x5927; TiDB &#x73B0;&#x6709;&#x5185;&#x5B58;&#x3002;</p>
-<pre><code>    TiDB &#x5B9E;&#x4F8B;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x670D;&#x52A1;&#x5668;&#x5168;&#x90E8;&#x5185;&#x5B58;&#x7684;&#xFF0C;&#x63D0;&#x5347;&#x7269;&#x7406;&#x670D;&#x52A1;&#x5668;&#x5185;&#x5B58;&#x5728;&#x771F;&#x5B9E;&#x573A;&#x666F;&#x4E2D;&#x5E76;&#x4E0D;&#x73B0;&#x5B9E;&#x3002;&#x4F46;&#x5F53;&#x524D;&#x5E02;&#x573A;&#x4E0A;&#x670D;&#x52A1;&#x5668;&#x591A; NUMA &#x67B6;&#x6784;&#xFF0C;TiDB &#x4F7F;&#x7528;&#x5EFA;&#x8BAE;&#x4E2D;&#x5B58;&#x5728;&#x7740; NUMA &#x7ED1;&#x6838;&#x7684;&#x673A;&#x5236;&#x3002;&#x5982;&#x679C;&#x5728;&#x505A;&#x7ED1;&#x6838;&#x52A8;&#x4F5C;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x4E86; membind &#x53C2;&#x6570;&#xFF08;Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above&#xFF09;&#x7ED1;&#x5B9A;&#x5230; NUMA NODE&#x4E0A;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x53EA;&#x80FD;&#x5206;&#x914D;&#x8BE5; NUMA NODES &#x4E0A;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x800C;&#x975E;&#x5168;&#x90E8;&#xFF1B;&#x63A8;&#x8350;&#x4F7F;&#x7528; preferred &#x53C2;&#x6570;&#xFF08;Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above&#xFF09;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#xFF0C;&#x5176;&#x542B;&#x4E49;&#x4E3A;&#x9996;&#x5148;&#x4F7F;&#x7528;&#x5206;&#x914D;&#x7684; NUMA NODE &#x7684;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#xFF0C;&#x4E0D;&#x8DB3;&#x65F6;&#x4F1A;&#x4F7F;&#x7528;&#x5176;&#x4ED6;&#x8282;&#x70B9;&#x7684;&#x5185;&#x5B58;&#x3002;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8; TiDB &#x4F7F;&#x7528;&#x5185;&#x5B58;&#x7684;&#x6C34;&#x4F4D;&#x3002;
-</code></pre><p>2.&#x51CF;&#x5C11; TiDB &#x4F7F;&#x7528;&#x5185;&#x5B58;&#x3002;</p>
-<p>1&#xFF09;&#x4F18;&#x5316;&#x5355;&#x4E00;&#x5927; SQL</p>
-<pre><code> &#x5F53;&#x51FA;&#x73B0; TiDB OOM &#x65F6; &#xFF0C;&#x53BB;&#x67E5;&#x770B;&#x5BF9;&#x5E94;&#x7684; tidb_slow_query.log &#x901A;&#x8FC7; Query_time &#x548C; Mem_max &#x503C;&#x5B9A;&#x4F4D;&#x4F7F;&#x7528;&#x5185;&#x5B58;&#x8FC7;&#x591A;&#x7684;&#x6162; SQL &#x3002;
-
-  &#x5982;&#x679C;&#x662F;&#x67E5;&#x8BE2; SQL  &#x53EF;&#x901A;&#x8FC7;&#x5176;&#x6267;&#x884C;&#x8BA1;&#x5212;&#x5B9A;&#x4F4D;&#xFF0C;&#x662F;&#x5426;&#x5B58;&#x5728;&#x7740;&#x4EE5;&#x4E0B;&#x52A8;&#x4F5C;&#xFF1A;
-
-    &#x5168;&#x8868;&#x626B;&#x63CF;  table scan  &#x4F18;&#x5316;&#x601D;&#x8DEF;&#xFF1A;&#x8003;&#x8651;&#x65B0;&#x5EFA;&#x7D22;&#x5F15;&#x3002;
-
-    hash join   &#x4F18;&#x5316;&#x601D;&#x8DEF;&#xFF1A;&#x6CE8;&#x610F;&#x8868;&#x4E4B;&#x95F4;&#x7684;&#x6392;&#x5217;&#x987A;&#x5E8F;&#xFF0C;&#x8BA9;&#x7B5B;&#x9009;&#x6027;&#x597D;&#x7684;&#x8868;&#x4F18;&#x5148; join &#xFF1B;&#x8003;&#x8651;&#x4F7F;&#x7528; index loop join &#x4EE3;&#x66FF;&#x3002;
-
-  &#x5982;&#x679C;&#x662F; delete &#x8BED;&#x53E5;&#xFF0C;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x4F7F;&#x7528; tidb_batch_delete &#x65B9;&#x5F0F;&#xFF0C;&#x6216;&#x4E1A;&#x52A1;&#x4E0A;&#x5206;&#x7247;&#x65B9;&#x5F0F;&#xFF0C;&#x8FBE;&#x5230;&#x5C11;&#x91CF;&#x591A;&#x6B21;&#x7684;&#x6548;&#x679C;&#x3002;
-</code></pre><p>2&#xFF09;&#x6A2A;&#x5411;&#x6269;&#x5BB9; TiDB </p>
-<pre><code> &#x9762;&#x5BF9;&#x6CA1;&#x6709;&#x5355;&#x4E00;&#x5927; SQL &#xFF0C;&#x800C;&#x662F;&#x5E76;&#x53D1;&#x8F83;&#x9AD8;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x6A2A;&#x5411;&#x6269;&#x5C55; TiDB &#x8282;&#x70B9;&#x6765;&#x7F13;&#x89E3;&#x5355;&#x4E00; TiDB &#x5B9E;&#x4F8B;&#x7684;&#x538B;&#x529B;&#xFF0C;&#x4ECE;&#x800C;&#x8D77;&#x5230;&#x7F13;&#x89E3; oom &#x7684;&#x4F5C;&#x7528;&#x3002;
-</code></pre><p>3.&#x4F7F;&#x7528; TiDB &#x78C1;&#x76D8;&#x5B58;&#x50A8;&#x5185;&#x5B58;&#x6570;&#x636E;&#x3002;</p>
-<p>1) &#x5F00;&#x542F; swap &#xFF0C;tidb &#x9ED8;&#x8BA4;&#x4F1A;&#x5173;&#x95ED;&#x6389;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x822C;&#x4E0D;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#x3002;</p>
-<p>2&#xFF09;4.0 &#x7248;&#x672C;&#x540E;&#xFF0C;&#x4F1A;&#x652F;&#x6301; oom-use-tmp-storage &#x53C2;&#x6570; &#x914D;&#x5408; tidb_mem_quota_query &#x6765;&#x5C06;&#x9ED8;&#x5199;&#x7B97;&#x5B50;&#x542F;&#x7528;&#x78C1;&#x76D8;&#x6765;&#x4E34;&#x65F6;&#x5B58;&#x50A8;&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
                                 
                                 </section>
@@ -2980,7 +2958,7 @@ capacity = &quot;30GB&quot;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"7.4 TiDB OOM 的常见原因","level":"5.7.4","depth":2,"next":{"title":"8 TiDB 调优指南","level":"5.8","depth":1,"path":"session4/chapter8/optimization-guide.md","ref":"session4/chapter8/optimization-guide.md","articles":[{"title":"8.1 TiDB 常见配置优化","level":"5.8.1","depth":2,"path":"session4/chapter8/tidb-common-config-optimize.md","ref":"session4/chapter8/tidb-common-config-optimize.md","articles":[]},{"title":"8.2 TiKV 常见配置优化","level":"5.8.2","depth":2,"path":"session4/chapter8/tikv-common-config-optimize.md","ref":"session4/chapter8/tikv-common-config-optimize.md","articles":[{"title":"8.2.1 TiKV 线程池优化","level":"5.8.2.1","depth":3,"path":"session4/chapter8/threadpool-optimize.md","ref":"session4/chapter8/threadpool-optimize.md","articles":[]},{"title":"8.2.2 海量 Region 集群调优","level":"5.8.2.2","depth":3,"path":"session4/chapter8/massive-region-optimize.md","ref":"session4/chapter8/massive-region-optimize.md","articles":[]},{"title":"8.2.3 其他常见优化设置","level":"5.8.2.3","depth":3,"path":"session4/chapter8/other-tikv-common-config-optimize.md","ref":"session4/chapter8/other-tikv-common-config-optimize.md","articles":[]}]},{"title":"8.3 添加索引调优加速","level":"5.8.3","depth":2,"path":"session4/chapter8/add-index-optimization.md","ref":"session4/chapter8/add-index-optimization.md","articles":[{"title":"8.3.1 TiDB 增加索引原理","level":"5.8.3.1","depth":3,"path":"session4/chapter8/add-index-internal.md","ref":"session4/chapter8/add-index-internal.md","articles":[]},{"title":"8.3.2 动态调整新增索引速度","level":"5.8.3.2","depth":3,"path":"session4/chapter8/speedup-add-index.md","ref":"session4/chapter8/speedup-add-index.md","articles":[]}]}]},"previous":{"title":"7.3 TiKV is busy 处理思路","level":"5.7.3","depth":2,"path":"session4/chapter7/tikv-is-busy.md","ref":"session4/chapter7/tikv-is-busy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter7/tidb-oom.md","mtime":"2020-03-16T08:58:40.387Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T08:59:27.343Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"7.4 TiDB OOM 的常见原因","level":"5.7.4","depth":2,"next":{"title":"8 TiDB 调优指南","level":"5.8","depth":1,"path":"session4/chapter8/optimization-guide.md","ref":"session4/chapter8/optimization-guide.md","articles":[{"title":"8.1 TiDB 常见配置优化","level":"5.8.1","depth":2,"path":"session4/chapter8/tidb-common-config-optimize.md","ref":"session4/chapter8/tidb-common-config-optimize.md","articles":[]},{"title":"8.2 TiKV 常见配置优化","level":"5.8.2","depth":2,"path":"session4/chapter8/tikv-common-config-optimize.md","ref":"session4/chapter8/tikv-common-config-optimize.md","articles":[{"title":"8.2.1 TiKV 线程池优化","level":"5.8.2.1","depth":3,"path":"session4/chapter8/threadpool-optimize.md","ref":"session4/chapter8/threadpool-optimize.md","articles":[]},{"title":"8.2.2 海量 Region 集群调优","level":"5.8.2.2","depth":3,"path":"session4/chapter8/massive-region-optimize.md","ref":"session4/chapter8/massive-region-optimize.md","articles":[]},{"title":"8.2.3 其他常见优化设置","level":"5.8.2.3","depth":3,"path":"session4/chapter8/other-tikv-common-config-optimize.md","ref":"session4/chapter8/other-tikv-common-config-optimize.md","articles":[]}]},{"title":"8.3 添加索引调优加速","level":"5.8.3","depth":2,"path":"session4/chapter8/add-index-optimization.md","ref":"session4/chapter8/add-index-optimization.md","articles":[{"title":"8.3.1 TiDB 增加索引原理","level":"5.8.3.1","depth":3,"path":"session4/chapter8/add-index-internal.md","ref":"session4/chapter8/add-index-internal.md","articles":[]},{"title":"8.3.2 动态调整新增索引速度","level":"5.8.3.2","depth":3,"path":"session4/chapter8/speedup-add-index.md","ref":"session4/chapter8/speedup-add-index.md","articles":[]}]}]},"previous":{"title":"7.3 TiKV is busy 处理思路","level":"5.7.3","depth":2,"path":"session4/chapter7/tikv-is-busy.md","ref":"session4/chapter7/tikv-is-busy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter7/tidb-oom.md","mtime":"2020-03-16T16:12:27.236Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-16T16:13:19.062Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
