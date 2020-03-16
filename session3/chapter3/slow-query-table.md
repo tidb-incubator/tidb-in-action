@@ -1,8 +1,8 @@
 # 3.5 SQL 慢查询系统表
 
-TiDB 会将执行时间超过 slow-threshold（默认值为 300 毫秒）的语句记录到 slow-query-file（默认值："tidb-slow.log"）日志中，用于帮助定位慢查询语句，分析和解决 SQL 执行的性能问题。
+TiDB 会将执行时间超过 `slow-threshold`（默认值为 300 毫秒）的语句记录到 `slow-query-file`（默认值："tidb-slow.log"）日志中，用于帮助定位慢查询语句，分析和解决 SQL 执行的性能问题。
 
-TiDB 默认启用慢查询日志，可以修改配置 enable-slow-log 来启用或禁用它。
+TiDB 默认启用慢查询日志，可以修改配置 `enable-slow-log` 来启用或禁用它。
 
 ## 日志示例
 
@@ -89,11 +89,11 @@ Slow Query 基础信息：
 
 ## 慢查询系统表
 
-通过查询 INFORMATION_SCHEMA.SLOW_QUERY 表来查询 **当前 TiDB 节点** 的慢查询日志中的内容，表中列名和慢日志中字段名一一对应，表结构可查看 Information Schema 中关于 SLOW_QUERY 表的介绍。
+通过查询 `INFORMATION_SCHEMA.SLOW_QUERY` 表来查询 **当前 TiDB 节点** 的慢查询日志中的内容，表中列名和慢日志中字段名一一对应，表结构可查看 Information Schema 中关于 `SLOW_QUERY` 表的介绍。
 
-TiDB 4.0 中新增了 CLUSTER_SLOW_QUERY 系统表，用来查询 **所有 TiDB 节点** 的 SLOW_QUERY 数据，使用上和 SLOW_QUERY 是一样的。
+TiDB 4.0 中新增了 `CLUSTER_SLOW_QUERY` 系统表，用来查询 **所有 TiDB 节点** 的 `SLOW_QUERY` 数据，使用上和 SLOW_QUERY 是一样的。
 
-TiDB 4.0 中的 SLOW_QUERY 已经支持查询任意时间段的慢日志，即支持查询已经被 rotate 的慢日志文件的数据。用户查询时只需要指定 TIME 时间范围即可定位需要解析的慢日志文件。如果查询不指定时间范围，则和 4.0 版本之前行为一致，只解析当前的慢日志文件。
+TiDB 4.0 中的 `SLOW_QUERY` 已经支持查询任意时间段的慢日志，即支持查询已经被 rotate 的慢日志文件的数据。用户查询时只需要指定 TIME 时间范围即可定位需要解析的慢日志文件。如果查询不指定时间范围，则和 4.0 版本之前行为一致，只解析当前的慢日志文件。
 
 > 注意：
 > 每次查询 SLOW_QUERY 表时，TiDB 都会去读取和解析一次当前节点的慢查询日志。
@@ -102,7 +102,7 @@ TiDB 4.0 中的 SLOW_QUERY 已经支持查询任意时间段的慢日志，即�
 
 ### 搜索 Top N 的慢查询
 
-查询 Top 2 的慢查询。is_internal=false 表示排除 TiDB 内部的慢查询：
+查询 Top 2 的慢查询。`is_internal=false` 表示排除 TiDB 内部的慢查询：
 
 ```sql
 select query_time, query
@@ -334,7 +334,7 @@ digest             | 24bd6d8a9b238086c9b8c3d240ad4ef32f79ce94cf5a468c0b8fe1eb5f8
 
 ## 解析其他的 TiDB 慢日志文件
 
-在 TiDB 4.0 之前，由于只支持解析 当前的慢日志文件，如果需要解析其他的慢日志文件，可以通过设置 session 变量 tidb_slow_query_file 控制查询 INFORMATION_SCHEMA.SLOW_QUERY 时要读取和解析的文件，示例如下：
+在 TiDB 4.0 之前，由于只支持解析 当前的慢日志文件，如果需要解析其他的慢日志文件，可以通过设置 session 变量 `tidb_slow_query_file` 控制查询 `INFORMATION_SCHEMA.SLOW_QUERY` 时要读取和解析的文件，示例如下：
 
 ```
 set tidb_slow_query_file = "/path-to-log/tidb-slow.log"
@@ -383,11 +383,11 @@ pt-query-digest --report tidb-slow.log
 
 ### 定位问题语句的方法
 
-SLOW_QUERY 中的语句并不是都是有问题的。造成集群整体压力增大的是那些 process_time 很大的语句。如果wait_time 很大，但 process_time 很小的语句通常不是问题语句，而是因为被问题语句阻塞，在执行队列等待造成的响应时间过长。
+`SLOW_QUERY` 中的语句并不是都是有问题的。造成集群整体压力增大的是那些 `process_time` 很大的语句。如果 `wait_time` 很大，但 `process_time` 很小的语句通常不是问题语句，而是因为被问题语句阻塞，在执行队列等待造成的响应时间过长。
 
 ## admin show slow 命令
 
-除了基于TiDB 日志，还有一种定位慢查询的方式是通过 admin show slow SQL 命令：
+除了基于TiDB 日志，还有一种定位慢查询的方式是通过 `admin show slow` SQL 命令：
 
 > 注意:
 > 此命令仅显示当前TiDB节点的慢查询
@@ -403,12 +403,12 @@ recent N 会显示最近的 N 条慢查询记录，例如：
 admin show slow recent 10;
 ```
 
-top N 则显示最近一段时间（大约几天）内，最慢的查询记录。如果指定 internal 选项，则返回查询系统内部 SQL 的慢查询记录；如果指定 all 选项，返回包含系统内部的所有SQL 汇总以后的慢查询记录；默认只返回非系统内部的SQL中的慢查询记录。
+top N 则显示最近一段时间（大约几天）内，最慢的查询记录。如果指定 `internal` 选项，则返回查询系统内部 SQL 的慢查询记录；如果指定 `all` 选项，返回包含系统内部的所有 SQL 汇总以后的慢查询记录；默认只返回非系统内部的 SQL 中的慢查询记录。
 
 >说明：
->N的最大值是30，显示时间范围为最近7天
+>N的最大值是 30，显示时间范围为最近 7 天
 
-例如显示最慢的3条SQL：
+例如显示最慢的 3 条SQL：
 
 ```sql
 admin show slow top 3;
