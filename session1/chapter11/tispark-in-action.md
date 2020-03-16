@@ -1,6 +1,7 @@
-上一章节中，针对 TiSpark 的架构和原理进行了详细的介绍，在本章，我们会介绍 TiSpark 的部署和使用方法。
+## 11.2 TiSpark 的使用
+上一节中，针对 TiSpark 的架构和原理进行了详细的介绍，在本节，我们会介绍 TiSpark 的部署和使用方法。
 
-**TiSpark 的部署**
+### 11.2.1 TiSpark 的部署
 
 由于 TiSpark 并没有直接修改 Apache Spark 的代码，因此只要是 Apache Spark 2.1 以上版本，就可以找到对应兼容的 TiSpark。具体版本的对应，可以查看官网文档[对应章节](https://github.com/pingcap/tispark#how-to-choose-tispark-version)。无论是通过 YARN 部署还是通过 Standalone 部署，都可以参考 Apache Spark 官网的[部署环节](https://spark.apache.org/docs/latest/cluster-overview.html)。通过匹配 Spark 版本，可以从 [TiSpark Release 栏目](https://github.com/pingcap/tispark/releases) 下载对应的 TiSpark 版本的 JAR 包。
 
@@ -19,11 +20,11 @@ spark.tispark.pd.addresses      pd-host1:port1,pd-host2:port2,pd-host3:port3
 ./spark-shell --jars /path/your-tispark.jar
 ```
 
-**TiSpark 的基本使用**
+### 11.2.2 TiSpark 的基本查询方式
 
 TiSpark 的使用方法与原生 Spark 类似，提供多种方式查询数据。
 
-* 通过 spark-shell 查询数据
+#### 11.2.2.1 通过 spark-shell 查询数据
 
 使用 spark-shell 启动，通过 Spark 提供的 API 即可访问数据。
 
@@ -76,7 +77,7 @@ scala> 
 |           R|           F|381449.00|  534594445.35|507996454.4067|
 +------------+------------+---------+--------------+--------------+
 ```
-* 通过 Spark SQL 查询数据
+#### 11.2.2.2 通过 Spark SQL 查询数据
 
 TiSpark同样支持利用 Spark SQL 查询数据。使用 spark-sql 命令即可进入交互式数据查询页面，接入输入 sql 即可。
 
@@ -90,7 +91,7 @@ spark-sql> select count(*) from lineitem;
 2000
 Time taken: 0.673 seconds, Fetched 1 row(s)
 ```
-* 利用 JDBC 访问 TiSpark
+#### 11.2.2.3 利用 JDBC 访问 TiSpark
 
 部署时启动 Thrift 服务器后，可以通过 JDBC 的方式使用 TiSpark。
 
@@ -112,9 +113,9 @@ select count(*) from account;
 +-----------+--+
 1 row selected (1.97 seconds)
 ```
-**TiSpark 的多语言使用**
+### 11.2.3 TiSpark 的多语言使用
 
-* **使用 PySpark 访问 TiSpark**
+#### 11.2.3.1 使用 PySpark 访问 TiSpark
 
 TiSpark on PySpark 是 TiSpark 用来支持 Python 语言而构建的 Python 包。PySpark 支持直接使用也可以通过 python 的包管理工具来安装使用。
 
@@ -160,7 +161,7 @@ spark.sql("select count(*) from customer").show()
 |     150|
 +--------+
 ```
-* **使用 TiSparkR 访问 TiSpark**
+#### 11.2.3.2 使用 TiSparkR 访问 TiSpark
 
 TiSparkR 是 TiSpark 用来支持R语言来构建的 R 包。同 PySpark 类似，TiSparkR 同样支持直接使用也可以通过加载 library 的方式使用。
 
@@ -178,7 +179,7 @@ head(count)
 |     150|
 +--------+
 ```
-示例二：利用 SparkR 包的形式使用 TiSpark
+示例四：利用 SparkR 包的形式使用 TiSpark
 首先，创建一个用以查询数据的 R 文件 test.R，文件示例如下：
 
 ```
@@ -198,7 +199,7 @@ head(count)
 |     150|
 +--------
 ```
-**TiSpark 访问 TiFlash**
+#### 11.2.3.3 TiSpark 访问 TiFlash
 
 参见 TiSpark 访问 TiFlash 章节
 

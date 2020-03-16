@@ -1,10 +1,10 @@
-# TiDB Operator 故障诊断
+# 第6章 TiDB Operator 故障诊断
 
 本文将介绍 Kubernetes 上 TiDB 集群的一些常见故障以及诊断解决方案。
 
-## 1 创建集群
+## 6.1 创建集群
 
-### 1.1 镜像拉取失败
+### 6.1.1 镜像拉取失败
 
 #### 问题分析
 
@@ -26,7 +26,7 @@ cd docker-wrapper/
 
 如果是生产环境，推荐采用 Kubernetes 的一些管理平台来部署和管理 Kubernetes 集群，同时在管理平台上设置镜像代理。如果采用镜像拉取到内网 image registry 的话，TiDB 的 helm chart 要更改对应的 image 设置。
 
-### 1.2 PD 处于 Running 运行中状态，但 TiKV 未开始创建
+### 6.1.2 PD 处于 Running 运行中状态，但 TiKV 未开始创建
 
 #### 问题分析
 
@@ -89,7 +89,7 @@ kubectl exec -it tidb-cluster-pd-0 -n=tidb  -- cat /etc/resolv.conf
 
 详见 1.5 Pod 之间网络不通
 
-### 1.3 容器处于 CrashLoopBackOff 状态
+### 6.1.3 容器处于 CrashLoopBackOff 状态
 
 #### 问题分析
 
@@ -210,7 +210,7 @@ chart 中预设的 pd replicas 为 3，但是出现了 pd 的 pod 为 5 个的�
 
 此时的 pd 集群需要通过 pd-recover 恢复。
 
-### 1.4 容器处于 Pending 状态
+### 6.1.4 容器处于 Pending 状态
 
 #### 问题分析
 
@@ -256,7 +256,7 @@ kubectl get storageclass
 
  需要添加对应的 PV 资源。对于 Local PV，可以参考 [本地 PV 配置](https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/reference/configuration/storage-class#%E6%9C%AC%E5%9C%B0-pv-%E9%85%8D%E7%BD%AE) 进行扩充。
 
-### 1.5 Pod 之间网络不通
+### 6.1.5 Pod 之间网络不通
 
 #### 问题分析
 
@@ -318,7 +318,7 @@ kubectl -n <namespace> -it exec <pod-name> -- cat /etc/tikv/tikv.toml | grep add
 kubectl -n <namespace> -it exec <pod-name> -- cat /etc/tidb/tidb.toml | grep port
 ```
 
-### 1.6 无法访问 TiDB 服务
+### 6.1.6 无法访问 TiDB 服务
 
 #### 问题分析
 
@@ -378,15 +378,15 @@ kubectl logs -f <tidb-pod-name> -n <namespace> -c tidb
 
     * 参考上面的 [Pod 之间网络不通](https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/troubleshoot/#pod-%E4%B9%8B%E9%97%B4%E7%BD%91%E7%BB%9C%E4%B8%8D%E9%80%9A) 章节
 
-## 2 集群运行过程中
+## 6.2 集群运行过程中
 
-### 2.1 删除 TiKV 或 PD，再次创建启动不成功
+### 6.2.1 删除 TiKV 或 PD，再次创建启动不成功
 
 #### 问题分析
 
 #### 解决方案
 
-### 2.2 并发扩缩容，TiKV Store 异常进入 Tombstone 状态
+### 6.2.2 并发扩缩容，TiKV Store 异常进入 Tombstone 状态
 
 #### 问题分析
 
@@ -446,7 +446,7 @@ kubectl get -n <namespace> po -l app.kubernetes.io/component=tikv
 
     Pod 重建后，会以在集群中注册一个新的 Store，恢复完成。
 
-### 2.3 TiDB 长连接被异常中断
+### 6.2.3 TiDB 长连接被异常中断
 
 #### 问题分析
 
@@ -482,7 +482,7 @@ tidb:
 
 > **注意**：进行以上配置要求 TiDB Operator 1.1 及以上版本。
 
-## 3 诊断模式
+## 6.3 诊断模式
 
 当 Pod 处于 CrashLoopBackoff 状态时，Pod 内容器会不断退出，导致无法正常使用 kubectl exec 或 tkctl debug，给诊断带来不便。为了解决这个问题，TiDB in Kubernetes 提供了 PD/TiKV/TiDB Pod 诊断模式。在诊断模式下，Pod 内的容器启动后会直接挂起，不会再进入重复 Crash 的状态，此时，便可以通过 kubectl exec 或 tkctl debug 连接 Pod 内的容器进行诊断。
 
@@ -549,4 +549,4 @@ kubectl delete pod <pod-name> -n <namespace>
 pod "demo-pd-1" deleted
 ```
 
-Pod 重建后会自动回到正常运行模式。
+监控：Pod 重建后会自动回到正常运行模式。

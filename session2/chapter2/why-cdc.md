@@ -1,8 +1,8 @@
-# CDC 解决什么问题
-
+## 2.1 4.0 增量数据订阅 CDC
 
 TiCDC (TiDB Change Data Capture) 是 TiDB 4.0 新推出通过拉取 TiKV 的 kv change log 来实现的 TiDB 增量数据同步工具。TiCDC 提供开放数据协议，可以轻松实现支持其他系统订阅数据变更，通过 TiCDC 可以实现缓存更新、数据实时分析等业务场景。TiCDC 还可以同步 TiDB 集群数据到其他 TiDB 集群或者 MySQL 中。
 
+### 2.1.1 CDC 解决什么问题
 在 TiCDC 工具出现之前，这样的功能是由 TiDB-Tools 工具中的 TiDB-Binlog 来实现的，TiDB-Binlog 通过收集各个 TiDB 实例产生的 binlog，并按照事务提交的时间排序后同步到下游，TiCDC 则是通过 TiKV 的 kv change log，在数据同步过程中的处理上两者有本质的区别。
 
 ### 1. 从易用性来看：
