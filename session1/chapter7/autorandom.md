@@ -1,8 +1,3 @@
----
-title: AutoRandom
-category: TiDB DDL
----
-
 ## 7.4 AutoRandom
 
 AutoRandom 是 TiDB 4.0 提供的一种扩展语法，用于解决整数类型主键通过 AutoIncrement 属性隐式分配 ID 时的写热点问题。
@@ -96,7 +91,7 @@ tidb> select last_insert_id();
 
 与 AutoRandom 相比，TiDB 还可以通过其他的方式避免主键自动分配时的写热点问题：
 
-* 使用 [alter-primary-key 配置选项]https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key)关闭主键聚簇索引，使用 AutoIncrement + `SHARD_ROW_ID_BITS`。
+* 使用 [alter-primary-key 配置选项](https://pingcap.com/docs-cn/dev/reference/configuration/tidb-server/configuration-file/#alter-primary-key)关闭主键聚簇索引，使用 AutoIncrement + `SHARD_ROW_ID_BITS`。
 
   在这种方式下，主键索引被当做普通的唯一索引处理，使得数据的写入可以由 `SHARD_ROW_ID_BITS` 语法打散避免热点，但缺点在于，主键仍然存在索引写入的热点，同时在查询时，由于关闭了聚簇索引，针对主键的查询需要进行一次额外的回表。
 
@@ -106,4 +101,4 @@ tidb> select last_insert_id();
 
 参考文献：
 
-参阅 [`AUTO_RANDOM` 的详细说明](/reference/sql/attributes/auto-random.md)
+参阅 [`AUTO_RANDOM` 的详细说明](https://github.com/pingcap/docs/blob/master/reference/sql/attributes/auto-random.md)
