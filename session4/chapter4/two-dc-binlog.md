@@ -2,7 +2,7 @@
 TiDB Binlog 组件用于收集 TiDB 的 binlog，并提供实时备份和同步功能。该组件在功能上类似于 MySQL 的主从复制，MySQL 的主从复制依赖于记录的 binlog 文件，TiDB Binlog 组件也是如此，主要的不同点是 TiDB 是分布式的，因此需要收集各个 TiDB 实例产生的 binlog，并按照事务提交的时间排序后才能同步到下游。如果你需要部署 TiDB 集群的从库，或者想订阅 TiDB 数据的变更输出到其他的系统中，TiDB Binlog 则是必不可少的工具。
 
 ## TiDB Binlog 组件架构
-![图片](https://uploader.shimo.im/f/z68Lvdrpj5Qcz32N.png!thumbnail)
+![图片](/res/session4/chapter4/two-dc-binlog/TiDB-Binlog_架构图.png)
 
 该架构的主要特点是：
 
@@ -22,7 +22,7 @@ TiDB Binlog 组件用于收集 TiDB 的 binlog，并提供实时备份和同步�
 
 	2）两中心集群各自独立，减少集群间互相影响，减少两集群同时故障的概率。
 
-![图片](https://uploader.shimo.im/f/HdLlC9DoRoELEzQw.png!thumbnail)
+![图片](/res/session4/chapter4/two-dc-binlog/TiDB-Binlog-1.png)
 
 当主集群所在的中心发生故障时，业务可以切换至从集群。因两集群采用 binlog 异步复制，无法保证数据一致性，所以极端情况下会有部分数据缺失。
 
@@ -34,7 +34,7 @@ TiDB Binlog 组件用于收集 TiDB 的 binlog，并提供实时备份和同步�
 
 另一种两中心架构部署方案是在之前方案的基础上进行一定的延伸，同样两个中心部署两套独立 TiDB 集群，将业务拆分为两个库，每个库分别放在一个集群（数据中心）中，接入每个数据中心的业务请求只访问本地库，两个集群之间通过 binlog 将本数据中心业务所涉及的库中的数据变更同步到对端，互为备份。
 
-![图片](https://uploader.shimo.im/f/coFSLq294WI4pN3f.png!thumbnail)
+![图片](/res/session4/chapter4/two-dc-binlog/TiDB-Binlog-2.png)
 
 	 这样就能实现两数据中心分库双活，解决从集群资源浪费的问题，但两集群的架构方案仍然无法保证数据一致性，而且此分库方案对应用可能有一定侵入性。
 
