@@ -1,8 +1,3 @@
----
-title: AutoRandom
-category: TiDB DDL
----
-
 ## 7.4 AutoRandom
 
 AutoRandom 是 TiDB 4.0 提供的一种扩展语法，用于解决整数类型主键通过 AutoIncrement 属性隐式分配 ID 时的写热点问题。
