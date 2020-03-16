@@ -1,7 +1,7 @@
-# 限制 SQL 内存使用和执行时间
+# 1.5 限制 SQL 内存使用和执行时间
 限制SQL内存使用和执行时间主要是为限制消耗系统资源多的SQL，防止某条SQL造成OOM或影响到集群的整体性能。
 
-## 限制SQL内存使用
+## 1.5.1 限制SQL内存使用
 限制SQL内存使用有如下三种方式。
 1. 通过配置文件参数修改
 * `oom-action`
@@ -68,7 +68,7 @@ set @@tidb_mem_quota_query = 8 << 20;
 ```sql
 select /*+ MEMORY_QUOTA(1024 MB) */ * from t;
 ```
-## 限制SQL执行时间
+## 1.5.2 限制SQL执行时间
 
 1. 修改session/global变量
 * `max_execution_time`
@@ -92,7 +92,7 @@ set @@global.MAX_EXECUTION_TIME=10000
 select /*+ MAX_EXECUTION_TIME(1000) */ * from t1 inner join t2 where t1.id = t2.id;
 ```
 
-## 定位消耗系统资源多的查询语句
+## 1.5.3 定位消耗系统资源多的查询语句
 上面介绍了如何限制SQL的内存使用和执行时间，如果一条语句在执行过程中达到或超过资源使用阈值时（执行时间/使用内存量）则会即时将这条语句写入到日志文件（默认文件为：`tidb.log`），用于在语句执行结束前定位消耗系统资源多的查询语句，帮助用户分析和解决语句执行的性能问题。以下是一条 Expensive query 日志示例：
 ```
 [2020/02/05 15:32:25.096 +08:00] [WARN] [expensivequery.go:167] [expensive_query] [cost_time=60.008338935s] [wait_time=0s] [request_count=1] [total_keys=70] [process_keys=65] [num_cop_tasks=1] [process_avg_time=0s] [process_p90_time=0s] [process_max_time=0s] [process_max_addr=10.0.1.9:20160] [wait_avg_time=0.002s] [wait_p90_time=0.002s] [wait_max_time=0.002s] [wait_max_addr=10.0.1.9:20160] [stats=t:pseudo] [conn_id=60026] [user=root] [database=test] [table_ids="[122]"] [txn_start_ts=414420273735139329] [mem_max="1035 Bytes (1.0107421875 KB)"] [sql="insert into t select sleep(1) from t"]

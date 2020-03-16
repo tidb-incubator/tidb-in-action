@@ -1,5 +1,5 @@
-# 使用 Hint 绑定执行计划
-当优化器选择了不当的执行计划的时候，需要使用 hint 进行执行计划的绑定。TiDB 兼容了mysql 的 use index，force index，ignore index 语法，同时开发了 TiDB 自身的 Optimizer Hints 语法，它基于 MySQL 5.7 中介绍的类似 comment 的语法，例如 /*+ TIDB_XX(t1, t2) */ 。TiDB[ 目前支](https://pingcap.com/blog-cn/#TiDB-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB)持的 hint 语法列表：
+# 6.1.5 使用 Hint 绑定执行计划
+当优化器选择了不当的执行计划的时候，需要使用 hint 进行执行计划的绑定。TiDB 兼容了mysql 的 use index，force index，ignore index 语法，同时开发了 TiDB 自身的 Optimizer Hints 语法，它基于 MySQL 5.7 中介绍的类似 comment 的语法，例如 /*+ TIDB_XX(t1, t2) */ 。TiDB目前支持的hint 语法列表：
 
 | Hint   | 功能说明   | 
 |:----|:----|
@@ -11,8 +11,10 @@
 | /*+ TIDB_SMJ(t) */   | Join Hint: Merge Join   | 
 | /*+ MAX_EXECUTION_TIME(num) */   | Executiom Time Limit   | 
 
-## USE INDEX,FORCE INDEX,IGNORE INDEX
-与mysql类似, 不合适的查询计划是慢查询的常见原因，这时就要用USE INDEX指定查询用的索引，例如
+
+## 6.1.5.1 USE INDEX,FORCE INDEX,IGNORE INDEX
+与 mysql 类似, 不合适的查询计划是慢查询的常见原因，这时就要用 USE INDEX 指定查询用的索引，例如
+
 
 下面例子 use/force index 使得原本全表扫描的 SQL 变成了通过索引扫描。
 ```
@@ -67,11 +69,13 @@ mysql> explain select a from t ignore index(idx_1) where a=2 ;
 +-------------------------+---------+-----------+---------------------------+  
 3 rows in set (0.00 sec)   | 
 ```
-和mysql不同的是, 目前 TiDB 并没有对 use index 和 force index 做区分
 
-当表上有多个索引时，建议多使用use index。tidb的表都比较大，analyze table会对集群性能造成较大影响，因此无法频繁更新统计信息。这时就要用use index保证查询计划的正确性
+和 mysql 不同的是, 目前 TiDB 并没有对 use index 和 force index 做区分
 
-## MAX_EXECUTION_TIME(N)
+当表上有多个索引时，建议使用 use index 。tidb的表都比较大，analyze table 会对集群性能造成较大影响，因此无法频繁更新统计信息。这时就要用 use index 保证查询计划的正确性
+
+## 6.1.5.2 MAX_EXECUTION_TIME(N)
+
 在 SELECT 语句中可以使用 MAX_EXECUTION_TIME(N)，它会限制语句的执行时间不能超过 N 毫秒，否则服务器会终止这条语句的执行。
 
 例如，下面例子设置了 1 秒超时
@@ -80,28 +84,36 @@ SELECT /*+ MAX_EXECUTION_TIME(1000) */  *  FROM t1
 ```
 另外，环境变量 max_execution_time 也会对语句执行时间进行限制。
 
-对于高可用和时间敏感的业务， 建议使用MAX_EXECUTION_TIME， 以免错误的查询计划或bug影响整个tidb集群的性能甚至稳定性. OLTP业务查询超时一般不超过5秒
 
-需要注意的是，mysql jdbc的查询超时设置对tidb不起作用。其实现是客户端感知超时时，向数据库发送一个KILL命令， 但是由于tidb是负载均衡的， 为防止在错误的 TiDB 服务器上终止连接， tidb不会执行这个KILL。这时就要用MAX_EXECUTION_TIME保证查询超时的效果
+对于高可用和时间敏感的业务， 建议使用 MAX_EXECUTION_TIME， 以免错误的查询计划或 bug 影响整个 tidb 集群的性能甚至稳定性. OLTP 业务查询超时一般不超过 5 秒。
 
-## JOIN HINT
+需要注意的是，mysql jdbc 的查询超时设置对 tidb 不起作用。其实现是客户端感知超时时，向数据库发送一个 KILL 命令， 但是由于 tidb 是负载均衡的， 为防止在错误的 TiDB 服务器上终止连接， tidb 不会执行这个 KILL。这时就要用 MAX_EXECUTION_TIME 保证查询超时的效果
+
+## 6.1.5.3 JOIN HINT
+
 TiDB 目前表 Join 的方式有 Sort Merge Join，Index Nested Loop Join，Hash Join，具体的每个 join 方式的实现细节可以参考 [TiDB源码阅读系列](https://pingcap.com/blog-cn/#TiDB-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB)
 
 语法：
 
-### TIDB_SMJ(t1, t2)
+
+### 1. TIDB_SMJ(t1, t2)
+
 ```
 SELECT /*+ TIDB_SMJ(t1, t2) */ * from t1，t2 where t1.id = t2.id;
 ```
 提示优化器使用 Sort Merge Join 算法，简单来说，就是将 Join 的两个表，首先根据连接属性进行排序，然后进行一次扫描归并, 进而就可以得出最后的结果，这个算法通常会占用更少的内存，但执行时间会更久。 当数据量太大，或系统内存不足时，建议尝试使用。
 
-### TIDB_INLJ(t1, t2)
+
+### 2. TIDB_INLJ(t1, t2)
+
 ```
 SELECT /*+ TIDB_INLJ(t1, t2) */ * from t1，t2 where t1.id = t2.id;
 ```
 提示优化器使用 Index Nested Loop Join 算法，Index Look Up Join 会读取外表的数据，并对内表进行主键或索引键查询，这个算法可能会在某些场景更快，消耗更少系统资源，有的场景会更慢，消耗更多系统资源。对于外表经过 WHERE 条件过滤后结果集较小（小于 1 万行）的场景，可以尝试使用。TIDB_INLJ() 中的参数是建立查询计划时，内表的候选表。即 TIDB_INLJ(t1) 只会考虑使用 t1 作为内表构建查询计划
 
-### TIDB_HJ(t1, t2)
+
+### 3. TIDB_HJ(t1, t2)
+
 ```
 SELECT /*+ TIDB_HJ(t1, t2) */ * from t1，t2 where t1.id = t2.id;
 ```

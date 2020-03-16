@@ -3,11 +3,11 @@ title: 在阿里云上部署 TiDB 集群
 category: how-to
 ---
 
-# 在阿里云上部署 TiDB 集群
+# 1.2.3.1.3 在阿里云上部署 TiDB 集群
 
 本文介绍了如何使用个人电脑（Linux 或 macOS 系统）在阿里云上部署 TiDB 集群。
 
-## 环境需求
+## 1. 环境需求
 
 - [aliyun-cli](https://github.com/aliyun/aliyun-cli) >= 3.0.15 并且[配置 aliyun-cli](https://www.alibabacloud.com/help/doc-detail/90766.htm?spm=a2c63.l28256.a3.4.7b52a893EFVglq)
 
@@ -16,7 +16,7 @@ category: how-to
     > Access Key 需要具有操作相应资源的权限。
 
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl) >= 1.12
-- [helm](https://helm.sh/docs/using_helm/#installing-the-helm-client) >= 2.9.1 且 <= 2.11.0
+- [helm](https://helm.sh/docs/using_helm/#installing-the-helm-client) >= 2.11.0
 - [jq](https://stedolan.github.io/jq/download/) >= 1.6
 - [terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) 0.12.*
 
@@ -36,7 +36,7 @@ category: how-to
 - AliyunVPNGatewayFullAccess
 - AliyunNATGatewayFullAccess
 
-## 概览
+## 2. 概览
 
 默认配置下，会创建：
 
@@ -52,9 +52,9 @@ category: how-to
 
 除了默认伸缩组之外的其它所有实例都是跨可用区部署的。而伸缩组 (Auto-scaling Group) 能够保证集群的健康实例数等于期望数值。因此，当发生节点故障甚至可用区故障时，伸缩组能够自动为我们创建新实例来确保服务可用性。
 
-## 安装部署
+## 3. 安装部署
 
-1. 设置目标 Region 和阿里云密钥（也可以在运行 `terraform` 命令时根据命令提示输入）：
+(1) 设置目标 Region 和阿里云密钥（也可以在运行 `terraform` 命令时根据命令提示输入）：
 
     ```shell
     export TF_VAR_ALICLOUD_REGION=<YOUR_REGION> && \
@@ -64,7 +64,7 @@ category: how-to
 
     用于部署集群的各变量的默认值存储在 `variables.tf` 文件中，如需定制可以修改此文件或在安装时通过 `-var` 参数覆盖。
 
-2. 使用 Terraform 进行安装：
+(2) 使用 Terraform 进行安装：
 
     ```shell
     git clone --depth=1 https://github.com/pingcap/tidb-operator && \
@@ -101,7 +101,7 @@ category: how-to
     vpc_id = vpc-bp1v8i5rwsc7yh8dwyep5
     ```
 
-3. 用 `kubectl` 或 `helm` 对集群进行操作：
+(3) 用 `kubectl` 或 `helm` 对集群进行操作：
 
     ```shell
     export KUBECONFIG=$PWD/credentials/kubeconfig
@@ -115,7 +115,7 @@ category: how-to
     helm ls
     ```
 
-## 连接数据库
+## 4. 连接数据库
 
 通过堡垒机可连接 TiDB 集群进行测试，相关信息在安装完成后的输出中均可找到：
 
@@ -127,7 +127,7 @@ ssh -i credentials/<cluster_name>-key.pem root@<bastion_ip>
 mysql -h <tidb_slb_ip> -P 4000 -u root
 ```
 
-## 监控
+## 5. 监控
 
 访问 `<monitor_endpoint>` 就可以查看相关的 Grafana 监控面板。相关信息可在安装完成后的输出中找到。默认帐号密码为：
 
@@ -138,7 +138,7 @@ mysql -h <tidb_slb_ip> -P 4000 -u root
 >
 > 出于安全考虑，假如你已经或将要配置 VPN 用于访问 VPC，强烈建议将 `deploy/modules/aliyun/tidb-cluster/values/default.yaml` 文件里 `monitor.grafana.service.annotations` 中的 `service.beta.kubernetes.io/alicloud-loadbalancer-address-type` 设置为 `intranet` 以禁止监控服务的公网访问。
 
-## 升级 TiDB 集群
+## 6. 升级 TiDB 集群
 
 在 `terraform.tfvars` 中设置 `tidb_version` 参数，并再次运行 `terraform apply` 即可完成升级。
 
@@ -148,11 +148,11 @@ mysql -h <tidb_slb_ip> -P 4000 -u root
 kubectl get pods --namespace <tidb_cluster_name> -o wide --watch
 ```
 
-## TiDB 集群水平伸缩
+## 7. TiDB 集群水平伸缩
 
 按需在 `terraform.tfvars` 中设置 `tikv_count` 和 `tidb_count` 数值，再次运行 `terraform apply` 即可完成 TiDB 集群的水平伸缩。
 
-## 销毁集群
+## 8. 销毁集群
 
 ```shell
 terraform destroy
@@ -174,11 +174,11 @@ terraform state rm module.ack.alicloud_cs_managed_kubernetes.k8s
 >
 > 监控组件挂载的云盘需要在阿里云管理控制台中手动删除。
 
-## 配置
+## 9. 配置
 
 ### 配置 TiDB Operator
 
-通过调整 `variables.tf` 内的值来配置 TiDB Operator，大多数配置项均能按照 `variable` 的注释理解语义后进行修改。需要注意的是，`operator_helm_values` 配置项允许为 TiDB Operator 提供一个自定义的 `values.yaml` 配置文件，示例如下：
+可以参考 `variables.tf` 内的变量来配置 TiDB Operator，大多数配置项均能按照 `variable` 的注释理解语义后进行修改。需要注意的是，`operator_helm_values` 配置项允许为 TiDB Operator 提供一个自定义的 `values.yaml` 配置文件，示例如下：
 
 - 在 `terraform.tfvars` 中设置 `operator_helm_values`：
 
@@ -196,9 +196,9 @@ terraform state rm module.ack.alicloud_cs_managed_kubernetes.k8s
 
 ### 配置 TiDB 集群
 
-TiDB 集群会使用 `./my-cluster.yaml` 作为集群的 `values.yaml` 配置文件，修改该文件即可配置 TiDB 集群。支持的配置项可参考 [Kubernetes 上的 TiDB 集群配置](/tidb-in-kubernetes/reference/configuration/tidb-cluster.md)。
+TiDB 集群会使用 `./my-cluster.yaml` 作为集群的 `values.yaml` 配置文件，修改该文件即可配置 TiDB 集群。支持的配置项可参考 [Kubernetes 上的 TiDB 集群配置](https://pingcap.com/docs-cn/stable/tidb-in-kubernetes/reference/configuration/tidb-cluster/)。
 
-## 管理多个 TiDB 集群
+## 10. 管理多个 TiDB 集群
 
 需要在一个 Kubernetes 集群下管理多个 TiDB 集群时，需要编辑 `./main.tf`，按实际需要新增 `tidb-cluster` 声明，示例如下：
 
@@ -252,19 +252,19 @@ module "tidb-cluster-staging" {
 | `override_values` | TiDB 集群的 `values.yaml` 配置文件，通常通过 `file()` 函数从文件中读取 | `nil` |
 | `local_exec_interpreter` | 执行命令行指令的解释器  | `["/bin/sh", "-c"]` |
 
-## 管理多个 Kubernetes 集群
+## 11. 管理多个 Kubernetes 集群
 
 推荐针对每个 Kubernetes 集群都使用单独的 Terraform 模块进行管理（一个 Terraform Module 即一个包含 `.tf` 脚本的目录）。
 
 `deploy/aliyun` 实际上是将 `deploy/modules` 中的数个可复用的 Terraform 脚本组合在了一起。当管理多个集群时（下面的操作在 `tidb-operator` 项目根目录下进行）：
 
-1. 首先针对每个集群创建一个目录，如：
+(1) 首先针对每个集群创建一个目录，如：
 
     ```shell
     mkdir -p deploy/aliyun-staging
     ```
 
-2. 参考 `deploy/aliyun` 的 `main.tf`，编写自己的脚本，下面是一个简单的例子：
+(2) 参考 `deploy/aliyun` 的 `main.tf`，编写自己的脚本，下面是一个简单的例子：
 
     ```hcl
     provider "alicloud" {
@@ -319,6 +319,6 @@ module "tidb-cluster-staging" {
 
 你也可以直接拷贝 `deploy/aliyun` 目录，但要注意不能拷贝已经运行了 `terraform apply` 的目录，建议重新 clone 仓库再进行拷贝。
 
-## 使用限制
+## 12. 使用限制
 
 目前，`pod cidr`，`service cidr` 和节点型号等配置在集群创建后均无法修改。
