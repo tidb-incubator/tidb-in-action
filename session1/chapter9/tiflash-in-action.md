@@ -41,7 +41,7 @@ TiDB 提供三种读取 TiFlash 副本的方式。如果添加了 TiFlash 副本
 
 
 #### 2. Engine 隔离
-Engine 隔离是通过配置变量来指定所有的查询均使用指定 engine 的副本，可选 engine 为 tikv 和 tiflash，分别有3个配置级别:
+Engine 隔离是通过配置变量来指定所有的查询均使用指定 engine 的副本，可选 engine 为 tikv 和 tiflash，分别有 2 个配置级别:
 
 (1). 会话级别，即 SESSION 级别。如果没有指定，会继承 GLOBAL 的配置。
 
