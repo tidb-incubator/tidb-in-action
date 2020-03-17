@@ -6,13 +6,13 @@
 
 TiDB 使用开源时序数据库 Prometheus 作为监控和性能指标信息存储方案，使用 Grafana 作为可视化组件进行信息的展示。
 
-Prometheus 狭义是上软件本身，即 prometheus server，广义上是基于 prometheus server 为核心的各类软件工具的生态。除 prometheus server 和 grafana 外，Prometheus 生态常用的组件还有 alertmanager、pushgateway 和非常丰富的各类 exporters。
+Prometheus 狭义上是软件本身，即 prometheus server，广义上是基于 prometheus server 为核心的各类软件工具的生态。除 prometheus server 和 grafana 外，Prometheus 生态常用的组件还有 alertmanager、pushgateway 和非常丰富的各类 exporters。
 
-prometheus server 自身是一个时序数据库，相比使用 MySQL 做为底层存储的 zabbix 监控，拥有非常高效的插入和查询性能，同时数据存储占用的空间也非常小。另外不同于 zabbix，prometheus server 中的数据是从各种数据源主动拉过来的，而不是客户端主动推送的。如果使用 prometheus server 要接收推送的信息，数据源和 prometheus server 中间需要使用 pushgateway。
+prometheus server 自身是一个时序数据库，相比使用 MySQL 做为底层存储的 zabbix 监控，拥有非常高效的插入和查询性能，同时数据存储占用的空间也非常小。另外不同于 zabbix，prometheus server 中的数据是从各种数据源主动拉过来的，而不是客户端主动推送的。如果要使用 prometheus server 接收推送的信息，数据源和 prometheus server 中间需要使用 pushgateway。
 
-Prometheus 监控生态非常完善，能监控对象非常丰富。详细的 exporter 支持对象可参考官方介绍 [exporters列表](https://prometheus.io/docs/instrumenting/exporters/ ) 。
+Prometheus 监控生态非常完善，能监控的对象非常丰富。详细的 exporter 支持对象可参考官方介绍 [exporters列表](https://prometheus.io/docs/instrumenting/exporters/ ) 。
 
-Prometheus 可以监控的对象远不止官方 exporters 列表中的产品，有此产品原生支持不在上面列表，如 TiDB; 有些可以通过标准的 exporter 来监控一类产品，如 snmp_exporter; 还有些可以通过自己写个简单的脚本往 pushgateway 推送；如果有一定开发能力，还可以通过自己写 exporter 来解决。同时有些产品随着版本的更新，不需要上面列表中的 exporter 就可以支持，比如 ceph。
+Prometheus 可以监控的对象远不止官方 exporters 列表中的产品，有些产品原生支持不在上面列表，如 TiDB; 有些可以通过标准的 exporter 来监控一类产品，如 snmp_exporter; 还有些可以通过自己写个简单的脚本往 pushgateway 推送；如果有一定开发能力，还可以通过自己写 exporter 来解决。同时有些产品随着版本的更新，不需要上面列表中的 exporter 就可以支持，比如 ceph。
 
 随着容器和 kurbernetes 的不断落地，以及更多的软件原生支持 Prometheus，相信很快 Prometheus 会成为监控领域的领军产品。
 
@@ -112,7 +112,7 @@ groups:
 - name: 这告警组的自定义名称
 - alert：告警规则的名称
 - expr：告警的表达式
-- for: 问题发生后保持多长时间再推送给，调低该值可以提高告警的敏感度，调高会减少告警毛刺
+- for: 问题发生后保持多长时间再推送给 client，调低该值可以提高告警的敏感度，调高会减少告警毛刺
 - labels： 可以加一些自定义的键值对标签
 - annotations: 可以加一些描述信息
 
