@@ -39,6 +39,7 @@ mem-quota-query
 * 作用域：GLOBAL
 * 默认值：32GB
 * 含义：该变量是 TiDB 全局 Global 配置，需在 TiDB 配置文件设置（可在 tidb-ansible conf/tidb.yaml 配置 mem-quota-query 滚更生效），如果一条查询语句执行过程中使用的内存空间超过该阈值，会触发 TiDB 启动配置文件中 OOMAction 项所指定的行为，配置文件 oom-action 默认值 log，表示打印超过内存阈值 SQL，可通过配置 cancel 实现 Kill SQL 语句，具体示例如下：
+
 ```
 conf/tidb.yaml
 ---
@@ -53,6 +54,7 @@ global:
   # Set the memory quota for a query in bytes. Default: 32GB
   # mem-quota-query: 34359738368
 ```
+
 ### 8.1.2 事务重试设置
 TiDB 数据库锁机制有别于传统数据库悲观锁，采用乐观锁，2PC 提交，此处不作具体展开，详情可查看 TiDB事务模型章节。针对事务冲突处理，可根据业务场景按需决定是否事务重试。
 
@@ -61,6 +63,7 @@ tidb_retry_limit
 * 作用域：SESSION | GLOBAL
 * 默认值：10
 * 含义：该变量用来设置最大重试次数。一个事务执行中遇到可重试的错误（例如事务冲突、事务提交过慢或表结构变更）时，会根据该变量的设置进行重试。注意当 tidb_retry_limit = 0 时，也会禁用自动重试，SQL设置具体示例如下：
+
 ```
 --设置SESSION作用域
 mysql> set @@session.tidb_retry_limit=0;
@@ -77,11 +80,13 @@ mysql> show variables like '%tidb_retry_limit%';
 | tidb_retry_limit | 0     |
 +------------------+-------+
 ```
+
 tidb_disable_txn_auto_retry
 
 * 作用域：SESSION | GLOBAL
 * 默认值：on
 * 含义：该变量用来设置是否禁用显式事务自动重试，若将变量值设置为 on 时，表示不会自动重试，遇到事务冲突需要在应用层重试。若将变量值设为 off，遇到事务冲突 TiDB 将会自动重试事务，这样在事务提交时遇到的错误更少。需要注意的是，这样可能会导致数据更新丢失。该变量不会影响自动提交的隐式事务和 TiDB 内部执行的事务，它们依旧会根据 tidb_retry_limit 的值来决定最大重试次数，SQL设置具体示例如下：
+
 ```
 --设置SESSION作用域
 mysql> set @@session.tidb_disable_txn_auto_retry=OFF;
@@ -99,6 +104,7 @@ mysql> show variables like '%tidb_disable_txn_auto_retry%';
 +-----------------------------+-------+
 1 row in set (0.01 sec)
 ```
+
 ### 8.1.3 Join 算子优化
 TiDB 数据库 SQL 执行，Join 算子天然并发，当系统资源富余时，可根据数据库 TP | AP 应用可适当调整 Join 算子并发提高 SQL 执行效率，提升数据库系统性能。
 
@@ -107,6 +113,7 @@ tidb_distsql_scan_concurrency
 * 作用域：SESSION | GLOBAL
 * 默认值：15
 * 含义：该变量用来设置 scan 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值。 对于 AP 类应用，最大值建议不要超过所有 TiKV 节点的 CPU 核数，SQL设置具体示例如下：
+
 ```
 --设置SESSION作用域
 mysql> set @@session.tidb_distsql_scan_concurrency=30;
@@ -124,11 +131,13 @@ mysql> show variables like '%tidb_distsql_scan_concurrency%';
 +-------------------------------+-------+
 1 row in set (0.01 sec)
 ```
+
 tidb_index_lookup_size
 
 * 作用域：SESSION | GLOBAL
 * 默认值：20000
 * 含义：该变量用来设置 index lookup 操作的 batch 大小，AP 类应用适合较大的值，TP 类应用适合较小的值，SQL设置具体示例如下：
+
 ```
 --设置SESSION作用域
 mysql> set @@session.tidb_index_lookup_size=40000;
@@ -146,11 +155,13 @@ mysql> show variables like '%tidb_index_lookup_size%';
 +------------------------+-------+
 1 row in set (0.00 sec)
 ```
+
 tidb_index_lookup_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：4
 * 含义：该变量用来设置 index lookup 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值，SQL设置具体示例如下：
+
 ```
 --设置SESSION作用域
 mysql> set @@session.tidb_index_lookup_concurrency=8;
@@ -168,11 +179,13 @@ mysql> show variables like '%tidb_index_lookup_concurrency%';
 +-------------------------------+-------+
 1 row in set (0.00 sec)
 ```
+
 tidb_index_lookup_join_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：4
 * 含义：该变量用来设置 index lookup join 算法的并发度，SQL设置具体示例如下：
+
 ```
 --设置SESSION作用域
 mysql> set @@session.tidb_index_lookup_join_concurrency=8;
@@ -188,11 +201,13 @@ mysql> show variables like '%tidb_index_lookup_join_concurrency%';
 +------------------------------------+-------+
 1 row in set (0.00 sec)
 ```
+
 tidb_hash_join_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：5
 * 含义：该变量用来设置 hash join 算法的并发度，SQL设置具体示例如下：
+
 ```
 --设置SESSION作用域
 mysql> set @@session.tidb_hash_join_concurrency=10;
@@ -210,11 +225,13 @@ mysql> show variables like '%tidb_hash_join_concurrency%';
 +----------------------------+-------+
 1 row in set (0.01 sec)
 ```
+
 tidb_index_serial_scan_concurrency
 
 * 作用域：SESSION | GLOBAL
 * 默认值：1
 * 含义：该变量用来设置顺序 scan 操作的并发度，AP 类应用适合较大的值，TP 类应用适合较小的值，SQL设置具体示例如下：
+
 ```
 --设置SESSION作用域
 mysql> set @@session.tidb_index_serial_scan_concurrency=4;
@@ -232,11 +249,13 @@ mysql> show variables like '%tidb_index_serial_scan_concurrency%';
 +------------------------------------+-------+
 1 row in set (0.00 sec)
 ```
+
 ### 8.1.4 常见 Mysql 兼容问题
 compatible-kill-query
 
 * 默认值：false
 * 含义：设置 Kill 语句的兼容性，TiDB 中 Kill sessionID 的行为和 MySQL 中的行为不相同。杀死一条查询，在 TiDB 里需要加上 TiDB 关键词，即 Kill TiDB sessionID。但如果把 compatible-kill-query 设置为 true，则不需要加上 TiDB 关键词。这种区别很重要，因为当用户按下 Ctrl+C 时，MySQL 命令行客户端的默认行为是：创建与后台的新连接，并在该新连接中执行 Kill 语句。如果负载均衡器或代理已将该新连接发送到与原始会话不同的 TiDB 服务器实例，则该错误会话可能被终止，从而导致使用 TiDB 集群的业务中断。只有当确定在 Kill 语句中引用的连接正好位于 Kill 语句发送到的服务器上时，才可以启用 compatible-kill-query ,具体示例如下(修改 tidb-ansible conf/tidb.yaml 配置再滚更)：
+
 ```
 conf/tidb.yaml
 ---
@@ -248,10 +267,14 @@ global:
   # turn on this option when TiDB server is behind a proxy.
   compatible-kill-query: false
 ```
+
+```
 tidb_constraint_check_in_place
 * 作用域：SESSION | GLOBAL
 * 默认值：0
 * 含义：TiDB 支持乐观事务模型，即在执行写入时，假设不存在冲突。冲突检查是在最后 commit 提交时才去检查。这里的检查指 unique key 检查。该变量用来控制是否每次写入一行时就执行一次唯一性检查。注意，开启该变量后，在大批量写入场景下，对性能会有影响。示例：
+```
+
 ```
 --默认关闭 tidb_constraint_check_in_place 参数行为
 create table t (i int key);
@@ -269,6 +292,7 @@ begin;
 insert into t values (1);
 ERROR 1062 : Duplicate entry '1' for key 'PRIMARY'
 ```
+
 ### 8.1.5 其他优化项
 prepared-plan-cache 以及 txn_local_latches 两个参数主要是 TiDB 配置参数，需要在 TiDB 配置文件中设置，可在 tidb-ansible conf/tidb.yaml 设置，再滚更 tidb-server 节点。
 

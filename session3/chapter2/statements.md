@@ -2,13 +2,13 @@
 
 在上一节介绍了怎样通过 KeyVis 来识别 TiDB 的业务的模式，本节主要带领读者体会怎样通过 Dashboard 的 Statements 信息来分析执行 SQL 情况，从而达到帮助运维人员快速定位 SQL 性能问题。
 
-## Statements 是什么
+## 1. Statements 是什么
 
 Statement，即 SQL 语句。
 
 针对 SQL 性能相关的问题，TiDB Dashboard 提供了 Statements 用来监控和统计 SQL。例如页面上提供了丰富的列表信息，包括延迟、执行次数、扫描行数、全表扫描次数等，可以用来分析哪些类别的 SQL 语句耗时过长、消耗内存过多等情况，帮助用户定位性能问题。
 
-## 为什么要用可视化 Statements
+## 2. 为什么要用可视化 Statements
 
 TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，仍发现它们有一些不足，如下：
 
@@ -20,7 +20,7 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 
 所以有了可视化 Statements 直接可以在页面观察 SQL 执行情况，也不需要到系统表中去查询了，方便运维人员。
 
-## 查看 Statements 整体情况
+## 3. 查看 Statements 整体情况
 
 登录后，在左侧点击「SQL 语句分析」即可进入此功能页面。在时间区间选项框中选择要分析的时间段即可得到该时段所有数据库的 SQL 语句执行统计情况，如果只关心某些数据库，则可以在第二个选项框中选择相应的数据库对结果进行过滤，支持多选。
 
@@ -35,7 +35,7 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 
 ![slow query table](/res/session3/chapter2/slow-query-table/1.jpg)
 
-## 查看 Statements 详情
+## 4. 查看 Statements 详情
 
 在 SQL 类别列点击某类 SQL 语句，可以进入该 SQL 语句的详情页查看更详细的信息，以及该 SQL 语句在不同节点上执行的统计情况。
 
@@ -48,7 +48,7 @@ TiDB 已经有很多性能排查工具了，但我们在应对各类场景时，
 
 ![slow query table](/res/session3/chapter2/slow-query-table/2.jpg)
 
-## Statements 参数配置
+## 5. Statements 参数配置
 
 - `tidb_enable_stmt_summary`：Statements 功能默认开启，通过设置系统变量打开，例如：
 

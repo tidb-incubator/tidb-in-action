@@ -1,4 +1,6 @@
-## Block-cache 
+## 8.2.3 其他常见优化设置
+
+1. Block-cache 
 TiKV 使用了 RocksDB 的 Column Family (CF) 特性，KV 数据最终存储在默认 RocksDB 内部的 default、write、lock 3 个 CF 内。
 
 * default CF 存储的是真正的数据，与其对应的参数位于 [rocksdb.defaultcf] 项中。

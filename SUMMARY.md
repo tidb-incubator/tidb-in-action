@@ -26,7 +26,7 @@
     * [7.1 表结构设计最佳实践](session1/chapter7/tidb-schema-design.md) @杜振强 @李霞
     * [7.2 如何查看 DDL 状态](session1/chapter7/tidb-ddl-status.md) @高海涛 @李霞
     * [7.3 Sequence](session1/chapter7/sequence.md) @潘迪
-    * [7.4 Auto Random](session1/chapter7/autorandom.md) @谢腾进 @王聪
+    * [7.4 AutoRandom](session1/chapter7/autorandom.md) @谢腾进 @王聪
 * [8 Titan 简介与实战](session1/chapter8/titan-intro.md)
     * [8.1 Titan 原理介绍](session1/chapter8/titan-internal.md) @孙晓光
     * [8.2 在 TiDB 集群中开启 Titan](session1/chapter8/titan-in-action.md) @孙晓光
@@ -50,8 +50,8 @@
     * [1.1 TiUP & TiOps](session2/chapter1/tiup-tiops.md)
         * [1.1.1 TiUP 简介](session2/chapter1/tiup-intro.md) @罗瑞星 @周帅
         * [1.1.2 用 TiUP 部署本地测试环境](session2/chapter1/tiup-playground.md) @罗瑞星
-        * [1.1.4 TiOps 简介](session2/chapter1/tiops-intro.md) @杨文
-        * [1.1.5 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md) @杨文
+        * [1.1.3 TiOps 简介](session2/chapter1/tiops-intro.md) @杨文
+        * [1.1.4 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md) @杨文
     * [1.2 TiDB on Kubernetes](session2/chapter1/tidb-on-k8s.md)
         * [1.2.1 TiDB-Operator 简介及原理](session2/chapter1/tidb-operator-intro.md) @[宋歌](https://github.com/shonge)
         * [1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）](session2/chapter1/tidb-operator-local-deployment.md) @李银龙
@@ -177,10 +177,10 @@
     * [6.2 SQL 调优案例](session4/chapter6/sql-optimization-cases.md) @郑智辉 @王英杰 @[朱博帅](https://github.com/zhuboshuai) @戚铮
     * [6.3 TiDB + TiSpark 跑批最佳实践](session4/chapter6/batch-tasks-best-practices.md) @高林
     * [6.4 分区表实践及问题处理](session4/chapter6/partition-table-best-practices.md) @代晓磊 @高振娇
-        * [6.4.1 TiDB分区表简介](session4/chapter6/patition-table-info.md) @代晓磊
-        * [6.4.2 TiDB分区表使用场景](session4/chapter6/patition-table-scenarios.md) @代晓磊
-        * [6.4.3 TiDB分区表问题处理](session4/chapter6/partition-table-practices.md) @代晓磊
-        * [6.4.4 TiDB分区表问题处理](session4/chapter6/partition-table-best-practices.md) @代晓磊
+        * [6.4.1 TiDB分区表简介](session4/chapter6/partition-table-info.md) @代晓磊
+        * [6.4.2 TiDB分区表使用场景](session4/chapter6/partition-table-scenarios.md) @代晓磊
+        * [6.4.3 TiDB分区表最佳实践](session4/chapter6/partition-table-practices.md) @代晓磊
+        * [6.4.4 TiDB分区表问题处理](session4/chapter6/partition-table-problem-handling.md) @代晓磊
     * [6.5 TiDB 在企业数据分级存储中的应用实践](session4/chapter6/tidb-in-enterprise-practices.md) @白鳝
     * [6.6 TiDB 与 HBase、ES、Druid 的数据交互实战](session4/chapter6/tidb-with-hbase-es-druid.md)@潘博存 @王伦伟
     * [6.7 TiDB 与可视化展现 Saiku、Grafana 的集成应用](session4/chapter6/tidb-siku-grafana.md)@潘博存 @王伦伟

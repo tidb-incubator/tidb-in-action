@@ -1,6 +1,6 @@
-# BR 备份与恢复实践
+## 2.3.2 BR 实操指南
 
-## 集群部署
+### 1. 集群部署
 
 为了测试 BR 备份恢复的完整流程，需要提前部署好一套完整的集群，部署方案主要参考[使用Ansible部署](https://pingcap.com/docs-cn/v3.1/how-to/deploy/orchestrated/ansible/)这篇文章，简约流程如下：
 
@@ -14,7 +14,7 @@
 
 关于备份恢复中需要用到的br工具，已经附带在官方 tidb-toolkit-v4.0.0-beta.1.tar.gz 包中，如果是使用 ansible 安装，可以直接在 tidb-ansible 目录下的 downloads 中找到。
 
-## 构建测试数据
+### 2. 构建测试数据
 
 在 TiDB 中创建对应库表
 ```sql
@@ -67,14 +67,14 @@ MySQL [br_test]> select count(1) from br_table;
 最后总共生成的数据文件分布在 6 个 TiKV 节点上。
 
 
-## 备份准备
+### 3. 备份准备
 
 在进行备份前，有一些需要调整的配置项
 
-1. tikv_gc_life_time参数
+1. tikv_gc_life_time 参数
 
 ```sql
-# 设置gc时间，避免备份时间过长导致数据被回收，需要注意的是，备份完成后，需要改回来参数。
+# 设置 gc 时间，避免备份时间过长导致数据被回收，需要注意的是，备份完成后，需要改回来参数。
 
 SELECT VARIABLE_VALUE FROM mysql.tidb WHERE VARIABLE_NAME = 'tikv_gc_life_time';
 
@@ -98,12 +98,12 @@ SELECT * FROM mysql.tidb WHERE VARIABLE_NAME = 'tikv_gc_life_time';
 
 需要注意的是，下文中执行挂载操作的，是所有的 TiKV, BR 节点，而非 TiDB，PD 所在节点。
 
-挂载NFS：
+挂载 NFS：
 ```bash
 mount -t nfs //xxxx.1.8/:/data  /data_nfs1
 ```
 
-## 备份执行
+### 4. 备份执行
 
 BR 命令包括备份，恢复两个操作，而备份，恢复又单独针对全库，单库，单表各有操作，因此单独讨论。
 
@@ -111,7 +111,7 @@ BR 命令包括备份，恢复两个操作，而备份，恢复又单独针对�
 
 另外需要注意的一点是，因为备份通过 gRPC 发送相关到 TiKV，因此 BR 执行的位置，最好是 PD 节点，避免额外的麻烦。
 
-### 通用参数
+### 5. 通用参数
 
 --ca，--cert，--key 如果设置了TLS类连接安全认证，这些参数指定相关安全证书等。
 
@@ -129,7 +129,7 @@ BR 命令包括备份，恢复两个操作，而备份，恢复又单独针对�
 
 -s, --storage 指定存储位置，比方"local:///data_nfs1"
 
-### 全库备份与恢复
+### 6. 全库备份与恢复
 
 参考命令：
 
@@ -141,19 +141,19 @@ bin/br backup full  --pd "192.168.122.101:2379" --storage "local:///data_nfs1/ba
 
 简单从日志看一下整个备份流程：
 
-1. 从 PD 连接获取到所有 TiKV 节点。
-2. 查询 infoSchema 获取元数据。
-3. 发送备份请求：{"cluster_id":6801677637806839235,"start_key":"dIAAAAAAAAAvX3IAAAAAAAAAAA==","end_key":"dIAAAAAAAAAvX3L//////////wA=","end_version":415142848617512967,"concurrency":4,"storage_backend":{Backend":{"Local":{"path":"/data_nfs1/backup"}}}}"
-4. 各个 TiKV 节点开始执行备份，执行命令完成后，返回到 BR 进行统计。
-5. 执行表的checksum [table=`br_test`.`br_table`] [Crc64Xor=12896770389982935753] [TotalKvs=100000] [TotalBytes=4788890] 
-6. 保存备份的元数据。
-7. 完成备份。
+	* 从 PD 连接获取到所有 TiKV 节点。
+	* 查询 infoSchema 获取元数据。
+	* 发送备份请求：{"cluster_id":6801677637806839235,"start_key":"dIAAAAAAAAAvX3IAAAAAAAAAAA==","end_key":"dIAAAAAAAAAvX3L//////////wA=","end_version":415142848617512967,"concurrency":4,"storage_backend":{Backend":{"Local":{"path":"/data_nfs1/backup"}}}}"
+	* 各个 TiKV 节点开始执行备份，执行命令完成后，返回到 BR 进行统计。
+	* 执行表的checksum [table=`br_test`.`br_table`] [Crc64Xor=12896770389982935753] [TotalKvs=100000] [TotalBytes=4788890] 
+	* 保存备份的元数据。
+	* 完成备份。
 
 备份过程中，提到的元数据，最终会保存到备份目录下，其主要包含的是校验和，以及备份集的相关描述信息，包括备份集合中，每个库，表，列的逻辑排列，字符集信息等（对应的是一个 protobuf 格式的描述文件）。
 
 备份完成后，在指定的备份目录，会最终出现命名类似5_2_23_80992061af3e5194c3f28a5b79d486c5e9db2feda1afb3f84b4ca229ddce9932_write.sst的备份集合，也就是最终的备份文件。
 
-## 恢复数据
+### 7. 恢复数据
 
 为了简化操作，这里在原有集群上进行恢复，往往实际中是要恢复到一个全新的集群上。
 
@@ -191,7 +191,7 @@ MySQL [br_test]> select count(1) from br_table;
 
 ```
 
-## 单库备份与恢复
+### 8. 单库备份与恢复
 
 单库的备份恢复参考命令如下：
 
@@ -205,7 +205,7 @@ bin/br restore db  --db "br_test" --pd "192.168.122.101:2379" --storage "local:/
 ```
 
 
-## 单表备份与恢复
+### 9. 单表备份与恢复
 
 单库的备份恢复参考命令如下：
 

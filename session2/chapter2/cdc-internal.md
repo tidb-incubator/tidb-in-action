@@ -1,3 +1,4 @@
+## 2.1.2 CDC 工作原理
 **TiCDC**（**Ti**DB **C**hange **D**ata **C**apture）是用来识别、捕捉和输出 TiDB/TiKV 集群上数据变更的工具系统。它既可以作为 TiDB 增量数据同步工具，将 TiDB 集群的增量数据同步至下游数据库；也提供开放数据协议，支持把数据发布到第三方系统。相较于 TiDB Binlog，TiCDC 不依赖 TiDB 事务模型保证数据同步的一致性，系统可水平扩展且天然支持高可用。
 
 ![architecture.png](/res/session2/chapter2/cdc-internal/1.png)
