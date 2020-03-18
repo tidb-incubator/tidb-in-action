@@ -73,6 +73,8 @@ Global Flags:
 
 ## 1.5.3 操作
 
+以TiDB on K8S上操作举例：
+
 (1) **创建 tidbcluster 集群**
 
 ```yaml
