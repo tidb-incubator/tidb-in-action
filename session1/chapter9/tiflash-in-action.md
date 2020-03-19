@@ -4,7 +4,7 @@
 ### 9.3.1 按表构建 TiFlash 副本
 TiFlash 接入 TiKV 集群后，默认不会开始同步数据，可通过 MySQL 客户端向 TiDB 发送 DDL 命令来为特定的表建立 TiFlash 副本：
 ```
-ALTER TABLE ​table_name​ SET TIFLASH REPLICA ​count​ 
+ALTER TABLE table_name SET TIFLASH REPLICA count; 
 ```
 说明：
 * count 表示副本数，如果设置为 0 则表示删除
@@ -12,24 +12,24 @@ ALTER TABLE ​table_name​ SET TIFLASH REPLICA ​count​
 
 示例 1，为表建立 2 个 TiFlash 副本：
 ```
-ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 2
+ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 2;
 ```
 
 示例 2，删除副本：
 ```
-ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 0
+ALTER TABLE `tpch50`.`lineitem` SET TIFLASH REPLICA 0;
 ```
 
 可通过如下 SQL 语句查看特定表（通过 WHERE 语句指定，去掉 WHERE 语句则查看所有表）的 TiFlash 副本的状态：
 ```
 SELECT * FROM information_schema.tiflash_replica
-WHERE TABLE_SCHEMA = '<db_name>' and TABLE_NAME = '<table_name>'
+WHERE TABLE_SCHEMA = '<db_name>' and TABLE_NAME = '<table_name>';
 ```
 查询结果中的 AVAILABLE 字段表示该表的 TiFlash 副本是否可用。
 
 注意，假设有一张表 `t` 已经通过上述的 DDL 语句同步到 TiFlash，则通过以下语句创建的表也会自动同步到 TiFlash：
 ```
-CREATE TABLE table_name like t
+CREATE TABLE table_name like t;
 ```
 
 ### 9.3.2 TiDB 读取 TiFlash
