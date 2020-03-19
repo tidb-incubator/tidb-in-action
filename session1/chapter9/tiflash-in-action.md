@@ -7,7 +7,7 @@ TiFlash 接入 TiKV 集群后，默认不会开始同步数据，可通过 MySQL
 ALTER TABLE table_name SET TIFLASH REPLICA count; 
 ```
 说明：
-* count 表示副本数，如果设置为 0 则表示删除
+* count 表示副本数，如果设置为 0 则表示删除 TiFlash 副本
 * 对于相同表的多次 DDL 命令，仅保证最后一次能生效
 
 示例 1，为表建立 2 个 TiFlash 副本：
@@ -59,9 +59,11 @@ set SESSION tidb_isolation_read_engines = "tikv,tiflash";
 ```
 
 如果希望只读取 TiFlash 的数据（隔离模式），则按如下配置：
-`set SESSION tidb_isolation_read_engines = "tiflash";`
+```
+set SESSION tidb_isolation_read_engines = "tiflash";
+```
 
-(2) TiDB 实例级别，即 INSTANCE 级别，和以上配置是***交集***关系。比如 INSTANCE 配置了 "tikv,tiflash"，而 SESSION 配置了 "tikv"，则只会读取 tikv。如果没有指定，默认继承会话级别配置。在 TiDB 的配置文件添加如下配置项：
+(2) TiDB 实例级别，即 INSTANCE 级别，和以上配置是交集关系。比如 INSTANCE 配置了 "tikv,tiflash"，而 SESSION 配置了 "tikv"，则只会读取 tikv。如果没有指定，默认继承会话级别配置。在 TiDB 的配置文件添加如下配置项：
 ```
 [isolation-read]
 engines = ["tikv", "tiflash"]
@@ -76,7 +78,7 @@ Engine 隔离的优先级高于优化器选择，即优化器仅会选取指定 
 #### 3. 手工 hint
 手工 hint 可以强制 TiDB 对于某张或某几张表使用 TiFlash 副本，其优先级高于 CBO 和 engine 隔离，使用方法为：
 ```
-select /*+ read_from_storage(tiflash[t]) */ * from t;
+SELECT /*+ read_from_storage(tiflash[t]) */ * FROM t;
 ```
 
 同样的，对于指定 hint 的表，如果没有 tiflash 副本，查询会报该表不存在该 tiflash 副本的错。
