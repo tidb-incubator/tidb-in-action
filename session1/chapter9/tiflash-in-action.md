@@ -29,7 +29,7 @@ WHERE TABLE_SCHEMA = '<db_name>' and TABLE_NAME = '<table_name>';
 
 注意，假设有一张表 `t` 已经通过上述的 DDL 语句同步到 TiFlash，则通过以下语句创建的表也会自动同步到 TiFlash：
 ```
-CREATE TABLE table_name like t;
+CREATE TABLE table_name LIKE t;
 ```
 
 ### 9.3.2 TiDB 读取 TiFlash
