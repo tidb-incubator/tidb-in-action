@@ -155,7 +155,7 @@ limit 10
 我们可以根据 command 和 time 条件找出有问题的执行语句，并根据其 ID 将其 kill 掉，一个个 ID 来 kill 显然太慢，我们可以通过 concat() 内置函数来实现快速 kill
 
 ```sql
--- 查询执行时间超过2分钟，且非 sleep 的线程，然后拼接成 kill 语句
+-- 查询执行时间超过2分钟，且非 sleep 的会话，然后拼接成 kill 语句
 select concat('kill ', 'TiDB', id, ';')
 from information_schema.processlist
 where command != 'Sleep'
