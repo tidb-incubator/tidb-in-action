@@ -8,9 +8,9 @@
 
 最终将诊断报告和系统报告生成一份 html 的报告，并支持下载后离线浏览和传阅。
 
-## 如何使用
+## 2.3.1 如何使用
 
-### 依赖
+### 1. 依赖
 
 诊断报告需要读取监控数据，目前需要设置 PD 的 `pd-server.metric-storage` 值为 prometheus 的地址。可以通过下面命令动态设置改配置项。
 
@@ -24,11 +24,11 @@ curl -X POST -d '{"metric-storage":"http://{PROMETHEUS_ADDRESS}"}' http://{PD_AD
 curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:2379/pd/api/v1/config
 ```
 
-### 关于时间范围的选择
+### 2. 关于时间范围的选择
 
-1. 建议生成报告的时间范围在 2 min ~ 60 min 内，目前不建议生成超过 1 小时范围的报告。
+建议生成报告的时间范围在 2 min ~ 60 min 内，目前不建议生成超过 1 小时范围的报告。
 
-### 生成诊断报告
+### 3. 生成诊断报告
 
 ![生成诊断报告步骤](/res/session3/chapter2/diagnosis-report/report-doc1.png)
 
@@ -36,30 +36,30 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 
 点击完整报告的链接即可查看报告内容。
 
-### 生成对比诊断报告
+### 4. 生成对比诊断报告
 
 ![生成对比诊断报告步骤](/res/session3/chapter2/diagnosis-report/report-doc3.png)
 
 关于对比报告的 2 个时间范围的选择，要求 2 个时间段的跨度一样，比如 start 和 end 的时间差均为 10 分钟。
 
-### 提示
+### 5. 提示
 
 ![图标](/res/session3/chapter2/diagnosis-report/report-doc4.png)
 
 - i 图标：鼠标移动到 i 图标会显示每一行的说明注释。
 - expand：点击 expand 展开会看到这项监控更加详细的信息，如是哪个 instance, 哪个 label 等等。
 
-## 自动诊断报告
+## 2.3.2 自动诊断报告
 
 自动诊断是 TiDB 的 4.0 引入的新特性，根据一些内置的诊断规则对系统做出诊断，这里具体可以参考 chapter3/inspection-tables.md 中的 `INSPECTION_RESULT` 诊断表查看更详细的内容。
 
-## 系统报告
+## 2.3.3 系统报告
 
-### Header
+### 1. Header
 
 报告头，包括报告的时间范围，集群机器的硬件信息，集群拓扑。
 
-#### Report Time Range
+#### (1) Report Time Range
 
 生成报告的时间范围。
 
@@ -67,7 +67,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 | :------------------ | :------------------ |
 | 2020-03-05 16:30:00 | 2020-03-05 16:50:00 |
 
-#### cluster hardware
+#### (2) cluster hardware
 
 集群中服务器的硬件信息。
 
@@ -82,7 +82,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 - DISK：磁盘大小，单位是 GB。
 - UPTIME: 服务器的启动时间，单位是 Day。
 
-#### cluster info
+#### (3) cluster info
 
 集群拓扑信息。信息来自 TiDB 的 `information_schema.cluster_info` 系统表。
 
@@ -95,9 +95,9 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 | tikv | 172.16.5.40:23150 | 172.16.5.40:23151 | 4.1.0-alpha                            | 8fa0e059e14c3a1433fcb581452f9ea0a14a72ce | 2020-03-04T20:54:17+08:00 | 91h58m47.643289422s |
 | tikv | 172.16.5.40:20150 | 172.16.5.40:20151 | 4.1.0-alpha                            | 8fa0e059e14c3a1433fcb581452f9ea0a14a72ce | 2020-03-04T20:45:24+08:00 | 92h7m40.643291283s  |
 
-### Load info
+### 2. Load info
 
-#### node load
+#### (1) node load
 
 服务器节点的负载信息，包括磁盘的读/写延迟，cpu、memory 的 avg, max, min 使用率。
 
@@ -108,7 +108,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 | node_cpu_usage          |          | 80.56% | 81.55% | 79.4%    |
 | node_mem_usage          |          | 27.9%  | 28.71% | 26.89%   |
 
-#### process cpu usage
+#### (2) process cpu usage
 
 各个 TiDB/PD/TiKV 的 CPU 的 avg, max, min 使用率。
 
@@ -121,7 +121,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 | 172.16.5.40:23151 | tikv | 0.3   | 1.07  | 0.04  |
 | 172.16.5.40:21151 | tikv | 0.27  | 0.71  | 0.04  |
 
-#### TiKV Thread CPU Usage
+#### (3) TiKV Thread CPU Usage
 
 查看 TiKV 各个线程的 CPU 使用率。
 
@@ -138,7 +138,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 | cop [expand](<javascript:void(0)>)          |                   | 0.01     | 0.18   | 0    |
 | grpc [expand](<javascript:void(0)>)         |                   | 0.16     | 0.85   | 0    |
 
-#### goroutines count
+#### (4) goroutines count
 
 TiDB/PD 的 goroutines 的 avg, max, min 数量信息。
 
@@ -147,9 +147,9 @@ TiDB/PD 的 goroutines 的 avg, max, min 数量信息。
 | 172.16.5.40:10089 | tidb | 899 | 996 | 651 |
 | 172.16.5.40:24799 | pd   | 114 | 115 | 113 |
 
-### Overview
+### 3. Overview
 
-#### Time Consume
+#### (1) Time Consume
 
 包括集群总体各项监控耗时以及各项耗时的占比。
 
@@ -174,7 +174,7 @@ TiDB/PD 的 goroutines 的 avg, max, min 数量信息。
 - P90: 该项监控的 P90 最大执行时间。
 - P80: 该项监控的 P80 最大执行时间。
 
-#### Error
+#### (2) Error
 
 集群内各个 error 出现的总次数。
 
@@ -204,15 +204,15 @@ TiDB/PD 的 goroutines 的 avg, max, min 数量信息。
 | node_network_in_errors_total_count                                      |                 | 0           |
 | node_network_out_errors_total_count                                     |                 | 0           |
 
-### TiDB
+### 4. TiDB
 
 TiDB 组件相关的监控信息。
 
-#### Time Consume
+#### (1) Time Consume
 
 TiDB 的各项监控耗时以及各项耗时的占比。和 overview 中类似，但是这个表的 label 信息会更丰富，能看到更多细节。
 
-#### Transaction
+#### (2) Transaction
 
 TiDB 事务相关的监控项。
 
@@ -237,7 +237,7 @@ TiDB 事务相关的监控项。
 
 在报告时间范围内，tidb_txn_kv_write_size：一共有 1379 次事务的 kv 写入，总 kv 写入大小是 216307980， 其中 P999, P99, P90, P80 的最大值分别为 1043333 , 996147, 248705, 235266 单位是 byte。
 
-#### DDL-owner
+#### (3) DDL-owner
 
 TiDB DDL 的 owner 信息。
 
@@ -247,13 +247,13 @@ TiDB DDL 的 owner 信息。
 
 > 注意： 如果 owner 信息为空，不代表这个时间段内一定没有 owner, 因为这里是依靠 ddl_worker 的监控信息来判断 DDL owner 的，也可能是这个时间段内 ddl_worker 没有做任何 DDL job 导致这里信息为空。
 
-### PD/TiKV
+### 5. PD/TiKV
 
 PD 和 TiKV 的监控报告和之前的表结构类似，这里不再重复赘述，点击 i 图标查看相关注释查看更多信息即可。
 
-### Config
+### 6. Config
 
-#### Scheduler Config
+#### (1) Scheduler Config
 
 PD Scheduler 配置参数的 change history。
 
@@ -292,7 +292,7 @@ PD Scheduler 配置参数的 change history。
 
 > 注意：由于拉取监控信息的延迟，上面 `leader-schedule-limit` 的修改时间可能要比 2020-03-05 16:46:00 更早几秒，但差别不会超过 prometheus 拉取监控的 间隔时间。
 
-#### TiDB GC Config
+#### (2) TiDB GC Config
 
 TiDB 的 GC 配置参数的 change history。
 
@@ -301,7 +301,7 @@ TiDB 的 GC 配置参数的 change history。
 | 2020-03-03 17:00:00.000000 | tikv_gc_life_time    | 6000  | 1            |
 | 2020-03-03 17:00:00.000000 | tikv_gc_run_interval | 60    | 1            |
 
-#### TiDB/PD/TiKV Current Config
+#### (3) TiDB/PD/TiKV Current Config
 
 注意，current Config 是指生成报告时集群当前的配置值，不是用户选择的报告时间范围内的值。
 

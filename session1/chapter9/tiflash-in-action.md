@@ -1,8 +1,8 @@
-# TiFlash 的使用
+## 9.3 TiFlash 的使用
 用户可以使用 TiDB 或者 TiSpark 读取 TiFlash， TiDB 适合用于中等规模的 OLAP 计算，而
 TiSpark 适合大规模的 OLAP 计算，用户可以根据自己的场景和使用习惯自行选择。
 
-## 按表构建 TiFlash 副本
+### 9.3.1 按表构建 TiFlash 副本
 TiFlash 接入 TiKV 集群后，默认不会开始同步数据，可通过 mysql 客户端向 TiDB 发送 DDL 命令来为特定的表建立 TiFlash 副本:
 ```
 ALTER TABLE ​table_name​ SET TIFLASH REPLICA ​count​ 
@@ -31,19 +31,19 @@ SELECT * FROM information_schema.tiflash_replica WHERE TABLE_SCHEMA = '<db_name>
 CREATE TABLE table_name like t
 ```
 
-## TiDB 读取 TiFlash
+### 9.3.2 TiDB 读取 TiFlash
 TiDB 提供三种读取 TiFlash 副本的方式。如果添加了 TiFlash 副本，而没有做任何 engine 的配置，则默认使用 CBO 方式。
 
 
-## CBO
+#### 1. CBO
 对于创建了 TiFlash 副本的表，TiDB 的 CBO 优化器会自动根据代价选择是否使用 TiFlash 副本，具体有没有选择 TiFlash 副本，可以通过 explainanalyze 语句查看，见下图:
 ![1.png](/res/session1/chapter9/tiflash-in-action/1.png)
 
 
-## Engine 隔离
-Engine 隔离是通过配置变量来指定所有的查询均使用指定 engine 的副本，可选 engine 为 tikv 和 tiflash，分别有3个配置级别:
+#### 2. Engine 隔离
+Engine 隔离是通过配置变量来指定所有的查询均使用指定 engine 的副本，可选 engine 为 tikv 和 tiflash，分别有 2 个配置级别:
 
-1. 会话级别，即 SESSION 级别。如果没有指定，会继承 GLOBAL 的配置。
+(1). 会话级别，即 SESSION 级别。如果没有指定，会继承 GLOBAL 的配置。
 
 ```
 set@@session.tidb_isolation_read_engines="逗号分隔的enginelist";
@@ -57,7 +57,7 @@ set@@session.tidb_isolation_read_engines="逗号分隔的enginelist";
 如希望只读取 TiFlash 的数据（隔离模式），则按如下配置：
 `set SESSION tidb_isolation_read_engines = "tiflash";`
 
-2. TiDB 实例级别，即 INSTANCE 级别，和以上配置是​交集​关系。比如 INSTANCE 配置了"tikv,tiflash"，而 SESSION 配置了"tikv"，则只会读取 tikv。如果没有指定，默认继承会话级别配置。在 TiDB 的配置文件添加如下配置项
+(2) TiDB 实例级别，即 INSTANCE 级别，和以上配置是​交集​关系。比如 INSTANCE 配置了"tikv,tiflash"，而 SESSION 配置了"tikv"，则只会读取 tikv。如果没有指定，默认继承会话级别配置。在 TiDB 的配置文件添加如下配置项
 
 ```
 [isolation-read]
@@ -68,7 +68,7 @@ engines = ["tikv", "tiflash"]
 指定了 engine 后，对于查询中的表没有对应 engine 副本的情况(因为 tikv 副本是必定存在的，因此只有配置了 engine 为 tiflash 而 tiflash 副本不存在这一种情况)，查询会报该表不存在该 engine 副本的错。
 Engine 隔离的优先级高于优化器选择，即优化器仅会选取指定 engine 的副本。
 
-## 手工Hint
+#### 3. 手工Hint
 手工 hint 可以强制 TiDB 对于某张或某几张表使用 TiFlash 副本，其优先级高于 CBO 和
  engine 隔离，使用方法为:
 

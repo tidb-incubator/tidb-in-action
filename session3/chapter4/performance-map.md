@@ -1,9 +1,9 @@
-# 性能调优地图
+# 4.1 性能调优地图
 
 作为一个复杂的分布式数据库，性能调优对 TiDB 来说是极为复杂而又重要的部分。下面这张图是我们整理的 TiDB 各个模块的地图，通过这张地图我们可以清晰地看出 TiDB 是如何处理一条 SQL 的。
 ![tidb performance](/res/session3/chapter4/performance-map/performance-map.png)
 
-## TiDB
+## 1. TiDB
 * 首先 TiDB 的【Server】模块会为 MySQL 客户端的每一个连接创建一个 session 并且分配一个 token。我们可以通过 Connection Count 这项监控来查看 TiDB 的连接数，通常建议单个 TiDB 的连接数不超过 500。
 * 然后经由这个 session 发送过来的 SQL 会在【Parse】中被转化为能够被 TiDB 所理解的语法树。这个时间可通过监控【Executor/Parse Duration】查看，通常应该在 10ms 以内。
 * 接下来 TiDB 会根据语法树生成物理执行计划，决定选择哪些索引或者算子来进行计算，这个过程被称作【Compile】。执行时间可通过监控【Executor/Compile Duration】
@@ -13,9 +13,9 @@
     * 事务在 channel 中等待的时间为监控【PD Client/PD TSO Wait Duration】
     * TiDB 向 PD 请求时间戳的网络请求的时间为监控【PD Client/PD TSO RPC duration】。
 
-## TiKV
+## 2. TiKV
 
-* 参考 [读写流程分析](/session3/chapter4/read-write-metrics.md) 一章，
+* 参考 [读写流程分析](/session3/chapter4/read-write-metrics.md) 一章
 * TiKV 的主要由 6 个模块构成。分别是 gRPC、Scheduler、raftstore、apply、storage-readpool 以及 coprocessor-readpool。
     * gRPC 是 TiKV 所有请求的入口，他会将外界的请求转发给各个模块。
         * 对于写事务的请求，会转发给 scheduler 线程。

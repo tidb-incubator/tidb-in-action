@@ -1,49 +1,44 @@
-### 1 TiDB DDL 特点
-大多数数据库执行 DDL 操作时，或多或少会对正在访问该数据库的 SQL 产生影响。例如，在执行 DDL 期间可能会有锁表操作，此时访问该表的 SQL 会被阻塞。因此，一般在表结构设计阶段都会尽量避免后续产生 DDL 操作；如果必须执行 DDL操作，也只能选择在业务低峰期操作，尽量减少对线上业务的影响。
+## 7.2 如何查看 DDL 状态
+
+### 7.2.1 TiDB DDL 特点
+大多数数据库执行 DDL 操作时，或多或少会对正在访问该数据库的 SQL 产生影响。例如，在执行 DDL 期间可能会有锁表操作，此时访问该表的 SQL 会被阻塞。因此，一般在表结构设计阶段都会尽量避免后续产生 DDL 操作。如果必须执行 DDL操作，也只能选择在业务低峰期操作，尽量减少对线上业务的影响。
 
 TiDB 上的 DDL 操作，不会阻塞任何该数据库上正在执行的 SQL，对业务的 SQL 访问和对 DBA 运维都极为友好，这也是 TiDB 相较于其他数据库产品的一大优势所在。
 
-### 2 对 DDL 进行管理
+### 7.2.2 对 DDL 进行管理
 TiDB 对 MySQL 语法进行了扩展，通过 ADMIN 语句对 DDL 操作进行管理。下面罗列了 DDL 管理的基本命令，各命令返回结果中各字段的详细含义，请参考[官方 admin 相关文档](https://pingcap.com/docs-cn/stable/reference/sql/statements/admin/#admin)。
 
-- 查看当前 schema version，owner 信息以及正在执行的 DDL 任务
+- 查看当前 schema version，owner 信息以及正在执行的 DDL 任务。
 
 ```
 ADMIN SHOW DDL;
 ```
 
-- 查看当前未执行完成的 DDL 任务(包括正在运行的 DDL 任务和等待运行的任务)以及最近 NUM 条(默认 10 )已经执行完成的 DDL 任务
+- 查看当前未执行完成的 DDL 任务(包括正在运行的 DDL 任务和等待运行的任务)以及最近 NUM 条(默认 10 )已经执行完成的 DDL 任务。
+```ADMIN SHOW DDL JOBS [NUM] [WHERE where_condition];```
 
-```
-ADMIN SHOW DDL JOBS [NUM] [WHERE where_condition];
+    - 例如，显示当前未完成的 DDL 任务，以及最近 5 条已经执行完成的 DDL 任务。
+        ```
+        ADMIN SHOW DDL JOBS 5;
+        ```
+    - 例如，显示 test 数据库中未执行完成的 DDL 任务，以及最近 5 条已经执行完成但执行失败的 DDL 任务。
+        ```
+        ADMIN SHOW DDL JOBS 5 WHERE state!='synced' AND db_name='test';
+        ```
 
-```
-
-例如，显示当前未完成的 DDL 任务，以及最近 5 条已经执行完成的 DDL 任务
-
-```
-ADMIN SHOW DDL JOBS 5;
-```
-
-例如，显示 test 数据库中未执行完成的 DDL 任务，以及最近 5 条已经执行完成但执行失败的 DDL 任务
-
-```
-ADMIN SHOW DDL JOBS 5 WHERE state!='synced' AND db_name='test';
-```
-
-- 根据 JOB_ID 查询具体的 DDL 语句
+- 根据 JOB_ID 查询具体的 DDL 语句。
 
 ```
 ADMIN SHOW DDL JOB QUERIES job_id [, job_id] ...;
 ```
 
-- 取消正在执行中的 DDL 任务
+- 取消正在执行中的 DDL 任务。
 
 ```
 ADMIN CANCEL DDL JOBS job_id [, job_id] ...;
 ```
 
-- 通过 JOB_ID 恢复表，等价于：RECOVER TABLE table_name
+- 通过 JOB_ID 恢复表，等价于：`RECOVER TABLE table_name`。
 
 ```
 RECOVER TABLE BY JOB ddl_job_id;
@@ -73,7 +68,7 @@ OWNER_ADDRESS: 10.40.216.9:4000
 ```
 除此之外，也可以通过访问 TiDB 提供的 HTTP 接口查看当前 owner 所在 TiDB，以及各个 TiDB 节点 `ddl_id`、`lease` 等信息，用法如下：
 
-```
+```console
 # 用法
 curl http://{TiDBIP}:10080/info/all
 # 例如
@@ -106,8 +101,8 @@ $curl http://127.0.0.1:10080/info/all
     }
 }
 ```
-### 3 DDL 相关参数
-#### 3.1 参数
+### 7.2.3 DDL 相关参数
+#### 参数
 * `tidb_ddl_reorg_worker_cnt`
 
 | 属性  | 值  |
@@ -132,7 +127,7 @@ $curl http://127.0.0.1:10080/info/all
 
 | 属性  | 值  |
 |:------------- |:---------------:|
-| 作用域      | GLOBAL \|SESSION |
+| 作用域      | GLOBAL &#124;SESSION |
 | 默认值      | PRIORITY_LOW        |
 | 作用   | 控制数据回填（re-organize）阶段执行的优先级   | 
 
@@ -144,16 +139,17 @@ $curl http://127.0.0.1:10080/info/all
 | 默认值         | 512   | 
 | 作用   | 控制 DDL 操作失败重试的次数，重试次数超过该值，则取消 DDL 操作   | 
 
-#### 3.2 使用场景
-TiDB 集群中，用户执行的 DDL 操作分两类：普通 DDL 操作和加索引操作。普通 DDL 操作执行时间短，一般秒级就可以执行完成；而加索引操作由于需要回填数据，因此执行时间略长。而在回填数据期间，需要将回填的数据写入 TiKV，对 TiKV 会产生额外的写入压力，从而造成一些性能影响。相关的测试可以参考：[线上负载与 ADD INDEX 相互影响的测试](https://pingcap.com/docs-cn/stable/benchmark/add-index-with-load/#tidb_ddl_reorg_batch_size--32)
+#### 使用场景
+TiDB 集群中，用户执行的 DDL 操作分两类：普通 DDL 操作和加索引操作。普通 DDL 操作执行时间短，一般秒级就可以执行完成；而加索引操作由于需要回填数据，因此执行时间略长。而在回填数据期间，需要将回填的数据写入 TiKV，对 TiKV 会产生额外的写入压力，从而造成一些性能影响。相关的测试可以参考：[线上负载与 ADD INDEX 相互影响的测试](https://pingcap.com/docs-cn/stable/benchmark/add-index-with-load/#tidb_ddl_reorg_batch_size--32)。
 
 TiDB 提供了参数 `tidb_ddl_reorg_worker_cnt` 和 `tidb_ddl_reorg_batch_size` 用来控制回填数据的速度。通过调整参数，可以在业务访问高峰到来时降低 DDL 速度，保证对业务的正常访问无影响；而在业务访问低峰增加 DDL 速度，从而更快的完成 DDL 任务。
 
-参数 `tidb_ddl_reorg_priority` 一旦设置的优先级过高，可能会对正常的 SQL 请求有一定的影响，一般默认值即可。
+**注意**
+- 参数 `tidb_ddl_reorg_priority` 调整优先级，可能会对正常的 SQL 请求有一定的影响，一般默认值即可。
 
-参数 `tidb_ddl_error_count_limit` 则用来控制重试次数，当发生异常（诸如由于超时、TiKV 无法连接等）时，可进行重试；超过重试次数则终止当前 DDL，一般默认值即可。
+- 参数 `tidb_ddl_error_count_limit` 则用来控制重试次数，当发生异常（诸如由于超时、TiKV 无法连接等）时，可进行重试；超过重试次数则终止当前 DDL，一般默认值即可。
 
-### 4  DDL 处理流程
+### 7.2.4 DDL 处理流程
 TiDB-Server 作为 SQL 的统一入口，DDL 操作也首先经由 TiDB-Server 处理，TiDB 可以多点写入，也就是不同的 TiDB-Server 可以同时接受 DDL 操作请求。
 
 为了保证 TiDB-Server 异常重启而丢失 DDL 信息，首先 TiDB-Server 会将 DDL 操作封装成一个拥有唯一标识的 DDL Job，存储到 TiKV 上的任务队列中，持久化保存。
@@ -164,16 +160,16 @@ Owner 节点上的 worker 会从任务队列中依次取出 DDL 任务执行。�
 
 Owner 上的 worker 在处理 `ADD INDEX` 类型 DDL 任务时，涉及到回填数据的过程。该过程会启动 `tidb_ddl_reorg_worker_cnt` 个线程，每次每个线程处理 `tidb_ddl_reorg_batch_size` 大小的数据。因此通过调整这两个参数，可以动态控制 `DDL` 执行速度。
 
-当 `DDL` 任务执行完成之后，会将执行完成的 `DDL` 任务移动至历史任务队列（job history queue）中，方便后续通过命令进行 DDL 任务的历史查询。
+当 DDL 任务执行完成之后，会将执行完成的 DDL 任务移动至历史任务队列（job history queue）中，方便后续通过命令进行 DDL 任务的历史查询。
 
 完整的 DDL 执行流程如下图所示，更详细的内容，可以参考 [DDL 源码解析](https://pingcap.com/blog-cn/tidb-source-code-reading-17/)。
 
 ![图片](./images/ddl-workflow.png)
 
-### 5 DDL 变更原理
+### 7.2.5 DDL 变更原理
 TiDB 在线表变更的原理借鉴自论文 《Online, Asynchronous Schema Change in F1》，通过在表结构变更过程中引入额外状态从而实现了一套在线表变更协议，使得集群存在相邻两个版本的 schema 时候，不会破坏数据完整性或发生数据异常。因此，在实现上，要求集群中在同一个表上所有 schema 版本最多存在两个相邻的版本。
 
-例如，以 ADD INDEX 类型的 DDL 操作为例，其状态变化如下表所示：
+例如，以 `ADD INDEX` 类型的 DDL 操作为例，其状态变化如下表所示：
 
 | schema版本  | 状态  | 说明  |
 |:------------- |:---------------|:---------------:|
@@ -185,6 +181,6 @@ TiDB 在线表变更的原理借鉴自论文 《Online, Asynchronous Schema Chan
 
 TiDB 在该论文的基础上又进行了一些优化。例如，在执行 `ADD COLUMN` 类型 DDL 时，TIDB并没有对数据进行回填，而是将最新添加的列的 default 值保存到 schema 的"原始默认值"字段中，在读取阶段如果 TiKV 发现该列值为 `null` 并且"原始默认字段"不为 `null`，则会使用"原始默认字段"对该 `null` 列进行填充，并将填充后的结果从 TiKV 返回。通过这种优化，该 DDL 操作不需要关心表中实际行数，可以更快的完成 DDL 变更。
 
-再例如，一些涉及删除数据的 DDL 操作，诸如：`Drop Index`，`Drop Table`，`Drop Database`，`Truncate Table` 等，在实现上，除了要完成和普通 DDL 变更一样的逻辑外，还需要对待删除的数据进行处理。TiDB 做法是，将这些需要删除的数据记录到 `gc_delete_range` 表中，通过 GC 机制，将对应的数据再进行删除。当然如果是删除某列的 DDL 操作，由于目前是行存储模式，删除列的代价会比较大，所以暂时只是在 schema 上进行删除列的标记，并不会实际删除该列的数据。
+再例如，一些涉及删除数据的 DDL 操作，诸如：`DROP INDEX`，`DROP TABLE`，`DROP DATABASE`，`TRUNCATE TABLE` 等，在实现上，除了要完成和普通 DDL 变更一样的逻辑外，还需要对待删除的数据进行处理。TiDB 做法是，将这些需要删除的数据记录到 `gc_delete_range` 表中，通过 GC 机制，将对应的数据再进行删除。当然如果是删除某列的 DDL 操作，由于目前是行存储模式，删除列的代价会比较大，所以暂时只是在 schema 上进行删除列的标记，并不会实际删除该列的数据。
 
 更详细的 DDL 实现原理及优化细节可以参考 [TiDB DDL architecture](https://github.com/pingcap/tidb/blob/master/docs/design/2018-10-08-online-DDL.md)。

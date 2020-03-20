@@ -1,6 +1,6 @@
-# TiDB TechDay
+### 2.1.2 TiDB TechDay
 
-为了让更多的社区伙伴能够近距离与我们展开交流，并快速 Get TiDB 的技术细节和正确使用姿势，从 2017 年开始，PingCAP 在每年年中面向社区小伙伴举行 TiDB TechDay 活动，用一天的时间为大家深入拆解当年 TiDB 技术层面的各种大招。
+为了让更多的社区伙伴能够近距离与我们展开交流，并快速 Get TiDB 分布式数据库的技术细节和正确使用姿势，从 2017 年开始，PingCAP 在每年年中面向社区小伙伴举行 TiDB TechDay 活动，用一天的时间为大家深入拆解当年 TiDB 分布式数据库技术层面的各种大招。
 
 [首届 TechDay](https://pingcap.com/community-cn/techday2017/) 在 2017 年的上海，这次活动为社区小伙伴带来了 TiDB Internal, TiSpark, TiDB on Kubernetes 等技术分享。
 
