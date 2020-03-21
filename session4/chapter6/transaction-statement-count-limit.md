@@ -12,6 +12,7 @@
 >
 > 键值对的总大小不超过 100MB
 >
+> 单个事务包含的 SQL 语句不超过 5000 条（默认）
 
 **详见 [PingCAP 官方文档 - 大事务](https://pingcap.com/docs-cn/v2.1/reference/transactions/overview/#大事务)**
 

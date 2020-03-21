@@ -1,22 +1,22 @@
-# Prometheus 在 TiDB 中的应用 
+# 4.4 Prometheus 使用指南
 
 本节将介绍监控工具 Prometheus 在 TiDB 中的应用，包括 Prometheus 本身的介绍以及如何通过 Prometheus 查看 TiDB 的监控和利用 Prometheus 的 alertmanager 进行告警。
 
-## Prometheus 简介
+## 4.4.1 Prometheus 简介
 
 TiDB 使用开源时序数据库 Prometheus 作为监控和性能指标信息存储方案，使用 Grafana 作为可视化组件进行信息的展示。
 
-Prometheus 狭义是上软件本身，即 prometheus server，广义上是基于 prometheus server 为核心的各类软件工具的生态。除 prometheus server 和 grafana 外，Prometheus 生态常用的组件还有 alertmanager、pushgateway 和非常丰富的各类 exporters。
+Prometheus 狭义上是软件本身，即 prometheus server，广义上是基于 prometheus server 为核心的各类软件工具的生态。除 prometheus server 和 grafana 外，Prometheus 生态常用的组件还有 alertmanager、pushgateway 和非常丰富的各类 exporters。
 
-prometheus server 自身是一个时序数据库，相比使用 MySQL 做为底层存储的 zabbix 监控，拥有非常高效的插入和查询性能，同时数据存储占用的空间也非常小。另外不同于 zabbix，prometheus server 中的数据是从各种数据源主动拉过来的，而不是客户端主动推送的。如果使用 prometheus server 要接收推送的信息，数据源和 prometheus server 中间需要使用 pushgateway。
+prometheus server 自身是一个时序数据库，相比使用 MySQL 做为底层存储的 zabbix 监控，拥有非常高效的插入和查询性能，同时数据存储占用的空间也非常小。另外不同于 zabbix，prometheus server 中的数据是从各种数据源主动拉过来的，而不是客户端主动推送的。如果要使用 prometheus server 接收推送的信息，数据源和 prometheus server 中间需要使用 pushgateway。
 
-Prometheus 监控生态非常完善，能监控对象非常丰富。详细的 exporter 支持对象可参考官方介绍 [exporters列表](https://prometheus.io/docs/instrumenting/exporters/ ) 。
+Prometheus 监控生态非常完善，能监控的对象非常丰富。详细的 exporter 支持对象可参考官方介绍 [exporters列表](https://prometheus.io/docs/instrumenting/exporters/ ) 。
 
-Prometheus 可以监控的对象远不止官方 exporters 列表中的产品，有此产品原生支持不在上面列表，如 TiDB; 有些可以通过标准的 exporter 来监控一类产品，如 snmp_exporter; 还有些可以通过自己写个简单的脚本往 pushgateway 推送；如果有一定开发能力，还可以通过自己写 exporter 来解决。同时有些产品随着版本的更新，不需要上面列表中的 exporter 就可以支持，比如 ceph。
+Prometheus 可以监控的对象远不止官方 exporters 列表中的产品，有些产品原生支持不在上面列表，如 TiDB; 有些可以通过标准的 exporter 来监控一类产品，如 snmp_exporter; 还有些可以通过自己写个简单的脚本往 pushgateway 推送；如果有一定开发能力，还可以通过自己写 exporter 来解决。同时有些产品随着版本的更新，不需要上面列表中的 exporter 就可以支持，比如 ceph。
 
 随着容器和 kurbernetes 的不断落地，以及更多的软件原生支持 Prometheus，相信很快 Prometheus 会成为监控领域的领军产品。
 
-### 架构介绍
+## 4.4.2 架构介绍
 
 Prometheus 的架构图如下：
 
@@ -34,14 +34,14 @@ Prometheus 除了可以采集静态的 exporters 之外，还可要通过 servic
 
 除 exporter 和 service discovery 之外，用户还可以写脚本做一些自定义的信息采集，然后通过 push 的方式推送到 pushgateway，pushgateway 对于 prometheus server 来说就是一个特殊的 exporter，prometheus server 可以像抓取其他 exporters 一样抓取 pushgateway 的信息。
 
-### 安装运行
+## 4.4.3 安装运行
 Prometheus 可以运行在 kubernetes 中，也可以运行中虚拟机中。Prometheus 的大部分组件都已经有编译好的二进制文件和 docker 镜像。对于二进制文件，从官方网站下载解压后就可以启动运行，命令如下：
 
 prometheus --config.file=conf/prometheus.yml
 
 建议将二进制文件做成 systemd 的一个服务，这部分可以参考 [TiDB 上运行 prometheus 的方式](https://pingcap.com/docs-cn/stable/how-to/monitor/monitor-a-cluster/#%E9%83%A8%E7%BD%B2-prometheus-%E5%92%8C-grafana) 。
 
-### Prometheus server 配置文件
+### 1. Prometheus server 配置文件
 
 prometheus server 的配置文件是 yaml 格式，由参数 --config.file 指定需要使用的配置文件。配置文件一般命名为 prometheus.yml。
 
@@ -90,7 +90,7 @@ scrape_configs:
 - targets： 要抓取的具体对象（instance)
 - file_sd_configs: 如果监控对象过多，可使用这种方式写到独立的文件中
 
-**告警规则配置示例**
+### 2. 告警规则配置示例
 
 ```
 groups:
@@ -112,25 +112,25 @@ groups:
 - name: 这告警组的自定义名称
 - alert：告警规则的名称
 - expr：告警的表达式
-- for: 问题发生后保持多长时间再推送给，调低该值可以提高告警的敏感度，调高会减少告警毛刺
+- for: 问题发生后保持多长时间再推送给 client，调低该值可以提高告警的敏感度，调高会减少告警毛刺
 - labels： 可以加一些自定义的键值对标签
 - annotations: 可以加一些描述信息
 
-## Prometheus 在 TiDB 集群中的应用
+## 4.4.4 Prometheus 在 TiDB 集群中的应用
 
 本节介绍 Promethues 在 TiDB 集群中的应用，主要包括通过 Prometheus PromQL 语言查看 TiDB 的监控，以及告警配置的讲解。
 
-### TiDB 集群中 Prometheus 的部署架构
+### 1. TiDB 集群中 Prometheus 的部署架构
 
 TiDB 已经原生支持 Prometheus，在 2.1 之前的版本，TiDB 的监控信息是由各 TiDB 的各个组件主动上报给 pushgateway，再由 prometheus server 去 pushgateway 上主动抓取监控信息。从 2.1 版本开始，TiDB 暴露 [Metrics 接口](https://pingcap.com/docs-cn/stable/how-to/monitor/monitor-a-cluster/#%E4%BD%BF%E7%94%A8-metrics-%E6%8E%A5%E5%8F%A3) ，由 prometheus server 主动抓取信息，这样的架构更符合 Prometheus 的设计思想，整个数据采集路径少了一层 pushgateway。数据采集完成后由 grafana 做报表展示，同时告警信息主动推送给 alertmanager，再由 altermanager 将告警推送到不同的消息渠道。
 
 ![2.png](/res/session3/chapter4/prometheus/2.png)
 
-### 通过 Prometheus PromQL 语言查看 TiDB 的监控 
+### 2. 通过 Prometheus PromQL 语言查看 TiDB 的监控 
 
 PromQL(Prometheus Query Language) 是 Promehteus 提供的函数查询语言，可以进行实时查询，也可以通过函数做聚合运算。本节介绍下如何通过 PromQL 对 TiDB 的监控信息进行查询。
 
-#### 数据类型
+(1) 数据类型
 
 Promethes 中的数据类型分 4 类：
 
@@ -139,19 +139,19 @@ Promethes 中的数据类型分 4 类：
 - Scalar - 数字，浮点值;
 - String - 字符串，当前还没有用。
 
-#### 通过 web UI 执行查询
+(2) 通过 web UI 执行查询
 
 下图是在 web UI ([http://prometheus-server:9090/graph)](http://prometheus-server:9090/graph) 上执行 up{instance="21.129.14.103:2998"} 表达式查询到的某个实例的存活状态。
 
 ![3.png](/res/session3/chapter4/prometheus/3.png)
 
-下面简单介绍下结果中各个字段的意义：
+(3) 结果中各个字段的意义：
 
 - up: 是一条具体的时序记录名字，同时 up 又是一条特殊的时序名称，他是 Prometheus 对每个监控对象自动生成的，指示该对象的起停状态，1 表示可连通，0 表示不可能连通（注意，0 不一定是服务挂了，也有可能是获取记录的时候超时了）。
 - 表达式中的 instance, job, project, service, alert_lev 都是该条的记录的标签，相对于关系型数据库中的字段。其中 instance 和 job 是基于 prometheus.yaml 中的内容自动生成的，project, service, alert_lev 是用户自定义的标签。instance 一般是 prometheus 里的 target，但是也可以在标签里重写。
 - 最后的 1 是这条记录在查询时的结果。
 
-#### Instant vector 查询
+### 3. Instant vector 查询
 
 下面列举下几种 Instant vector 查询的常见用法：
 
@@ -162,7 +162,7 @@ Promethes 中的数据类型分 4 类：
 - 匹配正则表达式，例如: up{tidb=~".+"}，可以匹配所以包含 tidb 的 up 时序数据
 - 使用算术运算和比较运算过滤结果: tikv_engine_bytes_written{instance="21.129.14.104:21910"}/1024/1024 > 500
 
-#### Range vector 查询
+### 4. Range vector 查询
 
 Range vector 查询类似于 instance vector 查询，不同之处在于通过 [] 加上时间范围限制，时间单位可以设置为：
 
@@ -177,13 +177,13 @@ Range vector 查询类似于 instance vector 查询，不同之处在于通过 [
 
 ![4.png](/res/session3/chapter4/prometheus/4.png)
 
-#### offset 查询
+### 5. offset 查询
 
 通过 offset 能够查询过去某个时间点的监控结果，如下查询的是一天前 TiDB 的请求数总量：
 
 sum((tidb_server_query_total{result="OK"}  offset 1d))
 
-#### TiDB 监控中常用函数
+### 4.4.5 TiDB 监控中常用函数
 
 本节结合实际例子，介绍下 TiDB 监控中经常用到的一些函数。
 
@@ -213,11 +213,11 @@ histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_buck
 
 ![8.png](/res/session3/chapter4/prometheus/8.png)
 
-### 通过配置 alertmanager 对 TiDB 故障进行报警
+### 4.4.6 通过配置 alertmanager 对 TiDB 故障进行报警
 
 本节介绍下 TiDB 中是如何配置 Promethues 的报警的。如果是通过 tidb-ansible 方式部署的集群，Promethues 的报警配置文件对应的路径是 tidb-ansbile/roles/prometheus/files/tidb.rules.yml。
 
-####  TiDB 告警级别
+#### 1. TiDB 告警级别
 
 TiDB 组件的报警项，根据严重级别可分为三类，按照严重程度由高到低依次为：紧急级别、重要级别、警告级别。
 
@@ -277,7 +277,7 @@ TiDB 组件的报警项，根据严重级别可分为三类，按照严重程度
 
 更多关于 TiDB 报警规划，以及 TiDB 详细告警的处理方法，请参考[ 官网介绍](https://pingcap.com/docs-cn/stable/reference/alert-rules/) 。
 
-#### 为 TiDB 集群配置 alertmanager 告警路由
+#### 2. 为 TiDB 集群配置 alertmanager 告警路由
 
 由于往外发送告警需要邮箱、短信、企业微信等外部消息通道打通，一般企业内部都有各自不同的安全要求和操作规范。另外像短信接口并不是统一标准的，大部分也不是原生支持 Prometheus 的，所以需要用户自己编写适配脚本，以 webhook 的方式与 alertmanger 进行适配。
 

@@ -1,6 +1,6 @@
 # 3.3 诊断结果表
 
-## 背景
+## 1. 背景
 
 在 3.1 和 3.2 中介绍了 TiDB 4.0 引入的集群信息表和集群监控表，也通过 SQL 演示了如何通过查询这些表来发现集群问题，比如通过 `information_schema.cluster_config` 发现集群不同节点配置不一致，通过 `information_schema.cluster_info` 发现是否存在组件版本不一样。
 
@@ -13,7 +13,7 @@
 
 诊断模块内部包含一系列的规则，这些规则会通过查询已有的监控表和集群信息表，对结果和预先设定的阈值进行对比，如果结果超过阈值或低于阈值将生成 `warning` / `critical` 的结果，并在 `details` 列中提供进一步信息。
 
-## 诊断结果表
+## 2. 诊断结果表
 
 诊断结果表 `information_schema.inspection_result` 的表结构如下：
 
@@ -50,7 +50,7 @@ mysql> desc inspection_result;
 * SEVERITY：严重程度，warning/critical
 * DETAILS：诊断的详细信息，可能包含进一步调查的 SQL 或文档链接
 
-### 查询已有的诊断规则
+查询已有的诊断规则：
 
 ```
 mysql> select * from inspection_rules where type='inspection';
@@ -66,7 +66,7 @@ mysql> select * from inspection_rules where type='inspection';
 5 rows in set (0.00 sec)
 ```
 
-## 诊断汇总表
+## 3. 诊断汇总表
 
 诊断结果需要基于确定性的阈值进行判断，比如当前 Coprocessor 配置的线程池为 8，如果 Coprocessor 的 CPU 使用率达到了 750%，可以确定这里有风险，或者可能提前成为瓶颈。但是部分监控会因为用户的 workload 不同而差异较大，所以难以定义确定的阈值。这部分场景问题排查也非常重要，所以新增了 `information_schema.inspection_summary`  对特定链路或模块的监控汇总，是用户可以根据整个模块或链路的上下文来排查定位问题。
 
@@ -101,7 +101,7 @@ AVG_VALUE/MIN_VALUE/MAX_VALUE 分别表示聚合的平均、最小、最大值�
 >
 > 由于汇总所有结果有一定开销，所以 `information_summary` 中的规则是惰性触发的，即通过 SQL 的谓词中显示指定的 rule 才会运行。比如 `select * from inspection_summary` 语句会得到一个空的结果集。`select * from inspection_summary where rule in ('read-link', 'ddl')` 会汇总读链路和 DDL 相关的监控。
 
-## 诊断时间范围
+## 4. 诊断时间范围
 
 诊断结果表和诊断监控汇总表都可以通过 hint 的方式指定诊断的时间范围，比如 `select /*+ time_range('2020-03-07 12:00:00','2020-03-07 13:00:00') */ * from inspection_summary` 对`2020-03-07 12:00:00` - `2020-03-07 13:00:00` 时间段的监控汇总。和监控汇总表一样，通过两个不同时间段的数据进行对比，快速发现差异较大的监控项。以下为一个例子：
 

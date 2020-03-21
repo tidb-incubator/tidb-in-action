@@ -1,17 +1,20 @@
 # 3.6 processlist 
 
-processlist 用来查看 TiDB 服务器的当前会话信息，可以用以下 3 种方式查看 processlist 信息：
+processlist 用来查看 TiDB 服务器的当前会话信息。
 
-查看当前 TiDB 服务器节点的会话信息，其中 `Info` 列包含查询文本，除非指定可选关键字 `FULL`，否则文本会被截断。
+## 3.6.1 查看 processlist 的方式
+可以用以下 3 种方式查看 processlist 信息：
+
+### 1. 查看当前 TiDB 服务器节点的会话信息，其中 `Info` 列包含查询文本，除非指定可选关键字 `FULL`，否则文本会被截断。
 
 ```sql
 SHOW [FULL] PROCESSLIST
 ```
 
-也可以直接查询系统表，`INFORMATION_SCHEMA.PROCESSLIST` 表，查询结果会比 `show processlist` 多 `MEM` 和 `TxnStart`列。
+### 2. 也可以直接查询系统表，`INFORMATION_SCHEMA.PROCESSLIST` 表，查询结果会比 `show processlist` 多 `MEM` 和 `TxnStart`列。
 
-* `MEM`：指正在处理的请求已使用的内存，单位是 byte。（从 v3.0.5 开始引入）
-* `TxnStart`：指当前处理请求的事务开始的时间戳。（从 v4.0.0 开始引入） 
+	* `MEM`：指正在处理的请求已使用的内存，单位是 byte。（从 v3.0.5 开始引入）
+	* `TxnStart`：指当前处理请求的事务开始的时间戳。（从 v4.0.0 开始引入） 
 
 ```sql
 SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST 
@@ -19,7 +22,7 @@ SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST
 
 查询 TiDB 的 `PROCESSLIST` 系统表时，用户一定会遇到的问题是：系统表只包含了当前 TiDB 节点的数据，而不是所有节点的数据。
 
-TiDB 4.0 中新增了 `CLUSTER_PROCESSLIST` 系统表，用来查询 **所有** TiDB 节点的 `PROCESSLIST` 数据，使用上和 `PROCESSLIST` 是一样的。`CLUSTER_PROCESSLIST` 表会比 `PROCESSLIST` 多一个 `INSTANCE` 列。`INSTANCE` 用来表示该条数据属于哪一个 TiDB 节点。
+### 3. TiDB 4.0 中新增了 `CLUSTER_PROCESSLIST` 系统表，用来查询 **所有** TiDB 节点的 `PROCESSLIST` 数据，使用上和 `PROCESSLIST` 是一样的。`CLUSTER_PROCESSLIST` 表会比 `PROCESSLIST` 多一个 `INSTANCE` 列。`INSTANCE` 用来表示该条数据属于哪一个 TiDB 节点。
 
 ```sql
 SELECT * FROM INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
@@ -28,7 +31,7 @@ SELECT * FROM INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
 > 注意
 > 只有 root 或者具有 `ProcessPriv` 权限的 User 能看到所有的会话信息，其他 User 只能看到和自己同一 User 的会话信息。
 
-## KILL [TIDB]
+## 3.6.2 KILL [TIDB]
 
 `KILL TIDB` 语句用于终止当前 TiDB 服务器中某个会话的连接。
 
@@ -62,7 +65,7 @@ Query OK, 0 rows affected (0.00 sec)
 
 再次查看发现 ID 为 5 的 查询已经被 kill 掉了
 
-## 查询 PROCESSLIST 示例
+## 3.6.3 查询 PROCESSLIST 示例
 
 ```sql
 SHOW FULL PROCESSLIST;
@@ -89,7 +92,7 @@ SHOW FULL PROCESSLIST;
 * State：显示当前sql语句的状态，比如：Sending data，Sorting for group，Creating tmp table，Locked 等等。
 * Info：会话正在执行的语句，为 NULL 时表示没有在执行任何语句。
 
-## 查询 INFORMATION_SCHEMA.PROCESSLIST 示例
+## 3.6.4 查询 INFORMATION_SCHEMA.PROCESSLIST 示例
 
 ```sql
 select * from INFORMATION_SCHEMA.PROCESSLIST
@@ -135,7 +138,7 @@ order by time desc
 select *
 from information_schema.processlist
 where command != 'Sleep'
-order by mem
+order by mem desc
 limit 10
 ```
 
@@ -153,16 +156,15 @@ limit 10
 
 ```sql
 -- 查询执行时间超过2分钟，且非 sleep 的会话，然后拼接成 kill 语句
-select concat('kill ', 'TiDB'，id, ';')
+select concat('kill ', 'TiDB '，id, ';')
 from information_schema.processlist
 where command != 'Sleep'
 and time > 2*60
 order by time desc
 ```
 
--- 然后再来查看执行时间超过2分钟，且非 sleep 的会话，发现已经全部被 kill 了
-
 ```sql
+-- 然后再来查看执行时间超过2分钟，且非 sleep 的会话，发现已经全部被 kill 了
 select *
 from information_schema.processlist
 where command != 'Sleep'
@@ -179,7 +181,7 @@ order by time desc
 +------+--------+--------+------+-----------+--------+---------+--------+-------+------------+
 ```
 
-## 查询 INFORMATION_SCHEMA.CLUSTER_PROCESSLIST 示例
+## 3.6.5 查询 INFORMATION_SCHEMA.CLUSTER_PROCESSLIST 示例
 
 ```sql
 select * from INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
@@ -216,16 +218,14 @@ group by instance;
 +---------------+----------+
 ```
 
-如果某个节点的长时间运行会话较多，可以进一步查看该节点的具体会话情况，并结合 `EXPLAIN ANALYZE` 分析具体 sql
+如果某个节点的长时间运行会话较多，可以进一步查看该节点的具体会话情况，并结合 `EXPLAIN ANALYZE` 分析具体 sql 。
 
-## 与 MySQL 兼容性
+## 3.6.6 与 MySQL 兼容性
 
-* KILL TIDB 语句是 TiDB 的扩展语法。如果正尝试终止的会话位于同一个 TiDB 服务器上，可在配置文件里设置 
+* KILL TIDB 语句是 TiDB 的扩展语法。如果正尝试终止的会话位于同一个 TiDB 服务器上，可在配置文件里设置 `compatible-kill-query = true` 。
 
 * TiDB 中的 `State` 列是非描述性的。在 TiDB 中，将状态表示为单个值更复杂，因为查询是并行执行的，而且每个 GO 线程在任一时刻都有不同的状态。
 
 * TiDB 的 show processlist 与 MySQL 的 show processlist 显示内容基本一样，不会显示系统进程号，而 ID 表示当前的 session ID。其中 TiDB 的 show processlist 和 MySQL 的 show processlist 区别如下：
 
-* 由于 TiDB 是分布式数据库，tidb-server 实例是无状态的 SQL 解析和执行引擎（详情可参考 TiDB 整体架构），用户使用 MySQL 客户端登录的是哪个 tidb-server，show processlist 就会显示当前连接的这个 tidb-server 中执行的 session 列表，不是整个集群中运行的全部 session 列表；而 MySQL 是单机数据库，show processlist 列出的是当前整个 MySQL 数据库的全部执行 SQL 列表。
-
-* TiDB 的 show processlist 显示内容比起 MySQL 来讲，多了一个当前 session 使用内存的估算值（单位 Byte）。
+ * 由于 TiDB 是分布式数据库，tidb-server 实例是无状态的 SQL 解析和执行引擎（详情可参考 TiDB 整体架构），用户使用 MySQL 客户端登录的是哪个 tidb-server，show processlist 就会显示当前连接的这个 tidb-server 中执行的 session 列表，不是整个集群中运行的全部 session 列表；而 MySQL 是单机数据库，show processlist 列出的是当前整个 MySQL 数据库的全部执行 SQL 列表。
