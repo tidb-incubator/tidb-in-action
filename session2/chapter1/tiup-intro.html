@@ -2831,41 +2831,28 @@
 <p>TiUP &#x7684;&#x4F7F;&#x7528;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5229;&#x7528; TiUP &#x7684;&#x6307;&#x4EE4;&#x5373;&#x53EF;&#x3002;&#x9996;&#x5148;&#x6267;&#x884C; tiup help &#x770B;&#x4E00;&#x4E0B;&#x5B83;&#x652F;&#x6301;&#x54EA;&#x4E9B;&#x6307;&#x4EE4;&#x548C;&#x53C2;&#x6570;&#xFF1A;</p>
 <pre><code>tiup help
 Usage:
-  tiup [flags]
-  tiup [command]
+  tiup [flags] &lt;command&gt; [args...]
+  tiup [flags] &lt;component&gt; [args...]
+
 Available Commands:
-  clean       Clean the data of the instantiated component
-  help        Help about any command
   install     Install a specific version of a component
   list        List the available TiDB components or versions
-  run         Run a component of specific version
-  status      List the status of running components
   uninstall   Uninstall components or versions of a component
   update      Update tiup components to the latest version
-  version     Show tiup version and quit
-Flags:
-      --bin &lt;component&gt;:[version]   Print binary path of a specific version of a component &lt;component&gt;:[version]
-  -h, --help                        help for tiup
-      --mirror mirror               Overwrite default mirror
+  status      List the status of instantiated components
+  clean       Clean the data of instantiated components
+  help        Help about any command or component
 
 Use &quot;tiup [command] --help&quot; for more information about a command.
 </code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5927;&#x81F4;&#x6709;&#x8FD9;&#x4E9B;&#x547D;&#x4EE4;&#x53EF;&#x9009;&#xFF1A;</p>
 <ul>
 <li>help: &#x6253;&#x5370; help &#x4FE1;&#x606F;&#xFF0C;&#x540E;&#x9762;&#x8DDF;&#x5B50;&#x547D;&#x4EE4;&#x5219;&#x662F;&#x6253;&#x5370;&#x8BE5;&#x5B50;&#x547D;&#x4EE4;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</li>
-<li>version: &#x6253;&#x5370; tiup &#x81EA;&#x8EAB;&#x7684;&#x7248;&#x672C;&#x4FE1;&#x606F;</li>
 <li>list: &#x67E5;&#x770B;&#x6709;&#x54EA;&#x4E9B;&#x7EC4;&#x4EF6;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;&#xFF0C;&#x4EE5;&#x53CA;&#x8FD9;&#x4E9B;&#x7EC4;&#x4EF6;&#x6709;&#x54EA;&#x4E9B;&#x7248;&#x672C;&#x53EF;&#x9009;</li>
 <li>install: &#x5B89;&#x88C5;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x67D0;&#x4E2A;&#x7248;&#x672C;</li>
 <li>update: &#x5347;&#x7EA7;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x5230;&#x6700;&#x65B0;&#x7684;&#x7248;&#x672C;</li>
 <li>uninstall: &#x5220;&#x9664;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;</li>
-<li>run: &#x8FD0;&#x884C;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;</li>
 <li>status: &#x67E5;&#x770B;&#x7EC4;&#x4EF6;&#x7EC4;&#x4EF6;&#x7684;&#x8FD0;&#x884C;&#x72B6;&#x6001;/&#x8FD0;&#x884C;&#x5386;&#x53F2;</li>
 <li>clean: &#x6E05;&#x9664;&#x67D0;&#x6B21;&#x8FD0;&#x884C;&#x540E;&#x7684;&#x6570;&#x636E;</li>
-</ul>
-<p>&#x7136;&#x540E; tiup &#x652F;&#x6301;&#x51E0;&#x4E2A;&#x53EF;&#x9009;&#x7684; flag:</p>
-<ul>
-<li>--bin: &#x6253;&#x5370;&#x67D0;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x4F4D;&#x7F6E;</li>
-<li>-h, --help: &#x6253;&#x5370; help &#x4FE1;&#x606F;</li>
-<li>--mirror: &#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x955C;&#x50CF;&#x66FF;&#x6362;&#x9ED8;&#x8BA4;&#x7684;&#x5B98;&#x65B9;&#x955C;&#x50CF;</li>
 </ul>
 <p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x77E5;&#x9053;&#x67D0;&#x4E2A;&#x5B50;&#x547D;&#x4EE4;&#x7684;&#x5177;&#x4F53;&#x7528;&#x6CD5;&#xFF0C;&#x6267;&#x884C; tiup subcommand -h &#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x6BD4;&#x5982;&#x6211;&#x4EEC;&#x60F3;&#x77E5;&#x9053; install &#x547D;&#x4EE4;&#x6709;&#x54EA;&#x4E9B;&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x4F20;&#xFF0C;&#x5C31;&#x6267;&#x884C; tiup install -h&#x3002;</p>
 <p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x6309;&#x7167;&#x6B63;&#x5E38;&#x4F7F;&#x7528;&#x4E60;&#x60EF;&#x4F9D;&#x6B21;&#x4ECB;&#x7ECD;&#x8FD9;&#x4E9B;&#x547D;&#x4EE4;&#x3002;</p>
@@ -2941,12 +2928,12 @@ Flags:
 Usage:
   tiup &lt;component1&gt;:[version] [flags]
 Flags:
-  -h, --help         help for run
+  -h, --help         help for this component
       --rm           Remove data directory on finish
   -n, --tag string   Specify a tag for this task
 </code></pre><p>&#x8BE5;&#x547D;&#x4EE4;&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x540D;&#x5B57;&#x4EE5;&#x53CA;&#x53EF;&#x9009;&#x7684;&#x7248;&#x672C;&#xFF0C;&#x82E5;&#x4E0D;&#x63D0;&#x4F9B;&#x7248;&#x672C;&#xFF0C;&#x5219;&#x4F7F;&#x7528;&#x8BE5;&#x7EC4;&#x4EF6;&#x5DF2;&#x5B89;&#x88C5;&#x7684;&#x6700;&#x65B0;&#x7A33;&#x5B9A;&#x7248;&#x3002;
 TiUP &#x5C06;&#x7EC4;&#x4EF6;&#x542F;&#x52A8;&#x4E4B;&#x524D;&#x4F1A;&#x4E3A;&#x5B83;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x7EC4;&#x4EF6;&#x653E;&#x5230;&#x8BE5;&#x76EE;&#x5F55;&#x4E2D;&#x8FD0;&#x884C;&#xFF0C;&#x7EC4;&#x4EF6;&#x5E94;&#x8BE5;&#x5C06;&#x6240;&#x6709;&#x6570;&#x636E;&#x751F;&#x6210;&#x5728;&#x8BE5;&#x76EE;&#x5F55;&#x4E2D;&#xFF0C;&#x76EE;&#x5F55;&#x7684;&#x540D;&#x5B57;&#x5C31;&#x662F;&#x8BE5;&#x7EC4;&#x4EF6;&#x8FD0;&#x884C;&#x65F6;&#x6307;&#x5B9A;&#x7684; tag &#x540D;&#x79F0;&#xFF0C;&#x82E5;&#x672A;&#x6307;&#x5B9A;&#xFF0C;&#x5219;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x968F;&#x673A;&#x7684; tag&#x3002;</p>
-<p>run &#x547D;&#x4EE4;&#x6709;&#x4E24;&#x4E2A; flag:</p>
+<p>&#x547D;&#x4EE4;&#x6709;&#x4E24;&#x4E2A; flag:</p>
 <ul>
 <li>--rm &#x7EC4;&#x4EF6;&#x9000;&#x51FA;&#x65F6;&#x5220;&#x9664;&#x5B83;&#x7684;&#x5DE5;&#x4F5C;&#x76EE;&#x5F55;</li>
 <li>--tag &#x4E3A;&#x7EC4;&#x4EF6;&#x6307;&#x5B9A;&#x4E00;&#x4E2A; tag</li>
@@ -3031,7 +3018,7 @@ tiup status
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.1.1 TiUP 简介","level":"3.1.1.1","depth":3,"next":{"title":"1.1.2 用 TiUP 部署本地测试环境","level":"3.1.1.2","depth":3,"path":"session2/chapter1/tiup-playground.md","ref":"session2/chapter1/tiup-playground.md","articles":[]},"previous":{"title":"1.1 TiUP & TiOps","level":"3.1.1","depth":2,"path":"session2/chapter1/tiup-tiops.md","ref":"session2/chapter1/tiup-tiops.md","articles":[{"title":"1.1.1 TiUP 简介","level":"3.1.1.1","depth":3,"path":"session2/chapter1/tiup-intro.md","ref":"session2/chapter1/tiup-intro.md","articles":[]},{"title":"1.1.2 用 TiUP 部署本地测试环境","level":"3.1.1.2","depth":3,"path":"session2/chapter1/tiup-playground.md","ref":"session2/chapter1/tiup-playground.md","articles":[]},{"title":"1.1.3 TiOps 简介","level":"3.1.1.3","depth":3,"path":"session2/chapter1/tiops-intro.md","ref":"session2/chapter1/tiops-intro.md","articles":[]},{"title":"1.1.4 TiOps 部署生产环境集群","level":"3.1.1.4","depth":3,"path":"session2/chapter1/tiops-deployment.md","ref":"session2/chapter1/tiops-deployment.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tiup-intro.md","mtime":"2020-03-19T13:53:20.716Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-19T13:54:07.569Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.1.1 TiUP 简介","level":"3.1.1.1","depth":3,"next":{"title":"1.1.2 用 TiUP 部署本地测试环境","level":"3.1.1.2","depth":3,"path":"session2/chapter1/tiup-playground.md","ref":"session2/chapter1/tiup-playground.md","articles":[]},"previous":{"title":"1.1 TiUP & TiOps","level":"3.1.1","depth":2,"path":"session2/chapter1/tiup-tiops.md","ref":"session2/chapter1/tiup-tiops.md","articles":[{"title":"1.1.1 TiUP 简介","level":"3.1.1.1","depth":3,"path":"session2/chapter1/tiup-intro.md","ref":"session2/chapter1/tiup-intro.md","articles":[]},{"title":"1.1.2 用 TiUP 部署本地测试环境","level":"3.1.1.2","depth":3,"path":"session2/chapter1/tiup-playground.md","ref":"session2/chapter1/tiup-playground.md","articles":[]},{"title":"1.1.3 TiOps 简介","level":"3.1.1.3","depth":3,"path":"session2/chapter1/tiops-intro.md","ref":"session2/chapter1/tiops-intro.md","articles":[]},{"title":"1.1.4 TiOps 部署生产环境集群","level":"3.1.1.4","depth":3,"path":"session2/chapter1/tiops-deployment.md","ref":"session2/chapter1/tiops-deployment.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tiup-intro.md","mtime":"2020-03-21T12:36:16.532Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-21T12:37:04.901Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
