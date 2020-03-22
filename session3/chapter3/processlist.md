@@ -156,7 +156,7 @@ limit 10
 
 ```sql
 -- 查询执行时间超过2分钟，且非 sleep 的会话，然后拼接成 kill 语句
-select concat('kill ', 'TiDB '，id, ';')
+select concat('kill ', 'TiDB', id, ';')
 from information_schema.processlist
 where command != 'Sleep'
 and time > 2*60
