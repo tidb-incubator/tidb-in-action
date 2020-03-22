@@ -50,8 +50,8 @@
     * [1.1 TiUP & TiOps](session2/chapter1/tiup-tiops.md)
         * [1.1.1 TiUP 简介](session2/chapter1/tiup-intro.md) @罗瑞星 @周帅
         * [1.1.2 用 TiUP 部署本地测试环境](session2/chapter1/tiup-playground.md) @罗瑞星
-        * [1.1.4 TiOps 简介](session2/chapter1/tiops-intro.md) @杨文
-        * [1.1.5 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md) @杨文
+        * [1.1.3 TiOps 简介](session2/chapter1/tiops-intro.md) @杨文
+        * [1.1.4 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md) @杨文
     * [1.2 TiDB on Kubernetes](session2/chapter1/tidb-on-k8s.md)
         * [1.2.1 TiDB-Operator 简介及原理](session2/chapter1/tidb-operator-intro.md) @[宋歌](https://github.com/shonge)
         * [1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）](session2/chapter1/tidb-operator-local-deployment.md) @李银龙
@@ -69,7 +69,7 @@
                 * [1.2.3.2.5 节点维护](session2/chapter1/tidb-operator-deployment-private-node.md)
                 * [1.2.3.2.6 删除 TiDB 集群](session2/chapter1/tidb-operator-deployment-private-delete.md)
         * [1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控](session2/chapter1/tidb-operator-access-monitoring.md) @张海龙
-        * [1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群](session2/chapter1/tidb-operator-br.md) @[宋歌](https://github.com/shonge)
+        * [1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群](session2/chapter1/tidb-operator-br.md) @尹亮
         * [1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据](session2/chapter1/tidb-operator-lightning.md) @[宋歌](https://github.com/shonge)
         * [1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南](session2/chapter1/tidb-operator-tools.md) @[程威](https://github.com/mikechengwei)
         * [1.2.8 TiDB-Operator 升级](session2/chapter1/tidb-operator-upgrade.md) @[程威](https://github.com/mikechengwei)

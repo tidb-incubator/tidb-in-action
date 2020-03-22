@@ -1,14 +1,14 @@
- # TPC-C 基准性能测试
+ # 3.2 TPC-C 基准性能测试
  
  本文介绍如何对 TiDB 进行 [TPC-C](http://www.tpc.org/tpcc/) 测试。
  
- ## TPC-C 简介 
+ ## 1. TPC-C 简介 
  
 TPC 是一系列事务处理和数据库基准测试的规范。其中TPC-C（Transaction Processing Performance Council）是针对 OLTP 的基准测试模型。TPC-C 测试模型给基准测试提供了一种统一的测试标准，可以大体观察出数据库服务稳定性、性能以及系统性能等一系列问题。对数据库展开 TPC-C 基准性能测试，一方面可以衡量数据库的性能，另一方面可以衡量采用不同硬件软件系统的性价比，也是被业内广泛应用并关注的一种测试模型。
 
 我们这里以经典的开源数据库测试工具 BenchmarkSQL 为例，其内嵌了 TPCC 测试脚本，可以对 PostgreSQL、MySQL、Oracle、TIDB 等行业内主流的数据库产品直接进行测试。
 
-## 一、BenchmarkSQL 
+## 2. BenchmarkSQL 
 
 TPC-C 是一个对 OLTP（联机交易处理）系统进行测试的规范，使用一个商品销售模型对 OLTP 系统进行测试，其中包含五类事务：
 
@@ -28,7 +28,7 @@ TPC-C 是一个对 OLTP（联机交易处理）系统进行测试的规范，使
 
 TPC-C 使用 tpmC 值（Transactions per Minute）来衡量系统最大有效吞吐量（MQTh，Max Qualified Throughput），其中 Transactions 以 NewOrder Transaction 为准，即最终衡量单位为每分钟处理的新订单数。
 
-## 二、TIDB测试环境部署
+## 3. TIDB测试环境部署
 
 对于 1000 warehous 我们将在 3 台服务器上部署集群。
 
@@ -65,7 +65,7 @@ nohup taskset -c 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39 bin/tidb
 | node2 | 1 | 1 | 1 | 
 | node3 | 1 | 1 | 1 | 
 
-## 三、TIDB 调优配置
+## 4. TIDB 调优配置
 
 1、升高日志级别，可以减少打印日志数量，对性能有积极影响。       
 
@@ -106,7 +106,7 @@ txn_local_latches:
   enabled: true
 ```
 
-## 四、TIKV调优配置
+## 5. TIKV调优配置
 
 1、调整日志级别，升高 TiKV 的日志级别同样有利于性能表现。
 
@@ -131,7 +131,7 @@ capacity = "10GB"
 
 3、开始可以使用基本的配置，压测运行后可以通过观察 Grafana 并参考 [TiKV 调优说明]进行调整。如出现单线程模块瓶颈，可以通过扩展 TiKV 节点来进行负载均摊；如出现多线程模块瓶颈，可以通过增加该模块并发度进行调整。
 
-## 五、BenchmarkSQL 配置
+## 6. BenchmarkSQL 配置
 
 修改 benchmarksql/run/props.mysql 文件
 
@@ -145,7 +145,7 @@ terminals=500   # 使用 500 个终端
 loadWorkers=32  # 导入数据的并发数
 ```
 
-## 六、导入数据
+## 7. 导入数据
 
 （导入数据通常是整个 TPC-C 测试中最耗时，也是最容易出问题的阶段）
 
@@ -230,7 +230,7 @@ ansible-playbook deploy.yml --tags=lightning
 
 由于是用 ansible 进行部署的，可以在监控页面看到 Lightning 的导入进度，或者通过日志查看导入是否结束。数据导入完成之后，可以运行 `sql.common/test.sql` 进行数据正确性验证，如果所有 SQL 语句都返回结果为空，即为数据导入正确。
 
-## 七、运行测试
+## 8. 运行测试
 
 执行 BenchmarkSQL 测试脚本：
 ```shell

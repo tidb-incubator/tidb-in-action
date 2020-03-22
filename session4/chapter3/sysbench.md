@@ -1,7 +1,7 @@
-# 概要
+# 3.1 Sysbench 基准性能测试
 TiDB 兼容 MySQL，支持无限的水平扩展，具备强一致性和金融级高可用性，为 OLTP 和 OLAP 场景提供一站式的解决方案。但想要使用 TiDB 时，都会被要求做基准测试并与 MySQL 对比，本文基于 sysbench 工具进行基准测试做简要说明。
 
-# 工具集方案
+# 3.1.1 工具集方案
 * sysbench 安装
 ```
 mkdir -p /tmp/sysbench
@@ -34,8 +34,8 @@ sysbench --version
 | TiDB 关键参数 | performance: <br> max-procs: 24 <br> |
 | TiKV 关键参数 | readpool: <br> coprocessor: <br> high-concurrency: 8 <br> normal-concurrency: 8 <br> low-concurrency: 8 <br> storage: <br> block-cache: <br> capacity: "32GB" <br> |
 
-# 测试实操
-## 测试准备工作
+# 3.1.2 测试实操
+## 1. 测试准备工作
 * sysbench 配置
 ```
 mysql-host=192.168.xxx.xxx
@@ -113,7 +113,7 @@ SELECT COUNT(pad) FROM sbtest1 USE INDEX(k_1);
 ```
 ANALYZE TABLE sbtest1;
 ```
-## 测试命令举例
+## 2. 测试命令举例
 * Point select 测试命令
 ```
 sysbench --config-file=sysbench-thread-16.cfg oltp_point_select --tables=32 --table-size=10000000 run
@@ -134,7 +134,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_write_only --tables=32 --tabl
 ```
 sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --table-size=10000000 run
 ```
-## 测试结果举例
+## 3. 测试结果举例
 笔者测试数据 32 张表，每张表有 10MB 数据。对集群所有 tidb-server 都同时进行 sysbench 测试，将结果相加，得出最终结果：
 
 * oltp_point_select
@@ -203,7 +203,7 @@ sysbench --config-file=sysbench-thread-16.cfg oltp_read_write --tables=32 --tabl
 
 ![oltp_read_write.png](/res/session4/chapter3/sysbench/oltp_read_write.png)
 
-# 总结
+# 3.1.3 总结
 由于 TiDB 与 MySQL 在体系架构上的差别非常大，很多方面都很难找到一个共同的基准点，所以大家不要消耗过多精力在这类基准测试上，应该更多关注 TiDB 和 MySQL 在应用程序使用场景上的区别。MySQL 读扩容可以通过添加从库进行扩展，但单节点写入不具备扩展能力只能通过分库分表，而分库分表会增加开发维护方面成本。TiDB 不管是读流量还是写流量都可以通过添加节点的方式进行快速方便的扩展。
 
 TiDB 设计的目标就是针对 MySQL 单台容量限制而被迫做出分库分表的场景，或者需要强一致性和完整分布式事务的场景。它的优势是通过尽量将并行计算下推到各个存储节点。对于小表（比如千万级以下）不适合 TiDB。因为数据量少导致表的 region 数量有限，发挥不了并行计算的优势。最极端的就是计数器表，几行记录高频更新，会变成存储引擎上的几个 KV 高频更新，然后数据都存储在一个 region 里，而这个 region 的流量都在一个计算节点上，再加上后台强一致性复制的开销，以及 TiDB 到 TiKV 的开销，最后表现出来的就是没有单个 MySQL 好。
