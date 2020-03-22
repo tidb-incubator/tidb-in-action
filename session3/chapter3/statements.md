@@ -167,7 +167,7 @@ A：因为 Statement Summary Tables 是内存表，把配置项改得过大，�
 #### 3.7.4.2 显示 commit 语句慢了，怎么查呢？
 Q：因为 TiDB 是乐观事务，只有在 commit 时才写数据，导致经常看到 commit 语句慢了，我要怎么确认是哪个事务呢？
 
-A：这种情况确实不好处理。目前的做法是按 commit 的前一个语句进行分类，也就是按 `pre_sample_text` 的 digest 来把 commit 分到不同的组中。这基于一个假设：commit 的前一条语句相同，就算同一类事务。
+A：这种情况确实不好处理。目前的做法是按 commit 的前一个语句进行分类，也就是按 `prev_sample_text` 的 digest 来把 commit 分到不同的组中。这基于一个假设：commit 的前一条语句相同，就算同一类事务。
 
 #### 3.7.4.3 `schema_name` 为什么总是空的？
 Q：SQL 里明明有表名，但 `schema_name` 这个字段却是空的，怎么回事？

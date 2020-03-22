@@ -138,7 +138,7 @@ order by time desc
 select *
 from information_schema.processlist
 where command != 'Sleep'
-order by mem
+order by mem desc
 limit 10
 ```
 
@@ -156,16 +156,15 @@ limit 10
 
 ```sql
 -- 查询执行时间超过2分钟，且非 sleep 的会话，然后拼接成 kill 语句
-select concat('kill ', 'TiDB'，id, ';')
+select concat('kill ', 'TiDB', id, ';')
 from information_schema.processlist
 where command != 'Sleep'
 and time > 2*60
 order by time desc
 ```
 
--- 然后再来查看执行时间超过2分钟，且非 sleep 的会话，发现已经全部被 kill 了
-
 ```sql
+-- 然后再来查看执行时间超过2分钟，且非 sleep 的会话，发现已经全部被 kill 了
 select *
 from information_schema.processlist
 where command != 'Sleep'
@@ -219,16 +218,14 @@ group by instance;
 +---------------+----------+
 ```
 
-如果某个节点的长时间运行会话较多，可以进一步查看该节点的具体会话情况，并结合 `EXPLAIN ANALYZE` 分析具体 sql
+如果某个节点的长时间运行会话较多，可以进一步查看该节点的具体会话情况，并结合 `EXPLAIN ANALYZE` 分析具体 sql 。
 
 ## 3.6.6 与 MySQL 兼容性
 
-* KILL TIDB 语句是 TiDB 的扩展语法。如果正尝试终止的会话位于同一个 TiDB 服务器上，可在配置文件里设置 
+* KILL TIDB 语句是 TiDB 的扩展语法。如果正尝试终止的会话位于同一个 TiDB 服务器上，可在配置文件里设置 `compatible-kill-query = true` 。
 
 * TiDB 中的 `State` 列是非描述性的。在 TiDB 中，将状态表示为单个值更复杂，因为查询是并行执行的，而且每个 GO 线程在任一时刻都有不同的状态。
 
 * TiDB 的 show processlist 与 MySQL 的 show processlist 显示内容基本一样，不会显示系统进程号，而 ID 表示当前的 session ID。其中 TiDB 的 show processlist 和 MySQL 的 show processlist 区别如下：
 
-* 由于 TiDB 是分布式数据库，tidb-server 实例是无状态的 SQL 解析和执行引擎（详情可参考 TiDB 整体架构），用户使用 MySQL 客户端登录的是哪个 tidb-server，show processlist 就会显示当前连接的这个 tidb-server 中执行的 session 列表，不是整个集群中运行的全部 session 列表；而 MySQL 是单机数据库，show processlist 列出的是当前整个 MySQL 数据库的全部执行 SQL 列表。
-
-* TiDB 的 show processlist 显示内容比起 MySQL 来讲，多了一个当前 session 使用内存的估算值（单位 Byte）。
+ * 由于 TiDB 是分布式数据库，tidb-server 实例是无状态的 SQL 解析和执行引擎（详情可参考 TiDB 整体架构），用户使用 MySQL 客户端登录的是哪个 tidb-server，show processlist 就会显示当前连接的这个 tidb-server 中执行的 session 列表，不是整个集群中运行的全部 session 列表；而 MySQL 是单机数据库，show processlist 列出的是当前整个 MySQL 数据库的全部执行 SQL 列表。
