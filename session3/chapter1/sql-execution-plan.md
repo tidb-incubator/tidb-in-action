@@ -6,14 +6,15 @@
 
 执行计划由一系列的算子构成。和其他数据库一样，在 TiDB 中可通过 `EXPLAIN` 语句返回的结果查看某条 `SQL` 的执行计划。
 
-目前 `TiDB` 的 `EXPLAIN` 会输出 4 列，分别是：`id`，`estRows`，`task`，`operator info`。执行计划中每个算子都由这 4 列属性来描述，`EXPLAIN`结果中每一行描述一个算子。每个属性的具体含义如下：
+目前 `TiDB` 的 `EXPLAIN` 会输出 5 列，分别是：`id`，`estRows`，`task`，`access object`， `operator info`。执行计划中每个算子都由这 5 列属性来描述，`EXPLAIN`结果中每一行描述一个算子。每个属性的具体含义如下：
 
 | 属性名          | 含义 |
 |:----------------|:----------------------------------------------------------------------------------------------------------|
 | id            | 算子的 ID，在整个执行计划中唯一的标识一个算子。在 TiDB 2.1 中，ID 会格式化的显示算子的树状结构。数据从孩子结点流向父亲结点，每个算子的父亲结点有且仅有一个。                                                                                       |
-| estRows       | 预计当前算子将会输出的数据条数，基于统计信息以及算子的执行逻辑估算而来。在 4.0 之前叫 count。 |
-| task          | 当前这个算子属于什么 task。目前的执行计划分成为两种 task，一种叫 **root** task，在 tidb-server 上执行，一种叫 **cop** task，并行的在 TiKV 或者 TiFlash 上执行。当前的执行计划在 task 级别的拓扑关系是一个 root task 后面可以跟许多 cop task，root task 使用 cop task 的输出结果作为输入。cop task 中执行的也即是 TiDB 下推到 TiKV 或者 TiFlash 上的任务，每个 cop task 分散在 TiKV 或者 TiFlash 集群中，由多个进程共同执行。 |
-| operator info | 每个算子的详细信息。各个算子的 operator info 各有不同，可参考下面的示例解读。                   |
+| estRows       | 算子预计将会输出的数据条数，基于统计信息以及算子的执行逻辑估算而来。在 4.0 之前叫 count。 |
+| task          | 算子属于的 task 种类。目前的执行计划分成为两种 task，一种叫 **root** task，在 tidb-server 上执行，一种叫 **cop** task，并行的在 TiKV 或者 TiFlash 上执行。当前的执行计划在 task 级别的拓扑关系是一个 root task 后面可以跟许多 cop task，root task 使用 cop task 的输出结果作为输入。cop task 中执行的也即是 TiDB 下推到 TiKV 或者 TiFlash 上的任务，每个 cop task 分散在 TiKV 或者 TiFlash 集群中，由多个进程共同执行。 |
+| access object | 算子所访问的数据项信息。包括表 `table`，表分区 `partition` 以及使用的索引 `index`（如果有）。只有直接访问数据的算子才拥有这些信息。 |
+| operator info | 算子的其它信息。各个算子的 operator info 各有不同，可参考下面的示例解读。 |
 
 ## 1.1.2 EXPLAIN ANALYZE 输出格式
 
@@ -21,22 +22,22 @@
 
 | 属性名          | 含义 |
 |:----------------|:---------------------------------|
-| estRows       | 当前算子实际输出的数据条数。 |
-| execution info  | time 显示从进入算子到离开算子的全部 wall time，包括所有子算子操作的全部执行时间。如果该算子被父算子多次调用 (loops)，这个时间就是累积的时间。loops 是当前算子被父算子调用的次数。 rows 是当前算子返回的行的总数。|
-| memory  | 当前算子占用内存大小 |
-| disk  | 当前算子占用磁盘大小 |
+| actRows       | 算子实际输出的数据条数。 |
+| execution info  | 算子的实际执行信息。time 表示从进入算子到离开算子的全部 wall time，包括所有子算子操作的全部执行时间。如果该算子被父算子多次调用 (loops)，这个时间就是累积的时间。loops 是当前算子被父算子调用的次数。 |
+| memory  | 算子占用内存空间的大小。 |
+| disk  | 算子占用磁盘空间的大小。 |
 
 一个例子：
 
 ```
 mysql> explain analyze select * from t where a < 10;
-+-------------------------------+---------+---------+-----------+-----------------------------------------------------+--------------------------------------------------------------------------------+---------------+------+
-| id                            | estRows | actRows | task      | operator info                                       | execution info                                                                 | memory        | disk |
-+-------------------------------+---------+---------+-----------+-----------------------------------------------------+--------------------------------------------------------------------------------+---------------+------+
-| IndexLookUp_10                | 9.00    | 9       | root      |                                                     | time:641.245µs, loops:2, rows:9, rpc num: 1, rpc time:242.648µs, proc keys:0   | 9.23046875 KB | N/A  |
-| ├─IndexRangeScan_8(Build)     | 9.00    | 9       | cop[tikv] | table:t, index:a, range:[-inf,10), keep order:false | time:142.94µs, loops:10, rows:9                                                | N/A           | N/A  |
-| └─TableRowIDScan_9(Probe)     | 9.00    | 9       | cop[tikv] | table:t, keep order:false                           | time:141.128µs, loops:10, rows:9                                               | N/A           | N/A  |
-+-------------------------------+---------+---------+-----------+-----------------------------------------------------+--------------------------------------------------------------------------------+---------------+------+
++-------------------------------+---------+---------+-----------+------------------+------------------------------------------------------------------------+-----------------------------------------------------+---------------+------+
+| id                            | estRows | actRows | task      | access object    | execution info                                                         | operator info                                       | memory        | disk |
++-------------------------------+---------+---------+-----------+------------------+------------------------------------------------------------------------+-----------------------------------------------------+---------------+------+
+| IndexLookUp_10                | 9.00    | 9       | root      |                  | time:641.245µs, loops:2, rpc num: 1, rpc time:242.648µs, proc keys:0   |                                                     | 9.23046875 KB | N/A  |
+| ├─IndexRangeScan_8(Build)     | 9.00    | 9       | cop[tikv] | table:t, index:a | time:142.94µs, loops:10,                                               | range:[-inf,10), keep order:false                   | N/A           | N/A  |
+| └─TableRowIDScan_9(Probe)     | 9.00    | 9       | cop[tikv] | table:t          | time:141.128µs, loops:10                                               | keep order:false                                    | N/A           | N/A  |
++-------------------------------+---------+---------+-----------+----------------- +------------------------------------------------------------------------+-----------------------------------------------------+---------------+------+
 3 rows in set (0.00 sec)
 ```
 
@@ -56,13 +57,13 @@ TiDB 的执行计划是一个树形结构，树中每个节点即是算子。考
 
 ```
 TiDB(root@127.0.0.1:test) > explain select * from t use index(idx_a) where a = 1;
-+-------------------------------+---------+-----------+---------------------------------------------------------------+
-| id                            | estRows | task      | operator info                                                 |
-+-------------------------------+---------+-----------+---------------------------------------------------------------+
-| IndexLookUp_7                 | 10.00   | root      |                                                               |
-| ├─IndexRangeScan_5(Build)     | 10.00   | cop[tikv] | table:t, index:a, range:[1,1], keep order:false, stats:pseudo |
-| └─TableRowIDScan_6(Probe)     | 10.00   | cop[tikv] | table:t, keep order:false, stats:pseudo                       |
-+-------------------------------+---------+-----------+---------------------------------------------------------------+
++-------------------------------+---------+-----------+------------------+---------------------------------------------+
+| id                            | estRows | task      | access object    | operator info                               |
++-------------------------------+---------+-----------+------------------+---------------------------------------------+
+| IndexLookUp_7                 | 10.00   | root      |                  |                                             |
+| ├─IndexRangeScan_5(Build)     | 10.00   | cop[tikv] | table:t, index:a | range:[1,1], keep order:false, stats:pseudo |
+| └─TableRowIDScan_6(Probe)     | 10.00   | cop[tikv] | table:t          | keep order:false, stats:pseudo              |
++-------------------------------+---------+-----------+----------------- +---------------------------------------------+
 3 rows in set (0.00 sec)
 ```
 
@@ -72,17 +73,17 @@ TiDB(root@127.0.0.1:test) > explain select * from t use index(idx_a) where a = 1
 
 ```
 TiDB(root@127.0.0.1:test) > explain select * from t t1 use index(idx_a) join t t2 use index() where t1.a = t2.a;
-+----------------------------------+----------+-----------+------------------------------------------------------------------+
-| id                               | estRows  | task      | operator info                                                    |
-+----------------------------------+----------+-----------+------------------------------------------------------------------+
-| HashLeftJoin_22                  | 12487.50 | root      | inner join, inner:TableReader_26, equal:[eq(test.t.a, test.t.a)] |
-| ├─TableReader_26(Build)          | 9990.00  | root      | data:Selection_25                                                |
-| │ └─Selection_25                 | 9990.00  | cop[tikv] | not(isnull(test.t.a))                                            |
-| │   └─TableFullScan_24           | 10000.00 | cop[tikv] | table:t2, keep order:false, stats:pseudo                         |
-| └─IndexLookUp_29(Probe)          | 9990.00  | root      |                                                                  |
-|   ├─IndexFullScan_27(Build)      | 9990.00  | cop[tikv] | table:t1, index:a, keep order:false, stats:pseudo                |
-|   └─TableRowIDScan_28(Probe)     | 9990.00  | cop[tikv] | table:t1, keep order:false, stats:pseudo                         |
-+----------------------------------+----------+-----------+------------------------------------------------------------------+
++----------------------------------+----------+-----------+------------------ +------------------------------------------------------------------+
+| id                               | estRows  | task      | access object     | operator info                                                    |
++----------------------------------+----------+-----------+------------------ +------------------------------------------------------------------+
+| HashLeftJoin_22                  | 12487.50 | root      |                   | inner join, inner:TableReader_26, equal:[eq(test.t.a, test.t.a)] |
+| ├─TableReader_26(Build)          | 9990.00  | root      |                   | data:Selection_25                                                |
+| │ └─Selection_25                 | 9990.00  | cop[tikv] |                   | not(isnull(test.t.a))                                            |
+| │   └─TableFullScan_24           | 10000.00 | cop[tikv] | table:t2          | keep order:false, stats:pseudo                                   |
+| └─IndexLookUp_29(Probe)          | 9990.00  | root      |                   |                                                                  |
+|   ├─IndexFullScan_27(Build)      | 9990.00  | cop[tikv] | table:t1, index:a | keep order:false, stats:pseudo                                   |
+|   └─TableRowIDScan_28(Probe)     | 9990.00  | cop[tikv] | table:t1          | keep order:false, stats:pseudo                                   |
++----------------------------------+----------+-----------+-------------------+------------------------------------------------------------------+
 7 rows in set (0.00 sec)
 ```
 
@@ -109,13 +110,13 @@ TiDB 会汇聚 TiKV/TiFlash 上扫描的数据或者计算结果，这种 “数
 
 ```
 mysql> explain select * from t use index(idx_a);
-+-------------------------------+----------+-----------+--------------------------------------------------+
-| id                            | estRows  | task      | operator info                                    |
-+-------------------------------+----------+-----------+--------------------------------------------------+
-| IndexLookUp_6                 | 10000.00 | root      |                                                  |
-| ├─IndexFullScan_4(Build)      | 10000.00 | cop[tikv] | table:t, index:a, keep order:false, stats:pseudo |
-| └─TableRowIDScan_5(Probe)     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo          |
-+-------------------------------+----------+-----------+--------------------------------------------------+
++-------------------------------+----------+-----------+------------------+--------------------------------+
+| id                            | estRows  | task      | access object    | operator info                  |
++-------------------------------+----------+-----------+------------------+--------------------------------+
+| IndexLookUp_6                 | 10000.00 | root      |                  |                                |
+| ├─IndexFullScan_4(Build)      | 10000.00 | cop[tikv] | table:t, index:a | keep order:false, stats:pseudo |
+| └─TableRowIDScan_5(Probe)     | 10000.00 | cop[tikv] | table:t          | keep order:false, stats:pseudo |
++-------------------------------+----------+-----------+----------------- +--------------------------------+
 3 rows in set (0.00 sec)
 ```
 
@@ -125,13 +126,13 @@ mysql> explain select * from t use index(idx_a);
 
 ```
 mysql> explain select * from t where a > 1 or b >100;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| TableReader_7           | 8000.00  | root      | data:Selection_6                        |
-| └─Selection_6           | 8000.00  | cop[tikv] | or(gt(test.t.a, 1), gt(test.t.b, 100))  |
-|   └─TableFullScan_5     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+----------------------------------------+
+| id                      | estRows  | task      | access object | operator info                          |
++-------------------------+----------+-----------+---------------+----------------------------------------+
+| TableReader_7           | 8000.00  | root      |               | data:Selection_6                       |
+| └─Selection_6           | 8000.00  | cop[tikv] |               | or(gt(test.t.a, 1), gt(test.t.b, 100)) |
+|   └─TableFullScan_5     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo         |
++-------------------------+----------+-----------+---------------+----------------------------------------+
 3 rows in set (0.00 sec)
 ```
 
@@ -147,14 +148,14 @@ mysql> explain select * from t where a > 1 or b >100;
 ```
 mysql> set @@tidb_enable_index_merge = 1;
 mysql> explain select * from t use index(idx_a, idx_b) where a > 1 or b > 1;
-+-------------------------+---------+-----------+------------------------------------------------------------------+
-| id                      | estRows | task      | operator info                                                    |
-+-------------------------+---------+-----------+------------------------------------------------------------------+
-| IndexMerge_16           | 6666.67 | root      |                                                                  |
-| ├─IndexRangeScan_13     | 3333.33 | cop[tikv] | table:t, index:a, range:(1,+inf], keep order:false, stats:pseudo |
-| ├─IndexRangeScan_14     | 3333.33 | cop[tikv] | table:t, index:b, range:(1,+inf], keep order:false, stats:pseudo |
-| └─TableRowIDScan_15     | 6666.67 | cop[tikv] | table:t, keep order:false, stats:pseudo                          |
-+-------------------------+---------+-----------+------------------------------------------------------------------+
++------------------------------+---------+-----------+------------------+------------------------------------------------+
+| id                           | estRows | task      | access object    | operator info                                  |
++------------------------------+---------+-----------+------------------+------------------------------------------------+
+| IndexMerge_16                | 6666.67 | root      |                  |                                                |
+| ├─IndexRangeScan_13(Build)   | 3333.33 | cop[tikv] | table:t, index:a | range:(1,+inf], keep order:false, stats:pseudo |
+| ├─IndexRangeScan_14(Build)   | 3333.33 | cop[tikv] | table:t, index:b | range:(1,+inf], keep order:false, stats:pseudo |
+| └─TableRowIDScan_15(Probe)   | 6666.67 | cop[tikv] | table:t          | keep order:false, stats:pseudo                 |
++------------------------------+---------+-----------+------------------+------------------------------------------------+
 4 rows in set (0.00 sec)
 ```
 
@@ -168,14 +169,14 @@ TiDB 上的 `Hash Aggregation` 算子采用多线程并发优化，执行速度�
 
 ```
 TiDB(root@127.0.0.1:test) > explain select /*+ HASH_AGG() */ count(*) from t;
-+---------------------------+----------+-----------+-----------------------------------------+
-| id                        | estRows  | task      | operator info                           |
-+---------------------------+----------+-----------+-----------------------------------------+
-| HashAgg_11                | 1.00     | root      | funcs:count(Column#7)->Column#4         |
-| └─TableReader_12          | 1.00     | root      | data:HashAgg_5                          |
-|   └─HashAgg_5             | 1.00     | cop[tikv] | funcs:count(1)->Column#7                |
-|     └─TableFullScan_8     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+---------------------------+----------+-----------+-----------------------------------------+
++---------------------------+----------+-----------+---------------+---------------------------------+
+| id                        | estRows  | task      | access object | operator info                   |
++---------------------------+----------+-----------+---------------+---------------------------------+
+| HashAgg_11                | 1.00     | root      |               | funcs:count(Column#7)->Column#4 |
+| └─TableReader_12          | 1.00     | root      |               | data:HashAgg_5                  |
+|   └─HashAgg_5             | 1.00     | cop[tikv] |               | funcs:count(1)->Column#7        |
+|     └─TableFullScan_8     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo  |
++---------------------------+----------+-----------+---------------+---------------------------------+
 4 rows in set (0.00 sec)
 ```
 
@@ -187,14 +188,14 @@ TiDB `Stream Aggregation` 算子通常会比 `Hash Aggregate` 占用更少的内
 
 ```
 TiDB(root@127.0.0.1:test) > explain select /*+ STREAM_AGG() */ count(*) from t;
-+----------------------------+----------+-----------+-----------------------------------------+
-| id                         | estRows  | task      | operator info                           |
-+----------------------------+----------+-----------+-----------------------------------------+
-| StreamAgg_16               | 1.00     | root      | funcs:count(Column#7)->Column#4         |
-| └─TableReader_17           | 1.00     | root      | data:StreamAgg_8                        |
-|   └─StreamAgg_8            | 1.00     | cop[tikv] | funcs:count(1)->Column#7                |
-|     └─TableFullScan_13     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+----------------------------+----------+-----------+-----------------------------------------+
++----------------------------+----------+-----------+---------------+---------------------------------+
+| id                         | estRows  | task      | access object | operator info                   |
++----------------------------+----------+-----------+---------------+---------------------------------+
+| StreamAgg_16               | 1.00     | root      |               | funcs:count(Column#7)->Column#4 |
+| └─TableReader_17           | 1.00     | root      |               | data:StreamAgg_8                |
+|   └─StreamAgg_8            | 1.00     | cop[tikv] |               | funcs:count(1)->Column#7        |
+|     └─TableFullScan_13     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo  |
++----------------------------+----------+-----------+---------------+---------------------------------+
 4 rows in set (0.00 sec)
 ```
 
@@ -218,17 +219,17 @@ TiDB 的 `Hash Join` 算子采用了多线程优化，执行速度较快，但�
 
 ```
 mysql> explain select /*+ HASH_JOIN(t1, t2) */ * from t t1 join t2 on t1.a = t2.a;
-+------------------------------+----------+-----------+-------------------------------------------------------------------+
-| id                           | estRows  | task      | operator info                                                     |
-+------------------------------+----------+-----------+-------------------------------------------------------------------+
-| HashLeftJoin_33              | 10000.00 | root      | inner join, inner:TableReader_43, equal:[eq(test.t.a, test.t2.a)] |
-| ├─TableReader_43(Build)      | 10000.00 | root      | data:Selection_42                                                 |
-| │ └─Selection_42             | 10000.00 | cop[tikv] | not(isnull(test.t2.a))                                            |
-| │   └─TableFullScan_41       | 10000.00 | cop[tikv] | table:t2, keep order:false                                        |
-| └─TableReader_37(Probe)      | 10000.00 | root      | data:Selection_36                                                 |
-|   └─Selection_36             | 10000.00 | cop[tikv] | not(isnull(test.t.a))                                             |
-|     └─TableFullScan_35       | 10000.00 | cop[tikv] | table:t1, keep order:false                                        |
-+------------------------------+----------+-----------+-------------------------------------------------------------------+
++------------------------------+----------+-----------+---------------+-------------------------------------------------------------------+
+| id                           | estRows  | task      | access object | operator info                                                     |
++------------------------------+----------+-----------+---------------+-------------------------------------------------------------------+
+| HashJoin_33                  | 10000.00 | root      |               | inner join, inner:TableReader_43, equal:[eq(test.t.a, test.t2.a)] |
+| ├─TableReader_43(Build)      | 10000.00 | root      |               | data:Selection_42                                                 |
+| │ └─Selection_42             | 10000.00 | cop[tikv] |               | not(isnull(test.t2.a))                                            |
+| │   └─TableFullScan_41       | 10000.00 | cop[tikv] | table:t2      | keep order:false                                                  |
+| └─TableReader_37(Probe)      | 10000.00 | root      |               | data:Selection_36                                                 |
+|   └─Selection_36             | 10000.00 | cop[tikv] |               | not(isnull(test.t.a))                                             |
+|     └─TableFullScan_35       | 10000.00 | cop[tikv] | table:t1      | keep order:false                                                  |
++------------------------------+----------+-----------+---------------+-------------------------------------------------------------------+
 7 rows in set (0.00 sec)
 ```
 
@@ -240,17 +241,17 @@ TiDB 的 `Merge Join` 算子相比于 Hash Join 通常会占用更少的内存�
 
 ```
 mysql> explain select /*+ SM_JOIN(t1) */ * from t t1 join t t2 on t1.a = t2.a;
-+------------------------------------+----------+-----------+---------------------------------------------------+
-| id                                 | estRows  | task      | operator info                                     |
-+------------------------------------+----------+-----------+---------------------------------------------------+
-| MergeJoin_6                        | 10000.00 | root      | inner join, left key:test.t.a, right key:test.t.a |
-| ├─IndexLookUp_13(Build)            | 10000.00 | root      |                                                   |
-| │ ├─IndexFullScan_11(Build)        | 10000.00 | cop[tikv] | table:t2, index:a, keep order:true                |
-| │ └─TableRowIDScan_12(Probe)       | 10000.00 | cop[tikv] | table:t2, keep order:false                        |
-| └─IndexLookUp_10(Probe)            | 10000.00 | root      |                                                   |
-|   ├─IndexFullScan_8(Build)         | 10000.00 | cop[tikv] | table:t1, index:a, keep order:true                |
-|   └─TableRowIDScan_9(Probe)        | 10000.00 | cop[tikv] | table:t1, keep order:false                        |
-+------------------------------------+----------+-----------+---------------------------------------------------+
++------------------------------------+----------+-----------+-------------------+---------------------------------------------------+
+| id                                 | estRows  | task      | access object     | operator info                                     |
++------------------------------------+----------+-----------+-------------------+---------------------------------------------------+
+| MergeJoin_6                        | 10000.00 | root      |                   | inner join, left key:test.t.a, right key:test.t.a |
+| ├─IndexLookUp_13(Build)            | 10000.00 | root      |                   |                                                   |
+| │ ├─IndexFullScan_11(Build)        | 10000.00 | cop[tikv] | table:t2, index:a | keep order:true                                   |
+| │ └─TableRowIDScan_12(Probe)       | 10000.00 | cop[tikv] | table:t2          | keep order:false                                  |
+| └─IndexLookUp_10(Probe)            | 10000.00 | root      |                   |                                                   |
+|   ├─IndexFullScan_8(Build)         | 10000.00 | cop[tikv] | table:t1, index:a | keep order:true                                   |
+|   └─TableRowIDScan_9(Probe)        | 10000.00 | cop[tikv] | table:t1          | keep order:false                                  |
++------------------------------------+----------+-----------+-------------------+---------------------------------------------------+
 7 rows in set (0.00 sec)
 ```
 
@@ -262,18 +263,18 @@ INL_HASH_JOIN(t1_name [, tl_name]) 提示优化器使用 Index Nested Loop Hash 
 
 ```
 mysql> explain select /*+ INL_HASH_JOIN(t1) */ * from t t1 join t t2 on t1.a = t2.a;
-+----------------------------------+----------+-----------+---------------------------------------------------------------------------------+
-| id                               | estRows  | task      | operator info                                                                   |
-+----------------------------------+----------+-----------+---------------------------------------------------------------------------------+
-| IndexHashJoin_32                 | 10000.00 | root      | inner join, inner:IndexLookUp_23, outer key:test.t.a, inner key:test.t.a        |
-| ├─TableReader_35(Build)          | 10000.00 | root      | data:Selection_34                                                               |
-| │ └─Selection_34                 | 10000.00 | cop[tikv] | not(isnull(test.t.a))                                                           |
-| │   └─TableFullScan_33           | 10000.00 | cop[tikv] | table:t2, keep order:false                                                      |
-| └─IndexLookUp_23(Probe)          | 1.00     | root      |                                                                                 |
-|   ├─Selection_22(Build)          | 1.00     | cop[tikv] | not(isnull(test.t.a))                                                           |
-|   │ └─IndexRangeScan_20          | 1.00     | cop[tikv] | table:t1, index:a, range: decided by [eq(test.t.a, test.t.a)], keep order:false |
-|   └─TableRowIDScan_21(Probe)     | 1.00     | cop[tikv] | table:t1, keep order:false                                                      |
-+----------------------------------+----------+-----------+---------------------------------------------------------------------------------+
++----------------------------------+----------+-----------+-------------------+--------------------------------------------------------------------------+
+| id                               | estRows  | task      | access object     | operator info                                                            |
++----------------------------------+----------+-----------+-------------------+--------------------------------------------------------------------------+
+| IndexHashJoin_32                 | 10000.00 | root      |                   | inner join, inner:IndexLookUp_23, outer key:test.t.a, inner key:test.t.a |
+| ├─TableReader_35(Build)          | 10000.00 | root      |                   | data:Selection_34                                                        |
+| │ └─Selection_34                 | 10000.00 | cop[tikv] |                   | not(isnull(test.t.a))                                                    |
+| │   └─TableFullScan_33           | 10000.00 | cop[tikv] | table:t2          | keep order:false                                                         |
+| └─IndexLookUp_23(Probe)          | 1.00     | root      |                   |                                                                          |
+|   ├─Selection_22(Build)          | 1.00     | cop[tikv] |                   | not(isnull(test.t.a))                                                    |
+|   │ └─IndexRangeScan_20          | 1.00     | cop[tikv] | table:t1, index:a | range: decided by [eq(test.t.a, test.t.a)], keep order:false             |
+|   └─TableRowIDScan_21(Probe)     | 1.00     | cop[tikv] | table:t1          | keep order:false                                                         |
++----------------------------------+----------+-----------+-------------------+--------------------------------------------------------------------------+
 8 rows in set (0.00 sec)
 ```
 
@@ -283,17 +284,17 @@ INL_MERGE_JOIN(t1_name [, tl_name]) 提示优化器使用 Index Nested Loop Merg
 
 ```
 mysql> explain select /*+ INL_MERGE_JOIN(t1) */ * from t t1 where  t1.a  in ( select t2.a from t2 where t2.b < t1.b);
-+------------------------------+----------+-----------+------------------------------------------------------------------------------------------------------+
-| id                           | estRows  | task      | operator info                                                                                        |
-+------------------------------+----------+-----------+------------------------------------------------------------------------------------------------------+
-| HashLeftJoin_26              | 8000.00  | root      | semi join, inner:TableReader_49, equal:[eq(test.t.a, test.t2.a)], other cond:lt(test.t2.b, test.t.b) |
-| ├─TableReader_49(Build)      | 10000.00 | root      | data:Selection_48                                                                                    |
-| │ └─Selection_48             | 10000.00 | cop[tikv] | not(isnull(test.t2.a)), not(isnull(test.t2.b))                                                       |
-| │   └─TableFullScan_47       | 10000.00 | cop[tikv] | table:t2, keep order:false                                                                           |
-| └─TableReader_38(Probe)      | 10000.00 | root      | data:Selection_37                                                                                    |
-|   └─Selection_37             | 10000.00 | cop[tikv] | not(isnull(test.t.a)), not(isnull(test.t.b))                                                         |
-|     └─TableFullScan_36       | 10000.00 | cop[tikv] | table:t1, keep order:false                                                                           |
-+------------------------------+----------+-----------+------------------------------------------------------------------------------------------------------+
++------------------------------+----------+-----------+---------------+------------------------------------------------------------------------------------------------------+
+| id                           | estRows  | task      | access object | operator info                                                                                        |
++------------------------------+----------+-----------+---------------+------------------------------------------------------------------------------------------------------+
+| HashJoin_26                  | 8000.00  | root      |               | semi join, inner:TableReader_49, equal:[eq(test.t.a, test.t2.a)], other cond:lt(test.t2.b, test.t.b) |
+| ├─TableReader_49(Build)      | 10000.00 | root      |               | data:Selection_48                                                                                    |
+| │ └─Selection_48             | 10000.00 | cop[tikv] |               | not(isnull(test.t2.a)), not(isnull(test.t2.b))                                                       |
+| │   └─TableFullScan_47       | 10000.00 | cop[tikv] | table:t2      | keep order:false                                                                                     |
+| └─TableReader_38(Probe)      | 10000.00 | root      |               | data:Selection_37                                                                                    |
+|   └─Selection_37             | 10000.00 | cop[tikv] |               | not(isnull(test.t.a)), not(isnull(test.t.b))                                                         |
+|     └─TableFullScan_36       | 10000.00 | cop[tikv] | table:t1      | keep order:false                                                                                     |
++------------------------------+----------+-----------+---------------+------------------------------------------------------------------------------------------------------+
 7 rows in set, 1 warning (0.01 sec)
 ```
 
@@ -301,19 +302,19 @@ mysql> explain select /*+ INL_MERGE_JOIN(t1) */ * from t t1 where  t1.a  in ( se
 
 ```
 mysql> explain select /*+ INL_MERGE_JOIN(t1) */ * from t t1 where  t1.a  in ( select avg(t2.a) from t2 where t2.b < t1.b);
-+----------------------------------+----------+-----------+-------------------------------------------------------------------------------+
-| id                               | estRows  | task      | operator info                                                                 |
-+----------------------------------+----------+-----------+-------------------------------------------------------------------------------+
-| Projection_10                    | 10000.00 | root      | test.t.id, test.t.a, test.t.b                                                 |
-| └─Apply_12                       | 10000.00 | root      | semi join, inner:StreamAgg_30, equal:[eq(Column#8, Column#7)]                 |
-|   ├─Projection_13(Build)         | 10000.00 | root      | test.t.id, test.t.a, test.t.b, cast(test.t.a, decimal(20,0) BINARY)->Column#8 |
-|   │ └─TableReader_15             | 10000.00 | root      | data:TableFullScan_14                                                         |
-|   │   └─TableFullScan_14         | 10000.00 | cop[tikv] | table:t1, keep order:false                                                    |
-|   └─StreamAgg_30(Probe)          | 1.00     | root      | funcs:avg(Column#12, Column#13)->Column#7                                     |
-|     └─TableReader_31             | 1.00     | root      | data:StreamAgg_19                                                             |
-|       └─StreamAgg_19             | 1.00     | cop[tikv] | funcs:count(test.t2.a)->Column#12, funcs:sum(test.t2.a)->Column#13            |
-|         └─Selection_29           | 8000.00  | cop[tikv] | lt(test.t2.b, test.t.b)                                                       |
-|           └─TableFullScan_28     | 10000.00 | cop[tikv] | table:t2, keep order:false                                                    |
-+----------------------------------+----------+-----------+-------------------------------------------------------------------------------+
++----------------------------------+----------+-----------+---------------+-------------------------------------------------------------------------------+
+| id                               | estRows  | task      | access object | operator info                                                                 |
++----------------------------------+----------+-----------+---------------+-------------------------------------------------------------------------------+
+| Projection_10                    | 10000.00 | root      |               | test.t.id, test.t.a, test.t.b                                                 |
+| └─Apply_12                       | 10000.00 | root      |               | semi join, inner:StreamAgg_30, equal:[eq(Column#8, Column#7)]                 |
+|   ├─Projection_13(Build)         | 10000.00 | root      |               | test.t.id, test.t.a, test.t.b, cast(test.t.a, decimal(20,0) BINARY)->Column#8 |
+|   │ └─TableReader_15             | 10000.00 | root      |               | data:TableFullScan_14                                                         |
+|   │   └─TableFullScan_14         | 10000.00 | cop[tikv] | table:t1      | keep order:false                                                              |
+|   └─StreamAgg_30(Probe)          | 1.00     | root      |               | funcs:avg(Column#12, Column#13)->Column#7                                     |
+|     └─TableReader_31             | 1.00     | root      |               | data:StreamAgg_19                                                             |
+|       └─StreamAgg_19             | 1.00     | cop[tikv] |               | funcs:count(test.t2.a)->Column#12, funcs:sum(test.t2.a)->Column#13            |
+|         └─Selection_29           | 8000.00  | cop[tikv] |               | lt(test.t2.b, test.t.b)                                                       |
+|           └─TableFullScan_28     | 10000.00 | cop[tikv] | table:t2      | keep order:false                                                              |
++----------------------------------+----------+-----------+-----------------------------------------------------------------------------------------------+
 10 rows in set, 1 warning (0.00 sec)
 ```
