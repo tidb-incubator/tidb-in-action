@@ -122,7 +122,7 @@ TiDB(root@127.0.0.1:test) > desc select count(*) from t t1 join t t2 on t1.a = t
 | HashAgg_11                     | 7992.00 | root      |                          | group by:test.t.a, funcs:count(Column#8)->Column#7                              |
 | └─HashJoin_24                  | 9990.00 | root      |                          | inner join, inner:HashAgg_37, equal:[eq(test.t.a, test.t.a)]                    |
 |   ├─HashAgg_37(Build)          | 7992.00 | root      |                          | group by:test.t.a, funcs:count(1)->Column#8, funcs:firstrow(test.t.a)->test.t.a |
-|   │ └─IndexReader_44           | 9990.00 | root      | table:t2                 | index:IndexFullScan_43                                                          |
+|   │ └─IndexReader_44           | 9990.00 | root      |                          | index:IndexFullScan_43                                                          |
 |   │   └─IndexFullScan_43       | 9990.00 | cop[tikv] | table:t2, index:idx_a(a) | keep order:false, stats:pseudo                                                  |
 |   └─IndexReader_48(Probe)      | 9990.00 | root      |                          | index:IndexFullScan_47                                                          |
 |     └─IndexFullScan_47         | 9990.00 | cop[tikv] | table:t1, index:idx_a(a) | keep order:false, stats:pseudo                                                  |
