@@ -2865,52 +2865,52 @@
 <p>&#x4E0E; mysql &#x7C7B;&#x4F3C;, &#x4E0D;&#x5408;&#x9002;&#x7684;&#x67E5;&#x8BE2;&#x8BA1;&#x5212;&#x662F;&#x6162;&#x67E5;&#x8BE2;&#x7684;&#x5E38;&#x89C1;&#x539F;&#x56E0;&#xFF0C;&#x8FD9;&#x65F6;&#x5C31;&#x8981;&#x7528; USE INDEX &#x6307;&#x5B9A;&#x67E5;&#x8BE2;&#x7528;&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x4F8B;&#x5982;</p>
 <p>&#x4E0B;&#x9762;&#x4F8B;&#x5B50; use/force index &#x4F7F;&#x5F97;&#x539F;&#x672C;&#x5168;&#x8868;&#x626B;&#x63CF;&#x7684; SQL &#x53D8;&#x6210;&#x4E86;&#x901A;&#x8FC7;&#x7D22;&#x5F15;&#x626B;&#x63CF;&#x3002;</p>
 <pre><code>mysql&gt; explain select * from t;  
-+-----------------------+---------+-----------+---------------------------+ 
-| id                    | estRows | task      | operator info             |
-+-----------------------+---------+-----------+---------------------------+  
-| TableReader_5         | 8193.00 | root      | data:TableFullScan_4      |
-|  | &#x2514;&#x2500;TableFullScan_4  | 8193.00 | cop[tikv] | table:t, keep order:false |  
-+-----------------------+---------+-----------+---------------------------+  
++-----------------------+---------+-----------+---------------+----------------------+
+| id                    | estRows | task      | access object | operator info        |
++-----------------------+---------+-----------+---------------+----------------------+
+| TableReader_5         | 8193.00 | root      |               | data:TableFullScan_4 |
+| &#x2514;&#x2500;TableFullScan_4     | 8193.00 | cop[tikv] | table:t       | keep order:false     |
++-----------------------+---------+-----------+---------------+----------------------+
 2 rows in set (0.00 sec)   
 
 mysql&gt; explain select * from t use index(idx_1);  
-+-------------------------------+---------+-----------+------------------------------------+  
-| id                            | estRows | task      | operator info                      |  
-+-------------------------------+---------+-----------+------------------------------------+  
-| IndexLookUp_6                 | 8193.00 | root      |                                    |  
-| &#x251C;&#x2500;IndexFullScan_4(Build)      | 8193.00 | cop[tikv] | table:t, index:a, keep order:false |  
-| &#x2514;&#x2500;TableRowIDScan_5(Probe)     | 8193.00 | cop[tikv] | table:t, keep order:false          |  
-+-------------------------------+---------+-----------+------------------------------------+  
++-------------------------------+---------+-----------+-------------------------+------------------+
+| id                            | estRows | task      | access object           | operator info    |
++-------------------------------+---------+-----------+-------------------------+------------------+
+| IndexLookUp_6                 | 8193.00 | root      |                         |                  |
+| &#x251C;&#x2500;IndexFullScan_4(Build)      | 8193.00 | cop[tikv] | table:t, index:idx_1(a) | keep order:false |
+| &#x2514;&#x2500;TableRowIDScan_5(Probe)     | 8193.00 | cop[tikv] | table:t                 | keep order:false |
++-------------------------------+---------+-----------+-------------------------+------------------+
 3 rows in set (0.00 sec)    
 mysql&gt; explain select * from t force index(idx_1);  
-+-------------------------------+---------+-----------+------------------------------------+  
-| id                            | estRows | task      | operator info                      |  
-+-------------------------------+---------+-----------+------------------------------------+  
-| IndexLookUp_6                 | 8193.00 | root      |                                    |  
-| &#x251C;&#x2500;IndexFullScan_4(Build)      | 8193.00 | cop[tikv] | table:t, index:a, keep order:false |  
-| &#x2514;&#x2500;TableRowIDScan_5(Probe)     | 8193.00 | cop[tikv] | table:t, keep order:false          |  
-+-------------------------------+---------+-----------+------------------------------------+  
-3 rows in set (0.00 sec
++-------------------------------+---------+-----------+-------------------------+------------------+
+| id                            | estRows | task      | access object           | operator info    |
++-------------------------------+---------+-----------+-------------------------+------------------+
+| IndexLookUp_6                 | 8193.00 | root      |                         |                  |
+| &#x251C;&#x2500;IndexFullScan_4(Build)      | 8193.00 | cop[tikv] | table:t, index:idx_1(a) | keep order:false |
+| &#x2514;&#x2500;TableRowIDScan_5(Probe)     | 8193.00 | cop[tikv] | table:t                 | keep order:false |
++-------------------------------+---------+-----------+-------------------------+------------------+
+3 rows in set (0.00 sec)
 </code></pre><p>&#x4E0B;&#x9762;&#x7684;&#x4F8B;&#x5B50; ignore index &#x4F7F;&#x5F97;&#x539F;&#x672C;&#x8D70;&#x7D22;&#x5F15;&#x7684; SQL  &#x53D8;&#x6210;&#x4E86;&#x5168;&#x8868;&#x626B;&#x63CF;</p>
 <pre><code>
 mysql&gt; explain select a from t where a=2;  
-+------------------------+---------+-----------+-------------------------------------------------+  
-| id                     | estRows | task      | operator info                                   |  
-+------------------------+---------+-----------+-------------------------------------------------+  
-| IndexReader_6          | 1.00    | root      | index:IndexRangeScan_5                          | 
-| &#x2514;&#x2500;IndexRangeScan_5     | 1.00    | cop[tikv] | table:t, index:a, range:[2,2], keep order:false |  
-+------------------------+---------+-----------+-------------------------------------------------+  
++------------------------+---------+-----------+-------------------------+-------------------------------+
+| id                     | estRows | task      | access object           | operator info                 |
++------------------------+---------+-----------+-------------------------+-------------------------------+
+| IndexReader_6          | 1.00    | root      |                         | index:IndexRangeScan_5        |
+| &#x2514;&#x2500;IndexRangeScan_5     | 1.00    | cop[tikv] | table:t, index:idx_1(a) | range:[2,2], keep order:false |
++------------------------+---------+-----------+-------------------------+-------------------------------+
 2 rows in set (0.00 sec)   
 
 mysql&gt; explain select a from t ignore index(idx_1) where a=2 ;
-+-------------------------+---------+-----------+---------------------------+  
-| id                      | estRows | task      | operator info             |
-+-------------------------+---------+-----------+---------------------------+  
-| TableReader_7           | 1.00    | root      | data:Selection_6          |  
-| &#x2514;&#x2500;Selection_6           | 1.00    | cop[tikv] | eq(test.t.a, 2)           |  
-|   &#x2514;&#x2500;TableFullScan_5     | 8193.00 | cop[tikv] | table:t, keep order:false |
-+-------------------------+---------+-----------+---------------------------+  
-3 rows in set (0.00 sec)   |
++-------------------------+---------+-----------+-----------------+------------------+
+| id                      | estRows | task      | access object   | operator info    |
++-------------------------+---------+-----------+-----------------+------------------+
+| TableReader_7           | 1.00    | root      |                 | data:Selection_6 |
+| &#x2514;&#x2500;Selection_6           | 1.00    | cop[tikv] | eq(test.t.a, 2) |                  |
+|   &#x2514;&#x2500;TableFullScan_5     | 8193.00 | cop[tikv] | table:t         | keep order:false |
++-------------------------+---------+-----------+-----------------+------------------+
+3 rows in set (0.00 sec)
 </code></pre><p>&#x548C; mysql &#x4E0D;&#x540C;&#x7684;&#x662F;, &#x76EE;&#x524D; TiDB &#x5E76;&#x6CA1;&#x6709;&#x5BF9; use index &#x548C; force index &#x505A;&#x533A;&#x5206;</p>
 <p>&#x5F53;&#x8868;&#x4E0A;&#x6709;&#x591A;&#x4E2A;&#x7D22;&#x5F15;&#x65F6;&#xFF0C;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528; use index &#x3002;tidb&#x7684;&#x8868;&#x90FD;&#x6BD4;&#x8F83;&#x5927;&#xFF0C;analyze table &#x4F1A;&#x5BF9;&#x96C6;&#x7FA4;&#x6027;&#x80FD;&#x9020;&#x6210;&#x8F83;&#x5927;&#x5F71;&#x54CD;&#xFF0C;&#x56E0;&#x6B64;&#x65E0;&#x6CD5;&#x9891;&#x7E41;&#x66F4;&#x65B0;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x3002;&#x8FD9;&#x65F6;&#x5C31;&#x8981;&#x7528; use index &#x4FDD;&#x8BC1;&#x67E5;&#x8BE2;&#x8BA1;&#x5212;&#x7684;&#x6B63;&#x786E;&#x6027;</p>
 <h2 id="6152-maxexecutiontimen">6.1.5.2 MAX_EXECUTION_TIME(N)</h2>
@@ -2978,7 +2978,7 @@ mysql&gt; explain select a from t ignore index(idx_1) where a=2 ;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"6.1.5 通过 hint 调整执行计划","level":"5.6.1.5","depth":3,"next":{"title":"6.2 SQL 调优案例","level":"5.6.2","depth":2,"path":"session4/chapter6/sql-optimization-cases.md","ref":"session4/chapter6/sql-optimization-cases.md","articles":[]},"previous":{"title":"6.1.4 一种高效分页批处理方案","level":"5.6.1.4","depth":3,"path":"session4/chapter6/page-inaction.md","ref":"session4/chapter6/page-inaction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter6/tidb-hint.md","mtime":"2020-03-22T05:37:55.219Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-22T05:38:40.389Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"6.1.5 通过 hint 调整执行计划","level":"5.6.1.5","depth":3,"next":{"title":"6.2 SQL 调优案例","level":"5.6.2","depth":2,"path":"session4/chapter6/sql-optimization-cases.md","ref":"session4/chapter6/sql-optimization-cases.md","articles":[]},"previous":{"title":"6.1.4 一种高效分页批处理方案","level":"5.6.1.4","depth":3,"path":"session4/chapter6/page-inaction.md","ref":"session4/chapter6/page-inaction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session4/chapter6/tidb-hint.md","mtime":"2020-03-24T13:23:06.209Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-24T13:23:52.155Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

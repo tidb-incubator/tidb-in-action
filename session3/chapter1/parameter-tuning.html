@@ -2870,14 +2870,14 @@
 <p>&#x5047;&#x8BBE;&#x8981;&#x8BA9;&#x4F18;&#x5316;&#x5668;&#x66F4;&#x52A0;&#x504F;&#x5411;&#x5148;&#x8BFB;&#x518D;&#x6309;&#x7167;&#x9006;&#x5E8F;&#x6392;&#x5E8F;&#x800C;&#x4E0D;&#x662F;&#x4F7F;&#x7528; TiKV &#x7684;&#x9006;&#x5E8F;&#x626B;&#xFF0C;&#x53EF;&#x4EE5;&#x8C03;&#x9AD8; <code>tidb_opt_desc_factor</code>&#xFF1A;</p>
 <p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x6309;&#x7167;&#x7D22;&#x5F15;&#x9006;&#x5E8F;&#x6392;&#x5E8F;&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;:</p>
 <pre><code class="lang-sql">TiDB(root@127.0.0.1:test) &gt; desc select * from t order by a desc;
-+----------------------------------+----------+-----------+-------------------------------------------------------+
-| id                               | estRows  | task      | operator info                                         |
-+----------------------------------+----------+-----------+-------------------------------------------------------+
-| Projection_13                    | 10000.00 | root      | test.t.a, test.t.b                                    |
-| &#x2514;&#x2500;IndexLookUp_12                 | 10000.00 | root      |                                                       |
-|   &#x251C;&#x2500;IndexFullScan_10(Build)      | 10000.00 | cop[tikv] | table:t, index:a, keep order:true, desc, stats:pseudo |
-|   &#x2514;&#x2500;TableRowIDScan_11(Probe)     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo               |
-+----------------------------------+----------+-----------+-------------------------------------------------------+
++----------------------------------+----------+-----------+-------------------------+-------------------------------------+
+| id                               | estRows  | task      | access object           | operator info                       |
++----------------------------------+----------+-----------+-------------------------+-------------------------------------+
+| Projection_13                    | 10000.00 | root      |                         | test.t.a, test.t.b                  |
+| &#x2514;&#x2500;IndexLookUp_12                 | 10000.00 | root      |                         |                                     |
+|   &#x251C;&#x2500;IndexFullScan_10(Build)      | 10000.00 | cop[tikv] | table:t, index:idx_a(a) | keep order:true, desc, stats:pseudo |
+|   &#x2514;&#x2500;TableRowIDScan_11(Probe)     | 10000.00 | cop[tikv] | table:t                 | keep order:false, stats:pseudo      |
++----------------------------------+----------+-----------+-------------------------+-------------------------------------+
 4 rows in set (0.00 sec)
 </code></pre>
 <p>&#x5047;&#x8BBE;&#x56E0;&#x4E3A;&#x67D0;&#x79CD;&#x539F;&#x56E0; TiKV &#x9006;&#x5E8F;&#x626B;&#x7684;&#x901F;&#x5EA6;&#x975E;&#x5E38;&#x6162;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8C03;&#x9AD8;&#x8BE5;&#x53C2;&#x6570;&#x6765;&#x6446;&#x8131;&#x9006;&#x5E8F;&#x626B;&#x7684;&#x6027;&#x80FD;&#x95EE;&#x9898;&#xFF1A;</p>
@@ -2885,29 +2885,29 @@
 Query OK, 0 rows affected (0.00 sec)
 
 TiDB(root@127.0.0.1:test) &gt; desc select * from t order by a desc;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| Sort_4                  | 10000.00 | root      | test.t.a:desc                           |
-| &#x2514;&#x2500;TableReader_8         | 10000.00 | root      | data:TableFullScan_7                    |
-|   &#x2514;&#x2500;TableFullScan_7     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| Sort_4                  | 10000.00 | root      |               | test.t.a:desc                  |
+| &#x2514;&#x2500;TableReader_8         | 10000.00 | root      |               | data:TableFullScan_7           |
+|   &#x2514;&#x2500;TableFullScan_7     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 </code></pre>
 <h2 id="143-&#x4F18;&#x5316;&#x89C4;&#x5219;&#x5F00;&#x5173;&#x548C;&#x9ED1;&#x540D;&#x5355;">1.4.3 &#x4F18;&#x5316;&#x89C4;&#x5219;&#x5F00;&#x5173;&#x548C;&#x9ED1;&#x540D;&#x5355;</h2>
 <p>TiDB &#x6709;&#x4E00;&#x4E2A;&#x805A;&#x5408;&#x4E0B;&#x63A8;&#x7684;&#x4F18;&#x5316;&#x89C4;&#x5219;&#xFF0C;&#x56E0;&#x4E3A;&#x4E0D;&#x80FD;&#x786E;&#x4FDD;&#x6240;&#x6709;&#x573A;&#x666F;&#x4E0B;&#x8BE5;&#x4F18;&#x5316;&#x89C4;&#x5219;&#x90FD;&#x662F;&#x5408;&#x9002;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x76EE;&#x524D;&#x9ED8;&#x8BA4;&#x5173;&#x95ED;&#x3002;&#x8FD9;&#x4E2A;&#x4F18;&#x5316;&#x89C4;&#x5219;&#x4F1A;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x628A;&#x805A;&#x5408;&#x7B97;&#x5B50;&#x4E0B;&#x63A8;&#x5230; Join &#x7B97;&#x5B50;&#x7684;&#x4E0B;&#x9762;&#xFF0C;&#x5982;&#x679C;&#x4E0B;&#x63A8;&#x540E;&#x80FD;&#x591F;&#x5927;&#x5927;&#x51CF;&#x5C11; Join &#x7684;&#x8BA1;&#x7B97;&#x91CF;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6253;&#x5F00;&#x8FD9;&#x4E2A;&#x4E0B;&#x63A8;&#x5F00;&#x5173;&#x6765;&#x63D0;&#x901F; SQL &#x7684;&#x6267;&#x884C;&#x3002;</p>
 <p>&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x805A;&#x5408;&#x6CA1;&#x6709;&#x4E0B;&#x63A8;&#x5230; Join &#x4E0B;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
 <pre><code class="lang-sql">TiDB(root@127.0.0.1:test) &gt; desc select count(*) from t t1 join t t2 on t1.a = t2.a group by t1.a;
-+-------------------------------+----------+-----------+---------------------------------------------------+
-| id                            | estRows  | task      | operator info                                     |
-+-------------------------------+----------+-----------+---------------------------------------------------+
-| HashAgg_10                    | 7992.00  | root      | group by:test.t.a, funcs:count(1)-&gt;Column#7       |
-| &#x2514;&#x2500;MergeJoin_13                | 12487.50 | root      | inner join, left key:test.t.a, right key:test.t.a |
-|   &#x251C;&#x2500;IndexReader_41(Build)     | 9990.00  | root      | index:IndexFullScan_40                            |
-|   &#x2502; &#x2514;&#x2500;IndexFullScan_40        | 9990.00  | cop[tikv] | table:t2, index:a, keep order:true, stats:pseudo  |
-|   &#x2514;&#x2500;IndexReader_39(Probe)     | 9990.00  | root      | index:IndexFullScan_38                            |
-|     &#x2514;&#x2500;IndexFullScan_38        | 9990.00  | cop[tikv] | table:t1, index:a, keep order:true, stats:pseudo  |
-+-------------------------------+----------+-----------+---------------------------------------------------+
++-------------------------------+----------+-----------+--------------------------+---------------------------------------------------+
+| id                            | estRows  | task      | access object            | operator info                                     |
++-------------------------------+----------+-----------+--------------------------+---------------------------------------------------+
+| HashAgg_10                    | 7992.00  | root      |                          | group by:test.t.a, funcs:count(1)-&gt;Column#7       |
+| &#x2514;&#x2500;MergeJoin_13                | 12487.50 | root      |                          | inner join, left key:test.t.a, right key:test.t.a |
+|   &#x251C;&#x2500;IndexReader_41(Build)     | 9990.00  | root      |                          | index:IndexFullScan_40                            |
+|   &#x2502; &#x2514;&#x2500;IndexFullScan_40        | 9990.00  | cop[tikv] | table:t2, index:idx_a(a) | keep order:true, stats:pseudo                     |
+|   &#x2514;&#x2500;IndexReader_39(Probe)     | 9990.00  | root      |                          | index:IndexFullScan_38                            |
+|     &#x2514;&#x2500;IndexFullScan_38        | 9990.00  | cop[tikv] | table:t1, index:idx_a(a) | keep order:true, stats:pseudo                     |
++-------------------------------+----------+-----------+--------------------------+---------------------------------------------------+
 6 rows in set (0.00 sec)
 </code></pre>
 <p>&#x63A5;&#x4E0B;&#x6765;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6253;&#x5F00;&#x5F00;&#x5173; <code>tidb_opt_agg_push_down</code> &#x6765;&#x628A;&#x805A;&#x5408;&#x4E0B;&#x63A8;&#x5230; Join &#x4E0B;&#x9762;&#xFF1A;</p>
@@ -2915,28 +2915,28 @@ TiDB(root@127.0.0.1:test) &gt; desc select * from t order by a desc;
 Query OK, 0 rows affected (0.00 sec)
 
 TiDB(root@127.0.0.1:test) &gt; desc select count(*) from t t1 join t t2 on t1.a = t2.a group by t1.a;
-+--------------------------------+---------+-----------+---------------------------------------------------------------------------------+
-| id                             | estRows | task      | operator info                                                                   |
-+--------------------------------+---------+-----------+---------------------------------------------------------------------------------+
-| HashAgg_11                     | 7992.00 | root      | group by:test.t.a, funcs:count(Column#8)-&gt;Column#7                              |
-| &#x2514;&#x2500;HashLeftJoin_24              | 9990.00 | root      | inner join, inner:HashAgg_37, equal:[eq(test.t.a, test.t.a)]                    |
-|   &#x251C;&#x2500;HashAgg_37(Build)          | 7992.00 | root      | group by:test.t.a, funcs:count(1)-&gt;Column#8, funcs:firstrow(test.t.a)-&gt;test.t.a |
-|   &#x2502; &#x2514;&#x2500;IndexReader_44           | 9990.00 | root      | index:IndexFullScan_43                                                          |
-|   &#x2502;   &#x2514;&#x2500;IndexFullScan_43       | 9990.00 | cop[tikv] | table:t2, index:a, keep order:false, stats:pseudo                               |
-|   &#x2514;&#x2500;IndexReader_48(Probe)      | 9990.00 | root      | index:IndexFullScan_47                                                          |
-|     &#x2514;&#x2500;IndexFullScan_47         | 9990.00 | cop[tikv] | table:t1, index:a, keep order:false, stats:pseudo                               |
-+--------------------------------+---------+-----------+---------------------------------------------------------------------------------+
++--------------------------------+---------+-----------+--------------------------+---------------------------------------------------------------------------------+
+| id                             | estRows | task      | access object            | operator info                                                                   |
++--------------------------------+---------+-----------+--------------------------+---------------------------------------------------------------------------------+
+| HashAgg_11                     | 7992.00 | root      |                          | group by:test.t.a, funcs:count(Column#8)-&gt;Column#7                              |
+| &#x2514;&#x2500;HashJoin_24                  | 9990.00 | root      |                          | inner join, inner:HashAgg_37, equal:[eq(test.t.a, test.t.a)]                    |
+|   &#x251C;&#x2500;HashAgg_37(Build)          | 7992.00 | root      |                          | group by:test.t.a, funcs:count(1)-&gt;Column#8, funcs:firstrow(test.t.a)-&gt;test.t.a |
+|   &#x2502; &#x2514;&#x2500;IndexReader_44           | 9990.00 | root      |                          | index:IndexFullScan_43                                                          |
+|   &#x2502;   &#x2514;&#x2500;IndexFullScan_43       | 9990.00 | cop[tikv] | table:t2, index:idx_a(a) | keep order:false, stats:pseudo                                                  |
+|   &#x2514;&#x2500;IndexReader_48(Probe)      | 9990.00 | root      |                          | index:IndexFullScan_47                                                          |
+|     &#x2514;&#x2500;IndexFullScan_47         | 9990.00 | cop[tikv] | table:t1, index:idx_a(a) | keep order:false, stats:pseudo                                                  |
++--------------------------------+---------+-----------+--------------------------+---------------------------------------------------------------------------------+
 7 rows in set (0.00 sec)
 </code></pre>
 <p>&#x6B64;&#x5916;&#xFF0C;TiDB &#x4F18;&#x5316;&#x5668;&#x4F7F;&#x7528; <code>mysql.opt_rule_blacklist</code> &#x6765;&#x7981;&#x7528;&#x51FA;&#x73B0;&#x5728;&#x8FD9;&#x4E2A;&#x8868;&#x4E2D;&#x7684;&#x903B;&#x8F91;&#x4F18;&#x5316;&#x89C4;&#x5219;&#x3002;</p>
 <pre><code class="lang-sql">TiDB(root@127.0.0.1:test) &gt; desc select * from t where a &gt; 10;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| TableReader_7           | 3333.33  | root      | data:Selection_6                        |
-| &#x2514;&#x2500;Selection_6           | 3333.33  | cop[tikv] | gt(test.t.a, 10)                        |
-|   &#x2514;&#x2500;TableFullScan_5     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| TableReader_7           | 3333.33  | root      |               | data:Selection_6               |
+| &#x2514;&#x2500;Selection_6           | 3333.33  | cop[tikv] |               | gt(test.t.a, 10)               |
+|   &#x2514;&#x2500;TableFullScan_5     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 </code></pre>
 <p>&#x5047;&#x8BBE;&#x4E0A;&#x9762;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x4E0B;&#x63A8;&#x5BFC;&#x81F4;&#x4E86;&#x6027;&#x80FD;&#x56DE;&#x9000;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x628A; predicate_pushdown &#x6DFB;&#x52A0;&#x5230;&#x9ED1;&#x540D;&#x5355;&#x4E2D;&#x6765;&#x7981;&#x7528;&#xFF1A;</p>
@@ -2948,13 +2948,13 @@ Query OK, 0 rows affected (0.00 sec)
 </code></pre>
 <p>&#x63A5;&#x7740;&#x518D;&#x67E5;&#x770B;&#x6267;&#x884C;&#x8BA1;&#x5212;&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x8BE5;&#x8FC7;&#x6EE4;&#x6761;&#x4EF6;&#x6CA1;&#x6709;&#x4E0B;&#x63A8;&#x5230; TiKV &#x4E0A;&#x6267;&#x884C;&#x4E86;&#xFF1A;</p>
 <pre><code class="lang-sql">TiDB(root@127.0.0.1:test) &gt; desc select * from t where a &gt; 10;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| Selection_5             | 8000.00  | root      | gt(test.t.a, 10)                        |
-| &#x2514;&#x2500;TableReader_7         | 10000.00 | root      | data:TableFullScan_6                    |
-|   &#x2514;&#x2500;TableFullScan_6     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| Selection_5             | 8000.00  | root      |               | gt(test.t.a, 10)               |
+| &#x2514;&#x2500;TableReader_7         | 10000.00 | root      |               | data:TableFullScan_6           |
+|   &#x2514;&#x2500;TableFullScan_6     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 </code></pre>
 <h2 id="144-&#x8868;&#x8FBE;&#x5F0F;&#x4E0B;&#x63A8;&#x9ED1;&#x540D;&#x5355;">1.4.4 &#x8868;&#x8FBE;&#x5F0F;&#x4E0B;&#x63A8;&#x9ED1;&#x540D;&#x5355;</h2>
@@ -2972,13 +2972,13 @@ Query OK, 0 rows affected (0.00 sec)
 </ul>
 <p>&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
 <pre><code class="lang-sql">TiDB(root@127.0.0.1:test) &gt; explain select * from t where a &lt; 2;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| TableReader_7           | 3323.33  | root      | data:Selection_6                        |
-| &#x2514;&#x2500;Selection_6           | 3323.33  | cop[tikv] | lt(test.t.a, 2)                         |
-|   &#x2514;&#x2500;TableFullScan_5     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| TableReader_7           | 3323.33  | root      |               | data:Selection_6               |
+| &#x2514;&#x2500;Selection_6           | 3323.33  | cop[tikv] |               | lt(test.t.a, 2)                |
+|   &#x2514;&#x2500;TableFullScan_5     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 </code></pre>
 <p>&#x5C06; <code>&lt;</code> &#x52A0;&#x5165;&#x9ED1;&#x540D;&#x5355;&#xFF1A;</p>
@@ -2990,13 +2990,13 @@ Query OK, 0 rows affected (0.00 sec)
 </code></pre>
 <p>&#x518D;&#x6B21;&#x6267;&#x884C;&#xFF0C;&#x5C31;&#x4F1A;&#x53D1;&#x73B0;&#x8FD9;&#x4E2A; <code>&lt;</code> &#x5C31;&#x6CA1;&#x6709;&#x88AB;&#x4E0B;&#x63A8;&#x5230; TiKV &#x4E86;&#xFF1A;</p>
 <pre><code class="lang-sql">TiDB(root@127.0.0.1:test) &gt; explain select * from t where a &lt; 2;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| Selection_5             | 8000.00  | root      | lt(test.t.a, 2)                         |
-| &#x2514;&#x2500;TableReader_7         | 10000.00 | root      | data:TableFullScan_6                    |
-|   &#x2514;&#x2500;TableFullScan_6     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| Selection_5             | 8000.00  | root      |               | lt(test.t.a, 2)                |
+| &#x2514;&#x2500;TableReader_7         | 10000.00 | root      |               | data:TableFullScan_6           |
+|   &#x2514;&#x2500;TableFullScan_6     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 </code></pre>
 <script src="../../gitbook_plugin_analytics.js"></script>
@@ -3042,7 +3042,7 @@ Query OK, 0 rows affected (0.00 sec)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.4 参数调优指南","level":"4.1.4","depth":2,"next":{"title":"1.5 限制 SQL 内存使用和执行时间","level":"4.1.5","depth":2,"path":"session3/chapter1/memory-quota-execution-time-limit.md","ref":"session3/chapter1/memory-quota-execution-time-limit.md","articles":[]},"previous":{"title":"1.3 SQL Plan Management","level":"4.1.3","depth":2,"path":"session3/chapter1/sql-plan-management.md","ref":"session3/chapter1/sql-plan-management.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter1/parameter-tuning.md","mtime":"2020-03-22T05:37:55.215Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-22T05:38:40.389Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.4 参数调优指南","level":"4.1.4","depth":2,"next":{"title":"1.5 限制 SQL 内存使用和执行时间","level":"4.1.5","depth":2,"path":"session3/chapter1/memory-quota-execution-time-limit.md","ref":"session3/chapter1/memory-quota-execution-time-limit.md","articles":[]},"previous":{"title":"1.3 SQL Plan Management","level":"4.1.3","depth":2,"path":"session3/chapter1/sql-plan-management.md","ref":"session3/chapter1/sql-plan-management.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter1/parameter-tuning.md","mtime":"2020-03-24T13:23:06.201Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-24T13:23:52.155Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
