@@ -113,7 +113,7 @@
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
 * [1 SQL 调优原理](session3/chapter1/optimization-guide.md) @[石壹笑](https://github.com/aierui)
-    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui)
+    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui) @[齐智](https://github.com/LittleFall)
     * [1.2 优化器简介](session3/chapter1/optimizer-summary.md) @[倪健](https://github.com/dapan3927)
     * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md) @[Qiannan](https://github.com/hsqlu)
     * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md) @[Qiannan](https://github.com/hsqlu)

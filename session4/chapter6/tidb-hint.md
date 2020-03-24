@@ -19,55 +19,55 @@
 下面例子 use/force index 使得原本全表扫描的 SQL 变成了通过索引扫描。
 ```
 mysql> explain select * from t;  
-+-----------------------+---------+-----------+---------------------------+ 
-| id                    | estRows | task      | operator info             |
-+-----------------------+---------+-----------+---------------------------+  
-| TableReader_5         | 8193.00 | root      | data:TableFullScan_4      |
-|  | └─TableFullScan_4  | 8193.00 | cop[tikv] | table:t, keep order:false |  
-+-----------------------+---------+-----------+---------------------------+  
++-----------------------+---------+-----------+---------------+----------------------+
+| id                    | estRows | task      | access object | operator info        |
++-----------------------+---------+-----------+---------------+----------------------+
+| TableReader_5         | 8193.00 | root      |               | data:TableFullScan_4 |
+| └─TableFullScan_4     | 8193.00 | cop[tikv] | table:t       | keep order:false     |
++-----------------------+---------+-----------+---------------+----------------------+
 2 rows in set (0.00 sec)   
 
 mysql> explain select * from t use index(idx_1);  
-+-------------------------------+---------+-----------+------------------------------------+  
-| id                            | estRows | task      | operator info                      |  
-+-------------------------------+---------+-----------+------------------------------------+  
-| IndexLookUp_6                 | 8193.00 | root      |                                    |  
-| ├─IndexFullScan_4(Build)      | 8193.00 | cop[tikv] | table:t, index:a, keep order:false |  
-| └─TableRowIDScan_5(Probe)     | 8193.00 | cop[tikv] | table:t, keep order:false          |  
-+-------------------------------+---------+-----------+------------------------------------+  
++-------------------------------+---------+-----------+-------------------------+------------------+
+| id                            | estRows | task      | access object           | operator info    |
++-------------------------------+---------+-----------+-------------------------+------------------+
+| IndexLookUp_6                 | 8193.00 | root      |                         |                  |
+| ├─IndexFullScan_4(Build)      | 8193.00 | cop[tikv] | table:t, index:idx_1(a) | keep order:false |
+| └─TableRowIDScan_5(Probe)     | 8193.00 | cop[tikv] | table:t                 | keep order:false |
++-------------------------------+---------+-----------+-------------------------+------------------+
 3 rows in set (0.00 sec)    
 mysql> explain select * from t force index(idx_1);  
-+-------------------------------+---------+-----------+------------------------------------+  
-| id                            | estRows | task      | operator info                      |  
-+-------------------------------+---------+-----------+------------------------------------+  
-| IndexLookUp_6                 | 8193.00 | root      |                                    |  
-| ├─IndexFullScan_4(Build)      | 8193.00 | cop[tikv] | table:t, index:a, keep order:false |  
-| └─TableRowIDScan_5(Probe)     | 8193.00 | cop[tikv] | table:t, keep order:false          |  
-+-------------------------------+---------+-----------+------------------------------------+  
-3 rows in set (0.00 sec   
++-------------------------------+---------+-----------+-------------------------+------------------+
+| id                            | estRows | task      | access object           | operator info    |
++-------------------------------+---------+-----------+-------------------------+------------------+
+| IndexLookUp_6                 | 8193.00 | root      |                         |                  |
+| ├─IndexFullScan_4(Build)      | 8193.00 | cop[tikv] | table:t, index:idx_1(a) | keep order:false |
+| └─TableRowIDScan_5(Probe)     | 8193.00 | cop[tikv] | table:t                 | keep order:false |
++-------------------------------+---------+-----------+-------------------------+------------------+
+3 rows in set (0.00 sec)
 ```
 
 下面的例子 ignore index 使得原本走索引的 SQL  变成了全表扫描
 ```
 
 mysql> explain select a from t where a=2;  
-+------------------------+---------+-----------+-------------------------------------------------+  
-| id                     | estRows | task      | operator info                                   |  
-+------------------------+---------+-----------+-------------------------------------------------+  
-| IndexReader_6          | 1.00    | root      | index:IndexRangeScan_5                          | 
-| └─IndexRangeScan_5     | 1.00    | cop[tikv] | table:t, index:a, range:[2,2], keep order:false |  
-+------------------------+---------+-----------+-------------------------------------------------+  
++------------------------+---------+-----------+-------------------------+-------------------------------+
+| id                     | estRows | task      | access object           | operator info                 |
++------------------------+---------+-----------+-------------------------+-------------------------------+
+| IndexReader_6          | 1.00    | root      |                         | index:IndexRangeScan_5        |
+| └─IndexRangeScan_5     | 1.00    | cop[tikv] | table:t, index:idx_1(a) | range:[2,2], keep order:false |
++------------------------+---------+-----------+-------------------------+-------------------------------+
 2 rows in set (0.00 sec)   
 
 mysql> explain select a from t ignore index(idx_1) where a=2 ;
-+-------------------------+---------+-----------+---------------------------+  
-| id                      | estRows | task      | operator info             |
-+-------------------------+---------+-----------+---------------------------+  
-| TableReader_7           | 1.00    | root      | data:Selection_6          |  
-| └─Selection_6           | 1.00    | cop[tikv] | eq(test.t.a, 2)           |  
-|   └─TableFullScan_5     | 8193.00 | cop[tikv] | table:t, keep order:false |
-+-------------------------+---------+-----------+---------------------------+  
-3 rows in set (0.00 sec)   | 
++-------------------------+---------+-----------+-----------------+------------------+
+| id                      | estRows | task      | access object   | operator info    |
++-------------------------+---------+-----------+-----------------+------------------+
+| TableReader_7           | 1.00    | root      |                 | data:Selection_6 |
+| └─Selection_6           | 1.00    | cop[tikv] | eq(test.t.a, 2) |                  |
+|   └─TableFullScan_5     | 8193.00 | cop[tikv] | table:t         | keep order:false |
++-------------------------+---------+-----------+-----------------+------------------+
+3 rows in set (0.00 sec)   
 ```
 
 和 mysql 不同的是, 目前 TiDB 并没有对 use index 和 force index 做区分
