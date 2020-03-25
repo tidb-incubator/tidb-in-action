@@ -18,41 +18,28 @@ TiUP 的使用非常简单，只需要利用 TiUP 的指令即可。首先执行
 ```
 tiup help
 Usage:
-  tiup [flags]
-  tiup [command]
+  tiup [flags] <command> [args...]
+  tiup [flags] <component> [args...]
+
 Available Commands:
-  clean       Clean the data of the instantiated component
-  help        Help about any command
-  install     Install a specific version of a component
-  list        List the available TiDB components or versions
-  run         Run a component of specific version
-  status      List the status of running components
-  uninstall   Uninstall components or versions of a component
-  update      Update tiup components to the latest version
-  version     Show tiup version and quit
-Flags:
-      --bin <component>:[version]   Print binary path of a specific version of a component <component>:[version]
-  -h, --help                        help for tiup
-      --mirror mirror               Overwrite default mirror
+  install     Install a specific version of a component
+  list        List the available TiDB components or versions
+  uninstall   Uninstall components or versions of a component
+  update      Update tiup components to the latest version
+  status      List the status of instantiated components
+  clean       Clean the data of instantiated components
+  help        Help about any command or component
 
 Use "tiup [command] --help" for more information about a command.
 ```
 可以看到大致有这些命令可选：
 * help: 打印 help 信息，后面跟子命令则是打印该子命令的使用方法
-* version: 打印 tiup 自身的版本信息
 * list: 查看有哪些组件可以安装，以及这些组件有哪些版本可选
 * install: 安装某个组件的某个版本
 * update: 升级某个组件到最新的版本
 * uninstall: 删除某个组件
-* run: 运行某个组件
 * status: 查看组件组件的运行状态/运行历史
 * clean: 清除某次运行后的数据
-
-然后 tiup 支持几个可选的 flag:
-
-* --bin: 打印某个组件的二进制文件存放位置
-* -h, --help: 打印 help 信息
-* --mirror: 指定一个镜像替换默认的官方镜像
 
 如果我们想要知道某个子命令的具体用法，执行 tiup subcommand -h 就可以看到，比如我们想知道 install 命令有哪些参数可以传，就执行 tiup install -h。
 
@@ -162,14 +149,14 @@ tiup [component] [flags]
 Usage:
   tiup <component1>:[version] [flags]
 Flags:
-  -h, --help         help for run
+  -h, --help         help for this component
       --rm           Remove data directory on finish
   -n, --tag string   Specify a tag for this task
 ```
 该命令需要提供一个组件的名字以及可选的版本，若不提供版本，则使用该组件已安装的最新稳定版。
 TiUP 将组件启动之前会为它建立一个目录，然后将组件放到该目录中运行，组件应该将所有数据生成在该目录中，目录的名字就是该组件运行时指定的 tag 名称，若未指定，则生成一个随机的 tag。
 
-run 命令有两个 flag:
+命令有两个 flag:
 
 * --rm 组件退出时删除它的工作目录
 * --tag 为组件指定一个 tag

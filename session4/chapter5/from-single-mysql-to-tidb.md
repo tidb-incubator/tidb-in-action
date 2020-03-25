@@ -1,7 +1,5 @@
 # 5.1.1 DM 同步单机 MySQL 到 TiDB 的实践
 
-Data Migration， DM 是一款可以将 MySQL 实例数据实时同步到 TiDB 集群的[开源产品](https://github.com/pingcap/dm)。
-
 本小节的实践目标是将 单机 MySQL 实例数据同步到 TiDB 集群。
 
 主要包括以下8个小节的内容，所有提到的参数配置及说明基于 DM 1.0.2版本
