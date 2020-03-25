@@ -2821,19 +2821,19 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="52-&#x5229;&#x7528;-recoverflashback-&#x547D;&#x4EE4;&#x79D2;&#x6062;&#x590D;&#x8BEF;&#x5220;&#x8868;">5.2 &#x5229;&#x7528; Recover/Flashback &#x547D;&#x4EE4;&#x79D2;&#x6062;&#x590D;&#x8BEF;&#x5220;&#x8868;</h1>
+                                <h2 id="52-&#x5229;&#x7528;-recoverflashback-&#x547D;&#x4EE4;&#x79D2;&#x6062;&#x590D;&#x8BEF;&#x5220;&#x8868;">5.2 &#x5229;&#x7528; Recover/Flashback &#x547D;&#x4EE4;&#x79D2;&#x6062;&#x590D;&#x8BEF;&#x5220;&#x8868;</h2>
 <p>&#x5BF9;&#x4E8E; DBA &#x6765;&#x8BF4;&#xFF0C;&#x5220;&#x5E93;&#x8DD1;&#x8DEF;&#x6C38;&#x8FDC;&#x662F;&#x88AB;&#x8C03;&#x4F83;&#x7684;&#x54CF;&#xFF0C;&#x8FD1;&#x5728;&#x773C;&#x524D;&#x7684;&#x67D0;&#x5FAE;&#x5546;&#x5E73;&#x53F0;&#x7684;&#x5927;&#x9762;&#x79EF;&#x5B95;&#x673A;&#x4E8B;&#x4EF6;&#x7ED9;&#x4F01;&#x4E1A;&#x7BA1;&#x7406;&#x4EBA;&#x5458;&#x53CA;&#x6570;&#x636E;&#x5E93;&#x8FD0;&#x7EF4;&#x56E2;&#x961F;&#x5E26;&#x6765;&#x7684;&#x542F;&#x793A;&#x4ECD;&#x5728;&#x88AB;&#x4E0D;&#x65AD;&#x8BA8;&#x8BBA;&#x3002;&#x5F53;&#x7136;&#x4E3A;&#x4E86;&#x5E94;&#x5BF9;&#x5927;&#x9762;&#x79EF;&#x7684;&#x6076;&#x610F;&#x5220;&#x5E93;&#x8DD1;&#x8DEF;&#x884C;&#x4E3A;&#xFF0C;&#x53EF;&#x80FD;&#x771F;&#x7684;&#x662F;&#x9632;&#x4E0D;&#x80DC;&#x9632;&#xFF0C;&#x4E0D;&#x8FC7;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E5F;&#x975E;&#x5E38;&#x7F55;&#x89C1;&#x3002;&#x4F46;&#x662F;&#x5927;&#x5BB6;&#x5C24;&#x5176;&#x662F;&#x7EBF;&#x4E0A;&#x8FD0;&#x7EF4; DBA &#x5728;&#x7EF4;&#x62A4;&#x6570;&#x636E;&#x5E93;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x51FA;&#x73B0;&#x5220;&#x9519;&#x8868;/&#x5E93;&#x7684;&#x60C5;&#x51B5;&#x5374;&#x662F;&#x5F88;&#x5BB9;&#x6613;&#x51FA;&#x73B0;&#x7684;&#xFF0C;&#x4E0B;&#x9762;&#x6765;&#x770B;&#x4E00;&#x4E0B; TiDB &#x63D0;&#x4F9B;&#x7684;&#x5FEB;&#x901F;&#x6062;&#x590D;&#x8BEF;&#x5220;&#x8868;&#x7684;&#x529F;&#x80FD;&#x3002;</p>
 <h2 id="521-recover-&#x5B9E;&#x73B0;&#x539F;&#x7406;">5.2.1 Recover &#x5B9E;&#x73B0;&#x539F;&#x7406;</h2>
 <p>TiDB &#x5728;&#x5220;&#x9664;&#x8868;&#x65F6;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x53EA;&#x5220;&#x9664;&#x4E86;&#x8868;&#x7684;&#x5143;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x5C06;&#x9700;&#x8981;&#x5220;&#x9664;&#x7684;&#x8868;&#x6570;&#x636E;&#xFF08;&#x884C;&#x6570;&#x636E;&#x548C;&#x7D22;&#x5F15;&#x6570;&#x636E;&#xFF09;&#x5199;&#x4E00;&#x6761;&#x6570;&#x636E;&#x5230; mysql.gc_delete_range &#x8868;&#x3002;TiDB &#x540E;&#x53F0;&#x7684; GC Worker &#x4F1A;&#x5B9A;&#x671F;&#x4ECE; mysql.gc_delete_range &#x8868;&#x4E2D;&#x53D6;&#x51FA;&#x8D85;&#x8FC7; GC lifetime &#x76F8;&#x5173;&#x8303;&#x56F4;&#x7684; key &#x8FDB;&#x884C;&#x5220;&#x9664;&#x3002;</p>
 <p>&#x6240;&#x4EE5;&#xFF0C;RECOVER TABLE &#x53EA;&#x9700;&#x8981;&#x5728; GC Worker &#x8FD8;&#x6CA1;&#x5220;&#x9664;&#x8868;&#x6570;&#x636E;&#x524D;&#xFF0C;&#x6062;&#x590D;&#x8868;&#x7684;&#x5143;&#x4FE1;&#x606F;&#x5E76;&#x5220;&#x9664; mysql.gc_delete_range &#x8868;&#x4E2D;&#x76F8;&#x5E94;&#x7684;&#x884C;&#x8BB0;&#x5F55;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;&#x6062;&#x590D;&#x8868;&#x7684;&#x5143;&#x4FE1;&#x606F;&#x53EF;&#x4EE5;&#x7528; TiDB &#x7684;&#x5FEB;&#x7167;&#x8BFB;&#x5B9E;&#x73B0;&#xFF0C;TiDB &#x4E2D;&#x8868;&#x7684;&#x6062;&#x590D;&#x662F;&#x901A;&#x8FC7;&#x5FEB;&#x7167;&#x8BFB;&#x83B7;&#x53D6;&#x8868;&#x7684;&#x5143;&#x4FE1;&#x606F;&#x540E;&#xFF0C;&#x518D;&#x8D70;&#x4E00;&#x6B21;&#x7C7B;&#x4F3C;&#x4E8E; CREATE TABLE &#x7684;&#x5EFA;&#x8868;&#x6D41;&#x7A0B;&#xFF0C;&#x6240;&#x4EE5; RECOVER TABLE &#x5B9E;&#x9645;&#x4E0A;&#x4E5F;&#x662F;&#x4E00;&#x79CD; DDL&#x3002;</p>
-<h3 id="1-&#x7B80;&#x5355;&#x5B9E;&#x8DF5;">1. &#x7B80;&#x5355;&#x5B9E;&#x8DF5;</h3>
+<h3 id="522-&#x7B80;&#x5355;&#x5B9E;&#x8DF5;">5.2.2 &#x7B80;&#x5355;&#x5B9E;&#x8DF5;</h3>
 <p>MySQL [test]&gt; show tables;</p>
-<p>+----------------+</p>
-<p>| Tables_in_test |</p>
-<p>+----------------+</p>
-<p>| t1             |</p>
-<p>| t3             |</p>
-<p>+----------------+</p>
+<p>+----------------+
+| Tables_in_test |
++----------------+
+| t1             |
+| t3             |
++----------------+</p>
 <p><strong>2 rows in set (0.00 sec)</strong></p>
 <p>MySQL [test]&gt; create table t2 like t1;</p>
 <p><strong>Query OK, 0 rows affected (0.10 sec)</strong></p>
@@ -2841,24 +2841,24 @@
 <p><strong>Query OK, 524288 rows affected (17.10 sec)</strong></p>
 <p><strong>Records: 524288  Duplicates: 0  Warnings: 0</strong></p>
 <p>MySQL [test]&gt; show tables;</p>
-<p>+----------------+</p>
-<p>| Tables_in_test |</p>
-<p>+----------------+</p>
-<p>| t1             |</p>
-<p>| t2             |</p>
-<p>| t3             |</p>
-<p>+----------------+</p>
+<p>+----------------+
+| Tables_in_test |
++----------------+
+| t1             |
+| t2             |
+| t3             |
++----------------+</p>
 <p><strong>3 rows in set (0.00 sec)</strong></p>
 <p>&#x6211;&#x4EEC;&#x6267;&#x884C; DDL &#x5220;&#x9664; t2 &#x8868;&#x3002;</p>
 <p>MySQL [test]&gt; drop table t2;</p>
 <p><strong>Query OK, 0 rows affected (0.24 sec)</strong></p>
 <p>MySQL [test]&gt; show tables;</p>
-<p>+----------------+</p>
-<p>| Tables_in_test |</p>
-<p>+----------------+</p>
-<p>| t1             |</p>
-<p>| t3             |</p>
-<p>+----------------+</p>
+<p>+----------------+
+| Tables_in_test |
++----------------+
+| t1             |
+| t3             |
++----------------+</p>
 <p><strong>2 rows in set (0.00 sec)</strong></p>
 <p>MySQL [test]&gt; select * from t2 limit 1;</p>
 <p>ERROR 1146 (42S02): Table &apos;test.t2&apos; doesn&apos;t exist</p>
@@ -2866,51 +2866,53 @@
 <p>MySQL [test]&gt; recover table t2;</p>
 <p><strong>Query OK, 0 rows affected (1.17 sec)</strong></p>
 <p>MySQL [test]&gt; show tables;</p>
-<p>+----------------+</p>
-<p>| Tables_in_test |</p>
-<p>+----------------+</p>
-<p>| t1             |</p>
-<p>| t2             |</p>
-<p>| t3             |</p>
-<p>+----------------+</p>
+<p>+----------------+
+| Tables_in_test |
++----------------+
+| t1             |
+| t2             |
+| t3             |
++----------------+</p>
 <p><strong>3 rows in set (0.00 sec)</strong></p>
 <p>MySQL [test]&gt; select count(1) from t2;</p>
-<p>+----------+</p>
-<p>| count(1) |</p>
-<p>+----------+</p>
-<p>|   524288 |</p>
-<p>+----------+</p>
+<p>+----------+
+| count(1) |
++----------+
+|   524288 |
++----------+</p>
 <p><strong>1 row in set (0.55 sec)</strong></p>
 <p>&#x53EF;&#x4EE5;&#x770B;&#x5230;table t2 &#x5DF2;&#x7ECF;&#x56DE;&#x6765;&#x4E86;&#x3002;&#x5F53;&#x7136;&#x6839;&#x636E;&#x524D;&#x9762;&#x7684;&#x539F;&#x7406;&#x4ECB;&#x7ECD;&#xFF0C;&#x5982;&#x679C;&#x8D85;&#x8FC7; gc &#x65F6;&#x95F4;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4F1A;&#x8FD4;&#x56DE;&#x4E0B;&#x9762;&#x9519;&#x8BEF;</p>
 <p>MySQL [test]&gt; recover table t2;</p>
 <p>ERROR 8055 (HY000): snapshot is older than GC safe point 2020-03-08 15:06:19 +0800 CST</p>
 <p>&#x53E6;&#x5916;&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x7528;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x67E5;&#x8BE2; ddl jobs &#x961F;&#x5217;&#xFF0C;&#x6307;&#x5B9A; job id &#x7684;&#x65B9;&#x5F0F;&#x6765;&#x8FDB;&#x884C;&#x6062;&#x590D;&#x3002;</p>
 <p>MySQL [test]&gt; ADMIN SHOW DDL JOBS;</p>
-<p>+--------+---------+------------+---------------+--------------+-----------+----------+-----------+-----------------------------------+-----------------------------------+--------+</p>
-<p>| JOB_ID | DB_NAME | TABLE_NAME | JOB_TYPE      | SCHEMA_STATE | SCHEMA_ID | TABLE_ID | ROW_COUNT | START_TIME                        | END_TIME                          | STATE  |</p>
-<p>+--------+---------+------------+---------------+--------------+-----------+----------+-----------+-----------------------------------+-----------------------------------+--------+</p>
-<p>|     73 | test    | t2         | drop table    | none         |         1 |       71 |         0 | 2020-03-08 15:38:47.076 +0800 CST | 2020-03-08 15:38:47.276 +0800 CST | synced |</p>
-<p>|     72 | test    | t2         | create table  | public       |         1 |       71 |         0 | 2020-03-08 15:38:37.626 +0800 CST | 2020-03-08 15:38:37.726 +0800 CST | synced |</p>
-<p>|     70 | test    | t2         | drop table    | none         |         1 |       66 |         0 | 2020-03-08 15:38:20.576 +0800 CST | 2020-03-08 15:38:20.776 +0800 CST | synced |</p>
+<p>+--------+---------+------------+---------------+--------------+-----------+----------+-----------+-----------------------------------+-----------------------------------+--------+
+| JOB_ID | DB_NAME | TABLE_NAME | JOB_TYPE      | SCHEMA_STATE | SCHEMA_ID | TABLE_ID | ROW_COUNT | START_TIME                        | END_TIME                          | STATE  |
++--------+---------+------------+---------------+--------------+-----------+----------+-----------+-----------------------------------+-----------------------------------+--------+
+|     73 | test    | t2         | drop table    | none         |         1 |       71 |         0 | 2020-03-08 15:38:47.076 +0800 CST | 2020-03-08 15:38:47.276 +0800 CST | synced |
+|     72 | test    | t2         | create table  | public       |         1 |       71 |         0 | 2020-03-08 15:38:37.626 +0800 CST | 2020-03-08 15:38:37.726 +0800 CST | synced |
+|     70 | test    | t2         | drop table    | none         |         1 |       66 |         0 | 2020-03-08 15:38:20.576 +0800 CST | 2020-03-08 15:38:20.776 +0800 CST | synced |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</p>
 <p>&#x4ECE; DDL &#x8BB0;&#x5F55;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x6211;&#x4EEC;&#x4E00;&#x5171;&#x6267;&#x884C;&#x4E86; 2 &#x6B21; drop table t2 &#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x53EA;&#x6267;&#x884C; recover table t2 &#x6062;&#x590D;&#x7684;&#x662F;&#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x5220;&#x9664;&#x7684;&#x8868;&#x3002;&#x5982;&#x679C;&#x6211;&#x5E0C;&#x671B;&#x6062;&#x590D;&#x524D;&#x9762;&#x4E00;&#x6B21;&#x5220;&#x9664;&#x7684;&#x52A8;&#x4F5C;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x7528;&#x5230;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;</p>
 <p>MySQL [test]&gt; recover table by job 70;</p>
 <p><strong>Query OK, 0 rows affected (1.15 sec)</strong></p>
-<h3 id="2-&#x4F7F;&#x7528;&#x9650;&#x5236;">2. &#x4F7F;&#x7528;&#x9650;&#x5236;</h3>
+<h3 id="523-&#x4F7F;&#x7528;&#x9650;&#x5236;">5.2.3 &#x4F7F;&#x7528;&#x9650;&#x5236;</h3>
 <p>recover table &#x7684;&#x4E00;&#x4E9B;&#x4F7F;&#x7528;&#x9650;&#x5236;&#xFF1A;</p>
 <ul>
 <li>&#x53EA;&#x80FD;&#x7528;&#x6765;&#x6062;&#x590D;&#x8BEF;&#x5220;&#x9664;&#x8868;&#x7684; DDL &#x64CD;&#x4F5C;&#xFF0C;&#x4F8B;&#x5982; truncate table&#xFF0C;delete &#x64CD;&#x4F5C;&#x6CA1;&#x6709;&#x529E;&#x6CD5;&#x6062;&#x590D;&#x3002;</li>
 <li>&#x53EA;&#x80FD;&#x5728; GC &#x56DE;&#x6536;&#x6570;&#x636E;&#x4E4B;&#x524D;&#x5B8C;&#x6210;&#xFF0C;&#x8D85;&#x8FC7; GC &#x65F6;&#x95F4;&#x540E;&#x4F1A;&#x62A5;&#x9519;&#x65E0;&#x6CD5;&#x6210;&#x529F;&#x6062;&#x590D;&#x3002;</li>
-<li>&#x5982;&#x679C;&#x5728;&#x4F7F;&#x7528; binlog &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E0A;&#x6E38;&#x6267;&#x884C; recover table &#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x975E;&#x9884;&#x671F;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4F8B;&#x5982;&#x4E0B;&#x6E38;&#x662F; MySQL &#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5BF9;&#x4E8E;&#x8FD9;&#x4E2A;&#x8BED;&#x6CD5;&#x4E0D;&#x517C;&#x5BB9;&#x3002;&#x4E0A;&#x4E0B;&#x6E38;&#x7684; GC &#x7B56;&#x7565;&#x914D;&#x7F6E;&#x4E0D;&#x540C;&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x590D;&#x5236;&#x5EF6;&#x8FDF;&#x53EF;&#x80FD;&#x4F1A;&#x5F15;&#x8D77;&#x4E0B;&#x6E38;&#x7684;&#x6570;&#x636E;&#x5728; apply recover table &#x7684;&#x65F6;&#x5019;&#x5DF2;&#x7ECF;&#x88AB; GC &#x4E86;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;&#x8BED;&#x53E5;&#x6267;&#x884C;&#x5931;&#x8D25;&#x3002;<h2 id="522-flashback-&#x4ECB;&#x7ECD;">5.2.2 Flashback &#x4ECB;&#x7ECD;</h2>
-Flashback &#x7684;&#x539F;&#x7406;&#x548C; Recover table &#x6BD4;&#x8F83;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E0D;&#x8FC7;&#x662F; recover &#x7684;&#x5347;&#x7EA7;&#x7248;&#xFF0C;&#x5728;&#x8986;&#x76D6; recover &#x7684;&#x6240;&#x6709;&#x529F;&#x80FD;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x652F;&#x6301; truncate table &#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x672A;&#x6765;&#x4E5F;&#x4F1A;&#x9010;&#x6E10;&#x53D6;&#x4EE3; recover &#x547D;&#x4EE4;&#x3002;&#x4E0B;&#x9762;&#x662F;&#x7B80;&#x5355;&#x7684;&#x4F7F;&#x7528;&#x793A;&#x4F8B;&#xFF0C;&#x5176;&#x4ED6;&#x4E0D;&#x518D;&#x7D2F;&#x8FF0;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x5728;&#x4F7F;&#x7528; binlog &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E0A;&#x6E38;&#x6267;&#x884C; recover table &#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x975E;&#x9884;&#x671F;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4F8B;&#x5982;&#x4E0B;&#x6E38;&#x662F; MySQL &#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5BF9;&#x4E8E;&#x8FD9;&#x4E2A;&#x8BED;&#x6CD5;&#x4E0D;&#x517C;&#x5BB9;&#x3002;&#x4E0A;&#x4E0B;&#x6E38;&#x7684; GC &#x7B56;&#x7565;&#x914D;&#x7F6E;&#x4E0D;&#x540C;&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x590D;&#x5236;&#x5EF6;&#x8FDF;&#x53EF;&#x80FD;&#x4F1A;&#x5F15;&#x8D77;&#x4E0B;&#x6E38;&#x7684;&#x6570;&#x636E;&#x5728; apply recover table &#x7684;&#x65F6;&#x5019;&#x5DF2;&#x7ECF;&#x88AB; GC &#x4E86;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;&#x8BED;&#x53E5;&#x6267;&#x884C;&#x5931;&#x8D25;&#x3002;</li>
 </ul>
+<h2 id="524-flashback-&#x4ECB;&#x7ECD;">5.2.4 Flashback &#x4ECB;&#x7ECD;</h2>
+<p>Flashback &#x7684;&#x539F;&#x7406;&#x548C; Recover table &#x6BD4;&#x8F83;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E0D;&#x8FC7;&#x662F; recover &#x7684;&#x5347;&#x7EA7;&#x7248;&#xFF0C;&#x5728;&#x8986;&#x76D6; recover &#x7684;&#x6240;&#x6709;&#x529F;&#x80FD;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x652F;&#x6301; truncate table &#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x672A;&#x6765;&#x4E5F;&#x4F1A;&#x9010;&#x6E10;&#x53D6;&#x4EE3; recover &#x547D;&#x4EE4;&#x3002;&#x4E0B;&#x9762;&#x662F;&#x7B80;&#x5355;&#x7684;&#x4F7F;&#x7528;&#x793A;&#x4F8B;&#xFF0C;&#x5176;&#x4ED6;&#x4E0D;&#x518D;&#x7D2F;&#x8FF0;&#x3002;</p>
 <p>MySQL [test]&gt; show tables;</p>
-<p>+----------------+</p>
-<p>| Tables_in_test |</p>
-<p>+----------------+</p>
-<p>| t1             |</p>
-<p>| t2             |</p>
-<p>| t3             |</p>
-<p>+----------------+</p>
+<p>+----------------+
+| Tables_in_test |
++----------------+
+| t1             |
+| t2             |
+| t3             |
++----------------+</p>
 <p><strong>3 rows in set (0.00 sec)</strong></p>
 <p>MySQL [test]&gt; truncate table t2;</p>
 <p><strong>Query OK, 0 rows affected (0.11 sec)</strong></p>
@@ -2919,26 +2921,26 @@ Flashback &#x7684;&#x539F;&#x7406;&#x548C; Recover table &#x6BD4;&#x8F83;&#x7C7B
 <p>MySQL [test]&gt; show tables;</p>
 <p>+----------------+</p>
 <p>| Tables_in_test |</p>
-<p>+----------------+</p>
-<p>| t1             |</p>
-<p>| t2             |</p>
-<p>| t3             |</p>
-<p>| t4             |</p>
-<p>+----------------+</p>
+<p>+----------------+
+| t1             |
+| t2             |
+| t3             |
+| t4             |
++----------------+</p>
 <p><strong>4 rows in set (0.00 sec)</strong></p>
 <p>MySQL [test]&gt; select count(1) from t2;</p>
-<p>+----------+</p>
-<p>| count(1) |</p>
-<p>+----------+</p>
-<p>|        0 |</p>
-<p>+----------+</p>
+<p>+----------+
+| count(1) |
++----------+
+|        0 |
++----------+</p>
 <p><strong>1 row in set (0.01 sec)</strong></p>
 <p>MySQL [test]&gt; select count(1) from t4;</p>
-<p>+----------+</p>
-<p>| count(1) |</p>
-<p>+----------+</p>
-<p>|   524288 |</p>
-<p>+----------+</p>
+<p>+----------+
+| count(1) |
++----------+
+|   524288 |
++----------+</p>
 <p><strong>1 row in set (0.39 sec)</strong></p>
 <p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x76EE;&#x524D; flashback &#x547D;&#x4EE4;&#x8FD8;&#x4E0D;&#x652F;&#x6301;&#x6307;&#x5B9A; ddl job id &#x6765;&#x6062;&#x590D;&#x8868;&#x3002;</p>
 <script src="../../gitbook_plugin_analytics.js"></script>
@@ -2984,7 +2986,7 @@ Flashback &#x7684;&#x539F;&#x7406;&#x548C; Recover table &#x6BD4;&#x8F83;&#x7C7B
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"5.2 利用 Recover/Flashback 命令秒恢复误删表","level":"4.5.2","depth":2,"next":{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"path":"session3/chapter5/recover-quorum.md","ref":"session3/chapter5/recover-quorum.md","articles":[]},"previous":{"title":"5.1 利用 GC 快照读恢复数据","level":"4.5.1","depth":2,"path":"session3/chapter5/recover-data-gc.md","ref":"session3/chapter5/recover-data-gc.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter5/recover-statements.md","mtime":"2020-03-24T13:23:06.205Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-24T13:23:52.155Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"5.2 利用 Recover/Flashback 命令秒恢复误删表","level":"4.5.2","depth":2,"next":{"title":"5.3 多数副本丢失数据恢复指南","level":"4.5.3","depth":2,"path":"session3/chapter5/recover-quorum.md","ref":"session3/chapter5/recover-quorum.md","articles":[]},"previous":{"title":"5.1 利用 GC 快照读恢复数据","level":"4.5.1","depth":2,"path":"session3/chapter5/recover-data-gc.md","ref":"session3/chapter5/recover-data-gc.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter5/recover-statements.md","mtime":"2020-03-25T07:14:32.289Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-25T07:15:21.533Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
