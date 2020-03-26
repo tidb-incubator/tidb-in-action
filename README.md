@@ -11,7 +11,8 @@ Read it: [TiDB In Action: based on 4.0](https://book.tidb.io/)
 
 选题参考目录：[目录](SUMMARY.md) 
 
-文章内容格式采用 [markdown](https://daringfireball.net/projects/markdown/syntax). Github 简易入门[指南](https://docs.google.com/document/d/1IiCrX3tFg6yvTrmlEXnsHoWUdyeCLkvJo31AjbjDWBs/edit)
+文章内容格式采用 [markdown](https://daringfireball.net/projects/markdown/syntax). 
+![Github 简易入门指南](Github-handbook.pdf)
 
 ## 图片目录
 
