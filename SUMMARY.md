@@ -69,7 +69,7 @@
                 * [1.2.3.2.5 节点维护](session2/chapter1/tidb-operator-deployment-private-node.md)
                 * [1.2.3.2.6 删除 TiDB 集群](session2/chapter1/tidb-operator-deployment-private-delete.md)
         * [1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控](session2/chapter1/tidb-operator-access-monitoring.md) @张海龙
-        * [1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群](session2/chapter1/tidb-operator-br.md) @[宋歌](https://github.com/shonge)
+        * [1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群](session2/chapter1/tidb-operator-br.md) @尹亮
         * [1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据](session2/chapter1/tidb-operator-lightning.md) @[宋歌](https://github.com/shonge)
         * [1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南](session2/chapter1/tidb-operator-tools.md) @[程威](https://github.com/mikechengwei)
         * [1.2.8 TiDB-Operator 升级](session2/chapter1/tidb-operator-upgrade.md) @[程威](https://github.com/mikechengwei)
@@ -113,7 +113,7 @@
 ## 第三部分 TiDB Troubleshooting 指南与工具
 
 * [1 SQL 调优原理](session3/chapter1/optimization-guide.md) @[石壹笑](https://github.com/aierui)
-    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui)
+    * [1.1 TiDB 执行计划概览](session3/chapter1/sql-execution-plan.md) @[石壹笑](https://github.com/aierui) @[齐智](https://github.com/LittleFall)
     * [1.2 优化器简介](session3/chapter1/optimizer-summary.md) @[倪健](https://github.com/dapan3927)
     * [1.3 SQL Plan Management](session3/chapter1/sql-plan-management.md) @[Qiannan](https://github.com/hsqlu)
     * [1.4 参数调优指南](session3/chapter1/parameter-tuning.md) @[Qiannan](https://github.com/hsqlu)
