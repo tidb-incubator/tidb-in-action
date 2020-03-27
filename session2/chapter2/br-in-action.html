@@ -2885,17 +2885,21 @@ mydb.close()
 </ol>
 <pre><code class="lang-sql"># &#x8BBE;&#x7F6E; gc &#x65F6;&#x95F4;&#xFF0C;&#x907F;&#x514D;&#x5907;&#x4EFD;&#x65F6;&#x95F4;&#x8FC7;&#x957F;&#x5BFC;&#x81F4;&#x6570;&#x636E;&#x88AB;&#x56DE;&#x6536;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x5907;&#x4EFD;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x6539;&#x56DE;&#x6765;&#x53C2;&#x6570;&#x3002;
 
+#&#x9ED8;&#x8BA4;&#x503C;
+
 <span class="hljs-keyword">SELECT</span> VARIABLE_VALUE <span class="hljs-keyword">FROM</span> mysql.tidb <span class="hljs-keyword">WHERE</span> VARIABLE_NAME = <span class="hljs-string">&apos;tikv_gc_life_time&apos;</span>;
 
-10m0s #&#x9ED8;&#x8BA4;&#x503C;
-
-<span class="hljs-keyword">UPDATE</span> mysql.tidb <span class="hljs-keyword">SET</span> VARIABLE_VALUE = <span class="hljs-string">&apos;720h&apos;</span> <span class="hljs-keyword">WHERE</span> VARIABLE_NAME = <span class="hljs-string">&apos;tikv_gc_life_time&apos;</span>;
+10m0s
 
 # &#x8BBE;&#x7F6E;&#x4E3A;720h
 
+<span class="hljs-keyword">UPDATE</span> mysql.tidb <span class="hljs-keyword">SET</span> VARIABLE_VALUE = <span class="hljs-string">&apos;720h&apos;</span> <span class="hljs-keyword">WHERE</span> VARIABLE_NAME = <span class="hljs-string">&apos;tikv_gc_life_time&apos;</span>;
+
+# &#x9A8C;&#x8BC1;&#x4FEE;&#x6539;&#x786E;&#x5B9E;&#x6210;&#x529F;
+
 <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> mysql.tidb <span class="hljs-keyword">WHERE</span> VARIABLE_NAME = <span class="hljs-string">&apos;tikv_gc_life_time&apos;</span>;
 
-720h # &#x9A8C;&#x8BC1;&#x4FEE;&#x6539;&#x786E;&#x5B9E;&#x6210;&#x529F;
+720h
 </code></pre>
 <ol>
 <li>&#x5907;&#x4EFD;&#x5B58;&#x50A8;&#x4F4D;&#x7F6E;</li>
@@ -2906,7 +2910,7 @@ mydb.close()
 </blockquote>
 <p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x4E0B;&#x6587;&#x4E2D;&#x6267;&#x884C;&#x6302;&#x8F7D;&#x64CD;&#x4F5C;&#x7684;&#xFF0C;&#x662F;&#x6240;&#x6709;&#x7684; TiKV, BR &#x8282;&#x70B9;&#xFF0C;&#x800C;&#x975E; TiDB&#xFF0C;PD &#x6240;&#x5728;&#x8282;&#x70B9;&#x3002;</p>
 <p>&#x6302;&#x8F7D; NFS&#xFF1A;</p>
-<pre><code class="lang-bash">mount -t nfs //xxxx.1.8/:/data  /data_nfs1
+<pre><code class="lang-bash">mount -t nfs //nfs_address/:/data  /data_nfs1
 </code></pre>
 <h3 id="4-&#x5907;&#x4EFD;&#x6267;&#x884C;">4. &#x5907;&#x4EFD;&#x6267;&#x884C;</h3>
 <p>BR &#x547D;&#x4EE4;&#x5305;&#x62EC;&#x5907;&#x4EFD;&#xFF0C;&#x6062;&#x590D;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#xFF0C;&#x800C;&#x5907;&#x4EFD;&#xFF0C;&#x6062;&#x590D;&#x53C8;&#x5355;&#x72EC;&#x9488;&#x5BF9;&#x5168;&#x5E93;&#xFF0C;&#x5355;&#x5E93;&#xFF0C;&#x5355;&#x8868;&#x5404;&#x6709;&#x64CD;&#x4F5C;&#xFF0C;&#x56E0;&#x6B64;&#x5355;&#x72EC;&#x8BA8;&#x8BBA;&#x3002;</p>
@@ -2914,12 +2918,10 @@ mydb.close()
 <p>&#x53E6;&#x5916;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x4E00;&#x70B9;&#x662F;&#xFF0C;&#x56E0;&#x4E3A;&#x5907;&#x4EFD;&#x901A;&#x8FC7; gRPC &#x53D1;&#x9001;&#x76F8;&#x5173;&#x5230; TiKV&#xFF0C;&#x56E0;&#x6B64; BR &#x6267;&#x884C;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x6700;&#x597D;&#x662F; PD &#x8282;&#x70B9;&#xFF0C;&#x907F;&#x514D;&#x989D;&#x5916;&#x7684;&#x9EBB;&#x70E6;&#x3002;</p>
 <h3 id="5-&#x901A;&#x7528;&#x53C2;&#x6570;">5. &#x901A;&#x7528;&#x53C2;&#x6570;</h3>
 <p>--ca&#xFF0C;--cert&#xFF0C;--key &#x5982;&#x679C;&#x8BBE;&#x7F6E;&#x4E86;TLS&#x7C7B;&#x8FDE;&#x63A5;&#x5B89;&#x5168;&#x8BA4;&#x8BC1;&#xFF0C;&#x8FD9;&#x4E9B;&#x53C2;&#x6570;&#x6307;&#x5B9A;&#x76F8;&#x5173;&#x5B89;&#x5168;&#x8BC1;&#x4E66;&#x7B49;&#x3002;</p>
-<p>--checksum &#x8FD0;&#x884C;&#x4EFB;&#x52A1;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x6267;&#x884C;checksum&#xFF0C;&#x9ED8;&#x8BA4;&#x6253;&#x5F00;&#x3002;</p>
 <p>--concurrency &#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x6267;&#x884C;&#x4EFB;&#x52A1;&#x7684;&#x5E76;&#x884C;&#x5EA6;&#xFF0C;&#x9ED8;&#x8BA4;4&#x3002;</p>
 <p>--log-file,--log-level&#x8BBE;&#x7F6E;&#x65E5;&#x5FD7;&#x8F93;&#x51FA;&#x4F4D;&#x7F6E;&#x4EE5;&#x53CA;&#x7EA7;&#x522B;&#x3002;</p>
 <p>-u, --pd &#x94FE;&#x63A5; PD &#x5730;&#x5740;&#xFF0C;&#x9ED8;&#x8BA4;127.0.0.1:2379</p>
 <p>--ratelimit &#x9650;&#x5236;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x901F;&#x5EA6;&#xFF0C;&#x5355;&#x4F4D;&#x662F;MB</p>
-<p>-c, --send-credentials-to-tikv &#x662F;&#x5426;&#x5C06; credentials &#x53D1;&#x9001;&#x7ED9; TiKV, &#x9ED8;&#x8BA4;&#x6253;&#x5F00;</p>
 <p>-s, --storage &#x6307;&#x5B9A;&#x5B58;&#x50A8;&#x4F4D;&#x7F6E;&#xFF0C;&#x6BD4;&#x65B9;&quot;local:///data_nfs1&quot;</p>
 <h3 id="6-&#x5168;&#x5E93;&#x5907;&#x4EFD;&#x4E0E;&#x6062;&#x590D;">6. &#x5168;&#x5E93;&#x5907;&#x4EFD;&#x4E0E;&#x6062;&#x590D;</h3>
 <p>&#x53C2;&#x8003;&#x547D;&#x4EE4;&#xFF1A;</p>
@@ -3023,7 +3025,7 @@ MySQL [br_test]&gt; select count(1) from br_table;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"2.3.2 BR 实操指南","level":"3.2.3.2","depth":3,"next":{"title":"2.4 4.0 分布式导出工具 Dumpling","level":"3.2.4","depth":2,"path":"session2/chapter2/dumpling-intro.md","ref":"session2/chapter2/dumpling-intro.md","articles":[{"title":"2.4.1 Dumpling 工作原理","level":"3.2.4.1","depth":3,"path":"session2/chapter2/dumpling-internal.md","ref":"session2/chapter2/dumpling-internal.md","articles":[]},{"title":"2.4.2 Dumpling 实操指南","level":"3.2.4.2","depth":3,"path":"session2/chapter2/dumpling-in-action.md","ref":"session2/chapter2/dumpling-in-action.md","articles":[]}]},"previous":{"title":"2.3.1 BR 工作原理","level":"3.2.3.1","depth":3,"path":"session2/chapter2/br-internal.md","ref":"session2/chapter2/br-internal.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter2/br-in-action.md","mtime":"2020-03-27T15:02:35.460Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-27T15:03:23.473Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"2.3.2 BR 实操指南","level":"3.2.3.2","depth":3,"next":{"title":"2.4 4.0 分布式导出工具 Dumpling","level":"3.2.4","depth":2,"path":"session2/chapter2/dumpling-intro.md","ref":"session2/chapter2/dumpling-intro.md","articles":[{"title":"2.4.1 Dumpling 工作原理","level":"3.2.4.1","depth":3,"path":"session2/chapter2/dumpling-internal.md","ref":"session2/chapter2/dumpling-internal.md","articles":[]},{"title":"2.4.2 Dumpling 实操指南","level":"3.2.4.2","depth":3,"path":"session2/chapter2/dumpling-in-action.md","ref":"session2/chapter2/dumpling-in-action.md","articles":[]}]},"previous":{"title":"2.3.1 BR 工作原理","level":"3.2.3.1","depth":3,"path":"session2/chapter2/br-internal.md","ref":"session2/chapter2/br-internal.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter2/br-in-action.md","mtime":"2020-03-27T15:39:14.404Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-27T15:40:01.162Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
