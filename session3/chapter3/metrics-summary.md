@@ -2,7 +2,7 @@
 
 由于 TiDB 集群的监控指标数量较大，需要提供便捷的方式从众多监控中找出异常的监控项，TiDB 4.0 提供了监控汇总表，监控汇总表 `information_schema.metrics_summary` 和 `information_schema.metrics_summary_by_label` 用于汇总所有监控数据，来提升用户对各个监控指标进行排查的效率。两者不同在于 `information_schema.metrics_summary_by_label` 会对不同的 `label` 使用区分统计。
 
-## 查询示例
+## 1. 查询示例
 
 以查询 `['2020-03-08 13:23:00', '2020-03-08 13:33:00')` 时间范围内 TiDB 集群中平均耗时最高的 3 组监控项为例。通过直接查询 `information_schema.metrics_summary` 表，并通过 `/*+ time_range() */` 这个 hint 来指定时间范围来构造以下 SQL：
 
@@ -85,7 +85,7 @@ COMMENT      | The quantile of TiDB query durations(second)
 
 前文提到 `metrics_summary_by_label` 表结构相对于 `metrics_summary` 多了一列 `LABEL`, 以上面查询结果的第 2, 3 行为例：分别表示 `tidb_query_duration` 的 `Select`/`Rollback` 类型的语句平均耗时非常高。
 
-## 推荐用法
+## 2. 推荐用法
 
 除以上示例之外，监控汇总表可以通过两个时间段的全链路监控对比，迅速找出监控数据变化最大的模块，快速定位瓶颈，以下对比两个时间段的所有监控（其中 t1 为 baseline），并按照差别最大的监控排序：
 

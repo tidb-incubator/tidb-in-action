@@ -1,15 +1,14 @@
- # TPC-C 基准性能测试
+ # 3.2 TPC-C 基准性能测试
  
  本文介绍如何对 TiDB 进行 [TPC-C](http://www.tpc.org/tpcc/) 测试。
  
- ## TPC-C 简介 
+ ## 1. TPC-C 简介 
  
-TPC 是一系列事务处理和数据库基准测试的规范。其中TPC-C（Transaction Processing Performance Council）是针对 OLTP 的基准测试模型。TPC-C 测试模型给基准测试提供了一种统一的测试标准，并非实际应用系统中的真实测试结果，但通过测试结果，可以大体观察出数据库服务稳定性、性能以及系统性能等一系列问题。对数据库展开TPC-C基准性能测试，一方面可以衡量数据库的性能，另一方面可以衡量采用不同硬件软件系统的性价比，也是被业内广泛应用并关注的一种测试模型。
-
+TPC 是一系列事务处理和数据库基准测试的规范。其中TPC-C（Transaction Processing Performance Council）是针对 OLTP 的基准测试模型。TPC-C 测试模型给基准测试提供了一种统一的测试标准，可以大体观察出数据库服务稳定性、性能以及系统性能等一系列问题。对数据库展开 TPC-C 基准性能测试，一方面可以衡量数据库的性能，另一方面可以衡量采用不同硬件软件系统的性价比，也是被业内广泛应用并关注的一种测试模型。
 
 我们这里以经典的开源数据库测试工具 BenchmarkSQL 为例，其内嵌了 TPCC 测试脚本，可以对 PostgreSQL、MySQL、Oracle、TIDB 等行业内主流的数据库产品直接进行测试。
 
-## 一、BenchmarkSQL 
+## 2. BenchmarkSQL 
 
 TPC-C 是一个对 OLTP（联机交易处理）系统进行测试的规范，使用一个商品销售模型对 OLTP 系统进行测试，其中包含五类事务：
 
@@ -29,9 +28,9 @@ TPC-C 是一个对 OLTP（联机交易处理）系统进行测试的规范，使
 
 TPC-C 使用 tpmC 值（Transactions per Minute）来衡量系统最大有效吞吐量（MQTh，Max Qualified Throughput），其中 Transactions 以 NewOrder Transaction 为准，即最终衡量单位为每分钟处理的新订单数。
 
-## 二、TIDB测试环境部署
+## 3. TIDB测试环境部署
 
-对于 1000 WAREHOUSE 我们将在 3 台服务器上部署集群。
+对于 1000 warehous 我们将在 3 台服务器上部署集群。
 
 在 3 台服务器的条件下，建议每台机器部署 1 个 TiDB，1 个 PD 和 1 个 TiKV 实例。
 
@@ -66,16 +65,16 @@ nohup taskset -c 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39 bin/tidb
 | node2 | 1 | 1 | 1 | 
 | node3 | 1 | 1 | 1 | 
 
-## 三、TIDB 调优配置
+## 4. TIDB 调优配置
 
-1、升高日志级别，可以减少打印日志数量，对性能有积极影响。具体在TiDB 配置文件中加入：       
+1、升高日志级别，可以减少打印日志数量，对性能有积极影响。       
 
 ```text
 [log]
 level = "error"
 ```
 
-2、性能相关配置，根据机器的CPU 核数设置，TiDB的CPU 使用数量。
+2、性能相关配置，可以根据机器的 CPU 核数设置，设置 TiDB 的 CPU 使用数量。
 
 ```text
 performance:
@@ -83,14 +82,14 @@ performance:
   max-procs: 20
 ```
 
-3、缓存语句数量设置，开启TiDB 配置中的prepared plan cache，以减少优化执行计划的开销。
+3、缓存语句数量设置，开启 TiDB 配置中的 prepared plan cache，可减少优化执行计划的开销。
 
 ```text
 prepared_plan_cache:
   enabled: true
 ```
 
-4、与TIKV客户端设置，默认值为16；当节点负载比较低时，可适当调大该值。
+4、与 TiKV 客户端相关的设置，默认值为 16；当节点负载比较低时，可适当调大该值。
 
 ```text
 tikv_client:
@@ -98,7 +97,7 @@ tikv_client:
   grpc-connection-count: 4
 ```
 
-5、本地事务冲突检测，并发压测建议开启，可减少事务的冲突。
+5、本地事务冲突检测设置，并发压测时建议开启，可减少事务的冲突。
 
 ```text
 txn_local_latches:
@@ -107,34 +106,32 @@ txn_local_latches:
   enabled: true
 ```
 
-## 四、TIKV调优配置
+## 5. TIKV调优配置
 
-1、调整日志级别
-
-升高TiKV 的日志级别同样有利于性能表现。由于TiKV 是以集群形式部署，在 Raft 算法的作用下，能保证大多数节点已经写入数据。因此，除了对数据安全极端敏感的场景之外，raftstore 中的 sync-log 选项可以关闭。
+1、调整日志级别，升高 TiKV 的日志级别同样有利于性能表现。
 
 ```text
 global:
   log-level = "error"
+```
 
+2、关闭 sync-log，由于TiKV 是以集群形式部署，在 Raft 算法的作用下，能保证大多数节点已经写入数据，除了对数据安全极端敏感的场景之外，raftstore 中的 sync-log 选项可以关闭。
+
+```text
 [raftstore]
 sync-log = false
 ```
 
-2、块缓存配置
-
-在 TiKV 中需要根据机器内存大小配置 RocksDB 的block cache，以充分利用内存。以 20 GB 内存的虚拟机部署一个TiKV 为例，其block cache 建议配置如下。
+3、块缓存配置，在 TiKV 中需要根据机器内存大小配置 RocksDB 的 block cache，以充分利用内存。以 20 GB 内存的虚拟机部署一个TiKV 为例，其 block cache 建议配置如下。
 
 ```text
 [storage.block-cache]
 capacity = "10GB"
 ```
 
-3、其他调节项
+3、开始可以使用基本的配置，压测运行后可以通过观察 Grafana 并参考 [TiKV 调优说明]进行调整。如出现单线程模块瓶颈，可以通过扩展 TiKV 节点来进行负载均摊；如出现多线程模块瓶颈，可以通过增加该模块并发度进行调整。
 
-开始可以使用基本的配置，压测运行后可以通过观察 Grafana 并参考 [TiKV 调优说明]进行调整。 如出现单线程模块瓶颈，可以通过扩展TiKV 节点来进行负载均摊；如出现多线程模块瓶颈，可以通过增加该模块并发度进行调整。
-
-## 五、BenchmarkSQL 配置
+## 6. BenchmarkSQL 配置
 
 修改 benchmarksql/run/props.mysql 文件
 
@@ -148,14 +145,14 @@ terminals=500   # 使用 500 个终端
 loadWorkers=32  # 导入数据的并发数
 ```
 
-## 六、导入数据
+## 7. 导入数据
 
 （导入数据通常是整个 TPC-C 测试中最耗时，也是最容易出问题的阶段）
 
 1、首先连接到 TiDB-Server 并执行：
 
 ```shell
-create database tpcc
+create database tpcc；
 ```
 
 2、之后在 shell 中运行 BenchmarkSQL 建表脚本：
@@ -168,13 +165,13 @@ cd run && \
 
 3、数据导入有两种方式可以选取，主要如下：
 
-（1）直接使用 BenchmarkSQL 导入（根据机器配置这个过程可能会持续几个小时）
+（1）直接使用 BenchmarkSQL 导入（根据机器配置这个过程可能会持续几个小时）；
 
 ```shell
 ./runLoader.sh props.mysql
 ```
 
-（2）通过 TiDB Lightning 导入（由于导入数据量随着 warehouse 的增加而增加，当需要导入 1000 warehouse 以上数据时，可以先用 BenchmarkSQL 生成 csv 文件，再将文件通过 TiDB Lightning（以下简称 Lightning）导入的方式来快速导入。生成的 csv 文件也可以多次复用，节省每次生成所需要的时间）。
+（2）通过 TiDB Lightning 导入（由于导入数据量随着 warehouse 的增加而增加，当需要导入 1000 warehouse 以上数据时，可以先用 BenchmarkSQL 生成 csv 文件，再将文件通过 TiDB Lightning（以下简称 Lightning）导入的方式来快速导入。生成的 csv 文件也可以多次复用，节省每次生成所需要的时间）；
 
   a、修改 BenchmarkSQL 的配置文件
 warehouse 的 csv 文件需要 77 MB 磁盘空间，在生成之前要根据需要分配足够的磁盘空间来保存 csv 文件。可以在 `benchmarksql/run/props.mysql` 文件中增加一行：
@@ -182,7 +179,7 @@ warehouse 的 csv 文件需要 77 MB 磁盘空间，在生成之前要根据需�
 fileLocation=/home/user/csv/  # 存储 csv 文件的目录绝对路径，需保证有足够的空间
 ```
 
-因为最终要使用 Lightning 导入数据，所以 csv 文件名最好符合 Lightning 要求，即 `{database}.{table}.csv` 的命名法。这里可以将以上配置改为：
+因为最终要使用 Lightning 导入数据，所以 csv 文件名需要符合 Lightning 要求，即 `{database}.{table}.csv` 的命名法。可以将以上配置改为：
 ```text
 fileLocation=/home/user/csv/tpcc.  # 存储 csv 文件的目录绝对路径 + 文件名前缀（database）
 ```
@@ -196,7 +193,7 @@ fileLocation=/home/user/csv/tpcc.  # 存储 csv 文件的目录绝对路径 + �
 
   c、修改 inventory.ini
 
-这里最好手动指定清楚部署的 IP、端口、目录，避免各种冲突问题带来的异常。
+建议手动指定清楚部署的 IP、端口、目录，避免各种冲突问题带来的异常。
 ```text
 [importer_server]
 IS1 ansible_host=172.16.5.34 deploy_dir=/data2/is1 tikv_importer_port=13323 import_dir=/data2/import
@@ -226,14 +223,14 @@ ansible-playbook deploy.yml --tags=lightning
 
   f、启动
 
-* 登录到部署 Lightning 和 Importer 的服务器
-* 进入部署目录
-* 在 Importer 目录下执行 `scripts/start_importer.sh`，启动 Importer
-* 在 Lightning 目录下执行 `scripts/start_lightning.sh`，开始导入数据
+* 登录到部署 Lightning 和 Importer 的服务器；
+* 进入部署目录；
+* 在 Importer 目录下执行 `scripts/start_importer.sh`，启动 Importer；
+* 在 Lightning 目录下执行 `scripts/start_lightning.sh`，开始导入数据。
 
 由于是用 ansible 进行部署的，可以在监控页面看到 Lightning 的导入进度，或者通过日志查看导入是否结束。数据导入完成之后，可以运行 `sql.common/test.sql` 进行数据正确性验证，如果所有 SQL 语句都返回结果为空，即为数据导入正确。
 
-## 七、运行测试
+## 8. 运行测试
 
 执行 BenchmarkSQL 测试脚本：
 ```shell

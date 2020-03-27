@@ -1,11 +1,6 @@
----
-title: 访问 Kubernetes 上的 TiDB 集群及其监控
-category: how-to
----
+## 1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控
 
-# 访问 Kubernetes 上的 TiDB 集群及其监控
-
-## 访问 Kubernetes 上的 TiDB 集群
+### 1.2.4.1 访问 Kubernetes 上的 TiDB 集群
 
 在 Kubernetes 集群内访问 TiDB 时，使用 TiDB service 域名 `<release-name>-tidb.<namespace>` 即可。若需要在集群外访问，则需将 TiDB 服务端口暴露出去。在 `tidb-cluster` Helm chart 中，通过 `values.yaml` 文件中的 `tidb.service` 字段进行配置：
 
@@ -18,7 +13,7 @@ tidb:
     # cloud.google.com/load-balancer-type: Internal
 ```
 
-### NodePort
+1. NodePort
 
 在没有 LoadBalancer 时，可选择通过 NodePort 暴露。NodePort 有两种模式：
 
@@ -34,7 +29,7 @@ tidb:
 
     使用 `Local` 模式时，建议打开 tidb-scheduler 的 `StableScheduling` 特性。tidb-scheduler 会尽可能在升级过程中将新 TiDB 实例调度到原机器，这样集群外的客户端便不需要在 TiDB 重启后更新配置。
 
-#### 查看 NodePort 模式下对外暴露的 IP/PORT
+2. 查看 NodePort 模式下对外暴露的 IP/PORT
 
 查看 Service 分配的 Node Port，可通过获取 TiDB 的 Service 对象来获知：
 
@@ -51,38 +46,38 @@ kubectl -n <namespace> get svc <release-name>-tidb -ojsonpath="{.spec.ports[?(@.
     kubectl -n <namespace> get pods -l "app.kubernetes.io/component=tidb,app.kubernetes.io/instance=<release-name>" -ojsonpath="{range .items[*]}{.spec.nodeName}{'\n'}{end}"
     ```
 
-### LoadBalancer
+3. LoadBalancer
 
 若运行在有 LoadBalancer 的环境，比如 GCP/AWS 平台，建议使用云平台的 LoadBalancer 特性。
 
 访问 [Kubernetes Service 文档](https://kubernetes.io/docs/concepts/services-networking/service/)，了解更多 Service 特性以及云平台 Load Balancer 支持。
 
 
-## Kubernetes 上的 TiDB 集群监控
+### 1.2.4.2 Kubernetes 上的 TiDB 集群监控
 
 基于 Kubernetes 环境部署的 TiDB 集群监控可以大体分为两个部分：对 TiDB 集群本身的监控、对 Kubernetes 集群及 TiDB Operator 的监控。本小节将对两者进行简要说明。
 
-### TiDB 集群的监控
+1. TiDB 集群的监控
 
 TiDB 通过 Prometheus 和 Grafana 监控 TiDB 集群。在通过 TiDB Operator 创建新的 TiDB 集群时，对于每个 TiDB 集群，会同时创建、配置一套独立的监控系统，与 TiDB 集群运行在同一 Namespace，包括 Prometheus 和 Grafana 两个组件。
 
 监控数据默认没有持久化，如果由于某些原因监控容器重启，已有的监控数据会丢失。可以在 `values.yaml` 中设置 `monitor.persistent` 为 `true` 来持久化监控数据。开启此选项时应将 `storageClass` 设置为一个当前集群中已有的存储，并且此存储应当支持将数据持久化，否则仍然会存在数据丢失的风险。
 
-#### 查看监控面板
+2. 查看监控面板
 
 Grafana 服务默认通过 `NodePort` 暴露，如果 Kubernetes 集群支持负载均衡器，你可以在 `values.yaml` 中将 `monitor.grafana.service.type` 修改为 `LoadBalancer`，然后在执行 `helm upgrade` 后通过负载均衡器访问面板。
 
 如果不需要使用 Grafana，可以在部署时在 `values.yaml` 中将 `monitor.grafana.create` 设置为 `false` 来节省资源。这一情况下需要使用其他已有或新部署的数据可视化工具直接访问监控数据来完成可视化。
 
-#### 访问监控数据
+3. 访问监控数据
 
 Prometheus 服务默认通过 `NodePort` 暴露，如果 Kubernetes 集群支持负载均衡器，你可以在 `values.yaml` 中将 `monitor.prometheus.service.type` 修改为 `LoadBalancer`，然后在执行 `helm upgrade` 后通过负载均衡器访问监控数据。
 
-### Kubernetes 的监控
+4. Kubernetes 的监控
 
 随集群部署的 TiDB 监控只关注 TiDB 本身各组件的运行情况，并不包括对容器资源、宿主机、Kubernetes 组件和 TiDB Operator 等的监控。对于这些组件或资源的监控，需要在整个 Kubernetes 集群维度部署监控系统来实现。
 
-#### 宿主机监控
+5. 宿主机监控
 
 对宿主机及其资源的监控与传统的服务器物理资源监控相同。
 
@@ -101,7 +96,7 @@ Prometheus 服务默认通过 `NodePort` 暴露，如果 Kubernetes 集群支持
 
 我们推荐通过 [Prometheus Operator](https://github.com/coreos/prometheus-operator) 在 Kubernetes 集群内部署基于 [Node Exporter](https://github.com/prometheus/node_exporter) 和 Prometheus 的宿主机监控系统，这一方案同时可以兼容并用于 Kubernetes 自身组件的监控。
 
-#### Kubernetes 组件监控
+6. Kubernetes 组件监控
 
 对 Kubernetes 组件的监控可以参考[官方文档](https://kubernetes.io/docs/tasks/debug-application-cluster/resource-usage-monitoring/)提供的方案，也可以使用其他兼容 Kubernetes 的监控系统来进行。
 
@@ -111,9 +106,9 @@ Prometheus 服务默认通过 `NodePort` 暴露，如果 Kubernetes 集群支持
 
 我们推荐通过 [Prometheus Operator](https://github.com/coreos/prometheus-operator) 部署基于 [Node Exporter](https://github.com/prometheus/node_exporter) 和 Prometheus 的宿主机监控系统，这一方案同时可以兼容并用于对宿主机资源的监控。
 
-### 报警配置
+## 1.2.4.3 报警配置
 
-#### TiDB 集群报警
+1. TiDB 集群报警
 
 在随 TiDB 集群部署 Prometheus 时，会自动导入一些默认的报警规则，可以通过浏览器访问 Prometheus 的 Alerts 页面查看当前系统中的所有报警规则和状态。
 
@@ -123,7 +118,7 @@ Prometheus 服务默认通过 `NodePort` 暴露，如果 Kubernetes 集群支持
 
 如果在你的现有基础设施中已经有可用的 AlertManager 服务，可以在 `values.yaml` 文件中修改 `monitor.prometheus.alertmanagerURL` 配置其地址供 Prometheus 使用；如果没有可用的 AlertManager 服务，或者希望部署一套独立的服务，可以参考官方的[说明](https://github.com/prometheus/alertmanager)部署。
 
-#### Kubernetes 报警
+2. Kubernetes 报警
 
 如果使用 Prometheus Operator 部署针对 Kubernetes 宿主机和服务的监控，会默认配置一些告警规则，并且会部署一个 AlertManager 服务，具体的设置方法请参阅 [kube-prometheus](https://github.com/coreos/kube-prometheus) 的说明。
 
