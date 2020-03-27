@@ -1,11 +1,11 @@
 
-# 4.4 AWS 跨 AZ 部署 TiDB
+## 4.4 AWS 跨 AZ 部署 TiDB
 本节介绍了在 AWS 上的单一区域 (region)、跨三个可用区（Availability Zones，以下简称 AZ）部署 TiDB 过程中，遇到的问题和相应的变通方案。
 
-## 4.4.1 比本地机房部署更高的故障率
+### 4.4.1 比本地机房部署更高的故障率
 根据我们的经验，每月平均至少有一个部署 TiDB 分布式数据库的 EC2 实例发生故障。在 AWS 上部署 TiDB 的这半年里，我们还经历过一次 AZ 不稳定的问题。下面提供了一些建议，帮助你时刻准备好应对各种类型的故障。
 
-### 1. 副本数
+#### 1. 副本数
 对于非关键性业务，考虑部署奇数个 PD 实例，并且建议接近选用的 AWS 区域的可用 AZ 数。TiKV region 副本数也是如此。例如，你选用的 AWS 区域提供了三个 AZ，那么建议你：
 
 
@@ -22,7 +22,7 @@
 与 max-replicas=3 相比，该设置不会在 AZ 故障期间提高可用性，但会减少由于 EC2 实例的偶然故障而导致集群服务中断的可能性。
 
 
-### 2. 位置标签 (location labels)
+#### 2. 位置标签 (location labels)
 
 
 配置完正确的副本数后，记得给 TiKV 设置适当的位置标签。否则，你的集群将无法承受预期的故障。 设置标签的基本原则是：
@@ -55,9 +55,9 @@
 
 
 
-需要注意的是 zone 是一个逻辑的标签，PD 在调度时首先会尝试将 Region 的 Peer 放置在不同的 AZ，此时无法满足(3 个 AZ ,5 个副本)，下一步保证放置在不同的 az.zone中( 此时 5 个 zone，5 个副本，满足要求 )。这样确保了在正常情况下，使用 az.zone 将每个副本（即 Region peer）放置在每个逻辑组（即 zone）中。 如果可用 az.zone 的数量少于 5，比如 zone 或 AZ 级别的故障出现时，将使用 az.zone.host 标签来均匀调度五个 Region peers，以保持最大可用性。
+需要注意的是 zone 是一个逻辑的标签，PD 在调度时首先会尝试将 Region 的 Peer 放置在不同的 AZ，此时无法满足(3 个 AZ ,5 个副本)，下一步保证放置在不同的 az.zone 中( 此时 5 个 zone，5 个副本，满足要求 )。这样确保了在正常情况下，使用 az.zone 将每个副本（即 Region peer）放置在每个逻辑组（即 zone）中。 如果可用 az.zone 的数量少于 5，比如 zone 或 AZ 级别的故障出现时，将使用 az.zone.host 标签来均匀调度五个 Region peers，以保持最大可用性。
 
-### 3. 置放群组 (placement groups)
+#### 3. 置放群组 (placement groups)
 
 如果你想减少相关的硬件故障，可以考虑使用 [Placement Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html)。在不同的场景下，
 Partition Placement Groups 和 Spread Placement Groups 各有用处。记住要额外配置位置标签（例如机架的标签）以充分利用 placement groups。

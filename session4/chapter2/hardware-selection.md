@@ -1,4 +1,4 @@
-# 2 硬件选型规划
+# 第2章 硬件选型规划
 
 TiDB 集群的硬件要求在[官方文档](https://pingcap.com/docs-cn/stable/how-to/deploy/hardware-recommendations/)中进行了总结。本节将介绍更实用的硬件选择和优化。请注意，如果工作负载不同，下文的细节可能有所不同，需要根据实际情况调整。
 
