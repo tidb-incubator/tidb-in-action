@@ -15,11 +15,10 @@ category: how-to
 
 (1) 通过传入 AWS 账号的 AccessKey 和 SecretKey 进行授权:
 
-    AWS 的客户端支持读取进程环境变量中的 `AWS_ACCESS_KEY_ID` 以及 `AWS_SECRET_ACCESS_KEY` 来获取与之相关联的用户或者角色的权限。
+AWS 的客户端支持读取进程环境变量中的 `AWS_ACCESS_KEY_ID` 以及 `AWS_SECRET_ACCESS_KEY` 来获取与之相关联的用户或者角色的权限。
 
 (2) 通过将 [IAM](https://aws.amazon.com/cn/iam/) 绑定 Pod 进行授权:
-
-    通过将用户的 IAM 角色与所运行的 Pod 资源进行绑定，使 Pod 中运行的进程获得角色所拥有的权限，这种授权方式是由 [`kube2iam`](https://github.com/jtblin/kube2iam) 提供。
+通过将用户的 IAM 角色与所运行的 Pod 资源进行绑定，使 Pod 中运行的进程获得角色所拥有的权限，这种授权方式是由 [`kube2iam`](https://github.com/jtblin/kube2iam) 提供。
 
 > **注意：**
 >
@@ -28,7 +27,7 @@ category: how-to
 
 (3) 通过将 [IAM](https://aws.amazon.com/cn/iam/) 绑定 ServiceAccount 进行授权:
 
-    通过将用户的 IAM 角色与 Kubeneters 中的 [`serviceAccount`](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#serviceaccount) 资源进行绑定， 从而使得使用该 ServiceAccount 账号的 Pod 都拥有该角色所拥有的权限，这种授权方式由 [`EKS Pod Identity Webhook`](https://github.com/aws/amazon-eks-pod-identity-webhook) 服务提供。
+通过将用户的 IAM 角色与 Kubeneters 中的 [`serviceAccount`](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#serviceaccount) 资源进行绑定， 从而使得使用该 ServiceAccount 账号的 Pod 都拥有该角色所拥有的权限，这种授权方式由 [`EKS Pod Identity Webhook`](https://github.com/aws/amazon-eks-pod-identity-webhook) 服务提供。
 
 > - 使用该授权模式时，可以参考 [AWS 官方文档](https://docs.aws.amazon.com/zh_cn/eks/latest/userguide/create-cluster.html) 创建 EKS 集群， 并且部署 TiDB Operator 以及 TiDB 集群。
 
@@ -44,219 +43,219 @@ Ad-hoc 全量备份通过创建一个自定义的 `Backup` Custom Resource (CR) 
 
 (1) 下载文件 [backup-rbac.yaml](https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml)，并执行以下命令在 `test1` 这个 namespace 中创建备份需要的 RBAC 相关资源：
 
-    ```shell
-    kubectl apply -f backup-rbac.yaml -n test1
-    ```
+```shell
+kubectl apply -f backup-rbac.yaml -n test1
+```
 
 (2) 创建 `s3-secret` secret。该 secret 存放用于访问 S3 兼容存储的凭证。
 
-    ```shell
-    kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test1
-    ```
+```shell
+kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test1
+```
 
 (3) 创建 `backup-demo1-tidb-secret` secret。该 secret 存放用于访问 TiDB 集群的用户所对应的密码。
 
-    ```shell
-    kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<password> --namespace=test1
-    ```
+```shell
+kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<password> --namespace=test1
+```
 
 #### 通过 IAM 绑定 Pod 授权
 
 (1) 下载文件 [backup-rbac.yaml](https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml)，并执行以下命令在 `test1` 这个 namespace 中创建备份需要的 RBAC 相关资源：
 
-    ```shell
-    kubectl apply -f backup-rbac.yaml -n test1
-    ```
+```shell
+kubectl apply -f backup-rbac.yaml -n test1
+```
 
 (2) 创建 `backup-demo1-tidb-secret` secret。该 secret 存放用于访问 TiDB 集群的用户所对应的密码：
 
-    ```shell
-    kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<password> --namespace=test1
-    ```
+```shell
+kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<password> --namespace=test1
+```
 
 (3) 创建 IAM 角色：
 
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)来为账号创建一个 IAM 角色，并且通过 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html) 为 IAM 角色赋予需要的权限。由于 `Backup` 需要访问 AWS 的 S3 存储，所以这里给 IAM 赋予了 `AmazonS3FullAccess` 的权限。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)来为账号创建一个 IAM 角色，并且通过 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html) 为 IAM 角色赋予需要的权限。由于 `Backup` 需要访问 AWS 的 S3 存储，所以这里给 IAM 赋予了 `AmazonS3FullAccess` 的权限。
     
 (4) 绑定 IAM 到 TiKV Pod：
 
-    在使用 BR 备份的过程中，TiKV Pod 和 BR Pod 一样需要对 S3 存储进行读写操作，所以这里需要给 TiKV Pod 打上 annotation 来绑定 IAM 角色。 
+在使用 BR 备份的过程中，TiKV Pod 和 BR Pod 一样需要对 S3 存储进行读写操作，所以这里需要给 TiKV Pod 打上 annotation 来绑定 IAM 角色。 
 
-    ```shell
-    kubectl edit tc demo1 -n test1
-    ```
+```shell
+kubectl edit tc demo1 -n test1
+```
 
-    找到 `spec.tikv.annotations`，增加 annotation `arn:aws:iam::123456789012:role/user`，然后退出编辑，等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
+找到 `spec.tikv.annotations`，增加 annotation `arn:aws:iam::123456789012:role/user`，然后退出编辑，等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
 
-    > **注意：**
-    >
-    > `arn:aws:iam::123456789012:role/user` 为步骤 (3) 中创建的 IAM 角色。
+> **注意：**
+>
+> `arn:aws:iam::123456789012:role/user` 为步骤 (3) 中创建的 IAM 角色。
 
 #### 通过 IAM 绑定 ServiceAccount 授权
 
 (1) 下载文件 [backup-rbac.yaml](https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml)，并执行以下命令在 `test1` 这个 namespace 中创建备份需要的 RBAC 相关资源：
 
-    ```shell
-    kubectl apply -f backup-rbac.yaml -n test2
-    ```
+```shell
+kubectl apply -f backup-rbac.yaml -n test2
+```
 
 (2) 创建 `backup-demo1-tidb-secret` secret。该 secret 存放用于访问 TiDB 集群的 root 账号和密钥：
 
-    ```shell
-    kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<password> --namespace=test1
-    ```
+```shell
+kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<password> --namespace=test1
+```
 
 (3) 在集群上为服务帐户启用 IAM 角色：
     
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html) 开启所在的 EKS 集群的 IAM 角色授权。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html) 开启所在的 EKS 集群的 IAM 角色授权。
 
 (4) 创建 IAM 角色：
 
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html)创建一个 IAM 角色，为角色赋予 `AmazonS3FullAccess` 的权限，并且编辑角色的 `Trust relationships`。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html)创建一个 IAM 角色，为角色赋予 `AmazonS3FullAccess` 的权限，并且编辑角色的 `Trust relationships`。
 
 (5) 绑定 IAM 到 ServiceAccount 资源上：
 
-    ```shell
-    kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test1
-    ```
+```shell
+kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test1
+```
 
-    > **注意：**
-    >
-    > `arn:aws:iam::123456789012:role/user` 为步骤 (4) 中创建的 IAM 角色。
+> **注意：**
+>
+> `arn:aws:iam::123456789012:role/user` 为步骤 (4) 中创建的 IAM 角色。
 
 (6) 将 ServiceAccount 绑定到 TiKV Pod：
 
-    ```shell
-    kubectl edit tc demo1 -n test1
-    ```
+```shell
+kubectl edit tc demo1 -n test1
+```
 
-    将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager，等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
+将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager，等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
 
 ### 使用 BR 备份数据到 Amazon S3 的存储
 
 + 创建 `Backup` CR，通过 accessKey 和 secretKey 授权的方式备份集群:
 
-    ```shell
-    kubectl apply -f backup-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f backup-aws-s3.yaml
+```
 
-    `backup-aws-s3.yaml` 文件内容如下：
+`backup-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: Backup
-    metadata:
-      name: demo1-backup-s3
-      namespace: test1
-    spec:
-      backupType: full
-      br:
-        cluster: demo1
-        clusterNamespace: test1
-        # enableTLSClient: false
-        # logLevel: info
-        # statusAddr: <status-addr>
-        # concurrency: 4
-        # rateLimit: 0
-        # timeAgo: <time>
-        # checksum: true
-        # sendCredToTikv: true
-      from:
-        host: <tidb-host-ip>
-        port: <tidb-port>
-        user: <tidb-user>
-        secretName: backup-demo1-tidb-secret
-      s3:
-        provider: aws
-        secretName: s3-secret
-        region: us-west-1
-        bucket: my-bucket
-        prefix: my-folder
-    ```
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: Backup
+metadata:
+  name: demo1-backup-s3
+  namespace: test1
+spec:
+  backupType: full
+  br:
+    cluster: demo1
+    clusterNamespace: test1
+    # enableTLSClient: false
+    # logLevel: info
+    # statusAddr: <status-addr>
+    # concurrency: 4
+    # rateLimit: 0
+    # timeAgo: <time>
+    # checksum: true
+    # sendCredToTikv: true
+  from:
+    host: <tidb-host-ip>
+    port: <tidb-port>
+    user: <tidb-user>
+    secretName: backup-demo1-tidb-secret
+  s3:
+    provider: aws
+    secretName: s3-secret
+    region: us-west-1
+    bucket: my-bucket
+    prefix: my-folder
+```
 
 + 创建 `Backup` CR，通过 IAM 绑定 Pod 授权的方式备份集群:
 
-    ```shell
-    kubectl apply -f backup-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f backup-aws-s3.yaml
+```
 
-    `backup-aws-s3.yaml` 文件内容如下：
+`backup-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: Backup
-    metadata:
-      name: demo1-backup-s3
-      namespace: test1
-      annotations:
-        iam.amazonaws.com/role: arn:aws:iam::123456789012:role/user
-    spec:
-      backupType: full
-      br:
-        cluster: demo1
-        sendCredToTikv: false
-        clusterNamespace: test1
-        # enableTLSClient: false
-        # logLevel: info
-        # statusAddr: <status-addr>
-        # concurrency: 4
-        # rateLimit: 0
-        # timeAgo: <time>
-        # checksum: true
-      from:
-        host: <tidb-host-ip>
-        port: <tidb-port>
-        user: <tidb-user>
-        secretName: backup-demo1-tidb-secret
-      s3:
-        provider: aws
-        region: us-west-1
-        bucket: my-bucket
-        prefix: my-folder
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: Backup
+metadata:
+  name: demo1-backup-s3
+  namespace: test1
+  annotations:
+    iam.amazonaws.com/role: arn:aws:iam::123456789012:role/user
+spec:
+  backupType: full
+  br:
+    cluster: demo1
+    sendCredToTikv: false
+    clusterNamespace: test1
+    # enableTLSClient: false
+    # logLevel: info
+    # statusAddr: <status-addr>
+    # concurrency: 4
+    # rateLimit: 0
+    # timeAgo: <time>
+    # checksum: true
+  from:
+    host: <tidb-host-ip>
+    port: <tidb-port>
+    user: <tidb-user>
+    secretName: backup-demo1-tidb-secret
+  s3:
+    provider: aws
+    region: us-west-1
+    bucket: my-bucket
+    prefix: my-folder
     ```
 
 + 创建 `Backup` CR，通过 IAM 绑定 ServiceAccount 授权的方式备份集群:
 
-    ```shell
-    kubectl apply -f backup-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f backup-aws-s3.yaml
+```
 
-    `backup-aws-s3.yaml` 文件内容如下：
+`backup-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: Backup
-    metadata:
-      name: demo1-backup-s3
-      namespace: test1
-    spec:
-      backupType: full
-      serviceAccount: tidb-backup-manager
-      br:
-        cluster: demo1
-        sendCredToTikv: false
-        clusterNamespace: test1
-        # enableTLSClient: false
-        # logLevel: info
-        # statusAddr: <status-addr>
-        # concurrency: 4
-        # rateLimit: 0
-        # timeAgo: <time>
-        # checksum: true
-      from:
-        host: <tidb-host-ip>
-        port: <tidb-port>
-        user: <tidb-user>
-        secretName: backup-demo1-tidb-secret
-      s3:
-        provider: aws
-        region: us-west-1
-        bucket: my-bucket
-        prefix: my-folder
-    ```
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: Backup
+metadata:
+  name: demo1-backup-s3
+  namespace: test1
+spec:
+  backupType: full
+  serviceAccount: tidb-backup-manager
+  br:
+    cluster: demo1
+    sendCredToTikv: false
+    clusterNamespace: test1
+    # enableTLSClient: false
+    # logLevel: info
+    # statusAddr: <status-addr>
+    # concurrency: 4
+    # rateLimit: 0
+    # timeAgo: <time>
+    # checksum: true
+  from:
+    host: <tidb-host-ip>
+    port: <tidb-port>
+    user: <tidb-user>
+    secretName: backup-demo1-tidb-secret
+  s3:
+    provider: aws
+    region: us-west-1
+    bucket: my-bucket
+    prefix: my-folder
+```
 
 以上三个示例分别使用三种授权模式将数据导出到 Amazon S3 存储上。Amazon S3 的 `acl`、`endpoint`、`storageClass` 配置项均可以省略。
 
@@ -284,9 +283,9 @@ Amazon S3 支持以下几种 `storageClass` 类型：
 
 创建好 `Backup` CR 后，可通过如下命令查看备份状态：
 
- ```shell
- kubectl get bk -n test1 -o wide
- ```
+```shell
+kubectl get bk -n test1 -o wide
+```
 
 更多 `Backup` CR 字段的详细解释:
 
@@ -319,142 +318,142 @@ Amazon S3 支持以下几种 `storageClass` 类型：
 
 + 创建 `BackupSchedule` CR，开启 TiDB 集群定时全量备份，通过 accessKey 和 secretKey 授权的方式备份集群：
 
-    ```shell
-    kubectl apply -f backup-scheduler-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f backup-scheduler-aws-s3.yaml
+```
 
-    `backup-scheduler-aws-s3.yaml` 文件内容如下：
+`backup-scheduler-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: BackupSchedule
-    metadata:
-      name: demo1-backup-schedule-s3
-      namespace: test1
-    spec:
-      #maxBackups: 5
-      #pause: true
-      maxReservedTime: "3h"
-      schedule: "*/2 * * * *"
-      backupTemplate:
-        backupType: full
-        br:
-          cluster: demo1
-          clusterNamespace: test1
-          # enableTLSClient: false
-          # logLevel: info
-          # statusAddr: <status-addr>
-          # concurrency: 4
-          # rateLimit: 0
-          # timeAgo: <time>
-          # checksum: true
-          # sendCredToTikv: true
-        from:
-          host: <tidb-host-ip>
-          port: <tidb-port>
-          user: <tidb-user>
-          secretName: backup-demo1-tidb-secret
-        s3:
-          provider: aws
-          secretName: s3-secret
-          region: us-west-1
-          bucket: my-bucket
-          prefix: my-folder
-    ```
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: BackupSchedule
+metadata:
+  name: demo1-backup-schedule-s3
+  namespace: test1
+spec:
+  #maxBackups: 5
+  #pause: true
+  maxReservedTime: "3h"
+  schedule: "*/2 * * * *"
+  backupTemplate:
+    backupType: full
+    br:
+      cluster: demo1
+      clusterNamespace: test1
+      # enableTLSClient: false
+      # logLevel: info
+      # statusAddr: <status-addr>
+      # concurrency: 4
+      # rateLimit: 0
+      # timeAgo: <time>
+      # checksum: true
+      # sendCredToTikv: true
+    from:
+      host: <tidb-host-ip>
+      port: <tidb-port>
+      user: <tidb-user>
+      secretName: backup-demo1-tidb-secret
+    s3:
+      provider: aws
+      secretName: s3-secret
+      region: us-west-1
+      bucket: my-bucket
+      prefix: my-folder
+```
 
 + 创建 `BackupSchedule` CR，开启 TiDB 集群定时全量备份，通过 IAM 绑定 Pod 授权的方式备份集群：
 
-    ```shell
-    kubectl apply -f backup-scheduler-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f backup-scheduler-aws-s3.yaml
+```
 
-    `backup-scheduler-aws-s3.yaml` 文件内容如下：
+`backup-scheduler-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: BackupSchedule
-    metadata:
-      name: demo1-backup-schedule-s3
-      namespace: test1
-      annotations:
-        iam.amazonaws.com/role: arn:aws:iam::123456789012:role/user
-    spec:
-      #maxBackups: 5
-      #pause: true
-      maxReservedTime: "3h"
-      schedule: "*/2 * * * *"
-      backupTemplate:
-        backupType: full
-        br:
-          cluster: demo1
-          sendCredToTikv: false
-          clusterNamespace: test1
-          # enableTLSClient: false
-          # logLevel: info
-          # statusAddr: <status-addr>
-          # concurrency: 4
-          # rateLimit: 0
-          # timeAgo: <time>
-          # checksum: true
-        from:
-          host: <tidb-host-ip>
-          port: <tidb-port>
-          user: <tidb-user>
-          secretName: backup-demo1-tidb-secret
-        s3:
-          provider: aws
-          region: us-west-1
-          bucket: my-bucket
-          prefix: my-folder
-    ```
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: BackupSchedule
+metadata:
+  name: demo1-backup-schedule-s3
+  namespace: test1
+  annotations:
+    iam.amazonaws.com/role: arn:aws:iam::123456789012:role/user
+spec:
+  #maxBackups: 5
+  #pause: true
+  maxReservedTime: "3h"
+  schedule: "*/2 * * * *"
+  backupTemplate:
+    backupType: full
+    br:
+      cluster: demo1
+      sendCredToTikv: false
+      clusterNamespace: test1
+      # enableTLSClient: false
+      # logLevel: info
+      # statusAddr: <status-addr>
+      # concurrency: 4
+      # rateLimit: 0
+      # timeAgo: <time>
+      # checksum: true
+    from:
+      host: <tidb-host-ip>
+      port: <tidb-port>
+      user: <tidb-user>
+      secretName: backup-demo1-tidb-secret
+    s3:
+      provider: aws
+      region: us-west-1
+      bucket: my-bucket
+      prefix: my-folder
+```
 
 + 创建 `BackupSchedule` CR，开启 TiDB 集群定时全量备份， 通过 IAM 绑定 ServiceAccount 授权的方式备份集群：
 
-    ```shell
-    kubectl apply -f backup-scheduler-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f backup-scheduler-aws-s3.yaml
+```
 
-    `backup-scheduler-aws-s3.yaml` 文件内容如下：
+`backup-scheduler-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: BackupSchedule
-    metadata:
-      name: demo1-backup-schedule-s3
-      namespace: test1
-    spec:
-      #maxBackups: 5
-      #pause: true
-      maxReservedTime: "3h"
-      schedule: "*/2 * * * *"
-      serviceAccount: tidb-backup-manager
-      backupTemplate:
-        backupType: full
-        br:
-          cluster: demo1
-          sendCredToTikv: false
-          clusterNamespace: test1
-          # enableTLSClient: false
-          # logLevel: info
-          # statusAddr: <status-addr>
-          # concurrency: 4
-          # rateLimit: 0
-          # timeAgo: <time>
-          # checksum: true
-        from:
-          host: <tidb-host-ip>
-          port: <tidb-port>
-          user: <tidb-user>
-          secretName: backup-demo1-tidb-secret
-        s3:
-          provider: aws
-          region: us-west-1
-          bucket: my-bucket
-          prefix: my-folder
-    ```
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: BackupSchedule
+metadata:
+  name: demo1-backup-schedule-s3
+  namespace: test1
+spec:
+  #maxBackups: 5
+  #pause: true
+  maxReservedTime: "3h"
+  schedule: "*/2 * * * *"
+  serviceAccount: tidb-backup-manager
+  backupTemplate:
+    backupType: full
+    br:
+      cluster: demo1
+      sendCredToTikv: false
+      clusterNamespace: test1
+      # enableTLSClient: false
+      # logLevel: info
+      # statusAddr: <status-addr>
+      # concurrency: 4
+      # rateLimit: 0
+      # timeAgo: <time>
+      # checksum: true
+    from:
+      host: <tidb-host-ip>
+      port: <tidb-port>
+      user: <tidb-user>
+      secretName: backup-demo1-tidb-secret
+    s3:
+      provider: aws
+      region: us-west-1
+      bucket: my-bucket
+      prefix: my-folder
+```
 
 定时全量备份创建完成后，可以通过以下命令查看定时全量备份的状态：
 
@@ -487,49 +486,49 @@ kubectl get bk -l tidb.pingcap.com/backup-schedule=demo1-backup-schedule-s3 -n t
 
 (1) 下载文件 [backup-rbac.yaml](https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml)，并执行以下命令在 `test2` 这个 namespace 中创建备份需要的 RBAC 相关资源：
 
-    ```shell
-    kubectl apply -f backup-rbac.yaml -n test2
-    ```
+```shell
+kubectl apply -f backup-rbac.yaml -n test2
+```
 
 (2) 创建 `s3-secret` secret。该 secret 存放用于访问 S3 兼容存储的凭证。
 
-    ```shell
-    kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test2
-    ```
+```shell
+kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test2
+```
 
 (3) 创建 `restore-demo2-tidb-secret` secret。该 secret 存放用于访问 TiDB 集群的 root 账号和密钥。
 
-    ```shell
-    kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=<password> --namespace=test2
-    ```
+```shell
+kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=<password> --namespace=test2
+```
 
 #### 通过 IAM 绑定 Pod 授权
 
 (1) 下载文件 [backup-rbac.yaml](https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml)，并执行以下命令在 `test2` 这个 namespace 中创建备份需要的 RBAC 相关资源：
 
-    ```shell
-    kubectl apply -f backup-rbac.yaml -n test2
-    ```
+```shell
+kubectl apply -f backup-rbac.yaml -n test2
+```
 
 (2) 创建 `restore-demo2-tidb-secret` secret。该 secret 存放用于访问 TiDB 集群的 root 账号和密钥：
 
-    ```shell
-    kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=<password> --namespace=test2
-    ```
+```shell
+kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=<password> --namespace=test2
+```
 
 (3) 创建 IAM 角色：
     
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) 来为账号创建一个 IAM 角色，并且通过 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html)为 IAM 角色赋予需要的权限。由于 `Restore` 需要访问 AWS 的 S3 存储，所以这里给 IAM 赋予了 `AmazonS3FullAccess` 的权限。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) 来为账号创建一个 IAM 角色，并且通过 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html)为 IAM 角色赋予需要的权限。由于 `Restore` 需要访问 AWS 的 S3 存储，所以这里给 IAM 赋予了 `AmazonS3FullAccess` 的权限。
     
 (4) 绑定 IAM 到 TiKV Pod:
 
-    在使用 BR 备份的过程中，TiKV Pod 和 BR Pod 一样需要对 S3 存储进行读写操作，所以这里需要给 TiKV Pod 打上 annotation 来绑定 IAM 角色。
+在使用 BR 备份的过程中，TiKV Pod 和 BR Pod 一样需要对 S3 存储进行读写操作，所以这里需要给 TiKV Pod 打上 annotation 来绑定 IAM 角色。
 
-    ```shell
-    kubectl edit tc demo2 -n test2
-    ```
+```shell
+kubectl edit tc demo2 -n test2
+```
 
-    找到 `spec.tikv.annotations`, 增加 annotation `arn:aws:iam::123456789012:role/user`, 然后退出编辑, 等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
+找到 `spec.tikv.annotations`, 增加 annotation `arn:aws:iam::123456789012:role/user`, 然后退出编辑, 等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
 
 > **注意：**
 >
@@ -539,37 +538,37 @@ kubectl get bk -l tidb.pingcap.com/backup-schedule=demo1-backup-schedule-s3 -n t
 
 (1) 下载文件 [backup-rbac.yaml](https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml)，并执行以下命令在 `test2` 这个 namespace 中创建备份需要的 RBAC 相关资源：
 
-    ```shell
-    kubectl apply -f backup-rbac.yaml -n test2
-    ```
+```shell
+kubectl apply -f backup-rbac.yaml -n test2
+```
 
 (2) 创建 `restore-demo2-tidb-secret` secret。该 secret 存放用于访问 TiDB 集群的 root 账号和密钥:
 
-    ```shell
-    kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=<password> --namespace=test2
-    ```
+```shell
+kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=<password> --namespace=test2
+```
 
 (3) 在集群上为服务帐户启用 IAM 角色：
     
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)开启所在的 EKS 集群的 IAM 角色授权。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)开启所在的 EKS 集群的 IAM 角色授权。
 
 (4) 创建 IAM 角色:
 
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html) 创建一个 IAM 角色，为角色赋予 `AmazonS3FullAccess` 的权限，并且编辑角色的 `Trust relationships`。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html) 创建一个 IAM 角色，为角色赋予 `AmazonS3FullAccess` 的权限，并且编辑角色的 `Trust relationships`。
 
 (5) 绑定 IAM 到 ServiceAccount 资源上：
 
-    ```shell
-    kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test2
-    ```
+```shell
+kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test2
+```
 
 (6) 将 ServiceAccount 绑定到 TiKV Pod：
 
-    ```shell
-    kubectl edit tc demo2 -n test2
-    ```
+```shell
+kubectl edit tc demo2 -n test2
+```
 
-    将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager , 等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
+将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager , 等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
 
 > **注意：**
 >
@@ -580,129 +579,130 @@ kubectl get bk -l tidb.pingcap.com/backup-schedule=demo1-backup-schedule-s3 -n t
 
 + 创建 `Restore` CR，通过 accessKey 和 secretKey 授权的方式恢复集群：
 
-    ```shell
-    kubectl apply -f resotre-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f resotre-aws-s3.yaml
+```
 
-    `restore-aws-s3.yaml` 文件内容如下：
+`restore-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: Restore
-    metadata:
-      name: demo2-restore-s3
-      namespace: test2
-    spec:
-      br:
-        cluster: demo2
-        clusterNamespace: test2
-        # enableTLSClient: false
-        # logLevel: info
-        # statusAddr: <status-addr>
-        # concurrency: 4
-        # rateLimit: 0
-        # timeAgo: <time>
-        # checksum: true
-        # sendCredToTikv: true
-      to:
-        host: <tidb-host-ip>
-        port: <tidb-port>
-        user: <tidb-user>
-        secretName: restore-demo2-tidb-secret
-      s3:
-        provider: aws
-        secretName: s3-secret
-        region: us-west-1
-        bucket: my-bucket
-        prefix: my-folder
-    ```
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: Restore
+metadata:
+  name: demo2-restore-s3
+  namespace: test2
+spec:
+  br:
+    cluster: demo2
+    clusterNamespace: test2
+    # enableTLSClient: false
+    # logLevel: info
+    # statusAddr: <status-addr>
+    # concurrency: 4
+    # rateLimit: 0
+    # timeAgo: <time>
+    # checksum: true
+    # sendCredToTikv: true
+  to:
+    host: <tidb-host-ip>
+    port: <tidb-port>
+    user: <tidb-user>
+    secretName: restore-demo2-tidb-secret
+  s3:
+    provider: aws
+    secretName: s3-secret
+    region: us-west-1
+    bucket: my-bucket
+    prefix: my-folder
+```
 
 + 创建 `Restore` CR，通过 IAM 绑定 Pod 授权的方式备份集群：
 
-    ```shell
-    kubectl apply -f restore-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f restore-aws-s3.yaml
+```
 
-    `restore-aws-s3.yaml` 文件内容如下：
+`restore-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: Restore
-    metadata:
-      name: demo2-restore-s3
-      namespace: test2
-      annotations:
-        iam.amazonaws.com/role: arn:aws:iam::123456789012:role/user
-    spec:
-      br:
-        cluster: demo2
-        sendCredToTikv: false
-        clusterNamespace: test2
-        # enableTLSClient: false
-        # logLevel: info
-        # statusAddr: <status-addr>
-        # concurrency: 4
-        # rateLimit: 0
-        # timeAgo: <time>
-        # checksum: true
-      to:
-        host: <tidb-host-ip>
-        port: <tidb-port>
-        user: <tidb-user>
-        secretName: restore-demo2-tidb-secret
-      s3:
-        provider: aws
-        region: us-west-1
-        bucket: my-bucket
-        prefix: my-folder
-    ```
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: Restore
+metadata:
+  name: demo2-restore-s3
+  namespace: test2
+  annotations:
+    iam.amazonaws.com/role: arn:aws:iam::123456789012:role/user
+spec:
+  br:
+    cluster: demo2
+    sendCredToTikv: false
+    clusterNamespace: test2
+    # enableTLSClient: false
+    # logLevel: info
+    # statusAddr: <status-addr>
+    # concurrency: 4
+    # rateLimit: 0
+    # timeAgo: <time>
+    # checksum: true
+  to:
+    host: <tidb-host-ip>
+    port: <tidb-port>
+    user: <tidb-user>
+    secretName: restore-demo2-tidb-secret
+  s3:
+    provider: aws
+    region: us-west-1
+    bucket: my-bucket
+    prefix: my-folder
+```
 
 + 创建 `Restore` CR，通过 IAM 绑定 ServiceAccount 授权的方式备份集群：
 
-    ```shell
-    kubectl apply -f restore-aws-s3.yaml
-    ```
+```shell
+kubectl apply -f restore-aws-s3.yaml
+```
 
-    `restore-aws-s3.yaml` 文件内容如下：
+`restore-aws-s3.yaml` 文件内容如下：
 
-    ```yaml
-    ---
-    apiVersion: pingcap.com/v1alpha1
-    kind: Restore
-    metadata:
-      name: demo2-restore-s3
-      namespace: test2
-    spec:
-      serviceAccount: tidb-backup-manager
-      br:
-        cluster: demo2
-        sendCredToTikv: false
-        clusterNamespace: test2
-        # enableTLSClient: false
-        # logLevel: info
-        # statusAddr: <status-addr>
-        # concurrency: 4
-        # rateLimit: 0
-        # timeAgo: <time>
-        # checksum: true
-      to:
-        host: <tidb-host-ip>
-        port: <tidb-port>
-        user: <tidb-user>
-        secretName: restore-demo2-tidb-secret
-      s3:
-        provider: aws
-        region: us-west-1
-        bucket: my-bucket
-        prefix: my-folder
+```yaml
+---
+apiVersion: pingcap.com/v1alpha1
+kind: Restore
+metadata:
+  name: demo2-restore-s3
+  namespace: test2
+spec:
+  serviceAccount: tidb-backup-manager
+  br:
+    cluster: demo2
+    sendCredToTikv: false
+    clusterNamespace: test2
+    # enableTLSClient: false
+    # logLevel: info
+    # statusAddr: <status-addr>
+    # concurrency: 4
+    # rateLimit: 0
+    # timeAgo: <time>
+    # checksum: true
+  to:
+    host: <tidb-host-ip>
+    port: <tidb-port>
+    user: <tidb-user>
+    secretName: restore-demo2-tidb-secret
+  s3:
+    provider: aws
+    region: us-west-1
+    bucket: my-bucket
+    prefix: my-folder
+```
 
 创建好 `Restore` CR 后，可通过以下命令查看恢复的状态：
 
-     ```shell
-     kubectl get rt -n test2 -o wide
-     ```
+```shell
+kubectl get rt -n test2 -o wide
+```
 
 更多 `Restore` CR 字段的详细解释：
 

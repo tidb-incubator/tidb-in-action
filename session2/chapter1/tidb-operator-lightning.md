@@ -27,9 +27,9 @@ tikv-importer 可以在一个现有的 TiDB 集群上启用，或者在新建 Ti
 
     (2) 部署该集群。
 
-        ```shell
-        helm install pingcap/tidb-cluster --name=<tidb-cluster-release-name> --namespace=<namespace> -f values.yaml --version=<chart-version>
-        ```
+    ```shell
+    helm install pingcap/tidb-cluster --name=<tidb-cluster-release-name> --namespace=<namespace> -f values.yaml --version=<chart-version>
+    ```
 
 * 配置一个现有的 TiDB 集群以启用 tikv-importer：
 
@@ -37,37 +37,37 @@ tikv-importer 可以在一个现有的 TiDB 集群上启用，或者在新建 Ti
 
     (2) 升级该 TiDB 集群。
 
-        ```shell
-        helm upgrade <tidb-cluster-release-name> pingcap/tidb-cluster -f values.yaml --version=<chart-version>
-        ```
+    ```shell
+    helm upgrade <tidb-cluster-release-name> pingcap/tidb-cluster -f values.yaml --version=<chart-version>
+    ```
 
 ## 3. 部署 tidb-lightning
 
 (1) 配置 TiDB Lightning
 
-    使用如下命令获得 TiDB Lightning 的默认配置。
+使用如下命令获得 TiDB Lightning 的默认配置。
 
-    ```shell
-    helm inspect values pingcap/tidb-lightning --version=<chart-version> > tidb-lightning-values.yaml
-    ```
+```shell
+helm inspect values pingcap/tidb-lightning --version=<chart-version> > tidb-lightning-values.yaml
+```
 
-    tidb-lightning Helm chart 支持恢复本地或远程的备份数据。
+tidb-lightning Helm chart 支持恢复本地或远程的备份数据。
 
-    * 本地模式
+* 本地模式
 
-        本地模式要求 Mydumper 备份数据位于其中一个 Kubernetes 节点上。要启用该模式，你需要将 `dataSource.local.nodeName` 设置为该节点名称，将 `dataSource.local.hostPath` 设置为 Mydumper 备份数据目录路径，该路径中需要包含名为 `metadata` 的文件。
+    本地模式要求 Mydumper 备份数据位于其中一个 Kubernetes 节点上。要启用该模式，你需要将 `dataSource.local.nodeName` 设置为该节点名称，将 `dataSource.local.hostPath` 设置为 Mydumper 备份数据目录路径，该路径中需要包含名为 `metadata` 的文件。
 
-    * PVC 模式
+* PVC 模式
 
-        PVC 模式要求 Mydumper 备份数据位于和要恢复到的目标 TiDB 集群在同一 namespace 下的一个 PVC 上。要启用该模式，你需要将 `dataSource.adhoc.pvcName` 设置为 Mydumper 备份数据所在的 PVC。
+    PVC 模式要求 Mydumper 备份数据位于和要恢复到的目标 TiDB 集群在同一 namespace 下的一个 PVC 上。要启用该模式，你需要将 `dataSource.adhoc.pvcName` 设置为 Mydumper 备份数据所在的 PVC。
 
-    * 远程模式
+* 远程模式
 
-        与本地模式不同，远程模式需要使用 [rclone](https://rclone.org) 将 Mydumper 备份 tarball 文件从网络存储中下载到 PV 中。远程模式能在 rclone 支持的任何云存储下工作，目前已经有以下存储进行了相关测试：[Google Cloud Storage (GCS)](https://cloud.google.com/storage/)、[AWS S3](https://aws.amazon.com/s3/) 和 [Ceph Object Storage](https://ceph.com/ceph-storage/object-storage/)。
+    与本地模式不同，远程模式需要使用 [rclone](https://rclone.org) 将 Mydumper 备份 tarball 文件从网络存储中下载到 PV 中。远程模式能在 rclone 支持的任何云存储下工作，目前已经有以下存储进行了相关测试：[Google Cloud Storage (GCS)](https://cloud.google.com/storage/)、[AWS S3](https://aws.amazon.com/s3/) 和 [Ceph Object Storage](https://ceph.com/ceph-storage/object-storage/)。
 
-        (1) 确保 `values.yaml` 中的 `dataSource.local.nodeName` 和 `dataSource.local.hostPath` 被注释掉。
+    * 确保 `values.yaml` 中的 `dataSource.local.nodeName` 和 `dataSource.local.hostPath` 被注释掉。
 
-        (2) 新建一个包含 rclone 配置的 `Secret`。rclone 配置示例如下。一般只需要配置一种云存储。有关其他的云存储，请参考 [rclone 官方文档](https://rclone.org/)。
+    * 新建一个包含 rclone 配置的 `Secret`。rclone 配置示例如下。一般只需要配置一种云存储。有关其他的云存储，请参考 [rclone 官方文档](https://rclone.org/)。
 
             ```yaml
             apiVersion: v1
@@ -99,15 +99,15 @@ tikv-importer 可以在一个现有的 TiDB 集群上启用，或者在新建 Ti
               service_account_credentials = <service-account-json-file-content>
             ```
 
-            使用你的实际配置替换上述配置中的占位符，并将该文件存储为 `secret.yaml`。然后通过 `kubectl apply -f secret.yaml -n <namespace>` 命令创建该 `Secret`。
+    使用你的实际配置替换上述配置中的占位符，并将该文件存储为 `secret.yaml`。然后通过 `kubectl apply -f secret.yaml -n <namespace>` 命令创建该 `Secret`。
 
-        (3) 将 `dataSource.remote.storageClassName` 设置为 Kubernetes 集群中现有的一个存储类型。
+    * 将 `dataSource.remote.storageClassName` 设置为 Kubernetes 集群中现有的一个存储类型。
 
 (2) 部署 TiDB Lightning
 
-    ```shell
-    helm install pingcap/tidb-lightning --name=<tidb-lightning-release-name> --namespace=<namespace> --set failFast=true -f tidb-lightning-values.yaml --version=<chart-version>
-    ```
+```shell
+helm install pingcap/tidb-lightning --name=<tidb-lightning-release-name> --namespace=<namespace> --set failFast=true -f tidb-lightning-values.yaml --version=<chart-version>
+```
 
 ## 4. Demo 演示
 
