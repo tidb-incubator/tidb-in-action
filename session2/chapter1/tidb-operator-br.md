@@ -88,9 +88,9 @@ kubectl edit tc demo1 -n test1
 
     找到 `spec.tikv.annotations`，增加 annotation `arn:aws:iam::123456789012:role/user`，然后退出编辑，等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
 
-    > **注意：**
-    >
-    > `arn:aws:iam::123456789012:role/user` 为步骤 (3) 中创建的 IAM 角色。
+> **注意：**
+>
+> `arn:aws:iam::123456789012:role/user` 为步骤 (3) 中创建的 IAM 角色。
 
 #### 通过 IAM 绑定 ServiceAccount 授权
 
@@ -120,15 +120,15 @@ kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<
 kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test1
 ```
 
-    > **注意：**
-    >
-    > `arn:aws:iam::123456789012:role/user` 为步骤 (4) 中创建的 IAM 角色。
+> **注意：**
+>
+> `arn:aws:iam::123456789012:role/user` 为步骤 (4) 中创建的 IAM 角色。
 
 (6) 将 ServiceAccount 绑定到 TiKV Pod：
 
-    ```shell
-    kubectl edit tc demo1 -n test1
-    ```
+```shell
+kubectl edit tc demo1 -n test1
+```
 
     将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager，等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
 
