@@ -15,11 +15,10 @@ category: how-to
 
 (1) 通过传入 AWS 账号的 AccessKey 和 SecretKey 进行授权:
 
-    AWS 的客户端支持读取进程环境变量中的 `AWS_ACCESS_KEY_ID` 以及 `AWS_SECRET_ACCESS_KEY` 来获取与之相关联的用户或者角色的权限。
+AWS 的客户端支持读取进程环境变量中的 `AWS_ACCESS_KEY_ID` 以及 `AWS_SECRET_ACCESS_KEY` 来获取与之相关联的用户或者角色的权限。
 
 (2) 通过将 [IAM](https://aws.amazon.com/cn/iam/) 绑定 Pod 进行授权:
-
-    通过将用户的 IAM 角色与所运行的 Pod 资源进行绑定，使 Pod 中运行的进程获得角色所拥有的权限，这种授权方式是由 [`kube2iam`](https://github.com/jtblin/kube2iam) 提供。
+通过将用户的 IAM 角色与所运行的 Pod 资源进行绑定，使 Pod 中运行的进程获得角色所拥有的权限，这种授权方式是由 [`kube2iam`](https://github.com/jtblin/kube2iam) 提供。
 
 > **注意：**
 >
@@ -28,7 +27,7 @@ category: how-to
 
 (3) 通过将 [IAM](https://aws.amazon.com/cn/iam/) 绑定 ServiceAccount 进行授权:
 
-    通过将用户的 IAM 角色与 Kubeneters 中的 [`serviceAccount`](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#serviceaccount) 资源进行绑定， 从而使得使用该 ServiceAccount 账号的 Pod 都拥有该角色所拥有的权限，这种授权方式由 [`EKS Pod Identity Webhook`](https://github.com/aws/amazon-eks-pod-identity-webhook) 服务提供。
+通过将用户的 IAM 角色与 Kubeneters 中的 [`serviceAccount`](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#serviceaccount) 资源进行绑定， 从而使得使用该 ServiceAccount 账号的 Pod 都拥有该角色所拥有的权限，这种授权方式由 [`EKS Pod Identity Webhook`](https://github.com/aws/amazon-eks-pod-identity-webhook) 服务提供。
 
 > - 使用该授权模式时，可以参考 [AWS 官方文档](https://docs.aws.amazon.com/zh_cn/eks/latest/userguide/create-cluster.html) 创建 EKS 集群， 并且部署 TiDB Operator 以及 TiDB 集群。
 
@@ -76,17 +75,17 @@ kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<
 
 (3) 创建 IAM 角色：
 
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)来为账号创建一个 IAM 角色，并且通过 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html) 为 IAM 角色赋予需要的权限。由于 `Backup` 需要访问 AWS 的 S3 存储，所以这里给 IAM 赋予了 `AmazonS3FullAccess` 的权限。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)来为账号创建一个 IAM 角色，并且通过 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html) 为 IAM 角色赋予需要的权限。由于 `Backup` 需要访问 AWS 的 S3 存储，所以这里给 IAM 赋予了 `AmazonS3FullAccess` 的权限。
     
 (4) 绑定 IAM 到 TiKV Pod：
 
-    在使用 BR 备份的过程中，TiKV Pod 和 BR Pod 一样需要对 S3 存储进行读写操作，所以这里需要给 TiKV Pod 打上 annotation 来绑定 IAM 角色。 
+在使用 BR 备份的过程中，TiKV Pod 和 BR Pod 一样需要对 S3 存储进行读写操作，所以这里需要给 TiKV Pod 打上 annotation 来绑定 IAM 角色。 
 
 ```shell
 kubectl edit tc demo1 -n test1
 ```
 
-    找到 `spec.tikv.annotations`，增加 annotation `arn:aws:iam::123456789012:role/user`，然后退出编辑，等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
+找到 `spec.tikv.annotations`，增加 annotation `arn:aws:iam::123456789012:role/user`，然后退出编辑，等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
 
 > **注意：**
 >
@@ -108,11 +107,11 @@ kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=<
 
 (3) 在集群上为服务帐户启用 IAM 角色：
     
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html) 开启所在的 EKS 集群的 IAM 角色授权。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html) 开启所在的 EKS 集群的 IAM 角色授权。
 
 (4) 创建 IAM 角色：
 
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html)创建一个 IAM 角色，为角色赋予 `AmazonS3FullAccess` 的权限，并且编辑角色的 `Trust relationships`。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html)创建一个 IAM 角色，为角色赋予 `AmazonS3FullAccess` 的权限，并且编辑角色的 `Trust relationships`。
 
 (5) 绑定 IAM 到 ServiceAccount 资源上：
 
@@ -130,7 +129,7 @@ kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:ia
 kubectl edit tc demo1 -n test1
 ```
 
-    将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager，等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
+将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager，等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
 
 ### 使用 BR 备份数据到 Amazon S3 的存储
 
@@ -284,9 +283,9 @@ Amazon S3 支持以下几种 `storageClass` 类型：
 
 创建好 `Backup` CR 后，可通过如下命令查看备份状态：
 
- ```shell
- kubectl get bk -n test1 -o wide
- ```
+```shell
+kubectl get bk -n test1 -o wide
+```
 
 更多 `Backup` CR 字段的详细解释:
 
@@ -519,17 +518,17 @@ kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=
 
 (3) 创建 IAM 角色：
     
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) 来为账号创建一个 IAM 角色，并且通过 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html)为 IAM 角色赋予需要的权限。由于 `Restore` 需要访问 AWS 的 S3 存储，所以这里给 IAM 赋予了 `AmazonS3FullAccess` 的权限。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) 来为账号创建一个 IAM 角色，并且通过 [AWS 官方文档](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html)为 IAM 角色赋予需要的权限。由于 `Restore` 需要访问 AWS 的 S3 存储，所以这里给 IAM 赋予了 `AmazonS3FullAccess` 的权限。
     
 (4) 绑定 IAM 到 TiKV Pod:
 
-    在使用 BR 备份的过程中，TiKV Pod 和 BR Pod 一样需要对 S3 存储进行读写操作，所以这里需要给 TiKV Pod 打上 annotation 来绑定 IAM 角色。
+在使用 BR 备份的过程中，TiKV Pod 和 BR Pod 一样需要对 S3 存储进行读写操作，所以这里需要给 TiKV Pod 打上 annotation 来绑定 IAM 角色。
 
 ```shell
 kubectl edit tc demo2 -n test2
 ```
 
-    找到 `spec.tikv.annotations`, 增加 annotation `arn:aws:iam::123456789012:role/user`, 然后退出编辑, 等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
+找到 `spec.tikv.annotations`, 增加 annotation `arn:aws:iam::123456789012:role/user`, 然后退出编辑, 等到 TiKV Pod 重启后，查看 Pod 是否加上了这个 annotation。
 
 > **注意：**
 >
@@ -551,11 +550,11 @@ kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=
 
 (3) 在集群上为服务帐户启用 IAM 角色：
     
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)开启所在的 EKS 集群的 IAM 角色授权。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)开启所在的 EKS 集群的 IAM 角色授权。
 
 (4) 创建 IAM 角色:
 
-    可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html) 创建一个 IAM 角色，为角色赋予 `AmazonS3FullAccess` 的权限，并且编辑角色的 `Trust relationships`。
+可以参考 [AWS 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html) 创建一个 IAM 角色，为角色赋予 `AmazonS3FullAccess` 的权限，并且编辑角色的 `Trust relationships`。
 
 (5) 绑定 IAM 到 ServiceAccount 资源上：
 
@@ -569,7 +568,7 @@ kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:ia
 kubectl edit tc demo2 -n test2
 ```
 
-    将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager , 等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
+将 `spec.tikv.serviceAccount` 修改为 tidb-backup-manager , 等到 TiKV Pod 重启后，查看 Pod 的 `serviceAccountName` 是否有变化。
 
 > **注意：**
 >
