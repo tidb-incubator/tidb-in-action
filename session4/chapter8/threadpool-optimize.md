@@ -13,7 +13,7 @@
 
 ●     UnifyReadPool 是 TiKV 4.0 推出的新特性，它由之前的 Coprocessor 线程池与 Storage Read Pool 合并而来，所有的读取请求包括 kv get、kv batch get、raw kv get、coprocessor 等都会在这个线程池中执行。
 
-![图片](/res/session4/chapter8/tikv-config-optimize/tikv_thread_pool.png)
+![图片](/res/session4/chapter8/tikv-config-optimize/tikv_thread_pool.jpg)
 
 ## 1. GRPC
 gRPC 线程池的大小默认配置（server.grpc-concurrency）是 **4**。由于 gRPC 线程池几乎不会有多少计算开销，它主要负责网络 IO、反序列化请求，因此该配置通常不需要调整，如果部署的机器 CPU 特别少（小于等于 8），可以考虑将该配置（server.grpc-concurrency）设置为 2，如果机器配置很高，并且 TiKV 承担了非常大量的读写请求，观察到 Grafana 上的监控 Thread CPU 的 gRPC poll CPU 的数值超过了 server.grpc-concurrency 大小的 80%，那么可以考虑适当调大  server.grpc-concurrency 以控制该线程池使用率在 **80%** 以下。
