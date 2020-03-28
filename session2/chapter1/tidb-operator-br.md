@@ -44,9 +44,9 @@ Ad-hoc 全量备份通过创建一个自定义的 `Backup` Custom Resource (CR) 
 
 (1) 下载文件 [backup-rbac.yaml](https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml)，并执行以下命令在 `test1` 这个 namespace 中创建备份需要的 RBAC 相关资源：
 
-    ```shell
+```shell
     kubectl apply -f backup-rbac.yaml -n test1
-    ```
+```
 
 (2) 创建 `s3-secret` secret。该 secret 存放用于访问 S3 兼容存储的凭证。
 
