@@ -2827,10 +2827,10 @@
 <h2 id="aws-&#x8D26;&#x53F7;&#x6743;&#x9650;&#x6388;&#x4E88;&#x7684;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;">AWS &#x8D26;&#x53F7;&#x6743;&#x9650;&#x6388;&#x4E88;&#x7684;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;</h2>
 <p>&#x672C;&#x6587;&#x6D4B;&#x8BD5;&#x4E86;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;&#x6743;&#x9650;&#x6388;&#x4E88;&#x65B9;&#x5F0F;:</p>
 <p>(1) &#x901A;&#x8FC7;&#x4F20;&#x5165; AWS &#x8D26;&#x53F7;&#x7684; AccessKey &#x548C; SecretKey &#x8FDB;&#x884C;&#x6388;&#x6743;:</p>
-<pre><code>AWS &#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x652F;&#x6301;&#x8BFB;&#x53D6;&#x8FDB;&#x7A0B;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x4E2D;&#x7684; `AWS_ACCESS_KEY_ID` &#x4EE5;&#x53CA; `AWS_SECRET_ACCESS_KEY` &#x6765;&#x83B7;&#x53D6;&#x4E0E;&#x4E4B;&#x76F8;&#x5173;&#x8054;&#x7684;&#x7528;&#x6237;&#x6216;&#x8005;&#x89D2;&#x8272;&#x7684;&#x6743;&#x9650;&#x3002;
-</code></pre><p>(2) &#x901A;&#x8FC7;&#x5C06; <a href="https://aws.amazon.com/cn/iam/" target="_blank">IAM</a> &#x7ED1;&#x5B9A; Pod &#x8FDB;&#x884C;&#x6388;&#x6743;:</p>
-<pre><code>&#x901A;&#x8FC7;&#x5C06;&#x7528;&#x6237;&#x7684; IAM &#x89D2;&#x8272;&#x4E0E;&#x6240;&#x8FD0;&#x884C;&#x7684; Pod &#x8D44;&#x6E90;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#xFF0C;&#x4F7F; Pod &#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x83B7;&#x5F97;&#x89D2;&#x8272;&#x6240;&#x62E5;&#x6709;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x8FD9;&#x79CD;&#x6388;&#x6743;&#x65B9;&#x5F0F;&#x662F;&#x7531; [`kube2iam`](https://github.com/jtblin/kube2iam) &#x63D0;&#x4F9B;&#x3002;
-</code></pre><blockquote>
+<p>AWS &#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x652F;&#x6301;&#x8BFB;&#x53D6;&#x8FDB;&#x7A0B;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x4E2D;&#x7684; <code>AWS_ACCESS_KEY_ID</code> &#x4EE5;&#x53CA; <code>AWS_SECRET_ACCESS_KEY</code> &#x6765;&#x83B7;&#x53D6;&#x4E0E;&#x4E4B;&#x76F8;&#x5173;&#x8054;&#x7684;&#x7528;&#x6237;&#x6216;&#x8005;&#x89D2;&#x8272;&#x7684;&#x6743;&#x9650;&#x3002;</p>
+<p>(2) &#x901A;&#x8FC7;&#x5C06; <a href="https://aws.amazon.com/cn/iam/" target="_blank">IAM</a> &#x7ED1;&#x5B9A; Pod &#x8FDB;&#x884C;&#x6388;&#x6743;:
+&#x901A;&#x8FC7;&#x5C06;&#x7528;&#x6237;&#x7684; IAM &#x89D2;&#x8272;&#x4E0E;&#x6240;&#x8FD0;&#x884C;&#x7684; Pod &#x8D44;&#x6E90;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#xFF0C;&#x4F7F; Pod &#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x83B7;&#x5F97;&#x89D2;&#x8272;&#x6240;&#x62E5;&#x6709;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x8FD9;&#x79CD;&#x6388;&#x6743;&#x65B9;&#x5F0F;&#x662F;&#x7531; <a href="https://github.com/jtblin/kube2iam" target="_blank"><code>kube2iam</code></a> &#x63D0;&#x4F9B;&#x3002;</p>
+<blockquote>
 <p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
 <ul>
 <li>&#x4F7F;&#x7528;&#x8BE5;&#x6388;&#x6743;&#x6A21;&#x5F0F;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://github.com/jtblin/kube2iam#usage" target="_blank"><code>kube2iam &#x6587;&#x6863;</code></a> &#x5728; Kubernetes &#x96C6;&#x7FA4;&#x4E2D;&#x521B;&#x5EFA; kube2iam &#x73AF;&#x5883;&#xFF0C; &#x5E76;&#x4E14;&#x90E8;&#x7F72; TiDB Operator &#x4EE5;&#x53CA; TiDB &#x96C6;&#x7FA4;&#x3002;</li>
@@ -2838,8 +2838,8 @@
 </ul>
 </blockquote>
 <p>(3) &#x901A;&#x8FC7;&#x5C06; <a href="https://aws.amazon.com/cn/iam/" target="_blank">IAM</a> &#x7ED1;&#x5B9A; ServiceAccount &#x8FDB;&#x884C;&#x6388;&#x6743;:</p>
-<pre><code>&#x901A;&#x8FC7;&#x5C06;&#x7528;&#x6237;&#x7684; IAM &#x89D2;&#x8272;&#x4E0E; Kubeneters &#x4E2D;&#x7684; [`serviceAccount`](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#serviceaccount) &#x8D44;&#x6E90;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#xFF0C; &#x4ECE;&#x800C;&#x4F7F;&#x5F97;&#x4F7F;&#x7528;&#x8BE5; ServiceAccount &#x8D26;&#x53F7;&#x7684; Pod &#x90FD;&#x62E5;&#x6709;&#x8BE5;&#x89D2;&#x8272;&#x6240;&#x62E5;&#x6709;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x8FD9;&#x79CD;&#x6388;&#x6743;&#x65B9;&#x5F0F;&#x7531; [`EKS Pod Identity Webhook`](https://github.com/aws/amazon-eks-pod-identity-webhook) &#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x3002;
-</code></pre><blockquote>
+<p>&#x901A;&#x8FC7;&#x5C06;&#x7528;&#x6237;&#x7684; IAM &#x89D2;&#x8272;&#x4E0E; Kubeneters &#x4E2D;&#x7684; <a href="https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#serviceaccount" target="_blank"><code>serviceAccount</code></a> &#x8D44;&#x6E90;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#xFF0C; &#x4ECE;&#x800C;&#x4F7F;&#x5F97;&#x4F7F;&#x7528;&#x8BE5; ServiceAccount &#x8D26;&#x53F7;&#x7684; Pod &#x90FD;&#x62E5;&#x6709;&#x8BE5;&#x89D2;&#x8272;&#x6240;&#x62E5;&#x6709;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x8FD9;&#x79CD;&#x6388;&#x6743;&#x65B9;&#x5F0F;&#x7531; <a href="https://github.com/aws/amazon-eks-pod-identity-webhook" target="_blank"><code>EKS Pod Identity Webhook</code></a> &#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x3002;</p>
+<blockquote>
 <ul>
 <li>&#x4F7F;&#x7528;&#x8BE5;&#x6388;&#x6743;&#x6A21;&#x5F0F;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://docs.aws.amazon.com/zh_cn/eks/latest/userguide/create-cluster.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a> &#x521B;&#x5EFA; EKS &#x96C6;&#x7FA4;&#xFF0C; &#x5E76;&#x4E14;&#x90E8;&#x7F72; TiDB Operator &#x4EE5;&#x53CA; TiDB &#x96C6;&#x7FA4;&#x3002;</li>
 </ul>
@@ -2850,179 +2850,167 @@
 <h3 id="ad-hoc-&#x5168;&#x91CF;&#x5907;&#x4EFD;&#x73AF;&#x5883;&#x51C6;&#x5907;">Ad-hoc &#x5168;&#x91CF;&#x5907;&#x4EFD;&#x73AF;&#x5883;&#x51C6;&#x5907;</h3>
 <h4 id="&#x901A;&#x8FC7;-accesskey-&#x548C;-secretkey-&#x6388;&#x6743;">&#x901A;&#x8FC7; AccessKey &#x548C; SecretKey &#x6388;&#x6743;</h4>
 <p>(1) &#x4E0B;&#x8F7D;&#x6587;&#x4EF6; <a href="https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml" target="_blank">backup-rbac.yaml</a>&#xFF0C;&#x5E76;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x5728; <code>test1</code> &#x8FD9;&#x4E2A; namespace &#x4E2D;&#x521B;&#x5EFA;&#x5907;&#x4EFD;&#x9700;&#x8981;&#x7684; RBAC &#x76F8;&#x5173;&#x8D44;&#x6E90;&#xFF1A;</p>
-<pre><code>```shell
-kubectl apply -f backup-rbac.yaml -n test1
-```
-</code></pre><p>(2) &#x521B;&#x5EFA; <code>s3-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; S3 &#x517C;&#x5BB9;&#x5B58;&#x50A8;&#x7684;&#x51ED;&#x8BC1;&#x3002;</p>
-<pre><code>```shell
-kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test1
-```
-</code></pre><p>(3) &#x521B;&#x5EFA; <code>backup-demo1-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684;&#x7528;&#x6237;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x5BC6;&#x7801;&#x3002;</p>
-<pre><code>```shell
-kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test1
-```
-</code></pre><h4 id="&#x901A;&#x8FC7;-iam-&#x7ED1;&#x5B9A;-pod-&#x6388;&#x6743;">&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;</h4>
+<pre><code class="lang-shell">kubectl apply -f backup-rbac.yaml -n test1
+</code></pre>
+<p>(2) &#x521B;&#x5EFA; <code>s3-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; S3 &#x517C;&#x5BB9;&#x5B58;&#x50A8;&#x7684;&#x51ED;&#x8BC1;&#x3002;</p>
+<pre><code class="lang-shell">kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test1
+</code></pre>
+<p>(3) &#x521B;&#x5EFA; <code>backup-demo1-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684;&#x7528;&#x6237;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x5BC6;&#x7801;&#x3002;</p>
+<pre><code class="lang-shell">kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test1
+</code></pre>
+<h4 id="&#x901A;&#x8FC7;-iam-&#x7ED1;&#x5B9A;-pod-&#x6388;&#x6743;">&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;</h4>
 <p>(1) &#x4E0B;&#x8F7D;&#x6587;&#x4EF6; <a href="https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml" target="_blank">backup-rbac.yaml</a>&#xFF0C;&#x5E76;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x5728; <code>test1</code> &#x8FD9;&#x4E2A; namespace &#x4E2D;&#x521B;&#x5EFA;&#x5907;&#x4EFD;&#x9700;&#x8981;&#x7684; RBAC &#x76F8;&#x5173;&#x8D44;&#x6E90;&#xFF1A;</p>
-<pre><code>```shell
-kubectl apply -f backup-rbac.yaml -n test1
-```
-</code></pre><p>(2) &#x521B;&#x5EFA; <code>backup-demo1-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684;&#x7528;&#x6237;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x5BC6;&#x7801;&#xFF1A;</p>
-<pre><code>```shell
-kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test1
-```
-</code></pre><p>(3) &#x521B;&#x5EFA; IAM &#x89D2;&#x8272;&#xFF1A;</p>
-<pre><code>&#x53EF;&#x4EE5;&#x53C2;&#x8003; [AWS &#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)&#x6765;&#x4E3A;&#x8D26;&#x53F7;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; IAM &#x89D2;&#x8272;&#xFF0C;&#x5E76;&#x4E14;&#x901A;&#x8FC7; [AWS &#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html) &#x4E3A; IAM &#x89D2;&#x8272;&#x8D4B;&#x4E88;&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;&#x3002;&#x7531;&#x4E8E; `Backup` &#x9700;&#x8981;&#x8BBF;&#x95EE; AWS &#x7684; S3 &#x5B58;&#x50A8;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x7ED9; IAM &#x8D4B;&#x4E88;&#x4E86; `AmazonS3FullAccess` &#x7684;&#x6743;&#x9650;&#x3002;
-</code></pre><p>(4) &#x7ED1;&#x5B9A; IAM &#x5230; TiKV Pod&#xFF1A;</p>
-<pre><code>&#x5728;&#x4F7F;&#x7528; BR &#x5907;&#x4EFD;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;TiKV Pod &#x548C; BR Pod &#x4E00;&#x6837;&#x9700;&#x8981;&#x5BF9; S3 &#x5B58;&#x50A8;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x7ED9; TiKV Pod &#x6253;&#x4E0A; annotation &#x6765;&#x7ED1;&#x5B9A; IAM &#x89D2;&#x8272;&#x3002; 
-
-```shell
-kubectl edit tc demo1 -n test1
-```
-
-&#x627E;&#x5230; `spec.tikv.annotations`&#xFF0C;&#x589E;&#x52A0; annotation `arn:aws:iam::123456789012:role/user`&#xFF0C;&#x7136;&#x540E;&#x9000;&#x51FA;&#x7F16;&#x8F91;&#xFF0C;&#x7B49;&#x5230; TiKV Pod &#x91CD;&#x542F;&#x540E;&#xFF0C;&#x67E5;&#x770B; Pod &#x662F;&#x5426;&#x52A0;&#x4E0A;&#x4E86;&#x8FD9;&#x4E2A; annotation&#x3002;
-
-&gt; **&#x6CE8;&#x610F;&#xFF1A;**
-&gt;
-&gt; `arn:aws:iam::123456789012:role/user` &#x4E3A;&#x6B65;&#x9AA4; (3) &#x4E2D;&#x521B;&#x5EFA;&#x7684; IAM &#x89D2;&#x8272;&#x3002;
-</code></pre><h4 id="&#x901A;&#x8FC7;-iam-&#x7ED1;&#x5B9A;-serviceaccount-&#x6388;&#x6743;">&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;</h4>
+<pre><code class="lang-shell">kubectl apply -f backup-rbac.yaml -n test1
+</code></pre>
+<p>(2) &#x521B;&#x5EFA; <code>backup-demo1-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684;&#x7528;&#x6237;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x5BC6;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test1
+</code></pre>
+<p>(3) &#x521B;&#x5EFA; IAM &#x89D2;&#x8272;&#xFF1A;</p>
+<p>&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x6765;&#x4E3A;&#x8D26;&#x53F7;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; IAM &#x89D2;&#x8272;&#xFF0C;&#x5E76;&#x4E14;&#x901A;&#x8FC7; <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a> &#x4E3A; IAM &#x89D2;&#x8272;&#x8D4B;&#x4E88;&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;&#x3002;&#x7531;&#x4E8E; <code>Backup</code> &#x9700;&#x8981;&#x8BBF;&#x95EE; AWS &#x7684; S3 &#x5B58;&#x50A8;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x7ED9; IAM &#x8D4B;&#x4E88;&#x4E86; <code>AmazonS3FullAccess</code> &#x7684;&#x6743;&#x9650;&#x3002;</p>
+<p>(4) &#x7ED1;&#x5B9A; IAM &#x5230; TiKV Pod&#xFF1A;</p>
+<p>&#x5728;&#x4F7F;&#x7528; BR &#x5907;&#x4EFD;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;TiKV Pod &#x548C; BR Pod &#x4E00;&#x6837;&#x9700;&#x8981;&#x5BF9; S3 &#x5B58;&#x50A8;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x7ED9; TiKV Pod &#x6253;&#x4E0A; annotation &#x6765;&#x7ED1;&#x5B9A; IAM &#x89D2;&#x8272;&#x3002; </p>
+<pre><code class="lang-shell">kubectl edit tc demo1 -n test1
+</code></pre>
+<p>&#x627E;&#x5230; <code>spec.tikv.annotations</code>&#xFF0C;&#x589E;&#x52A0; annotation <code>arn:aws:iam::123456789012:role/user</code>&#xFF0C;&#x7136;&#x540E;&#x9000;&#x51FA;&#x7F16;&#x8F91;&#xFF0C;&#x7B49;&#x5230; TiKV Pod &#x91CD;&#x542F;&#x540E;&#xFF0C;&#x67E5;&#x770B; Pod &#x662F;&#x5426;&#x52A0;&#x4E0A;&#x4E86;&#x8FD9;&#x4E2A; annotation&#x3002;</p>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<p><code>arn:aws:iam::123456789012:role/user</code> &#x4E3A;&#x6B65;&#x9AA4; (3) &#x4E2D;&#x521B;&#x5EFA;&#x7684; IAM &#x89D2;&#x8272;&#x3002;</p>
+</blockquote>
+<h4 id="&#x901A;&#x8FC7;-iam-&#x7ED1;&#x5B9A;-serviceaccount-&#x6388;&#x6743;">&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;</h4>
 <p>(1) &#x4E0B;&#x8F7D;&#x6587;&#x4EF6; <a href="https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml" target="_blank">backup-rbac.yaml</a>&#xFF0C;&#x5E76;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x5728; <code>test1</code> &#x8FD9;&#x4E2A; namespace &#x4E2D;&#x521B;&#x5EFA;&#x5907;&#x4EFD;&#x9700;&#x8981;&#x7684; RBAC &#x76F8;&#x5173;&#x8D44;&#x6E90;&#xFF1A;</p>
-<pre><code>```shell
-kubectl apply -f backup-rbac.yaml -n test2
-```
-</code></pre><p>(2) &#x521B;&#x5EFA; <code>backup-demo1-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684; root &#x8D26;&#x53F7;&#x548C;&#x5BC6;&#x94A5;&#xFF1A;</p>
-<pre><code>```shell
-kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test1
-```
-</code></pre><p>(3) &#x5728;&#x96C6;&#x7FA4;&#x4E0A;&#x4E3A;&#x670D;&#x52A1;&#x5E10;&#x6237;&#x542F;&#x7528; IAM &#x89D2;&#x8272;&#xFF1A;</p>
-<pre><code>&#x53EF;&#x4EE5;&#x53C2;&#x8003; [AWS &#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html) &#x5F00;&#x542F;&#x6240;&#x5728;&#x7684; EKS &#x96C6;&#x7FA4;&#x7684; IAM &#x89D2;&#x8272;&#x6388;&#x6743;&#x3002;
-</code></pre><p>(4) &#x521B;&#x5EFA; IAM &#x89D2;&#x8272;&#xFF1A;</p>
-<pre><code>&#x53EF;&#x4EE5;&#x53C2;&#x8003; [AWS &#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html)&#x521B;&#x5EFA;&#x4E00;&#x4E2A; IAM &#x89D2;&#x8272;&#xFF0C;&#x4E3A;&#x89D2;&#x8272;&#x8D4B;&#x4E88; `AmazonS3FullAccess` &#x7684;&#x6743;&#x9650;&#xFF0C;&#x5E76;&#x4E14;&#x7F16;&#x8F91;&#x89D2;&#x8272;&#x7684; `Trust relationships`&#x3002;
-</code></pre><p>(5) &#x7ED1;&#x5B9A; IAM &#x5230; ServiceAccount &#x8D44;&#x6E90;&#x4E0A;&#xFF1A;</p>
-<pre><code>```shell
-kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test1
-```
-
-&gt; **&#x6CE8;&#x610F;&#xFF1A;**
-&gt;
-&gt; `arn:aws:iam::123456789012:role/user` &#x4E3A;&#x6B65;&#x9AA4; (4) &#x4E2D;&#x521B;&#x5EFA;&#x7684; IAM &#x89D2;&#x8272;&#x3002;
-</code></pre><p>(6) &#x5C06; ServiceAccount &#x7ED1;&#x5B9A;&#x5230; TiKV Pod&#xFF1A;</p>
-<pre><code>```shell
-kubectl edit tc demo1 -n test1
-```
-
-&#x5C06; `spec.tikv.serviceAccount` &#x4FEE;&#x6539;&#x4E3A; tidb-backup-manager&#xFF0C;&#x7B49;&#x5230; TiKV Pod &#x91CD;&#x542F;&#x540E;&#xFF0C;&#x67E5;&#x770B; Pod &#x7684; `serviceAccountName` &#x662F;&#x5426;&#x6709;&#x53D8;&#x5316;&#x3002;
-</code></pre><h3 id="&#x4F7F;&#x7528;-br-&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5230;-amazon-s3-&#x7684;&#x5B58;&#x50A8;">&#x4F7F;&#x7528; BR &#x5907;&#x4EFD;&#x6570;&#x636E;&#x5230; Amazon S3 &#x7684;&#x5B58;&#x50A8;</h3>
+<pre><code class="lang-shell">kubectl apply -f backup-rbac.yaml -n test2
+</code></pre>
+<p>(2) &#x521B;&#x5EFA; <code>backup-demo1-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684; root &#x8D26;&#x53F7;&#x548C;&#x5BC6;&#x94A5;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl create secret generic backup-demo1-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test1
+</code></pre>
+<p>(3) &#x5728;&#x96C6;&#x7FA4;&#x4E0A;&#x4E3A;&#x670D;&#x52A1;&#x5E10;&#x6237;&#x542F;&#x7528; IAM &#x89D2;&#x8272;&#xFF1A;</p>
+<p>&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a> &#x5F00;&#x542F;&#x6240;&#x5728;&#x7684; EKS &#x96C6;&#x7FA4;&#x7684; IAM &#x89D2;&#x8272;&#x6388;&#x6743;&#x3002;</p>
+<p>(4) &#x521B;&#x5EFA; IAM &#x89D2;&#x8272;&#xFF1A;</p>
+<p>&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x521B;&#x5EFA;&#x4E00;&#x4E2A; IAM &#x89D2;&#x8272;&#xFF0C;&#x4E3A;&#x89D2;&#x8272;&#x8D4B;&#x4E88; <code>AmazonS3FullAccess</code> &#x7684;&#x6743;&#x9650;&#xFF0C;&#x5E76;&#x4E14;&#x7F16;&#x8F91;&#x89D2;&#x8272;&#x7684; <code>Trust relationships</code>&#x3002;</p>
+<p>(5) &#x7ED1;&#x5B9A; IAM &#x5230; ServiceAccount &#x8D44;&#x6E90;&#x4E0A;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test1
+</code></pre>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
+<p><code>arn:aws:iam::123456789012:role/user</code> &#x4E3A;&#x6B65;&#x9AA4; (4) &#x4E2D;&#x521B;&#x5EFA;&#x7684; IAM &#x89D2;&#x8272;&#x3002;</p>
+</blockquote>
+<p>(6) &#x5C06; ServiceAccount &#x7ED1;&#x5B9A;&#x5230; TiKV Pod&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl edit tc demo1 -n test1
+</code></pre>
+<p>&#x5C06; <code>spec.tikv.serviceAccount</code> &#x4FEE;&#x6539;&#x4E3A; tidb-backup-manager&#xFF0C;&#x7B49;&#x5230; TiKV Pod &#x91CD;&#x542F;&#x540E;&#xFF0C;&#x67E5;&#x770B; Pod &#x7684; <code>serviceAccountName</code> &#x662F;&#x5426;&#x6709;&#x53D8;&#x5316;&#x3002;</p>
+<h3 id="&#x4F7F;&#x7528;-br-&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5230;-amazon-s3-&#x7684;&#x5B58;&#x50A8;">&#x4F7F;&#x7528; BR &#x5907;&#x4EFD;&#x6570;&#x636E;&#x5230; Amazon S3 &#x7684;&#x5B58;&#x50A8;</h3>
 <ul>
-<li><p>&#x521B;&#x5EFA; <code>Backup</code> CR&#xFF0C;&#x901A;&#x8FC7; accessKey &#x548C; secretKey &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;:</p>
-<pre><code class="lang-shell">  kubectl apply -f backup-aws-s3.yaml
-</code></pre>
-<p>  <code>backup-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-yaml"><span class="hljs-bullet">  -</span>--
-<span class="hljs-attr">  apiVersion:</span> pingcap.com/v1alpha1
-<span class="hljs-attr">  kind:</span> Backup
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    name:</span> demo1-backup-s3
-<span class="hljs-attr">    namespace:</span> test1
-<span class="hljs-attr">  spec:</span>
-<span class="hljs-attr">    backupType:</span> full
-<span class="hljs-attr">    br:</span>
-<span class="hljs-attr">      cluster:</span> demo1
-<span class="hljs-attr">      clusterNamespace:</span> test1
-      <span class="hljs-comment"># enableTLSClient: false</span>
-      <span class="hljs-comment"># logLevel: info</span>
-      <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
-      <span class="hljs-comment"># concurrency: 4</span>
-      <span class="hljs-comment"># rateLimit: 0</span>
-      <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
-      <span class="hljs-comment"># checksum: true</span>
-      <span class="hljs-comment"># sendCredToTikv: true</span>
-<span class="hljs-attr">    from:</span>
-<span class="hljs-attr">      host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      port:</span> &lt;tidb-port<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      user:</span> &lt;tidb-user<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      secretName:</span> backup-demo1-tidb-secret
-<span class="hljs-attr">    s3:</span>
-<span class="hljs-attr">      provider:</span> aws
-<span class="hljs-attr">      secretName:</span> s3-secret
-<span class="hljs-attr">      region:</span> us-west<span class="hljs-bullet">-1</span>
-<span class="hljs-attr">      bucket:</span> my-bucket
-<span class="hljs-attr">      prefix:</span> my-folder
-</code></pre>
-</li>
-<li><p>&#x521B;&#x5EFA; <code>Backup</code> CR&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;:</p>
-<pre><code class="lang-shell">  kubectl apply -f backup-aws-s3.yaml
-</code></pre>
-<p>  <code>backup-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-yaml"><span class="hljs-bullet">  -</span>--
-<span class="hljs-attr">  apiVersion:</span> pingcap.com/v1alpha1
-<span class="hljs-attr">  kind:</span> Backup
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    name:</span> demo1-backup-s3
-<span class="hljs-attr">    namespace:</span> test1
-<span class="hljs-attr">    annotations:</span>
-      iam.amazonaws.com/role: arn:aws:iam::<span class="hljs-number">123456789012</span>:role/user
-<span class="hljs-attr">  spec:</span>
-<span class="hljs-attr">    backupType:</span> full
-<span class="hljs-attr">    br:</span>
-<span class="hljs-attr">      cluster:</span> demo1
-<span class="hljs-attr">      sendCredToTikv:</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">      clusterNamespace:</span> test1
-      <span class="hljs-comment"># enableTLSClient: false</span>
-      <span class="hljs-comment"># logLevel: info</span>
-      <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
-      <span class="hljs-comment"># concurrency: 4</span>
-      <span class="hljs-comment"># rateLimit: 0</span>
-      <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
-      <span class="hljs-comment"># checksum: true</span>
-<span class="hljs-attr">    from:</span>
-<span class="hljs-attr">      host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      port:</span> &lt;tidb-port<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      user:</span> &lt;tidb-user<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      secretName:</span> backup-demo1-tidb-secret
-<span class="hljs-attr">    s3:</span>
-<span class="hljs-attr">      provider:</span> aws
-<span class="hljs-attr">      region:</span> us-west<span class="hljs-bullet">-1</span>
-<span class="hljs-attr">      bucket:</span> my-bucket
-<span class="hljs-attr">      prefix:</span> my-folder
-</code></pre>
-</li>
-<li><p>&#x521B;&#x5EFA; <code>Backup</code> CR&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;:</p>
-<pre><code class="lang-shell">  kubectl apply -f backup-aws-s3.yaml
-</code></pre>
-<p>  <code>backup-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-yaml"><span class="hljs-bullet">  -</span>--
-<span class="hljs-attr">  apiVersion:</span> pingcap.com/v1alpha1
-<span class="hljs-attr">  kind:</span> Backup
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    name:</span> demo1-backup-s3
-<span class="hljs-attr">    namespace:</span> test1
-<span class="hljs-attr">  spec:</span>
-<span class="hljs-attr">    backupType:</span> full
-<span class="hljs-attr">    serviceAccount:</span> tidb-backup-manager
-<span class="hljs-attr">    br:</span>
-<span class="hljs-attr">      cluster:</span> demo1
-<span class="hljs-attr">      sendCredToTikv:</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">      clusterNamespace:</span> test1
-      <span class="hljs-comment"># enableTLSClient: false</span>
-      <span class="hljs-comment"># logLevel: info</span>
-      <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
-      <span class="hljs-comment"># concurrency: 4</span>
-      <span class="hljs-comment"># rateLimit: 0</span>
-      <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
-      <span class="hljs-comment"># checksum: true</span>
-<span class="hljs-attr">    from:</span>
-<span class="hljs-attr">      host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      port:</span> &lt;tidb-port<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      user:</span> &lt;tidb-user<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      secretName:</span> backup-demo1-tidb-secret
-<span class="hljs-attr">    s3:</span>
-<span class="hljs-attr">      provider:</span> aws
-<span class="hljs-attr">      region:</span> us-west<span class="hljs-bullet">-1</span>
-<span class="hljs-attr">      bucket:</span> my-bucket
-<span class="hljs-attr">      prefix:</span> my-folder
-</code></pre>
-</li>
+<li>&#x521B;&#x5EFA; <code>Backup</code> CR&#xFF0C;&#x901A;&#x8FC7; accessKey &#x548C; secretKey &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;:</li>
 </ul>
+<pre><code class="lang-shell">kubectl apply -f backup-aws-s3.yaml
+</code></pre>
+<p><code>backup-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> Backup
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo1-backup-s3
+<span class="hljs-attr">  namespace:</span> test1
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  backupType:</span> full
+<span class="hljs-attr">  br:</span>
+<span class="hljs-attr">    cluster:</span> demo1
+<span class="hljs-attr">    clusterNamespace:</span> test1
+    <span class="hljs-comment"># enableTLSClient: false</span>
+    <span class="hljs-comment"># logLevel: info</span>
+    <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+    <span class="hljs-comment"># concurrency: 4</span>
+    <span class="hljs-comment"># rateLimit: 0</span>
+    <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+    <span class="hljs-comment"># checksum: true</span>
+    <span class="hljs-comment"># sendCredToTikv: true</span>
+<span class="hljs-attr">  from:</span>
+<span class="hljs-attr">    host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    secretName:</span> backup-demo1-tidb-secret
+<span class="hljs-attr">  s3:</span>
+<span class="hljs-attr">    provider:</span> aws
+<span class="hljs-attr">    secretName:</span> s3-secret
+<span class="hljs-attr">    region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">    bucket:</span> my-bucket
+<span class="hljs-attr">    prefix:</span> my-folder
+</code></pre>
+<ul>
+<li>&#x521B;&#x5EFA; <code>Backup</code> CR&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;:</li>
+</ul>
+<pre><code class="lang-shell">kubectl apply -f backup-aws-s3.yaml
+</code></pre>
+<p><code>backup-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> Backup
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo1-backup-s3
+<span class="hljs-attr">  namespace:</span> test1
+<span class="hljs-attr">  annotations:</span>
+    iam.amazonaws.com/role: arn:aws:iam::<span class="hljs-number">123456789012</span>:role/user
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  backupType:</span> full
+<span class="hljs-attr">  br:</span>
+<span class="hljs-attr">    cluster:</span> demo1
+<span class="hljs-attr">    sendCredToTikv:</span> <span class="hljs-literal">false</span>
+<span class="hljs-attr">    clusterNamespace:</span> test1
+    <span class="hljs-comment"># enableTLSClient: false</span>
+    <span class="hljs-comment"># logLevel: info</span>
+    <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+    <span class="hljs-comment"># concurrency: 4</span>
+    <span class="hljs-comment"># rateLimit: 0</span>
+    <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+    <span class="hljs-comment"># checksum: true</span>
+<span class="hljs-attr">  from:</span>
+<span class="hljs-attr">    host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    secretName:</span> backup-demo1-tidb-secret
+<span class="hljs-attr">  s3:</span>
+<span class="hljs-attr">    provider:</span> aws
+<span class="hljs-attr">    region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">    bucket:</span> my-bucket
+<span class="hljs-attr">    prefix:</span> my-folder
+</code></pre>
+<ul>
+<li>&#x521B;&#x5EFA; <code>Backup</code> CR&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;:</li>
+</ul>
+<pre><code class="lang-shell">kubectl apply -f backup-aws-s3.yaml
+</code></pre>
+<p><code>backup-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> Backup
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo1-backup-s3
+<span class="hljs-attr">  namespace:</span> test1
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  backupType:</span> full
+<span class="hljs-attr">  serviceAccount:</span> tidb-backup-manager
+<span class="hljs-attr">  br:</span>
+<span class="hljs-attr">    cluster:</span> demo1
+<span class="hljs-attr">    sendCredToTikv:</span> <span class="hljs-literal">false</span>
+<span class="hljs-attr">    clusterNamespace:</span> test1
+    <span class="hljs-comment"># enableTLSClient: false</span>
+    <span class="hljs-comment"># logLevel: info</span>
+    <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+    <span class="hljs-comment"># concurrency: 4</span>
+    <span class="hljs-comment"># rateLimit: 0</span>
+    <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+    <span class="hljs-comment"># checksum: true</span>
+<span class="hljs-attr">  from:</span>
+<span class="hljs-attr">    host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    secretName:</span> backup-demo1-tidb-secret
+<span class="hljs-attr">  s3:</span>
+<span class="hljs-attr">    provider:</span> aws
+<span class="hljs-attr">    region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">    bucket:</span> my-bucket
+<span class="hljs-attr">    prefix:</span> my-folder
+</code></pre>
 <p>&#x4EE5;&#x4E0A;&#x4E09;&#x4E2A;&#x793A;&#x4F8B;&#x5206;&#x522B;&#x4F7F;&#x7528;&#x4E09;&#x79CD;&#x6388;&#x6743;&#x6A21;&#x5F0F;&#x5C06;&#x6570;&#x636E;&#x5BFC;&#x51FA;&#x5230; Amazon S3 &#x5B58;&#x50A8;&#x4E0A;&#x3002;Amazon S3 &#x7684; <code>acl</code>&#x3001;<code>endpoint</code>&#x3001;<code>storageClass</code> &#x914D;&#x7F6E;&#x9879;&#x5747;&#x53EF;&#x4EE5;&#x7701;&#x7565;&#x3002;</p>
 <p>Amazon S3 &#x652F;&#x6301;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD; access-control list (ACL) &#x7B56;&#x7565;&#xFF1A;</p>
 <ul>
@@ -3045,7 +3033,7 @@ kubectl edit tc demo1 -n test1
 </ul>
 <p>&#x5982;&#x679C;&#x4E0D;&#x8BBE;&#x7F6E; <code>storageClass</code>&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528; <code>STANDARD_IA</code>&#x3002;&#x8FD9;&#x51E0;&#x79CD;&#x5B58;&#x50A8;&#x7C7B;&#x578B;&#x7684;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#x53C2;&#x8003; <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x3002;</p>
 <p>&#x521B;&#x5EFA;&#x597D; <code>Backup</code> CR &#x540E;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x5982;&#x4E0B;&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x5907;&#x4EFD;&#x72B6;&#x6001;&#xFF1A;</p>
-<pre><code class="lang-shell"> kubectl get bk -n test1 -o wide
+<pre><code class="lang-shell">kubectl get bk -n test1 -o wide
 </code></pre>
 <p>&#x66F4;&#x591A; <code>Backup</code> CR &#x5B57;&#x6BB5;&#x7684;&#x8BE6;&#x7EC6;&#x89E3;&#x91CA;:</p>
 <ul>
@@ -3072,131 +3060,132 @@ kubectl edit tc demo1 -n test1
 <p>&#x540C; <a href="#ad-hoc-&#x5168;&#x91CF;&#x5907;&#x4EFD;&#x73AF;&#x5883;&#x51C6;&#x5907;">Ad-hoc &#x5168;&#x91CF;&#x5907;&#x4EFD;&#x73AF;&#x5883;&#x51C6;&#x5907;</a>&#x3002;</p>
 <h3 id="&#x4F7F;&#x7528;-br-&#x5B9A;&#x65F6;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5230;-amazon-s3-&#x7684;&#x5B58;&#x50A8;">&#x4F7F;&#x7528; BR &#x5B9A;&#x65F6;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5230; Amazon S3 &#x7684;&#x5B58;&#x50A8;</h3>
 <ul>
-<li><p>&#x521B;&#x5EFA; <code>BackupSchedule</code> CR&#xFF0C;&#x5F00;&#x542F; TiDB &#x96C6;&#x7FA4;&#x5B9A;&#x65F6;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x901A;&#x8FC7; accessKey &#x548C; secretKey &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</p>
-<pre><code class="lang-shell">  kubectl apply -f backup-scheduler-aws-s3.yaml
-</code></pre>
-<p>  <code>backup-scheduler-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-yaml"><span class="hljs-bullet">  -</span>--
-<span class="hljs-attr">  apiVersion:</span> pingcap.com/v1alpha1
-<span class="hljs-attr">  kind:</span> BackupSchedule
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    name:</span> demo1-backup-schedule-s3
-<span class="hljs-attr">    namespace:</span> test1
-<span class="hljs-attr">  spec:</span>
-    <span class="hljs-comment">#maxBackups: 5</span>
-    <span class="hljs-comment">#pause: true</span>
-<span class="hljs-attr">    maxReservedTime:</span> <span class="hljs-string">&quot;3h&quot;</span>
-<span class="hljs-attr">    schedule:</span> <span class="hljs-string">&quot;*/2 * * * *&quot;</span>
-<span class="hljs-attr">    backupTemplate:</span>
-<span class="hljs-attr">      backupType:</span> full
-<span class="hljs-attr">      br:</span>
-<span class="hljs-attr">        cluster:</span> demo1
-<span class="hljs-attr">        clusterNamespace:</span> test1
-        <span class="hljs-comment"># enableTLSClient: false</span>
-        <span class="hljs-comment"># logLevel: info</span>
-        <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
-        <span class="hljs-comment"># concurrency: 4</span>
-        <span class="hljs-comment"># rateLimit: 0</span>
-        <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
-        <span class="hljs-comment"># checksum: true</span>
-        <span class="hljs-comment"># sendCredToTikv: true</span>
-<span class="hljs-attr">      from:</span>
-<span class="hljs-attr">        host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        port:</span> &lt;tidb-port<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        user:</span> &lt;tidb-user<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        secretName:</span> backup-demo1-tidb-secret
-<span class="hljs-attr">      s3:</span>
-<span class="hljs-attr">        provider:</span> aws
-<span class="hljs-attr">        secretName:</span> s3-secret
-<span class="hljs-attr">        region:</span> us-west<span class="hljs-bullet">-1</span>
-<span class="hljs-attr">        bucket:</span> my-bucket
-<span class="hljs-attr">        prefix:</span> my-folder
-</code></pre>
-</li>
-<li><p>&#x521B;&#x5EFA; <code>BackupSchedule</code> CR&#xFF0C;&#x5F00;&#x542F; TiDB &#x96C6;&#x7FA4;&#x5B9A;&#x65F6;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</p>
-<pre><code class="lang-shell">  kubectl apply -f backup-scheduler-aws-s3.yaml
-</code></pre>
-<p>  <code>backup-scheduler-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-yaml"><span class="hljs-bullet">  -</span>--
-<span class="hljs-attr">  apiVersion:</span> pingcap.com/v1alpha1
-<span class="hljs-attr">  kind:</span> BackupSchedule
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    name:</span> demo1-backup-schedule-s3
-<span class="hljs-attr">    namespace:</span> test1
-<span class="hljs-attr">    annotations:</span>
-      iam.amazonaws.com/role: arn:aws:iam::<span class="hljs-number">123456789012</span>:role/user
-<span class="hljs-attr">  spec:</span>
-    <span class="hljs-comment">#maxBackups: 5</span>
-    <span class="hljs-comment">#pause: true</span>
-<span class="hljs-attr">    maxReservedTime:</span> <span class="hljs-string">&quot;3h&quot;</span>
-<span class="hljs-attr">    schedule:</span> <span class="hljs-string">&quot;*/2 * * * *&quot;</span>
-<span class="hljs-attr">    backupTemplate:</span>
-<span class="hljs-attr">      backupType:</span> full
-<span class="hljs-attr">      br:</span>
-<span class="hljs-attr">        cluster:</span> demo1
-<span class="hljs-attr">        sendCredToTikv:</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">        clusterNamespace:</span> test1
-        <span class="hljs-comment"># enableTLSClient: false</span>
-        <span class="hljs-comment"># logLevel: info</span>
-        <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
-        <span class="hljs-comment"># concurrency: 4</span>
-        <span class="hljs-comment"># rateLimit: 0</span>
-        <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
-        <span class="hljs-comment"># checksum: true</span>
-<span class="hljs-attr">      from:</span>
-<span class="hljs-attr">        host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        port:</span> &lt;tidb-port<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        user:</span> &lt;tidb-user<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        secretName:</span> backup-demo1-tidb-secret
-<span class="hljs-attr">      s3:</span>
-<span class="hljs-attr">        provider:</span> aws
-<span class="hljs-attr">        region:</span> us-west<span class="hljs-bullet">-1</span>
-<span class="hljs-attr">        bucket:</span> my-bucket
-<span class="hljs-attr">        prefix:</span> my-folder
-</code></pre>
-</li>
-<li><p>&#x521B;&#x5EFA; <code>BackupSchedule</code> CR&#xFF0C;&#x5F00;&#x542F; TiDB &#x96C6;&#x7FA4;&#x5B9A;&#x65F6;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C; &#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</p>
-<pre><code class="lang-shell">  kubectl apply -f backup-scheduler-aws-s3.yaml
-</code></pre>
-<p>  <code>backup-scheduler-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-yaml"><span class="hljs-bullet">  -</span>--
-<span class="hljs-attr">  apiVersion:</span> pingcap.com/v1alpha1
-<span class="hljs-attr">  kind:</span> BackupSchedule
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    name:</span> demo1-backup-schedule-s3
-<span class="hljs-attr">    namespace:</span> test1
-<span class="hljs-attr">  spec:</span>
-    <span class="hljs-comment">#maxBackups: 5</span>
-    <span class="hljs-comment">#pause: true</span>
-<span class="hljs-attr">    maxReservedTime:</span> <span class="hljs-string">&quot;3h&quot;</span>
-<span class="hljs-attr">    schedule:</span> <span class="hljs-string">&quot;*/2 * * * *&quot;</span>
-<span class="hljs-attr">    serviceAccount:</span> tidb-backup-manager
-<span class="hljs-attr">    backupTemplate:</span>
-<span class="hljs-attr">      backupType:</span> full
-<span class="hljs-attr">      br:</span>
-<span class="hljs-attr">        cluster:</span> demo1
-<span class="hljs-attr">        sendCredToTikv:</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">        clusterNamespace:</span> test1
-        <span class="hljs-comment"># enableTLSClient: false</span>
-        <span class="hljs-comment"># logLevel: info</span>
-        <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
-        <span class="hljs-comment"># concurrency: 4</span>
-        <span class="hljs-comment"># rateLimit: 0</span>
-        <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
-        <span class="hljs-comment"># checksum: true</span>
-<span class="hljs-attr">      from:</span>
-<span class="hljs-attr">        host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        port:</span> &lt;tidb-port<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        user:</span> &lt;tidb-user<span class="hljs-string">&gt;
-</span><span class="hljs-attr">        secretName:</span> backup-demo1-tidb-secret
-<span class="hljs-attr">      s3:</span>
-<span class="hljs-attr">        provider:</span> aws
-<span class="hljs-attr">        region:</span> us-west<span class="hljs-bullet">-1</span>
-<span class="hljs-attr">        bucket:</span> my-bucket
-<span class="hljs-attr">        prefix:</span> my-folder
-</code></pre>
-</li>
+<li>&#x521B;&#x5EFA; <code>BackupSchedule</code> CR&#xFF0C;&#x5F00;&#x542F; TiDB &#x96C6;&#x7FA4;&#x5B9A;&#x65F6;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x901A;&#x8FC7; accessKey &#x548C; secretKey &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</li>
 </ul>
+<pre><code class="lang-shell">kubectl apply -f backup-scheduler-aws-s3.yaml
+</code></pre>
+<p><code>backup-scheduler-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> BackupSchedule
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo1-backup-schedule-s3
+<span class="hljs-attr">  namespace:</span> test1
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-comment">#maxBackups: 5</span>
+  <span class="hljs-comment">#pause: true</span>
+<span class="hljs-attr">  maxReservedTime:</span> <span class="hljs-string">&quot;3h&quot;</span>
+<span class="hljs-attr">  schedule:</span> <span class="hljs-string">&quot;*/2 * * * *&quot;</span>
+<span class="hljs-attr">  backupTemplate:</span>
+<span class="hljs-attr">    backupType:</span> full
+<span class="hljs-attr">    br:</span>
+<span class="hljs-attr">      cluster:</span> demo1
+<span class="hljs-attr">      clusterNamespace:</span> test1
+      <span class="hljs-comment"># enableTLSClient: false</span>
+      <span class="hljs-comment"># logLevel: info</span>
+      <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+      <span class="hljs-comment"># concurrency: 4</span>
+      <span class="hljs-comment"># rateLimit: 0</span>
+      <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+      <span class="hljs-comment"># checksum: true</span>
+      <span class="hljs-comment"># sendCredToTikv: true</span>
+<span class="hljs-attr">    from:</span>
+<span class="hljs-attr">      host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      secretName:</span> backup-demo1-tidb-secret
+<span class="hljs-attr">    s3:</span>
+<span class="hljs-attr">      provider:</span> aws
+<span class="hljs-attr">      secretName:</span> s3-secret
+<span class="hljs-attr">      region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">      bucket:</span> my-bucket
+<span class="hljs-attr">      prefix:</span> my-folder
+</code></pre>
+<ul>
+<li>&#x521B;&#x5EFA; <code>BackupSchedule</code> CR&#xFF0C;&#x5F00;&#x542F; TiDB &#x96C6;&#x7FA4;&#x5B9A;&#x65F6;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-shell">kubectl apply -f backup-scheduler-aws-s3.yaml
+</code></pre>
+<p><code>backup-scheduler-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> BackupSchedule
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo1-backup-schedule-s3
+<span class="hljs-attr">  namespace:</span> test1
+<span class="hljs-attr">  annotations:</span>
+    iam.amazonaws.com/role: arn:aws:iam::<span class="hljs-number">123456789012</span>:role/user
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-comment">#maxBackups: 5</span>
+  <span class="hljs-comment">#pause: true</span>
+<span class="hljs-attr">  maxReservedTime:</span> <span class="hljs-string">&quot;3h&quot;</span>
+<span class="hljs-attr">  schedule:</span> <span class="hljs-string">&quot;*/2 * * * *&quot;</span>
+<span class="hljs-attr">  backupTemplate:</span>
+<span class="hljs-attr">    backupType:</span> full
+<span class="hljs-attr">    br:</span>
+<span class="hljs-attr">      cluster:</span> demo1
+<span class="hljs-attr">      sendCredToTikv:</span> <span class="hljs-literal">false</span>
+<span class="hljs-attr">      clusterNamespace:</span> test1
+      <span class="hljs-comment"># enableTLSClient: false</span>
+      <span class="hljs-comment"># logLevel: info</span>
+      <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+      <span class="hljs-comment"># concurrency: 4</span>
+      <span class="hljs-comment"># rateLimit: 0</span>
+      <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+      <span class="hljs-comment"># checksum: true</span>
+<span class="hljs-attr">    from:</span>
+<span class="hljs-attr">      host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      secretName:</span> backup-demo1-tidb-secret
+<span class="hljs-attr">    s3:</span>
+<span class="hljs-attr">      provider:</span> aws
+<span class="hljs-attr">      region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">      bucket:</span> my-bucket
+<span class="hljs-attr">      prefix:</span> my-folder
+</code></pre>
+<ul>
+<li>&#x521B;&#x5EFA; <code>BackupSchedule</code> CR&#xFF0C;&#x5F00;&#x542F; TiDB &#x96C6;&#x7FA4;&#x5B9A;&#x65F6;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C; &#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-shell">kubectl apply -f backup-scheduler-aws-s3.yaml
+</code></pre>
+<p><code>backup-scheduler-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> BackupSchedule
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo1-backup-schedule-s3
+<span class="hljs-attr">  namespace:</span> test1
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-comment">#maxBackups: 5</span>
+  <span class="hljs-comment">#pause: true</span>
+<span class="hljs-attr">  maxReservedTime:</span> <span class="hljs-string">&quot;3h&quot;</span>
+<span class="hljs-attr">  schedule:</span> <span class="hljs-string">&quot;*/2 * * * *&quot;</span>
+<span class="hljs-attr">  serviceAccount:</span> tidb-backup-manager
+<span class="hljs-attr">  backupTemplate:</span>
+<span class="hljs-attr">    backupType:</span> full
+<span class="hljs-attr">    br:</span>
+<span class="hljs-attr">      cluster:</span> demo1
+<span class="hljs-attr">      sendCredToTikv:</span> <span class="hljs-literal">false</span>
+<span class="hljs-attr">      clusterNamespace:</span> test1
+      <span class="hljs-comment"># enableTLSClient: false</span>
+      <span class="hljs-comment"># logLevel: info</span>
+      <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+      <span class="hljs-comment"># concurrency: 4</span>
+      <span class="hljs-comment"># rateLimit: 0</span>
+      <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+      <span class="hljs-comment"># checksum: true</span>
+<span class="hljs-attr">    from:</span>
+<span class="hljs-attr">      host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">      secretName:</span> backup-demo1-tidb-secret
+<span class="hljs-attr">    s3:</span>
+<span class="hljs-attr">      provider:</span> aws
+<span class="hljs-attr">      region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">      bucket:</span> my-bucket
+<span class="hljs-attr">      prefix:</span> my-folder
+</code></pre>
 <p>&#x5B9A;&#x65F6;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x5B9A;&#x65F6;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#x7684;&#x72B6;&#x6001;&#xFF1A;</p>
 <pre><code class="lang-shell">kubectl get bks -n test1 -o wide
 </code></pre>
@@ -3216,180 +3205,168 @@ kubectl edit tc demo1 -n test1
 <p>&#x4ECE;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;&#x6388;&#x6743;&#x65B9;&#x5F0F;&#x4E2D;&#x9009;&#x62E9;&#x4E00;&#x79CD;&#x3002;</p>
 <h4 id="&#x901A;&#x8FC7;-accesskey-&#x548C;-secretkey-&#x6388;&#x6743;">&#x901A;&#x8FC7; AccessKey &#x548C; SecretKey &#x6388;&#x6743;</h4>
 <p>(1) &#x4E0B;&#x8F7D;&#x6587;&#x4EF6; <a href="https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml" target="_blank">backup-rbac.yaml</a>&#xFF0C;&#x5E76;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x5728; <code>test2</code> &#x8FD9;&#x4E2A; namespace &#x4E2D;&#x521B;&#x5EFA;&#x5907;&#x4EFD;&#x9700;&#x8981;&#x7684; RBAC &#x76F8;&#x5173;&#x8D44;&#x6E90;&#xFF1A;</p>
-<pre><code>```shell
-kubectl apply -f backup-rbac.yaml -n test2
-```
-</code></pre><p>(2) &#x521B;&#x5EFA; <code>s3-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; S3 &#x517C;&#x5BB9;&#x5B58;&#x50A8;&#x7684;&#x51ED;&#x8BC1;&#x3002;</p>
-<pre><code>```shell
-kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test2
-```
-</code></pre><p>(3) &#x521B;&#x5EFA; <code>restore-demo2-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684; root &#x8D26;&#x53F7;&#x548C;&#x5BC6;&#x94A5;&#x3002;</p>
-<pre><code>```shell
-kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test2
-```
-</code></pre><h4 id="&#x901A;&#x8FC7;-iam-&#x7ED1;&#x5B9A;-pod-&#x6388;&#x6743;">&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;</h4>
+<pre><code class="lang-shell">kubectl apply -f backup-rbac.yaml -n test2
+</code></pre>
+<p>(2) &#x521B;&#x5EFA; <code>s3-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; S3 &#x517C;&#x5BB9;&#x5B58;&#x50A8;&#x7684;&#x51ED;&#x8BC1;&#x3002;</p>
+<pre><code class="lang-shell">kubectl create secret generic s3-secret --from-literal=access_key=xxx --from-literal=secret_key=yyy --namespace=test2
+</code></pre>
+<p>(3) &#x521B;&#x5EFA; <code>restore-demo2-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684; root &#x8D26;&#x53F7;&#x548C;&#x5BC6;&#x94A5;&#x3002;</p>
+<pre><code class="lang-shell">kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test2
+</code></pre>
+<h4 id="&#x901A;&#x8FC7;-iam-&#x7ED1;&#x5B9A;-pod-&#x6388;&#x6743;">&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;</h4>
 <p>(1) &#x4E0B;&#x8F7D;&#x6587;&#x4EF6; <a href="https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml" target="_blank">backup-rbac.yaml</a>&#xFF0C;&#x5E76;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x5728; <code>test2</code> &#x8FD9;&#x4E2A; namespace &#x4E2D;&#x521B;&#x5EFA;&#x5907;&#x4EFD;&#x9700;&#x8981;&#x7684; RBAC &#x76F8;&#x5173;&#x8D44;&#x6E90;&#xFF1A;</p>
-<pre><code>```shell
-kubectl apply -f backup-rbac.yaml -n test2
-```
-</code></pre><p>(2) &#x521B;&#x5EFA; <code>restore-demo2-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684; root &#x8D26;&#x53F7;&#x548C;&#x5BC6;&#x94A5;&#xFF1A;</p>
-<pre><code>```shell
-kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test2
-```
-</code></pre><p>(3) &#x521B;&#x5EFA; IAM &#x89D2;&#x8272;&#xFF1A;</p>
-<pre><code>&#x53EF;&#x4EE5;&#x53C2;&#x8003; [AWS &#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) &#x6765;&#x4E3A;&#x8D26;&#x53F7;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; IAM &#x89D2;&#x8272;&#xFF0C;&#x5E76;&#x4E14;&#x901A;&#x8FC7; [AWS &#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html)&#x4E3A; IAM &#x89D2;&#x8272;&#x8D4B;&#x4E88;&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;&#x3002;&#x7531;&#x4E8E; `Restore` &#x9700;&#x8981;&#x8BBF;&#x95EE; AWS &#x7684; S3 &#x5B58;&#x50A8;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x7ED9; IAM &#x8D4B;&#x4E88;&#x4E86; `AmazonS3FullAccess` &#x7684;&#x6743;&#x9650;&#x3002;
-</code></pre><p>(4) &#x7ED1;&#x5B9A; IAM &#x5230; TiKV Pod:</p>
-<pre><code>&#x5728;&#x4F7F;&#x7528; BR &#x5907;&#x4EFD;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;TiKV Pod &#x548C; BR Pod &#x4E00;&#x6837;&#x9700;&#x8981;&#x5BF9; S3 &#x5B58;&#x50A8;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x7ED9; TiKV Pod &#x6253;&#x4E0A; annotation &#x6765;&#x7ED1;&#x5B9A; IAM &#x89D2;&#x8272;&#x3002;
-
-```shell
-kubectl edit tc demo2 -n test2
-```
-
-&#x627E;&#x5230; `spec.tikv.annotations`, &#x589E;&#x52A0; annotation `arn:aws:iam::123456789012:role/user`, &#x7136;&#x540E;&#x9000;&#x51FA;&#x7F16;&#x8F91;, &#x7B49;&#x5230; TiKV Pod &#x91CD;&#x542F;&#x540E;&#xFF0C;&#x67E5;&#x770B; Pod &#x662F;&#x5426;&#x52A0;&#x4E0A;&#x4E86;&#x8FD9;&#x4E2A; annotation&#x3002;
-</code></pre><blockquote>
+<pre><code class="lang-shell">kubectl apply -f backup-rbac.yaml -n test2
+</code></pre>
+<p>(2) &#x521B;&#x5EFA; <code>restore-demo2-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684; root &#x8D26;&#x53F7;&#x548C;&#x5BC6;&#x94A5;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test2
+</code></pre>
+<p>(3) &#x521B;&#x5EFA; IAM &#x89D2;&#x8272;&#xFF1A;</p>
+<p>&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a> &#x6765;&#x4E3A;&#x8D26;&#x53F7;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; IAM &#x89D2;&#x8272;&#xFF0C;&#x5E76;&#x4E14;&#x901A;&#x8FC7; <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x4E3A; IAM &#x89D2;&#x8272;&#x8D4B;&#x4E88;&#x9700;&#x8981;&#x7684;&#x6743;&#x9650;&#x3002;&#x7531;&#x4E8E; <code>Restore</code> &#x9700;&#x8981;&#x8BBF;&#x95EE; AWS &#x7684; S3 &#x5B58;&#x50A8;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x7ED9; IAM &#x8D4B;&#x4E88;&#x4E86; <code>AmazonS3FullAccess</code> &#x7684;&#x6743;&#x9650;&#x3002;</p>
+<p>(4) &#x7ED1;&#x5B9A; IAM &#x5230; TiKV Pod:</p>
+<p>&#x5728;&#x4F7F;&#x7528; BR &#x5907;&#x4EFD;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;TiKV Pod &#x548C; BR Pod &#x4E00;&#x6837;&#x9700;&#x8981;&#x5BF9; S3 &#x5B58;&#x50A8;&#x8FDB;&#x884C;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x7ED9; TiKV Pod &#x6253;&#x4E0A; annotation &#x6765;&#x7ED1;&#x5B9A; IAM &#x89D2;&#x8272;&#x3002;</p>
+<pre><code class="lang-shell">kubectl edit tc demo2 -n test2
+</code></pre>
+<p>&#x627E;&#x5230; <code>spec.tikv.annotations</code>, &#x589E;&#x52A0; annotation <code>arn:aws:iam::123456789012:role/user</code>, &#x7136;&#x540E;&#x9000;&#x51FA;&#x7F16;&#x8F91;, &#x7B49;&#x5230; TiKV Pod &#x91CD;&#x542F;&#x540E;&#xFF0C;&#x67E5;&#x770B; Pod &#x662F;&#x5426;&#x52A0;&#x4E0A;&#x4E86;&#x8FD9;&#x4E2A; annotation&#x3002;</p>
+<blockquote>
 <p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
 <p><code>arn:aws:iam::123456789012:role/user</code> &#x4E3A;&#x6B65;&#x9AA4; (3) &#x4E2D;&#x521B;&#x5EFA;&#x7684; IAM &#x89D2;&#x8272;&#x3002;</p>
 </blockquote>
 <h4 id="&#x901A;&#x8FC7;-iam-&#x7ED1;&#x5B9A;-serviceaccount-&#x6388;&#x6743;">&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;</h4>
 <p>(1) &#x4E0B;&#x8F7D;&#x6587;&#x4EF6; <a href="https://github.com/pingcap/tidb-operator/blob/master/manifests/backup/backup-rbac.yaml" target="_blank">backup-rbac.yaml</a>&#xFF0C;&#x5E76;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x5728; <code>test2</code> &#x8FD9;&#x4E2A; namespace &#x4E2D;&#x521B;&#x5EFA;&#x5907;&#x4EFD;&#x9700;&#x8981;&#x7684; RBAC &#x76F8;&#x5173;&#x8D44;&#x6E90;&#xFF1A;</p>
-<pre><code>```shell
-kubectl apply -f backup-rbac.yaml -n test2
-```
-</code></pre><p>(2) &#x521B;&#x5EFA; <code>restore-demo2-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684; root &#x8D26;&#x53F7;&#x548C;&#x5BC6;&#x94A5;:</p>
-<pre><code>```shell
-kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test2
-```
-</code></pre><p>(3) &#x5728;&#x96C6;&#x7FA4;&#x4E0A;&#x4E3A;&#x670D;&#x52A1;&#x5E10;&#x6237;&#x542F;&#x7528; IAM &#x89D2;&#x8272;&#xFF1A;</p>
-<pre><code>&#x53EF;&#x4EE5;&#x53C2;&#x8003; [AWS &#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)&#x5F00;&#x542F;&#x6240;&#x5728;&#x7684; EKS &#x96C6;&#x7FA4;&#x7684; IAM &#x89D2;&#x8272;&#x6388;&#x6743;&#x3002;
-</code></pre><p>(4) &#x521B;&#x5EFA; IAM &#x89D2;&#x8272;:</p>
-<pre><code>&#x53EF;&#x4EE5;&#x53C2;&#x8003; [AWS &#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html) &#x521B;&#x5EFA;&#x4E00;&#x4E2A; IAM &#x89D2;&#x8272;&#xFF0C;&#x4E3A;&#x89D2;&#x8272;&#x8D4B;&#x4E88; `AmazonS3FullAccess` &#x7684;&#x6743;&#x9650;&#xFF0C;&#x5E76;&#x4E14;&#x7F16;&#x8F91;&#x89D2;&#x8272;&#x7684; `Trust relationships`&#x3002;
-</code></pre><p>(5) &#x7ED1;&#x5B9A; IAM &#x5230; ServiceAccount &#x8D44;&#x6E90;&#x4E0A;&#xFF1A;</p>
-<pre><code>```shell
-kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test2
-```
-</code></pre><p>(6) &#x5C06; ServiceAccount &#x7ED1;&#x5B9A;&#x5230; TiKV Pod&#xFF1A;</p>
-<pre><code>```shell
-kubectl edit tc demo2 -n test2
-```
-
-&#x5C06; `spec.tikv.serviceAccount` &#x4FEE;&#x6539;&#x4E3A; tidb-backup-manager , &#x7B49;&#x5230; TiKV Pod &#x91CD;&#x542F;&#x540E;&#xFF0C;&#x67E5;&#x770B; Pod &#x7684; `serviceAccountName` &#x662F;&#x5426;&#x6709;&#x53D8;&#x5316;&#x3002;
-</code></pre><blockquote>
+<pre><code class="lang-shell">kubectl apply -f backup-rbac.yaml -n test2
+</code></pre>
+<p>(2) &#x521B;&#x5EFA; <code>restore-demo2-tidb-secret</code> secret&#x3002;&#x8BE5; secret &#x5B58;&#x653E;&#x7528;&#x4E8E;&#x8BBF;&#x95EE; TiDB &#x96C6;&#x7FA4;&#x7684; root &#x8D26;&#x53F7;&#x548C;&#x5BC6;&#x94A5;:</p>
+<pre><code class="lang-shell">kubectl create secret generic restore-demo2-tidb-secret --from-literal=password=&lt;password&gt; --namespace=test2
+</code></pre>
+<p>(3) &#x5728;&#x96C6;&#x7FA4;&#x4E0A;&#x4E3A;&#x670D;&#x52A1;&#x5E10;&#x6237;&#x542F;&#x7528; IAM &#x89D2;&#x8272;&#xFF1A;</p>
+<p>&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x5F00;&#x542F;&#x6240;&#x5728;&#x7684; EKS &#x96C6;&#x7FA4;&#x7684; IAM &#x89D2;&#x8272;&#x6388;&#x6743;&#x3002;</p>
+<p>(4) &#x521B;&#x5EFA; IAM &#x89D2;&#x8272;:</p>
+<p>&#x53EF;&#x4EE5;&#x53C2;&#x8003; <a href="https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html" target="_blank">AWS &#x5B98;&#x65B9;&#x6587;&#x6863;</a> &#x521B;&#x5EFA;&#x4E00;&#x4E2A; IAM &#x89D2;&#x8272;&#xFF0C;&#x4E3A;&#x89D2;&#x8272;&#x8D4B;&#x4E88; <code>AmazonS3FullAccess</code> &#x7684;&#x6743;&#x9650;&#xFF0C;&#x5E76;&#x4E14;&#x7F16;&#x8F91;&#x89D2;&#x8272;&#x7684; <code>Trust relationships</code>&#x3002;</p>
+<p>(5) &#x7ED1;&#x5B9A; IAM &#x5230; ServiceAccount &#x8D44;&#x6E90;&#x4E0A;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl annotate sa tidb-backup-manager -n eks.amazonaws.com/role-arn=arn:aws:iam::123456789012:role/user --namespace=test2
+</code></pre>
+<p>(6) &#x5C06; ServiceAccount &#x7ED1;&#x5B9A;&#x5230; TiKV Pod&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl edit tc demo2 -n test2
+</code></pre>
+<p>&#x5C06; <code>spec.tikv.serviceAccount</code> &#x4FEE;&#x6539;&#x4E3A; tidb-backup-manager , &#x7B49;&#x5230; TiKV Pod &#x91CD;&#x542F;&#x540E;&#xFF0C;&#x67E5;&#x770B; Pod &#x7684; <code>serviceAccountName</code> &#x662F;&#x5426;&#x6709;&#x53D8;&#x5316;&#x3002;</p>
+<blockquote>
 <p><strong>&#x6CE8;&#x610F;&#xFF1A;</strong></p>
 <p><code>arn:aws:iam::123456789012:role/user</code> &#x4E3A;&#x6B65;&#x9AA4; (4) &#x4E2D;&#x521B;&#x5EFA;&#x7684; IAM &#x89D2;&#x8272;&#x3002;</p>
 </blockquote>
 <h3 id="&#x5C06;&#x6307;&#x5B9A;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x6062;&#x590D;&#x5230;-tidb-&#x96C6;&#x7FA4;">&#x5C06;&#x6307;&#x5B9A;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x6062;&#x590D;&#x5230; TiDB &#x96C6;&#x7FA4;</h3>
 <ul>
-<li><p>&#x521B;&#x5EFA; <code>Restore</code> CR&#xFF0C;&#x901A;&#x8FC7; accessKey &#x548C; secretKey &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x6062;&#x590D;&#x96C6;&#x7FA4;&#xFF1A;</p>
-<pre><code class="lang-shell">  kubectl apply -f resotre-aws-s3.yaml
-</code></pre>
-<p>  <code>restore-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-yaml"><span class="hljs-bullet">  -</span>--
-<span class="hljs-attr">  apiVersion:</span> pingcap.com/v1alpha1
-<span class="hljs-attr">  kind:</span> Restore
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    name:</span> demo2-restore-s3
-<span class="hljs-attr">    namespace:</span> test2
-<span class="hljs-attr">  spec:</span>
-<span class="hljs-attr">    br:</span>
-<span class="hljs-attr">      cluster:</span> demo2
-<span class="hljs-attr">      clusterNamespace:</span> test2
-      <span class="hljs-comment"># enableTLSClient: false</span>
-      <span class="hljs-comment"># logLevel: info</span>
-      <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
-      <span class="hljs-comment"># concurrency: 4</span>
-      <span class="hljs-comment"># rateLimit: 0</span>
-      <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
-      <span class="hljs-comment"># checksum: true</span>
-      <span class="hljs-comment"># sendCredToTikv: true</span>
-<span class="hljs-attr">    to:</span>
-<span class="hljs-attr">      host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      port:</span> &lt;tidb-port<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      user:</span> &lt;tidb-user<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      secretName:</span> restore-demo2-tidb-secret
-<span class="hljs-attr">    s3:</span>
-<span class="hljs-attr">      provider:</span> aws
-<span class="hljs-attr">      secretName:</span> s3-secret
-<span class="hljs-attr">      region:</span> us-west<span class="hljs-bullet">-1</span>
-<span class="hljs-attr">      bucket:</span> my-bucket
-<span class="hljs-attr">      prefix:</span> my-folder
-</code></pre>
-</li>
-<li><p>&#x521B;&#x5EFA; <code>Restore</code> CR&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</p>
-<pre><code class="lang-shell">  kubectl apply -f restore-aws-s3.yaml
-</code></pre>
-<p>  <code>restore-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-yaml"><span class="hljs-bullet">  -</span>--
-<span class="hljs-attr">  apiVersion:</span> pingcap.com/v1alpha1
-<span class="hljs-attr">  kind:</span> Restore
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    name:</span> demo2-restore-s3
-<span class="hljs-attr">    namespace:</span> test2
-<span class="hljs-attr">    annotations:</span>
-      iam.amazonaws.com/role: arn:aws:iam::<span class="hljs-number">123456789012</span>:role/user
-<span class="hljs-attr">  spec:</span>
-<span class="hljs-attr">    br:</span>
-<span class="hljs-attr">      cluster:</span> demo2
-<span class="hljs-attr">      sendCredToTikv:</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">      clusterNamespace:</span> test2
-      <span class="hljs-comment"># enableTLSClient: false</span>
-      <span class="hljs-comment"># logLevel: info</span>
-      <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
-      <span class="hljs-comment"># concurrency: 4</span>
-      <span class="hljs-comment"># rateLimit: 0</span>
-      <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
-      <span class="hljs-comment"># checksum: true</span>
-<span class="hljs-attr">    to:</span>
-<span class="hljs-attr">      host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      port:</span> &lt;tidb-port<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      user:</span> &lt;tidb-user<span class="hljs-string">&gt;
-</span><span class="hljs-attr">      secretName:</span> restore-demo2-tidb-secret
-<span class="hljs-attr">    s3:</span>
-<span class="hljs-attr">      provider:</span> aws
-<span class="hljs-attr">      region:</span> us-west<span class="hljs-bullet">-1</span>
-<span class="hljs-attr">      bucket:</span> my-bucket
-<span class="hljs-attr">      prefix:</span> my-folder
-</code></pre>
-</li>
-<li><p>&#x521B;&#x5EFA; <code>Restore</code> CR&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</p>
-<pre><code class="lang-shell">  kubectl apply -f restore-aws-s3.yaml
-</code></pre>
-<p>  <code>restore-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
-<h2 id="-yaml">  ```yaml</h2>
-<p>  apiVersion: pingcap.com/v1alpha1
-  kind: Restore
-  metadata:</p>
-<pre><code>name: demo2-restore-s3
-namespace: test2
-</code></pre><p>  spec:</p>
-<pre><code>serviceAccount: tidb-backup-manager
-br:
-  cluster: demo2
-  sendCredToTikv: false
-  clusterNamespace: test2
-  # enableTLSClient: false
-  # logLevel: info
-  # statusAddr: &lt;status-addr&gt;
-  # concurrency: 4
-  # rateLimit: 0
-  # timeAgo: &lt;time&gt;
-  # checksum: true
-to:
-  host: &lt;tidb-host-ip&gt;
-  port: &lt;tidb-port&gt;
-  user: &lt;tidb-user&gt;
-  secretName: restore-demo2-tidb-secret
-s3:
-  provider: aws
-  region: us-west-1
-  bucket: my-bucket
-  prefix: my-folder
-</code></pre></li>
+<li>&#x521B;&#x5EFA; <code>Restore</code> CR&#xFF0C;&#x901A;&#x8FC7; accessKey &#x548C; secretKey &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x6062;&#x590D;&#x96C6;&#x7FA4;&#xFF1A;</li>
 </ul>
+<pre><code class="lang-shell">kubectl apply -f resotre-aws-s3.yaml
+</code></pre>
+<p><code>restore-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> Restore
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo2-restore-s3
+<span class="hljs-attr">  namespace:</span> test2
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  br:</span>
+<span class="hljs-attr">    cluster:</span> demo2
+<span class="hljs-attr">    clusterNamespace:</span> test2
+    <span class="hljs-comment"># enableTLSClient: false</span>
+    <span class="hljs-comment"># logLevel: info</span>
+    <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+    <span class="hljs-comment"># concurrency: 4</span>
+    <span class="hljs-comment"># rateLimit: 0</span>
+    <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+    <span class="hljs-comment"># checksum: true</span>
+    <span class="hljs-comment"># sendCredToTikv: true</span>
+<span class="hljs-attr">  to:</span>
+<span class="hljs-attr">    host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    secretName:</span> restore-demo2-tidb-secret
+<span class="hljs-attr">  s3:</span>
+<span class="hljs-attr">    provider:</span> aws
+<span class="hljs-attr">    secretName:</span> s3-secret
+<span class="hljs-attr">    region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">    bucket:</span> my-bucket
+<span class="hljs-attr">    prefix:</span> my-folder
+</code></pre>
+<ul>
+<li>&#x521B;&#x5EFA; <code>Restore</code> CR&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; Pod &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-shell">kubectl apply -f restore-aws-s3.yaml
+</code></pre>
+<p><code>restore-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> Restore
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo2-restore-s3
+<span class="hljs-attr">  namespace:</span> test2
+<span class="hljs-attr">  annotations:</span>
+    iam.amazonaws.com/role: arn:aws:iam::<span class="hljs-number">123456789012</span>:role/user
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  br:</span>
+<span class="hljs-attr">    cluster:</span> demo2
+<span class="hljs-attr">    sendCredToTikv:</span> <span class="hljs-literal">false</span>
+<span class="hljs-attr">    clusterNamespace:</span> test2
+    <span class="hljs-comment"># enableTLSClient: false</span>
+    <span class="hljs-comment"># logLevel: info</span>
+    <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+    <span class="hljs-comment"># concurrency: 4</span>
+    <span class="hljs-comment"># rateLimit: 0</span>
+    <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+    <span class="hljs-comment"># checksum: true</span>
+<span class="hljs-attr">  to:</span>
+<span class="hljs-attr">    host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    secretName:</span> restore-demo2-tidb-secret
+<span class="hljs-attr">  s3:</span>
+<span class="hljs-attr">    provider:</span> aws
+<span class="hljs-attr">    region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">    bucket:</span> my-bucket
+<span class="hljs-attr">    prefix:</span> my-folder
+</code></pre>
+<ul>
+<li>&#x521B;&#x5EFA; <code>Restore</code> CR&#xFF0C;&#x901A;&#x8FC7; IAM &#x7ED1;&#x5B9A; ServiceAccount &#x6388;&#x6743;&#x7684;&#x65B9;&#x5F0F;&#x5907;&#x4EFD;&#x96C6;&#x7FA4;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-shell">kubectl apply -f restore-aws-s3.yaml
+</code></pre>
+<p><code>restore-aws-s3.yaml</code> &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> pingcap.com/v1alpha1
+<span class="hljs-attr">kind:</span> Restore
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> demo2-restore-s3
+<span class="hljs-attr">  namespace:</span> test2
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  serviceAccount:</span> tidb-backup-manager
+<span class="hljs-attr">  br:</span>
+<span class="hljs-attr">    cluster:</span> demo2
+<span class="hljs-attr">    sendCredToTikv:</span> <span class="hljs-literal">false</span>
+<span class="hljs-attr">    clusterNamespace:</span> test2
+    <span class="hljs-comment"># enableTLSClient: false</span>
+    <span class="hljs-comment"># logLevel: info</span>
+    <span class="hljs-comment"># statusAddr: &lt;status-addr&gt;</span>
+    <span class="hljs-comment"># concurrency: 4</span>
+    <span class="hljs-comment"># rateLimit: 0</span>
+    <span class="hljs-comment"># timeAgo: &lt;time&gt;</span>
+    <span class="hljs-comment"># checksum: true</span>
+<span class="hljs-attr">  to:</span>
+<span class="hljs-attr">    host:</span> &lt;tidb-host-ip<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    port:</span> &lt;tidb-port<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    user:</span> &lt;tidb-user<span class="hljs-string">&gt;
+</span><span class="hljs-attr">    secretName:</span> restore-demo2-tidb-secret
+<span class="hljs-attr">  s3:</span>
+<span class="hljs-attr">    provider:</span> aws
+<span class="hljs-attr">    region:</span> us-west<span class="hljs-bullet">-1</span>
+<span class="hljs-attr">    bucket:</span> my-bucket
+<span class="hljs-attr">    prefix:</span> my-folder
+</code></pre>
 <p>&#x521B;&#x5EFA;&#x597D; <code>Restore</code> CR &#x540E;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x6062;&#x590D;&#x7684;&#x72B6;&#x6001;&#xFF1A;</p>
-<pre><code> ```shell
- kubectl get rt -n test2 -o wide
- ```
-</code></pre><p>&#x66F4;&#x591A; <code>Restore</code> CR &#x5B57;&#x6BB5;&#x7684;&#x8BE6;&#x7EC6;&#x89E3;&#x91CA;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl get rt -n test2 -o wide
+</code></pre>
+<p>&#x66F4;&#x591A; <code>Restore</code> CR &#x5B57;&#x6BB5;&#x7684;&#x8BE6;&#x7EC6;&#x89E3;&#x91CA;&#xFF1A;</p>
 <ul>
 <li><code>.spec.metadata.namespace</code>&#xFF1A;<code>Restore</code> CR &#x6240;&#x5728;&#x7684; namespace&#x3002;</li>
 <li><code>.spec.to.host</code>&#xFF1A;&#x5F85;&#x6062;&#x590D; TiDB &#x96C6;&#x7FA4;&#x7684;&#x8BBF;&#x95EE;&#x5730;&#x5740;&#x3002;</li>
@@ -3440,7 +3417,7 @@ s3:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群","category":"how-to","level":"3.1.2.5","depth":3,"next":{"title":"1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据","level":"3.1.2.6","depth":3,"path":"session2/chapter1/tidb-operator-lightning.md","ref":"session2/chapter1/tidb-operator-lightning.md","articles":[]},"previous":{"title":"1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控","level":"3.1.2.4","depth":3,"path":"session2/chapter1/tidb-operator-access-monitoring.md","ref":"session2/chapter1/tidb-operator-access-monitoring.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-br.md","mtime":"2020-03-28T03:33:32.470Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-28T03:34:17.372Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.5 在 Kubernetes 集群上使用 BR 备份、恢复 TiDB 集群","category":"how-to","level":"3.1.2.5","depth":3,"next":{"title":"1.2.6 在 Kubernetes 集群上使用 Lightning 导入数据","level":"3.1.2.6","depth":3,"path":"session2/chapter1/tidb-operator-lightning.md","ref":"session2/chapter1/tidb-operator-lightning.md","articles":[]},"previous":{"title":"1.2.4 访问 Kubernetes 上的 TiDB 集群及其监控","level":"3.1.2.4","depth":3,"path":"session2/chapter1/tidb-operator-access-monitoring.md","ref":"session2/chapter1/tidb-operator-access-monitoring.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-br.md","mtime":"2020-03-28T09:50:55.590Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-28T09:51:42.433Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
