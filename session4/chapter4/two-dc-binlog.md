@@ -127,7 +127,7 @@ $ ansible-playbook rolling_update.yml --tags=tidb
 $ ansible-playbook rolling_update_monitor.yml --tags=prometheus
 ```
 
-  3. 查看 Pump 服务状态
+   3. 查看 Pump 服务状态
 
 使用 binlogctl 查看 Pump 服务状态，pd-urls 参数请替换为集群 PD 地址，结果 State 为 online 表示 Pump 启动成功
 
