@@ -61,14 +61,14 @@ Pump 和 Drainer 均可部署和运行在 Intel x86-64 架构的 64 位通用硬
 ### 搭建步骤
 1. 部署 Pump    
    1. 中控机上修改 tidb-ansible/inventory.ini  ( 这里默认用户在上下游已经成功部署好了 TiDB 集群 )
-      1. 设置 enable_binlog = True，表示 TiDB 集群开启 binlog。
+  - 1. 设置 enable_binlog = True，表示 TiDB 集群开启 binlog。
 ```
 ## binlog trigger
 
 enable_binlog = True
 ```
 
-      2. 为 pump_servers 主机组添加部署机器 IP。
+   - 2. 为 pump_servers 主机组添加部署机器 IP。
     
 ```
 ## Binlog Part
@@ -78,7 +78,7 @@ enable_binlog = True
 172.16.10.74
 ```
 
-      3. 默认 Pump 保留 7 天数据，如需修改可修改 tidb-ansible/conf/pump.yml（TiDB 3.0.2 及之前版本中为 tidb-ansible/conf/pump-cluster.yml）文件中 gc 变量值，并取消注释。
+   - 3. 默认 Pump 保留 7 天数据，如需修改可修改 tidb-ansible/conf/pump.yml（TiDB 3.0.2 及之前版本中为 tidb-ansible/conf/pump-cluster.yml）文件中 gc 变量值，并取消注释。
     
 ```
 global:
@@ -90,7 +90,7 @@ global:
 # gc: 7
 ```
 
-      4. 请确保部署目录有足够空间存储 binlog，详见[调整部署目录](https://pingcap.com/docs-cn/stable/how-to/deploy/orchestrated/ansible#%E8%B0%83%E6%95%B4%E9%83%A8%E7%BD%B2%E7%9B%AE%E5%BD%95)，也可为 Pump 设置单独的部署目录。
+   - 4. 请确保部署目录有足够空间存储 binlog，详见[调整部署目录](https://pingcap.com/docs-cn/stable/how-to/deploy/orchestrated/ansible#%E8%B0%83%E6%95%B4%E9%83%A8%E7%BD%B2%E7%9B%AE%E5%BD%95)，也可为 Pump 设置单独的部署目录。
     
 ```
 ## Binlog Part
@@ -159,14 +159,14 @@ INFO[0000] [pd] init cluster id 6569368151110378289
 
 5. 部署 Drainer 服务并开启 Drainer 同步实时增量数据
 
-  1. 修改 tidb-ansible/inventory.ini 文件。为 drainer_servers 主机组添加部署机器 IP，initial_commit_ts 请设置为获取的 initial_commit_ts，仅用于 Drainer 第一次启动。
+   1. 修改 tidb-ansible/inventory.ini 文件。为 drainer_servers 主机组添加部署机器 IP，initial_commit_ts 请设置为获取的 initial_commit_ts，仅用于 Drainer 第一次启动。
 ```
 [drainer_servers]
 
 drainer_mysql ansible_host=172.16.10.71 initial_commit_ts="402899541671542785"
 ```
 
-  2. 修改配置文件
+   2. 修改配置文件
 ```
 cd /home/tidb/tidb-ansible/conf &&
 cp drainer.toml drainer_mysql_drainer.toml &&
@@ -184,13 +184,13 @@ user = "root"
 password = "123456"
 port = 3306
 ```
-
-  3. 部署 Drainer
+   
+   3. 部署 Drainer
 ```
 ansible-playbook deploy_drainer.yml
 ```
 
-  4. 启动 Drainer
+   4. 启动 Drainer
 ```
 ansible-playbook start_drainer.yml
 ```
