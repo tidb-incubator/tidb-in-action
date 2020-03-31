@@ -21,6 +21,7 @@
 >**注意：**
 >Raftstore 的 CPU 使用率是指单线程的情况。如果是多线程 Raftstore，可等比例放大使用率。
 >由于 Raftstore 线程中有 I/O 操作，所以 CPU 使用率不可能达到 100%。
+
 ### 性能监控
 可在 Grafana 的 TiKV 面板下查看相关的监控 metrics：
 
