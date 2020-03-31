@@ -59,19 +59,16 @@ Pump 和 Drainer 均可部署和运行在 Intel x86-64 架构的 64 位通用硬
 跨数据中心带宽至少 300M 及以上，同时确保数据中心内部及跨数据中心的所有节点之间私网互联互通，业务网络之间不需要互联互通。
 
 ### 搭建步骤
-1. 部署 Pump 
-
-  1. 中控机上修改 tidb-ansible/inventory.ini  ( 这里默认用户在上下游已经成功部署好了 TiDB 集群 )
-  
-  -  1. 设置 enable_binlog = True，表示 TiDB 集群开启 binlog。
-    
+1. 部署 Pump    
+   1. 中控机上修改 tidb-ansible/inventory.ini  ( 这里默认用户在上下游已经成功部署好了 TiDB 集群 )
+      1. 设置 enable_binlog = True，表示 TiDB 集群开启 binlog。
 ```
 ## binlog trigger
 
 enable_binlog = True
 ```
 
-  -  2. 为 pump_servers 主机组添加部署机器 IP。
+      2. 为 pump_servers 主机组添加部署机器 IP。
     
 ```
 ## Binlog Part
@@ -81,7 +78,7 @@ enable_binlog = True
 172.16.10.74
 ```
 
-  -  3. 默认 Pump 保留 7 天数据，如需修改可修改 tidb-ansible/conf/pump.yml（TiDB 3.0.2 及之前版本中为 tidb-ansible/conf/pump-cluster.yml）文件中 gc 变量值，并取消注释。
+      3. 默认 Pump 保留 7 天数据，如需修改可修改 tidb-ansible/conf/pump.yml（TiDB 3.0.2 及之前版本中为 tidb-ansible/conf/pump-cluster.yml）文件中 gc 变量值，并取消注释。
     
 ```
 global:
@@ -93,7 +90,7 @@ global:
 # gc: 7
 ```
 
-  -  4. 请确保部署目录有足够空间存储 binlog，详见[调整部署目录](https://pingcap.com/docs-cn/stable/how-to/deploy/orchestrated/ansible#%E8%B0%83%E6%95%B4%E9%83%A8%E7%BD%B2%E7%9B%AE%E5%BD%95)，也可为 Pump 设置单独的部署目录。
+      4. 请确保部署目录有足够空间存储 binlog，详见[调整部署目录](https://pingcap.com/docs-cn/stable/how-to/deploy/orchestrated/ansible#%E8%B0%83%E6%95%B4%E9%83%A8%E7%BD%B2%E7%9B%AE%E5%BD%95)，也可为 Pump 设置单独的部署目录。
     
 ```
 ## Binlog Part
@@ -103,7 +100,7 @@ pump2 ansible_host=172.16.10.73 deploy_dir=/data2/pump
 pump3 ansible_host=172.16.10.74 deploy_dir=/data3/pump
 ```
 
-  2. 部署并启动含 Pump 组件的 TiDB 集群。
+   2. 部署并启动含 Pump 组件的 TiDB 集群。
   
   -  1. 部署 pump_servers 和 node_exporters
     
