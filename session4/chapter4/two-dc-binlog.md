@@ -61,13 +61,17 @@ Pump 和 Drainer 均可部署和运行在 Intel x86-64 架构的 64 位通用硬
 ### 搭建步骤
 1. 部署 Pump 
   1. 中控机上修改 tidb-ansible/inventory.ini  *( 这里默认用户在上下游已经成功部署好了 TiDB 集群 )*
+  
     1. 设置 enable_binlog = True，表示 TiDB 集群开启 binlog。
+    
 ```
 ## binlog trigger
 
 enable_binlog = True
 ```
+
     2. 为 pump_servers 主机组添加部署机器 IP。
+    
 ```
 ## Binlog Part
 [pump_servers]
@@ -75,7 +79,9 @@ enable_binlog = True
 172.16.10.73
 172.16.10.74
 ```
+
     3. 默认 Pump 保留 7 天数据，如需修改可修改 tidb-ansible/conf/pump.yml（TiDB 3.0.2 及之前版本中为 tidb-ansible/conf/pump-cluster.yml）文件中 gc 变量值，并取消注释。
+    
 ```
 global:
 
@@ -85,7 +91,9 @@ global:
 
 # gc: 7
 ```
+
     4. 请确保部署目录有足够空间存储 binlog，详见[调整部署目录](https://pingcap.com/docs-cn/stable/how-to/deploy/orchestrated/ansible#%E8%B0%83%E6%95%B4%E9%83%A8%E7%BD%B2%E7%9B%AE%E5%BD%95)，也可为 Pump 设置单独的部署目录。
+    
 ```
 ## Binlog Part
 [pump_servers]
@@ -93,24 +101,33 @@ pump1 ansible_host=172.16.10.72 deploy_dir=/data1/pump
 pump2 ansible_host=172.16.10.73 deploy_dir=/data2/pump
 pump3 ansible_host=172.16.10.74 deploy_dir=/data3/pump
 ```
+
   2. 部署并启动含 Pump 组件的 TiDB 集群。
     1. 部署 pump_servers 和 node_exporters
+    
 ```
 $ ansible-playbook deploy.yml --tags=pump -l ${pump1_ip},${pump2_ip},[${alias1_name},${alias2_name}]
 ### 上述命令中，逗号后不要加空格，否则会报错
 ```
+
     2. 启动 pump_servers
+    
 ```
 $ ansible-playbook start.yml --tags=pump
 ```
+
     3. 更新并重启 tidb_servers
+    
 ```
 $ ansible-playbook rolling_update.yml --tags=tidb
 ```
+
     4. 更新监控信息
+    
 ```
 $ ansible-playbook rolling_update_monitor.yml --tags=prometheus
 ```
+
   3. 查看 Pump 服务状态
 
 使用 binlogctl 查看 Pump 服务状态，pd-urls 参数请替换为集群 PD 地址，结果 State 为 online 表示 Pump 启动成功
@@ -122,6 +139,7 @@ INFO[0000] pump: {NodeID: ip-172-16-10-72:8250, Addr: 172.16.10.72:8250, State: 
 INFO[0000] pump: {NodeID: ip-172-16-10-73:8250, Addr: 172.16.10.73:8250, State: online, MaxCommitTS: 403051525703991299, UpdateTime: 2018-12-25 14:23:36 +0800 CST}
 INFO[0000] pump: {NodeID: ip-172-16-10-74:8250, Addr: 172.16.10.74:8250, State: online, MaxCommitTS: 403051525717360643, UpdateTime: 2018-12-25 14:23:35 +0800 CST}
 ```
+
 2. 记录 TSO 断点信息
 
 Drainer 在初次启动时需要获取 initial_commit_ts 这个时间戳信息，为了保证数据的完整性，需要进行全量数据的备份与恢复。此时 initial_commit_ts 的值必须是全量备份的时间戳。为了保证这个时间戳包含备份数据之后的所有数据变更，我们把这一步操作放到全备之前来做。
