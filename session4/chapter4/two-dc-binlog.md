@@ -60,7 +60,8 @@ Pump 和 Drainer 均可部署和运行在 Intel x86-64 架构的 64 位通用硬
 
 ### 搭建步骤
 1. 部署 Pump 
-  Ⅰ 中控机上修改 tidb-ansible/inventory.ini  ( 这里默认用户在上下游已经成功部署好了 TiDB 集群 )
+
+  1. 中控机上修改 tidb-ansible/inventory.ini  ( 这里默认用户在上下游已经成功部署好了 TiDB 集群 )
   
   -  1. 设置 enable_binlog = True，表示 TiDB 集群开启 binlog。
     
@@ -102,7 +103,7 @@ pump2 ansible_host=172.16.10.73 deploy_dir=/data2/pump
 pump3 ansible_host=172.16.10.74 deploy_dir=/data3/pump
 ```
 
-  Ⅱ. 部署并启动含 Pump 组件的 TiDB 集群。
+  2. 部署并启动含 Pump 组件的 TiDB 集群。
   
   -  1. 部署 pump_servers 和 node_exporters
     
@@ -129,7 +130,7 @@ $ ansible-playbook rolling_update.yml --tags=tidb
 $ ansible-playbook rolling_update_monitor.yml --tags=prometheus
 ```
 
-  Ⅲ. 查看 Pump 服务状态
+  3. 查看 Pump 服务状态
 
 使用 binlogctl 查看 Pump 服务状态，pd-urls 参数请替换为集群 PD 地址，结果 State 为 online 表示 Pump 启动成功
 
@@ -161,13 +162,14 @@ INFO[0000] [pd] init cluster id 6569368151110378289
 
 5. 部署 Drainer 服务并开启 Drainer 同步实时增量数据
 
-  Ⅰ. 修改 tidb-ansible/inventory.ini 文件。为 drainer_servers 主机组添加部署机器 IP，initial_commit_ts 请设置为获取的 initial_commit_ts，仅用于 Drainer 第一次启动。
+  1. 修改 tidb-ansible/inventory.ini 文件。为 drainer_servers 主机组添加部署机器 IP，initial_commit_ts 请设置为获取的 initial_commit_ts，仅用于 Drainer 第一次启动。
 ```
 [drainer_servers]
 
 drainer_mysql ansible_host=172.16.10.71 initial_commit_ts="402899541671542785"
 ```
-  Ⅱ. 修改配置文件
+
+  2. 修改配置文件
 ```
 cd /home/tidb/tidb-ansible/conf &&
 cp drainer.toml drainer_mysql_drainer.toml &&
@@ -185,11 +187,13 @@ user = "root"
 password = "123456"
 port = 3306
 ```
-  Ⅲ. 部署 Drainer
+
+  3. 部署 Drainer
 ```
 ansible-playbook deploy_drainer.yml
 ```
-  Ⅳ. 启动 Drainer
+
+  4. 启动 Drainer
 ```
 ansible-playbook start_drainer.yml
 ```
