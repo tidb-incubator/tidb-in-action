@@ -51,7 +51,11 @@ set @@GLOBAL.max_execution_time=10000; //限制 SQL 执行最长时间为 10s
 ```
   * 增大 TiDB 现有内存
 ```
-TiDB 实例默认使用服务器全部内存的，提升物理服务器内存在真实场景中并不现实。但当前市场上服务器多 NUMA 架构，TiDB 使用建议中存在着 NUMA 绑核的机制。如果在做绑核动作时，如果使用了 membind 参数（Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above）绑定到 NUMA NODE上，则默认只能分配该 NUMA NODES 上的内存，而非全部；推荐使用 preferred 参数（Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above）进行绑定，其含义为首先使用分配的 NUMA NODE 的内存资源，不足时会使用其他节点的内存。这样可以提高 TiDB 使用内存的水位。sudo -s
+TiDB 实例默认使用服务器全部内存的，提升物理服务器内存在真实场景中并不现实。但当前市场上服务器多 NUMA 架构，TiDB 使用建议中存在着 NUMA 绑核的机制。
+如果在做绑核动作时，如果使用了 membind 参数（Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above）绑定到 NUMA NODE上，则默认只能分配该 NUMA NODES 上的内存，而非全部；
+推荐使用 preferred 参数（Only allocate memory from nodes.  Allocation will fail when there is not enough memory available on these nodes.  nodes may be specified as noted above）进行绑定，其含义为首先使用分配的 NUMA NODE 的内存资源，不足时会使用其他节点的内存。
+这样可以提高 TiDB 使用内存的水位。
+sudo -s numactl --preferred=node
 ```
 
   * 减少 TiDB 使用内存。
