@@ -1245,7 +1245,9 @@ create table t_bak as select * from t where to_char(date1,’yyyy-mm-dd hh24:mi:
 delete from t where id in (select id from t_bak);
 
 commit;
-```bash
+```
+
+```
 $vi ./fbo_ggs_Linux_x64_shiphome/Disk1/response/oggcore.rsp
 ####################################################################
 ## Copyright(c) Oracle Corporation 2017. All rights reserved.     ##
