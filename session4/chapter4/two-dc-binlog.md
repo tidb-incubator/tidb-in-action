@@ -154,9 +154,13 @@ INFO[0000] [pd] init cluster id 6569368151110378289
 2018/06/21 11:24:47 meta.go:117: [info] meta: &{CommitTS:400962745252184065}
 ```
 该命令会输出 meta: &{CommitTS:400962745252184065}，其中 CommitTS 的值即所需的时间戳。
+
 3. 逻辑备份全量数据，使用 mydumper 备份主库的数据。
+
 4. 全量数据传输并恢复到备端，使用 loader 恢复数据。
+
 5. 部署 Drainer 服务并开启 Drainer 同步实时增量数据
+
   1. 修改 tidb-ansible/inventory.ini 文件。为 drainer_servers 主机组添加部署机器 IP，initial_commit_ts 请设置为获取的 initial_commit_ts，仅用于 Drainer 第一次启动。
 ```
 [drainer_servers]
