@@ -61,7 +61,6 @@ Pump 和 Drainer 均可部署和运行在 Intel x86-64 架构的 64 位通用硬
 ### 搭建步骤
 1. 部署 Pump 
   1. 中控机上修改 tidb-ansible/inventory.ini  *( 这里默认用户在上下游已经成功部署好了 TiDB 集群 )*
-  
     1. 设置 enable_binlog = True，表示 TiDB 集群开启 binlog。
     
 ```
