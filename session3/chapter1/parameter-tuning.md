@@ -60,14 +60,14 @@ TiDB(root@127.0.0.1:test) > show variables like "%tidb%factor%";
 
 ```sql
 TiDB(root@127.0.0.1:test) > desc select * from t order by a desc;
-+----------------------------------+----------+-----------+-------------------------------------------------------+
-| id                               | estRows  | task      | operator info                                         |
-+----------------------------------+----------+-----------+-------------------------------------------------------+
-| Projection_13                    | 10000.00 | root      | test.t.a, test.t.b                                    |
-| └─IndexLookUp_12                 | 10000.00 | root      |                                                       |
-|   ├─IndexFullScan_10(Build)      | 10000.00 | cop[tikv] | table:t, index:a, keep order:true, desc, stats:pseudo |
-|   └─TableRowIDScan_11(Probe)     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo               |
-+----------------------------------+----------+-----------+-------------------------------------------------------+
++----------------------------------+----------+-----------+-------------------------+-------------------------------------+
+| id                               | estRows  | task      | access object           | operator info                       |
++----------------------------------+----------+-----------+-------------------------+-------------------------------------+
+| Projection_13                    | 10000.00 | root      |                         | test.t.a, test.t.b                  |
+| └─IndexLookUp_12                 | 10000.00 | root      |                         |                                     |
+|   ├─IndexFullScan_10(Build)      | 10000.00 | cop[tikv] | table:t, index:idx_a(a) | keep order:true, desc, stats:pseudo |
+|   └─TableRowIDScan_11(Probe)     | 10000.00 | cop[tikv] | table:t                 | keep order:false, stats:pseudo      |
++----------------------------------+----------+-----------+-------------------------+-------------------------------------+
 4 rows in set (0.00 sec)
 ```
 
@@ -78,13 +78,13 @@ TiDB(root@127.0.0.1:test) > set @@tidb_opt_desc_factor = 10;
 Query OK, 0 rows affected (0.00 sec)
 
 TiDB(root@127.0.0.1:test) > desc select * from t order by a desc;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| Sort_4                  | 10000.00 | root      | test.t.a:desc                           |
-| └─TableReader_8         | 10000.00 | root      | data:TableFullScan_7                    |
-|   └─TableFullScan_7     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| Sort_4                  | 10000.00 | root      |               | test.t.a:desc                  |
+| └─TableReader_8         | 10000.00 | root      |               | data:TableFullScan_7           |
+|   └─TableFullScan_7     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 ```
 
@@ -96,16 +96,16 @@ TiDB 有一个聚合下推的优化规则，因为不能确保所有场景下该
 
 ```sql
 TiDB(root@127.0.0.1:test) > desc select count(*) from t t1 join t t2 on t1.a = t2.a group by t1.a;
-+-------------------------------+----------+-----------+---------------------------------------------------+
-| id                            | estRows  | task      | operator info                                     |
-+-------------------------------+----------+-----------+---------------------------------------------------+
-| HashAgg_10                    | 7992.00  | root      | group by:test.t.a, funcs:count(1)->Column#7       |
-| └─MergeJoin_13                | 12487.50 | root      | inner join, left key:test.t.a, right key:test.t.a |
-|   ├─IndexReader_41(Build)     | 9990.00  | root      | index:IndexFullScan_40                            |
-|   │ └─IndexFullScan_40        | 9990.00  | cop[tikv] | table:t2, index:a, keep order:true, stats:pseudo  |
-|   └─IndexReader_39(Probe)     | 9990.00  | root      | index:IndexFullScan_38                            |
-|     └─IndexFullScan_38        | 9990.00  | cop[tikv] | table:t1, index:a, keep order:true, stats:pseudo  |
-+-------------------------------+----------+-----------+---------------------------------------------------+
++-------------------------------+----------+-----------+--------------------------+---------------------------------------------------+
+| id                            | estRows  | task      | access object            | operator info                                     |
++-------------------------------+----------+-----------+--------------------------+---------------------------------------------------+
+| HashAgg_10                    | 7992.00  | root      |                          | group by:test.t.a, funcs:count(1)->Column#7       |
+| └─MergeJoin_13                | 12487.50 | root      |                          | inner join, left key:test.t.a, right key:test.t.a |
+|   ├─IndexReader_41(Build)     | 9990.00  | root      |                          | index:IndexFullScan_40                            |
+|   │ └─IndexFullScan_40        | 9990.00  | cop[tikv] | table:t2, index:idx_a(a) | keep order:true, stats:pseudo                     |
+|   └─IndexReader_39(Probe)     | 9990.00  | root      |                          | index:IndexFullScan_38                            |
+|     └─IndexFullScan_38        | 9990.00  | cop[tikv] | table:t1, index:idx_a(a) | keep order:true, stats:pseudo                     |
++-------------------------------+----------+-----------+--------------------------+---------------------------------------------------+
 6 rows in set (0.00 sec)
 ```
 
@@ -116,17 +116,17 @@ TiDB(root@127.0.0.1:test) > set tidb_opt_agg_push_down = 1;
 Query OK, 0 rows affected (0.00 sec)
 
 TiDB(root@127.0.0.1:test) > desc select count(*) from t t1 join t t2 on t1.a = t2.a group by t1.a;
-+--------------------------------+---------+-----------+---------------------------------------------------------------------------------+
-| id                             | estRows | task      | operator info                                                                   |
-+--------------------------------+---------+-----------+---------------------------------------------------------------------------------+
-| HashAgg_11                     | 7992.00 | root      | group by:test.t.a, funcs:count(Column#8)->Column#7                              |
-| └─HashLeftJoin_24              | 9990.00 | root      | inner join, inner:HashAgg_37, equal:[eq(test.t.a, test.t.a)]                    |
-|   ├─HashAgg_37(Build)          | 7992.00 | root      | group by:test.t.a, funcs:count(1)->Column#8, funcs:firstrow(test.t.a)->test.t.a |
-|   │ └─IndexReader_44           | 9990.00 | root      | index:IndexFullScan_43                                                          |
-|   │   └─IndexFullScan_43       | 9990.00 | cop[tikv] | table:t2, index:a, keep order:false, stats:pseudo                               |
-|   └─IndexReader_48(Probe)      | 9990.00 | root      | index:IndexFullScan_47                                                          |
-|     └─IndexFullScan_47         | 9990.00 | cop[tikv] | table:t1, index:a, keep order:false, stats:pseudo                               |
-+--------------------------------+---------+-----------+---------------------------------------------------------------------------------+
++--------------------------------+---------+-----------+--------------------------+---------------------------------------------------------------------------------+
+| id                             | estRows | task      | access object            | operator info                                                                   |
++--------------------------------+---------+-----------+--------------------------+---------------------------------------------------------------------------------+
+| HashAgg_11                     | 7992.00 | root      |                          | group by:test.t.a, funcs:count(Column#8)->Column#7                              |
+| └─HashJoin_24                  | 9990.00 | root      |                          | inner join, inner:HashAgg_37, equal:[eq(test.t.a, test.t.a)]                    |
+|   ├─HashAgg_37(Build)          | 7992.00 | root      |                          | group by:test.t.a, funcs:count(1)->Column#8, funcs:firstrow(test.t.a)->test.t.a |
+|   │ └─IndexReader_44           | 9990.00 | root      |                          | index:IndexFullScan_43                                                          |
+|   │   └─IndexFullScan_43       | 9990.00 | cop[tikv] | table:t2, index:idx_a(a) | keep order:false, stats:pseudo                                                  |
+|   └─IndexReader_48(Probe)      | 9990.00 | root      |                          | index:IndexFullScan_47                                                          |
+|     └─IndexFullScan_47         | 9990.00 | cop[tikv] | table:t1, index:idx_a(a) | keep order:false, stats:pseudo                                                  |
++--------------------------------+---------+-----------+--------------------------+---------------------------------------------------------------------------------+
 7 rows in set (0.00 sec)
 ```
 
@@ -134,13 +134,13 @@ TiDB(root@127.0.0.1:test) > desc select count(*) from t t1 join t t2 on t1.a = t
 
 ```sql
 TiDB(root@127.0.0.1:test) > desc select * from t where a > 10;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| TableReader_7           | 3333.33  | root      | data:Selection_6                        |
-| └─Selection_6           | 3333.33  | cop[tikv] | gt(test.t.a, 10)                        |
-|   └─TableFullScan_5     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| TableReader_7           | 3333.33  | root      |               | data:Selection_6               |
+| └─Selection_6           | 3333.33  | cop[tikv] |               | gt(test.t.a, 10)               |
+|   └─TableFullScan_5     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 ```
 
@@ -162,13 +162,13 @@ Query OK, 0 rows affected (0.00 sec)
 
 ```sql
 TiDB(root@127.0.0.1:test) > desc select * from t where a > 10;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| Selection_5             | 8000.00  | root      | gt(test.t.a, 10)                        |
-| └─TableReader_7         | 10000.00 | root      | data:TableFullScan_6                    |
-|   └─TableFullScan_6     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| Selection_5             | 8000.00  | root      |               | gt(test.t.a, 10)               |
+| └─TableReader_7         | 10000.00 | root      |               | data:TableFullScan_6           |
+|   └─TableFullScan_6     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 ```
 
@@ -192,13 +192,13 @@ TiDB(root@127.0.0.1:test) > desc select * from t where a > 10;
 
 ```sql
 TiDB(root@127.0.0.1:test) > explain select * from t where a < 2;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| TableReader_7           | 3323.33  | root      | data:Selection_6                        |
-| └─Selection_6           | 3323.33  | cop[tikv] | lt(test.t.a, 2)                         |
-|   └─TableFullScan_5     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| TableReader_7           | 3323.33  | root      |               | data:Selection_6               |
+| └─Selection_6           | 3323.33  | cop[tikv] |               | lt(test.t.a, 2)                |
+|   └─TableFullScan_5     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 ```
 
@@ -216,12 +216,12 @@ Query OK, 0 rows affected (0.00 sec)
 
 ```sql
 TiDB(root@127.0.0.1:test) > explain select * from t where a < 2;
-+-------------------------+----------+-----------+-----------------------------------------+
-| id                      | estRows  | task      | operator info                           |
-+-------------------------+----------+-----------+-----------------------------------------+
-| Selection_5             | 8000.00  | root      | lt(test.t.a, 2)                         |
-| └─TableReader_7         | 10000.00 | root      | data:TableFullScan_6                    |
-|   └─TableFullScan_6     | 10000.00 | cop[tikv] | table:t, keep order:false, stats:pseudo |
-+-------------------------+----------+-----------+-----------------------------------------+
++-------------------------+----------+-----------+---------------+--------------------------------+
+| id                      | estRows  | task      | access object | operator info                  |
++-------------------------+----------+-----------+---------------+--------------------------------+
+| Selection_5             | 8000.00  | root      |               | lt(test.t.a, 2)                |
+| └─TableReader_7         | 10000.00 | root      |               | data:TableFullScan_6           |
+|   └─TableFullScan_6     | 10000.00 | cop[tikv] | table:t       | keep order:false, stats:pseudo |
++-------------------------+----------+-----------+---------------+--------------------------------+
 3 rows in set (0.00 sec)
 ```

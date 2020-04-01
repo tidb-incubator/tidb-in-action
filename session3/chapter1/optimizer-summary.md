@@ -6,7 +6,7 @@
 
 ### 1 基本逻辑算子介绍
 
-TiDB 中的逻辑算子主要以下几个：
+TiDB 中的逻辑算子主要有以下几个：
 
 * DataSource：数据源，表示一个源表，如 `select * from t` 中的 `t`。
 * Selection： 代表了相应的过滤条件，`select * from t where a = 5` 中的 `where a = 5`。
@@ -52,7 +52,7 @@ select t1.a from t1 left join t2 on t1.b = t2.b;
 select t1.a from t1;
 ```
 
-#### 例子 3：`Max` / `Min` 优化
+#### 例子 2：`Max` / `Min` 优化
 
 `Max` / `Min` 优化，会对 `Max` / `Min` 语句进行改写。如下面的语句：
 
@@ -76,8 +76,8 @@ select id from t order by id desc limit 1;
 
 物理优化需要做的决策有很多，比如说：
 
-* 读取数据的方式：使用索引读取或全表扫描数据。
-* 如果使用所以读取，还需确定选择哪个具体索引。
+* 读取数据的方式：使用索引扫描或全表扫描读取数据。
+* 与此同时，如果存在多个索引，索引之间的选择，也同步完成。
 * 逻辑算子的物理实现，即实际使用的算法。
 * 是否可以将算子下推到存储层执行，以提升执行效率。
 
@@ -87,7 +87,7 @@ TiDB 优化器会根据统计信息来选择最优的执行计划。统计信息
 
 ### 1 手动搜集
 
-通过执行 `ANALYZE` 语句来收集统计信息。如需更快的分析速度，可将 `tidb_enable_fast_analyze`（默认值为 0）设置为 1 来打开快速分析功能。以数据库中 person 表为例，使用 fast analyze 的执行语句如下：
+通过执行 `ANALYZE` 语句来收集统计信息。如需更快的分析速度，可将 `tidb_enable_fast_analyze`（默认值为 0）设置为 1 来打开快速分析功能，此时将采取采样的方式收集统计信息。以数据库中 person 表为例，使用 fast analyze 的执行语句如下：
 
 ```sql
 set @@tidb_enable_fast_analyze = 1;
@@ -110,7 +110,7 @@ mysql> show analyze status where job_info = 'analyze columns';
 
 ### 2 自动更新
 
-在执行 DML 语句时，TiDB 会自动更新表的总行数以及修改的行数。这些信息会定期自动持久化，更新周期是 1 分钟（20 \* stats-lease）
+在执行 DML 语句时，TiDB 会自动更新表的总行数以及修改的行数。这些信息会定期自动持久化，更新周期默认是 1 分钟（20 \* stats-lease）
 
 > 注意：stats-lease 的默认值是 3s，如果将其设定为 0，则关闭统计信息自动更新。
 
@@ -140,7 +140,7 @@ mysql> show stats_healthy where table_name = 'person';
 1 row in set (0.00 sec)
 ```
 
-可通过 `SHOW STATS_HISTOGRAMS` 来查看列的不同值数量以及 NULL 数量等信息:
+可通过 `SHOW STATS_HISTOGRAMS` 来查看列的不同值数量以及 NULL 值数量等信息:
 
 ```sql
 mysql> show stats_histograms where table_name = 'person';

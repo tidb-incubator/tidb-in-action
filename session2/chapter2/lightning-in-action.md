@@ -1,6 +1,9 @@
+# 2.2.2 Lightning 实操指南
+这一节将介绍如何使用 Lightning 导入数据的实操
+
 # 2.2.2.1 TiDB Lightning 快速开始
 
-## **警告**
+## **注意**
 
 * TiDB Lightning 运行后，TiDB 集群将无法正常对外提供服务。
 * 若 `tidb-lightning` 崩溃，集群会留在“导入模式”。若忘记转回“普通模式”，集群会产生大量未压缩的文件，继而消耗 CPU 并导致延迟。此时，需要使用 `tidb-lightning-ctl` 手动将集群转回“普通模式”：
