@@ -167,7 +167,7 @@ CREATE TABLE `t1` (
 | Update_On_name | 30W/(1+Involved_Idx_Count*2) | 10W |
 | Update_On_age | 30W/(1+Involved_Idx_Count*2) | 30W |
 
-对于 TiDB 来说，有一个特殊之处，就是当主键是非 int 类型时，会有一个隐藏 int 类型主键，同时，本身顶一的这个主键变成了唯一索引。所以，修改下上面表定义为如下：
+对于 TiDB 来说，有一个特殊之处，就是当主键是非 int 类型时，会有一个隐藏 int 类型主键，同时，本身的这个主键变成了唯一索引。所以，修改下上面表定义为如下：
 
 CREATE TABLE `t1` (
 
@@ -195,7 +195,7 @@ CREATE TABLE `t1` (
 
 ### 4.6.4 事务的其他限制
 
-除了上面 RocksDB 层的限制意外，TiDB 中对于事务还有另外一个限制
+除了上面 RocksDB 层的限制以外，TiDB 中对于事务还有另外一个限制
 
 (1) 参数 stmt-count-limit，默认值是 5000。
 
