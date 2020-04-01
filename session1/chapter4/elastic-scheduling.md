@@ -1,5 +1,5 @@
 ## 4.2 弹性调度
-***弹性调度（Elastic Schedule）*** 是 TiDB 在4.0 的新特性，与云环境结合提供的一些列调度调度，可以让 TiDB 具备***自适用能力（Adaptive Capacity）***，即 TiDB 能根据用户的 workload 模式自动调节形态以达到资源的最大利用率。自适用能力是 TiDB 能够提供 DBaaS 服务的一项关键能力。
+***弹性调度（Elastic Schedule）*** 是 TiDB 在 4.0 的新特性，与云环境结合提供的一系列调度策略，可以让 TiDB 具备***自适用能力（Adaptive Capacity）***，即 TiDB 能根据用户的 workload 模式自动调节形态以达到资源的最大利用率。自适用能力是 TiDB 能够提供 DBaaS 服务的一项关键能力。
 
 ### 4.2.1 需求背景
 在云环境中的弹性调度可极大节省机器资源，节约成本。传统上，将 TiDB 集群部署在 IDC 环境中，即将集群部署在相同或不同机房，在这种环境下，通常希望各台机器的资源利率用比较平均，并且需要预留足够的机器资源以应对高峰期，如下图（红色为已用资源，绿色为未用资源）：
@@ -18,7 +18,7 @@
 ### 4.2.2 自动伸缩
 自动伸缩（Auto-Scale）包含两方面的内容，一是弹性扩缩容节点，二是在扩缩容节点后自动均衡集群负载。
 
-和[ Aurora](https://www.youtube.com/watch?v=mali0B4wus0) 做法类似，弹性伸缩节点可通过对指标或者某种资源的利用率来设置一个阈值，比如 CPU 利用率（TiDB Server 或 TiKV Server）、QPS（TiKV Server）等，当集群在平衡状态下目标指标等于或者超过阈值一段时间以后，就会自动触发水平的弹性伸缩。
+和 [Aurora](https://www.youtube.com/watch?v=mali0B4wus0) 做法类似，弹性伸缩节点可通过对指标或者某种资源的利用率来设置一个阈值，比如 CPU 利用率（TiDB Server 或 TiKV Server）、QPS（TiKV Server）等，当集群在平衡状态下目标指标等于或者超过阈值一段时间以后，就会自动触发水平的弹性伸缩。
 
 TiDB 借助 TiDB Operator 和 PD 来实现 Auto-Scale。目前由 TiDB Operator 组件定期获取 TiDB / TiKV 的 metrics 信息后，通过 API 的方式暴露出期望的 TiDB / TiKV numbers，然后由 TiDB Operator 定期拉取 PD API 信息，通过内部的 Auto-Scaling 算法对 TidbCluster.Spec.Replicas 进行调整，从而实现 Auto-Scaling。在 TiDB Operator 中，新增了 Autoscaler API 和 Autoscaler Controller，下面是一个 Autoscaler API 的例子：
 
