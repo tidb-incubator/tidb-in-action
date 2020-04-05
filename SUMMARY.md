@@ -13,7 +13,7 @@
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 调度概述](session1/chapter4/scheduling-overview.md) @陈书宁
     * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[季朋](https://github.com/pengji)
-* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董洪亮 @王军 @王聪
+* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮 @王军 @王聪
         <!--
         与 MySQL 兼容性对比
         TiDB 与 MySQL 的语句兼容性说明
