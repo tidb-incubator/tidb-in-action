@@ -80,7 +80,7 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
 }
 ```
 
-静态类变量 Map<String, KeyInfo>  keysMap ，该容器 key 值保存拼接字段 tablename@columname@datefmt@nofmt ；value 保存号段信息类 keyInfo；微服务获取唯一序列号都是先从 keysMap 中获取，keyInfo 返回空会初始化申请序列号表的 keyInfo 号段信息，获取唯一序列号的主要方法 keyInfo.getNextSerialno()。
+静态类变量 Map<String, KeyInfo>  keysMap ，该容器 key 值保存拼接字段 tablename@columname@datefmt@nofmt ；value 保存号段信息类 KeyInfo；微服务获取唯一序列号都是先从 keysMap 中获取，keyInfo 返回空会初始化申请序列号表的 keyInfo 号段信息，获取唯一序列号的主要方法 keyInfo.getNextSerialno()。
 
 ```
     /**
@@ -94,7 +94,7 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
         if(notExistKey()) {
             init();
         }
-        //判断号段的最大值是否为零
+        // 判断号段的最大值是否为零
         if (iMaxNo !=0 ) {
             sNextSerilNo = getNextNo();
         }else {
@@ -139,23 +139,27 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
                     System.out.println("getSerialNo["+getInfoKey()+"/"+sOldMaxSerialNo+"-"+getMaxSerialNo()+"] Update Failed. Lock Try!");
                     LockDBKeyTable(sTableUpper, sColumnUpper,sDateFmt, sNoFmt, con);
                 }
-                //queryDBKeyTable 方法用于获取号段最大数，详细执行 sql --select MaxSerialNo from key_producer where TableName=? and ColumnName=? and DateFmt=? and NoFmt=? for update
+		
+                // queryDBKeyTable 方法用于获取号段最大数，详细执行 sql --select MaxSerialNo from key_producer where TableName=? and ColumnName=? and DateFmt=? and NoFmt=? for update
                 sOldMaxSerialNo = queryDBKeyTable(sTableUpper, sColumnUpper, sDateFmt, sNoFmt, con);
                 if (sOldMaxSerialNo == null) {
-                    //InsertDBKeyTable 方法用于插入初始化值，详细执行 sql -- insert into key_producer (TableName,ColumnName,MaxSerialNo,DateFmt,NoFmt) values (?,?,?,?,?);
+                    // InsertDBKeyTable 方法用于插入初始化值，详细执行 sql -- insert into key_producer (TableName,ColumnName,MaxSerialNo,DateFmt,NoFmt) values (?,?,?,?,?);
                     sOldMaxSerialNo = InsertDBKeyTable(sTableUpper, sColumnUpper,sDateFmt, sNoFmt, con);
                 }
+		
                 // 判断是否有号段最大数，没有则按照日期初始化
                 if ("INIT".equals(sOldMaxSerialNo)) {
-                    //LockDBKeyTable 方法用于更新初始化数据为号段最大数赋值，详细执行sql -- update key_producer set MaxSerialNo=MaxSerialNo where TableName=? and ColumnName=? and DateFmt=? and NoFmt=?
+                    // LockDBKeyTable 方法用于更新初始化数据为号段最大数赋值，详细执行sql -- update key_producer set MaxSerialNo=MaxSerialNo where TableName=? and ColumnName=? and DateFmt=? and NoFmt=?
                     LockDBKeyTable(sTableUpper, sColumnUpper,sDateFmt, sNoFmt, con);
-                    //getMaxNoFromBusiTable方法：从数据表中通过max方法获取最大号段值
+                
+		    // getMaxNoFromBusiTable方法：从数据表中通过max方法获取最大号段值
                     iMaxNo= getMaxNoFromBusiTable(sTable, sColumn, getPrefixDate(), sOldMaxSerialNo, con);
                 }
  
                 iMaxNo = getMaxNo(sOldMaxSerialNo);
                 setMaxNo(iMaxNo);
-                //updateDBKeyTable 方法用于更新号段最大数信息，详细执行 sql -- update key_producer set MaxSerialNo=? where TableName=? and ColumnName=? and DateFmt=? and NoFmt=? and MaxSerialNo=?
+                
+		// updateDBKeyTable 方法用于更新号段最大数信息，详细执行 sql -- update key_producer set MaxSerialNo=? where TableName=? and ColumnName=? and DateFmt=? and NoFmt=? and MaxSerialNo=?
                 int iUpd =  updateDBKeyTable(sTableUpper, sColumnUpper,sDateFmt, sNoFmt, getMaxSerialNo(), sOldMaxSerialNo, con);
                 if (iUpd == 1) {
                     con.commit();
@@ -185,4 +189,5 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
         return getNextNo();
 	}
 ```
+
 可以看到，使用了 SELECT FOR UPDATE 以及 synchronized 关键字，确保了高并发下的全局唯一性，并且十分灵活不绑定单一数据库产品。经测试,在 16 个微服务、 120 万 QPS 联机交易以及批量业务双重压力测试下没有任何问题。
