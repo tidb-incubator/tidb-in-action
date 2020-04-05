@@ -37,11 +37,11 @@ delta seconds 和 sequence 由节点自身生成，worker node id 则是应用�
 
 ```
 CREATE TABLE `key_producer` (
-  `TABLENAME` varchar(80) COLLATE utf8_bin NOT NULL COMMENT '表名',
-  `COLUMNNAME` varchar(80) COLLATE utf8_bin NOT NULL COMMENT '列名',
+  `TABLENAME` varchar(80) COLLATE utf8_bin NOT NULL COMMENT '表名称',
+  `COLUMNNAME` varchar(80) COLLATE utf8_bin NOT NULL COMMENT '列名称',
   `MAXSERIALNO` varchar(80) COLLATE utf8_bin DEFAULT NULL COMMENT '最大数',
-  `DATEFMT` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '日期模式',
-  `NOFMT` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '流水号模式',
+  `DATEFMT` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '日期格式',
+  `NOFMT` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '流水号格式',
   `UPDATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`TABLENAME`,`COLUMNNAME`,`DATEFMT`,`NOFMT`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='索引生成表 '
@@ -80,10 +80,9 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
 }
 ```
 
-静态类变量 Map<String, KeyInfo>  keysMap ，该容器 key 值保存拼接字段 tablename@columname@datefmt@nofmt ；value 保存号段信息类 keyInfo；微服务获取唯一序列号都是先从 keysMap 中获取，keyInfo 返回空会初始化申请序列号表的 keyInfo 号段信息，获取唯一序列号的主要方法 
+静态类变量 Map<String, KeyInfo>  keysMap ，该容器 key 值保存拼接字段 tablename@columname@datefmt@nofmt ；value 保存号段信息类 keyInfo；微服务获取唯一序列号都是先从 keysMap 中获取，keyInfo 返回空会初始化申请序列号表的 keyInfo 号段信息，获取唯一序列号的主要方法 keyInfo.getNextSerialno()。
 
 ```
-keyInfo.getNextSerialno(); 代码如下：
     /**
      * 获取唯一序列号
      *
