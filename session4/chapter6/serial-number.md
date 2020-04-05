@@ -10,11 +10,11 @@ uid-generator 生成的 64 位 ID 结构如下
 
 ![图片](https://uploader.shimo.im/f/6tTFV186YUQbK6Yt.png!thumbnail)
 
-* sign：长度固定为1位。符号标识，即生成的 UID 为正数。
-* delta seconds：默认28位。当前时间，相对于可设置时间基点 (默认"2016-05-20") 的增量值，单位为秒。28位最多可支持约8.7年。
-* worker node id：默认22位。机器id，22位时最多可支持约420万次机器启动。内置实现为在启动时由数据库分配。默认分配策略为用后即弃，后续可提供复用策略。
-* sequence：默认13位。每秒下的并发序列，13位可支持每秒8192个并发。
-* worker node id：默认22位。
+* sign：长度固定为 1 位。符号标识，即生成的 UID 为正数。
+* delta seconds：默认 28 位。当前时间，相对于可设置时间基点 (默认 "2016-05-20") 的增量值，单位为秒。28 位最多可支持约 8.7 年。
+* worker node id：默认 22 位。机器 id，22 位时最多可支持约 420 万次机器启动。内置实现为在启动时由数据库分配。默认分配策略为用后即弃，后续可提供复用策略。
+* sequence：默认 13 位。每秒下的并发序列，13 位可支持每秒 8192 个并发。
+* worker node id：默认 22 位。
 
 delta seconds 和 sequence 由节点自身生成，worker node id 则是应用进程在启动时从一个集中式的 ID 生成器取得，之后这个进程的节点 ID 一般不再变换，这样就减少了集中式 ID 生成器的负载。常见的集中式 ID 生成器是数据库自增列或者 Zookeeper。
 
@@ -25,7 +25,7 @@ delta seconds 和 sequence 由节点自身生成，worker node id 则是应用�
 2. 大流量写入空表时，即使使用 Snowflake, 最好提前 split region, 否则写入集中在少数几个 region 中，而且 TiDB 新建立的 region leader 还可能留在当前热点节点，无法缓解写入瓶颈。
 3. 根据数据预期寿命调整 delta seconds 位数, 一般在 28 位至 44 位之间。
 4. delta seconds 时间基点尽量贴近当前时间，不要使用默认值。
-5. worker node id 位数有限，对应数值不超过 500 万。 如果使用 TiDB 的自增列实现 worker node id，每次 TiDB 实例的重启都会让自增列返回值增加至少 3 万，这样最多 500/3 = 166 次实例重启后，自增列返回值就比 worker node id 可接受的最大值要大。这时就不能直接使用这个过大的值，需要清空自增列所在的表，把自增列值重置为零，也可以在 Snowflake 实现层解决这个问题。
+5. worker node id 位数有限，对应数值不超过 500 万。 如果使用 TiDB 的自增列实现 worker node id，每次 TiDB 实例的重启都会让自增列返回值增加至少 3 万，这样最多 500 / 3 = 166 次实例重启后，自增列返回值就比 worker node id 可接受的最大值要大。这时就不能直接使用这个过大的值，需要清空自增列所在的表，把自增列值重置为零，也可以在 Snowflake 实现层解决这个问题。
 # 方案二：号段分配方案
 号段模式也是当下分布式 ID 生成器的主流实现方式之一。号段模式可以理解为从数据库批量地获取自增 ID，每次从数据库取出一个号段范围，例如 (1,1000] 代表 1000 个 ID。本方案需要一张序列号生成表，每个序列使用一行数据来控制，这张表需要具有序列名称、序列最大值、序列获取步长（step）等字段，应用程序每次按配置好的步长来获取一批序列号，并同时更新该序列最大值，在应用程序内存中完成最终的序列号加工及分配。在预期并发变高时，可以通过调大序列获取步长的方式降低这行记录上的并发更新频度。
 
@@ -80,14 +80,14 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
         keyInfo = dbkey;
     }
     
-    // keyInfo.getNextSerialno()是获取唯一序列号的主要方法
+    // keyInfo.getNextSerialno() 是获取唯一序列号的主要方法
     sNewSerialNo = keyInfo.getNextSerialNo();
     return sNewSerialNo;
 }
 }
 ```
 
-<!--TODO: 以下是KeyInfo类的实现，缺少了Class定义和构造函数，需要补充。 -->
+<!--TODO: 以下是 KeyInfo 类的实现，缺少了 Class 定义和构造函数，需要补充。 -->
 ```
     /**
      * 获取唯一序列号
