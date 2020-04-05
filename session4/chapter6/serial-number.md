@@ -53,6 +53,8 @@ CREATE TABLE `key_producer` (
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 public class KeyFactory {
+    // key 值保存拼接字段 tablename@columname@datefmt@nofmt
+    // value 保存号段信息类 keyInfo
     private static Map<String, KeyInfo> keysMap = new ConcurrentHashMap<String, KeyInfo>(50);
 
 /**
@@ -69,21 +71,22 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
     String sNewSerialNo = "DBERROR";
     KeyInfo keyInfo;
     
-    // key 值保存拼接字段 tablename@columname@datefmt@nofmt
-    // value 保存号段信息类 KeyInfo
-    keyInfo =  keysMap.get(KeyInfo.getKey(sTable, sColumn, sDateFmt, sNoFmt ));
+    // 从 keysMap 中获取唯一序列号
+    // 若返回值为空，则初始化申请序列号表的 keyInfo 号段信息
+    keyInfo =  keysMap.get(KeyInfo.getKey(sTable, sColumn, sDateFmt, sNoFmt ));
     if (keyInfo == null) {
         KeyInfo dbkey = new KeyInfo(sTable, sColumn, sDateFmt, sNoFmt, cacheSize);
         keysMap.put(dbkey.getInfoKey(),dbkey);
         keyInfo = dbkey;
     }
-    sNewSerialNo = keyInfo.getNextSerialNo();
+    
+    // keyInfo.getNextSerialno()是获取唯一序列号的主要方法
+    sNewSerialNo = keyInfo.getNextSerialNo();
     return sNewSerialNo;
 }
 }
 ```
 
-静态类变量 Map<String, KeyInfo>  keysMap ，该容器 key 值保存拼接字段 tablename@columname@datefmt@nofmt ；value 保存号段信息类 KeyInfo；微服务获取唯一序列号都是先从 keysMap 中获取，keyInfo 返回空会初始化申请序列号表的 keyInfo 号段信息，获取唯一序列号的主要方法 keyInfo.getNextSerialno()。
 
 ```
     /**
