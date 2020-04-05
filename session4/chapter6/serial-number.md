@@ -27,18 +27,15 @@ delta seconds 和 sequence 由节点自身生成，worker node id 则是应用�
 4. delta seconds 时间基点尽量贴近当前时间，不要使用默认值。
 5. worker node id 位数有限，对应数值不超过 500 万。 如果使用 TiDB 的自增列实现 worker node id，每次 TiDB 实例的重启都会让自增列返回值增加至少 3 万，这样最多 500/3 = 166 次实例重启后，自增列返回值就比 worker node id 可接受的最大值要大。这时就不能直接使用这个过大的值，需要清空自增列所在的表，把自增列值重置为零，也可以在 Snowflake 实现层解决这个问题。
 # 方案二：号段分配方案
-本方案需要一张序列号生成表，每个序列使用一行数据来控制，这张表需要具有序列名称、序列最大值、序列获取步长（step）等字段，应用程序每次按配置好的步长来获取一批序列号，并同时更新该序列最大值，在应用程序内存中完成最终的序列号加工及分配。在预期并发变高时，可以通过调大序列获取步长的方式降低这行记录上的并发更新频度。
+号段模式也是当下分布式 ID 生成器的主流实现方式之一。号段模式可以理解为从数据库批量地获取自增 ID，每次从数据库取出一个号段范围，例如 (1,1000] 代表 1000 个 ID。本方案需要一张序列号生成表，每个序列使用一行数据来控制，这张表需要具有序列名称、序列最大值、序列获取步长（step）等字段，应用程序每次按配置好的步长来获取一批序列号，并同时更新该序列最大值，在应用程序内存中完成最终的序列号加工及分配。在预期并发变高时，可以通过调大序列获取步长的方式降低这行记录上的并发更新频度。
 
 这里需要注意，在 TiDB 中，必须使用 SELECT FOR UPDATE 锁定相关记录行之后再更新序列最大值。
 
-在分布式系统中，高并发场景下能否稳定、快速地获取一个唯一序列号至关重要。下面介绍一个生成唯一序列号的方式；
+下面介绍具体的实现方法。
 
-基于数据库的号段模式：
+表结构定义如下：
 
 ```
-号段模式是当下分布式 ID 生成器的主流实现方式之一。号段模式可以理解为从数据库批量地获取自增 ID，每次从数据库取出一个号段范围，例如 (1,1000] 代表 1000 个 ID，具体的业务服务将本号段，生成 1~1000 的自增 ID 并加载到内存。我们来看一下具体的实现方式。
-
-表结构如下：
 CREATE TABLE `key_producer` (
   `TABLENAME` varchar(80) COLLATE utf8_bin NOT NULL COMMENT '表名',
   `COLUMNNAME` varchar(80) COLLATE utf8_bin NOT NULL COMMENT '列名',
@@ -50,8 +47,9 @@ CREATE TABLE `key_producer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='索引生成表 '
 ```
  
-```
 具体代码如下：
+
+```
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 public class KeyFactory {
@@ -81,9 +79,11 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
 }
 }
 ```
-静态类变量 Map<String, KeyInfo>  keysMap ，该容器 key 值保存拼接字段 tablename@columname@datefmt@nofmt ；value 保存号段信息类 keyInfo；
+
+静态类变量 Map<String, KeyInfo>  keysMap ，该容器 key 值保存拼接字段 tablename@columname@datefmt@nofmt ；value 保存号段信息类 keyInfo；微服务获取唯一序列号都是先从 keysMap 中获取，keyInfo 返回空会初始化申请序列号表的 keyInfo 号段信息，获取唯一序列号的主要方法 
+
 ```
-微服务获取唯一序列号都是先从 keysMap 中获取，keyInfo 返回空会初始化申请序列号表的 keyInfo 号段信息，获取唯一序列号的主要方法 keyInfo.getNextSerialno(); 代码如下：
+keyInfo.getNextSerialno(); 代码如下：
     /**
      * 获取唯一序列号
      *
