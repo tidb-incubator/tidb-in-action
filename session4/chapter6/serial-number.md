@@ -3,7 +3,7 @@
 
 本节将介绍两种高性能的序列号生成方案。
 
-# 方案一 类 snowflake 方案
+# 方案一：类 Snowflake 方案
 Snowflake 是 Twitter 提出的分布式 id 生成方案。目前有多种实现，较流行的是百度的 uid-generator 和美团的 leaf。以下以 uid-generator 为例展开说明。
 
 uid-generator 生成的 64 位 id 结构如下
@@ -21,12 +21,12 @@ delta seconds 和 sequence 由节点自身生成，worker node id 则是应用�
 当大流量写入时，由于 worker node id 位于生成 id 的中部并且没有重复，不同节点生成的 id 之间就不会并排在一起，因此写入就会被打散到各个 region。
 
 ## 使用 Snowflake 时需要注意的问题
-1. 节点时钟有可能回拨, 这时 snowflake 的实现一般会报错或者等待。
-2. 大流量写入空表时，即使使用 snowflake, 最好提前 split region, 否则写入集中在少数的几个 region 中，而且 tidb 新建立的 region leader 还可能留在当前热点节点，无法缓解写入瓶颈。
+1. 节点时钟有可能回拨, 这时 Snowflake 的实现一般会报错或者等待。
+2. 大流量写入空表时，即使使用 Snowflake, 最好提前 split region, 否则写入集中在少数的几个 region 中，而且 TiDB 新建立的 region leader 还可能留在当前热点节点，无法缓解写入瓶颈。
 3. 根据数据预期寿命调整 delta seconds 位数, 一般在 28 位至 44 位之间。
 4. delta seconds 时间基点尽量贴近当前时间，不要使用默认值。
-5. worker id 位数有限，对应数值不超过 500 万。 如果使用 tidb 的自增列实现 worker id，每次 tidb 实例的重启都会让自增列返回值增加至少 3 万, 这样最多 500/3 = 166 次实例重启后，自增列返回值就比 worker id 可接受的最大值要大。这时就不能直接使用这个过大的值，需要 truncate 自增列所在表，把自增列值重置为零， 也可以在 snowflake 实现层解决这个问题。
-# 方案二 号段分配方案
+5. worker node id 位数有限，对应数值不超过 500 万。 如果使用 TiDB 的自增列实现 worker node id，每次 TiDB 实例的重启都会让自增列返回值增加至少 3 万, 这样最多 500/3 = 166 次实例重启后，自增列返回值就比 worker node id 可接受的最大值要大。这时就不能直接使用这个过大的值，需要 truncate 自增列所在表，把自增列值重置为零， 也可以在 Snowflake 实现层解决这个问题。
+# 方案二：号段分配方案
 本方案需要一张序列号生成表，每个序列使用一行数据来控制，这张表需要具有序列名称、序列最大值、序列获取步长（step）等字段，应用程序每次按配置好的步长来获取一批序列号，并同时更新该序列最大值，在应用内存中完成最终的序列号加工及分配。在预期并发变高时，可以通过调大序列获取步长的方式来降低这行记录上的更新并发。
 
 这里需要注意，在 TiDB 中，必须使用 select for update 后再更新序列最大值，
