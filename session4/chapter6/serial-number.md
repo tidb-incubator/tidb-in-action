@@ -194,4 +194,4 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
 	}
 ```
 
-可以看到，使用了 SELECT FOR UPDATE 以及 synchronized 关键字，确保了高并发下的全局唯一性，并且十分灵活不绑定单一数据库产品。经测试,在 16 个微服务、 120 万 QPS 联机交易以及批量业务双重压力测试下没有任何问题。
+可以看到，使用了 SELECT FOR UPDATE 以及 synchronized 关键字，确保了高并发下的全局唯一性，并且十分灵活不绑定单一数据库产品。经测试，在 16 个微服务、 120 万 QPS 联机交易以及批量业务双重压力测试下没有任何问题。
