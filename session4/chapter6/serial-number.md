@@ -68,6 +68,9 @@ public class KeyFactory {
 public static String getSerialNoByDS(String sTable, String sColumn, String sDateFmt, String sNoFmt, int cacheSize) throws Exception {
     String sNewSerialNo = "DBERROR";
     KeyInfo keyInfo;
+    
+    // key 值保存拼接字段 tablename@columname@datefmt@nofmt
+    // value 保存号段信息类 KeyInfo
     keyInfo =  keysMap.get(KeyInfo.getKey(sTable, sColumn, sDateFmt, sNoFmt ));
     if (keyInfo == null) {
         KeyInfo dbkey = new KeyInfo(sTable, sColumn, sDateFmt, sNoFmt, cacheSize);
@@ -94,6 +97,7 @@ public static String getSerialNoByDS(String sTable, String sColumn, String sDate
         if(notExistKey()) {
             init();
         }
+	
         // 判断号段的最大值是否为零
         if (iMaxNo !=0 ) {
             sNextSerilNo = getNextNo();
