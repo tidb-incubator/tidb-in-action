@@ -170,15 +170,15 @@ TiDB / PD 组件的 goroutines 的 AVG、 MAX、 MIN 数量信息。
 
 - METRIC_NAME：该项监控项的名称
 - LABEL：该项监控的 LABEL 信息，点击 expand 后可以查看该项监控更加详细的各项 LABEL 的监控信息。
-- TIME_RATIO：该项监控消耗的总时间和 TIME_RATIO 为 1 的监控行总时间比例。
+- TIME_RATIO：该项监控消耗的总时间和 TIME_RATIO 为 1 的监控行总时间比例
 	
-		例如 tidb_cop 的总耗时占 tidb_query 总耗时的 0.001。
-- TOTAL_TIME：该项监控的总耗时。
-- TOTAL_COUNT： 该项监控执行的总次数。
-- P999： 该项监控的 P999 最大执行时间。
-- P99：该项监控的 P99 最大执行时间。
-- P90：该项监控的 P90 最大执行时间。
-- P80：该项监控的 P80 最大执行时间。
+		例如 tidb_cop 的总耗时占 tidb_query 总耗时的 0.001 秒
+- TOTAL_TIME：该项监控的总耗时
+- TOTAL_COUNT： 该项监控执行的总次数
+- P999： 该项监控的 P999 最大执行时间
+- P99：该项监控的 P99 最大执行时间
+- P90：该项监控的 P90 最大执行时间
+- P80：该项监控的 P80 最大执行时间
 
 #### (2) Error
 

@@ -22,7 +22,7 @@ TiDB 已支持多种性能排查工具。但在多种应用场景需求下，仍
 4. Explain analyze 只能查看可以复现的问题
 5. Profile 只能查看整个实例的瓶颈
 
-所以有了可视化 Statements，可以直接在页面观察 SQL 执行情况，不需要查询系统表，便于用户定位性能问题。
+因此推出可视化 Statements，可以直接在页面观察 SQL 执行情况，不需要查询系统表，便于用户定位性能问题。
 
 ## 3. 查看 Statements 整体情况
 
@@ -38,7 +38,9 @@ TiDB 已支持多种性能排查工具。但在多种应用场景需求下，仍
 2. 支持按数据库过滤
 3. 支持按不同的指标排序
 
-注：这里所指的 SQL 语句实际指的是某一类 SQL 语句。语法一致的 SQL 语句会规一化为一类相同的 SQL 语句。
+> 注意：
+> 
+> 这里所指的 SQL 语句实际指的是某一类 SQL 语句。语法一致的 SQL 语句会规一化为一类相同的 SQL 语句。
 
 例如：
 
@@ -46,8 +48,7 @@ TiDB 已支持多种性能排查工具。但在多种应用场景需求下，仍
 SELECT * FROM employee WHERE id IN (1, 2, 3);
 select * from EMPLOYEE where ID in (4, 5);
 ```
-
-规一化为
+规一化为 
 
 ```sql
 select * from employee where id in (...);
@@ -99,6 +100,8 @@ select * from employee where id in (...);
 - 通过 `max-stmt-count` 更改保存的 SQL 种类数量，默认 200 条。当 SQL 种类超过 `max-stmt-count` 时，会移除最近没有使用的 SQL。
 - 通过 `max-sql-length` 更改 `DIGEST_TEXT` 和 `QUERY_SAMPLE_TEXT` 的最大显示长度，默认是 4096。
 
-注: `tidb_stmt_summary_history_size`、`max-stmt-count`、`max-sql-length` 这些配置都影响内存占用，建议根据实际情况调整，不宜设置得过大。
+> 注意：
+> 
+> `tidb_stmt_summary_history_size`、`max-stmt-count`、`max-sql-length` 这些配置都影响内存占用，建议根据实际情况调整，不宜设置得过大。
 
 综上所述，可视化 Statements 可以快速定位某个 SQL 性能问题，也可以配合前一小节介绍的 KeyVis 进行分析。
