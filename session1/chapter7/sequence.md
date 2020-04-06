@@ -1,6 +1,6 @@
 ## 7.3 Sequence
 
-Sequence 是数据库系统按照一定规则自增的数字序列，具有唯一和单调递增的特性。在官方 SQL 2003 标准中，其被定义为“生成连续数值的一种机制，Sequence 既可以是内部对象，也可以是外部对象”。因原生 MySQL 中并未支持 Sequence，TiDB Sequence 语法参考 MariaDB、Oracle 和 IBM Db2。
+Sequence 是数据库系统按照一定规则自增的数字序列，具有唯一和单调递增的特性。在官方 SQL 2003 标准中，其被定义为“生成连续数值的一种机制，Sequence 既可以是内部对象，也可以是外部对象”。因原生 MySQL 中并未支持 Sequence，所以 TiDB Sequence 的语法参考了 MariaDB、Oracle 和 IBM Db2。
 
 - Create Sequence 语法
 
@@ -64,7 +64,7 @@ CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 
 (2) 从不同的 TiDB 节点获取到的 Sequence 值顺序有所不同
 
-如果两个应用节点同时连接至同一个 TiDB 节点，两个节点间取到的则为连续递增的值
+如果两个应用节点同时连接至同一个 `TiDB` 节点，两个节点取到的则为连续递增的值
 
 ```SQL
 节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
@@ -84,7 +84,7 @@ CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 1 row in set (0.00 sec)
 ```
 
-(3) 如果两个应用节点分别连接至不同`TiDB`节点，两个节点间取到的则为区间递增（每个 TiDB 节点上为连续递增）但不连续的值
+(3) 如果两个应用节点分别连接至不同 `TiDB` 节点，两个节点取到的则为区间递增（每个 TiDB 节点上为连续递增）但不连续的值
 
 ```SQL
 节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
@@ -106,7 +106,7 @@ CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 
 - 在一张表里面需要有多个自增字段
 
-MySQL 语法中每张表仅能新建一个 `auto_increment` 字段，且该字段必须定义在主键或是索引列上。在应用设计的时候，主键通常由具有业务意义的字段表示，例如用户名、主机名等，通过 Sequence 和生成列，我们可以实现多自增字段需求。
+MySQL 语法中每张表仅能新建一个 `auto_increment` 字段，且该字段必须定义在主键或是索引列上。在 TiDB 中通过 `Sequence` 和生成列，我们可以实现多自增字段需求。
 
 (1) 首先新建如下两个 Sequence
 
