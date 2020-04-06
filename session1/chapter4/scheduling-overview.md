@@ -53,7 +53,7 @@ TiKV 集群是 TiDB 数据库的分布式 KV 存储引擎，数据以 Region 为
 ### 4.1.4 信息收集
 调度依赖于整个集群信息的收集，简单来说，我们需要知道每个 TiKV 节点的状态以及每个 Region 的状态。TiKV 集群会向 PD 汇报两类消息：
 
-**每个 TiKV 节点会定期向 PD 汇报节点的整体信息**
+**每个 TiKV 节点会定期向 PD 汇报节点的状态信息**
 
 TiKV 节点（Store）与 PD 之间存在心跳包，一方面 PD 通过心跳包检测每个 Store 是否存活，以及是否有新加入的 Store；另一方面，心跳包中也会携带这个 [Store 的状态信息](https://github.com/pingcap/kvproto/blob/release-3.1/proto/pdpb.proto#L421)，主要包括：
 
@@ -65,7 +65,7 @@ TiKV 节点（Store）与 PD 之间存在心跳包，一方面 PD 通过心跳�
 * 是否过载
 * labels 标签信息（标签是具备层级关系的一系列 Tag）
 
-**每个 Raft Group 的 Leader 会定期向 PD 汇报信息。**
+**每个 Raft Group 的 Leader 会定期向 PD 汇报 Region 的状态信息**
 
 每个 Raft Group 的 Leader 和 PD 之间存在心跳包，用于汇报这个[ Region 的状态](https://github.com/pingcap/kvproto/blob/release-3.1/proto/pdpb.proto#L271)，主要包括下面几点信息：
 
@@ -99,7 +99,7 @@ PD 收集了这些信息后，还需要一些策略来制定具体的调度计�
 
 **副本在 Store 之间的分布均匀分配**
 
-由于每个 Region 副本中存储的数据容量上限是固定的，所以我们维持每个节点上面副本数量的均衡，使得总体的负载更均衡。
+由于每个 Region 副本中存储的数据容量上限是固定的，所以我们通过维持每个节点上面副本数量的均衡，使得总体的负载更均衡。
 
 **Leader 数量在 Store 之间均匀分配**
 
