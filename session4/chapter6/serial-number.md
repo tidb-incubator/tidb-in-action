@@ -8,7 +8,7 @@ Snowflake 是 Twitter 提出的分布式 ID 生成方案。目前有多种实现
 
 uid-generator 生成的 64 位 ID 结构如下
 
-![图片](https://uploader.shimo.im/f/6tTFV186YUQbK6Yt.png!thumbnail)
+![uid-generator.png](/res/session4/chapter6/serial-number/uid-generator.png)
 
 * sign：长度固定为 1 位。固定为 0，表示生成的 ID 始终为正数。
 * delta seconds：默认 28 位。当前时间，表示为相对于某个预设时间基点 (默认 "2016-05-20") 的增量值，单位为秒。28 位最多可支持约 8.7 年。
