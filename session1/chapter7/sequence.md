@@ -84,7 +84,7 @@ CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 1 row in set (0.00 sec)
 ```
 
-(3) 如果两个应用节点分别连接至不同`TiDB`节点，两个节点间取到的则为区间递增（每个 TiDB 上为连续递增）但不连续的值
+(3) 如果两个应用节点分别连接至不同`TiDB`节点，两个节点间取到的则为区间递增（每个 TiDB 节点上为连续递增）但不连续的值
 
 ```SQL
 节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
