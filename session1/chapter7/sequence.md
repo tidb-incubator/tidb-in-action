@@ -241,4 +241,4 @@ tidb[test]> select * from t;
 
 ### 7.3.2 注意事项
 
-在分布式架构的数据库中实现连续递增序列是比较有难度的，而 `Sequence` 把`严格递增`和`性能`两方面交给了使用者，在新建 `Sequence` 的时候，可以通过组合 `Order/No Order`（目前尚未实现）和 `Cache/No Cache` 来选择新建高性能的 `Sequence`，亦或是性能较差但递增较为严格的 `Sequence`。
+在分布式架构的数据库中实现单调递增序列是比较有难度的，而 `Sequence` 把`严格递增`和`性能`两方面交给了使用者，在新建 `Sequence` 的时候，可以通过组合 `Order/No Order`（目前尚未实现）和 `Cache/No Cache` 来选择新建高性能的 `Sequence`，亦或是性能较差但递增较为严格的 `Sequence`。
