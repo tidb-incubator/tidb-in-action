@@ -27,7 +27,8 @@ TiSpark 是将 Spark SQL 直接运行在分布式存储引擎 TiKV 上的 OLAP �
 
   * 解析 TiKV Table Schema 将 TiKV 中的 Schema 信息转化为 Spark SQL 认识的 Schema
   * 解析 TiKV 的类型系统
-  * 从 TiKV 中获取的数据是 KV Pair ，需要编码和解码模块负责将 KV Pair 转化为 Spark SQL 可以使用的数据。这里的编解码逻辑和 TiDB 编解码逻辑一致。
+  * 从 TiKV 中获取的数据是 Key-Value Pair ，需要编码和解码模块负责将 Key-Value Pair 转化为 Spark SQL 可以使用的数据。这里的编解码逻辑和 TiDB 编解码逻辑一致。
+
   * 协处理器支持，可以把谓词，索引，键值域处理计算下推到 TiKV 侧，减少数据传输过程，更能利用 TiKV 的分布式计算能力。在调用协处理的时候也依赖上面类型系统和编码系统，用于构造协处理器调用参数。
   * 为了更加精确选择查询计划，提高 SQL 运行效率， TiSpark 中 Java TiKV Client 利用了 TiDB 的统计信息实现了更合理的基于代价的估算。
 
@@ -94,6 +95,5 @@ TiStrategy 负责改写 TiSpark 的物理执行计划，假设 Spark SQL 中包�
 
 ### 11.1.8 总结
 TiSpark 实现了富 TiKV Java Client ，并通过 Spark 内置扩展接口改写 Spark Plan ，将 TiKV 的表结构和数据集成到 Spark 中。  非常巧妙的将 TiKV 体系和现有大数据体系融合起来。再通过分析 TiSpark 对聚簇和非聚簇索引的处理，以及协处理器在其中的作用，加深了对 TiSpark 与 TiKV 交互的理解。 最后分析 TiSpark 分布式写入 TiKV ，完成了 TiSpark 对 TiKV 读和写的总体理解。
-
 
 
