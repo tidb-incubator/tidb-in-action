@@ -71,7 +71,7 @@ GROUP BY class ;
 * 首先根据谓词对索引表进行扫表，逻辑类同之前对聚簇索引的读取。
 * 根据 Row ID 和所属 Region 分发整理数据
 * 在每个 Spark Executor 排序这些 Row ID 并尽可能整合成更大的值域段
-* 针对所查询的表进行编码并并发发送请求
+* 针对所查询的表进行编码，同时并发发送请求
 
 例如下图中扫描 school 的非聚簇索引表数据，得到 1,2,3,4,5,7,8,10,88 的 Row ID ，在 Spark Executor 端对这些 Row ID 排序，再根据 Row ID 对 student 主表进行范围扫描，再将 TiKV 主表返回数据在 Spark 中再计算得到最终结果。
 
