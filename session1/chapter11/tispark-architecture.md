@@ -23,16 +23,16 @@ TiSpark 是将 Spark SQL 直接运行在分布式存储引擎 TiKV 上的 OLAP �
   * 将 TiKV 数据包解码并转化为为 Spark SQL 的行格式
 
 ### 11.1.2 富 TiKV Java Client
-如上架构所示 TiSpark 需要从 TiKV 中获取表结构信息和底层 KV Pair 信息，那么 TiSpark 如何与 TiKV 通信获取这些信息呢？ 这里就需要 TiKV Java Client ，通过 gRPC 与 TiKV Server 通信调用 TiKV API 。
+如上架构所示， TiSpark 需要从 TiKV 中获取表结构信息和底层 KV Pair 信息，那么 TiSpark 如何与 TiKV 通信获取这些信息呢？ 这里就需要 TiKV Java Client ，通过 gRPC 与 TiKV Server 通信调用 TiKV API 。
 
   * 解析 TiKV Table Schema 将 TiKV 中的 Schema 信息转化为 Spark SQL 认识的 Schema
   * 解析 TiKV 的类型系统
-  * 从 TiKV 中获取的数据是 KV Pair 需要，编码解码模块负责将 KV Pair 转化为 Spark SQL 可以使用的数据。这里的编解码逻辑和 TiDB 编解码逻辑一致。
-  * 协处理器支持，可以谓词，索引，键值域处理计算下推到 TiKV 侧，减少数据传输过程更能利用 TiKV 的分布式计算能力。在调用协处理的时候也依赖上面类型系统和编码系统，用于构造协处理器调用参数。
-  * 为了更加精确选择查询计划，提高 SQL 运行效率， TiSpark 中 Java TiKV Client 利用了 TiDB 的统计信息实现了更合理的基于代价的估算
+  * 从 TiKV 中获取的数据是 KV Pair ，需要编码和解码模块负责将 KV Pair 转化为 Spark SQL 可以使用的数据。这里的编解码逻辑和 TiDB 编解码逻辑一致。
+  * 协处理器支持，可以把谓词，索引，键值域处理计算下推到 TiKV 侧，减少数据传输过程，更能利用 TiKV 的分布式计算能力。在调用协处理的时候也依赖上面类型系统和编码系统，用于构造协处理器调用参数。
+  * 为了更加精确选择查询计划，提高 SQL 运行效率， TiSpark 中 Java TiKV Client 利用了 TiDB 的统计信息实现了更合理的基于代价的估算。
 
 ### 11.1.3 打通 TiKV 和 TiSpark
-通过富 Java TiKV Client 可以完成 TiSpark 与 TiKV 通信，获取 TiKV 的相关数据，如何将 TiKV 的数据注入到 Spark 中完成 Spark 程序分布式计算呢？ 答案是通过修改 Spark Plan 可以完成。Spark 内置了扩展性接口，通过扩展 SparkSessionExtensions 类 Spark 可以实现用户自定义 SQL Plan，语法支持以及元数据解析等。具体可以参见下图 Spark 官网 API 说明。 
+通过富 Java TiKV Client 可以完成 TiSpark 与 TiKV 通信，获取 TiKV 的相关数据，如何将 TiKV 的数据注入到 Spark 中完成 Spark 程序分布式计算呢？ 答案是通过修改 Spark Plan 可以完成。Spark 内置了扩展性接口，通过扩展 SparkSessionExtensions 类， Spark 可以实现用户自定义 SQL Plan 、语法支持以及元数据解析等。具体可以参见下图 Spark 官网 API 说明。 
 
 ![图片](/res/session1/chapter11/spark-extension.png)
 
