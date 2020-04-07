@@ -8,7 +8,7 @@ TiSpark 是将 Spark SQL 直接运行在分布式存储引擎 TiKV 上的 OLAP �
 
 ![图片](/res/session1/chapter11/tispark-arch-image.png)
 
-* TiSpark 内置实现 TiKV 和 PD Java Client，让 TiSpark 可以通过 gRPC 与 TiKV 和 PD 通信，从 TiKV / TiFlash 中获取 Key-Value Pair 和表结构用于支持 TiSpark SQL 计算，从 PD 中获取表元数据信息用于支持表结构解析和 TiKV 数据定位。
+* TiSpark 内置实现 TiKV 和 PD Java Client，让 TiSpark 可以通过 gRPC 与 TiKV 和 PD 通信，从 TiKV / TiFlash 中获取 KV Pair 和表结构用于支持 TiSpark SQL 计算，从 PD 中获取表元数据信息用于支持表结构解析和 TiKV 数据定位。
 * TiSpark 在分布式写入数据时需要通过 TiDB 来进行锁表和 Region 预切分操作，保证数据写入正确性和高效性
 * TiSpark Driver 侧：
   * 通过 PD CLient 从 PD 中获取 TiDB metadata 信息，并将 TiDB 的 metadata 信息转化 Spark 的支持的 metadata 信息。转化成功之后 TiSpark 可以看到 TiDB的表。
