@@ -6,7 +6,7 @@ node_js:
 cache: npm
 
 before_install:
-  - sudo apt-get -y calibre libfontconfig libxss1 libasound2
+  - sudo apt-get install -y calibre libfontconfig
   - npm install -g gitbook-cli svgexport@0.3.2
 
 before_script:

@@ -18,8 +18,5 @@
   "devDependencies": {
     "gitbook-plugin-analytics": "git+https://git@github.com/you06/gitbook-plugin-analytics.git",
     "npm": ">=6.13.4"
-  },
-  "dependencies": {
-    "svgexport": "^0.4.0"
   }
 }
