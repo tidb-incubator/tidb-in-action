@@ -8,7 +8,7 @@ TiSpark 是将 Spark SQL 直接运行在分布式存储引擎 TiKV 上的 OLAP �
 
 ![图片](/res/session1/chapter11/tispark-arch-image.png)
 
-* TiSpark 内置实现 TiKV 和 PD Java Client，让 TiSpark 可以通过 gRPC 与 TiKV 和 PD 通信，从 TiKV / TiFlash 中获取 KV Pair 和表结构用于支持 TiSpark SQL 计算，从 PD 中获取表元数据信息用于支持表结构解析和 TiKV 数据定位。
+* TiSpark 内置实现 TiKV 和 PD Java Client，让 TiSpark 可以通过 gRPC 与 TiKV 和 PD 通信，从 TiKV / TiFlash 中获取 Key-Value Pair 和表结构用于支持 TiSpark SQL 计算，从 PD 中获取表元数据信息用于支持表结构解析和 TiKV 数据定位。
 * TiSpark 在分布式写入数据时需要通过 TiDB 来进行锁表和 Region 预切分操作，保证数据写入正确性和高效性
 * TiSpark Driver 侧：
   * 通过 PD CLient 从 PD 中获取 TiDB metadata 信息，并将 TiDB 的 metadata 信息转化 Spark 的支持的 metadata 信息。转化成功之后 TiSpark 可以看到 TiDB的表。
@@ -23,7 +23,7 @@ TiSpark 是将 Spark SQL 直接运行在分布式存储引擎 TiKV 上的 OLAP �
   * 将 TiKV 数据包解码并转化为为 Spark SQL 的行格式
 
 ### 11.1.2 富 TiKV Java Client
-如上架构所示， TiSpark 需要从 TiKV 中获取表结构信息和底层 KV Pair 信息，那么 TiSpark 如何与 TiKV 通信获取这些信息呢？ 这里就需要 TiKV Java Client ，通过 gRPC 与 TiKV Server 通信调用 TiKV API 。
+如上架构所示， TiSpark 需要从 TiKV 中获取表结构信息和底层 Key-Value Pair 信息，那么 TiSpark 如何与 TiKV 通信获取这些信息呢？ 这里就需要 TiKV Java Client ，通过 gRPC 与 TiKV Server 通信调用 TiKV API 。
 
   * 解析 TiKV Table Schema 将 TiKV 中的 Schema 信息转化为 Spark SQL 认识的 Schema
   * 解析 TiKV 的类型系统
@@ -89,7 +89,7 @@ TiStrategy 负责改写 TiSpark 的物理执行计划，假设 Spark SQL 中包�
 * 根据 DataFrame 中数据进行 Region 预切分和分配
 * TiKV 数据写入需要支持分布式事务， TiKV 采用 Percolator 协议进行事务操作，操作过程如下：
   * 在 Spark Driver 端开始写数据时申请 TiKV 中主数据预写，对此条数据加锁。
-  * 在 Spark Executor 端将 DataFrame 转化为 TiKV 的 KV Pair 格式，并调用 gRPC 进行次数据预写，将 DataFrame 数据存入到 TiKV ， 此过程如果存在写入冲突可以选择报错或者覆盖写入。
+  * 在 Spark Executor 端将 DataFrame 转化为 TiKV 的 Key-Value Pair 格式，并调用 gRPC 进行次数据预写，将 DataFrame 数据存入到 TiKV ， 此过程如果存在写入冲突可以选择报错或者覆盖写入。
   * 在 Spark Driver 端等待 Spark Executor 预写成功，再将主数据提交。 Percolator 提交成功取决于主数据提交状态。 
   * 在 Spark Excutor 端提交次数据。到此完成了所有两阶段事务提交。
 
