@@ -83,7 +83,7 @@ TiStrategy 负责改写 TiSpark 的物理执行计划，假设 Spark SQL 中包�
 ![图片](/res/session1/chapter11/agg.png)
 
 ### 11.1.7 分布式大数据写入
-最初 TiSpark 只能通过 TiDB JDBC 的方式将数据写入到 TiDB ，这存在可扩展性问题，将 TiSpark 直接写入 TiKV 则可以解决此问题。在 Spark 中数据一般是以 DataFrame 的形式存在， TiSpark 写入过程中可以将 DataFrame 的数据转化为 TiKV 认识的格式，并通过 TiKV Java Client 将数据写入 TiKV。
+最初 TiSpark 只能通过 TiDB JDBC 的方式将数据写入到 TiDB ，这存在可扩展性问题。通过 TiSpark 直接写入 TiKV 则可以解决此问题。在 Spark 中数据一般是以 DataFrame 的形式存在， TiSpark 写入过程中可以将 DataFrame 的数据转化为 TiKV 认识的格式，并通过 TiKV Java Client 将数据写入 TiKV。
 
 * 根据 DataFrame 中数据进行 Region 预切分和分配
 * TiKV 数据写入需要支持分布式事务， TiKV 采用 Percolator 协议进行事务操作，操作过程如下：
