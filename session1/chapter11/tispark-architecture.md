@@ -44,14 +44,14 @@ spark.sql.extensions org.apache.spark.sql.TiExtensions
 
 ![图片](/res/session1/chapter11/tiextension.png)
 
-原生 Spark SQL 执行计划如下图左边所示，一个 Spark SQL 开始运行，通过 Catalyst 解析器被解析为逻辑执行计划，在优化器中生成物理执行计划，最后通过 DataSource 的 API 获取数据。 TiSpark 修改 Spark Plan 之后 SQL 执行过程如下图右边所示。将 SQL 优化器和物理执行计划改写为与 TiKV 相关的交互，在物理执行计划中从 TiKV 获取表结构、数据和索引等信息。改写之后 Spark 看到的接口不变，但是底层实现变成了从 TiKV 交互，既保证了与原来 Spark 程序的兼容又完成 TiKV 数据注入。
+原生 Spark SQL 执行计划如下图左边所示，一个 Spark SQL 开始运行，通过 Catalyst 解析器被解析为逻辑执行计划，在优化器中生成物理执行计划，最后通过 DataSource 的 API 获取数据。 TiSpark 修改 Spark Plan 之后的 SQL 执行过程如下图右边所示。将 SQL 优化器和物理执行计划改写为与 TiKV 相关的交互，在物理执行计划中从 TiKV 获取表结构、数据和索引等信息。改写之后 Spark 看到的接口不变，但是底层实现变成了与 TiKV 交互，既保证了与原来 Spark 程序的兼容又完成 TiKV 数据注入。
 
 ![图片](/res/session1/chapter11/process.png)
 
 ### 11.1.4 聚簇索引
 上面 Spark SQL 架构比较抽象，具体来看一个例子：
 
-Spark SQL 运行如下 SQL ，其中 student 表是 TiDB 中的表，在 studentID 列上有聚簇索引， 在 school 列上的非聚簇索引。聚簇索引会将索引和数据放在一起。
+Spark SQL 运行如下 SQL ，其中 student 表是 TiDB 中的表，在 studentID 列上有聚簇索引， 在 school 列上有非聚簇索引。聚簇索引会将索引和数据放在一起。
 
 SELECT class, avg(score) FROM student
 
@@ -61,7 +61,7 @@ GROUP BY class ;
 
 ![图片](/res/session1/chapter11/filter.png)
 
-在上图中 studentID 是一个聚簇索引， TiKV Region 中会包含聚簇索引的范围，比如上图中 Region 2 的 studentId 范围是 [5000 - 10000) ， Region 3 的 studentID 范围是 [10000 - 15000) 。在 SQL 运行时聚簇索引会转化为对 TiKV 的范围查询，现在需求查找数据范围在 8000 到 10100 ，TiSpark 会将对于的请求发送到 Region 2 和 Region 3 做范围查找。TiSpark 会在 Spark Executor 端将 TiKV 支持的谓词发送给 TiKV 协处理器计算，并将 TiKV 计算之后的结果进行汇总和再计算。 对于 TiKV 不支持的谓词部分会留在 Spark 中计算得到最终 SQL 运行结果。 
+在上图中 studentID 是一个聚簇索引， TiKV Region 中会包含聚簇索引的范围，比如上图中 Region 2 的 studentId 范围是 [5000 - 10000) ， Region 3 的 studentID 范围是 [10000 - 15000) 。在 SQL 运行时聚簇索引会转化为对 TiKV 的范围查询，现在要查找范围在 8000 到 10100 的数据 ，TiSpark 会将对应的请求发送到 Region 2 和 Region 3 做范围查找。TiSpark 会在 Spark Executor 端将 TiKV 支持的谓词发送给 TiKV 协处理器计算，并将 TiKV 计算之后的结果进行汇总和再计算。 对于 TiKV 不支持的谓词部分会留在 Spark 中进行计算，从而得到最终 SQL 运行结果。 
 
 ### 11.1.5 非聚簇索引处理
 非聚簇索引被编码为键值对，键是按照索引列顺序排序的数据，值是指向表主数据的 Row ID 。
