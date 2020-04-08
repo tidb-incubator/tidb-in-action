@@ -5,22 +5,24 @@ TiDB 4.0 诊断系统添加了集群监控系统表，所有表都在 `metrics_s
 
 ### 3.2.1 监控表示例
 
-`tidb_query_duration` 的表结构如下。从表的 `COMMENT` 中可以看出，这个表用来查询 TiDB query 执行的百分位时间，如 P999，P99，P90 的查询耗时。 `value` 的单位是秒。
+`tidb_query_duration` 表用来查询 TiDB query 执行的百分位时间，如 P999，P99，P90 的查询耗时，单位是秒。 其表结构如下：
 
-```sql
-metrics_schema> show create table tidb_query_duration;
-+---------------------+--------------------------------------------------------------------------------------------------------------------+
-| Table               | Create Table                                                                                                       |
-+---------------------+--------------------------------------------------------------------------------------------------------------------+
-| tidb_query_duration | CREATE TABLE `tidb_query_duration` (                                                                               |
-|                     |   `time` datetime unsigned DEFAULT NULL,                                                                           |
-|                     |   `instance` varchar(512) DEFAULT NULL,                                                                            |
-|                     |   `sql_type` varchar(512) DEFAULT NULL,                                                                            |
-|                     |   `quantile` double unsigned DEFAULT NULL,                                                                         |
-|                     |   `value` double unsigned DEFAULT NULL                                                                             |
-|                     | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='The quantile of TiDB query durations(second)' |
-+---------------------+--------------------------------------------------------------------------------------------------------------------+
-```
+| 字段名 | 类型 |
+| :-----:| :----: |
+| TIME | unsigned |
+| INSTANCE | varchar(512) |
+| SQL_TYPE | varchar(512) |
+| QUANTILE | double unsigned|
+| VALUE | double unsigned|
+
+字段解释：
+
+* TIME：query 执行的具体时间
+* INSTANCE：运行 query 的 TiDB 实例地址， 以 `IP:PORT` 格式组织
+* SQL_TYPE：query 的具体类型，比如 `Select`，`internal`
+* QUANTILE：query 执行的时间百分位
+* VALUE：与 `QUANTILE` 字段对应执行时间百分位的查询耗时，如上所述，单位为秒
+
 
 下面 SQL 查询当前时间的 P90 的 TiDB Query 耗时。可以看出，`Select` 类似的 Query 的 P90 耗时是 0.0384 秒，`internal` 类型的 P90 耗时是 0.00327。`instance` 字段是 TiDB 示例的地址。
 
@@ -40,19 +42,14 @@ metrics_schema> select * from tidb_query_duration where value is not null and ti
 
 系统表表结构如下所示：
 
-```
-mysql> desc metrics_tables;
-+------------+-----------------+------+------+---------+-------+
-| Field      | Type            | Null | Key  | Default | Extra |
-+------------+-----------------+------+------+---------+-------+
-| TABLE_NAME | varchar(64)     | YES  |      | NULL    |       |
-| PROMQL     | varchar(64)     | YES  |      | NULL    |       |
-| LABELS     | varchar(64)     | YES  |      | NULL    |       |
-| QUANTILE   | double unsigned | YES  |      | NULL    |       |
-| COMMENT    | varchar(256)    | YES  |      | NULL    |       |
-+------------+-----------------+------+------+---------+-------+
-5 rows in set (0.00 sec)
-```
+| 字段名 | 类型 |
+| :-----:| :----: |
+| TABLE_NAME | varchar(64) |
+| PROMQL | varchar(64) |
+| LABELS | varchar(64) |
+| QUANTILE | double unsigned |
+| COMMENT | varchar(256)|
+
 
 字段解释:
 
