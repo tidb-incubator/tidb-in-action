@@ -4,7 +4,7 @@ summary: 了解如何在 GCP GKE 上部署 TiDB 集群。
 category: how-to
 ---
 
-# 在 GCP GKE 上部署 TiDB 集群
+# 1.2.3.1.2 在 GCP GKE 上部署 TiDB 集群
 
 <!-- markdownlint-disable MD029 -->
 
@@ -14,7 +14,7 @@ category: how-to
 >
 > 当前多磁盘聚合功能[存在一些已知问题](https://github.com/pingcap/tidb-operator/issues/684)，不建议在生产环境中每节点配置一块以上磁盘。我们正在修复此问题。
 
-## 环境准备
+## 1. 环境准备
 
 部署前，确认已安装以下软件：
 
@@ -25,7 +25,7 @@ category: how-to
 * [Helm](https://helm.sh/docs/using_helm/#installing-the-helm-client) >= 2.11.0 且 < 3.0.0
 * [jq](https://stedolan.github.io/jq/download/)
 
-## 配置
+## 2. 配置
 
 为保证部署顺利，需要提前进行一些配置。在开始配置 Google Cloud SDK、API、Terraform 前，先下载以下资源：
 
@@ -64,25 +64,25 @@ compute.googleapis.com container.googleapis.com
 
 要使用以上 3 个环境变量来配置 Terraform，可执行以下步骤：
 
-1. 将 `GCP_REGION` 替换为的 GCP Region。
+(1) 将 `GCP_REGION` 替换为的 GCP Region。
 
     ```bash
     echo GCP_REGION=\"us-west1\" >> terraform.tfvars
     ```
 
-2. 将 `GCP_PROJECT` 替换为的 GCP 项目名称，确保连接的是正确的 GCP 项目。
+(2) 将 `GCP_PROJECT` 替换为的 GCP 项目名称，确保连接的是正确的 GCP 项目。
 
     ```bash
     echo "GCP_PROJECT=\"$(gcloud config get-value project)\"" >> terraform.tfvars
     ```
 
-3. 初始化 Terraform。
+(3) 初始化 Terraform。
 
     ```bash
     terraform init
     ```
 
-4. 为 Terraform 创建一个有限权限的服务账号，并设置证书路径。
+(4) 为 Terraform 创建一个有限权限的服务账号，并设置证书路径。
 
     ```bash
     ./create-service-account.sh
@@ -90,11 +90,11 @@ compute.googleapis.com container.googleapis.com
 
 Terraform 自动加载和填充匹配 `terraform.tfvars` 或 `*.auto.tfvars` 文件的变量。相关详细信息，请参阅 [Terraform 文档](https://learn.hashicorp.com/terraform/getting-started/variables.html)。上述步骤会使用 `GCP_REGION` 和 `GCP_PROJECT` 填充 `terraform.tfvars` 文件，使用 `GCP_CREDENTIALS_PATH` 填充 `credentials.auto.tfvars` 文件。
 
-## 部署 TiDB 集群
+## 3. 部署 TiDB 集群
 
 本小节介绍如何部署 TiDB 集群。
 
-1. 确定实例类型。
+(1) 确定实例类型。
 
     - 如果只是想试一下 TiDB，又不想花费太高成本，可以采用轻量级的配置：
 
@@ -121,7 +121,7 @@ Terraform 自动加载和填充匹配 `terraform.tfvars` 或 `*.auto.tfvars` 文
     >
     > 工作节点的数量取决于指定 Region 中可用区的数量。大部分 Region 有 3 个可用区，但是 `us-central1` 有 4 个可用区。参考 [Regions and Zones](https://cloud.google.com/compute/docs/regions-zones/) 查看更多信息。参考[自定义](#自定义)部分来自定义区域集群的节点池。
 
-2. 启动脚本来部署 TiDB 集群：
+(2) 启动脚本来部署 TiDB 集群：
 
     ```bash
     terraform apply
@@ -148,17 +148,17 @@ Terraform 自动加载和填充匹配 `terraform.tfvars` 或 `*.auto.tfvars` 文
     tidb_version = v3.0.1
     ```
 
-## 访问 TiDB 数据库
+## 4. 访问 TiDB 数据库
 
 `terraform apply` 运行完成后，可执行以下步骤来访问 TiDB 数据库。注意用[部署 TiDB 集群](#部署-tidb-集群)小节的输出信息替换 `<>` 部分的内容。
 
-1. 通过 `ssh` 远程连接到堡垒机。
+(1) 通过 `ssh` 远程连接到堡垒机。
 
     ```bash
     gcloud compute ssh <gke-cluster-name>-bastion --zone <zone>
     ```
 
-2. 通过 MySQL 客户端来访问 TiDB 集群。
+(2) 通过 MySQL 客户端来访问 TiDB 集群。
 
     ```bash
     mysql -h <tidb_ilb_ip> -P 4000 -u root
@@ -168,7 +168,7 @@ Terraform 自动加载和填充匹配 `terraform.tfvars` 或 `*.auto.tfvars` 文
     >
     > 通过 MySQL 连接 TiDB 前，需要先安装 MySQL 客户端。
 
-## 与 GKE 集群交互
+## 5. 与 GKE 集群交互
 
 可以通过 `kubectl` 和 `helm` 使用 kubeconfig 文件 `credentials/kubeconfig_<gke_cluster_name>` 和 GKE 集群交互。交互方式主要有以下两种。
 
@@ -181,10 +181,6 @@ Terraform 自动加载和填充匹配 `terraform.tfvars` 或 `*.auto.tfvars` 文
     ```bash
     kubectl --kubeconfig credentials/kubeconfig_<gke_cluster_name> get po -n <tidb_cluster_name>
     ```
-
-    > **注意：**
-    >
-    > 下面这条命令使用的 `--kubeconfig` 参数至少需要 Helm 2.10.0 版本以上。
 
     ```bash
     helm --kubeconfig credentials/kubeconfig_<gke_cluster_name> ls
@@ -204,12 +200,12 @@ Terraform 自动加载和填充匹配 `terraform.tfvars` 或 `*.auto.tfvars` 文
     helm ls
     ```
 
-## 升级 TiDB 集群
+## 6. 升级 TiDB 集群
 
 要升级 TiDB 集群，可执行以下步骤：
 
-1. 编辑 `terraform.tfvars` 文件，将 `tidb_version` 变量的值修改为更高版本。
-2. 运行 `terraform apply`。
+(1) 编辑 `terraform.tfvars` 文件，将 `tidb_version` 变量的值修改为更高版本。
+(2) 运行 `terraform apply`。
 
 例如，要将 TiDB 集群升级到 4.0.0-rc.2，可设置 `tidb_version` 为 `v4.0.0-rc.2`：
 
@@ -243,14 +239,13 @@ Check Table Before Drop: false
 1 row in set (0.001 sec)
 ```
 
-## 管理多个 TiDB 集群
+## 7. 管理多个 TiDB 集群
 
 一个 `tidb-cluster` 模块的实例对应一个 GKE 集群中的 TiDB 集群。要添加一个新的 TiDB 集群，可执行以下步骤：
 
-1. 编辑 `tidbclusters.tf` 文件来添加一个 `tidb-cluster` 模块。
+(1) 编辑 `tidbclusters.tf` 文件来添加一个 `tidb-cluster` 模块。
 
     例如：
-
 
     ```hcl
     module "example-tidb-cluster" {
@@ -294,7 +289,7 @@ Check Table Before Drop: false
 
     上述配置可使该脚本打印出用于连接 TiDB 集群的命令。
 
-2. 修改完成后，执行以下命令来创建集群。
+(2) 修改完成后，执行以下命令来创建集群。
 
     ```bash
     terraform init
@@ -304,12 +299,12 @@ Check Table Before Drop: false
     terraform apply
     ```
 
-## 扩容
+## 8. 扩容
 
 如果需要扩容 TiDB 集群，可执行以下步骤：
 
-1. 按需在文件 `terraform.tfvars` 中设置 `tikv_count`、`tidb_count` 变量。
-2. 运行 `terraform apply`。
+(1) 按需在文件 `terraform.tfvars` 中设置 `tikv_count`、`tidb_count` 变量。
+(2) 运行 `terraform apply`。
 
 > **警告：**
 >
@@ -332,7 +327,7 @@ tidb_count     = 2
 >
 > 增加节点数量会在每个可用区都增加节点。
 
-## 自定义
+## 9. 自定义
 
 可以在 `terraform.tfvars` 文件来指定值。
 
@@ -429,9 +424,7 @@ GKE 使用 [Fluentd](https://www.fluentd.org/) 作为其默认的日志收集工
 
 如果需要从监控节点池中删掉一个节点，可采用如下步骤：
 
-1. 获取托管的实例组和所在可用区。
-
-    
+(1) 获取托管的实例组和所在可用区。
 
     ```bash
     gcloud compute instance-groups managed list | grep monitor
@@ -447,17 +440,13 @@ GKE 使用 [Fluentd](https://www.fluentd.org/) 作为其默认的日志收集工
 
     第一列是托管的实例组，第二列是所在的可用区。
 
-2. 获取实例组中的实例名字。
-
-    
+(2) 获取实例组中的实例名字。
 
     ```bash
     gcloud compute instance-groups managed list-instances <the-name-of-the-managed-instance-group> --zone <zone>
     ```
 
     示例：
-
-    
 
     ```bash
     gcloud compute instance-groups managed list-instances gke-tidb-monitor-pool-08578e18-grp --zone us-west1-b
@@ -470,20 +459,17 @@ GKE 使用 [Fluentd](https://www.fluentd.org/) 作为其默认的日志收集工
     gke-tidb-monitor-pool-08578e18-c7vd  us-west1-b  RUNNING  NONE    gke-tidb-monitor-pool-08578e18
     ```
 
-3. 通过指定托管的实例组和实例的名称来删掉该实例。
+(3) 通过指定托管的实例组和实例的名称来删掉该实例。
 
     例如：
-
-    
 
     ```bash
     gcloud compute instance-groups managed delete-instances gke-tidb-monitor-pool-08578e18-grp --instances=gke-tidb-monitor-pool-08578e18-c7vd --zone us-west1-b
     ```
 
-## 销毁 TiDB 集群
+## 10. 销毁 TiDB 集群
 
 如果不想再继续使用 TiDB 集群，可以通过如下命令进行销毁：
-
 
 ```bash
 terraform destroy
@@ -501,8 +487,6 @@ terraform destroy
 
 - 自动删除：在执行 `terraform destroy` 之前将 Kubernetes 的 PV (Persistent Volume) 回收策略设置为 `Delete`，具体操作为在 `terraform destroy` 之前运行以下 `kubectl` 命令：
 
-    
-
     ```bash
     kubectl --kubeconfig /path/to/kubeconfig/file get pvc -n namespace-of-tidb-cluster -o jsonpath='{.items[*].spec.volumeName}'|fmt -1 | xargs -I {} kubectl --kubeconfig /path/to/kubeconfig/file patch pv {} -p '{"spec":{"persistentVolumeReclaimPolicy":"Delete"}}'
     ```
@@ -511,13 +495,11 @@ terraform destroy
 
     下面是一个名为 `change-pv-reclaimpolicy.sh` 的脚本。相对于仓库根目录来说，它在 `deploy/gcp` 目录，简化了上述过程。
 
-    
-
     ```bash
     ./change-pv-reclaimpolicy.sh /path/to/kubeconfig/file <tidb-cluster-namespace>
     ```
 
-## 管理多个 Kubernetes 集群
+## 11. 管理多个 Kubernetes 集群
 
 本节介绍管理多个 Kubernetes 集群的最佳实践，其中每个 Kubernetes 集群都可以部署一个或多个 TiDB 集群。
 
@@ -529,11 +511,10 @@ terraform destroy
 
 管理多个 Kubernetes 集群的最佳实践有以下两点：
 
-1. 为每个 Kubernetes 集群创建一个新目录。
-2. 根据具体需求，使用 Terraform 脚本将上述模块进行组合。
+(1) 为每个 Kubernetes 集群创建一个新目录。
+(2) 根据具体需求，使用 Terraform 脚本将上述模块进行组合。
 
 如果采用了最佳实践，集群中的 Terraform 状态不会相互干扰，并且可以很方便地管理多个 Kubernetes 集群。示例如下（假设已在项目根目录）：
-
 
 ```shell
 mkdir -p deploy/gcp-staging && \

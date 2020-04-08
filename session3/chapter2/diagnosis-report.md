@@ -18,6 +18,7 @@
 curl -X POST -d '{"metric-storage":"http://{PROMETHEUS_ADDRESS}"}' http://{PD_ADDRESS}/pd/api/v1/config
 ```
 
+
 示例：
 
 ```shell
@@ -28,6 +29,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 
 建议生成诊断报告的时间范围在 2 min ~ 60 min 内，目前不建议生成时间范围超过 1 小时的诊断报告。
 
+
 ### 3. 生成诊断报告并查看
 
 点击完整报告的链接即可查看报告内容。
@@ -35,7 +37,6 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 ![生成诊断报告步骤](/res/session3/chapter2/diagnosis-report/report-doc1.png)
 
 ![生成诊断报告结果](/res/session3/chapter2/diagnosis-report/report-doc2.png)
-
 
 
 ### 4. 生成对比诊断报告
@@ -243,6 +244,7 @@ TiDB 事务相关的监控项。
 
 在报告时间范围内，`tidb_txn_kv_write_size`：一共有 1379 次事务的 kv 写入，总 kv 写入大小是 216307980， 其中 P999、P99、P90、P80 的最大值分别为 1043333、996147、248705、235266，单位是 byte。
 
+
 #### (3) DDL-owner
 
 TiDB DDL 的 owner 信息。
@@ -296,6 +298,7 @@ PD Scheduler 配置参数的 change history
 示例，上面报告中，`leader-schedule-limit` 配置参数有过修改
 
 - 2020-03-05 16:30:00， `leader-schedule-limit` 的配置值为 4
+
 - 2020-03-05 16:46:00，`leader-schedule-limit` 的配置值为 8，说明该配置的值在 2020-03-05 16:46:00 修改
 
 > 注意：
