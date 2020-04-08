@@ -71,25 +71,25 @@ select * from employee where id in (...);
 
 ## 5. Statements 参数配置
 
-- `tidb_enable_stmt_summary`：
+* `tidb_enable_stmt_summary`
 
-	Statements 功能默认开启，通过设置系统变量打开，例如：
+    Statements 功能默认开启，也可以通过设置系统变量打开，例如：
 
   ```sql
   set global tidb_enable_stmt_summary = true;
   ```
 
-- `tidb_stmt_summary_refresh_interval`
+* `tidb_stmt_summary_refresh_interval`
 
-	设置 `performance_schema.events_statements_summary_by_digest` 表的的清空周期，单位是秒 (s)，默认值是 1800，例如：
+    设置 `performance_schema.events_statements_summary_by_digest` 表的的清空周期，单位是秒 (s)，默认值是 1800，例如：
 
   ```sql
   set global tidb_stmt_summary_refresh_interval = 1800;
   ```
 
-- `tidb_stmt_summary_history_size`：
+* `tidb_stmt_summary_history_size`
 
-	设置 `performance_schema.events_statements_summary_by_digest_history` 表保存每种 SQL 的历史的数量，默认值是 24，例如：
+    设置 `performance_schema.events_statements_summary_by_digest_history` 表保存每种 SQL 的历史的数量，默认值是 24，例如：
 
   ```sql
   set global tidb_stmt_summary_history_size = 24;
@@ -97,11 +97,12 @@ select * from employee where id in (...);
 
 由于 Statements 信息是存储在内存表中，为了防止内存溢出等问题，需要限制保存的 SQL 条数和 SQL 的最大显示长度。这两个参数需要在 config.toml 的 `[stmt-summary]` 类别下配置：
 
-- 通过 `max-stmt-count` 更改保存的 SQL 种类数量，默认 200 条。当 SQL 种类超过 `max-stmt-count` 时，会移除最近没有使用的 SQL。
-- 通过 `max-sql-length` 更改 `DIGEST_TEXT` 和 `QUERY_SAMPLE_TEXT` 的最大显示长度，默认是 4096。
+* 通过 `max-stmt-count` 更改保存的 SQL 种类数量，默认 200 条。当 SQL 种类超过 `max-stmt-count` 时，会移除最近没有使用的 SQL
+
+* 通过 `max-sql-length` 更改 `DIGEST_TEXT` 和 `QUERY_SAMPLE_TEXT` 的最大显示长度，默认是 4096
 
 > 注意：
-> 
-> `tidb_stmt_summary_history_size`、`max-stmt-count`、`max-sql-length` 这些配置都影响内存占用，建议根据实际情况调整，不宜设置得过大。
+>
+> `tidb_stmt_summary_history_size`、`max-stmt-count`、`max-sql-length` 几项配置影响内存占用，建议根据实际情况调整，不宜设置得过大。
 
 综上所述，可视化 Statements 可以快速定位某个 SQL 性能问题，也可以配合前一小节介绍的 KeyVis 进行分析。
