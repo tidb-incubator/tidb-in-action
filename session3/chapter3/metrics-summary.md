@@ -1,15 +1,19 @@
-# 监控汇总表
+# 3.4 监控汇总表
 
-由于 TiDB 的监控表太多，TiDB 4.0 提供了监控汇总表，来减少使用 SQL 对各个监控指标进行逐项查询的工作量。
+由于 TiDB 集群的监控指标数量较大，需要提供便捷的方式从众多监控中找出异常的监控项，TiDB 4.0 提供了监控汇总表，监控汇总表 `information_schema.metrics_summary` 和 `information_schema.metrics_summary_by_label` 用于汇总所有监控数据，来提升用户对各个监控指标进行排查的效率。两者不同在于 `information_schema.metrics_summary_by_label` 会对不同的 `label` 使用区分统计。
 
-监控汇总表 `information_schema.metrics_summary` 和 `information_schema.metrics_summary_by_label` 用于汇总所有监控数据。两者不同在于 information_schema.metrics_summary_by_label 会按照 label 进行汇总。
+## 1. 查询示例
 
-## 查询示例
-
-查询 `metrics_summary` 监控汇总表，在  `['2020-03-08 13:23:00', '2020-03-08 13:33:00')`  时间范围内，TiDB 的 Top 3 的 P99 的平均最长耗时。这里查询监控汇总表是通过 `/*+ time_range() */` hint 来指定查询时间范围。
+以查询 `['2020-03-08 13:23:00', '2020-03-08 13:33:00')` 时间范围内 TiDB 集群中平均耗时最高的 3 组监控项为例。通过直接查询 `information_schema.metrics_summary` 表，并通过 `/*+ time_range() */` 这个 hint 来指定时间范围来构造以下 SQL：
 
 ```sql
-information_schema> select /*+ time_range('2020-03-08 13:23:00','2020-03-08 13:33:00') */ * from `METRICS_SUMMARY` where metrics_name like 'tidb%duration' and avg_value > 0 and quantile=0.99  order by avg_value desc limit 3\G
+mysql> select /*+ time_range('2020-03-08 13:23:00','2020-03-08 13:33:00') */ *
+       from information_schema.`METRICS_SUMMARY`
+       where metrics_name like 'tidb%duration'
+         and avg_value > 0
+         and quantile = 0.99
+       order by avg_value desc
+       limit 3\G
 ***************************[ 1. row ]***************************
 METRICS_NAME | tidb_get_token_duration
 QUANTILE     | 0.99
@@ -35,12 +39,18 @@ MIN_VALUE    | 0.000975
 MAX_VALUE    | 0.013
 COMMENT      | The quantile of kv requests durations by store
 ```
-> 注意：其中 `tidb_get_token_duration` 的单位是微秒（us）， 其 `COMMENT` 里面也有提到。
+> 注意：其中 `tidb_get_token_duration` 在 `COMMENT` 列中注释了值的单位是微秒（us）
 
 类似的，查询 `metrics_summary_by_label` 监控汇总表结果如下：
 
 ```sql 
-information_schema> select /*+ time_range('2020-03-08 13:23:00','2020-03-08 13:33:00') */ * from `METRICS_SUMMARY_BY_LABEL` where metrics_name like 'tidb%duration' and avg_value > 0 and quantile=0.99  order by avg_value desc limit 10\G
+mysql> select /*+ time_range('2020-03-08 13:23:00','2020-03-08 13:33:00') */ *
+       from information_schema.`METRICS_SUMMARY_BY_LABEL`
+       where metrics_name like 'tidb%duration'
+         and avg_value > 0
+         and quantile = 0.99
+       order by avg_value desc
+       limit 10\G
 ***************************[ 1. row ]***************************
 INSTANCE     | 172.16.5.40:10089
 METRICS_NAME | tidb_get_token_duration
@@ -73,37 +83,41 @@ MAX_VALUE    | 0.008241
 COMMENT      | The quantile of TiDB query durations(second)
 ```
 
-`metrics_summary_by_label` 表结构相对于 `metrics_summary` 多了一列 `LABEL`, 比如上面查询结果的第 2, 3 行中：分别是指 `tidb_query_duration` 的 `Select` 类型的语句耗时和 `tidb_query_duration` 的 `Rollback` 类似的语句耗时。
+前文提到 `metrics_summary_by_label` 表结构相对于 `metrics_summary` 多了一列 `LABEL`, 以上面查询结果的第 2, 3 行为例：分别表示 `tidb_query_duration` 的 `Select`/`Rollback` 类型的语句平均耗时非常高。
 
-## 推荐的使用方法
+## 2. 推荐用法
 
-监控汇总表可以通过两个时间段的全链路监控对比，迅速找出监控数据变化最大的模块，快速定位瓶颈，例如以下对比两个时间段的所有监控，并按照差别最大的监控排序：
+除以上示例之外，监控汇总表可以通过两个时间段的全链路监控对比，迅速找出监控数据变化最大的模块，快速定位瓶颈，以下对比两个时间段的所有监控（其中 t1 为 baseline），并按照差别最大的监控排序：
 
 * 时间段 t1 : ("2020-03-03 17:08:00", "2020-03-03 17:11:00")
 * 时间段 t2 : ("2020-03-03 17:18:00", "2020-03-03 17:21:00")
 
-对两个时间段的监控按照 METRICS_NAME 进行 join，并按照差值排序。其中 TIME_RANGE 是用于指定查询时间的 Hint。
+对两个时间段的监控按照 METRICS_NAME 进行 join，并按照差值排序。其中 `/*+ time_range() */` 是用于指定查询时间的 hint。
 
-1. 查询 t1.avg_value / t2.avg_value 差异最大的 Top 10 监控项
+1. 查询 t1.avg_value / t2.avg_value 差异最大的 10 个监控项
 
 ```sql
-information_schema>SELECT 
-  t1.avg_value / t2.avg_value AS ratio, t1.metrics_name,t1.avg_value, t2.avg_value,t2.comment
-FROM 
-  (
-    SELECT /*+ time_range("2020-03-03 17:08:00", "2020-03-03 17:11:00")*/
-      * 
-    FROM metrics_summary
-  ) t1 
-  JOIN
-  (
-    SELECT /*+ time_range("2020-03-03 17:18:00", "2020-03-03 17:21:00")*/
-      * 
-    FROM metrics_summary
-  ) t2
-  ON t1.metrics_name = t2.metrics_name 
-ORDER BY 
-  ratio DESC limit 10;
+mysql> SELECT 
+         t1.avg_value / t2.avg_value AS ratio,
+         t1.metrics_name,
+         t1.avg_value,
+         t2.avg_value,
+         t2.comment
+       FROM 
+         (
+           SELECT /*+ time_range("2020-03-03 17:08:00", "2020-03-03 17:11:00")*/
+             * 
+           FROM information_schema.metrics_summary
+         ) t1 
+         JOIN
+         (
+           SELECT /*+ time_range("2020-03-03 17:18:00", "2020-03-03 17:21:00")*/
+             * 
+           FROM information_schema.metrics_summary
+         ) t2
+         ON t1.metrics_name = t2.metrics_name 
+       ORDER BY 
+         ratio DESC limit 10;
 +----------------+-----------------------------------+-------------------+-------------------+--------------------------------------------------------------------------+
 | ratio          | metrics_name                      | avg_value         | avg_value         | comment                                                                  |
 +----------------+-----------------------------------+-------------------+-------------------+--------------------------------------------------------------------------+
@@ -126,28 +140,32 @@ ORDER BY
 * t1 时间段内的 tikv_region_average_written_keys （region 的平均写入 keys 数） 比 t2 时间段高了 8.8 倍
 * t1 时间段内的 tidb_kv_write_size （tidb 每个事务写入的 kv 大小） 比 t2 时间段高了 1.96 倍
 
-可以知道，t1 时间段的写入要比 t2 时间段高。
+通过以上结果可以轻易看出 t1 时间段的写入要比 t2 时间段高。
 
-1. 反过来，查询 t2.avg_value / t1.avg_value 差异最大的 Top 10 监控项
+1. 反过来，查询 t2.avg_value / t1.avg_value 差异最大的 10 个监控项
 
 ```sql
-information_schema>SELECT 
-  t2.avg_value / t1.avg_value AS ratio, t1.metrics_name,t1.avg_value, t2.avg_value,t2.comment
-FROM 
-  (
-    SELECT /*+ time_range("2020-03-03 17:08:00", "2020-03-03 17:11:00")*/
-      * 
-    FROM metrics_summary
-  ) t1 
-  JOIN
-  (
-    SELECT /*+ time_range("2020-03-03 17:18:00", "2020-03-03 17:21:00")*/
-      * 
-    FROM metrics_summary
-  ) t2
-  ON t1.metrics_name = t2.metrics_name 
-ORDER BY 
-  ratio DESC limit 10;
+mysql> SELECT 
+         t2.avg_value / t1.avg_value AS ratio,
+         t1.metrics_name,
+         t1.avg_value,
+         t2.avg_value,
+         t2.comment
+       FROM 
+         (
+           SELECT /*+ time_range("2020-03-03 17:08:00", "2020-03-03 17:11:00")*/
+             * 
+           FROM information_schema.metrics_summary
+         ) t1 
+         JOIN
+         (
+           SELECT /*+ time_range("2020-03-03 17:18:00", "2020-03-03 17:21:00")*/
+             * 
+           FROM information_schema.metrics_summary
+         ) t2
+         ON t1.metrics_name = t2.metrics_name 
+       ORDER BY 
+         ratio DESC limit 10;
 +----------------+-----------------------------------------+----------------+------------------+---------------------------------------------------------------------------------------------+
 | ratio          | metrics_name                            | avg_value      | avg_value        | comment                                                                                     |
 +----------------+-----------------------------------------+----------------+------------------+---------------------------------------------------------------------------------------------+
@@ -171,6 +189,6 @@ ORDER BY
 - t2 时间段内的 tikv_cop_total_response_size（tikv 的 cop 请求结果的大小 ） 比 t1 时间段高了 192 倍
 - t2 时间段内的 tikv_cop_scan_details（tikv 的 cop 请求的 scan ） 比 t1 时间段高了 105 倍
 
-通过上面两个时间段对比查询可以大致了解集群在这2个时间段的负载情况。t2 时间段的 Cop 请求要比 t2 时间段高很多，导致 TiKV 的 Copprocessor 过载，出现了 cop task 等待，可以猜测可能是 t2 时间段出现了一些大查询，或者是查询较多的负载。
+通过上面两个时间段对比查询可以大致了解集群在这 2 个时间段的负载情况。t2 时间段的 Cop 请求要比 t2 时间段高很多，导致 TiKV 的 Copprocessor 过载，出现了 cop task 等待，可以猜测可能是 t2 时间段出现了一些大查询，或者是查询较多的负载。
 
 实际上，在 t1 ~ t2 整个时间段内都在跑 [go-ycsb](https://github.com/pingcap/go-ycsb) 的压测，然后在 t2 时间段跑了 20 个 tpch 的查询，所以是因为 tpch 大查询导致了很多的 cop 请求。
