@@ -1,22 +1,29 @@
 # 1.1.1 TiUP 简介
 
-在各种系统软件和应用软件的安装管理中，包管理器均有着广泛的应用，包管理工具的出现也大大简化的软件安装升级维护的工作。例如，几乎所有使用 RPM 的 Linux 都会使用 Yum 来进行包管理，Anaconda 可以非常方便的管理 python 的环境和相关软件包。在早期的 TiDB 生态中，没有专门的包管理工具，使用者只能通过相应的配置文件和文件夹命名来手动管理，像 Prometheus 等第三方监控报表工具甚至需要额外的特殊管理，这样大大提高了相应的运维管理工作。
+在各种系统软件和应用软件的安装管理中，包管理器均有着广泛的应用，包管理工具的出现大大简化了软件的安装和升级维护工作。例如，几乎所有使用 RPM 的 Linux 都会使用 Yum 来进行包管理，而 Anaconda 则可以非常方便地管理 python 的环境和相关软件包。在早期的 TiDB 生态中，没有专门的包管理工具，使用者只能通过相应的配置文件和文件夹命名来手动管理，像 Prometheus 等第三方监控报表工具甚至需要额外的特殊管理，这样大大提升了运维管理难度。
 
-如今，在 TiDB 4.0 的生态系统里，TiUP 作为新的工具，承担着包管理器的角色，管理着 TiDB 生态下众多的组件（例如 TiDB、PD、TiKV），用户想要运行 TiDB 生态中任何东西的时候，只需要执行 TiUP 的一行命令即可，相比之前极大的降低了管理难度。用户可以访问 [https://tiup.io/](https://tiup.io/) 来查看相应的文档
+如今，在 TiDB 4.0 的生态系统里，TiUP 作为新的工具，承担着包管理器的角色，管理着 TiDB 生态下众多的组件（例如 TiDB、PD、TiKV）。用户想要运行 TiDB 生态中任何东西的时候，只需要执行 TiUP 一行命令即可，相比以前，极大地降低了管理难度。用户可以访问 [https://tiup.io/](https://tiup.io/) 来查看相应的文档。
 
-#### 1.安装
+## 1. 安装
 
 作为一个包管理工具，TiUP 的安装非常简单，只需要在控制台执行如下命令：
 
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
 ```
-#### 2.功能介绍
 
-TiUP 的使用非常简单，只需要利用 TiUP 的指令即可。首先执行 tiup help 看一下它支持哪些指令和参数：
+## 2. 功能介绍
+
+TiUP 的使用非常简单，只需要利用 TiUP 的指令即可。首先执行 `tiup help` 看一下它支持哪些命令和参数：
 
 ```
-tiup help
+~$ tiup help
+TiUP is a command-line component management tool that can help to download and install
+TiDB platform components to the local system. You can run a specific version of a component via
+"tiup <component>[:version]". If no version number is specified, the latest version installed
+locally will be used. If the specified component does not have any version installed locally,
+the latest stable version will be downloaded from the repository.
+
 Usage:
   tiup [flags] <command> [args...]
   tiup [flags] <component> [args...]
@@ -30,117 +37,198 @@ Available Commands:
   clean       Clean the data of instantiated components
   help        Help about any command or component
 
+Available Components:
+
+Flags:
+  -B, --binary <component>[:version]   Print binary path of a specific version of a component <component>[:version]
+                                       and the latest version installed will be selected if no version specified
+      --binpath string                 Specify the binary path of component instance
+  -h, --help                           help for tiup
+      --skip-version-check             Skip the strict version check, by default a version must be a valid SemVer string
+  -T, --tag string                     Specify a tag for component instance
+
+Component instances with the same "tag" will share a data directory ($TIUP_HOME/data/$tag):
+  $ tiup --tag mycluster playground
+
+Examples:
+  $ tiup playground                    # Quick start
+  $ tiup playground nightly            # Start a playground with the latest nightly version
+  $ tiup install <component>[:version] # Install a component of specific version
+  $ tiup update --all                  # Update all installed components to the latest version
+  $ tiup update --nightly              # Update all installed components to the nightly version
+  $ tiup update --self                 # Update the "tiup" to the latest version
+  $ tiup list --refresh                # Fetch the latest supported components list
+  $ tiup status                        # Display all running/terminated instances
+  $ tiup clean <name>                  # Clean the data of running/terminated instance (Kill process if it's running)
+  $ tiup clean --all                   # Clean the data of all running/terminated instances
+
 Use "tiup [command] --help" for more information about a command.
 ```
-可以看到大致有这些命令可选：
-* help: 打印 help 信息，后面跟子命令则是打印该子命令的使用方法
-* list: 查看有哪些组件可以安装，以及这些组件有哪些版本可选
-* install: 安装某个组件的某个版本
-* update: 升级某个组件到最新的版本
-* uninstall: 删除某个组件
-* status: 查看组件组件的运行状态/运行历史
-* clean: 清除某次运行后的数据
 
-如果我们想要知道某个子命令的具体用法，执行 tiup subcommand -h 就可以看到，比如我们想知道 install 命令有哪些参数可以传，就执行 tiup install -h。
+支持这些命令：
+* list: 查询组件列表，知道有哪些组件可以安装，以及这些组件有哪些版本可选
+* install: 安装某个组件的特定版本
+* update: 升级某个组件到最新的版本
+* uninstall: 删除组件
+* status: 查看组件的运行状态
+* clean: 清除组件的运行数据
+* help: 打印帮助信息，后面跟子命令则是打印该子命令的使用方法
+
+如果我们想要知道某个命令的具体用法，可以执行 `tiup help <command>` 或者 `tiup <command> -h`。比如我们想知道 install 命令用法，就执行 `tiup help install` 或者 `tiup install -h`。
 
 下面我们按照正常使用习惯依次介绍这些命令。
 
-(1) 查询列表：tiup list
+### (1) 查询组件列表：tiup list
 
-当想要用 TiUP 安装东西的时候，首先需要知道有哪些组件可以安装，以及这些组件有哪些版本可以安装，这便是 list 子命令的功能。
+当想要用 TiUP 安装东西的时候，首先需要知道有哪些组件可以安装，以及这些组件有哪些版本可以安装，这便是 list 命令的功能。
 
-它的用法如下：
+用法如下：
 
 ```
-tiup list --help
+~$ tiup help list
+List the available TiDB components if you don't specify any component name,
+or list the available versions of a specific component. Display a list of
+local caches by default. You must use --refresh to force TiUP to fetch
+the latest list from the mirror server. Use the --installed flag to hide 
+components or versions which have not been installed.
+
+  # Refresh and list all available components
+  tiup list --refresh
+
+  # List all installed components
+  tiup list --installed
+
+  # List all installed versions of TiDB
+  tiup list tidb --installed
+
 Usage:
-  tiup list [component] [flags]
+  tiup list [component] [flags]
+
 Flags:
-  -h, --help        help for list
-      --installed   List installed components only.
-      --refresh     Refresh local components/version list cache.
+  -h, --help        help for list
+      --installed   List installed components only.
+      --refresh     Refresh local components/version list cache.
+
+Global Flags:
+      --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
 ```
+
 从帮助信息上可以看出，tiup list 支持这几种用法：
-* tiup list: 查看当前有哪些组件可以安装
-* tiup list <comp>: 查看某个组件有哪些版本可以安装
+* `tiup list`: 查看当前有哪些组件可以安装
+* `tiup list <component>`: 查看某个组件有哪些版本可以安装
 
 对于上面两种使用方法，可以组合使用两个 flag:
+* `--installed`: 本地已经安装了哪些组件，或者已经安装了某个组件的哪些版本
+* `--refresh`: 获取服务器上最新的组件列表，以及它们的版本列表
 
-* --installed: 本地已经安装了哪些组件，或者某个组件的哪些版本
-* --refresh: 服务器上最新的组件列表，以及他们的版本列表
-
-示例一：查看当前已经安装的所有组件，命令如下：
-
+示例一：查看当前已经安装的所有组件
 ```
 tiup list --installed
 ```
-示例二：从服务器获取 TiKV 所有可安装版本组件列表，命令如下：
+
+示例二：从服务器获取 TiKV 所有可安装版本组件列表
 ```
 tiup list tikv --refresh
 ```
-(2) 安装组件：tiup install
 
-查看完列表之后，进行安装也非常简单，利用 install 这项命令处理即可。相关的命令和参数如下：
+### (2) 安装组件：tiup install
 
+查看组件列表之后，安装也非常简单，利用 tiup install 这项命令处理即可。相关的命令和参数如下：
 ```
-tiup install -h
+$ tiup help install
+Install a specific version of a component. The component can be specified
+by <component> or <component>:<version>. The latest stable version will
+be installed if there is no version specified.
+
+You can install multiple components at once, or install multiple versions
+of the same component:
+
+  tiup install tidb:v3.0.5 tikv pd
+  tiup install tidb:v3.0.5 tidb:v3.0.8 tikv:v3.0.9
+
 Usage:
-  tiup install <component1>:[version] [component2...N] [flags]
+  tiup install <component1>[:version] [component2...N] [flags]
+
 Flags:
-  -h, --help   help for install
+  -h, --help   help for install
+
+Global Flags:
+      --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
 ```
-install 的使用方式较单一：
-* tiup install <component>：安装指定组件的最新稳定版
-* tiup install <component>:[versiion]: 安装指定组件的指定版本
 
-示例一：使用 TiUP 安装 TiDB：
+使用方式：
+* `tiup install <component>`: 安装指定组件的最新稳定版
+* `tiup install <component>:[version]`: 安装指定组件的指定版本
 
+示例一：使用 TiUP 安装最新稳定版的 TiDB
 ```
 tiup install tidb
 ```
-示例二：使用 TiUP 安装 nightly 版本的TiDB：
+
+示例二：使用 TiUP 安装 nightly 版本的TiDB
 ```
 tiup install tidb:nightly
 ```
-示例三：使用 TiUP 安装 3.0.6 版本的 TiKV：
+
+示例三：使用 TiUP 安装 v3.0.6 版本的 TiKV
 ```
 tiup install tikv:v3.0.6
 ```
-(3) 升级组件：tiup update
+
+### (3) 升级组件：tiup update
 
 在官方组件提供了新版之后，同样可以利用 TiUP 进行升级。相关的命令和参数如下：
-
 ```
-tiup update -h
+$ tiup help update
+Update some components to the latest version. Use --nightly
+to update to the latest nightly version. Use --all to update all components 
+installed locally. Use <component>:<version> to update to the specified 
+version. Components will be ignored if the latest version has already been 
+installed locally, but you can use --force explicitly to overwrite an 
+existing installation. Use --self which is used to update TiUP to the 
+latest version. All other flags will be ignored if the flag --self is given.
+
+  $ tiup update --all                     # Update all components to the latest stable version
+  $ tiup update --nightly --all           # Update all components to the latest nightly version
+  $ tiup update playground:v0.0.3 --force # Overwrite an existing local installation
+  $ tiup update --self                    # Update TiUP to the latest version
+
 Usage:
-  tiup update [component1]:[version] [component2..N] [flags]
+  tiup update [component1][:version] [component2..N] [flags]
+
 Flags:
-      --all       Update all components
-      --force     Force update a component to the latest version
-  -h, --help      help for update
-      --nightly   Update the components to nightly version
-      --self      Update tiup to the latest version
+      --all       Update all components
+      --force     Force update a component to the latest version
+  -h, --help      help for update
+      --nightly   Update the components to nightly version
+      --self      Update tiup to the latest version
+
+Global Flags:
+      --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
 ```
+
 使用方式上和 install 基本相同，不过它支持几个额外的 flag:
-* --all: 升级所有组件
-* --nightly: 升级至 nightly 版本（若无此参数则升级到最新稳定版）
-* --self: 升级 tiup 自己
-* --force：强制升级至最新版本（若无此参数则本地有最新版本了就不更新）
+* `--all`: 升级所有组件
+* `--nightly`: 升级至 nightly 版本
+* `--self`: 升级 TiUP 自己至最新版本
+* `--force`: 强制升级至最新版本
 
-示例一：升级所有组件至最新版本：
-
+示例一：升级所有组件至最新版本
 ```
 tiup update --all
 ```
-示例二：升级所有组件至最新 nightly 版本：
+
+示例二：升级所有组件至最新 nightly 版本
 ```
-tiup update --nightly --all
+tiup update --all --nightly
 ```
-示例三：升级 TiUP 至最新版本：
+
+示例三：升级 TiUP 至最新版本
 ```
 tiup update --self
 ```
-(4) 运行组件：tiup <component>
+
+### (4) 运行组件：tiup \<component\>
 
 安装完成之后可以利用 tiup 启动相应的组件。相关的命令和参数如下：
 
