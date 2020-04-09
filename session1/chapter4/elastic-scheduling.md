@@ -11,7 +11,7 @@
 ### 4.2.2 自动伸缩
 自动伸缩（Auto-Scale）包含两方面的内容，一是弹性扩缩容节点，二是在扩缩容节点后自动均衡集群负载。
 
-和 [Aurora](https://www.youtube.com/watch?v=mali0B4wus0) 做法类似，弹性伸缩节点可通过对一些系统指标设置一个阈值，比如 CPU 利用率（TiDB Server 或 TiKV Server）、QPS（TiKV Server）等，当集群在平衡状态下目标指标<!--TODO:这里的平衡状态下是什么意思?-->等于或者超过阈值一段时间以后，就会自动触发水平的弹性伸缩。
+和 [Aurora](https://www.youtube.com/watch?v=mali0B4wus0) 做法类似，弹性伸缩节点可通过对一些系统指标设置一个阈值，比如 CPU 利用率（TiDB Server 或 TiKV Server）、QPS（TiKV Server）等，当集群在平衡状态下目标指标等于或者超过阈值一段时间以后，就会自动触发水平的弹性伸缩。
 
 TiDB 借助 TiDB Operator 和 PD 来实现 Auto-Scale：
 - TiDB Operator 通过 API 的方式暴露出期望的 TiDB / TiKV 节点数量
