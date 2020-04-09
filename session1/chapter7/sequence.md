@@ -1,6 +1,6 @@
 ## 7.3 Sequence
 
-Sequence 是数据库系统按照一定规则自增的数字序列，具有唯一和单调递增的特性。在官方 SQL 2003 标准中，其被定义为“生成连续数值的一种机制，Sequence 既可以是内部对象，也可以是外部对象”。因原生 MySQL 中并未支持 Sequence，TiDB Sequence 语法参考 MariaDB、Oracle 和 IBM Db2。
+Sequence 是数据库系统按照一定规则自增的数字序列，具有唯一和单调递增的特性。在官方 SQL 2003 标准中，其被定义为“生成连续数值的一种机制，Sequence 既可以是内部对象，也可以是外部对象”。因原生 MySQL 中并未支持 Sequence，所以 TiDB Sequence 的语法参考了 MariaDB、Oracle 和 IBM Db2。
 
 - Create Sequence 语法
 
@@ -52,9 +52,9 @@ SELECT SETVAL(sequence_name,100)；
 
 本部分将会通过一些案例介绍 TiDB Sequence 的使用方法：
 
-- 并发的应用需要获取单调递增的流水号
+- 并发应用需要获取单调递增的序列号
 
-在使用分布式数据库的场景里，通常应用也是分布式架构，这样多个应用节点之间如何获取唯一且递增的序列号就成为一个难题。在分布式数据库没有 Sequence 的时候，应用基本通过`雪花算法`、`数据库主键自增`等方法实现，业界也有一些较为成熟的方案，比如 [Leaf - 美团点评分布式 ID](https://tech.meituan.com/2017/04/21/mt-leaf.html)、[百度的 uid-generator](https://github.com/baidu/uid-generator) 等，上述方案中为了解决单调递增且不重复的问题引入一个新的系统、模块，极大的提高了应用系统的复杂度。这里通过简单新建一个 `Sequence` 看看 TiDB 如何解决上述问题。
+在使用分布式数据库的场景里，通常应用也是分布式架构，这样多个应用节点之间如何获取唯一且递增的序列号就成为一个难题。在分布式数据库没有 Sequence 的时候，应用基本通过`雪花算法`、`数据库主键自增`等方法实现，业界也有一些较为成熟的方案，比如 [Leaf - 美团点评分布式 ID](https://tech.meituan.com/2017/04/21/mt-leaf.html)、[百度的 uid-generator](https://github.com/baidu/uid-generator) 等，上述方案中为了解决该问题引入一个新的系统或模块，极大的增加了应用系统的复杂度。接下来我们看看 TiDB 如何通过 `Sequence` 解决上述问题。
 
 (1) 首先新建一个 Sequence
 
@@ -64,7 +64,7 @@ CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 
 (2) 从不同的 TiDB 节点获取到的 Sequence 值顺序有所不同
 
-如果两个应用节点同时连接至同一个 TiDB 节点，两个节点间取到的则为连续递增的值
+如果两个应用节点同时连接至同一个 `TiDB` 节点，两个节点取到的则为连续递增的值
 
 ```SQL
 节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
@@ -84,7 +84,7 @@ CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 1 row in set (0.00 sec)
 ```
 
-(3) 如果两个应用节点分别连接至不同`TiDB`节点，两个节点间取到的则为区间递增（每个 TiDB 上为连续递增）但不连续的值
+(3) 如果两个应用节点分别连接至不同 `TiDB` 节点，两个节点取到的则为区间递增（每个 TiDB 节点上为连续递增）但不连续的值
 
 ```SQL
 节点 A：tidb[test]> SELECT NEXT VALUE FOR seq_for_unique;
@@ -106,7 +106,7 @@ CREATE SEQUENCE seq_for_unique START WITH 1 INCREMENT BY 1 CACHE 1000 NOCYCLE;
 
 - 在一张表里面需要有多个自增字段
 
-MySQL 语法中每张表仅能新建一个 `auto_increment` 字段，且该字段必须定义在主键或是唯一索引列上。在应用设计的时候，主键通常有业务意义的字段表示，例如用户名、主机名等，但通过 Sequence 和生成列，我们可以实现多自增字段需求。
+MySQL 语法中每张表仅能新建一个 `auto_increment` 字段，且该字段必须定义在主键或是索引列上。在 TiDB 中通过 `Sequence` 和生成列，我们可以实现多自增字段需求。
 
 (1) 首先新建如下两个 Sequence
 
@@ -148,9 +148,9 @@ tidb[test]> select * from user;
 3 rows in set (0.01 sec)
 ```
 
-- 更新数据表中其中一列值为连续自增的值
+- 更新数据表中一列值为连续自增的值
 
-假设我们有一张数据表，表中有 20 万行数据，我们需要更新其中一列的值为连续自增且唯一的整数，如果没有 Sequence，我们只能通过应用一条条读写记录，并用 `update` 更新值，并且还需要按照固定批次提交，但现在我们有了 Sequence，一切都会变的特别简单。
+假设我们有一张数据表，表中有 20 万行数据，我们需要更新其中一列的值为连续自增且唯一的整数，如果没有 Sequence，我们只能通过应用一条条读取记录，并用 `update` 更新值，同时还需要分批次提交，但现在我们有了 Sequence，一切都会变的特别简单。
 
 (1) 新建一张测试表
 
@@ -241,4 +241,4 @@ tidb[test]> select * from t;
 
 ### 7.3.2 注意事项
 
-在分布式架构的数据库中实现完成连续递增的序列是比较有难度的，而 `Sequence` 把`严格递增`和`性能`两方面交给了使用者，在新建 `Sequence` 的时候，可以通过组合 `Order/No Order`（目前尚未实现）和 `Cache/No Cache` 来选择新建高性能的 `Sequence`，亦或是性能较差但递增较为严格的 `Sequence`。
+在分布式架构的数据库中实现单调递增序列是比较有难度的，而 `Sequence` 把`严格递增`和`性能`两方面交给了使用者，在新建 `Sequence` 的时候，可以通过组合 `Order/No Order`（目前尚未实现）和 `Cache/No Cache` 来选择新建高性能的 `Sequence`，亦或是性能较差但递增较为严格的 `Sequence`。
