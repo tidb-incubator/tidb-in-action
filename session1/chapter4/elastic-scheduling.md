@@ -1,5 +1,5 @@
 ## 4.2 弹性调度
-***弹性调度（Elastic Schedule）*** 是 TiDB 在 4.0 的新特性，通过与云环境结合后提供的一系列调度策略，可以让 TiDB 具备 ***自适应能力（Adaptive Capacity）***，即 TiDB 能根据用户的 workload 模式自动调节形态以达到资源的最大利用率。自适应能力是 TiDB 能够提供 DBaaS 服务的一项关键能力。
+***弹性调度（Elastic Schedule）*** 是 TiDB 在 4.0 的新特性，通过与云环境结合后提供的一系列调度策略，可以让 TiDB 具备 ***自适应能力（Adaptive Capacity）*** ，即 TiDB 能根据用户的 workload 模式自动调节形态以达到资源的最大利用率。自适应能力是 TiDB 能够提供 DBaaS 服务的一项关键能力。
 
 ### 4.2.1 需求背景
 传统上，我们一般将 TiDB 集群部署在 IDC 环境中，在这种情况下，用户通常希望各台机器的资源利率比较平均，并且各台机器需要预留足够的资源以应对高峰期，但大部分时间业务流量比较低且平均，机器的利用率相对于高峰期处在一个比较低的水平，造成了机器资源的浪费。而在云环境下，机器资源可以按需分配，并且云厂商能够支持秒级或分钟级交付，那么在平常的大部分时间里，就不需要让每台机器预留资源，而是应该尽可能地利用每台机器资源。当遇到资源利用高峰期时，可以临时扩容机器并且将一部分负载调度到新机器上，进而分散集群压力，保证性能稳定。
@@ -13,7 +13,12 @@
 
 和 [Aurora](https://www.youtube.com/watch?v=mali0B4wus0) 做法类似，弹性伸缩节点可通过对一些系统指标设置一个阈值，比如 CPU 利用率（TiDB Server 或 TiKV Server）、QPS（TiKV Server）等，当集群在平衡状态下目标指标<!--TODO:这里的平衡状态下是什么意思?-->等于或者超过阈值一段时间以后，就会自动触发水平的弹性伸缩。
 
-TiDB 借助 TiDB Operator 和 PD 来实现 Auto-Scale。首先TiDB Operator 组件通过 API 的方式暴露出期望的 TiDB / TiKV 节点数量，然后由其定期获取 TiDB / TiKV 的 metrics 信息和 PD 上的集群状态信息，接着通过内部的 Auto-Scaling 算法对 TidbCluster.Spec.Replicas 进行调整，从而实现 Auto-Scaling。在 TiDB Operator 中，新增了 Autoscaler API 和 Autoscaler Controller，下面是一个 Autoscaler API 的例子：
+TiDB 借助 TiDB Operator 和 PD 来实现 Auto-Scale：
+- TiDB Operator 通过 API 的方式暴露出期望的 TiDB / TiKV 节点数量
+- TiDB Operator 定期获取 TiDB / TiKV 的 metrics 信息和 PD 上的集群状态信息
+- TiDB Operator 通过内部的 Auto-Scaling 算法对 `TidbCluster.Spec.Replicas` 进行调整，从而实现 Auto-Scaling。
+
+在 TiDB Operator 中，新增了 AutoScaler API 和 AutoScaler Controller，下面是一个 AutoScaler API 的例子：
 
 ```
 apiVersion: pingcap.com/v1alpha1
@@ -73,9 +78,11 @@ spec:
 对于第一种情况，访问平均分布在集群的大部分 Region 中，目前调度不会对其做相关的特殊处理。对于第三种情况，现有的热点调度器已经能够识别并且对其进行调度。下面来介绍下对于第 2 种和第 4 种情况如何去做动态调整：
 
 1. 根据负载动态分裂 ( Load Base Splitting)
-对于上述第二种情况，会出现小区域的热点问题。特别是在 TiDB 实践中经常遇到的热点小表问题，热点数据集中在几个 Region 中，造成无法利用多台机器资源的情况。 TiDB 4.0 中引入了根据负载动态分裂特性，即根据负载自动拆分 Region。其主要的思路借鉴了 CRDB 的[实现](https://www.cockroachlabs.com/docs/stable/load-based-splitting.html)，会根据设定的 QPS 阈值来进行自动的分裂。其主要原理是，若对该   Region 的请求 QPS 超过阈值则进行采样，对采样的请求分布进行判断。采样的方法是通过蓄水池采样出请求中的 20 个 key，然后统计请求在这些 key 的左右区域的分布来进行判断，如果分布比较平均并能找到合适的 key 进行分裂，则自动地对该 Region 进行分裂。
+
+对于上述第二种情况，会出现小区域的热点问题。特别是在 TiDB 实践中经常遇到的热点小表问题，热点数据集中在几个 Region 中，造成无法利用多台机器资源的情况。TiDB 4.0 中引入了根据负载动态分裂特性，即根据负载自动拆分 Region。其主要的思路借鉴了 CRDB 的[实现](https://www.cockroachlabs.com/docs/stable/load-based-splitting.html)，会根据设定的 QPS 阈值来进行自动的分裂。其主要原理是，若对该 Region 的请求 QPS 超过阈值则进行采样，对采样的请求分布进行判断。采样的方法是通过蓄水池采样出请求中的 20 个 key，然后统计请求在这些 key 的左右区域的分布来进行判断，如果分布比较平均并能找到合适的 key 进行分裂，则自动地对该 Region 进行分裂。
 
 2. 热点隔离 (Isolate Frequently Access Region）
+
 由于 TiKV 的分区是按 Range 切分的，在 TiDB 的实践中自增主建、递增的索引的写入等都会造成单一热点的情况，另外如果用户没有对 workload 进行分区，且访问是 non-uniform 的，也会造成单一热点问题。这些都是上述的第四种情况。根据过去的最佳实践经验，往往需要用户调整表结构，采用分区表，使用 shard_bits 等方式来使得单一分区变成多分区，才能进行负载均衡。而在云环境中，在用户不用调整 workload 或者表结构的情况下，TiDB 可以通过在云上弹性一个高性能的机器，并由 PD 通过识别自动将单一热点调度到该机器上，达到热点隔离的目的。该方法也特别适用于时事、新闻等突然出现爆发式业务热点的情况。
 
 ### 4.2.4 总结
