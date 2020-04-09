@@ -131,7 +131,7 @@ prod-cluster  tidb  v3.0.12    /root/.tiup/storage/cluster/clusters/prod-cluster
 
 #### 4. 启动集群
 
-如果在上一步中没有立刻启动集群，我们可以执行命令将该集群启动起来，如果忘记了已经部署的集群的名字，可以使用 `tiup cluster list` 查看，启动集群的命令：
+上一步部署成功后，我们可以执行命令将该集群启动起来，如果忘记了已经部署的集群的名字，可以使用 `tiup cluster list` 查看，启动集群的命令：
 ```
 tiup cluster start prod-cluster
 ```
