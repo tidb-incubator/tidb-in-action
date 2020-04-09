@@ -72,7 +72,7 @@ RocskDB 是一款优秀的开源单机存储引擎，负责将 TiDB 的数据存
     
         * 读取数据如果 Memtable 没有，会访问 Block-Cache
         
-        * Block-Cache 一般设¥默认设置为系统总内存的 45%，单机多实例的情况下，按照实例个数分配
+        * Block-Cache 默认设置为系统总内存的 45%，单机多实例的情况下，按照实例个数分配
 
     * WAL Write Ahead Log 写操作先写入 logfile，再写入 Memtable
     
@@ -81,4 +81,3 @@ RocskDB 是一款优秀的开源单机存储引擎，负责将 TiDB 的数据存
         * SST 文件中的内容是有序的
         
         * 根据一定的 Compaction 规则压缩数据
-
