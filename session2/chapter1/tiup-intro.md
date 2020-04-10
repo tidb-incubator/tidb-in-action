@@ -85,7 +85,7 @@ tiup [flags] <component> [args...]
 * update: 升级某个组件到最新的版本
 * uninstall: 卸载组件
 * status: 查看组件的运行状态
-* clean: 清除组件的运行数据
+* clean: 清除组件的运行实例
 * help: 打印帮助信息，后面跟命令则是打印该命令的使用方法
 
 常见的全局通用选项 flags：
@@ -275,7 +275,49 @@ tiup tidb:v3.0.8
 tiup --tag=experiment tikv
 ```
 
-### (5) 卸载组件：tiup uninstall
+### (5) 查询组件运行状态：tiup status
+
+通过 `tiup status` 可以查看组件的运行状态。相关的命令和参数如下：
+
+```
+~$ tiup help status
+List the status of instantiated components
+
+Usage:
+  tiup status [flags]
+
+Flags:
+  -h, --help   help for status
+
+Global Flags:
+      --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
+```
+
+### (6) 清理组件运行实例：tiup clean
+
+通过 `tiup clean` 可以清理组件的运行实例，在清理之前，会先 kill 进程，然后再删除数据目录。相应的命令和参数如下：
+
+```
+~$ tiup help clean
+Clean the data of instantiated components
+
+Usage:
+  tiup clean [flags]
+
+Flags:
+      --all    Clean all data of instantiated components
+  -h, --help   help for clean
+
+Global Flags:
+      --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
+```
+
+示例一：清理 tag 名称为 experiment 的组件实例
+```
+tiup clean experiment
+```
+
+### (4) 卸载组件：tiup uninstall
 
 TiUP 安装的组件是要占用本地磁盘空间的，如果不想保留那么多老版本的组件，可以先查看当前安装了哪些版本的组件，然后再卸载某个组件，支持卸载所有版本或者某个特定版本。相应的命令和参数如下：
 
@@ -324,47 +366,5 @@ tiup uninstall tikv --all
 示例三：卸载所有已经安装的组件
 ```
 tiup uninstall --all
-```
-
-### (6) 清理组件运行实例：tiup clean
-
-通过 `tiup clean` 可以清理组件的运行实例，在清理之前，会先 kill 进程，然后再删除数据目录。相应的命令和参数如下：
-
-```
-~$ tiup help clean
-Clean the data of instantiated components
-
-Usage:
-  tiup clean [flags]
-
-Flags:
-      --all    Clean all data of instantiated components
-  -h, --help   help for clean
-
-Global Flags:
-      --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
-```
-
-示例一：清理 tag 名称为 experiment 的组件实例
-```
-tiup clean experiment
-```
-
-### (7) 查询组件运行状态：tiup status
-
-通过 `tiup status` 可以查看组件的运行状态。相关的命令和参数如下：
-
-```
-~$ tiup help status
-List the status of instantiated components
-
-Usage:
-  tiup status [flags]
-
-Flags:
-  -h, --help   help for status
-
-Global Flags:
-      --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
 ```
 
