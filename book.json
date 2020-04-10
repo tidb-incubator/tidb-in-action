@@ -1,6 +1,7 @@
 {
 	"plugins": [
-		"analytics"
+		"analytics",
+		"yahei"
 	],
 	"pluginsConfig": {
 		"analytics": {
