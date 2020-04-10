@@ -85,7 +85,7 @@ tiup [flags] <component> [args...]
 * update: 升级某个组件到最新的版本
 * uninstall: 卸载组件
 * status: 查看组件的运行状态
-* clean: 清除组件的运行实例
+* clean: 清理组件的运行实例
 * help: 打印帮助信息，后面跟命令则是打印该命令的使用方法
 
 常见的全局通用选项 flags：
@@ -138,7 +138,7 @@ Global Flags:
 * `tiup list`: 查看当前有哪些组件可以安装
 * `tiup list <component>`: 查看某个组件有哪些版本可以安装
 
-对于上面两种使用方法，可以组合使用两个 flag:
+对于上面两种使用方法，可以组合使用两个 flag：
 * `--installed`: 本地已经安装了哪些组件，或者已经安装了某个组件的哪些版本
 * `--refresh`: 获取服务器上最新的组件列表，以及它们的版本列表
 
@@ -230,7 +230,7 @@ Global Flags:
       --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
 ```
 
-使用方式上和 install 基本相同，不过它支持几个额外的 flag:
+使用方式上和 install 基本相同，不过它支持几个额外的 flag：
 * `--all`: 升级所有组件
 * `--nightly`: 升级至 nightly 版本
 * `--self`: 升级 TiUP 自己至最新版本
@@ -251,7 +251,7 @@ tiup update --all --nightly
 tiup update --self
 ```
 
-### (4) 运行组件：tiup \<component\>
+### (4) 运行组件：tiup &lt;component&gt;
 
 安装完成之后可以利用 TiUP 启动相应的组件：
 
@@ -319,7 +319,7 @@ tiup clean experiment
 
 ### (4) 卸载组件：tiup uninstall
 
-TiUP 安装的组件是要占用本地磁盘空间的，如果不想保留那么多老版本的组件，可以先查看当前安装了哪些版本的组件，然后再卸载某个组件，支持卸载所有版本或者某个特定版本。相应的命令和参数如下：
+TiUP 安装的组件是要占用本地磁盘空间的，如果不想保留那么多老版本的组件，可以先查看当前安装了哪些版本的组件，然后再卸载某个组件。TiUP 支持卸载某个组件的所有版本或者特定版本，也支持卸载所有组件。相应的命令和参数如下：
 
 ```
 ~$ tiup help uninstall
