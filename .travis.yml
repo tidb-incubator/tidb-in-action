@@ -12,6 +12,7 @@ before_install:
 before_script:
   - npm install
   - export PATH=$(npm bin):$PATH
+  - gitbook install
 
 script:
   - gitbook build . --gitbook=3.2.3
