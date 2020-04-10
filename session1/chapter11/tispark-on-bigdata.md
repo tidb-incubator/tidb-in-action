@@ -112,14 +112,15 @@ RSC client is executing SQL query: select cnt from dc_tmp.test_for_mix, statemen
 可以看到是成功的实现了混和访问，对业务逻辑来说，数据在Hive库或者在TiDB库没有任何感知。  
 
 ### 11.4.3 改进地方：
-1. 写回TiDB    
+#### 写回TiDB    
 TiDB 4.0 实现大事务支持之前，TiSpark 没有理想的方案支持向 TiDB 原生写入数据的方案。用户可以选择的是：  
-(1) 使用 Spark 原生的 JDBC 方案，将 TiDB 当做 MySQL 写入数据，具体方案请参考[文档](https://github.com/pingcap/tispark#write-data-to-tidb-using-tidb-connector)。这个方案的缺陷是，数据必须被拆分为小批次插入，而这些批次之间无法维持事务原子性。换句话说，如果插入在中途失败，那么已经写入的数据并不会自动回滚，而需要人工干预。  
-(2) 第二个方案是使用 TiSpark 的[大批写入](https://github.com/pingcap/tispark/blob/master/docs/datasource_api_userguide.md)，这个方案可以导入大量数据且维持事务的原子性，但是由于缺少锁表和大事务支持，并不推荐在生产环境使用。
+* 使用 Spark 原生的 JDBC 方案，将 TiDB 当做 MySQL 写入数据，具体方案请参考[文档](https://github.com/pingcap/tispark#write-data-to-tidb-using-tidb-connector)。这个方案的缺陷是，数据必须被拆分为小批次插入，而这些批次之间无法维持事务原子性。换句话说，如果插入在中途失败，那么已经写入的数据并不会自动回滚，而需要人工干预。  
+* 第二个方案是使用 TiSpark 的[大批写入](https://github.com/pingcap/tispark/blob/master/docs/datasource_api_userguide.md)，这个方案可以导入大量数据且维持事务的原子性，但是由于缺少锁表和大事务支持，并不推荐在生产环境使用。 
+
 在 TiSpark 完成对应 TiDB 4.0 大事务对应的支持后，用户就可以使用 TiSpark 作为一种主要的 TiDB 跑批方案，无论是向 TiDB 写入还是由 TiDB 向其他系统写出。在本文写作的时间点，此功能尚未完成，如有相关需要，请关注官方 [Github 页面](https://github.com/pingcap/tispark)更新 TiSpark 版本。
 
-2. 库重名问题      
-TiDB 和 Hive 重名的情况，需要为 TiSpark 开启表名前缀模式，该模式会为所有 TiDB 表在 TiSpark 中加入前缀（而并不会改变 TiDB 内实际的表名）。例如，希望 TiDB 表在 TiSpark 中以 tidb_ 作为前缀使用，则增加如下配置（这并不会实际改变 TiDB 的表明）：
+#### 库重名问题      
+TiDB 和 Hive 重名的情况，需要为 TiSpark 开启表名前缀模式，该模式会为所有 TiDB 表在 TiSpark 中加入前缀（而并不会改变 TiDB 内实际的表名）。例如，希望 TiDB 表在 TiSpark 中以 tidb_ 作为前缀使用，则增加如下配置（这并不会实际改变 TiDB 的表名）：
 ```
 spark.tispark.db_prefix  "tidb_"
 ```
