@@ -22,7 +22,7 @@
 
     * TiDB 发送给 TiKV 的各种请求耗时可以通过监控【KV Request/KV Request Duration 99 by type】查看
 
-* TiDB 采用两阶段提交的事务模型。为此需要向 PD 请求一个全局的时间戳，用来表明事务的开始时间与提交时间。为了不给 PD 造成过多的请求压力，TiDB 通过单个线程一次为多个事务分配时间
+* TiDB 采用两阶段提交的事务模型。为此需要向 PD 请求一个全局逻辑时间戳 TSO，用来表明事务的开始时间与提交时间。为了不给 PD 造成过多的请求压力，TiDB 通过单个线程一次为多个事务分配时间
 
     * 事务在 channel 中等待的时间为监控【PD Client/PD TSO Wait Duration】
     
@@ -79,5 +79,4 @@ RocskDB 是一款优秀的开源单机存储引擎，负责将 TiDB 的数据存
     * SST 在 Memtable 写满以后，将数据写入磁盘中的 SST 文件，对应 logfile 里的 log 会被安全删除。
 
         * SST 文件中的内容是有序的
-        
         * 根据一定的 Compaction 规则压缩数据
