@@ -2,7 +2,7 @@
 
 TiDB 默认会启用慢查询日志，并将执行时间超过阈值（默认为 300 毫秒）的 SQL 保存到日志文件。慢查询日志常用于定位慢查询语句，分析和解决 SQL 的性能问题。关于慢查询日志的格式和字段含义，请参阅 TiDB 文档。
 
-通过系统表 `INFORMATION_SCHEMA.SLOW_QUERY` 可以查看当前 TiDB 节点的慢查询日志，其内容与慢查询日志文件对应。TiDB 4.0 新增了系统表 `CLUSTER_SLOW_QUERY`，可以用于查看全部 TiDB 节点的慢查询，使用上和 `SLOW_QUERY` 表保持一致。
+通过系统表 `information_schema.slow_query` 可以查看当前 TiDB 节点的慢查询日志，其内容与慢查询日志文件对应。TiDB 4.0 新增了系统表 `information_schema.cluster_slow_query`，可以用于查看全部 TiDB 节点的慢查询，使用上和 `information_schema.slow_query` 表保持一致。
 
 本节将针对上述两种慢查询系统表给出一些常见的查询示例。
 
