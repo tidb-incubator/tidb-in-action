@@ -1,8 +1,8 @@
 # 3.5 SQL 慢查询内存表
 
-TiDB 默认会启用慢查询日志，并将执行时间超过 `slow-threshold`（默认值为 300 毫秒）的语句记录到慢查询日志文件中。慢查询日志常用于定位慢查询语句，分析和解决 SQL 执行的性能问题。关于慢查询日志格式和字段含义，请参阅 TiDB 文档。
+TiDB 默认会启用慢查询日志，并将执行时间超过 `slow-threshold`（默认值为 300 毫秒）的语句记录到日志文件中。慢查询日志常用于定位慢查询语句，分析和解决 SQL 的性能问题。关于慢查询日志的格式和字段含义，请参阅 TiDB 文档。
 
-通过 `INFORMATION_SCHEMA.SLOW_QUERY` 表可以查询当前 TiDB 节点的慢查询日志，表中内容和慢查询日志字段一一对应。TiDB 4.0 新增了系统表 `CLUSTER_SLOW_QUERY`，可以用来查询全部 TiDB 节点的慢查询，使用上和 `SLOW_QUERY` 表一直。
+通过系统表 `INFORMATION_SCHEMA.SLOW_QUERY` 可以查询当前 TiDB 节点的慢查询日志，表中内容和慢查询日志字段一一对应。TiDB 4.0 又新增了系统表 `CLUSTER_SLOW_QUERY`，可以用来查询全部 TiDB 节点的慢查询，并且使用上和 `SLOW_QUERY` 表保持一致。
 
 本节给出一些常见的查询示例。
 
@@ -113,7 +113,7 @@ digest     | db705c89ca2dfc1d39d10e0f30f285cbbadec7e24da4f15af461b148d8ffb020
 min(query) | SELECT DISTINCT c FROM sbtest11 WHERE id BETWEEN ? AND ? ORDER BY c [arguments: (303359, 303458)];
 ```
 
-然后，可以用上述结果中的 SQL 指纹进一步查询执行计划：
+然后，可以借助 SQL 指纹进一步查询执行计划：
 
 ```sql
 > select min(plan),plan_digest 
@@ -134,7 +134,7 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
               └─TableScan_11    cop     1.2440069558121831      table:sbtest25, range:[472745,472844], keep order:false
 ```
 
-### 统计集群各个 TiDB 节点的慢查询数量
+### 统计各个 TiDB 节点的慢查询数量
 
 ```sql
 > select instance, count(*) 
@@ -152,7 +152,7 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
 
 ### 检索异常时段的慢日志
 
-假定 `2020-03-10 13:24:00` 至 `2020-03-10 13:27:00` 期间发现 QPS 降低和查询响应时间升高等问题，猜测可能是慢查询导致的。可以用以下 SQL 查询仅仅出现在异常时段的慢查询：
+假定 `2020-03-10 13:24:00` 至 `2020-03-10 13:27:00` 期间发现 QPS 降低和查询响应时间升高等问题，可以用以下 SQL 过滤出仅仅出现在异常时段的慢查询：
 
 ```sql
 > SELECT * FROM
