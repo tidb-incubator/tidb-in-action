@@ -1,37 +1,8 @@
 # 3.5 SQL 慢查询内存表
 
-TiDB 默认会启用慢查询日志，并将执行时间超过 `slow-threshold`（默认值为 300 毫秒）的语句记录到慢查询日志文件中。慢查询日志常用于定位慢查询语句，分析和解决 SQL 执行的性能问题。
+TiDB 默认会启用慢查询日志，并将执行时间超过 `slow-threshold`（默认值为 300 毫秒）的语句记录到慢查询日志文件中。慢查询日志常用于定位慢查询语句，分析和解决 SQL 执行的性能问题。关于慢查询日志格式和字段含义，请参阅 TiDB 文档。
 
-以下给出一段慢查询日志示例，具体的字段含义请参阅 TiDB 文档。
-
-```
-# Time: 2019-08-14T09:26:59.487776265+08:00
-# Txn_start_ts: 410450924122144769
-# User: root@127.0.0.1
-# Conn_ID: 3086
-# Query_time: 1.527627037
-# Parse_time: 0.000054933
-# Compile_time: 0.000129729
-# Process_time: 0.07 Wait_time: 0.002 Backoff_time: 0.002 Request_count: 1 Total_keys: 131073 Process_keys: 131072 Prewrite_time: 0.335415029 Commit_time: 0.032175429 Get_commit_ts_time: 0.000177098 Local_latch_wait_time: 0.106869448 Write_keys: 131072 Write_size: 3538944 Prewrite_region: 1
-# DB: test
-# Is_internal: false
-# Digest: 50a2e32d2abbd6c1764b1b7f2058d428ef2712b029282b776beb9506a365c0f1
-# Stats: t:414652072816803841
-# Num_cop_tasks: 1
-# Cop_proc_avg: 0.07 Cop_proc_p90: 0.07 Cop_proc_max: 0.07 Cop_proc_addr: 172.16.5.87:20171
-# Cop_wait_avg: 0 Cop_wait_p90: 0 Cop_wait_max: 0 Cop_wait_addr: 172.16.5.87:20171
-# Mem_max: 525211
-# Succ: true
-# Plan_digest: e5f9d9746c756438a13c75ba3eedf601eecf555cdb7ad327d7092bdd041a83e7
-# Plan: tidb_decode_plan('ZJAwCTMyXzcJMAkyMAlkYXRhOlRhYmxlU2Nhbl82CjEJMTBfNgkxAR0AdAEY1Dp0LCByYW5nZTpbLWluZiwraW5mXSwga2VlcCBvcmRlcjpmYWxzZSwgc3RhdHM6cHNldWRvCg==')
-insert into t select * from t;
-```
-
-## 3. 慢查询系统表
-
-通过查询 `INFORMATION_SCHEMA.SLOW_QUERY` 表来查询 **当前 TiDB 节点** 的慢查询日志中的内容，表中列名和慢日志中字段名一一对应，表结构可查看 Information Schema 中关于 `SLOW_QUERY` 表的介绍。
-
-TiDB 4.0 中新增了 `CLUSTER_SLOW_QUERY` 系统表，用来查询 **所有 TiDB 节点** 的 `SLOW_QUERY` 数据，使用上和 SLOW_QUERY 是一样的。
+通过 `INFORMATION_SCHEMA.SLOW_QUERY` 表可以查询当前 TiDB 节点的慢查询日志，表中内容和慢查询日志字段一一对应。TiDB 4.0 新增了系统表 `CLUSTER_SLOW_QUERY`，可以用来查询全部 TiDB 节点的慢查询，使用上和 `SLOW_QUERY` 表一直。
 
 TiDB 4.0 中的 `SLOW_QUERY` 已经支持查询任意时间段的慢日志，即支持查询已经被 rotate 的慢日志文件的数据。用户查询时只需要指定 TIME 时间范围即可定位需要解析的慢日志文件。如果查询不指定时间范围，则和 4.0 版本之前行为一致，只解析当前的慢日志文件。
 
