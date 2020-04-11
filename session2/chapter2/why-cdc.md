@@ -9,14 +9,11 @@ TiCDC 更易使用：
 * TiCDC 可以全部使用 SQL 管理，不需要另外组件，而且自带管理界面
 
 ## 性能
-TiCDC 性能更好：
 
+TiCDC 性能更好：
 * TiCDC 提供更良好的扩展性，可以应对超大规模 TiDB 集群的使用场景，在这一点上 TiDB-Binlog 要弱于 TiCDC，Pump 集群虽然具有一定的扩展性，但是 Drainer 是单节点归并排序，无法应对超大规模 TiDB 集群
 * TiDB-Binlog 在极端情况下可能会丢失 Commit Binlog，需要反查 TiKV 事务状态，同步延迟可达到 10 分钟，而 TiCDC 的同步延迟通常在毫秒级别
-* 目前版本 TiDB-Binlog 的实现强依赖于 TiDB Transaction 模型，会阻扰已知的下面的优化：
-  * Big Transaction 功能
-  * 不从 PD 获取 Commit Timestamp
-  * 1 pc
+* 目前版本 TiDB-Binlog 的实现强依赖于 TiDB Transaction 模型，会阻扰已知的一些优化，比如 Big Transaction 功能、不从 PD 获取 Commit Timestamp 等
 
 ## 可用性
 
