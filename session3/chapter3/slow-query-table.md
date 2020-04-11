@@ -2,13 +2,13 @@
 
 TiDB 默认会启用慢查询日志，并将执行时间超过阈值（默认为 300 毫秒）的 SQL 保存到日志文件。慢查询日志常用于定位慢查询语句，分析和解决 SQL 的性能问题。关于慢查询日志的格式和字段含义，请参阅 TiDB 文档。
 
-通过系统表 `INFORMATION_SCHEMA.SLOW_QUERY` 可以查询当前 TiDB 节点的慢查询日志，表中内容和慢查询日志字段一一对应。TiDB 4.0 又新增了系统表 `CLUSTER_SLOW_QUERY`，可以用来查询全部 TiDB 节点的慢查询，使用上和 `SLOW_QUERY` 表保持一致。
+通过系统表 `INFORMATION_SCHEMA.SLOW_QUERY` 可以查看当前 TiDB 节点的慢查询日志，其内容与慢查询日志文件对应。TiDB 4.0 新增了系统表 `CLUSTER_SLOW_QUERY`，可以用于查看全部 TiDB 节点的慢查询，使用上和 `SLOW_QUERY` 表保持一致。
 
-本节将给出一些 SQL 慢查询内存表的常见查询示例。
+本节将针对上述两种慢查询系统表给出一些常见的查询示例。
 
 ### 检索当前节点 Top N 慢查询
 
-以下 SQL 用于查询 Top 2 慢查询：
+以下 SQL 用于检索当前TiDB节点的 Top 2 慢查询：
 
 ```sql
 > select query_time, query
@@ -26,7 +26,7 @@ TiDB 默认会启用慢查询日志，并将执行时间超过阈值（默认为
 
 ### 检索全部节点上指定用户的 Top N 慢查询
 
-以下 SQL 用户查询用户 `test` 的 Top 2 慢查询 SQL：
+以下 SQL 会检索全部 TiDB 节点上指定用户 `test` 的 Top 2 慢查询：
 
 ```sql
 > select query_time, query, user
@@ -59,7 +59,7 @@ TiDB 默认会启用慢查询日志，并将执行时间超过阈值（默认为
 | 0.302558006 | select * from t1 where a=1; | 4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa |
 +-------------+-----------------------------+------------------------------------------------------------------+
 
--- 再根据 SQL 指纹搜索同类慢查询
+-- 再根据 SQL 指纹检索同类慢查询
 > select query, query_time
     from information_schema.cluster_slow_query
    where digest = "4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa";
@@ -73,7 +73,7 @@ TiDB 默认会启用慢查询日志，并将执行时间超过阈值（默认为
 
 ### 检索统计信息为 `pseudo` 的慢查询
 
-慢查询日志中统计信息被标记为 `pseudo` 意味着 TiDB 表的统计信息更新不及时，需要运行 `analyze table` 手动收集统计信息。以下 SQL 可以找到这一类慢查询：
+如果慢查询日志中的统计信息被标记为 `pseudo`，往往说明 TiDB 表的统计信息更新不及时，需要运行 `analyze table` 手动收集统计信息。以下 SQL 可以找到这一类慢查询：
 
 ```sql
 > select query, query_time, stats
@@ -93,7 +93,7 @@ TiDB 默认会启用慢查询日志，并将执行时间超过阈值（默认为
 
 ### 查询执行计划发生变化的慢查询
 
-由于统计信息不准，可能导致同类型 SQL 的执行计划发生预期之外的改变。可以用以下 SQL 查询哪些 SQL 具有多种不同的执行计划：
+由于统计信息不准，可能导致同类型 SQL 的执行计划发生意料之外的改变。用以下 SQL 可以检索到哪些慢查询具有多种不同的执行计划：
 
 ```sql
 > select count(distinct plan_digest) as count, digest,min(query) 
@@ -113,11 +113,8 @@ min(query) | SELECT DISTINCT c FROM sbtest22 WHERE id BETWEEN ? AND ? ORDER BY c
 count      | 2
 digest     | db705c89ca2dfc1d39d10e0f30f285cbbadec7e24da4f15af461b148d8ffb020
 min(query) | SELECT DISTINCT c FROM sbtest11 WHERE id BETWEEN ? AND ? ORDER BY c [arguments: (303359, 303458)];
-```
 
-然后，可以借助 SQL 指纹进一步查询执行计划：
-
-```sql
+-- 借助 SQL 指纹进一步查询执行计划的详细信息
 > select min(plan),plan_digest 
     from cluster_slow_query 
   where digest='17b4518fde82e32021877878bec2bb309619d384fca944106fcaf9c93b536e94' 
@@ -136,7 +133,7 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
               └─TableScan_11    cop     1.2440069558121831      table:sbtest25, range:[472745,472844], keep order:false
 ```
 
-### 统计各个 TiDB 节点的慢查询数量
+### 统计各个节点的慢查询数量
 
 以下 SQL 统计指定时段内各个 TiDB 节点上出现过的慢查询数量：
 
@@ -154,7 +151,7 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
 +---------------+----------+
 ```
 
-### 检索异常时段的慢日志
+### 检索异常时段的慢查询
 
 假定 `2020-03-10 13:24:00` 至 `2020-03-10 13:27:00` 期间发现 QPS 降低和查询响应时间升高等问题，可以用以下 SQL 过滤出仅仅出现在异常时段的慢查询：
 
