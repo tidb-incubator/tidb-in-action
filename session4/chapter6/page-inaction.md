@@ -53,7 +53,7 @@ MySQL [demo]> select * from tmp_loan limit 10;
 +-----------+-----------+-------------+
 ```
 
-常规的分片方式采用 MOD 函数对主键取余。下面的 SQL 演示了分片的具体做法：
+常规的分片方式采用 MOD 函数对主键取余。下面的 SQL 演示了具体做法：
 
 ```
 # ${ThreadNums} 是分片数量, 用于确定最大分片数是多少
@@ -79,9 +79,9 @@ MySQL [demo]> select serialno from tmp_loan where MOD(substring(serialno,-3),17)
 117942 rows in set (1.407 sec)
 ```
 
-如上所示，一共分成了 17 片，每个分片约为 12 万行左右。后续可以通过消息队列发送请求到批量处理服务并发执行 SQL 获取数据，并遍历结果集开始批量处理数据。
+如上所示，一共分成了 17 片，每个分片约为 12 万行左右。后续发送请求到批量处理服务，该服务负责执行 SQL 获取数据，并遍历结果集具体执行批量处理任务。
 
-从 Mysql 切换到 TiDB 后，由于 GC lift time 设置为10min，原来采用 ResultSet 遍历结果集的方式就会由于事务时间过长而出现 GC life time is shorter than transaction duration 报错，为了避免这种异常，我们需要减少每个分片的行数以及控制 ResultSet 遍历数据集的时间，这边我们只谈减少每个分片行数，要减少行数可以通过增大总分片数量，这样可以缩短 ResultSet 遍历时间，但是通过后台监控发现同一时间运行几十条 sql 每一条都因为mod函数要整表扫描，取数时引发性能尖峰，对于联机业务会有影响。
+从 MySQL 切换到 TiDB 后，由于 GC lift time（默认设置为 10 min）的限制，原来采用 ResultSet 遍历结果集的方式就会由于事务时间过长而出现报错 `GC life time is shorter than transaction duration`。为了避免这种异常，我们需要减少每个分片的行数以及控制 ResultSet 遍历数据集的时间，这边我们只谈减少每个分片行数，要减少行数可以通过增大总分片数量，这样可以缩短 ResultSet 遍历时间，但是通过后台监控发现同一时间运行几十条 sql 每一条都因为mod函数要整表扫描，取数时引发性能尖峰，对于联机业务会有影响。
 
 改进方案采用窗口函数 row_number() 将数据按照主键排序后赋予行号，再通过聚合函数按照设置好的页面大小的行号进行分组，以计算书每页的最大值和最小值
 
