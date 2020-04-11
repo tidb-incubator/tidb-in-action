@@ -102,7 +102,7 @@ $ cdc cli changefeed list --pd=http://10.1.1.10:2379
 ]
 ```
 
-若要查询同步任务的配置信息和同步状态，则须给出对应的同步任务 ID：
+若要查询同步任务的配置信息和同步状态，则需要给出对应的同步任务 ID：
 ```
 $ cdc cli changefeed query --pd=http://10.1.1.10:2379 --changefeed-id=004a0ea8-2ef1-45b4-8ce1-b3281e7dc24d
 {
