@@ -56,7 +56,7 @@ MySQL [demo]> select * from tmp_loan limit 10;
 改进方案的基本思路是，首先将数据按照主键排序，然后调用窗口函数 `row_number()` 为每一行数据生成行号，接着调用聚合函数按照设置好的页面大小对行号进行分组，最终计算出每页的最小值和最大值。下面的代码演示了具体的做法：
 
 ```
-MySQL [demo]> SELECT min(t.serialno) AS start_key, max(t.serialno) AS end_key, count(*) AS page_size FROM ( SELECT *, row_number () over (ORDER BY serialno) AS row_num FROM tmp_loan ) t GROUP BY floor((t.row_num - 1) / 50000) ORDER BY start_key;
+MySQL [demo]> selecct min(t.serialno) as start_key, max(t.serialno) as end_key, count(*) as page_size from ( select *, row_number () over (order by serialno) as row_num from tmp_loan ) t group by floor((t.row_num - 1) / 50000) order by start_key;
 +-----------+-----------+-----------+
 | start_key | end_key   | page_size |
 +-----------+-----------+-----------+
@@ -75,7 +75,7 @@ MySQL [demo]> SELECT min(t.serialno) AS start_key, max(t.serialno) AS end_key, c
 接下来，只需要使用 `serialno between start_key and end_key` 查询每个分片的数据即可。
 
 ```
-MySQL [demo]> select serialno from tmp_loan where serialno BETWEEN 200050002 and 200100007;
+MySQL [demo]> select serialno from tmp_loan where serialno between 200050002 and 200100007;
 +-----------+
 | serialno  |
 +-----------+
@@ -92,11 +92,11 @@ MySQL [demo]> select serialno from tmp_loan where serialno BETWEEN 200050002 and
 当我们需要批量修改数据时，也可以借助上面计算好的分片信息，实现高效数据更新。
 
 ```
-MySQL [demo]> update tmp_loan set businesssum = 6666 where serialno BETWEEN 200000000 and 200050001;
+MySQL [demo]> update tmp_loan set businesssum = 6666 where serialno between 200000000 and 200050001;
 Query OK, 50000 rows affected (0.89 sec)
 Rows matched: 50000  Changed: 50000  Warnings: 0
 
-MySQL [demo]> select * from tmp_loan ORDER BY serialno limit 10;
+MySQL [demo]> select * from tmp_loan order by serialno limit 10;
 +-----------+-----------+-------------+
 | serialno  | name      | businesssum |
 +-----------+-----------+-------------+
