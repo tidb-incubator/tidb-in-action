@@ -156,8 +156,8 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
 假定 `2020-03-10 13:24:00` 至 `2020-03-10 13:27:00` 期间发现 QPS 降低和查询响应时间升高等问题，可以用以下 SQL 过滤出仅仅出现在异常时段的慢查询：
 
 ```sql
-> SELECT * FROM
-    (SELECT /*+ AGG_TO_COP(), HASH_AGG() */ count(*),
+> select * from
+    (select /*+ AGG_TO_COP(), HASH_AGG() */ count(*),
          min(time),
          sum(query_time) AS sum_query_time,
          sum(Process_time) AS sum_process_time,
@@ -169,18 +169,19 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
          max(Cop_proc_max),
          min(query),min(prev_stmt),
          digest
-    FROM information_schema.CLUSTER_SLOW_QUERY
-    WHERE time >= '2020-03-10 13:24:00'
-            AND time < '2020-03-10 13:27:00'
-            AND Is_internal = false
-    GROUP BY  digest) AS t1
-  WHERE t1.digest NOT IN
-    (SELECT /*+ AGG_TO_COP(), HASH_AGG() */ digest
-    FROM information_schema.CLUSTER_SLOW_QUERY
-    WHERE time >= '2020-03-10 13:20:00' -- 排除正常时段 `2020-03-10 13:20:00` ~ `2020-03-10 13:23:00` 期间的慢查询
-      AND time < '2020-03-10 13:23:00'
-    GROUP BY  digest)
-  ORDER BY  t1.sum_query_time DESC limit 10\G
+    from information_schema.CLUSTER_SLOW_QUERY
+    where time >= '2020-03-10 13:24:00'
+      and time < '2020-03-10 13:27:00'
+      adn Is_internal = false
+    group by  digest) AS t1
+  where t1.digest not in
+    (select /*+ AGG_TO_COP(), HASH_AGG() */ digest
+    from information_schema.CLUSTER_SLOW_QUERY
+    where time >= '2020-03-10 13:20:00' -- 排除正常时段 `2020-03-10 13:20:00` ~ `2020-03-10 13:23:00` 期间的慢查询
+      and time < '2020-03-10 13:23:00'
+   group by  digest)
+  order by t1.sum_query_time desc
+  limit 10\G
 ***************************[ 1. row ]***************************
 count(*)           | 200
 min(time)          | 2020-03-10 13:24:27.216186
