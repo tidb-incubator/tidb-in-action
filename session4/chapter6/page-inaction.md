@@ -79,9 +79,9 @@ MySQL [demo]> select serialno from tmp_loan where MOD(substring(serialno,-3),17)
 117942 rows in set (1.407 sec)
 ```
 
-如上所示，一共把 tmp_loan 表分成了 17 片，每个分片约为 12 万行左右。后续可针对每一个分片执行 SQL 获取数据，并遍历结果集执行批量处理任务；并且，多个分片可以并行处理以提升效率。从 MySQL 切换到 TiDB 后，由于 GC lift time 默认设置为 10 min，遍历结果集执行批量更新处理的时间可能超过此限制而导致 TiDB 报错 `GC life time is shorter than transaction duration`。为避免程序因该错误而异常终止，我们通常会增大分片总数，减少每个分片的行数，以缩短单一分片的处理时间。但是，分片总数增多之后，需要并发处理的分片数目必然随之增多，否则无法满足一小时内并发处理 200 万行数据的业务目标；通过后台监控发现同一时间运行几十条 sql 每一条都因为mod函数要整表扫描，取数时引发性能尖峰，对于联机业务会有影响。
+如上所示，一共把 tmp_loan 表分成了 17 片，每个分片约为 12 万行左右。后续可针对每一个分片执行 SQL 获取数据，并遍历结果集逐行处理；并且，多个分片可以并行处理以提升效率。从 MySQL 切换到 TiDB 后，由于 GC lift time 默认设置为 10 分钟，遍历结果集执行批量更新处理的时间可能超过此限制而导致 TiDB 报错 `GC life time is shorter than transaction duration`。为规避这类问题，我们通常会增大分片总数，减少每个分片的行数，以缩短单一分片的处理时间。但是，新的问题也随之而来：分片总数增多之后，需要并发处理的分片数目也必然随之增多，否则无法满足一小时内完成批处理的业务目标；当同时运行几十条 SQL，每一条都要调用 MOD 函数扫描整表，往往会引发性能尖峰，影响联机业务。
 
-改进方案采用窗口函数 row_number() 将数据按照主键排序后赋予行号，再通过聚合函数按照设置好的页面大小的行号进行分组，以计算书每页的最大值和最小值
+改进方案借助窗口函数 row_number() 将数据按照主键排序后赋予行号，再调用聚合函数进行分组，计算出每页的最大值和最小值。
 
 ```
 MySQL [demo]> SELECT min(t.serialno) AS start_key, max(t.serialno) AS end_key, count(*) AS page_size FROM ( SELECT *, row_number () over (ORDER BY serialno) AS row_num FROM tmp_loan ) t GROUP BY floor((t.row_num - 1) / 50000) ORDER BY start_key;
