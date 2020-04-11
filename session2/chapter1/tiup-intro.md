@@ -12,7 +12,12 @@
 curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
 ```
 
-该命令将 TiUP 安装在 `$HOME/.tiup` 文件夹下，之后安装的组件以及组件运行产生的数据也会放在该文件夹下。
+该命令将 TiUP 安装在 `$HOME/.tiup` 文件夹下，之后安装的组件以及组件运行产生的数据也会放在该文件夹下。同时，它还会自动将 `$HOME/.tiup/bin` 加入到 Shell Profile 文件中，这样你就可以直接使用 TiUP 了，譬如查看 TiUP 的版本：
+```
+tiup --version
+```
+
+该文档主要参照 TiUP v0.0.3 版本，由于 TiUP 功能还在不断改进完善中，所以文档可能存在与最新版不一致的地方。
 
 ## 2. 功能介绍
 
@@ -84,8 +89,8 @@ tiup [flags] <component> [args...]
 * install: 安装某个组件的特定版本
 * update: 升级某个组件到最新的版本
 * uninstall: 卸载组件
-* status: 查看组件的运行状态
-* clean: 清理组件的运行实例
+* status: 查看组件运行状态
+* clean: 清理组件实例
 * help: 打印帮助信息，后面跟命令则是打印该命令的使用方法
 
 常见的全局通用选项 flags：
@@ -93,7 +98,7 @@ tiup [flags] <component> [args...]
 * `--binpath`: 指定要运行组件的可执行程序文件路径，这样可以不使用组件的安装路径
 * `--tag`: 指定组件运行实例的 tag 名称，该名称可以认为是该实例的 ID，如果不指定，则会自动生成随机的 tag 名称
 
-在上面的帮助文档中，可以看到已经支持了3个组件。随着时间的推移，组件会越来越多，也希望大家积极参与贡献。
+在上面的帮助文档中，可以看到已经支持了 3 个组件。随着时间的推移，组件会越来越多，也希望大家积极参与贡献。
 
 如果我们想要知道某个命令或组件的具体用法，可以执行 `tiup help <command|component>` 或者 `tiup <command|component> --help` 或者 `tiup <command|component> -h`。
 
@@ -261,9 +266,9 @@ tiup [flags] <component>[:version] [args...]
 
 该命令需要提供一个组件的名字以及可选的版本，若不提供版本，则使用该组件已安装的最新稳定版。
 
-在组件启动之前，TiUP 会先为它创建一个目录，然后将组件放到该目录中运行。组件应该将所有数据生成在该目录中，目录的名字就是该组件运行时指定的 tag 名称，若未指定，则生成一个随机的 tag。
+在组件启动之前，TiUP 会先为它创建一个目录，然后将组件放到该目录中运行。组件会将所有数据生成在该目录中，目录的名字就是该组件运行时指定的 tag 名称。如果不指定 tag，则会随机生成一个 tag 名称，并且在实例终止时***自动删除***工作目录。
 
-如果我们想要多次启动同一个组件并复用之前的工作目录，就可以在启动时用 `--tag` 指定相同的名字。
+如果我们想要多次启动同一个组件并复用之前的工作目录，就可以在启动时用 `--tag` 指定相同的名字。指定 tag 后，在实例终止时就***不会自动删除***工作目录，方便下次启动时复用。
 
 示例一：运行 v3.0.8 版本的 TiDB
 ```
@@ -293,9 +298,9 @@ Global Flags:
       --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
 ```
 
-### (6) 清理组件运行实例：tiup clean
+### (6) 清理组件实例：tiup clean
 
-通过 `tiup clean` 可以清理组件的运行实例，在清理之前，会先 kill 进程，然后再删除数据目录。相应的命令和参数如下：
+通过 `tiup clean` 可以清理组件实例，并删除工作目录。如果在清理之前实例还在运行，会先 kill 相关进程。相应的命令和参数如下：
 
 ```
 ~$ tiup help clean
@@ -315,6 +320,11 @@ Global Flags:
 示例一：清理 tag 名称为 experiment 的组件实例
 ```
 tiup clean experiment
+```
+
+示例二：清理所有组件实例
+```
+tiup clean --all
 ```
 
 ### (4) 卸载组件：tiup uninstall

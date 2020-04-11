@@ -48,10 +48,10 @@ Flags:
 ```
 
 从帮助信息上可以看出，playground 在启动时可以通过参数做很多定制化工作：
-* 支持指定各组件的个数
-* 支持指定各组件的可执行程序和配置文件
-* 支持使用 `--host` 修改默认的 host，譬如将 host 修改为机器的对外 IP 地址，服务就可以被其他机器访问
-* 支持使用 `--monitor` 启动 Prometheus 组件，提供集群监控能力
+* 指定各组件的个数
+* 指定各组件的可执行程序和配置文件
+* 使用 `--host` 修改默认的 host，譬如修改为机器的对外 IP 地址，服务就可以被其他机器访问
+* 使用 `--monitor` 启动 Prometheus 组件，提供集群监控能力
 
 最简单地，你可以通过如下命令快速启动一个集群：
 ```
@@ -60,11 +60,11 @@ tiup playground
 
 上述命令实际上做了以下事情：
 * 因为没有指定版本，TiUP 会先查找 playground 的最新版本，假设当前最新版为 v0.0.6，则该命令相当于 `tiup playground:v0.0.6`
-* 如果 playground 组件的 v0.0.6 版本没有安装，TiUP 会先将其安装，然后再启动运行 playground 实例
+* 如果 playground 组件的 v0.0.6 版本没有安装，TiUP 会先将其安装，然后再启动运行实例
 * 因为 playground 没有指定 TiDB/PD/TiKV 各组件的版本，默认情况下，它会使用各组件的最新 release 版本，假设当前为 v4.0.0，则该命令相当于 `tiup playground:v0.0.6 v4.0.0`
-* 因为 playground 也没有指定各组件的个数，默认情况下，它会启动由 1 个 TiDB，1 个 TiKV 和 1 个 PD 构成的最小化集群
-* playground 实际上也是调用 TiUP 命令来启动 TiDB/PD/TiKV 组件，譬如调用 `tiup tidb v4.0.0` 来启动 TiDB 实例，当然，在真正执行时它还会额外指定一些参数
-* 在依次启动完各个组件后，TiUP 会告诉你启动成功，并告诉你一些有用的信息，譬如如何通过 MySQL 客户端连接集群、如何访问 dashboard
+* 因为 playground 也没有指定各组件的个数，默认情况下，它会启动由 1 个 TiDB、1 个 TiKV 和 1 个 PD 构成的最小化集群
+* playground 实际上也是调用 TiUP 命令来启动 TiDB/PD/TiKV 组件，譬如调用 `tiup tidb:v4.0.0` 来启动 TiDB 实例，当然，在真正执行时它还会额外指定一些参数
+* 在依次启动完各个组件后，playground 会告诉你启动成功，并告诉你一些有用的信息，譬如如何通过 MySQL 客户端连接集群、如何访问 dashboard
 
 在上一章节中我们知道，由于没有使用 `--tag` 选项，TiUP 会为该实例随机生成一个 tag 名称，将该实例的运行数据都放在用 tag 名称命名的文件夹下，并且在实例运行终止时自动删除文件夹。如果想要在多次启动时复用数据，可以通过指定 tag 名称的方法来启动，譬如：
 ```
@@ -93,7 +93,7 @@ tiup playground --host x.x.x.x
 
 #### 2. 通过 playground 搭建测试集群
 
-作为一个分布式系统，最基础的 TiDB 测试集群通常由 2 个 TiDB 组件，3 个 TiKV 组件和 3 个PD组件来构成。通过 playground，我们可以快速搭建出上述的一套基础测试集群，相关的命令如下：
+作为一个分布式系统，最基础的 TiDB 测试集群通常由 2 个 TiDB 组件、3 个 TiKV 组件和 3 个PD组件来构成。通过 playground，我们可以快速搭建出上述的一套基础测试集群，相关的命令如下：
 ```
 tiup playground --db=2 --kv=3 --pd=3
 ```
@@ -109,7 +109,7 @@ CLUSTER START SUCCESSFULLY, Enjoy it ^-^
 To connect TiDB: mysql --host 127.0.0.1 --port 4000 -u root
 ```
 
-除了使用 playground 输出的连接命令外，还可以通过 TiUP 提供的 client 组件来连接到测试集群，命令如下：
+除了使用 playground 输出的连接命令外，还可以通过 TiUP 提供的 client 组件来连接到测试集群：
 ```
 tiup client
 ```
