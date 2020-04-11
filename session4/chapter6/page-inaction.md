@@ -1,6 +1,6 @@
 ## 6.1.4 一种高效分页批处理方案
 
-分页更新 SQL 一般使用主键或者唯一索引进行排序，这样能消除相邻两页之间的空隙或重叠；再配合 MySQL limit 语法中非常好用的 offset 功能按固定行数拆分页面，然后把页面包装进独立的事务中，从而实现灵活的分页更新。
+常规的分页更新 SQL 一般使用主键或者唯一索引进行排序，这样能消除相邻两页之间的空隙或重叠；再配合 MySQL limit 语法中非常好用的 offset 功能按固定行数拆分页面，然后把页面包装进独立的事务中，从而实现灵活的分页更新。
 
 ```
 begin;
@@ -53,18 +53,17 @@ MySQL [demo]> select * from tmp_loan limit 10;
 +-----------+-----------+-------------+
 ```
 
-原来的分片方式采用 MOD 函数对主键取余，如下：
+常规的分片方式采用 MOD 函数对主键取余。下面的 SQL 演示了分片的具体做法：
 
 ```
+# ${ThreadNums} 是分片数量, 用于确定最大分片数是多少
+# ${ThreadId} 是当前分片的序号, 用于确定是哪一个分片  
 select serialno 
   from tmp_loan 
  where MOD(substring(serialno,-3),${ThreadNums}) = ${ThreadId} 
 order by serialno;
-```
 
-其中 ${ThreadNums} 是分片数量用于确定最大分片数是多少，${ThreadId} 是当前分片的序号用于确定是哪一个分片。如下：  
-
-```
+# 下面是一个具体的例子
 MySQL [demo]> select serialno from tmp_loan where MOD(substring(serialno,-3),17) = 1 order by serialno;
 +-----------+
 | serialno  |
@@ -80,7 +79,7 @@ MySQL [demo]> select serialno from tmp_loan where MOD(substring(serialno,-3),17)
 117942 rows in set (1.407 sec)
 ```
 
-可以看到一共分成17片，每一个分片数据量大约有12万行左右，后续通过 RabbitMQ 发送请求到批量微服务，在批量处理类中执行 sql 获取数据，采用 ResultSet 遍历结果集开始批量处理数据。
+如上所示，一共分成了 17 片，每个分片约为 12 万行左右。后续可以通过消息队列发送请求到批量处理服务并发执行 SQL 获取数据，并遍历结果集开始批量处理数据。
 
 从 Mysql 切换到 TiDB 后，由于 GC lift time 设置为10min，原来采用 ResultSet 遍历结果集的方式就会由于事务时间过长而出现 GC life time is shorter than transaction duration 报错，为了避免这种异常，我们需要减少每个分片的行数以及控制 ResultSet 遍历数据集的时间，这边我们只谈减少每个分片行数，要减少行数可以通过增大总分片数量，这样可以缩短 ResultSet 遍历时间，但是通过后台监控发现同一时间运行几十条 sql 每一条都因为mod函数要整表扫描，取数时引发性能尖峰，对于联机业务会有影响。
 
