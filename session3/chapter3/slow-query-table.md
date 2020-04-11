@@ -11,16 +11,11 @@ TiDB 默认会启用慢查询日志，并将执行时间超过 `slow-threshold`�
 查询 Top 2 的慢查询。`is_internal=false` 表示排除 TiDB 内部的慢查询：
 
 ```sql
-select query_time, query
-from information_schema.slow_query
-where is_internal = false  -- 排除 TiDB 内部的慢查询 SQL
-order by query_time desc
-limit 2;
-```
-
-输出样例：
-
-```
+> select query_time, query
+    from information_schema.slow_query
+   where is_internal = false  -- 排除 TiDB 内部的慢查询 SQL
+  order by query_time desc
+  limit 2;
 +--------------+------------------------------------------------------------------+
 | query_time   | query                                                            |
 +--------------+------------------------------------------------------------------+
@@ -34,17 +29,12 @@ limit 2;
 下面例子中搜索 test 用户执行的慢查询 SQL，且按执行消耗时间逆序排序显式前 2 条：
 
 ```sql
-select query_time, query, user
-from information_schema.cluster_slow_query
-where is_internal = false  -- 排除 TiDB 内部的慢查询 SQL
-  and user = "test"        -- 查找的用户名
-order by query_time desc
-limit 2;
-```
-
-输出样例：
-
-```
+> select query_time, query, user
+    from information_schema.cluster_slow_query
+  where is_internal = false  -- 排除 TiDB 内部的慢查询 SQL
+    and user = "test"        -- 查找的用户名
+  order by query_time desc
+  limit 2;
 +-------------+------------------------------------------------------------------+----------------+
 | Query_time  | query                                                            | user           |
 +-------------+------------------------------------------------------------------+----------------+
@@ -55,37 +45,24 @@ limit 2;
 ### 根据 SQL 指纹搜索同类慢查询
 
 在得到 Top N 的慢查询 SQL 后，可通过 SQL 指纹继续搜索同类慢查询 SQL。
-先获取 Top N 的慢查询和对应的 SQL 指纹：
 
 ```sql
-select query_time, query, digest
-from information_schema.cluster_slow_query
-where is_internal = false
-order by query_time desc
-limit 1;
-```
-
-输出样例：
-
-```
+# 先获取 Top N 的慢查询和对应的 SQL 指纹
+> select query_time, query, digest
+    from information_schema.cluster_slow_query
+   where is_internal = false
+  order by query_time desc
+  limit 1;
 +-------------+-----------------------------+------------------------------------------------------------------+
 | query_time  | query                       | digest                                                           |
 +-------------+-----------------------------+------------------------------------------------------------------+
 | 0.302558006 | select * from t1 where a=1; | 4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa |
 +-------------+-----------------------------+------------------------------------------------------------------+
-```
 
-再根据 SQL 指纹搜索同类慢查询：
-
-```sql
-select query, query_time
-from information_schema.cluster_slow_query
-where digest = "4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa";
-```
-
-输出样例：
-
-```
+# 再根据 SQL 指纹搜索同类慢查询
+> select query, query_time
+    from information_schema.cluster_slow_query
+   where digest = "4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa";
 +-----------------------------+-------------+
 | query                       | query_time  |
 +-----------------------------+-------------+
@@ -94,18 +71,13 @@ where digest = "4751cb6008fda383e22dacb601fde85425dc8f8cf669338d55d944bafb46a6fa
 +-----------------------------+-------------+
 ```
 
-### 搜索统计信息为 pseudo 的慢查询 SQL 语句
+### 搜索统计信息为 `pseudo` 的慢查询 SQL 语句
 
 ```sql
-select query, query_time, stats
-from information_schema.cluster_slow_query
-where is_internal = false
-  and stats like '%pseudo%';
-```
-
-输出样例：
-
-```
+> select query, query_time, stats
+    from information_schema.cluster_slow_query
+  where is_internal = false
+    and stats like '%pseudo%';
 +-----------------------------+-------------+---------------------------------+
 | query                       | query_time  | stats                           |
 +-----------------------------+-------------+---------------------------------+
@@ -122,15 +94,11 @@ where is_internal = false
 由于统计信息不准可能导致同类型 SQL 的执行计划发生改变导致执行变慢，可以用以下 SQL 查询哪些 SQL 具有不用的执行计划：
 
 ```sql
-select count(distinct plan_digest) as count, digest,min(query) 
-from cluster_slow_query 
-group by digest 
-having count>1 limit 3\G
-```
-
-输出样例：
-
-```
+> select count(distinct plan_digest) as count, digest,min(query) 
+    from cluster_slow_query 
+  group by digest 
+  having count>1 
+  limit 3\G
 ***************************[ 1. row ]***************************
 count      | 2
 digest     | 17b4518fde82e32021877878bec2bb309619d384fca944106fcaf9c93b536e94
@@ -148,14 +116,10 @@ min(query) | SELECT DISTINCT c FROM sbtest11 WHERE id BETWEEN ? AND ? ORDER BY c
 然后可以用查询结果中的 SQL 指纹进一步查询不同的 plan
 
 ```sql
-select min(plan),plan_digest 
-from cluster_slow_query where digest='17b4518fde82e32021877878bec2bb309619d384fca944106fcaf9c93b536e94' 
-group by plan_digest\G
-```
-
-输出样例：
-
-```
+> select min(plan),plan_digest 
+    from cluster_slow_query 
+  where digest='17b4518fde82e32021877878bec2bb309619d384fca944106fcaf9c93b536e94' 
+  group by plan_digest\G
 *************************** 1. row ***************************
   min(plan):    Sort_6                  root    100.00131380758702      sbtest.sbtest25.c:asc
         └─HashAgg_10            root    100.00131380758702      group by:sbtest.sbtest25.c, funcs:firstrow(sbtest.sbtest25.c)->sbtest.sbtest25.c
@@ -170,15 +134,14 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
               └─TableScan_11    cop     1.2440069558121831      table:sbtest25, range:[472745,472844], keep order:false
 ```
 
-### 查询集群各个 TIDB 节点的慢查询数量
+### 查询集群各个 TiDB 节点的慢查询数量
 
 ```sql
-select instance, count(*) from information_schema.cluster_slow_query where time >= "2020-03-06 00:00:00" and time < now() group by instance;
-```
-
-输出样例：
-
-```
+> select instance, count(*) 
+    from information_schema.cluster_slow_query 
+   where time >= "2020-03-06 00:00:00" 
+     and time < now() 
+  group by instance;
 +---------------+----------+
 | instance      | count(*) |
 +---------------+----------+
@@ -192,7 +155,7 @@ select instance, count(*) from information_schema.cluster_slow_query where time 
 假如发现 `2020-03-10 13:24:00` ~ `2020-03-10 13:27:00` 的 QPS 降低或者延迟上升等问题，可能是由于突然出现大查询导致的，可以用下面 SQL 查询仅出现在异常时间段的慢日志，其中 `2020-03-10 13:20:00` ~ `2020-03-10 13:23:00` 为正常时间段。
 
 ```sql
-SELECT * FROM
+> SELECT * FROM
     (SELECT /*+ AGG_TO_COP(), HASH_AGG() */ count(*),
          min(time),
          sum(query_time) AS sum_query_time,
@@ -210,18 +173,13 @@ SELECT * FROM
             AND time < '2020-03-10 13:27:00'
             AND Is_internal = false
     GROUP BY  digest) AS t1
-WHERE t1.digest NOT IN
+  WHERE t1.digest NOT IN
     (SELECT /*+ AGG_TO_COP(), HASH_AGG() */ digest
     FROM information_schema.CLUSTER_SLOW_QUERY
     WHERE time >= '2020-03-10 13:20:00'
             AND time < '2020-03-10 13:23:00'
     GROUP BY  digest)
-ORDER BY  t1.sum_query_time DESC limit 10\G
-```
-
-输出样例：
-
-```
+  ORDER BY  t1.sum_query_time DESC limit 10\G
 ***************************[ 1. row ]***************************
 count(*)           | 200
 min(time)          | 2020-03-10 13:24:27.216186
