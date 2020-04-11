@@ -53,34 +53,6 @@ MySQL [demo]> select * from tmp_loan limit 10;
 +-----------+-----------+-------------+
 ```
 
-常规的分片方式是采用 `mod` 函数对主键取余。下面的代码演示了具体做法：
-
-```
-# ${ThreadNums} 是分片数量, 用于确定最大分片数是多少
-# ${ThreadId} 是当前分片的序号, 用于确定是哪一个分片  
-select serialno 
-  from tmp_loan 
- where mod(substring(serialno,-3),${ThreadNums}) = ${ThreadId} 
-order by serialno;
-
-# 下面是一个具体的例子, 取出第一个分片的 serialno
-MySQL [demo]> select serialno from tmp_loan where MOD(substring(serialno,-3),17) = 1 order by serialno;
-+-----------+
-| serialno  |
-+-----------+
-| 200000001 |
-| 200000018 |
-| 200000035 |
-| 200000052 |
-| 200000069 |
-| 200000086 |
-| ......... |
-+-----------+
-117942 rows in set (1.407 sec)
-```
-
-如上所示，一共把 `tmp_loan` 表分成了 17 片，每个分片含有约 12 万行数据。然后，可以针对每一个分片执行 SQL 获取数据，并遍历结果集逐行处理；并且，可以采取多个分片并行处理的策略以提升效率。从 MySQL 切换到 TiDB 后，由于 `GC lift time` 默认设置为 10 分钟，遍历结果集执行批量更新处理的时间可能超过此限制而导致 TiDB 报错 `GC life time is shorter than transaction duration`。为规避此问题，我们通常会增大分片总数，以减少每个分片的行数，从而缩短单一分片的处理时间。但是，新的问题也随之而来：分片总数增大之后，需要并发处理的分片数目必然随之增多，否则无法满足一小时内完成批处理作业的目标；如果同时运行几十条 SQL，每一条都要调用 `mod` 函数扫描整表，则往往会引发性能问题，进而影响线上业务。
-
 改进方案的基本思路是，首先将数据按照主键排序，然后调用窗口函数 `row_number()` 为每一行数据生成行号，接着调用聚合函数按照设置好的页面大小对行号进行分组，最终计算出每页的最小值和最大值。下面的代码演示了具体的做法：
 
 ```
@@ -117,7 +89,7 @@ MySQL [demo]> select serialno from tmp_loan where serialno BETWEEN 200050002 and
 50000 rows in set (0.070 sec)
 ```
 
-相较于使用 `mod` 函数，窗口函数 `row_number()` 的优势在于分片数量较多时可有效降低 TiKV 扫描数据的压力并提高查询速度。当我们需要批量修改数据时，也可以借助上面计算好的分片信息，实现高效数据更新。
+当我们需要批量修改数据时，也可以借助上面计算好的分片信息，实现高效数据更新。
 
 ```
 MySQL [demo]> update tmp_loan set businesssum = 6666 where serialno BETWEEN 200000000 and 200050001;
