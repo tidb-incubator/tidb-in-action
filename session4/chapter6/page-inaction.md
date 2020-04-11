@@ -17,7 +17,7 @@ commit;
 
 本节将介绍一种改进方案：灵活运用窗口函数 row_number() 把数据按照主键排序后赋予行号，再调用聚合函数按照设置好的页面大小对行号进行分组，最终计算出每页的最大值和最小值。
 
-业务需求：在一小时内并发处理200万行批量数据，初始化一张表tmp_loan表结构如下
+我们假定，业务需求是要在一小时内并发处理200万行数据。下面我们来初始化一张表tmp_loan，表结构如下所示，该表初始状态即包含约200万行数据。
 
 ```
 MySQL [demo]> desc tmp_loan;
@@ -28,16 +28,14 @@ MySQL [demo]> desc tmp_loan;
 | name        | varchar(40) | NO   |      |         |       |
 | businesssum | int(10)     | NO   |      | 0       |       |
 +-------------+-------------+------+------+---------+-------+
-```
-初始化200万行数据
 
-```
 MySQL [demo]> select count(1) from tmp_loan;
 +----------+
 | count(1) |
 +----------+
 |  1998985 |
 +----------+
+
 MySQL [demo]> select * from tmp_loan limit 10;
 +-----------+-----------+-------------+
 | serialno  | name      | businesssum |
@@ -54,6 +52,7 @@ MySQL [demo]> select * from tmp_loan limit 10;
 | 200000009 | 严香      |       10000 |
 +-----------+-----------+-------------+
 ```
+
 原来的分片方式采用 MOD 函数对主键取余，如下：
 ```
 select serialno from tmp_table where MOD(substring(serialno,-3),${ThreadNums}) = ${ThreadId} order by serialno;
