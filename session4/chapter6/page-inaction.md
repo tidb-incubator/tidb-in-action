@@ -57,8 +57,9 @@ MySQL [demo]> select * from tmp_loan limit 10;
 
 ```
 select serialno 
-  from tmp_table 
- where MOD(substring(serialno,-3),${ThreadNums}) = ${ThreadId} order by serialno;
+  from tmp_loan 
+ where MOD(substring(serialno,-3),${ThreadNums}) = ${ThreadId} 
+order by serialno;
 ```
 
 其中 ${ThreadNums} 是分片数量用于确定最大分片数是多少，${ThreadId} 是当前分片的序号用于确定是哪一个分片。如下：  
