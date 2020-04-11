@@ -97,7 +97,7 @@ TiDB 默认会启用慢查询日志，并将执行时间超过阈值（默认为
 
 ```sql
 > select count(distinct plan_digest) as count, digest,min(query) 
-    from cluster_slow_query 
+    from information_schema.cluster_slow_query 
   group by digest 
   having count>1 
   limit 3\G
@@ -116,7 +116,7 @@ min(query) | SELECT DISTINCT c FROM sbtest11 WHERE id BETWEEN ? AND ? ORDER BY c
 
 -- 借助 SQL 指纹进一步查询执行计划的详细信息
 > select min(plan),plan_digest 
-    from cluster_slow_query 
+    from information_schema.cluster_slow_query
   where digest='17b4518fde82e32021877878bec2bb309619d384fca944106fcaf9c93b536e94' 
   group by plan_digest\G
 *************************** 1. row ***************************
@@ -169,14 +169,14 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
          max(Cop_proc_max),
          min(query),min(prev_stmt),
          digest
-    from information_schema.CLUSTER_SLOW_QUERY
+    from information_schema.cluster_slow_query
     where time >= '2020-03-10 13:24:00'
       and time < '2020-03-10 13:27:00'
       adn Is_internal = false
     group by  digest) AS t1
   where t1.digest not in
     (select /*+ AGG_TO_COP(), HASH_AGG() */ digest
-    from information_schema.CLUSTER_SLOW_QUERY
+    from information_schema.cluster_slow_query
     where time >= '2020-03-10 13:20:00' -- 排除正常时段 `2020-03-10 13:20:00` ~ `2020-03-10 13:23:00` 期间的慢查询
       and time < '2020-03-10 13:23:00'
    group by  digest)
