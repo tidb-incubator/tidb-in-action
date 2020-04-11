@@ -1,8 +1,6 @@
 # 3.5 SQL 慢查询系统表
 
-TiDB 会将执行时间超过 `slow-threshold`（默认值为 300 毫秒）的语句记录到 `slow-query-file`（默认值："tidb-slow.log"）日志中，用于帮助定位慢查询语句，分析和解决 SQL 执行的性能问题。
-
-TiDB 默认启用慢查询日志，可以修改配置 `enable-slow-log` 来启用或禁用它。
+TiDB 会将执行时间超过 `slow-threshold`（默认值为 300 毫秒）的语句记录到慢查询日志文件中。慢查询日志常用于定位慢查询语句，分析和解决 SQL 执行的性能问题。TiDB 默认启用慢查询日志，可以通过修改配置 `enable-slow-log` 启用或禁用该日志。
 
 ## 1. 日志示例
 
