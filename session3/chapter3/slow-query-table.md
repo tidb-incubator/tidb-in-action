@@ -138,6 +138,8 @@ plan_digest: 6afbbd21f60ca6c6fdf3d3cd94f7c7a49dd93c00fcf8774646da492e50e204ee
 
 ### 统计各个 TiDB 节点的慢查询数量
 
+以下 SQL 统计指定时段内各个 TiDB 节点上出现过的慢查询数量：
+
 ```sql
 > select instance, count(*) 
     from information_schema.cluster_slow_query 
