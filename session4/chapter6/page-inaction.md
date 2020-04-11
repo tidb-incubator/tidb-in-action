@@ -63,7 +63,7 @@ select serialno
  where mod(substring(serialno,-3),${ThreadNums}) = ${ThreadId} 
 order by serialno;
 
-# 下面是一个具体的例子
+# 下面是一个具体的例子, 取出第一个分片的 serialno
 MySQL [demo]> select serialno from tmp_loan where MOD(substring(serialno,-3),17) = 1 order by serialno;
 +-----------+
 | serialno  |
