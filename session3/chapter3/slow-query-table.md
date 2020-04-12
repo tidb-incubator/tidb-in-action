@@ -91,6 +91,8 @@ insert into t select * from t;
 
 ## 慢查询内存表查询示例
 
+下面通过一些示例展示如何通过 SQL 查看 TiDB 的慢查询。
+
 ### 检索当前节点 Top N 慢查询
 
 以下 SQL 用于检索当前TiDB节点的 Top 2 慢查询：
