@@ -27,12 +27,12 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 
 ### 导入模式
 
-Lightning 在导入阶段需要单独使用集群，设置集群来提高速度。在开始阶段切换“导入模式”，在此模式下，
+一旦目标 TiKV 集群切换到导入模式，整个数据导入阶段该集群将被 tidb-lightning 独占，无法对外提供正常服务。tidb-lightning 会修改集群配置以提高数据导入效率：
 
 * TiKV 的后台任务数会增加，以并行接收更多的 SST 文件。
-* write stall triggers 会被移除，使写速度优先于读速度。
+* `write stall triggers` 被移除，使写速度优先于读速度。
 
-在导入数据完成后，Lightning 会自动切换集群回“普通模式”。
+数据导入完成后，tidb-lightning 会自动切换回“普通模式”。
 
 ## 2. tidb-lightning 架构
 
