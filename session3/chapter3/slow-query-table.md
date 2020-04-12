@@ -6,7 +6,7 @@ TiDB 默认会启用慢查询日志，并将执行时间超过规定阈值的 SQ
 
 ## 慢查询日志示例及字段说明
 
-下面是一段慢查询日志示例：
+下面是一段典型的慢查询日志：
 
 ```
 # Time: 2019-08-14T09:26:59.487776265+08:00
@@ -50,7 +50,7 @@ insert into t select * from t;
 * `Succ`：表示该语句是否执行成功。
 * `Backoff_time`：表示遇到需要重试的错误时该语句在重试前等待的时间。常见的需要重试的错误有以下几种：遇到了 lock、Region 分裂、tikv server is busy。
 * `Plan_digest`：表示 plan 的指纹。
-* `Plan`：表示该语句的执行计划，用 `select tidb_decode_plan('xxx...')` 可以解析出具体的执行计划。
+* `Plan`：表示该语句的执行计划，运行 `select tidb_decode_plan('...')` 可以解析出具体的执行计划。
 * `Query`：表示该 SQL 语句。慢日志里不会打印字段名 `Query`，但映射到内存表后对应的字段叫 `Query`。
 
 (2) 和事务执行相关的字段：
