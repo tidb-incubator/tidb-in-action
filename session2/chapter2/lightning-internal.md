@@ -1,5 +1,5 @@
 # 2.2.1 Lightning 工作原理
-TiDB Lightning 是一个将全量数据高速导入到 TiDB 集群的工具，导入速度可达到传统 SQL 导入方式的 3 倍以上，大约每小时 300 GB。Lightning 有两个主要的使用场景：大量新数据的快速导入，以及全量数据的备份恢复。目前，Lightning 支持把 Mydumper 和 CSV 文件格式的数据文件导入到 TiDB。
+Lightning 支持把全量数据高速导入到 TiDB 集群，导入速度可达每小时 300 GB，是传统 SQL 导入方式的 3 倍多。Lightning 有两个主要的使用场景：大量新数据的快速导入，以及全量数据恢复。目前，Lightning 支持导入 Mydumper 和 CSV 文件格式的数据文件到 TiDB。
 
 ## 1. 整体架构
 
@@ -7,10 +7,9 @@ TiDB Lightning 是一个将全量数据高速导入到 TiDB 集群的工具，�
 
 ![架构图](/res/session2/chapter2/lightning-internal/1.png)
 
-TiDB Lightning 主要包含两个部分：
-
-* **TiDB Lightning**（“前端”）：主要完成适配工作，通过读取数据源，在下游 TiDB 集群建表、将数据转换成键值对发送到 tikv-importer、检查数据完整性等。
-* **tikv-importer**（“后端”）：主要完成将数据导入 TiKV 集群的工作，对 TiDB Lightning 写入的键值对进行缓存、排序、切分操作并导入到 TiKV 集群。
+如上图所示，TiDB Lightning 主要包含两个部分：
+* **TiDB Lightning**（前端）：负责导入过程的管理和适配工作。读取数据源文件，在目标 TiDB 集群上建表，并将数据文件转换成键值对发送到 tikv-importer，最后执行数据完整性检查等收尾工作。
+* **tikv-importer**（后端）：负责将数据导入到目标 TiKV 集群。对 Lightning 写入的键值对执行缓存、排序、切分等操作，并导入到 TiKV 集群。
 
 ### 整体工作原理
 
