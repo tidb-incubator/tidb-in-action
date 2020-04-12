@@ -38,7 +38,6 @@ SHOW FULL PROCESSLIST;
 
 ### 2. 查询系统表 `INFORMATION_SCHEMA.PROCESSLIST`
 这种方式和第一种方式输出结果类似，不同点在于查询结果会比 `show processlist` 多 `MEM` 和 `TxnStart`列。这两列具体含义如下：
- 
 
 	* `MEM`：指正在处理的请求已使用的内存，单位是 byte。（从 v3.0.5 开始引入）
 	* `TxnStart`：指当前处理请求的事务开始的时间戳。（从 v4.0.0 开始引入） 
@@ -46,31 +45,58 @@ SHOW FULL PROCESSLIST;
 下面是一个实际的例子：
 
 ```sql
-SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST 
+select * 
+from information_schema.processlist 
+where command != 'Sleep' 
+order by time desc\G
 ```
 ```result
-+------+--------+-----------+--------+-----------+--------+---------+----------------------------------------------+-------+------------+
-| ID   | USER   | HOST      | DB     | COMMAND   | TIME   | STATE   | INFO                                         | MEM   | TxnStart   |
-|------+--------+-----------+--------+-----------+--------+---------+----------------------------------------------+-------+------------|
-| 9    | root   | 127.0.0.1 | <null> | Query     | 0      | 2       | select * from INFORMATION_SCHEMA.PROCESSLIST | 0     |            |
-| 7    | root   | 127.0.0.1 | <null> | Sleep     | 51     | 2       | <null>                                       | 0     |            |
-+------+--------+-----------+--------+-----------+--------+---------+----------------------------------------------+-------+------------+
+*************************** 1. row ***************************
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Query
+    TIME: 0
+   STATE: 2
+    INFO: select * from information_schema.processlist where command != 'Sleep' order by time desc
+     MEM: 4588
+TxnStart:
+1 row in set (0.00 sec)
 ```
 
 ### 3.  查询系统表`INFORMATION_SCHEMA.CLUSTER_PROCESSLIST`
 查询 TiDB 的 `INFORMATION_SCHEMA.PROCESSLIST` 系统表时，用户一定会遇到的问题是：此表只包含了当前 TiDB 节点的数据，而不是所有节点的数据。为了解决这个问题，TiDB 4.0 中新增了 `INFORMATION_SCHEMA.CLUSTER_PROCESSLIST` 系统表，用来查询 **所有** TiDB 节点的 `PROCESSLIST` 数据。其使用方式和 `PROCESSLIST` 一致。`CLUSTER_PROCESSLIST` 表比 `PROCESSLIST` 多一个 `INSTANCE` 列，用来表示该条数据属于哪一个 TiDB 节点。具体示例如下：
 
 ```sql
-SELECT * FROM INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
+SELECT * FROM INFORMATION_SCHEMA.CLUSTER_PROCESSLIST\G
 ```
 ```result
-+---------------+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------+-------+----------------------------------------+
-| INSTANCE      | ID   | USER   | HOST      | DB     | COMMAND   | TIME   | STATE   | INFO                                                 | MEM   | TxnStart                               |
-|---------------+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------+-------+----------------------------------------|
-| 0.0.0.0:10080 | 9    | root   | 127.0.0.1 | <null> | Sleep     | 1824   | 2       | <null>                                               | 0     |                                        |
-| 0.0.0.0:10080 | 10   | root   | 127.0.0.1 | <null> | Sleep     | 1439   | 2       | <null>                                               | 0     |                                        |
-| 0.0.0.0:10081 | 7    | root   | 127.0.0.1 | <null> | Query     | 0      | 2       | select * from INFORMATION_SCHEMA.CLUSTER_PROCESSLIST | 0     | 03-08 13:42:02.850(415143329228390401) |
-+---------------+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------+-------+----------------------------------------+
+*************************** 1. row ***************************
+INSTANCE: 172.16.4.235:10070
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Query
+    TIME: 0
+   STATE: 2
+    INFO: SELECT * FROM INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
+     MEM: 0
+TxnStart: 04-12 16:51:39.735(415939035066531841)
+*************************** 2. row ***************************
+INSTANCE: 172.16.5.189:10070
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Sleep
+    TIME: 6
+   STATE: 2
+    INFO: NULL
+     MEM: 0
+TxnStart:
+2 rows in set (0.00 sec)
 ```
 
 > 注意:
