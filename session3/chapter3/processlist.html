@@ -2839,34 +2839,96 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="36-processlist">3.6 processlist</h1>
-<p>processlist &#x7528;&#x6765;&#x67E5;&#x770B; TiDB &#x670D;&#x52A1;&#x5668;&#x7684;&#x5F53;&#x524D;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;&#x3002;</p>
+<p>processlist &#x7528;&#x6765;&#x67E5;&#x770B; TiDB &#x670D;&#x52A1;&#x5668;&#x5F53;&#x524D;&#x7684;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;&#x3002;</p>
 <h2 id="361-&#x67E5;&#x770B;-processlist-&#x7684;&#x65B9;&#x5F0F;">3.6.1 &#x67E5;&#x770B; processlist &#x7684;&#x65B9;&#x5F0F;</h2>
 <p>&#x53EF;&#x4EE5;&#x7528;&#x4EE5;&#x4E0B; 3 &#x79CD;&#x65B9;&#x5F0F;&#x67E5;&#x770B; processlist &#x4FE1;&#x606F;&#xFF1A;</p>
-<h3 id="1-&#x67E5;&#x770B;&#x5F53;&#x524D;-tidb-&#x670D;&#x52A1;&#x5668;&#x8282;&#x70B9;&#x7684;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;&#xFF0C;&#x5176;&#x4E2D;-info-&#x5217;&#x5305;&#x542B;&#x67E5;&#x8BE2;&#x6587;&#x672C;&#xFF0C;&#x9664;&#x975E;&#x6307;&#x5B9A;&#x53EF;&#x9009;&#x5173;&#x952E;&#x5B57;-full&#xFF0C;&#x5426;&#x5219;&#x6587;&#x672C;&#x4F1A;&#x88AB;&#x622A;&#x65AD;&#x3002;">1. &#x67E5;&#x770B;&#x5F53;&#x524D; TiDB &#x670D;&#x52A1;&#x5668;&#x8282;&#x70B9;&#x7684;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;&#xFF0C;&#x5176;&#x4E2D; <code>Info</code> &#x5217;&#x5305;&#x542B;&#x67E5;&#x8BE2;&#x6587;&#x672C;&#xFF0C;&#x9664;&#x975E;&#x6307;&#x5B9A;&#x53EF;&#x9009;&#x5173;&#x952E;&#x5B57; <code>FULL</code>&#xFF0C;&#x5426;&#x5219;&#x6587;&#x672C;&#x4F1A;&#x88AB;&#x622A;&#x65AD;&#x3002;</h3>
-<pre><code class="lang-sql"><span class="hljs-keyword">SHOW</span> [<span class="hljs-keyword">FULL</span>] <span class="hljs-keyword">PROCESSLIST</span>
+<h3 id="1-&#x6267;&#x884C;-sql-show-full-processlist">1. &#x6267;&#x884C; SQL: <code>SHOW [FULL] PROCESSLIST</code></h3>
+<p>&#x6B64;&#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x5F53;&#x524D; TiDB &#x670D;&#x52A1;&#x5668;&#x8282;&#x70B9;&#x7684;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;&#x3002; &#x4E0B;&#x9762;&#x7ED9;&#x51FA;&#x4E00;&#x4E2A;&#x5B9E;&#x9645;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">FULL</span> <span class="hljs-keyword">PROCESSLIST</span>;
 </code></pre>
-<h3 id="2-&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;&#xFF0C;informationschemaprocesslist-&#x8868;&#xFF0C;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x4F1A;&#x6BD4;-show-processlist-&#x591A;-mem-&#x548C;-txnstart&#x5217;&#x3002;">2. &#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;&#xFF0C;<code>INFORMATION_SCHEMA.PROCESSLIST</code> &#x8868;&#xFF0C;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x4F1A;&#x6BD4; <code>show processlist</code> &#x591A; <code>MEM</code> &#x548C; <code>TxnStart</code>&#x5217;&#x3002;</h3>
+<pre><code class="lang-result">+------+--------+-----------+--------+-----------+--------+---------+-----------------------+
+| Id   | User   | Host      | db     | Command   | Time   | State   | Info                  |
+|------+--------+-----------+--------+-----------+--------+---------+-----------------------|
+| 1    | root   | 127.0.0.1 | &lt;null&gt; | Sleep     | 127    | 2       | &lt;null&gt;                |
+| 3    | root   | 127.0.0.1 | &lt;null&gt; | Sleep     | 75     | 2       | &lt;null&gt;                |
+| 5    | root   | 127.0.0.1 | &lt;null&gt; | Query     | 0      | 2       | show full processlist |
++------+--------+-----------+--------+-----------+--------+---------+-----------------------+
+</code></pre>
+<p>&#x8F93;&#x51FA;&#x5B57;&#x6BB5;&#x542B;&#x4E49;&#x8BF4;&#x660E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li>Id&#xFF1A;&#x8FDE;&#x63A5; TiDB &#x670D;&#x52A1;&#x5668;&#x4F1A;&#x8BDD;&#x7684;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>KILL TiDB {ID}</code> &#x6765;&#x7EC8;&#x6B62;&#x540C;&#x4E00;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x4F1A;&#x8BDD; Id &#x7684;&#x8FDE;&#x63A5;&#x3002;</li>
+<li>User&#xFF1A;&#x5F53;&#x524D;&#x4F1A;&#x8BDD;&#x7684;&#x7528;&#x6237;&#x3002;</li>
+<li>Host&#xFF1A;&#x4F1A;&#x8BDD;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x4E3B;&#x673A;&#x540D;&#x3002;</li>
+<li>db&#xFF1A;&#x4F1A;&#x8BDD;&#x8FDE;&#x63A5;&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5219;&#x4E3A; null&#x3002;</li>
+<li>Command&#xFF1A;&#x4F1A;&#x8BDD;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;&#x7C7B;&#x578B;&#xFF0C;&#x4E00;&#x822C;&#x662F;&#x4F11;&#x7720;&#xFF08;Sleep&#xFF09;&#xFF0C;&#x67E5;&#x8BE2;&#xFF08;Query&#xFF09;&#x3002;</li>
+<li>Time&#xFF1A;&#x4F1A;&#x8BDD;&#x5904;&#x4E8E;&#x5F53;&#x524D;&#x72B6;&#x6001;&#x7684;&#x65F6;&#x95F4;&#xFF08;&#x4EE5;&#x79D2;&#x4E3A;&#x5355;&#x4F4D;&#xFF09;&#x3002;</li>
+<li>State&#xFF1A;&#x663E;&#x793A;&#x5F53;&#x524D;sql&#x8BED;&#x53E5;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;Sending data&#xFF0C;Sorting for group&#xFF0C;Creating tmp table&#xFF0C;Locked &#x7B49;&#x7B49;&#x3002;</li>
+<li>Info&#xFF1A;&#x4F1A;&#x8BDD;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;&#x8BED;&#x53E5;&#xFF0C;&#x4E3A; NULL &#x65F6;&#x8868;&#x793A;&#x6CA1;&#x6709;&#x5728;&#x6267;&#x884C;&#x4EFB;&#x4F55;&#x8BED;&#x53E5;&#x3002;</li>
+</ul>
+<p>&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x6307;&#x5B9A;&#x53EF;&#x9009;&#x5173;&#x952E;&#x5B57; <code>FULL</code>&#xFF0C;&#x8F93;&#x51FA;&#x6587;&#x672C;&#x4F1A;&#x88AB;&#x622A;&#x65AD;&#x3002;</p>
+<h3 id="2-&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;-informationschemaprocesslist">2. &#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868; <code>INFORMATION_SCHEMA.PROCESSLIST</code></h3>
+<p>&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x548C;&#x7B2C;&#x4E00;&#x79CD;&#x65B9;&#x5F0F;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E0D;&#x540C;&#x70B9;&#x5728;&#x4E8E;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x4F1A;&#x6BD4; <code>show processlist</code> &#x591A; <code>MEM</code> &#x548C; <code>TxnStart</code>&#x5217;&#x3002;&#x8FD9;&#x4E24;&#x5217;&#x5177;&#x4F53;&#x542B;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
 <pre><code>* `MEM`&#xFF1A;&#x6307;&#x6B63;&#x5728;&#x5904;&#x7406;&#x7684;&#x8BF7;&#x6C42;&#x5DF2;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x5355;&#x4F4D;&#x662F; byte&#x3002;&#xFF08;&#x4ECE; v3.0.5 &#x5F00;&#x59CB;&#x5F15;&#x5165;&#xFF09;
 * `TxnStart`&#xFF1A;&#x6307;&#x5F53;&#x524D;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#x7684;&#x4E8B;&#x52A1;&#x5F00;&#x59CB;&#x7684;&#x65F6;&#x95F4;&#x6233;&#x3002;&#xFF08;&#x4ECE; v4.0.0 &#x5F00;&#x59CB;&#x5F15;&#x5165;&#xFF09; 
-</code></pre><pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.<span class="hljs-keyword">PROCESSLIST</span>
+</code></pre><p>&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A;&#x5B9E;&#x9645;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">select</span> * 
+<span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">processlist</span> 
+<span class="hljs-keyword">where</span> command != <span class="hljs-string">&apos;Sleep&apos;</span> 
+<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">time</span> <span class="hljs-keyword">desc</span>\G
 </code></pre>
-<p>&#x67E5;&#x8BE2; TiDB &#x7684; <code>PROCESSLIST</code> &#x7CFB;&#x7EDF;&#x8868;&#x65F6;&#xFF0C;&#x7528;&#x6237;&#x4E00;&#x5B9A;&#x4F1A;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;&#x662F;&#xFF1A;&#x7CFB;&#x7EDF;&#x8868;&#x53EA;&#x5305;&#x542B;&#x4E86;&#x5F53;&#x524D; TiDB &#x8282;&#x70B9;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x8282;&#x70B9;&#x7684;&#x6570;&#x636E;&#x3002;</p>
-<h3 id="3-tidb-40-&#x4E2D;&#x65B0;&#x589E;&#x4E86;-clusterprocesslist-&#x7CFB;&#x7EDF;&#x8868;&#xFF0C;&#x7528;&#x6765;&#x67E5;&#x8BE2;-&#x6240;&#x6709;-tidb-&#x8282;&#x70B9;&#x7684;-processlist-&#x6570;&#x636E;&#xFF0C;&#x4F7F;&#x7528;&#x4E0A;&#x548C;-processlist-&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;clusterprocesslist-&#x8868;&#x4F1A;&#x6BD4;-processlist-&#x591A;&#x4E00;&#x4E2A;-instance-&#x5217;&#x3002;instance-&#x7528;&#x6765;&#x8868;&#x793A;&#x8BE5;&#x6761;&#x6570;&#x636E;&#x5C5E;&#x4E8E;&#x54EA;&#x4E00;&#x4E2A;-tidb-&#x8282;&#x70B9;&#x3002;">3. TiDB 4.0 &#x4E2D;&#x65B0;&#x589E;&#x4E86; <code>CLUSTER_PROCESSLIST</code> &#x7CFB;&#x7EDF;&#x8868;&#xFF0C;&#x7528;&#x6765;&#x67E5;&#x8BE2; <strong>&#x6240;&#x6709;</strong> TiDB &#x8282;&#x70B9;&#x7684; <code>PROCESSLIST</code> &#x6570;&#x636E;&#xFF0C;&#x4F7F;&#x7528;&#x4E0A;&#x548C; <code>PROCESSLIST</code> &#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;<code>CLUSTER_PROCESSLIST</code> &#x8868;&#x4F1A;&#x6BD4; <code>PROCESSLIST</code> &#x591A;&#x4E00;&#x4E2A; <code>INSTANCE</code> &#x5217;&#x3002;<code>INSTANCE</code> &#x7528;&#x6765;&#x8868;&#x793A;&#x8BE5;&#x6761;&#x6570;&#x636E;&#x5C5E;&#x4E8E;&#x54EA;&#x4E00;&#x4E2A; TiDB &#x8282;&#x70B9;&#x3002;</h3>
-<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
+<pre><code class="lang-result">*************************** 1. row ***************************
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Query
+    TIME: 0
+   STATE: 2
+    INFO: select * from information_schema.processlist where command != &apos;Sleep&apos; order by time desc
+     MEM: 4588
+TxnStart:
+1 row in set (0.00 sec)
+</code></pre>
+<h3 id="3--&#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;informationschemaclusterprocesslist">3.  &#x67E5;&#x8BE2;&#x7CFB;&#x7EDF;&#x8868;<code>INFORMATION_SCHEMA.CLUSTER_PROCESSLIST</code></h3>
+<p>&#x67E5;&#x8BE2; TiDB &#x7684; <code>INFORMATION_SCHEMA.PROCESSLIST</code> &#x7CFB;&#x7EDF;&#x8868;&#x65F6;&#xFF0C;&#x7528;&#x6237;&#x4E00;&#x5B9A;&#x4F1A;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;&#x662F;&#xFF1A;&#x6B64;&#x8868;&#x53EA;&#x5305;&#x542B;&#x4E86;&#x5F53;&#x524D; TiDB &#x8282;&#x70B9;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x8282;&#x70B9;&#x7684;&#x6570;&#x636E;&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;TiDB 4.0 &#x4E2D;&#x65B0;&#x589E;&#x4E86; <code>INFORMATION_SCHEMA.CLUSTER_PROCESSLIST</code> &#x7CFB;&#x7EDF;&#x8868;&#xFF0C;&#x7528;&#x6765;&#x67E5;&#x8BE2; <strong>&#x6240;&#x6709;</strong> TiDB &#x8282;&#x70B9;&#x7684; <code>PROCESSLIST</code> &#x6570;&#x636E;&#x3002;&#x5176;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x548C; <code>PROCESSLIST</code> &#x4E00;&#x81F4;&#x3002;<code>CLUSTER_PROCESSLIST</code> &#x8868;&#x6BD4; <code>PROCESSLIST</code> &#x591A;&#x4E00;&#x4E2A; <code>INSTANCE</code> &#x5217;&#xFF0C;&#x7528;&#x6765;&#x8868;&#x793A;&#x8BE5;&#x6761;&#x6570;&#x636E;&#x5C5E;&#x4E8E;&#x54EA;&#x4E00;&#x4E2A; TiDB &#x8282;&#x70B9;&#x3002;&#x5177;&#x4F53;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.CLUSTER_PROCESSLIST\G
+</code></pre>
+<pre><code class="lang-result">*************************** 1. row ***************************
+INSTANCE: 172.16.4.235:10070
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Query
+    TIME: 0
+   STATE: 2
+    INFO: SELECT * FROM INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
+     MEM: 0
+TxnStart: 04-12 16:51:39.735(415939035066531841)
+*************************** 2. row ***************************
+INSTANCE: 172.16.5.189:10070
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Sleep
+    TIME: 6
+   STATE: 2
+    INFO: NULL
+     MEM: 0
+TxnStart:
+2 rows in set (0.00 sec)
 </code></pre>
 <blockquote>
-<p>&#x6CE8;&#x610F;
+<p>&#x6CE8;&#x610F;:
 &#x53EA;&#x6709; root &#x6216;&#x8005;&#x5177;&#x6709; <code>ProcessPriv</code> &#x6743;&#x9650;&#x7684; User &#x80FD;&#x770B;&#x5230;&#x6240;&#x6709;&#x7684;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;&#xFF0C;&#x5176;&#x4ED6; User &#x53EA;&#x80FD;&#x770B;&#x5230;&#x548C;&#x81EA;&#x5DF1;&#x540C;&#x4E00; User &#x7684;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;&#x3002;</p>
 </blockquote>
 <h2 id="362-kill-tidb">3.6.2 KILL [TIDB]</h2>
 <p><code>KILL TIDB</code> &#x8BED;&#x53E5;&#x7528;&#x4E8E;&#x7EC8;&#x6B62;&#x5F53;&#x524D; TiDB &#x670D;&#x52A1;&#x5668;&#x4E2D;&#x67D0;&#x4E2A;&#x4F1A;&#x8BDD;&#x7684;&#x8FDE;&#x63A5;&#x3002;</p>
 <h3 id="kill-&#x8BED;&#x53E5;&#x7684;&#x517C;&#x5BB9;&#x6027;">KILL &#x8BED;&#x53E5;&#x7684;&#x517C;&#x5BB9;&#x6027;</h3>
-<ul>
-<li><p>TiDB &#x4E2D; KILL xxx &#x7684;&#x884C;&#x4E3A;&#x548C; MySQL &#x4E2D;&#x7684;&#x884C;&#x4E3A;&#x4E0D;&#x76F8;&#x540C;&#x3002;&#x5728; TiDB &#x91CC;&#x9700;&#x8981;&#x52A0;&#x4E0A; TIDB &#x5173;&#x952E;&#x8BCD;&#xFF0C;&#x5373; KILL TIDB xxx&#x3002;&#x4F46;&#x662F;&#x5728; TiDB &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x8BBE;&#x7F6E; <code>compatible-kill-query = true</code> &#x540E;&#xFF0C;&#x5219;&#x4E0D;&#x9700;&#x8981;&#x52A0;&#x4E0A; TIDB &#x5173;&#x952E;&#x8BCD;&#x3002;</p>
-</li>
-<li><p>&#x8FD9;&#x79CD;&#x533A;&#x522B;&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x56E0;&#x4E3A;&#x5F53;&#x7528;&#x6237;&#x6309;&#x4E0B; Ctrl+C &#x65F6;&#xFF0C;MySQL &#x547D;&#x4EE4;&#x884C;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;&#x662F;&#xFF1A;&#x521B;&#x5EFA;&#x4E0E;&#x540E;&#x53F0;&#x7684;&#x65B0;&#x8FDE;&#x63A5;&#xFF0C;&#x5E76;&#x5728;&#x8BE5;&#x65B0;&#x8FDE;&#x63A5;&#x4E2D;&#x6267;&#x884C; KILL &#x8BED;&#x53E5;&#x3002;&#x5982;&#x679C;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668;&#x6216;&#x4EE3;&#x7406;&#x5DF2;&#x5C06;&#x8BE5;&#x65B0;&#x8FDE;&#x63A5;&#x53D1;&#x9001;&#x5230;&#x4E0E;&#x539F;&#x59CB;&#x4F1A;&#x8BDD;&#x4E0D;&#x540C;&#x7684; TiDB &#x670D;&#x52A1;&#x5668;&#x5B9E;&#x4F8B;&#xFF0C;&#x5219;&#x8BE5;&#x9519;&#x8BEF;&#x4F1A;&#x8BDD;&#x53EF;&#x80FD;&#x88AB;&#x7EC8;&#x6B62;&#xFF0C;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;&#x4F7F;&#x7528; TiDB &#x96C6;&#x7FA4;&#x7684;&#x4E1A;&#x52A1;&#x4E2D;&#x65AD;&#x3002;&#x53EA;&#x6709;&#x5F53;&#x60A8;&#x786E;&#x5B9A;&#x5728; KILL &#x8BED;&#x53E5;&#x4E2D;&#x5F15;&#x7528;&#x7684;&#x8FDE;&#x63A5;&#x6B63;&#x597D;&#x4F4D;&#x4E8E; KILL &#x8BED;&#x53E5;&#x53D1;&#x9001;&#x5230;&#x7684;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x65F6;&#xFF0C;&#x624D;&#x53EF;&#x4EE5;&#x542F;&#x7528; compatible-kill-query&#x3002;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x6B63;&#x5C1D;&#x8BD5;&#x7EC8;&#x6B62;&#x7684;&#x4F1A;&#x8BDD;&#x4F4D;&#x4E8E;&#x540C;&#x4E00;&#x4E2A; TiDB &#x670D;&#x52A1;&#x5668;&#x4E0A;&#xFF0C;&#x53EF;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x91CC;&#x8BBE;&#x7F6E; <code>compatible-kill-query = true</code>&#x3002;</p>
-</li>
-</ul>
+<p>TiDB &#x4E2D; KILL xxx &#x7684;&#x884C;&#x4E3A;&#x548C; MySQL &#x4E0D;&#x76F8;&#x540C;&#x3002;&#x5728; TiDB &#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x52A0;&#x4E0A; TIDB &#x5173;&#x952E;&#x8BCD;&#xFF0C;&#x5373; KILL TIDB xxx&#x3002;&#x4F46;&#x662F;&#x5728; TiDB &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x8BBE;&#x7F6E; <code>compatible-kill-query = true</code> &#x540E;&#xFF0C;&#x5219;&#x4E0D;&#x9700;&#x8981;&#x52A0;&#x4E0A; TIDB &#x5173;&#x952E;&#x8BCD;&#x3002;</p>
+<h3 id="kill-&#x8BED;&#x53E5;&#x517C;&#x5BB9;&#x6027;&#x7684;&#x8BBE;&#x8BA1;&#x8003;&#x91CF;">KILL &#x8BED;&#x53E5;&#x517C;&#x5BB9;&#x6027;&#x7684;&#x8BBE;&#x8BA1;&#x8003;&#x91CF;</h3>
+<p>&#x5F53;&#x7528;&#x6237;&#x6309;&#x4E0B; Ctrl+C &#x65F6;&#xFF0C;MySQL &#x547D;&#x4EE4;&#x884C;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;&#x662F;&#xFF1A;&#x521B;&#x5EFA;&#x4E0E;&#x540E;&#x53F0;&#x7684;&#x65B0;&#x8FDE;&#x63A5;&#xFF0C;&#x5E76;&#x5728;&#x8BE5;&#x65B0;&#x8FDE;&#x63A5;&#x4E2D;&#x6267;&#x884C; KILL &#x8BED;&#x53E5;&#x3002;&#x7136;&#x800C; TiDB &#x662F;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x53EF;&#x80FD;&#x90E8;&#x7F72;&#x4E86;&#x591A;&#x4E2A; TiDB &#x5B9E;&#x4F8B;&#x3002;&#x5982;&#x679C;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668;&#x6216;&#x4EE3;&#x7406;&#x5DF2;&#x5C06;&#x8BE5;&#x65B0;&#x8FDE;&#x63A5;&#x53D1;&#x9001;&#x5230;&#x4E0E;&#x539F;&#x59CB;&#x4F1A;&#x8BDD;&#x4E0D;&#x540C;&#x7684; TiDB &#x670D;&#x52A1;&#x5668;&#x5B9E;&#x4F8B;&#xFF0C;&#x5219;&#x8BE5;&#x9519;&#x8BEF;&#x4F1A;&#x8BDD;&#x53EF;&#x80FD;&#x88AB;&#x7EC8;&#x6B62;&#xFF0C;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;&#x4F7F;&#x7528; TiDB &#x96C6;&#x7FA4;&#x7684;&#x4E1A;&#x52A1;&#x4E2D;&#x65AD;&#x3002;&#x53EA;&#x6709;&#x5F53;&#x60A8;&#x786E;&#x5B9A;&#x5728; KILL &#x8BED;&#x53E5;&#x4E2D;&#x5F15;&#x7528;&#x7684;&#x8FDE;&#x63A5;&#x6B63;&#x597D;&#x4F4D;&#x4E8E; KILL &#x8BED;&#x53E5;&#x53D1;&#x9001;&#x5230;&#x7684;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x65F6;&#xFF0C;&#x624D;&#x53EF;&#x4EE5;&#x542F;&#x7528; compatible-kill-query&#x3002;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x6B63;&#x5C1D;&#x8BD5;&#x7EC8;&#x6B62;&#x7684;&#x4F1A;&#x8BDD;&#x4F4D;&#x4E8E;&#x540C;&#x4E00;&#x4E2A; TiDB &#x670D;&#x52A1;&#x5668;&#x4E0A;&#xFF0C;&#x53EF;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x91CC;&#x8BBE;&#x7F6E; <code>compatible-kill-query = true</code>&#x3002;</p>
 <h3 id="kill-&#x793A;&#x4F8B;">KILL &#x793A;&#x4F8B;</h3>
 <pre><code class="lang-sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">PROCESSLIST</span>;
 </code></pre>
@@ -2880,71 +2942,61 @@
 </code></pre>
 <pre><code class="lang-result">Query OK, 0 rows affected (0.00 sec)
 </code></pre>
-<p>&#x518D;&#x6B21;&#x67E5;&#x770B;&#x53D1;&#x73B0; ID &#x4E3A; 5 &#x7684; &#x67E5;&#x8BE2;&#x5DF2;&#x7ECF;&#x88AB; kill &#x6389;&#x4E86;</p>
-<h2 id="363-&#x67E5;&#x8BE2;-processlist-&#x793A;&#x4F8B;">3.6.3 &#x67E5;&#x8BE2; PROCESSLIST &#x793A;&#x4F8B;</h2>
-<pre><code class="lang-sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">FULL</span> <span class="hljs-keyword">PROCESSLIST</span>;
-</code></pre>
-<pre><code class="lang-result">+------+--------+-----------+--------+-----------+--------+---------+-----------------------+
-| Id   | User   | Host      | db     | Command   | Time   | State   | Info                  |
-|------+--------+-----------+--------+-----------+--------+---------+-----------------------|
-| 1    | root   | 127.0.0.1 | &lt;null&gt; | Sleep     | 127    | 2       | &lt;null&gt;                |
-| 3    | root   | 127.0.0.1 | &lt;null&gt; | Sleep     | 75     | 2       | &lt;null&gt;                |
-| 5    | root   | 127.0.0.1 | &lt;null&gt; | Query     | 0      | 2       | show full processlist |
-+------+--------+-----------+--------+-----------+--------+---------+-----------------------+
-</code></pre>
-<p>&#x5B57;&#x6BB5;&#x542B;&#x4E49;&#x8BF4;&#x660E;</p>
-<ul>
-<li>Id&#xFF1A;&#x8FDE;&#x63A5; TiDB &#x670D;&#x52A1;&#x5668;&#x4F1A;&#x8BDD;&#x7684;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>KILL TiDB {ID}</code> &#x6765;&#x7EC8;&#x6B62;&#x540C;&#x4E00;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x4F1A;&#x8BDD; Id &#x7684;&#x8FDE;&#x63A5;&#x3002;</li>
-<li>User&#xFF1A;&#x5F53;&#x524D;&#x4F1A;&#x8BDD;&#x7684;&#x7528;&#x6237;&#x3002;</li>
-<li>Host&#xFF1A;&#x4F1A;&#x8BDD;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x4E3B;&#x673A;&#x540D;&#x3002;</li>
-<li>db&#xFF1A;&#x4F1A;&#x8BDD;&#x8FDE;&#x63A5;&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5219;&#x4E3A; null&#x3002;</li>
-<li>Command&#xFF1A;&#x4F1A;&#x8BDD;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;&#x7C7B;&#x578B;&#xFF0C;&#x4E00;&#x822C;&#x662F;&#x4F11;&#x7720;&#xFF08;Sleep&#xFF09;&#xFF0C;&#x67E5;&#x8BE2;&#xFF08;Query&#xFF09;&#x3002;</li>
-<li>Time&#xFF1A;&#x4F1A;&#x8BDD;&#x5904;&#x4E8E;&#x5F53;&#x524D;&#x72B6;&#x6001;&#x7684;&#x65F6;&#x95F4;&#xFF08;&#x4EE5;&#x79D2;&#x4E3A;&#x5355;&#x4F4D;&#xFF09;&#x3002;</li>
-<li>State&#xFF1A;&#x663E;&#x793A;&#x5F53;&#x524D;sql&#x8BED;&#x53E5;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;Sending data&#xFF0C;Sorting for group&#xFF0C;Creating tmp table&#xFF0C;Locked &#x7B49;&#x7B49;&#x3002;</li>
-<li>Info&#xFF1A;&#x4F1A;&#x8BDD;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;&#x8BED;&#x53E5;&#xFF0C;&#x4E3A; NULL &#x65F6;&#x8868;&#x793A;&#x6CA1;&#x6709;&#x5728;&#x6267;&#x884C;&#x4EFB;&#x4F55;&#x8BED;&#x53E5;&#x3002;</li>
-</ul>
-<h2 id="364-&#x67E5;&#x8BE2;-informationschemaprocesslist-&#x793A;&#x4F8B;">3.6.4 &#x67E5;&#x8BE2; INFORMATION_SCHEMA.PROCESSLIST &#x793A;&#x4F8B;</h2>
-<pre><code class="lang-sql"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> INFORMATION_SCHEMA.<span class="hljs-keyword">PROCESSLIST</span>
-</code></pre>
-<pre><code class="lang-result">+------+--------+-----------+--------+-----------+--------+---------+----------------------------------------------+-------+------------+
-| ID   | USER   | HOST      | DB     | COMMAND   | TIME   | STATE   | INFO                                         | MEM   | TxnStart   |
-|------+--------+-----------+--------+-----------+--------+---------+----------------------------------------------+-------+------------|
-| 9    | root   | 127.0.0.1 | &lt;null&gt; | Query     | 0      | 2       | select * from INFORMATION_SCHEMA.PROCESSLIST | 0     |            |
-| 7    | root   | 127.0.0.1 | &lt;null&gt; | Sleep     | 51     | 2       | &lt;null&gt;                                       | 0     |            |
-+------+--------+-----------+--------+-----------+--------+---------+----------------------------------------------+-------+------------+
-</code></pre>
-<p><code>show full processlist</code> &#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6240;&#x6709;&#x8FDE;&#x63A5;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x4F46;&#x662F;&#x5927;&#x591A;&#x8FDE;&#x63A5;&#x7684; <code>state</code> &#x5176;&#x5B9E;&#x662F; <code>Sleep</code> &#x7684;&#xFF0C;&#x8FD9;&#x79CD;&#x7684;&#x5176;&#x5B9E;&#x662F;&#x7A7A;&#x95F2;&#x72B6;&#x6001;&#xFF0C;&#x6CA1;&#x6709;&#x592A;&#x591A;&#x67E5;&#x770B;&#x4EF7;&#x503C;
-&#x6211;&#x4EEC;&#x8981;&#x89C2;&#x5BDF;&#x7684;&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>select</code> &#x67E5;&#x8BE2; <code>PROCESSLIST</code> &#x7CFB;&#x7EDF;&#x8868;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;&#xFF1A;</p>
+<p>&#x518D;&#x6B21;&#x67E5;&#x770B;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0; ID &#x4E3A; 5 &#x7684; &#x67E5;&#x8BE2;&#x5DF2;&#x7ECF;&#x88AB; kill &#x6389;&#x4E86;&#x3002;</p>
+<h2 id="363-&#x793A;&#x4F8B;&#xFF1A;&#x5229;&#x7528;-informationschemaprocesslist-&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x67E5;&#x8BE2;">3.6.3 &#x793A;&#x4F8B;&#xFF1A;&#x5229;&#x7528; INFORMATION_SCHEMA.PROCESSLIST &#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x67E5;&#x8BE2;</h2>
+<p>&#x901A;&#x8FC7;&#x6267;&#x884C;<code>show full processlist</code> &#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6240;&#x6709;&#x8FDE;&#x63A5;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x4F46;&#x662F;&#x5927;&#x591A;&#x8FDE;&#x63A5;&#x7684; <code>state</code> &#x5176;&#x5B9E;&#x662F; <code>Sleep</code> &#x7684;&#x3002;&#x8FD9;&#x79CD;&#x8FDE;&#x63A5;&#x5176;&#x5B9E;&#x5904;&#x4E8E;&#x7A7A;&#x95F2;&#x72B6;&#x6001;&#xFF0C;&#x6CA1;&#x6709;&#x592A;&#x591A;&#x67E5;&#x770B;&#x4EF7;&#x503C;&#x3002;
+&#x6211;&#x4EEC;&#x8981;&#x89C2;&#x5BDF;&#x7684;&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#x8FDE;&#x63A5;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>select</code> &#x67E5;&#x8BE2;&#x5BF9; <code>PROCESSLIST</code> &#x7CFB;&#x7EDF;&#x8868;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;&#xFF1A;</p>
 <pre><code class="lang-sql"><span class="hljs-comment">-- &#x67E5;&#x8BE2;&#x975E; Sleep &#x72B6;&#x6001;&#x7684;&#x94FE;&#x63A5;&#xFF0C;&#x6309;&#x6D88;&#x8017;&#x65F6;&#x95F4;&#x5012;&#x5E8F;&#x5C55;&#x793A;&#xFF0C;&#x52A0;&#x6761;&#x4EF6;&#x8FC7;&#x6EE4;</span>
 <span class="hljs-keyword">select</span> *
 <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">processlist</span>
 <span class="hljs-keyword">where</span> command != <span class="hljs-string">&apos;Sleep&apos;</span>
-<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">time</span> <span class="hljs-keyword">desc</span>
+<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">time</span> <span class="hljs-keyword">desc</span> \G
 </code></pre>
-<p>&#x8FD9;&#x6837;&#x5C31;&#x8FC7;&#x6EE4;&#x51FA;&#x6765;&#x54EA;&#x4E9B;&#x662F;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#xFF0C;&#x7136;&#x540E;&#x6309;&#x7167;&#x6D88;&#x8017;&#x65F6;&#x95F4;&#x5012;&#x5E8F;&#x5C55;&#x793A;&#xFF0C;&#x6392;&#x5728;&#x6700;&#x524D;&#x9762;&#x7684;&#xFF0C;&#x6781;&#x5927;&#x53EF;&#x80FD;&#x5C31;&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#x8FDE;&#x63A5;&#x4E86;&#xFF0C;&#x7136;&#x540E;&#x67E5;&#x770B; info &#x4E00;&#x5217;&#xFF0C;&#x5C31;&#x80FD;&#x770B;&#x5230;&#x5177;&#x4F53;&#x6267;&#x884C;&#x7684;&#x4EC0;&#x4E48; SQL &#x8BED;&#x53E5;&#x4E86;</p>
-<pre><code class="lang-result">+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------+
-| ID   | USER   | HOST      | DB     | COMMAND   | TIME   | STATE   | INFO                                                                                     | MEM   | TxnStart   |
-|------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------|
-| 10   | root   | 127.0.0.1 | &lt;null&gt; | Query     | 0      | 2       | select * from information_schema.processlist where command != &apos;Sleep&apos; order by time desc | 4588  |            |
-+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------+
+<p>&#x8FD9;&#x6837;&#x5C31;&#x8FC7;&#x6EE4;&#x51FA;&#x6765;&#x54EA;&#x4E9B;&#x662F;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDE;&#x63A5;&#x3002;&#x4E4B;&#x540E;&#x518D;&#x6309;&#x7167;&#x6D88;&#x8017;&#x65F6;&#x95F4;&#x5012;&#x5E8F;&#x5C55;&#x793A;&#xFF0C;&#x6392;&#x5728;&#x6700;&#x524D;&#x9762;&#x7684;&#xFF0C;&#x6781;&#x5927;&#x53EF;&#x80FD;&#x5C31;&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#x8FDE;&#x63A5;&#x4E86;&#x3002;&#x6700;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x67E5;&#x770B; info &#x4E00;&#x5217;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x770B;&#x5230;&#x5177;&#x4F53;&#x6267;&#x884C;&#x7684;&#x4EC0;&#x4E48; SQL &#x8BED;&#x53E5;&#x4E86;&#x3002;</p>
+<pre><code class="lang-result">*************************** 1. row ***************************
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Query
+    TIME: 0
+   STATE: 2
+    INFO: select *
+from information_schema.processlist
+where command != &apos;Sleep&apos;
+order by time desc
+     MEM: 4588
+TxnStart:
+1 row in set (0.00 sec)
 </code></pre>
-<p>&#x627E;&#x51FA;&#x8FD0;&#x884C;&#x8F83;&#x957F;&#x7684; sql &#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD0;&#x884C; <code>EXPLAIN ANALYZE</code> &#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x83B7;&#x5F97;&#x4E00;&#x4E2A; SQL &#x8BED;&#x53E5;&#x6267;&#x884C;&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x5177;&#x4F53;&#x4FE1;&#x606F;&#x3002;&#x5173;&#x4E8E; <code>EXPLAIN ANALYZE</code> &#x7684;&#x5177;&#x4F53;&#x4F7F;&#x7528;&#x53EF;&#x67E5;&#x770B; <a href="https://pingcap.com/docs-cn/stable/reference/performance/understanding-the-query-execution-plan/#%E4%BD%BF%E7%94%A8-explain-%E6%9D%A5%E4%BC%98%E5%8C%96-sql-%E8%AF%AD%E5%8F%A5" target="_blank">&#x4F7F;&#x7528; EXPLAIN &#x6765;&#x4F18;&#x5316; SQL &#x8BED;&#x53E5;</a></p>
-<p>&#x5F53; TiDB &#x8282;&#x70B9;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x8FC7;&#x6EE4;&#x51FA;&#x6D88;&#x8017;&#x5185;&#x5B58;&#x6700;&#x591A;&#x7684; 10 &#x6761;&#x8FD0;&#x884C;&#x4E2D;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x6392;&#x5728;&#x6700;&#x524D;&#x9762;&#x7684;&#xFF0C;&#x6781;&#x5927;&#x53EF;&#x80FD;&#x5C31;&#x662F;&#x6709;&#x95EE;&#x9898;&#x7684;&#x8FDE;&#x63A5;&#x4E86;&#xFF0C;&#x7136;&#x540E;&#x67E5;&#x770B; info &#x4E00;&#x5217;&#xFF0C;&#x5C31;&#x80FD;&#x770B;&#x5230;&#x5177;&#x4F53;&#x6267;&#x884C;&#x7684;&#x4EC0;&#x4E48; SQL &#x8BED;&#x53E5;</p>
+<p>&#x627E;&#x51FA;&#x8FD0;&#x884C;&#x8F83;&#x957F;&#x7684; SQL &#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD0;&#x884C; <code>EXPLAIN ANALYZE</code> &#x8BED;&#x53E5;&#x83B7;&#x5F97;&#x4E00;&#x4E2A; SQL &#x8BED;&#x53E5;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x5177;&#x4F53;&#x4FE1;&#x606F;&#x3002;&#x5173;&#x4E8E; <code>EXPLAIN ANALYZE</code> &#x7684;&#x5177;&#x4F53;&#x4F7F;&#x7528;&#xFF0C;&#x53EF;&#x67E5;&#x770B; <a href="https://pingcap.com/docs-cn/stable/reference/performance/understanding-the-query-execution-plan/#%E4%BD%BF%E7%94%A8-explain-%E6%9D%A5%E4%BC%98%E5%8C%96-sql-%E8%AF%AD%E5%8F%A5" target="_blank">&#x4F7F;&#x7528; EXPLAIN &#x6765;&#x4F18;&#x5316; SQL &#x8BED;&#x53E5;</a></p>
+<p>&#x5F53; TiDB &#x8282;&#x70B9;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x540C;&#x6837;&#x65B9;&#x5F0F;&#x8FC7;&#x6EE4;&#x51FA;&#x6D88;&#x8017;&#x5185;&#x5B58;&#x6700;&#x591A;&#x7684; 10 &#x6761;&#x8FD0;&#x884C;&#x4E2D;&#x7684;&#x547D;&#x4EE4;&#x5728;&#x5177;&#x4F53;&#x6267;&#x884C;&#x7684;&#x4EC0;&#x4E48; SQL &#x8BED;&#x53E5;&#x3002;</p>
 <pre><code class="lang-sql"><span class="hljs-comment">-- &#x67E5;&#x8BE2;&#x975E; Sleep &#x72B6;&#x6001;&#x7684;&#x94FE;&#x63A5;&#xFF0C;&#x6309;&#x6D88;&#x8017;&#x5185;&#x5B58;&#x5C55;&#x793A;&#x5176; top10</span>
 <span class="hljs-keyword">select</span> *
 <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">processlist</span>
 <span class="hljs-keyword">where</span> command != <span class="hljs-string">&apos;Sleep&apos;</span>
 <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> mem <span class="hljs-keyword">desc</span>
-<span class="hljs-keyword">limit</span> <span class="hljs-number">10</span>
+<span class="hljs-keyword">limit</span> <span class="hljs-number">10</span> \G
 </code></pre>
-<pre><code class="lang-result">+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------+
-| ID   | USER   | HOST      | DB     | COMMAND   | TIME   | STATE   | INFO                                                                                     | MEM   | TxnStart   |
-|------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------|
-| 10   | root   | 127.0.0.1 | &lt;null&gt; | Query     | 0      | 2       | select * from information_schema.processlist where command != &apos;Sleep&apos; order by time desc | 4588  |            |
-+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------+
+<pre><code class="lang-result">*************************** 1. row ***************************
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Query
+    TIME: 0
+   STATE: 2
+    INFO: select *
+from information_schema.processlist
+where command != &apos;Sleep&apos;
+order by mem desc
+limit 10
+     MEM: 4588
+TxnStart:
+1 row in set (0.00 sec)
 </code></pre>
-<p>&#x627E;&#x51FA;&#x5185;&#x5B58;&#x6D88;&#x8017;&#x8F83;&#x591A;&#x7684; sql &#x540E;&#xFF0C;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD0;&#x884C; <code>EXPLAIN ANALYZE</code> &#x8BED;&#x6765;&#x83B7;&#x5177;&#x4F53; SQL &#x6267;&#x884C;&#x4FE1;&#x606F;&#x3002;</p>
-<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6839;&#x636E; command &#x548C; time &#x6761;&#x4EF6;&#x627E;&#x51FA;&#x6709;&#x95EE;&#x9898;&#x7684;&#x6267;&#x884C;&#x8BED;&#x53E5;&#xFF0C;&#x5E76;&#x6839;&#x636E;&#x5176; ID &#x5C06;&#x5176; kill &#x6389;&#xFF0C;&#x4E00;&#x4E2A;&#x4E2A; ID &#x6765; kill &#x663E;&#x7136;&#x592A;&#x6162;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; concat() &#x5185;&#x7F6E;&#x51FD;&#x6570;&#x6765;&#x5B9E;&#x73B0;&#x5FEB;&#x901F; kill</p>
+<p>&#x627E;&#x51FA;&#x5185;&#x5B58;&#x6D88;&#x8017;&#x8F83;&#x591A;&#x7684; SQL &#x540E;&#xFF0C;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD0;&#x884C; <code>EXPLAIN ANALYZE</code> &#x8BED;&#x6765;&#x83B7;&#x5177;&#x4F53; SQL &#x6267;&#x884C;&#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6839;&#x636E; command &#x548C; time &#x6761;&#x4EF6;&#x627E;&#x51FA;&#x6709;&#x95EE;&#x9898;&#x7684;&#x6267;&#x884C;&#x8BED;&#x53E5;&#xFF0C;&#x5E76;&#x6839;&#x636E;&#x5176; ID &#x5C06;&#x5176; kill &#x6389;&#x3002;&#x5982;&#x679C;&#x89C9;&#x5F97;&#x4E00;&#x4E2A;&#x4E2A; ID &#x6765; kill &#x592A;&#x6162;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; concat() &#x5185;&#x7F6E;&#x51FD;&#x6570;&#x6765;&#x5B9E;&#x73B0;&#x5FEB;&#x901F; kill</p>
 <pre><code class="lang-sql"><span class="hljs-comment">-- &#x67E5;&#x8BE2;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x8D85;&#x8FC7;2&#x5206;&#x949F;&#xFF0C;&#x4E14;&#x975E; sleep &#x7684;&#x4F1A;&#x8BDD;&#xFF0C;&#x7136;&#x540E;&#x62FC;&#x63A5;&#x6210; kill &#x8BED;&#x53E5;</span>
 <span class="hljs-keyword">select</span> <span class="hljs-keyword">concat</span>(<span class="hljs-string">&apos;kill &apos;</span>, <span class="hljs-string">&apos;TiDB&apos;</span>, <span class="hljs-keyword">id</span>, <span class="hljs-string">&apos;;&apos;</span>)
 <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">processlist</span>
@@ -2965,18 +3017,8 @@
 |------+--------+--------+------+-----------+--------+---------+--------+-------+------------|
 +------+--------+--------+------+-----------+--------+---------+--------+-------+------------+
 </code></pre>
-<h2 id="365-&#x67E5;&#x8BE2;-informationschemaclusterprocesslist-&#x793A;&#x4F8B;">3.6.5 &#x67E5;&#x8BE2; INFORMATION_SCHEMA.CLUSTER_PROCESSLIST &#x793A;&#x4F8B;</h2>
-<pre><code class="lang-sql"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
-</code></pre>
-<pre><code class="lang-result">+---------------+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------+-------+----------------------------------------+
-| INSTANCE      | ID   | USER   | HOST      | DB     | COMMAND   | TIME   | STATE   | INFO                                                 | MEM   | TxnStart                               |
-|---------------+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------+-------+----------------------------------------|
-| 0.0.0.0:10080 | 9    | root   | 127.0.0.1 | &lt;null&gt; | Sleep     | 1824   | 2       | &lt;null&gt;                                               | 0     |                                        |
-| 0.0.0.0:10080 | 10   | root   | 127.0.0.1 | &lt;null&gt; | Sleep     | 1439   | 2       | &lt;null&gt;                                               | 0     |                                        |
-| 0.0.0.0:10081 | 7    | root   | 127.0.0.1 | &lt;null&gt; | Query     | 0      | 2       | select * from INFORMATION_SCHEMA.CLUSTER_PROCESSLIST | 0     | 03-08 13:42:02.850(415143329228390401) |
-+---------------+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------+-------+----------------------------------------+
-</code></pre>
-<h3 id="&#x67E5;&#x8BE2;&#x96C6;&#x7FA4;&#x5404;&#x4E2A;-tidb-&#x8282;&#x70B9;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x8D85;&#x8FC7;2&#x5206;&#x949F;&#x7684;&#x4F1A;&#x8BDD;&#x6570;&#x91CF;">&#x67E5;&#x8BE2;&#x96C6;&#x7FA4;&#x5404;&#x4E2A; TiDB &#x8282;&#x70B9;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x8D85;&#x8FC7;2&#x5206;&#x949F;&#x7684;&#x4F1A;&#x8BDD;&#x6570;&#x91CF;</h3>
+<h2 id="364-&#x793A;&#x4F8B;&#xFF1A;&#x5229;&#x7528;-informationschemaclusterprocesslist-&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x67E5;&#x8BE2;">3.6.4 &#x793A;&#x4F8B;&#xFF1A;&#x5229;&#x7528; INFORMATION_SCHEMA.CLUSTER_PROCESSLIST &#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x67E5;&#x8BE2;</h2>
+<p>&#x4E0B;&#x9762;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x6F14;&#x793A;&#x4E86;&#x5982;&#x4F55;&#x5229;&#x7528;<code>INFORMATION_SCHEMA.CLUSTER_PROCESSLIST</code>&#x67E5;&#x8BE2;&#x96C6;&#x7FA4;&#x5404;&#x4E2A; TiDB &#x8282;&#x70B9;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x8D85;&#x8FC7;2&#x5206;&#x949F;&#x7684;&#x4F1A;&#x8BDD;&#x6570;&#x91CF;&#xFF1A;</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">instance</span>, <span class="hljs-keyword">count</span>(*)
 <span class="hljs-keyword">from</span> INFORMATION_SCHEMA.CLUSTER_PROCESSLIST
 <span class="hljs-keyword">where</span> command != <span class="hljs-string">&apos;Sleep&apos;</span>
@@ -2991,14 +3033,14 @@
 | 0.0.0.0:10080 | 3        |
 +---------------+----------+
 </code></pre>
-<p>&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x957F;&#x65F6;&#x95F4;&#x8FD0;&#x884C;&#x4F1A;&#x8BDD;&#x8F83;&#x591A;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x67E5;&#x770B;&#x8BE5;&#x8282;&#x70B9;&#x7684;&#x5177;&#x4F53;&#x4F1A;&#x8BDD;&#x60C5;&#x51B5;&#xFF0C;&#x5E76;&#x7ED3;&#x5408; <code>EXPLAIN ANALYZE</code> &#x5206;&#x6790;&#x5177;&#x4F53; sql &#x3002;</p>
-<h2 id="366-&#x4E0E;-mysql-&#x517C;&#x5BB9;&#x6027;">3.6.6 &#x4E0E; MySQL &#x517C;&#x5BB9;&#x6027;</h2>
+<p>&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x957F;&#x65F6;&#x95F4;&#x8FD0;&#x884C;&#x4F1A;&#x8BDD;&#x8F83;&#x591A;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x67E5;&#x770B;&#x8BE5;&#x8282;&#x70B9;&#x7684;&#x5177;&#x4F53;&#x4F1A;&#x8BDD;&#x60C5;&#x51B5;&#xFF0C;&#x5E76;&#x7ED3;&#x5408; <code>EXPLAIN ANALYZE</code> &#x5206;&#x6790;&#x5177;&#x4F53; SQL &#x3002;</p>
+<h2 id="365-&#x4E0E;-mysql-&#x517C;&#x5BB9;&#x6027;">3.6.5 &#x4E0E; MySQL &#x517C;&#x5BB9;&#x6027;</h2>
 <ul>
 <li><p>KILL TIDB &#x8BED;&#x53E5;&#x662F; TiDB &#x7684;&#x6269;&#x5C55;&#x8BED;&#x6CD5;&#x3002;&#x5982;&#x679C;&#x6B63;&#x5C1D;&#x8BD5;&#x7EC8;&#x6B62;&#x7684;&#x4F1A;&#x8BDD;&#x4F4D;&#x4E8E;&#x540C;&#x4E00;&#x4E2A; TiDB &#x670D;&#x52A1;&#x5668;&#x4E0A;&#xFF0C;&#x53EF;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x91CC;&#x8BBE;&#x7F6E; <code>compatible-kill-query = true</code> &#x3002;</p>
 </li>
 <li><p>TiDB &#x4E2D;&#x7684; <code>State</code> &#x5217;&#x662F;&#x975E;&#x63CF;&#x8FF0;&#x6027;&#x7684;&#x3002;&#x5728; TiDB &#x4E2D;&#xFF0C;&#x5C06;&#x72B6;&#x6001;&#x8868;&#x793A;&#x4E3A;&#x5355;&#x4E2A;&#x503C;&#x66F4;&#x590D;&#x6742;&#xFF0C;&#x56E0;&#x4E3A;&#x67E5;&#x8BE2;&#x662F;&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#xFF0C;&#x800C;&#x4E14;&#x6BCF;&#x4E2A; GO &#x7EBF;&#x7A0B;&#x5728;&#x4EFB;&#x4E00;&#x65F6;&#x523B;&#x90FD;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
 </li>
-<li><p>TiDB &#x7684; show processlist &#x4E0E; MySQL &#x7684; show processlist &#x663E;&#x793A;&#x5185;&#x5BB9;&#x57FA;&#x672C;&#x4E00;&#x6837;&#xFF0C;&#x4E0D;&#x4F1A;&#x663E;&#x793A;&#x7CFB;&#x7EDF;&#x8FDB;&#x7A0B;&#x53F7;&#xFF0C;&#x800C; ID &#x8868;&#x793A;&#x5F53;&#x524D;&#x7684; session ID&#x3002;&#x5176;&#x4E2D; TiDB &#x7684; show processlist &#x548C; MySQL &#x7684; show processlist &#x533A;&#x522B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<li><p>TiDB &#x7684; <code>show processlist</code> &#x4E0E; MySQL &#x7684; <code>show processlist</code> &#x663E;&#x793A;&#x5185;&#x5BB9;&#x57FA;&#x672C;&#x4E00;&#x6837;&#xFF0C;&#x4E0D;&#x4F1A;&#x663E;&#x793A;&#x7CFB;&#x7EDF;&#x8FDB;&#x7A0B;&#x53F7;&#xFF0C;&#x800C; ID &#x8868;&#x793A;&#x5F53;&#x524D;&#x7684; session ID&#x3002;&#x5176;&#x4E2D; TiDB &#x7684; <code>show processlist</code> &#x548C; MySQL &#x7684; <code>show processlist</code> &#x533A;&#x522B;&#x5982;&#x4E0B;&#xFF1A;</p>
 <ul>
 <li>&#x7531;&#x4E8E; TiDB &#x662F;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#xFF0C;tidb-server &#x5B9E;&#x4F8B;&#x662F;&#x65E0;&#x72B6;&#x6001;&#x7684; SQL &#x89E3;&#x6790;&#x548C;&#x6267;&#x884C;&#x5F15;&#x64CE;&#xFF08;&#x8BE6;&#x60C5;&#x53EF;&#x53C2;&#x8003; TiDB &#x6574;&#x4F53;&#x67B6;&#x6784;&#xFF09;&#xFF0C;&#x7528;&#x6237;&#x4F7F;&#x7528; MySQL &#x5BA2;&#x6237;&#x7AEF;&#x767B;&#x5F55;&#x7684;&#x662F;&#x54EA;&#x4E2A; tidb-server&#xFF0C;show processlist &#x5C31;&#x4F1A;&#x663E;&#x793A;&#x5F53;&#x524D;&#x8FDE;&#x63A5;&#x7684;&#x8FD9;&#x4E2A; tidb-server &#x4E2D;&#x6267;&#x884C;&#x7684; session &#x5217;&#x8868;&#xFF0C;&#x4E0D;&#x662F;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x5168;&#x90E8; session &#x5217;&#x8868;&#xFF1B;&#x800C; MySQL &#x662F;&#x5355;&#x673A;&#x6570;&#x636E;&#x5E93;&#xFF0C;show processlist &#x5217;&#x51FA;&#x7684;&#x662F;&#x5F53;&#x524D;&#x6574;&#x4E2A; MySQL &#x6570;&#x636E;&#x5E93;&#x7684;&#x5168;&#x90E8;&#x6267;&#x884C; SQL &#x5217;&#x8868;&#x3002;</li>
 </ul>
@@ -3047,7 +3089,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3.6 Processlist","level":"4.3.6","depth":2,"next":{"title":"3.7 Statement Summary","level":"4.3.7","depth":2,"path":"session3/chapter3/statements.md","ref":"session3/chapter3/statements.md","articles":[]},"previous":{"title":"3.5 SQL 慢查询内存表","level":"4.3.5","depth":2,"path":"session3/chapter3/slow-query-table.md","ref":"session3/chapter3/slow-query-table.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics","yahei"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"yahei":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/processlist.md","mtime":"2020-04-12T09:00:11.733Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-12T09:01:29.422Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"3.6 Processlist","level":"4.3.6","depth":2,"next":{"title":"3.7 Statement Summary","level":"4.3.7","depth":2,"path":"session3/chapter3/statements.md","ref":"session3/chapter3/statements.md","articles":[]},"previous":{"title":"3.5 SQL 慢查询内存表","level":"4.3.5","depth":2,"path":"session3/chapter3/slow-query-table.md","ref":"session3/chapter3/slow-query-table.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics","yahei"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"yahei":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session3/chapter3/processlist.md","mtime":"2020-04-12T09:29:56.795Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-12T09:31:18.352Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
