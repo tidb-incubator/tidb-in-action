@@ -131,25 +131,25 @@ ALTER TABLE `xxxx` AUTO_INCREMENT=123456;
 
 * tidb-lightning 和 tikv-importer 均须配备万兆网卡。
 * tidb-lightning 对本地磁盘空间大小没有硬性要求。为保证长时间运行数据导入处理，须保证磁盘空间足够保存日志文件。
-* tikv-importer 对磁盘空间大小有一定要求。假定有 20 张表，其中有一张 5 TB 的大表。考虑到该表的索引键值对需要在 tikv-importer 上先进行全量排序后再上传到 TiKV 中，所以需要保证 tikv-importer 的本地磁盘空间至少可以保存对应的索引引擎文件。索引引擎文件在磁盘上的大小主要由表结构里的索引数量决定；如果索引中的字段以整数类型为主，则索引引擎文件会更小一些。这里提供一个经验值：一个包含 5 个索引、体积为 4 TB 的单表，索引引擎文件体积约为 2 TB。
-* TiKV 集群容量可以按照数据文件体积的 4 倍来估算。例如，数据文件体积为 5 TB，则目标 TiKV 集群至少要预留 20 TB 可用空间。但是，该估算值有一定误差范围：如果单表内重复数据较多，最终 TiKV 的压缩比也会较大，则相应地容量要求也会降低。
+* tikv-importer 对磁盘空间大小有一定要求。请参考后面”**量化指标**“一节提供的估算思路。
 
 ## 8. 量化指标
 
-* `io-concurrency` 不要设置太的值，否则容易导致磁盘内部缓存失效出现大量 cache miss，影响顺序读的效率。
-* 下面给出的一些公式可以帮助我们计算数据导入过程中的资源使用量。 这里，我们假定 tidb-lightning 和 tikv-importer 之间的交互过程不是性能瓶颈。
+下面给出的一些公式和计算方法可以帮助我们计算数据导入过程中的资源使用量。 这里，我们假定 tidb-lightning 和 tikv-importer 之间的交互过程不是性能瓶颈。
 
-  * 假定 tikv-importer 节点使用万兆网卡 （理论带宽上限为 10 gbps），则编码速度最高达到每秒 300 MB 时就会耗尽全部带宽。这就是 TiDB Lightning 工具数据导入速度的理论上限。
+* 假定 tikv-importer 节点使用万兆网卡（理论带宽上限为 10 gbps），则编码速度最高达到每秒 300 MB 时就会耗尽全部带宽。这就是使用 TiDB Lightning 工具导入数据的理论上限速度。
 
     ```
     max-speed = bandwidth (1.2 GB/s) / replicas (3)
     ```
 
-  * tidb-lightning 的内存占用很低，几乎可以忽略；tikv-importer 的内存占用取决于引擎文件个数和导入线程数。
+* tidb-lightning 的内存占用很低，几乎可以忽略；tikv-importer 的内存占用取决于引擎文件个数和导入线程数。
 
     ```
     ram-usage = (max-open-engines (8) × write-buffer-size (1 GB) × 2)
               + (num-import-jobs (24) × region-split-size (512 MB) × 2)
     ```
 
-  * tikv-importer 的磁盘空间使用量基本上取决于最大的 N 个表, 其中 `N = max(index-concurrency, table-concurrency)`。实际的磁盘空间使用量与索引数量和索引字段构成相关。
+* tikv-importer 的磁盘空间使用量基本上取决于最大的 N 个表, 其中 `N = max(index-concurrency, table-concurrency)`。实际的磁盘空间使用量还和表的索引数量以及索引字段构成相关。假定需要导入 20 张表，其中有一张 5 TB 的大表。考虑到该表的索引键值对需要在 tikv-importer 上先进行全量排序后再上传到 TiKV 中，所以需要保证 tikv-importer 的本地磁盘空间至少可以保存对应的索引引擎文件。索引引擎文件在磁盘上的大小主要由表结构里的索引数量决定；当然，如果索引中的字段以整数类型为主，则索引引擎文件会更小一些。这里提供一个经验值：一个包含 5 个索引、体积为 4 TB 的表，对应的索引引擎文件体积约为 2 TB。
+  
+* 目标TiKV 集群的磁盘容量可以按照数据文件体积的 4 倍来估算。例如，数据文件体积为 5 TB，则目标 TiKV 集群至少要预留 20 TB 可用空间。该估算值可能有一定的误差范围；如果单表内重复数据较多，最终 TiKV 的压缩比也会较大，则相应地容量要求会降低。
