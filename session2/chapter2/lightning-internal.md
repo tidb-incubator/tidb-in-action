@@ -60,19 +60,18 @@ tidb-lightning 把数据文件拆分成多个能并发执行的小任务。下�
 
 * `batch-size`：对于很大的表，比如超过 5TB 的表，如果一次性导入到整个引擎文件，可能会因为 tikv-importer 磁盘空间不足导致失败。tidb-lightning 会按照 `batch-size` 的配置对一个大表进行切分，导入过程中每个批次使用单独的引擎文件。`batch-size` 不应该小于 100GB，太小的话会使 region balance 和 leader balance 值升高，导致 Region 在 TiKV 之间频繁调度，浪费网络资源。
 
-* `table-concurrency`：配置同时导入的批次个数。如上所述，每个表会按照 `batch-size` 切分成多个批次。
+* `table-concurrency`：同时导入的批次个数。如上所述，每个表会按照 `batch-size` 切分成多个批次。
 
-* `index-concurrency`：配置同时有多少个索引引擎。`table-concurrency` + `index-concurrency` 的总和必须小于 tikv-importer 的 `max-open-engines` 配置。
+* `index-concurrency`：并行的索引引擎文件个数。`table-concurrency` + `index-concurrency` 的总和必须小于 tikv-importer 的 `max-open-engines` 配置。
 
-* `io-concurrency`：配置并发访问磁盘的 I/O 线程数。由于磁盘内部缓存容量有限，过高的并发度容易引发频繁的 cache miss，导致 I/O 延迟加大。因此，不建议将该
+* `io-concurrency`：并发访问磁盘的 I/O 线程数。由于磁盘内部缓存容量有限，过高的并发度容易引发频繁的 cache miss，导致 I/O 延迟加大。因此，不建议将该
 
-* `block-size`：tidb-lightning 会一次性读取一个 `block-size` 的大小，然后进行编码。默认为 64 KiB；
+* `block-size`：默认值为 64KB。tidb-lightning 会一次性读取一个 `block-size` 大小的数据文件，然后进行编码。
 
-* `region-concurrency`：每个批次的内部线程数，每个线程要执行读文件、编码和发送到 tikv-importer 等步骤。
-
-读文件这步需要使用 I/O，使用 `io-concurrency` 控制并发读取。
-
-编码需要使用 CPU，主要跟 `region-conconcurrency` 配置有关，例如，若编码一次耗时 50 ms，那么每秒只能进行编码 20 次，若 `block-size` 为 64 KiB，则单核每秒只能编码 1.28 MB 的数据，若 `region-concurrency = 60`，那编码的总速度大约为 75 MB/s。
+* `region-concurrency`：每个批次的内部线程数。每个线程要执行读文件、编码和发送到 tikv-importer 等步骤。
+    * 读文件会消耗 I/O 资源，需要调节 `io-concurrency` 控制并发读取。
+    * 编码过程的瓶颈主要在 CPU，需要适当调整 `region-conconcurrency` 配置。
+    * 举例来说，若一次编码处理耗时 50 ms，那么每秒只能进行 20 次编码。若 `block-size` 为 64 KB，则单一 CPU 核每秒最多完成 1.28 MB 数据的编码处理。若 `region-concurrency = 60`，则整体编码处理的极限速度约为每秒 75 MB。
 
 ## 3. tikv-importer 架构
 
