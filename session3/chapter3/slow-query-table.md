@@ -76,7 +76,7 @@ insert into t select * from t;
 (5) 和 TiKV Coprocessor Task 相关的字段：
 
 * `Process_time`：该 SQL 在 TiKV 上的处理时间之和。因为数据会并行发到 TiKV 执行，该值可能会超过 `Query_time`。
-* Wait_time：表示该语句在 TiKV 上的等待时间之和。因为 TiKV 的 Coprocessor 线程数是有限的，当所有的 Coprocessor 线程都在工作的时候，请求会排队；若队列中部分请求耗时很长，后面的请求的等待时间会增加。
+* `Wait_time`：表示该语句在 TiKV 上的等待时间之和。因为 TiKV 的 Coprocessor 线程数是有限的，当所有的 Coprocessor 线程都在工作的时候，请求会排队；若队列中部分请求耗时很长，后面的请求的等待时间会增加。
 * `Request_count`：表示该语句发送的 Coprocessor 请求的数量。
 * `Total_keys`：表示 Coprocessor 扫过的 key 的数量。
 * `Process_keys`：表示 Coprocessor 处理的 key 的数量。相较于 `total_keys`，`processed_keys` 不包含 MVCC 的旧版本。如果 `processed_keys` 和 `total_keys` 相差很大，说明旧版本比较多。
