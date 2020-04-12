@@ -36,58 +36,58 @@ insert into t select * from t;
 > 注意：
 > 慢查询日志中所有时间相关字段的单位都是秒。
 
-(1) Slow Query 基础信息：
+(1) 慢查询基础信息：
 
-* Time：表示日志打印时间。
-* Query_time：表示执行该语句花费的时间。
-* Parse_time：表示该语句在语法解析阶段花费的时间。
-* Compile_time：表示该语句在查询优化阶段花费的时间。
-* Digest：表示该语句的 SQL 指纹。
-* Stats：表示 table 使用的统计信息版本时间戳。如果时间戳显示为 `pseudo`，表示用默认假设的统计信息。
-* Txn_start_ts：表示事务的开始时间戳，也就是事务的唯一 ID，可以用该值在 TiDB 日志中查找事务相关的其他日志。
-* Is_internal：表示是否为 TiDB 内部的 SQL 语句。`true` 表示是 TiDB 系统内部执行的 SQL 语句，`false` 表示是由用户执行的 SQL 语句。
-* Index_ids：表示该语句使用的索引 ID。
-* Succ：表示该语句是否执行成功。
-* Backoff_time：表示遇到需要重试的错误时该语句在重试前等待的时间。常见的需要重试的错误有以下几种：遇到了 lock、Region 分裂、tikv server is busy。
-* Plan_digest：表示 plan 的指纹。
-* Plan：表示该语句的执行计划，用 `select tidb_decode_plan('xxx...')` 可以解析出具体的执行计划。
-* Query：表示该 SQL 语句。慢日志里不会打印字段名 `Query`，但映射到内存表后对应的字段叫 `Query`。
+* `Time`：表示日志打印时间。
+* `Query_time`：表示执行该语句花费的时间。
+* `Parse_time`：表示该语句在语法解析阶段花费的时间。
+* `Compile_time`：表示该语句在查询优化阶段花费的时间。
+* `Digest`：表示该语句的 SQL 指纹。
+* `Stats`：表示 table 使用的统计信息版本时间戳。如果时间戳显示为 `pseudo`，表示用默认假设的统计信息。
+* `Txn_start_ts`：表示事务的开始时间戳，也就是事务的唯一 ID，可以用该值在 TiDB 日志中查找事务相关的其他日志。
+* `Is_internal`：表示是否为 TiDB 内部的 SQL 语句。`true` 表示是 TiDB 系统内部执行的 SQL 语句，`false` 表示是由用户执行的 SQL 语句。
+* `Index_ids`：表示该语句使用的索引 ID。
+* `Succ`：表示该语句是否执行成功。
+* `Backoff_time`：表示遇到需要重试的错误时该语句在重试前等待的时间。常见的需要重试的错误有以下几种：遇到了 lock、Region 分裂、tikv server is busy。
+* `Plan_digest`：表示 plan 的指纹。
+* `Plan`：表示该语句的执行计划，用 `select tidb_decode_plan('xxx...')` 可以解析出具体的执行计划。
+* `Query`：表示该 SQL 语句。慢日志里不会打印字段名 `Query`，但映射到内存表后对应的字段叫 `Query`。
 
 (2) 和事务执行相关的字段：
 
-* Prewrite_time：表示事务两阶段提交中第一阶段（prewrite 阶段）的耗时。
-* Commit_time：表示事务两阶段提交中第二阶段（commit 阶段）的耗时。
-* Get_commit_ts_time：表示事务两阶段提交中第二阶段（commit 阶段）获取 commit 时间戳的耗时。
-* Local_latch_wait_time：表示事务两阶段提交中第二阶段（commit 阶段）发起前在 TiDB 侧等锁的耗时。
-* Write_keys：表示该事务向 TiKV 的 Write CF 写入 Key 的数量。
-* Write_size：表示事务提交时写 key 和 value 的总大小。
-* Prewrite_region：表示事务两阶段提交中第一阶段（prewrite 阶段）涉及的 TiKV Region 数量。每个 Region 会触发一次远程过程调用。
+* `Prewrite_time`：表示事务两阶段提交中第一阶段（`prewrite` 阶段）的耗时。
+* `Commit_time`：表示事务两阶段提交中第二阶段（`commit` 阶段）的耗时。
+* `Get_commit_ts_time`：表示事务两阶段提交中第二阶段（`commit` 阶段）获取 `commit` 时间戳的耗时。
+* `Local_latch_wait_time`：表示事务两阶段提交中第二阶段（`commit` 阶段）发起前在 TiDB 侧等锁的耗时。
+* `Write_keys`：表示该事务向 TiKV 的 Write CF 写入 Key 的数量。
+* `Write_size`：表示事务提交时写 key 和 value 的总大小。
+* `Prewrite_region`：表示事务两阶段提交中第一阶段（`prewrite` 阶段）涉及的 TiKV Region 数量。每个 Region 会触发一次远程过程调用。
 
 (3) 和内存使用相关的字段：
 
-* Memory_max：表示执行期间 TiDB 使用的最大内存空间，单位为 byte。
+* `Memory_max`：表示执行期间 TiDB 使用的最大内存空间，单位为 `byte`。
 
-(4) 和 SQL 执行的用户相关的字段：
+(4) 和用户相关的字段：
 
-* User：表示执行语句的用户名。
-* Conn_ID：表示用户的连接 ID，可以用类似 con:3 的关键字在 TiDB 日志中查找该链接相关的其他日志。
-* DB：表示执行语句时使用的 database。
+* `User`：表示执行语句的用户名。
+* `Conn_ID`：表示用户的连接 ID，可以用类似 `con:3` 的关键字在 TiDB 日志中查找该链接相关的其他日志。
+* `DB`：表示执行语句时使用的 database。
 
 (5) 和 TiKV Coprocessor Task 相关的字段：
 
-* Process_time：执行 SQL 在 TiKV 的处理时间之和，因为数据会并行的发到 TiKV 执行，这个值可能会超过 Query_time。
-* Wait_time：表示这个语句在 TiKV 的等待时间之和，因为 TiKV 的 Coprocessor 线程数是有限的，当所有的 Coprocessor 线程都在工作的时候，请求会排队；当队列中有某些请求耗时很长的时候，后面的请求的等待时间都会增加。
-* Request_count：表示这个语句发送的 Coprocessor 请求的数量。
-* Total_keys：表示 Coprocessor 扫过的 key 的数量。
-* Process_keys：表示 Coprocessor 处理的 key 的数量。相比 total_keys，processed_keys 不包含 MVCC 的旧版本。如果 processed_keys 和 total_keys 相差很大，说明旧版本比较多。
-* Cop_proc_avg：cop-task 的平均执行时间。
-* Cop_proc_p90：cop-task 的 P90 分位执行时间。
-* Cop_proc_max：cop-task 的最大执行时间。
-* Cop_proc_addr：执行时间最长的 cop-task 所在地址。
-* Cop_wait_avg：cop-task 的平均等待时间。
-* Cop_wait_p90：cop-task 的 P90 分位等待时间。
-* Cop_wait_max：cop-task 的最大等待时间。
-* Cop_wait_addr：等待时间最长的 cop-task 所在地址。
+* `Process_time`：该 SQL 在 TiKV 上的处理时间之和。因为数据会并行发到 TiKV 执行，该值可能会超过 `Query_time`。
+* Wait_time：表示该语句在 TiKV 上的等待时间之和。因为 TiKV 的 Coprocessor 线程数是有限的，当所有的 Coprocessor 线程都在工作的时候，请求会排队；若队列中部分请求耗时很长，后面的请求的等待时间会增加。
+* `Request_count`：表示该语句发送的 Coprocessor 请求的数量。
+* `Total_keys`：表示 Coprocessor 扫过的 key 的数量。
+* `Process_keys`：表示 Coprocessor 处理的 key 的数量。相较于 `total_keys`，`processed_keys` 不包含 MVCC 的旧版本。如果 `processed_keys` 和 `total_keys` 相差很大，说明旧版本比较多。
+* `Cop_proc_avg`：cop-task 的平均执行时间。
+* `Cop_proc_p90`：cop-task 的 P90 分位执行时间。
+* `Cop_proc_max`：cop-task 的最大执行时间。
+* `Cop_proc_addr`：执行时间最长的 cop-task 所在地址。
+* `Cop_wait_avg`：cop-task 的平均等待时间。
+* `Cop_wait_p90`：cop-task 的 P90 分位等待时间。
+* `Cop_wait_max`：cop-task 的最大等待时间。
+* `Cop_wait_addr`：等待时间最长的 cop-task 所在地址。
 
 ## 慢查询内存表查询示例
 
