@@ -1,5 +1,5 @@
 # 2.2.1 Lightning 工作原理
-TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据文件到 TiDB 集群，导入速度可达每小时 300 GB，是传统 SQL 导入方式的 3 倍多。它有两个主要的目标使用场景：大量新数据的快速导入，以及全量数据恢复。
+TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据文件到 TiDB 集群，导入速度可达每小时 300GB，是传统 SQL 导入方式的 3 倍多。它有两个主要的目标使用场景：大量新数据的快速导入，以及全量数据恢复。
 
 本节将介绍 TiDB Lightning 工具的工作原理。
 
@@ -19,7 +19,7 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 
 1. 导入数据之前，tidb-lightning 会自动将 TiKV 集群切换为“导入模式”（import mode）以优化写入效率。
 2. tidb-lightning 会在目标 TiDB 集群上建立空数据库和表，并获取其元数据。
-3. 每张表都会被分割为多个连续的批次，这样来自大表（200 GB+）的数据就可以并行导入。
+3. 每张表都会被分割为多个连续的批次，这样来自大表（200GB 以上）的数据就可以并行导入。
 4. tidb-lightning 会通过 gRPC 通知 tikv-importer 为每一个批次准备一个“引擎文件”（engine file）来处理键值对。tidb-lightning 会并发读取数据文件，转换成与目标 TiDB 集群相同编码的键值对，然后发送到 tikv-importer 里对应的引擎文件。
 5. 当一个引擎文件数据写入完毕，tikv-importer 便开始对目标 TiKV 集群数据进行 Region 分裂和调度，然后导入数据到 TiKV 集群。引擎文件包含两种：数据引擎与索引引擎，分别对应两种键值对：行数据和次级索引。通常行数据在数据文件里是完全有序的，而次级索引则是无序的。因此，数据引擎文件在对应 Region 写入完成后会被立即上传，而索引引擎文件只有在整张表所有 Region 编码完成后才会执行导入。
 6. 整张表的所有引擎文件完成导入后，tidb-lightning 会对比本地数据文件及目标 TiDB 集群的校验和（checksum），确保导入的数据无损；然后让 TiDB 分析（ANALYZE）这些新增的数据，以优化日后的操作。同时，tidb-lightning 会调整表的 AUTO_INCREMENT 值防止后续新增数据时发生冲突。表的自增 ID 是通过行数的上界估计值得到的，与表的数据文件总大小成正比。因此，最后的自增 ID 通常比实际行数大得多。这属于正常现象，因为在 TiDB 中自增 ID 不一定是连续分配的。
@@ -32,7 +32,7 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 * TiKV 的后台任务数会增加，以并行接收更多的 SST 文件。
 * `write stall triggers` 被移除，使写速度优先于读速度。
 
-数据导入完成后，tidb-lightning 会自动切换回“普通模式”。
+数据导入完成后，tidb-lightning 会自动把 TiKV 集群切换回“普通模式”。
 
 ## 2. tidb-lightning 架构
 
@@ -40,35 +40,35 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 
 ### 工作原理
 
-首先，tidb-lightning 会扫描 SQL 备份，区分出结构文件（包含 CREATE TABLE 语句）和数据文件（包含 INSERT 语句）。结构文件的内容会直接发送到 TiDB，用以建立数据库构型。
+首先，tidb-lightning 会扫描数据文件，区分出结构文件（包含 `CREATE TABLE` 语句）和数据文件（包含 `INSERT` 语句）。结构文件的内容会直接发送到 TiDB，用于建立数据库和表。然后，tidb-lightning 会并发处理每一张表的数据。这里，我们来看一张表的导入处理过程。
 
-然后 tidb-lightning 就会并发处理每一张表的数据。这里我们只集中看一张表的流程。每个数据文件的内容都是规律的 INSERT 语句，像是：
+每个数据文件的内容都是规律的 `INSERT` 语句，如下所示：
 
-```sql
+``` sql
 INSERT INTO `tbl` VALUES (1, 2, 3), (4, 5, 6), (7, 8, 9);
 INSERT INTO `tbl` VALUES (10, 11, 12), (13, 14, 15), (16, 17, 18);
 INSERT INTO `tbl` VALUES (19, 20, 21), (22, 23, 24), (25, 26, 27);
 ```
 
-tidb-lightning 会作初步分析，找出每行在文件的位置并分配一个行号，使得没有主键的表可以唯一的区分每一行。tidb-lightning 会直接使用 TiDB 实例来把 SQL 转换为键值对，称为“键值编码器”（KV encoder）。与外部的 TiDB 集群不同，KV 编码器是寄存在 tidb-lightning 进程内的，而且使用内存存储，所以每执行完一个 INSERT 之后，tidb-lightning 可以直接读取内存获取转换后的键值对（这些键值对包含数据及索引），得到键值对之后便可以发送到 tikv-importer。
+tidb-lightning 会分析数据文件，找出每一行的位置并分配一个行号，这样即使没有定义主键的表也能够区分每一行。tidb-lightning 会直接借助 TiDB 实例把 SQL 转换为键值对，称为“键值编码器”（KV encoder）。与外部的 TiDB 集群不同，键值编码器是寄存在 tidb-lightning 进程内的，并使用内存存储；每执行完一个 INSERT 之后，tidb-lightning 可以直接读取内存获取转换后的键值对（这些键值对包含数据及索引），得到键值对之后便可以发送到 tikv-importer。
 
 ### 并发设置
 
-tidb-lightning 把数据源分成多个能并发的小任务。这些并发度有几个可以调整的设置
+tidb-lightning 把数据文件拆分成多个能并发执行的小任务。下面的配置选项可以帮助调节这些任务的并发度：
 
 ![4.png](/res/session2/chapter2/lightning-internal/4.png)
 
-* `batch-size`：对于很大的单表，比如 5 TB+，如果一次过导入到一个引擎文件，可能会因为 tikv-importer 磁盘空间不足，最终导致该表导入失败，所以 tidb-lightning 会按照 `batch-size` 的配置大小对一个大表进行切分，导入过程中，一个批次使用一个引擎文件；`batch-size` 不应该小于 100 GiB，太小的 `batch-size` 会使region balance 和 leader balance 很高，导致 region 在 TiKV 之间频繁调度，占用网络资源；
+* `batch-size`：对于很大的表，比如超过 5TB 的表，如果一次性导入到整个引擎文件，可能会因为 tikv-importer 磁盘空间不足导致失败。tidb-lightning 会按照 `batch-size` 的配置对一个大表进行切分，导入过程中每个批次使用单独的引擎文件。`batch-size` 不应该小于 100GB，太小的话会使 region balance 和 leader balance 值升高，导致 Region 在 TiKV 之间频繁调度，浪费网络资源。
 
-* `table-concurrency`：控制多少个批次同时进行导入，每个表里面会按照 `batch-size` 配置切分成多个批次；
+* `table-concurrency`：配置同时导入的批次个数。如上所述，每个表会按照 `batch-size` 切分成多个批次。
 
-* `index-concurrency`：控制同时有多少个索引引擎。`table-concurrency` + `index-concurrency` 的总和必须小于 tikv-importer 的 `max-open-engines` 配置；
+* `index-concurrency`：配置同时有多少个索引引擎。`table-concurrency` + `index-concurrency` 的总和必须小于 tikv-importer 的 `max-open-engines` 配置。
 
-* `io-concurrency`：多个 IO 并发访问磁盘，随着并发度提高，磁盘内部缓存容量有限，会导致频繁 cache miss，导致 I/O 的延迟加大，不建议调整太大；
+* `io-concurrency`：配置并发访问磁盘的 I/O 线程数。由于磁盘内部缓存容量有限，过高的并发度容易引发频繁的 cache miss，导致 I/O 延迟加大。因此，不建议将该
 
 * `block-size`：tidb-lightning 会一次性读取一个 `block-size` 的大小，然后进行编码。默认为 64 KiB；
 
-* `region-concurrency`：每个批次内部线程数，每个线程要进行读文件 → 编码 → 发送到 tikv-importer 的步骤；
+* `region-concurrency`：每个批次的内部线程数，每个线程要执行读文件、编码和发送到 tikv-importer 等步骤。
 
 读文件这步需要使用 I/O，使用 `io-concurrency` 控制并发读取。
 
