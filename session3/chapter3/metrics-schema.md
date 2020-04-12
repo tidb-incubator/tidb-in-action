@@ -33,22 +33,13 @@ metrics_schema> select * from tidb_query_duration where value is not null and ti
 
 系统表表结构如下所示：
 
-| 字段名 | 类型 |
-| :-----:| :----: |
-| TABLE_NAME | varchar(64) |
-| PROMQL | varchar(64) |
-| LABELS | varchar(64) |
-| QUANTILE | double unsigned |
-| COMMENT | varchar(256)|
-
-
-字段解释:
-
-* TABLE_NAME：对应于 metrics_schema 中的表名
-* PROMQL：监控表的主要原理是将 SQL 映射成 PromQL，并将 prometheus 结果转换成 SQL 查询结果，这个字段是 PromQL 的表达式模板，获取监控表数据时使用查询条件改写模板中的变量，生成最终的查询表达式
-* LABELS：监控定义的 label，每一个 label 会对应监控表中的一列，SQL 中如果包含对应列的过滤，对应的 PromQL 也会改变
-* QUANTILE：百分位，对于直方图的监控数据，指定一个默认百分位，如果值为 0，表示该监控表对应的监控不是直方图
-* COMMENT：对该监控表的解释
+| 字段名 | 类型 | 字段解释 |
+| :-----:| :----: | :----: |
+| TABLE_NAME | varchar(64) | 对应于 metrics_schema 中的表名 |
+| PROMQL | varchar(64) | 监控表的主要原理是将 SQL 映射成 PromQL，并将 prometheus 结果转换成 SQL 查询结果，这个字段是 PromQL 的表达式模板，获取监控表数据时使用查询条件改写模板中的变量，生成最终的查询表达式 |
+| LABELS | varchar(64) | 监控定义的 label，每一个 label 会对应监控表中的一列，SQL 中如果包含对应列的过滤，对应的 PromQL 也会改变 |
+| QUANTILE | double unsigned | 百分位，对于直方图的监控数据，指定一个默认百分位，如果值为 0，表示该监控表对应的监控不是直方图 |
+| COMMENT | varchar(256)| 对该监控表的解释 |
 
 ### 3.2.3 监控表实现方式
 
