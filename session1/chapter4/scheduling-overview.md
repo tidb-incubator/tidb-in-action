@@ -51,7 +51,7 @@ TiKV 集群是 TiDB 数据库的分布式 KV 存储引擎，数据以 Region 为
 刚好 Raft 协议通过 AddReplica、RemoveReplica、TransferLeader 这三个命令，可以支撑上述三种基本操作。
 
 ### 4.1.4 信息收集
-调度依赖于整个集群信息的收集，简单来说，我们需要知道每个 TiKV 节点的状态以及每个 Region 的状态。TiKV 集群会向 PD 汇报两类消息：
+调度依赖于整个集群信息的收集，简单来说，我们需要知道每个 TiKV 节点的状态以及每个 Region 的状态。TiKV 集群会向 PD 汇报两类消息，TiKV 节点信息和 Region 信息：
 
 **每个 TiKV 节点会定期向 PD 汇报节点的状态信息**
 
