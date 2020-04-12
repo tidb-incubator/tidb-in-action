@@ -16,7 +16,7 @@
 
 **详见 [PingCAP 官方文档 - 大事务](https://pingcap.com/docs-cn/v2.1/reference/transactions/overview/#大事务)**
 
-键值对应该比较容易理解，毕竟 TiDB 底层存储选用的是 RocksDB 引擎，一种基于 Key-Value 的存储结构。而每个键值对的大小和总大小限制分别是 6MB 和 100MB，这个应该也比较容易理解。关键在于每个事物包含键值对的总数不超过 30W，这个经常会引起一些误解，下面做一些详细说明。
+键值对应该比较容易理解，毕竟 TiDB 底层存储选用的是 RocksDB 引擎，一种基于 Key-Value 的存储结构。而每个键值对的大小和总大小限制分别是 6MB 和 100MB，这个应该也比较容易理解。关键在于每个事务包含键值对的总数不超过 30W，这个经常会引起一些误解，下面做一些详细说明。
 
 ### 4.6.2 如何理解 30W
 
@@ -27,7 +27,9 @@
 | Key   | Value   | Flag   |
 |----|----|----|
 
-当插入一条数据时，TiKV 记录该数据包含以下几个步骤：
+- **Insert操作**
+
+插入数据时，TiKV 的处理包含以下几个步骤：
 
 (1) 插入数据本身
 
@@ -44,7 +46,9 @@
 | Key: Index + PK + TSO | Value: Null | Flag: Put |
 |----|----|----|
 
-综上，当执行 Insert 事务时，30W 限制需要除以所有索引的数量 (包含主键和唯一索引)。
+综上，当执行 Insert 事务时，30W 限制需要除以 （1 + 所有索引的数量 (包含唯一索引))。
+
+- **Delete操作**
 
 下面考虑当删除一条数据时，TiKV 是如何处理的。首先需要明确，RocksDB 引擎所有的操作都是新增，所以删除也是插入，相当于插入了一条 Flag = Del 的记录。具体步骤如下：
 
@@ -63,11 +67,11 @@
 | Key: Index + PK + TSO | Value: Null | Flag: Del |
 |----|----|----|
 
-综上，当执行 Delete 事务时，30W 限制需要除以所有索引的数量 (包含主键和唯一索引)。
+综上，当执行 Delete 事务时，30W 限制需要除以 (1 + 所有索引的数量 (包含唯一索引))。
 
-更新比较复杂，放到最后说明。
+- **Update操作**
 
-首先，更新的是非主键且无索引字段的情况。这种情况，只需要修改记录本身的内容即可，也就是下面一步：
+首先，我们看看如果更新的是非主键且无索引字段的情况。这种情况，只需要修改记录本身的内容即可，也就是下面一步：
 
 (1) 插入数据本身即可
 
@@ -115,9 +119,6 @@
 
 (2) 所有的唯一索引
 
-| Key: Index (UK) + TSO | Value: Null | Flag: Del |
-|----|----|----|
-
 | Key: Index (UK) + TSO | Value: PK | Flag: Put |
 |----|----|----|
 
@@ -129,15 +130,15 @@
 | Key: Index + PK + TSO   | Value: Null   | Flag: Put   |
 |----|----|----|
 
-综上，主键字段的更新，30W 限制需要除以  ((1 + 普通索引数量)*2 + 唯一索引数量) ，Update 主键的时候，唯一索引当做 1 个 KV，普通索引和主键本身当做 2 个 KV（在对应的 Key-Value 中，Key 是 UK 的值，Update PK 的时候，Key 值不变，所以 Del + Put 当做一次 kv-Entry 操作；其他的，比如普通索引，Key 里面就存了 PK 的值，这样 Update 的时候记录的 Del 是一个 kv，Put 是一个新的 kv，所以当做两次处理）。
+综上，主键字段的更新，30W 限制需要除以  ((1 + 普通索引数量) * 2 + 唯一索引数量) ，Update 主键的时候，唯一索引当做 1 个 KV，普通索引和主键当做 2 个 KV（唯一索引在对应的 Key-Value 中，Key 是 UK 的值，Value 是 PK，Update PK 的时候，Key 值不变，所以只需一次 Put kv 操作；其他的，比如普通索引，Key 里面就存了 PK 的值，这样 Update 的时候记录的 Del 是一个 kv，Put 是一个新的 kv，所以当做两次处理）。
 
 ### 4.6.3 30W 键值对的转换
 
 总结如下：
 |操作|键值对转换公式|
 |:----:|:----:|
-| Insert | 30W/Idx_Count |
-| Delete | 30W/Idx_Count |
+| Insert | 30W/(1+Idx_Count) |
+| Delete | 30W/(1+Idx_Count) |
 | Update_On_PK | 30W/((1+Non_UK)\*2+UK\*1)   |
 | Update_non_PK | 30W/(1+Involved_Idx_Count*2) |
 
@@ -161,13 +162,13 @@ CREATE TABLE `t1` (
 
 |操作|键值对转换公式|最大操作行数|
 |:----:|:----:|:----:|
-| Insert | 30W/Idx_Count | 15W |
-| Delete | 30W/Idx_Count | 15W |
+| Insert | 30W/(1+1) | 15W |
+| Delete | 30W/(1+1) | 15W |
 | Update_On_id | 30W/((1+1)*2 + 0)   | 7.5W |
-| Update_On_name | 30W/(1+Involved_Idx_Count*2) | 10W |
-| Update_On_age | 30W/(1+Involved_Idx_Count*2) | 30W |
+| Update_On_name | 30W/(1+1*2) | 10W |
+| Update_On_age | 30W/(1+0*2) | 30W |
 
-对于 TiDB 来说，有一个特殊之处，就是当主键是非 int 类型时，会有一个隐藏 int 类型主键，同时，本身顶一的这个主键变成了唯一索引。所以，修改下上面表定义为如下：
+对于 TiDB 来说，有一个特殊之处，就是当主键是非 int 类型时，会有一个隐藏 int 类型主键，同时，本身定义的这个主键变成了唯一索引。所以，修改下上面表定义为如下：
 
 CREATE TABLE `t1` (
 
@@ -187,21 +188,21 @@ CREATE TABLE `t1` (
 
 |操作|键值对转换公式|最大操作行数|
 |:----|:----|:----|
-| Insert   | 30W/Idx_Count   | 10W   |
-| Delete   | 30W/Idx_Count   | 10W   |
-| Update_On_id   | 30W/(1+Involved_Idx_Count*2)   | 10W   |
-| Update_On_name   | 30W/(1+Involved_Idx_Count*2)   | 10W   |
-| Update_On_age   | 30W/(1+Involved_Idx_Count*2) | 30W |
+| Insert   | 30W/(1+2)   | 10W   |
+| Delete   | 30W/(1+2)   | 10W   |
+| Update_On_id   | 30W/(1+1*2)   | 10W   |
+| Update_On_name   | 30W/(1+1*2)   | 10W   |
+| Update_On_age   | 30W/(1+0*2) | 30W |
 
 ### 4.6.4 事务的其他限制
 
-除了上面 RocksDB 层的限制意外，TiDB 中对于事务还有另外一个限制
+除了上述限制以外，TiDB 中对于事务还有另外一个限制
 
 (1) 参数 stmt-count-limit，默认值是 5000。
 
 >StmtCountLimit limits the max count of statement inside a transaction.
 
-也就是一个事务里面，默认最多包含 5000 条 SQL statement，在不超过上面 RocksDB 层的几个限制的前提下，这个参数可以修改 TiDB 的配置文件进行调整。
+也就是一个事务里面，默认最多包含 5000 条 SQL statement，在不超过上面几个限制的前提下，这个参数可以修改 TiDB 的配置文件进行调整。
 
 (2) 另外在某些场景下，例如执行 Insert Into Select 的时候，可能会遇到下面的报错
 
@@ -214,23 +215,23 @@ CREATE TABLE `t1` (
 >\# The max time a Txn may use (in seconds) from its startTS to commitTS.
 >\# We use it to guarantee GC worker will not influence any active txn. Please make sure that this# Value is less than gc_life_time - 10s.
 
-所以我们要尽量保证一个事务在这个 gc_life_time - 10s 的时间内完成，也可以通过调整 gc 时间 + 修改这个参数来避免这个问题，可能 TiDB 的配置文件中没有放出这个参数，可以手动编辑加入这个值。当然，更好的办法应该是开启 tidb_batch_insert 参数来规避单个事务过大的问题。
+所以我们要尽量保证一个事务在这个 gc_life_time - 10s 的时间内完成，也可以通过调整 gc 时间 + 修改这个参数来避免这个问题，可能 TiDB 的配置文件中没有放出这个参数，可以手动编辑加入这个值。当然，更好的办法应该是开启 Batch 功能来规避单个事务过大的问题。
 
 ### 4.6.5 如何绕开大事务的限制
 
 官方提供内部 Batch 的方法来绕过大事务的限制，分别由三个参数来控制：
 
-tidb_batch_insert
+- tidb_batch_insert
 
 > 作用域: SESSION 默认值: 0 这个变量用来设置是否自动切分插入数据。仅在 Autocommit 开启时有效。 当插入大量数据时，可以将其设置为 True，这样插入数据会被自动切分为多个 Batch，每个 Batch 使用一个单独的事务进行插入。
 
-tidb_batch_delete
+- tidb_batch_delete
 
 > 作用域: SESSION 默认值: 0 这个变量用来设置是否自动切分待删除的数据。仅在 Autocommit 开启时有效。 当删除大量数据时，可以将其设置为 True，这样待删除数据会被自动切分为多个 Batch，每个 Batch 使用一个单独的事务进行删除。
 
-tidb_dml_batch_size
+- tidb_dml_batch_size
 
-> 作用域: SESSION 默认值: 20000 这个变量用来设置自动切分插入 / 待删除数据的的 Batch 大小。仅在 tidb_batch_insert 或 tidb_batch_delete 开启时有效。 需要注意的是，当单行总数据大小很大时，20k 行总数据量数据会超过单个事务大小限制。因此在这种情况下，用户应当将其设置为一个较小的值。
+> 作用域: SESSION 默认值: 20000 这个变量用来设置自动切分插入 / 待删除数据的的 Batch 大小。仅在 tidb_batch_insert 或 tidb_batch_delete 开启时有效。 需要注意的是，当单行数据大小很大时，20k 行总数据量有可能会超过单个事务大小限制，因此在这种情况下，用户应当将该参数设置为一个较小的合适值。
 
 针对 Update 场景，官方还是建议通过 limit 的方式来循环操作，目前并未提供内部 Batch Update 的参数开关。
 

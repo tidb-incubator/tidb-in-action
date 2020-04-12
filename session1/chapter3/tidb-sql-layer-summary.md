@@ -1,8 +1,8 @@
 ## 3.3 SQL 层简介
 
-TiDB 的 SQL层，即 tidb-server，跟 Google 的 [F1](https://dbdb.io/db/google-f1) 比较类似，负责将 SQL 翻译成 KV 操作，转发给共享的分布式 KV 存储层 TiKV，并组装 TiKV 返回的结果，最终将查询结果返回给客户端。
+TiDB 的 SQL层，即 tidb-server，跟 Google 的 [F1](https://dbdb.io/db/google-f1) 比较类似，负责将 SQL 翻译成 Key-Value 操作，将其转发给共用的分布式 Key-Value 存储层 TiKV，然后组装 TiKV 返回的结果，最终将查询结果返回给客户端。
 
-这一层的节点都是无状态的节点，本身并不存储数据，节点之间完全对等。
+这一层的节点都是无状态的，节点本身并不存储数据，节点之间完全对等。
 
 ### 3.3.1 SQL 运算
 

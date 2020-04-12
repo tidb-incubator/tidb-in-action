@@ -1,7 +1,7 @@
 ## 11.4 TiSpark 结合大数据体系
 作为新兴的存储引擎，TiDB 虽然在架构上比大多数传统主流的大技术体系要相对优雅和先进，但由于技术生态以及迁移成本等问题，不可能在短时间内取而代之，因此必然面临和前辈共处一室的尴尬场景。毕竟谁也拉不下面子把自己辛苦收集和处理的数据再抽取一次丢给对方使用，但老板又说要实现数据协同效应，怎么办呢？下面介绍一些皆大欢喜的解决办法。  
 ### 11.4.1 与 Hive 表混和读写
-但凡有些规模和积累的公司一定不会对基于 Hadoop 集群的 Hive 表陌生，毕竟廉价，稳定且成熟。但 Hive 表不适合存放频繁变化的数据，而这却是 TiDB 的强项，这就导致了多业务公司可能既有 Hadoop 集群又有 TiDB 集群。要实现完美的混和访问，我们希望达到以下三个核心目标：  
+但凡有些规模和积累的公司一定不会对基于 Hadoop 集群的 Hive 表陌生，毕竟廉价，稳定且成熟。但 Hive 表不适合存放频繁变化的数据，而这却是 TiDB 的强项，这就导致了很多业务公司可能既有 Hadoop 集群又有 TiDB 集群。要实现完美的混和访问，我们希望达到以下三个核心目标：  
 1. 对业务 SQL 来讲，不能有 Hive/TiDB 表的区分，都按库名+表名进行访问，不要有多余操作。
 2. 由于访问 Hive 表可能需要消耗巨大资源，因此最好可以使用与之配套的计算集群资源。
 3. 确保 hive-site.xml 能够被 Spark 访问到，例如 hive-site.xml 复制到 SPARK_HOME/conf 下。hive-site.xml 中包含了 Hive Metastore 相关信息，只有 Spark 可以读取它，才能访问 Hive 中的数据。
@@ -112,14 +112,15 @@ RSC client is executing SQL query: select cnt from dc_tmp.test_for_mix, statemen
 可以看到是成功的实现了混和访问，对业务逻辑来说，数据在Hive库或者在TiDB库没有任何感知。  
 
 ### 11.4.3 改进地方：
-1. 写回TiDB
-TiDB 4.0 大事务实现之前，TiSpark 没有理想的方案支持向 TiDB 原生写入数据的方案。用户可以选择的是：
-(1) 使用 Spark 原生的 JDBC 方案，将 TiDB 当做 MySQL 写入数据，具体方案请参考[文档](https://github.com/pingcap/tispark#write-data-to-tidb-using-tidb-connector)。这个方案的缺陷是，数据必须被拆分为小批次插入，而这些批次之间无法维持事务原子性。换句话说，如果插入在中途失败，那么已经写入的数据并不会自动回滚，而需要人工干预。
-(2) 第二个方案是使用 TiSpark 的[大批写入](https://github.com/pingcap/tispark/blob/master/docs/datasource_api_userguide.md)，这个方案可以导入大量数据且维持事务原子回滚可能，但是需要由于缺少锁表和大事务支持，并不推荐在生产环境使用。
+#### 1. 写回TiDB    
+TiDB 4.0 实现大事务支持之前，TiSpark 没有理想的方案支持向 TiDB 原生写入数据的方案。用户可以选择的是：  
+* 使用 Spark 原生的 JDBC 方案，将 TiDB 当做 MySQL 写入数据，具体方案请参考[文档](https://github.com/pingcap/tispark#write-data-to-tidb-using-tidb-connector)。这个方案的缺陷是，数据必须被拆分为小批次插入，而这些批次之间无法维持事务原子性。换句话说，如果插入在中途失败，那么已经写入的数据并不会自动回滚，而需要人工干预。  
+* 第二个方案是使用 TiSpark 的[大批写入](https://github.com/pingcap/tispark/blob/master/docs/datasource_api_userguide.md)，这个方案可以导入大量数据且维持事务的原子性，但是由于缺少锁表和大事务支持，并不推荐在生产环境使用。 
+
 在 TiSpark 完成对应 TiDB 4.0 大事务对应的支持后，用户就可以使用 TiSpark 作为一种主要的 TiDB 跑批方案，无论是向 TiDB 写入还是由 TiDB 向其他系统写出。在本文写作的时间点，此功能尚未完成，如有相关需要，请关注官方 [Github 页面](https://github.com/pingcap/tispark)更新 TiSpark 版本。
 
-2. 库重名问题      
-TiDB 和 Hive 重名的情况，需要为 TiSpark 开启表名前缀模式，该模式会为所有 TiDB 表在 TiSpark 中加入前缀（而并不会改变 TiDB 内实际的表名）。例如希望 TiDB 表在 TiSpark 中以 tidb_ 作为前缀使用，则增加如下配置（这并不会实际改变 TiDB 的表明）：
+#### 2. 库重名问题      
+TiDB 和 Hive 重名的情况，需要为 TiSpark 开启表名前缀模式，该模式会为所有 TiDB 表在 TiSpark 中加入前缀（而并不会改变 TiDB 内实际的表名）。例如，希望 TiDB 表在 TiSpark 中以 tidb_ 作为前缀使用，则增加如下配置（这并不会实际改变 TiDB 的表名）：
 ```
 spark.tispark.db_prefix  "tidb_"
 ```
