@@ -4,9 +4,9 @@
 
 本章将介绍以下几种 TiDB 备份恢复和导入导出工具：
 - 增量数据订阅工具 CDC：识别、捕捉和输出 TiDB/TiKV 集群的数据变更。它既可以作为 TiDB 增量数据同步工具，将 TiDB 集群的增量数据同步至下游数据库；也提供开放数据协议，支持把数据发布到第三方系统。
-- TiDB 数据导入工具 Lightning：支持将 Mydumper 和 CSV 文件格式快速地导入目标 TiDB 集群中。
+- TiDB 数据导入工具 Lightning：支持将 Mydumper 和 CSV 文件格式快速导入目标 TiDB 集群中。
 - 分布式备份和恢复工具 BR：专门为 TiDB 量身打造的快速备份和恢复工具，支持从TiKV 直接备份出 SST 文件，并支持将这些 SST 文件快速恢复到目标 TiKV 集群中。
-- 分布式导出工具 Dumpling：
+- 分布式导出工具 Dumpling：完全采用 Golang 重新实现、与 TiDB 生态高度集成的类 Mydumper 工具，支持以 SQL 和 CSV 等多种数据输出格式并发高速导出 TiDB 数据，并支持直接导出数据到 S3 等云存储系统。 
 
 
 
