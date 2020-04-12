@@ -136,10 +136,10 @@ ALTER TABLE `xxxx` AUTO_INCREMENT=123456;
 
 ## 8. 量化指标
 
-* `io-concurrency` 不要设置过大，否则容易导致磁盘内部缓存大量出现 cache miss，影响顺序读的效率。
-* 下面的一些公式可以帮助我们计算数据导入过程中的资源使用和导入速度。 这里，我们假定 tidb-lightning 和 tikv-importer 之间的交互过程不是性能瓶颈。
+* `io-concurrency` 不要设置太的值，否则容易导致磁盘内部缓存失效出现大量 cache miss，影响顺序读的效率。
+* 下面给出的一些公式可以帮助我们计算数据导入过程中的资源使用量。 这里，我们假定 tidb-lightning 和 tikv-importer 之间的交互过程不是性能瓶颈。
 
-  * 假定 tikv-importer 节点使用万兆网卡 （理论带宽上限为 10 gbps），则编码速度最高达到每秒 300 MB 时就会耗尽全部带宽。这就是 TiDB Lightning 工具数据导入速度的上限。
+  * 假定 tikv-importer 节点使用万兆网卡 （理论带宽上限为 10 gbps），则编码速度最高达到每秒 300 MB 时就会耗尽全部带宽。这就是 TiDB Lightning 工具数据导入速度的理论上限。
 
     ```
     max-speed = bandwidth (1.2 GB/s) / replicas (3)
@@ -152,4 +152,4 @@ ALTER TABLE `xxxx` AUTO_INCREMENT=123456;
               + (num-import-jobs (24) × region-split-size (512 MB) × 2)
     ```
 
-  * tikv-importer 磁盘空间使用量基本上取决于最大的 N 个表, 其中 `N = max(index-concurrency, table-concurrency)`。实际的磁盘空间使用量与索引数量和类型相关。
+  * tikv-importer 的磁盘空间使用量基本上取决于最大的 N 个表, 其中 `N = max(index-concurrency, table-concurrency)`。实际的磁盘空间使用量与索引数量和类型相关。
