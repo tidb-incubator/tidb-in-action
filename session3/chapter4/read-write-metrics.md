@@ -36,7 +36,11 @@ TiKV 底层使用 RocksDB 存储引擎，TiKV 中处理 Query 相关的所有 KV
 
 2. 除了 L0 外，对于每一层二分查找包含这个 key 的文件（每一个文件包含一个 key 的范围，如果目标 key 没有在这个范围之中，则跳过这个文件，另 L0 的文件是可能重叠的，需要查 L0 的所有文件）
 
-3. 对于每个 sst 文件，会先刷到 block-cache 中。然后检查 Bloom filter，这个文件是否包含这个 key（前一步骤中是判断 key 是否可能位于这个文件是根据文件的范围，比如 A 文件的范围是 [1, 10)，这个时候如果 key 是 11，那么直接跳过这个文件，如果 key 是 5，则这个文件可能包含这个返回；本步骤通过 bloom filter 判断是否包含这个 key，能通过前一步骤说明这个 key 位于这个范围，这一步检查是否这个文件包含这个 key，比如 A 的范围是 [1, 10)，里面的 key 有 (1,3,5,7,9)，这个时候 6 虽然落在范围 [1, 10)，但是并没有包含在这个文件）
+3.  SST 文件中的查询
+     - 通过 SST 的 Index Block 二分定位到 Key 所在的 Block
+     - 在这个 Block 中进行 Bloom filter 检查，确定这个文件是否可能包含这个 Key：
+       - 如果 Bloom filter 判断为 false，则该 key 一定不在本 block 中。
+       - 如果 Bloom filter 判断为 ture，则该 key 可能在本 block 中。
 
 4. 通过 Index Block 二分查定位 key 所在的 Block（一个 SST 文件中包含多个 Block ）
 
