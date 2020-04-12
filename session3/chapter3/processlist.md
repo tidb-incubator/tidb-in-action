@@ -148,18 +148,27 @@ Query OK, 0 rows affected (0.00 sec)
 select *
 from information_schema.processlist
 where command != 'Sleep'
-order by time desc
+order by time desc \G
 ```
 
 这样就过滤出来哪些是正在运行的连接。之后再按照消耗时间倒序展示，排在最前面的，极大可能就是有问题的连接了。最后，通过查看 info 一列，我们就能看到具体执行的什么 SQL 语句了。
 
 ```result
-+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------+
-| ID   | USER   | HOST      | DB     | COMMAND   | TIME   | STATE   | INFO                                                                                     | MEM   | TxnStart   |
-|------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------|
-| 10   | root   | 127.0.0.1 | <null> | Query     | 0      | 2       | select * from information_schema.processlist where command != 'Sleep' order by time desc | 4588  |            |
-+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------+
-
+*************************** 1. row ***************************
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Query
+    TIME: 0
+   STATE: 2
+    INFO: select *
+from information_schema.processlist
+where command != 'Sleep'
+order by time desc
+     MEM: 4588
+TxnStart:
+1 row in set (0.00 sec)
 ```
 
 找出运行较长的 SQL 后，我们可以通过运行 `EXPLAIN ANALYZE` 语句获得一个 SQL 语句执行过程中的一些具体信息。关于 `EXPLAIN ANALYZE` 的具体使用，可查看 [使用 EXPLAIN 来优化 SQL 语句](https://pingcap.com/docs-cn/stable/reference/performance/understanding-the-query-execution-plan/#%E4%BD%BF%E7%94%A8-explain-%E6%9D%A5%E4%BC%98%E5%8C%96-sql-%E8%AF%AD%E5%8F%A5)
@@ -172,15 +181,26 @@ select *
 from information_schema.processlist
 where command != 'Sleep'
 order by mem desc
-limit 10
+limit 10 \G
 ```
 
 ```result
-+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------+
-| ID   | USER   | HOST      | DB     | COMMAND   | TIME   | STATE   | INFO                                                                                     | MEM   | TxnStart   |
-|------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------|
-| 10   | root   | 127.0.0.1 | <null> | Query     | 0      | 2       | select * from information_schema.processlist where command != 'Sleep' order by time desc | 4588  |            |
-+------+--------+-----------+--------+-----------+--------+---------+------------------------------------------------------------------------------------------+-------+------------+
+*************************** 1. row ***************************
+      ID: 1
+    USER: root
+    HOST: 172.16.5.169
+      DB: NULL
+ COMMAND: Query
+    TIME: 0
+   STATE: 2
+    INFO: select *
+from information_schema.processlist
+where command != 'Sleep'
+order by mem desc
+limit 10
+     MEM: 4588
+TxnStart:
+1 row in set (0.00 sec)
 ```
 
 找出内存消耗较多的 SQL 后，同样可以通过运行 `EXPLAIN ANALYZE` 语来获具体 SQL 执行信息。
