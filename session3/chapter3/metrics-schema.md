@@ -7,22 +7,13 @@ TiDB 4.0 诊断系统添加了集群监控系统表，所有表都在 `metrics_s
 
 `tidb_query_duration` 表用来查询 TiDB query 执行的百分位时间，如 P999，P99，P90 的查询耗时，单位是秒。 其表结构如下：
 
-| 字段名 | 类型 |
-| :-----:| :----: |
-| TIME | unsigned |
-| INSTANCE | varchar(512) |
-| SQL_TYPE | varchar(512) |
-| QUANTILE | double unsigned|
-| VALUE | double unsigned|
-
-字段解释：
-
-* TIME：query 执行的具体时间
-* INSTANCE：运行 query 的 TiDB 实例地址， 以 `IP:PORT` 格式组织
-* SQL_TYPE：query 的具体类型，比如 `Select`，`internal`
-* QUANTILE：query 执行的时间百分位
-* VALUE：与 `QUANTILE` 字段对应执行时间百分位的查询耗时，如上所述，单位为秒
-
+| 字段名 | 类型 | 字段解释 |
+| :-----:| :----: | :----: |
+| TIME | unsigned | query 执行的具体时间 |
+| INSTANCE | varchar(512) | 运行 query 的 TiDB 实例地址， 以 `IP:PORT` 格式组织 |
+| SQL_TYPE | varchar(512) | query 的具体类型，比如 `Select`，`internal` |
+| QUANTILE | double unsigned| query 执行的时间百分位 |
+| VALUE | double unsigned| 与 `QUANTILE` 字段对应执行时间百分位的查询耗时，如上所述，单位为秒 |
 
 下面 SQL 查询当前时间的 P90 的 TiDB Query 耗时。可以看出，`Select` 类似的 Query 的 P90 耗时是 0.0384 秒，`internal` 类型的 P90 耗时是 0.00327。`instance` 字段是 TiDB 示例的地址。
 
