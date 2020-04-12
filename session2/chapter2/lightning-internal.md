@@ -3,7 +3,7 @@ Lightning 支持把全量数据高速导入到 TiDB 集群，导入速度可达�
 
 ## 1. 整体架构
 
-### 架构组件
+### 组件概览
 
 ![架构图](/res/session2/chapter2/lightning-internal/1.png)
 
@@ -11,7 +11,7 @@ Lightning 支持把全量数据高速导入到 TiDB 集群，导入速度可达�
 * **TiDB Lightning**（前端）：负责导入过程的管理和适配工作。读取数据源文件，在目标 TiDB 集群上建表，并将数据文件转换成键值对发送到 tikv-importer，最后执行数据完整性检查等收尾工作。
 * **tikv-importer**（后端）：负责将数据导入到目标 TiKV 集群。对 Lightning 写入的键值对执行缓存、排序、切分等操作，并导入到 TiKV 集群。
 
-### 整体工作原理
+### 数据导入过程
 
 ![导入流程图](/res/session2/chapter2/lightning-internal/2.png)
 
