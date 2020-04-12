@@ -1,17 +1,23 @@
 sudo: false
-dist: trusty
+dist: xenial
 language: node_js
 node_js:
   - 12
 cache: npm
 
+before_install:
+  - sudo apt-get install -y calibre libfontconfig
+  - npm install -g gitbook-cli svgexport@0.3.2
+
 before_script:
   - npm install
-  - npm install -g gitbook-cli
   - export PATH=$(npm bin):$PATH
+  - gitbook install
 
 script:
   - gitbook build . --gitbook=3.2.3
+  - gitbook pdf . --gitbook=3.2.3
+  - mv book.pdf _book/
 
 deploy:
   provider: pages

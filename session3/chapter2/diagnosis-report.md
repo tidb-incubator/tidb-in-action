@@ -1,12 +1,12 @@
 # 2.3 生成集群诊断报告
 
-诊断报告的全称是 诊断报告 + 系统报告。
+诊断报告全称是 诊断报告 + 系统报告。
 
-诊断报告是指 TiDB 内置的诊断对系统在某一时间范围内，做出的系统诊断，帮助 DBA 发现集群潜在的问题以及自动系统巡检功能，最终将诊断结果汇总一个诊断报告表。
+诊断报告是指 TiDB 内置的诊断，对系统在某一时间范围内的状态做出的系统诊断以及自动系统巡检，将诊断结果汇总一个诊断报告表，帮助 DBA 发现集群潜在的问题。
 
 系统报告包括集群的拓扑信息，机器的硬件信息，服务器以及各个组件的负载信息，各个组件的监控信息以及配置信息。
 
-最终将诊断报告和系统报告生成一份 html 的报告，并支持下载后离线浏览和传阅。
+最终将诊断报告和系统报告生成一份 html 格式的报告，并支持下载离线浏览及传阅。
 
 ## 2.3.1 如何使用
 
@@ -18,7 +18,8 @@
 curl -X POST -d '{"metric-storage":"http://{PROMETHEUS_ADDRESS}"}' http://{PD_ADDRESS}/pd/api/v1/config
 ```
 
-示例
+
+示例：
 
 ```shell
 curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:2379/pd/api/v1/config
@@ -26,32 +27,36 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 
 ### 2. 关于时间范围的选择
 
-建议生成报告的时间范围在 2 min ~ 60 min 内，目前不建议生成超过 1 小时范围的报告。
+建议生成诊断报告的时间范围在 2 min ~ 60 min 内，目前不建议生成时间范围超过 1 小时的诊断报告。
 
-### 3. 生成诊断报告
+
+### 3. 生成诊断报告并查看
+
+点击完整报告的链接即可查看报告内容。
 
 ![生成诊断报告步骤](/res/session3/chapter2/diagnosis-report/report-doc1.png)
 
 ![生成诊断报告结果](/res/session3/chapter2/diagnosis-report/report-doc2.png)
 
-点击完整报告的链接即可查看报告内容。
 
 ### 4. 生成对比诊断报告
 
+对比两个诊断时间段的报告，要求 2 个时间段的跨度一样，比如 start 和 end 的时间差均为 10 分钟。
+
 ![生成对比诊断报告步骤](/res/session3/chapter2/diagnosis-report/report-doc3.png)
 
-关于对比报告的 2 个时间范围的选择，要求 2 个时间段的跨度一样，比如 start 和 end 的时间差均为 10 分钟。
 
 ### 5. 提示
 
+- i 图标：鼠标移动到 i 图标会显示每一行的说明注释。
+- expand：点击 expand 展开会看到这项监控更加详细的信息，例如是哪个 instance, 哪个 label 等等。
+
 ![图标](/res/session3/chapter2/diagnosis-report/report-doc4.png)
 
-- i 图标：鼠标移动到 i 图标会显示每一行的说明注释。
-- expand：点击 expand 展开会看到这项监控更加详细的信息，如是哪个 instance, 哪个 label 等等。
 
 ## 2.3.2 自动诊断报告
 
-自动诊断是 TiDB 的 4.0 引入的新特性，根据一些内置的诊断规则对系统做出诊断，这里具体可以参考 chapter3/inspection-tables.md 中的 `INSPECTION_RESULT` 诊断表查看更详细的内容。
+自动诊断是 TiDB 的 4.0 引入的新特性，根据一些内置的诊断规则对系统做出诊断，这里具体可以参考下一章诊断系统表中的 `INSPECTION_RESULT` 诊断结果表，查看更详细的内容。
 
 ## 2.3.3 系统报告
 
@@ -75,16 +80,16 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 | :---------- | :------------------- | :-------- | :---------- | :--------------------------------------------------- | :----------------- |
 | 172.16.5.40 | `tidb*1 tikv*4 pd*1` | 20/40     | 122.696     | sda3: 1465.187500 nvme0n1: 343.715603 sda1: 0.185237 | 253.14520396237572 |
 
-- HOST: 服务器地址。
-- INSTANCE: 表示服务器上运行的组件。`tidb*1 tikv*4 pd*1` 表示这台服务器上有 1 个 TiDB，4 个 TiKV，1 个 PD 实例。
-- CPU_CORES：CPU 核心数，逻辑核心/物理核心
-- MEMORY：内存大小，单位是 GB。
-- DISK：磁盘大小，单位是 GB。
-- UPTIME: 服务器的启动时间，单位是 Day。
+- HOST： 服务器地址
+- INSTANCE： 表示服务器上运行的组件。`tidb*1 tikv*4 pd*1` 表示这台服务器上运行着 1 个 TiDB 实例，4 个 TiKV 实例 以及 1 个 PD 实例
+- CPU_CORES：CPU 核心数，逻辑核心 / 物理核心
+- MEMORY：内存容量，单位是 GB
+- DISK：磁盘容量，单位是 GB
+- UPTIME: 服务器的启动时间，单位是 Day
 
 #### (3) cluster info
 
-集群拓扑信息。信息来自 TiDB 的 `information_schema.cluster_info` 系统表。
+集群拓扑信息，信息来自 TiDB 的 `information_schema.cluster_info` 系统表。
 
 | TYPE | INSTANCE          | STATUS_ADDRESS    | VERSION                                | GIT_HASH                                 | START_TIME                | UPTIME              |
 | :--- | :---------------- | :---------------- | :------------------------------------- | :--------------------------------------- | :------------------------ | :------------------ |
@@ -99,7 +104,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 
 #### (1) node load
 
-服务器节点的负载信息，包括磁盘的读/写延迟，cpu、memory 的 avg, max, min 使用率。
+服务器节点的负载信息，包括磁盘的读 / 写延迟，CPU、Memory 的 AVG、 MAX、 MIN 使用率。
 
 | METRIC_NAME             | instance | AVG    | MAX    | MIN      |
 | :---------------------- | :------- | :----- | :----- | :------- |
@@ -110,7 +115,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 
 #### (2) process cpu usage
 
-各个 TiDB/PD/TiKV 的 CPU 的 avg, max, min 使用率。
+各个 TiDB / PD / TiKV 组件的 CPU 的 AVG、 MAX、 MIN 使用率。
 
 | instance          | job  | AVG   | MAX   | MIN   |
 | :---------------- | :--- | :---- | :---- | :---- |
@@ -140,7 +145,7 @@ curl -X POST -d '{"metric-storage":"http://127.0.0.1:9090"}' http://127.0.0.1:23
 
 #### (4) goroutines count
 
-TiDB/PD 的 goroutines 的 avg, max, min 数量信息。
+TiDB / PD 组件的 goroutines 的 AVG、 MAX、 MIN 数量信息。
 
 | instance          | job  | AVG | MAX | MIN |
 | :---------------- | :--- | :-- | :-- | :-- |
@@ -164,19 +169,21 @@ TiDB/PD 的 goroutines 的 avg, max, min 数量信息。
 | tidb_cop [expand](<javascript:void(0)>)               |       | 0.001      | 206.21     | 2756        | 2.01   | 1.66     | 0.42     | 0.16     |
 | tidb_transaction [expand](<javascript:void(0)>)       |       | 0.09       | 15920.8    | 9456815     | 0.49   | 0.06     | 0.02     | 0.008    |
 
-- METRIC_NAME：监控项的名称
-- Label: 监控的 label 信息，点击 expand 后可以查看该项监控更加详细的各项 label 的监控信息。
-- TIME_RATIO：该项监控消耗的总时间和 TIME_RATIO 为 1 的监控行总时间比例。如 `tidb_cop`的总耗时占 `tidb_query` 总耗时的 0.001。
-- TOTAL_TIME: 该项监控的总耗时。
-- TOTAL_COUNT: 该项监控执行的总次数。
-- P999: 该项监控的 P999 最大执行时间。
-- P99: 该项监控的 P99 最大执行时间。
-- P90: 该项监控的 P90 最大执行时间。
-- P80: 该项监控的 P80 最大执行时间。
+- METRIC_NAME：该项监控项的名称
+- LABEL：该项监控的 LABEL 信息，点击 expand 后可以查看该项监控更加详细的各项 LABEL 的监控信息。
+- TIME_RATIO：该项监控消耗的总时间和 TIME_RATIO 为 1 的监控行总时间比例
+	
+		例如 tidb_cop 的总耗时占 tidb_query 总耗时的 0.001 秒
+- TOTAL_TIME：该项监控的总耗时
+- TOTAL_COUNT： 该项监控执行的总次数
+- P999： 该项监控的 P999 最大执行时间
+- P99：该项监控的 P99 最大执行时间
+- P90：该项监控的 P90 最大执行时间
+- P80：该项监控的 P80 最大执行时间
 
 #### (2) Error
 
-集群内各个 error 出现的总次数。
+集群内各种 error 出现的总次数。
 
 | METRIC_NAME                                                             | LABEL           | TOTAL_COUNT |
 | :---------------------------------------------------------------------- | :-------------- | :---------- |
@@ -210,7 +217,7 @@ TiDB 组件相关的监控信息。
 
 #### (1) Time Consume
 
-TiDB 的各项监控耗时以及各项耗时的占比。和 overview 中类似，但是这个表的 label 信息会更丰富，能看到更多细节。
+TiDB 的各项监控耗时以及各项耗时的占比。与 Overview 中类似，并且 label 信息会更丰富，可以看到更多细节。
 
 #### (2) Transaction
 
@@ -226,16 +233,17 @@ TiDB 事务相关的监控项。
 | tidb_load_safepoint_total_num [expand](<javascript:void(0)>)  |       | 67          |             |         |        |        |        |
 | tidb_lock_resolver_total_num [expand](<javascript:void(0)>)   |       | 40          |             |         |        |        |        |
 
-- TOTAL_VALUE： 该项监控在报告时间段内所有值的 sum。
-- TOTAL_COUNT：该项监控出现的总次数。
-- P999: 该项监控的 P999 最大值。
-- P99: 该项监控的 P99 最大值。
-- P90: 该项监控的 P90 最大值。
-- P80: 该项监控的 P80 最大值。
+- TOTAL_VALUE： 该项监控在报告时间段内所有值的和
+- TOTAL_COUNT：该项监控出现的总次数
+- P999： 该项监控的 P999 最大值
+- P99：该项监控的 P99 最大值
+- P90：该项监控的 P90 最大值
+- P80：该项监控的 P80 最大值
 
 示例：
 
-在报告时间范围内，tidb_txn_kv_write_size：一共有 1379 次事务的 kv 写入，总 kv 写入大小是 216307980， 其中 P999, P99, P90, P80 的最大值分别为 1043333 , 996147, 248705, 235266 单位是 byte。
+在报告时间范围内，`tidb_txn_kv_write_size`：一共有 1379 次事务的 kv 写入，总 kv 写入大小是 216307980， 其中 P999、P99、P90、P80 的最大值分别为 1043333、996147、248705、235266，单位是 byte。
+
 
 #### (3) DDL-owner
 
@@ -245,17 +253,19 @@ TiDB DDL 的 owner 信息。
 | :------------------ | :---------------- |
 | 2020-03-05 16:30:00 | 172.16.5.40:10089 |
 
-> 注意： 如果 owner 信息为空，不代表这个时间段内一定没有 owner, 因为这里是依靠 ddl_worker 的监控信息来判断 DDL owner 的，也可能是这个时间段内 ddl_worker 没有做任何 DDL job 导致这里信息为空。
+> 注意： 
+> 
+> 如果 owner 信息为空，不代表这个时间段内一定没有 owner。因为 TiDB 依据 `ddl_worker` 的监控信息来判断 DDL owner，所以也可能由于这个时间段内 `ddl_worker` 没有做任何 DDL job， 导致 owner 信息为空。
 
-### 5. PD/TiKV
+### 5. PD / TiKV
 
-PD 和 TiKV 的监控报告和之前的表结构类似，这里不再重复赘述，点击 i 图标查看相关注释查看更多信息即可。
+PD 和 TiKV 的监控报告与之前的表结构类似，这里不再重复赘述，点击 i 图标查看相关注释查看更多信息即可。
 
 ### 6. Config
 
 #### (1) Scheduler Config
 
-PD Scheduler 配置参数的 change history。
+PD Scheduler 配置参数的 change history
 
 | MIN_TIME                   | CONFIG_ITEM                     | VALUE  | CHANGE_COUNT |
 | :------------------------- | :------------------------------ | :----- | :----------- |
@@ -282,27 +292,32 @@ PD Scheduler 配置参数的 change history。
 
 - MIN_TIME： 在报告时间范围内监控项生效的最小时间
 - CONFIG_ITEM：配置项的名称
-- VALUE：配置项的值。
-- CHANGE_COUNT：配置项在报告时间范围内被修改的次数。
+- VALUE：配置项的值
+- CHANGE_COUNT：配置项在报告时间范围内被修改的次数
 
 示例，上面报告中，`leader-schedule-limit` 配置参数有过修改
 
 - 2020-03-05 16:30:00， `leader-schedule-limit` 的配置值为 4
-- 2020-03-05 16:46:00，`leader-schedule-limit` 的配置值为 8，说明在 2020-03-05 16:46:00 时该配置的值呗修改了。
 
-> 注意：由于拉取监控信息的延迟，上面 `leader-schedule-limit` 的修改时间可能要比 2020-03-05 16:46:00 更早几秒，但差别不会超过 prometheus 拉取监控的 间隔时间。
+- 2020-03-05 16:46:00，`leader-schedule-limit` 的配置值为 8，说明该配置的值在 2020-03-05 16:46:00 修改
+
+> 注意：
+> 
+> 由于拉取监控信息的延迟，上面 `leader-schedule-limit` 的修改时间可能要比 2020-03-05 16:46:00 早几秒，但延迟不会超过 prometheus 拉取监控的间隔时间。
 
 #### (2) TiDB GC Config
 
-TiDB 的 GC 配置参数的 change history。
+TiDB 的 GC 配置参数的 change history
 
 | MIN_TIME                   | CONFIG_ITEM          | VALUE | CHANGE_COUNT |
 | :------------------------- | :------------------- | :---- | :----------- |
 | 2020-03-03 17:00:00.000000 | tikv_gc_life_time    | 6000  | 1            |
 | 2020-03-03 17:00:00.000000 | tikv_gc_run_interval | 60    | 1            |
 
-#### (3) TiDB/PD/TiKV Current Config
-
-注意，current Config 是指生成报告时集群当前的配置值，不是用户选择的报告时间范围内的值。
+#### (3) TiDB / PD / TiKV Current Config
 
 该表的数据来源是 TiDB 的 `information_schema.cluster_config` 系统表。
+
+> 注意：
+> 
+> current Config 是指生成报告时集群当前的配置值，不是用户选择的报告时间范围内的值。

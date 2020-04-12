@@ -1246,7 +1246,20 @@ delete from t where id in (select id from t_bak);
 
 commit;
 ```
-o have read       ##
+
+```
+$vi ./fbo_ggs_Linux_x64_shiphome/Disk1/response/oggcore.rsp
+####################################################################
+## Copyright(c) Oracle Corporation 2017. All rights reserved.     ##
+##                                                                ##
+## Specify values for the variables listed below to customize     ##
+## your installation.                                             ##
+##                                                                ##
+## Each variable is associated with a comment. The comment        ##
+## can help to populate the variables with the appropriate        ##
+## values.                                                        ##
+##                                                                ##
+## IMPORTANT NOTE: This file should be secured to have read       ##
 ## permission only by the oracle user or an administrator who     ##
 ## own this installation to protect any sensitive input values.   ##
 ##                                                                ##

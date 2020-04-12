@@ -13,7 +13,7 @@
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 调度概述](session1/chapter4/scheduling-overview.md) @陈书宁
     * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[季朋](https://github.com/pengji)
-* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董洪亮 @王军 @王聪
+* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮 @王军 @王聪
         <!--
         与 MySQL 兼容性对比
         TiDB 与 MySQL 的语句兼容性说明
@@ -189,6 +189,7 @@
     * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
     * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚 @于沛涛
+    * [7.5 TiKV 磁盘空间占用与回收常见问题](session4/chapter7/compact.md)
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
     * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md) @胡盼盼
     * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md)
