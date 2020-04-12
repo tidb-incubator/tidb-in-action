@@ -2,7 +2,7 @@
 
 TiDB 默认会启用慢查询日志，并将执行时间超过规定阈值的 SQL 保存到日志文件。慢查询日志常用于定位慢查询语句，分析和解决 SQL 的性能问题。通过系统表 `information_schema.slow_query` 也可以查看当前 TiDB 节点的慢查询日志，其字段与慢查询日志文件内容一致。TiDB 4.0 又新增了系统表 `information_schema.cluster_slow_query`，可以用于查看全部 TiDB 节点的慢查询。
 
-本节将首先简要介绍慢查询日志的格式，然后针对上述两种慢查询系统表给出一些常见的查询示例。
+本节将首先简要介绍慢查询日志的格式和字段含义，然后针对上述两种慢查询系统表给出一些常见的查询示例。
 
 ## 慢查询日志示例及字段说明
 
@@ -34,24 +34,24 @@ insert into t select * from t;
 以下逐一介绍慢查询日志中各个字段的含义。
 
 > 注意：
-> 慢查询日志中所有时间相关字段的单位都是 “秒”
+> 慢查询日志中所有时间相关字段的单位都是秒。
 
 (1) Slow Query 基础信息：
 
 * Time：表示日志打印时间。
-* Query_time：表示执行这个语句花费的时间。
-* Parse_time：表示这个语句在语法解析阶段花费的时间。
-* Compile_time：表示这个语句在查询优化阶段花费的时间。
-* Digest：表示 SQL 语句的指纹。
-* Stats：表示 table 使用的统计信息版本时间戳。如果时间戳显示为 pseudo，表示用默认假设的统计信息。
-* Txn_start_ts：表示事务的开始时间戳，也是事务的唯一 ID，可以用这个值在 TiDB 日志中查找事务相关的其他日志。
-* Is_internal：表示是否为 TiDB 内部的 SQL 语句。true 表示 TiDB 系统内部执行的 SQL 语句，false 表示用户执行的 SQL 语句。
-* Index_ids：表示语句使用的索引的 ID。
-* Succ：表示语句是否执行成功。
-* Backoff_time：表示语句遇到需要重试的错误时在重试前等待的时间，常见的需要重试的错误有以下几种：遇到了 lock、Region 分裂、tikv server is busy。
+* Query_time：表示执行该语句花费的时间。
+* Parse_time：表示该语句在语法解析阶段花费的时间。
+* Compile_time：表示该语句在查询优化阶段花费的时间。
+* Digest：表示该语句的 SQL 指纹。
+* Stats：表示 table 使用的统计信息版本时间戳。如果时间戳显示为 `pseudo`，表示用默认假设的统计信息。
+* Txn_start_ts：表示事务的开始时间戳，也就是事务的唯一 ID，可以用该值在 TiDB 日志中查找事务相关的其他日志。
+* Is_internal：表示是否为 TiDB 内部的 SQL 语句。`true` 表示是 TiDB 系统内部执行的 SQL 语句，`false` 表示是由用户执行的 SQL 语句。
+* Index_ids：表示该语句使用的索引 ID。
+* Succ：表示该语句是否执行成功。
+* Backoff_time：表示遇到需要重试的错误时该语句在重试前等待的时间。常见的需要重试的错误有以下几种：遇到了 lock、Region 分裂、tikv server is busy。
 * Plan_digest：表示 plan 的指纹。
-* Plan：表示语句的执行计划，用 select tidb_decode_plan('xxx...') SQL 语句可以解析出具体的执行计划。
-* Query：表示 SQL 语句。慢日志里面不会打印 Query 字段名，但映射到内存表后，对应的字段叫 Query。
+* Plan：表示该语句的执行计划，用 `select tidb_decode_plan('xxx...')` 可以解析出具体的执行计划。
+* Query：表示该 SQL 语句。慢日志里不会打印字段名 `Query`，但映射到内存表后对应的字段叫 `Query`。
 
 (2) 和事务执行相关的字段：
 
