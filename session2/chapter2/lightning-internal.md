@@ -33,10 +33,10 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 
 ### 导入模式
 
-一旦目标 TiKV 集群切换到导入模式，整个数据导入阶段该集群将被 tidb-lightning 独占，无法对外提供正常服务。tidb-lightning 会修改集群配置以提高数据导入效率：
+一旦目标 TiKV 集群切换到导入模式，整个数据导入阶段该集群将被 tidb-lightning 独占，无法对外提供正常服务。tidb-lightning 会修改下列集群配置以提高数据导入速度：
 
-* TiKV 的后台任务数会增加，以并行接收更多的 SST 文件。
-* `write stall triggers` 被移除，使写速度优先于读速度。
+* 增加 TiKV 后台任务数，以并行接收更多的 SST 文件。
+* 移除 `write stall triggers`，使写速度优先于读速度。
 
 数据导入完成后，tidb-lightning 会自动把 TiKV 集群切换回“普通模式”。
 
@@ -46,9 +46,9 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 
 ### 工作原理
 
-首先，tidb-lightning 会扫描数据文件，区分出结构文件（包含 `CREATE TABLE` 语句）和数据文件（包含 `INSERT` 语句）。结构文件的内容会直接发送到 TiDB，用于建立数据库和表。然后，tidb-lightning 会并发处理每一张表的数据。这里，我们来看一张表的导入处理过程。
+tidb-lightning 会扫描数据文件，区分出结构文件（包含 `CREATE TABLE` 语句）和数据文件（包含 `INSERT` 语句）。结构文件的内容会直接发送到 TiDB，用于建立数据库和表。然后，tidb-lightning 会并发处理数据文件。这里，我们来具体看一下一张表的导入处理过程。
 
-每个数据文件的内容都是规律的 `INSERT` 语句，如下所示：
+每张表的数据文件内容都是规律的 `INSERT` 语句，如下所示：
 
 ``` sql
 INSERT INTO `tbl` VALUES (1, 2, 3), (4, 5, 6), (7, 8, 9);
@@ -56,7 +56,7 @@ INSERT INTO `tbl` VALUES (10, 11, 12), (13, 14, 15), (16, 17, 18);
 INSERT INTO `tbl` VALUES (19, 20, 21), (22, 23, 24), (25, 26, 27);
 ```
 
-tidb-lightning 会分析数据文件，找出每一行的位置并分配一个行号，这样即使没有定义主键的表也能够区分每一行。tidb-lightning 会直接借助 TiDB 实例把 SQL 转换为键值对，称为“键值编码器”（KV encoder）。与外部的 TiDB 集群不同，键值编码器是寄存在 tidb-lightning 进程内的，并使用内存存储；每执行完一个 INSERT 之后，tidb-lightning 可以直接读取内存获取转换后的键值对（这些键值对包含数据及索引），得到键值对之后便可以发送到 tikv-importer。
+tidb-lightning 会分析数据文件，找出每一行的位置并分配一个行号，这样即使没有定义主键的表也能够区分每一行。tidb-lightning 会直接借助 TiDB 实例把 SQL 转换为键值对，称为“键值编码器”（KV encoder）。与外部的 TiDB 集群不同，键值编码器是寄存在 tidb-lightning 进程内的，并使用内存存储；每执行完一个 INSERT 之后，tidb-lightning 可以直接读取内存获取转换后的键值对（这些键值对包含数据及索引），并发送到 tikv-importer。
 
 ### 并发设置
 
