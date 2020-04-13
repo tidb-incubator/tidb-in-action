@@ -9,18 +9,24 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 
 ![架构图](/res/session2/chapter2/lightning-internal/1.png)
 
-如上图所示，TiDB Lightning 工具主要包含两个组件：
-* **tidb-lightning**（前端）：负责导入过程的管理和适配工作。读取数据文件，在目标 TiDB 集群上建表，并将数据文件转换成键值对发送到 tikv-importer，最后执行数据完整性检查等收尾工作。
+如上图所示，TiDB Lightning 工具包含两个组件：
+* **tidb-lightning**（前端）：负责导入过程的管理和适配工作。读取数据文件，在目标 TiDB 集群上建表，并将数据文件转换成键值对发送到 tikv-importer。等tikv-importer 的处理工作完成后，tidb-lightning还需要执行数据校验等收尾工作。
 * **tikv-importer**（后端）：负责将数据导入到目标 TiKV 集群。对 tidb-lightning 写入的键值对执行缓存、排序和切分等操作后导入 TiKV 集群。
+
+那么，为什么要把一个流程拆分成两个组件呢？
+* tidb-lightning 与 TiDB 密不可分，tikv-importer 则与 TiKV 密不可分。在实现上，tidb-lightning 复用了 TiDB 的代码，tikv-importer 则引用 TiKV 为库。这样一来，tidb-lightning 与 tikv-importer 之间就出现了语言冲突：TiDB 使用 Go 实现，而TiKV 使用 Rust。把二者拆分为各自独立的组件更方便开发，而双方都需要的键值对可以透过 gRPC 传递。
+* 分开 tidb-lightning 和 tikv-importer 也使得横向扩展更为灵活。例如，可以运行多个 tidb-lightning，传送键值对给同一个 tikv-importer。
+
+总体而言，TiDB Lightning 工具的设计思路是，绕过SQL层，在线下将数据文件转化为键值对，并生成排好序的 SST 文件，然后直接推送到 TiKV 层的 RocksDB 里。这种批处理的方式可以绕过 TiDB 层的 ACID 限制和 TiKV 层的线上排序等耗时步骤，提升数据导入过程的整体效率。
 
 ### 数据导入过程
 
 ![导入流程图](/res/session2/chapter2/lightning-internal/2.png)
 
 1. 导入数据之前，tidb-lightning 会自动将 TiKV 集群切换为“导入模式”（import mode）以优化写入效率。
-2. tidb-lightning 会在目标 TiDB 集群上建立空数据库和表，并获取其元数据。
-3. 每张表都会被分割为多个连续的批次，这样来自大表（200 GB 以上）的数据就可以并行导入。
-4. tidb-lightning 会通过 gRPC 通知 tikv-importer 为每一个批次准备一个“引擎文件”（engine file）来处理键值对。tidb-lightning 会并发读取数据文件，转换成与目标 TiDB 集群相同编码的键值对，然后发送到 tikv-importer 里对应的引擎文件。
+2. tidb-lightning 会在目标 TiDB 集群上创建好空数据库和表。
+3. 每张表的数据文件都会被分割为多个连续的批次，这样来自大表（200 GB 以上）的数据就可以并行导入了。
+4. tidb-lightning 会并发读取数据文件，转换成与目标 TiDB 集群相同编码的键值对，然后发送到 tikv-importer。tidb-lightning 通过 gRPC 传递键值对给 tikv-importer。tikv-importer 会为每一个批次的键值对准备一个“引擎文件”（engine file）。
 5. 当一个引擎文件数据写入完毕，tikv-importer 便开始对目标 TiKV 集群数据进行 Region 分裂和调度，然后导入数据到 TiKV 集群。引擎文件包含两种：数据引擎与索引引擎，分别对应两种键值对：行数据和次级索引。通常行数据在数据文件里是完全有序的，而次级索引则是无序的。因此，数据引擎文件在对应 Region 写入完成后会被立即上传，而索引引擎文件只有在整张表所有 Region 编码完成后才会执行导入。
 6. 整张表的所有引擎文件完成导入后，tidb-lightning 会对比本地数据文件及目标 TiDB 集群的校验和（checksum），确保导入的数据无损；然后让 TiDB 分析（ANALYZE）这些新增的数据，以优化日后的操作。同时，tidb-lightning 会调整表的 AUTO_INCREMENT 值防止后续新增数据时发生冲突。表的自增 ID 是通过行数的上界估计值得到的，与表的数据文件总大小成正比。因此，最后的自增 ID 通常比实际行数大得多。这属于正常现象，因为在 TiDB 中自增 ID 不一定是连续分配的。
 7. 在所有步骤完毕后，tidb-lightning 会自动将 TiKV 切换回“普通模式”（normal mode），此后 TiDB 集群才可以正常对外提供服务。
