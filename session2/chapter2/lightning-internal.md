@@ -97,9 +97,9 @@ SST 文件包含整个表的数据和索引，和 TiKV 的储存单位 Region �
 
 ![6.png](/res/session2/chapter2/lightning-internal/6.png)
 
-* `max-open-engines`：表示 Lightning 可以在 tikv-importer 同时打开引擎文件的数量，如果是单个 Lightning 实例，这个配置需要不小于 Lightning 中 `index-concurrency` + `table-concurreny` 的大小，如果是多个 Lightning 实例，则不能小于所有实例的 `index-concurrency` + `table-concurreny` 总和。引擎文件会消耗磁盘空间，数据引擎的磁盘空间大小为 Lightning 中 `batch-size` 的大小，索引引擎的大小参考下面第 7 段的估算方式，需要根据 Importer 机器的磁盘容量来合理配置本参数；
-* `num-import-jobs`: 一个 Lightning `batch-size` 的数据写入到一个引擎文件之后，会使用 Import 过程导入到 TiKV，这个参数控制同时进行导入的线程数量，通常使用默认配置即可；
-* `region-split-size`: 一个引擎文件会很大（如 100 GiB），不能一次性导入到 TiKV，所以会把引擎文件切分成多个更小的 SST 文件，SST 文件不会超过这个大小，不建议低于 96 MiB。SST 切分过小，会导致 Ingest 的吞吐量小。
+* `max-open-engines`：表示 tidb-lightning 可以在 tikv-importer 同时打开的引擎文件数量，对于单个 tidb-lightning 实例，这个配置不应小于 tidb-lightning 的 `index-concurrency` + `table-concurreny`；多个 Lightning 实例并行运行的状况下，不能小于所有实例的 `index-concurrency` + `table-concurreny` 总和。引擎文件会消耗磁盘空间，数据引擎的磁盘空间大小为 tidb-lightning 中 `batch-size` 的大小，索引引擎的大小参考本节后面的估算方式，需要根据 tikv-importer 节点的磁盘容量来合理配置本参数。
+* `num-import-jobs`: 一个 `batch-size` 大小的数据写入到引擎文件后，会有若干个线程负责将其导入到 TiKV。这个参数控制同时进行导入的线程数量，通常使用默认配置即可。
+* `region-split-size`: 一个引擎文件可能会很大（比如 100 GB），很难一次性导入到 TiKV。需要把引擎文件切分成多个较小的 SST 文件，SST 文件不会超过`region-split-size` 值。通常，不建议低于 96 MB，因为SST 切分过小会导致 Ingest 的吞吐量小。
 
 ## 4. 数据校验
 
