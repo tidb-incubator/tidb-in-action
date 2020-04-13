@@ -11,7 +11,7 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 
 如上图所示，TiDB Lightning 工具主要包含两个组件：
 * **tidb-lightning**（前端）：负责导入过程的管理和适配工作。读取数据文件，在目标 TiDB 集群上建表，并将数据文件转换成键值对发送到 tikv-importer，最后执行数据完整性检查等收尾工作。
-* **tikv-importer**（后端）：负责将数据导入到目标 TiKV 集群。对 tidb-lightning 写入的键值对执行缓存、排序和切分等操作，最终导入 TiKV 集群。
+* **tikv-importer**（后端）：负责将数据导入到目标 TiKV 集群。对 tidb-lightning 写入的键值对执行缓存、排序和切分等操作后导入 TiKV 集群。
 
 ### 数据导入过程
 
@@ -95,15 +95,15 @@ tidb-lightning 把数据文件拆分成多个能并发执行的小任务。下�
 * `num-import-jobs`: 一个 Lightning `batch-size` 的数据写入到一个引擎文件之后，会使用 Import 过程导入到 TiKV，这个参数控制同时进行导入的线程数量，通常使用默认配置即可；
 * `region-split-size`: 一个引擎文件会很大（如 100 GiB），不能一次性导入到 TiKV，所以会把引擎文件切分成多个更小的 SST 文件，SST 文件不会超过这个大小，不建议低于 96 MiB。SST 切分过小，会导致 Ingest 的吞吐量小。
 
-## 4. 校验检查
+## 4. 数据校验
 
 ![7.png](/res/session2/chapter2/lightning-internal/7.png)
 
-我们传输大量数据时，需要自动检查数据完整，避免忽略掉错误。tidb-lightning 会在整个表的 Region 全部导入后，对比传送到 tikv-importer 之前这个表的 Checksum，以及在 TiKV 集群里面时的 Checksum。如果两者一样，我们就有信心说这个表的数据没有问题。
+完成数据导入后会自动执行数据校验以确保数据完整性。tidb-lightning 会在每个表完成导入后，对比导入前后的 Checksum 确认二者是否一致。
 
-一个表的 Checksum 是透过计算键值对的哈希值（Hash）产生的。因为键值对分布在不同的 TiKV 实例上，这个 Checksum 函数应该具备结合性；另外，tidb-lightning 传送键值对之前它们是无序的，所以 Checksum 也不应该考虑顺序，即服从交换律。也就是说 Checksum 不是简单的把整个 SST 文件计算 SHA-256 这样就了事。
+一个表的 Checksum 是透过计算键值对的哈希值产生的。因为键值对分布在不同的 TiKV 实例上，这个 Checksum 函数应该具备结合性；另外，tidb-lightning 传送键值对之前它们是无序的，所以 Checksum 也不应该考虑顺序，即服从交换律。也就是说， Checksum 计算并不是简单地针对整个 SST 文件计算 SHA-256。
 
-我们的解决办法是这样的：先计算每个键值对的 CRC64，然后用 XOR 结合在一起，得出一个 64 位元的校验数字。为减低 Checksum 值冲突的概率，我们同时会计算键值对的数量和大小。在下面两个地方分别计算来比对表中 3 个指标的和：
+我们的解决办法是这样的：先计算每个键值对的 CRC64，然后用 XOR 结合在一起，得出一个 64 位元的校验数字。为降低 Checksum 值冲突的概率，我们同时会计算键值对的数量和大小。在下面两个地方分别计算来比对表中 3 个指标的和：
 
   * 一次是在 tidb-lightning encode 后
   * 一次是在TiDB执行SQL命令：
@@ -111,7 +111,7 @@ tidb-lightning 把数据文件拆分成多个能并发执行的小任务。下�
 
 ## 5. 分析与更新自增值
 
-tidb-lightning 在检查数据完整后会进行重新计算表的统计信息，支持查询计划优化，及更新表的自增值，即执行：
+数据校验结束后，tidb-lightning 会重新计算表的统计信息，并更新表的自增值：
 
 ```sql
 ANALYZE TABLE `xxxx`;
