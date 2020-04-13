@@ -111,9 +111,8 @@ SST 文件包含整个表的数据和索引，和 TiKV 的储存单位 Region �
 
 我们的解决办法是这样的：先计算每个键值对的 CRC64，然后用 XOR 结合在一起，得出一个 64 位元的校验数字。为降低 Checksum 值冲突的概率，我们同时会计算键值对的数量和大小。在下面两个地方分别计算来比对表中 3 个指标的和：
 
-  * 一次是在 tidb-lightning encode 后
-  * 一次是在TiDB执行SQL命令：
-    * ADMIN CHECKSUM TABLE `xxxx`;
+  * 一次是在 tidb-lightning 编码后。
+  * 一次是在TiDB执行SQL命令：```ADMIN CHECKSUM TABLE `xxxx`;```
 
 ## 5. 分析与更新自增值
 
