@@ -133,7 +133,7 @@ ALTER TABLE `xxxx` AUTO_INCREMENT=123456;
 * 清空目标表里的数据。
 * 不能有其他业务写入数据到目标表。
 
-一个表只能接受一个 Lightning 实例导入，多个 Lightning 实例不能同时导入数据到同一张表。同一个数据源若需要使用多个 Lightning 实例并行导入，应该修改白名单配置以确保一个表只接受一个 Lightning 实例导入。
+一个表只能接受一个 tidb-lightning 实例导入，多个 tidb-lightning 实例不能同时导入数据到同一张表。同一个数据文件若需要使用多个 tidb-lightning 实例并行导入，应该修改白名单配置以确保一个表只接受一个 tidb-lightning 实例导入。
 
 ## 7. 机器配置要求
 
