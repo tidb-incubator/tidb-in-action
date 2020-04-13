@@ -12,7 +12,7 @@
 curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
 ```
 
-该命令将 TiUP 安装在 `$HOME/.tiup` 文件夹下，之后安装的组件以及组件运行产生的数据也会放在该文件夹下。同时，它还会自动将 `$HOME/.tiup/bin` 加入到 Shell Profile 文件中，这样你就可以直接使用 TiUP 了，譬如查看 TiUP 的版本：
+该命令将 TiUP 安装在 `$HOME/.tiup` 文件夹下，之后安装的组件以及组件运行产生的数据也会放在该文件夹下。同时，它还会自动将 `$HOME/.tiup/bin` 加入到 Shell Profile 文件的 PATH 环境变量中，这样你就可以直接使用 TiUP 了，譬如查看 TiUP 的版本：
 ```
 tiup --version
 ```
@@ -45,6 +45,10 @@ Available Commands:
   help        Help about any command or component
 
 Available Components:
+  playground          Bootstrap a local TiDB cluster
+  package             A toolbox to package tiup component
+  cluster             Deploy a TiDB cluster for production
+  mirrors             Build a local mirrors and download all selected components
 
 Flags:
   -B, --binary <component>[:version]   Print binary path of a specific version of a component <component>[:version]
@@ -98,7 +102,7 @@ tiup [flags] <component> [args...]
 * `--binpath`: 指定要运行组件的可执行程序文件路径，这样可以不使用组件的安装路径
 * `--tag`: 指定组件运行实例的 tag 名称，该名称可以认为是该实例的 ID，如果不指定，则会自动生成随机的 tag 名称
 
-在上面的帮助文档中，可以看到最常使用的 3 个组件。实际上现在已经支持了上十个组件，随着时间的推移，组件还会越来越多，也希望大家积极参与贡献。
+通过 `tiup list` 命令可以查看支持的组件，目前已经支持了上十个组件了，包括常用的 playground/package/cluster 等。随着时间的推移，组件还会越来越多，同时也希望大家积极参与贡献组件。
 
 如果我们想要知道某个命令或组件的具体用法，可以执行 `tiup help <command|component>` 或者 `tiup <command|component> --help` 或者 `tiup <command|component> -h`。
 
@@ -159,7 +163,7 @@ tiup list tikv --refresh
 
 ### (2) 安装组件：tiup install
 
-查看组件列表之后，安装也非常简单，利用 tiup install 这项命令处理即可。相关的命令和参数如下：
+查看组件列表之后，安装也非常简单，利用 `tiup install` 命令即可。相关的命令和参数如下：
 
 ```
 $ tiup help install
@@ -297,6 +301,16 @@ Flags:
 Global Flags:
       --skip-version-check   Skip the strict version check, by default a version must be a valid SemVer string
 ```
+
+运行该命令会得到一个实例列表，每行一个实例。列表中包含这些列：
+* Name: 实例的 tag 名称
+* Component: 实例的组件名称
+* PID: 实例运行的进程 ID
+* Status: 实例状态，RUNNING 表示正在运行，TERM 表示已经终止
+* Created Time: 实例的启动时间
+* Directory: 实例的工作目录，可以通过 `--tag` 指定
+* Binary: 实例的可执行程序，可以通过 `--binpath` 指定
+* Args: 实例的运行参数
 
 ### (6) 清理组件实例：tiup clean
 

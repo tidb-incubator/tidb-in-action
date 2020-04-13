@@ -1,12 +1,12 @@
 ## 1.4.2 基于 TiDB-Operator 的集群滚动更新
 
-滚动更新 TiDB 集群时，会按 PD、TiKV、TiDB 的顺序，串行删除 Pod，并创建新版本的 Pod，当新版本的 Pod 正常运行后，再处理下一个 Pod。
+TiDB 集群的滚动更新会按 PD、TiKV、TiDB 的顺序进行。每升级每一个组件，会先删除旧版本的 Pod，再创建新版本的 Pod。新版本的 Pod 正常运行后，再处理下一个 Pod。
 
-滚动升级过程会自动处理 PD、TiKV 的 Leader 迁移与 TiDB 的 DDL Owner 迁移。因此，在多节点的部署拓扑下（最小环境：PD \* 3、TiKV \* 3、TiDB \* 2），滚动更新 TiKV、PD 不会影响业务正常运行。
+滚动升级流程会自动处理 PD、TiKV 的 Leader 迁移。因此，在多节点的部署拓扑下（最小环境：PD \* 3、TiKV \* 3、TiDB \* 2），滚动更新 TiKV、PD 不会影响业务正常运行。
 
-对于有连接重试功能的客户端，滚动更新 TiDB 同样不会影响业务。对于无法进行重试的客户端，滚动更新 TiDB 则会导致连接到被关闭节点的数据库连接失效，造成部分业务请求失败。对于这类业务，推荐在客户端添加重试功能或在低峰期进行 TiDB 的滚动升级操作。
+滚动升级流程会自动处理 TiDB 的 DDL Owner 迁移。对于有连接重试功能的客户端，滚动更新 TiDB 同样不会影响业务。如果客户端无法进行重试，滚动更新 TiDB 则会导致连接到被关闭节点的数据库连接失效，造成部分业务请求失败。对于这类业务，推荐在客户端添加重试功能，或者在低峰期进行 TiDB 的滚动升级操作。
 
-滚动更新可以用于升级 TiDB 版本，也可以用于更新集群配置。
+滚动更新既可以用于升级 TiDB 版本，也可以用于更新集群配置。
 
 ### 1.4.2.1 升级 TiDB 版本
 
@@ -23,11 +23,11 @@
     watch kubectl -n <namespace> get pod -o wide
     ```
 
-    当所有 Pod 都重建完毕进入 `Running` 状态后，升级完成。
+    所有 Pod 都重建完毕进入 `Running` 状态即表示升级完成。
 
 ### 1.4.2.2 更新 TiDB 集群配置
 
-默认条件下，修改配置文件不会自动应用到 TiDB 集群中，只有在实例重启时，才会重新加载新的配置文件。
+默认条件下，配置文件的修改不会自动应用到 TiDB 集群中，只有在实例重启时，才会重新加载新的配置文件。
 
 您可以开启配置文件自动更新特性，在每次配置文件更新时，自动执行滚动更新，将修改后的配置应用到集群中。操作步骤如下：
 
@@ -45,7 +45,7 @@
     watch kubectl -n <namespace> get pod -o wide
     ```
 
-    当所有 Pod 都重建完毕进入 `Running` 状态后，升级完成。
+    所有 Pod 都重建完毕进入 `Running` 状态即表示升级完成。
 
 > **注意：**
 >
@@ -55,14 +55,15 @@
 
 如果 PD 集群因为 PD 配置错误、PD 镜像 tag 错误、NodeAffinity 等原因不可用，[TiDB 集群扩缩容](/tidb-in-kubernetes/scale-in-kubernetes.md)、[升级 TiDB 版本](#升级-tidb-版本)和[更新 TiDB 集群配置](#更新-tidb-集群配置)这三种操作都无法成功执行。
 
-这种情况下，可使用 `force-upgrade`（TiDB Operator 版本 > v1.0.0-beta.3 ）强制升级集群以恢复集群功能。
-首先为集群设置 `annotation`：
+这种情况下，可使用 `force-upgrade`（TiDB Operator 版本 > v1.0.0-beta.3 ）强制升级集群以恢复集群功能。步骤如下：
+
+1. 首先为集群设置 `annotation`：
 
 ```shell
 kubectl annotate --overwrite tc <release-name> -n <namespace> tidb.pingcap.com/force-upgrade=true
 ```
 
-然后执行对应操作中的 `helm upgrade` 命令：
+2. 然后执行对应操作中的 `helm upgrade` 命令：
 
 ```shell
 helm upgrade <release-name> pingcap/tidb-cluster -f values.yaml --version=<chart-version>
