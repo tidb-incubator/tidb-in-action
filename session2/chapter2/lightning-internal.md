@@ -87,11 +87,11 @@ tidb-lightning 把数据文件拆分成多个能并发执行的小任务。下�
 
 因异步操作的缘故，tikv-importer 得到的原始键值对注定是无序的。所以，tikv-importer 要做的第一件事就是要排序。这需要给每个表划定准备排序的储存空间，我们称之为引擎文件。
 
-对大数据排序是个解决了很多遍的问题，我们在此使用现有的答案：直接使用 RocksDB。一个引擎文件就相等于本地的 RocksDB，并设置为优化大量写入操作。排序相当于将键值对全写入到引擎文件里，RocksDB 就会帮我们合并、排序，并得到 SST 格式的文件。
+对大数据排序是个解决了很多遍的问题，我们在此使用现有的答案：直接使用 RocksDB。一个引擎文件就相等于一个本地 RocksDB，并大量写入操作做了配置上的优化。排序就相当于将键值对全部写入到引擎文件里，然后 RocksDB 就会自动帮我们合并、排序，最终得到 SST 格式的文件。
 
-这个 SST 文件包含整个表的数据和索引，比起 TiKV 的储存单位 Regions 实在太大了。所以接下来就是要切分成合适的大小（默认为 96 MiB）。tikv-importer 会根据要导入的数据范围预先把 Region 分裂好，然后让 PD 把这些分裂出来的 Region 分散调度到不同的 TiKV 实例上。
+SST 文件包含整个表的数据和索引，和 TiKV 的储存单位 Region 比起来实在太大了。所以接下来要切分成合适的大小（默认为 96 MB）。tikv-importer 会根据要导入的数据范围预先把 Region 分裂好，然后借助 PD 把这些分裂出来的 Region 分散调度到不同的 TiKV 实例上。
 
-最后，tikv-importer 将 SST 上传到对应 Region 的每个副本上。然后通过 Leader 发起 Ingest 命令，把这个 SST 文件导入到 Raft group 里，完成一个 Region 的导入过程。
+最后，tikv-importer 将 SST 上传到对应 Region 的每个副本上，通过 Leader 发起 Ingest 命令，把 SST 文件导入到 Raft group 里。这样就完成了一个 Region 的导入过程。
 
 ### 并发设置
 
