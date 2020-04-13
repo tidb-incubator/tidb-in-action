@@ -56,7 +56,7 @@ INSERT INTO `tbl` VALUES (10, 11, 12), (13, 14, 15), (16, 17, 18);
 INSERT INTO `tbl` VALUES (19, 20, 21), (22, 23, 24), (25, 26, 27);
 ```
 
-tidb-lightning 会分析数据文件，找出每一行的位置并分配一个行号，这样即使没有定义主键的表也能够区分每一行。tidb-lightning 会直接借助 TiDB 实例把 SQL 转换为键值对，称为“键值编码器”（KV encoder）。与外部的 TiDB 集群不同，键值编码器是寄存在 tidb-lightning 进程内的，并使用内存存储；每执行完一个 INSERT 之后，tidb-lightning 可以直接读取内存获取转换后的键值对（这些键值对包含数据及索引），并发送到 tikv-importer。
+tidb-lightning 会找出每一行的位置，并分配一个行号，这样即使没有定义主键的表也能够区分每一行。tidb-lightning 会直接借助 TiDB 实例把 SQL 转换为键值对，称为“键值编码器”（KV encoder）。与外部的 TiDB 集群不同，键值编码器是寄存在 tidb-lightning 进程内的，并使用内存存储；每执行完一个 INSERT 之后，tidb-lightning 可以直接读取内存获取转换后的键值对（这些键值对包含数据及索引），并发送到 tikv-importer。
 
 ### 并发设置
 
@@ -64,20 +64,20 @@ tidb-lightning 把数据文件拆分成多个能并发执行的小任务。下�
 
 ![4.png](/res/session2/chapter2/lightning-internal/4.png)
 
-* `batch-size`：对于很大的表，比如超过 5 TB 的表，如果一次性导入到整个引擎文件，可能会因为 tikv-importer 磁盘空间不足导致失败。tidb-lightning 会按照 `batch-size` 的配置对一个大表进行切分，导入过程中每个批次使用单独的引擎文件。`batch-size` 不应该小于 100 GB，太小的话会使 region balance 和 leader balance 值升高，导致 Region 在 TiKV 之间频繁调度，浪费网络资源。
+* `batch-size`：对于很大的表，比如超过 5 TB 的表，如果一次性导入，可能会因为 tikv-importer 磁盘空间不足导致失败。tidb-lightning 会按照 `batch-size` 的配置对一个大表进行切分，导入过程中每个批次使用单独的引擎文件。`batch-size` 不应该小于 100 GB，太小的话会使 region balance 和 leader balance 值升高，导致 Region 在 TiKV 不同节点之间频繁调度，浪费网络资源。
 
 * `table-concurrency`：同时导入的批次个数。如上所述，每个表会按照 `batch-size` 切分成多个批次。
 
 * `index-concurrency`：并行的索引引擎文件个数。`table-concurrency` + `index-concurrency` 的总和必须小于 tikv-importer 的 `max-open-engines` 配置。
 
-* `io-concurrency`：并发访问磁盘的 I/O 线程数。由于磁盘内部缓存容量有限，过高的并发度容易引发频繁的 cache miss，导致 I/O 延迟加大。因此，不建议将该
+* `io-concurrency`：并发访问磁盘的 I/O 线程数。由于磁盘内部缓存容量有限，过高的并发度容易引发频繁的 cache miss，导致 I/O 延迟增大。因此，不建议将该值调整得太大。
 
 * `block-size`：默认值为 64 KB。tidb-lightning 会一次性读取一个 `block-size` 大小的数据文件，然后进行编码。
 
 * `region-concurrency`：每个批次的内部线程数。每个线程要执行读文件、编码和发送到 tikv-importer 等步骤。
     * 读文件会消耗 I/O 资源，需要调节 `io-concurrency` 控制并发读取。
     * 编码过程的瓶颈主要在 CPU，需要适当调整 `region-conconcurrency` 配置。
-    * 举例来说，若一次编码处理耗时 50 毫秒，那么每秒只能进行 20 次编码。若 `block-size` 为 64 KB，则单一 CPU 核每秒最多完成 1.28 MB 数据的编码处理。若 `region-concurrency` 设置为 60，则整体编码处理的极限速度约为每秒 75 MB。
+    * 举例来说，若一次编码处理耗时 50 毫秒，那么每秒只能进行 20 次编码。若 `block-size` 为 64 KB，则单一 CPU 核每秒最多完成 1.28 MB 数据的编码处理。当 `region-concurrency` 设置为 60，则整体编码处理的极限速度约为每秒 75 MB。
 
 ## 3. tikv-importer 架构
 
