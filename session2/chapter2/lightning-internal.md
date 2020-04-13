@@ -113,9 +113,9 @@ SST 文件包含整个表的数据和索引，和 TiKV 的储存单位 Region �
 
   * 一次是导入前在 tidb-lightning 编码后。
   * 一次是导入后在 TiDB 上执行如下 SQL 命令：
-  ``` sql
-  ADMIN CHECKSUM TABLE `xxxx`;
-  ```
+      ``` sql
+      ADMIN CHECKSUM TABLE `xxxx`;
+      ```
 
 ## 5. 分析与更新自增值
 
