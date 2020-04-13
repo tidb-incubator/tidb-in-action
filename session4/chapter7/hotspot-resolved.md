@@ -114,7 +114,7 @@ BlockCache 的命中率下降或者抖动时可能是存在全表扫描的 SQL�
 2. Region 并发读取过高
 有些表数据量不大、包含的 Region 数量较少，但业务查询频繁的命中个别 Region 最终导致单个 TiKV 节点性能达到极限。目前可以通过改造小表为 hash 分区表来保证数据均匀地分散到一定数量的分区来解决。从 SHOW TABLE REGIONS 命令可以观察到新建的 hash 分区表已经提前创建了4个分区：
 
-    ```
+```
 SQL> CREATE TABLE t1(
     -> id INT NOT NULL,
     -> name VARCHAR(30),
@@ -175,7 +175,7 @@ APPROXIMATE_SIZE(MB): 1
 APPROXIMATE_SIZE(MB): 1
     APPROXIMATE_KEYS: 0
 4 rows in set (0.05 sec)
-    ```
+```
 除了可以通过改造为 hash 表之外，TiDB 3.1 版本提供的 Follower Read 功能增加了集群的吞吐能力，也能在一定程度上缓解读热点。未来在 TiDB 4.0，PD 会提供 Load Base Splitting 策略，除了根据 Region 的大小进行 Region 分裂之外，还会根据访问 QPS 负载自动分裂频繁访问的小表的 Region，具体参考本书"弹性调度"章节。
 
 ### 7.2.4 写热点解决方案
