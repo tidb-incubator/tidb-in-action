@@ -27,7 +27,7 @@ tikv_servers:
 2. 执行扩容操作。TiUP cluster 根据 `scale.yaml` 文件中声明的端口、目录等信息在集群中添加相应的节点。
 
 ```
-$ tiops scale-out -c tidb-test -T scale.yaml
+$ tiup cluster scale-out tidb-test scale.yaml
 ```
 
 ```
@@ -54,7 +54,7 @@ Global Flags:
 有时候业务量降低了，集群再占有原来的资源显得有些浪费，我们会想安全地释放某些节点，减小集群规模，于是需要缩容。缩容即下线服务，最终会将指定的节点从集群中移除，并删除遗留的相关数据文件。由于 TiKV 和 Binlog 组件的下线是异步的（需要先通过 API 执行移除操作）并且下线过程耗时较长（需要持续观察节点是否已经下线成功），所以对 TiKV 和 Binglog 组件做了特殊处理。
 
 + 对 TiKV 及 Binlog 组件的操作
-    - TiOps 通过 API 将其下线后直接退出而不等待下线完成
+    - TiUP cluster 通过 API 将其下线后直接退出而不等待下线完成
     - 等之后再执行集群操作相关的命令时会检查是否存在已经下线完成的 TiKV 或者 Binlog 节点。如果不存在，则继续执行指定的操作；如果存在，则执行如下操作：
         - 停止已经下线掉的节点的服务
         - 清理已经下线掉的节点的相关数据文件
