@@ -33,3 +33,4 @@
     * coprocessor-readpool 处理复杂的范围查询以及表达式计算。
 * TiKV 共持有了两个 RocksDB 实例，一个用于 raftstore 线程记录 raft 日志与 raft 元信息。另一个用于记录用户写入的数据，以及 TiKV 事务中的锁信息。
 * 线程池调优请见 [8.2.1 TiKV 线程池优化](/session4/chapter8/threadpool-optimize.md) 一章
+
