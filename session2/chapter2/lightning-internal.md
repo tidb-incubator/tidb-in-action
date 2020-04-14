@@ -17,7 +17,7 @@ TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据�
 * tidb-lightning 与 TiDB 密不可分，tikv-importer 则与 TiKV 紧密相连。在实现上，tidb-lightning 复用了 TiDB 的代码，tikv-importer 则引用 TiKV 为库。这样一来，tidb-lightning 与 tikv-importer 之间就出现了编程语言冲突：TiDB 使用 Go 实现，而TiKV 则使用 Rust。拆分为各自独立的组件更方便开发，而双方都需要的键值对可以透过 gRPC 传递。
 * 分开 tidb-lightning 和 tikv-importer 也使得横向扩展更为灵活。例如，前端可以运行多个 tidb-lightning，传送键值对给同一个后端 tikv-importer。
 
-总体而言，TiDB Lightning 工具的设计思路是，绕过SQL层，在线下将数据文件转化为键值对，并生成排好序的 SST 文件，直接推送到 TiKV 层的 RocksDB 里。这种批处理方式可以绕过 TiDB 层复杂的 SQL 和 事务处理，省却 TiKV 层线上排序等耗时步骤，提升数据导入过程的整体效率。
+总体而言，TiDB Lightning 工具的设计思路是，绕过 SQL 层，在线下将数据文件转化为键值对，并生成排好序的 SST 文件，直接推送到 TiKV 层的 RocksDB 里。这种批处理方式可以绕过 TiDB 层复杂的 SQL 和 事务处理，省却 TiKV 层线上排序等耗时步骤，提升数据导入过程的整体效率。
 
 ### 数据导入过程
 
