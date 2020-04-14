@@ -1,6 +1,6 @@
-### 1.1.4 TiOps 简介
+## 1.1.3 TiOps 简介
 
-#### 1.TiOps 简介
+### 1. TiOps 简介
 
 #### 1.1 背景
 
@@ -10,7 +10,7 @@
 
 TiOps 是一款部署、运维 TiDB 的命令行工具，通过简单易用的操作命令来提升 TiDB 的运维效率。
 
-#### 2.功能说明
+### 2. 功能说明
 
 #### 2.1 集群初始化
 
@@ -20,22 +20,22 @@ TiOps 是一款部署、运维 TiDB 的命令行工具，通过简单易用的�
 
 提供 TiDB 集群常见的部署、运维管理操作，其中包括：集群/角色/组件的部署、启动、停止、重启、扩容、缩容、升级、销毁、修改配置、重新加载配置、查询集群状态等功能。
 
-#### 3.准备工作
+### 3. 准备工作
 
-#### 基本要求
+**基本要求：**
 
 * 操作系统：仅支持 CentOS 7.3 及以上 Linux 操作系统 （建议使用 el7 系列最新版）
 * 软件源：系统需已安装 epel-release 包，或通过其他方式添加了 EPEL 源
 * 磁盘空间：中控机执行用户的 `$HOME` 目录可用空间 > 10GB
 * 网络：中控机有互联网访问，且与部署机处在同一网络环境中
 
-(1)、在中控机上安装第三方包管理库
+(1) 在中控机上安装第三方包管理库
 
 ```sh
 yum install -y epel-release
 ```
 
-(2)、安装 TiOps 
+(2) 安装 TiOps 
 
 当前只提供 rpm 包，后续会考虑使用 tiup ，通过指定 nightly 等参数来进行下载安装。
 
@@ -46,9 +46,9 @@ wget https://download.pingcap.org/tiops-v0.2.0-1.el7.x86_64.rpm
 yum localinstall -y tiops-v0.2.0-1.dev.el7.x86_64.rpm
 ```
 
-(3)、测试 TiOps 安装是否成功
+(3) 测试 TiOps 安装是否成功
 
-在命令行输入：`tiops -h` 后，输出如下内容即表示 TiOps 已经安装成功。
+在命令行输入 `tiops -h` 后，输出如下内容即表示 TiOps 已经安装成功。
 
 ```sh
 tiops -h
@@ -85,27 +85,27 @@ optional arguments:
   -v, --verbose         Print verbose output.
 ```
 
-(4)、初始化中控机
+(4) 初始化中控机
 
 工具会自动生成中控机当前用户的 ssh key，它默认会存放在 `~/.ssh/id_rsa` 和 `~/.ssh/id_rsa.pub`，生成 ssh key 将被用于中控机和目标机器的 ssh 通讯。
 
-##### 命令：
+**命令：**
 
 ```sh
 tiops bootstrap-local
 ```
 
-(5)、初始化中控机器与目标机器之间的网络
+(5) 初始化中控机器与目标机器之间的网络
 
 指定目标机器 IP 和用户名，然后会在目标机器上创建运行 TiDB 服务的用户，并赋予 sudo 权限。
 
-##### 命令：
+**命令：**
 
 ```sh
 tiops bootstrap-ssh -H 10.9.1.1,10.9.1.2,10.9.1.3 -u root -d tidb
 ```
 
-##### 参数说明：
+**参数说明：**
 
 ```sh
 -H |--host hosts：必选参数，目机机器 IP 地址列表，多个 IP 之间采用 `,` 分割；也可直接传一个由多 IP 地址组成的文件，文件中每一行是一个 IP 地址，可参考 /usr/share/tiops/hosts.yaml.example
@@ -116,23 +116,23 @@ tiops bootstrap-ssh -H 10.9.1.1,10.9.1.2,10.9.1.3 -u root -d tidb
 -f | --forks 可选参数，并发执行数量，默认：5
 ```
 
-##### 注意事项：
+**注意事项：**
 
 * 因为中控机与目标机器之间通过 ssh 通信，所以 TiOps 工具需要打通中控机与目标机器之间的免密码通信。
 * 目标机器的用户名除 root 外，也可以是具有 root 权限的普通用户。
 * 传入的密码若包含特殊字符，可以将密码字符串用单引号包起来。
 
-(6)、初始化目标机器
+(6) 初始化目标机器
 
 根据传入的参数，检查、修改目标机器配置、NTP 服务、防火墙、时区、Swap、irqbalance 等。
 
-##### 命令：
+**命令：**
 
 ```sh
 tiops bootstrap-host -H 10.9.1.1,10.9.1.2,10.9.1.3 -d tidb
 ```
 
-##### 参数说明：
+**参数说明：**
 
 ```sh
 -H |--host hosts：必选参数，目机机器 IP 地址列表，多个 IP 之间采用 `,` 分割；也可直接传一个由多 IP 地址组成的文件，文件中每一行是一个 IP 地址，可参考 /usr/share/tiops/hosts.yaml.example
@@ -147,11 +147,11 @@ tiops bootstrap-host -H 10.9.1.1,10.9.1.2,10.9.1.3 -d tidb
 -f | --forks 可选参数，并发执行数量，默认：5
 ```
 
-##### 注意事项：
+**注意事项：**
 
 * 一定要指定上一步你所创建的运行 TiDB 服务的用户
 
-(7)、配置、修改集群拓扑信息
+(7) 配置和修改集群拓扑信息
 
 通过如下命令，可查看 TiOps 拓扑配置文件示例。
 
@@ -159,17 +159,18 @@ tiops bootstrap-host -H 10.9.1.1,10.9.1.2,10.9.1.3 -d tidb
 cat /usr/share/tiops/topology.yaml.example
 ```
 
-#### 注意事项：
+**注意事项：**
+
 * pd_servers、tidb_servers、tikv_servers、monitoring_server、grafana_server 为必配项。
 * 配置时除必须配置 `IP` 外，还可以配置 `data_dir`、`deploy_dir`、`port` 等配置项，详细的配置项可以参考`/usr/share/tiops/topology.yaml.example.full`。
 
-#### 4.TiOps 部署
+### 4. TiOps 部署
 
 #### 4.1 准备集群所需拓扑文件
 
 根据实际情况来规划集群的拓扑信息，一般可以直接用 `/usr/share/tiops/topology.yaml.example` 或 `/usr/share/tiops/topology.yaml.example.full` 来进行对应修改。
 
-命令：
+**命令：**
 
 ```sh
 cp /usr/share/tiops/topology.yaml.example topology.yaml
@@ -207,16 +208,15 @@ grafana_server:
 
 #### 4.2 部署集群
 
-(1)、部署
+根据 `-T` 所指定的集群拓扑文件，使用 TiOps 部署一个名称为 `mai` 的集群，部署完成后系统处于未启动状态，需要通过 `start` 命令启动它。
 
-根据 -T 所指定的集群拓扑文件，使用 TiOps 部署一个名称为 `mai` 的集群，部署完成后系统处于未启动状态，需要通过 `start` 命令启动它。
+**命令：**
 
-#### 命令：
 ```sh
 tiops deploy -c mai -T topology.yaml -d tidb
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name name 必选参数，集群名称
@@ -234,11 +234,11 @@ tiops deploy -c mai -T topology.yaml -d tidb
 -f | --forks 可选参数，并发执行数量，默认：5
 ```
 
-#### 5.TiOps 运维
+### 5. TiOps 运维
 
 #### 5.1 启动集群/角色/节点
 
-#### 命令:
+**命令：**
 
 ```sh
 tiops start -c mai
@@ -252,7 +252,7 @@ mysql -h 10.9.1.1 -P4000 -u root
 
 输出类似 `Server version: 5.7.25-TiDB-v3.0.9 MySQL Community Server (Apache License 2.0)` 的字符串，即表示当前 TiDB 已经连接成功。
 
-#### 参数说明:
+**参数说明：**
 
 ```sh
 -c | --cluster_name name 必选参数，集群名称
@@ -270,14 +270,14 @@ mysql -h 10.9.1.1 -P4000 -u root
 -f | --forks 可选参数，并发执行数量，默认：5
 ```
 
-#### 注意事项:
+**注意事项：**
 
 * 集群不是第一次启动的时候才可以根据节点 ID 启动
 * 慎重使用按照角色启动
 
 #### 5.2 重启集群/角色/节点
 
-#### 命令:
+**命令：**
 
 ```sh
 tiops restart -c mai
@@ -285,7 +285,7 @@ tiops restart -c mai
 
 TiOps 将会先停止 grafana, blackbox_exporter, node_exporter, prometheus, tidb, tikv, pd 等组件，然后再启动它们。
 
-#### 参数说明:
+**参数说明：**
 
 ```sh
 -c | --cluster_name cluster_name 必选参数，集群名称
@@ -296,7 +296,7 @@ TiOps 将会先停止 grafana, blackbox_exporter, node_exporter, prometheus, tid
 
 #### 5.3 停止集群/角色/节点
 
-#### 命令:
+**命令：**
 
 ```sh
 tiops stop -c mai
@@ -304,7 +304,7 @@ tiops stop -c mai
 
 TiOps 将会停止 grafana, blackbox_exporter, node_exporter, prometheus, tidb, tikv, pd 等组件。
 
-#### 参数说明:
+**参数说明：**
 
 ```sh
 -c | --cluster_name cluster_name 必选参数，集群名称
@@ -315,32 +315,32 @@ TiOps 将会停止 grafana, blackbox_exporter, node_exporter, prometheus, tidb, 
 
 #### 5.4 销毁集群
 
-#### 命令:
+**命令：**
 
 ```sh
 tiops destroy -c mai
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name cluster_name 必选参数，集群名称
 -f | --forks 可选参数，并发执行数量，默认：5
 ```
 
-#### 注意事项：
+**注意事项：**
 
 - 销毁集群会删除整个集群的数据。
 
 #### 5.5 版本升级
 
-#### 命令：
+**命令：**
 
 ```sh
 tiops upgrade -c mai -d tidb
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name cluster_name 必选参数，集群名称
@@ -354,13 +354,13 @@ tiops upgrade -c mai -d tidb
 
 #### 5.6 扩容
 
-#### 命令：
+**命令：**
 
 ```sh
 tiops scale-out -c mai -T topology.yaml
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name name 必选参数，集群名称
@@ -376,13 +376,13 @@ tiops scale-out -c mai -T topology.yaml
 
 #### 5.7 缩容或者下线节点
 
-#### 命令：
+**命令：**
 
 ```sh
 tiops scale-in -c mai
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name name 必选参数，集群名称
@@ -392,13 +392,13 @@ tiops scale-in -c mai
 
 #### 5.8 重新加载配置文件
 
-#### 命令：
+**命令：**
 
 ```sh
 tiops reload -c mai
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name cluster_name 必选参数，集群名称
@@ -409,25 +409,25 @@ tiops reload -c mai
 
 #### 5.9 编辑配置文件
 
-#### 命令：
+**命令：**
 
 ```sh
 tiops edit-config -c mai
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name cluster_name 必选参数，集群名称
 ```
 
-#### 注意事项：
+**注意事项：**
 
 * 编辑配置需要 reload 配置才会生效。
 
 #### 5.10 查看集群详细信息
 
-#### 命令：
+**命令：**
 
 查看集群/角色/节点的详细信息。
 
@@ -435,7 +435,7 @@ tiops edit-config -c mai
 tiops display -c mai
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name cluster_name 必选参数，集群名称
@@ -444,9 +444,9 @@ tiops display -c mai
  --status 可选参数，输出节点状态详细信息
 ```
 
-#### 输出说明：
+**输出说明：**
 
-当设置 `--status` 参数时，会输出 TiDB 各个组件当前的简单状态信息，
+当设置 `--status` 参数时，会输出 TiDB 各个组件当前的简单状态信息。
 
 ```sh
 TiDB cluster mai, version 3.0.9
@@ -481,7 +481,7 @@ Drainer Node 状态，如果 Drainer 的状态接口请求失败则为 Down
 
 #### 5.11 查看 TiOps 版本信息
 
-#### 命令：
+**命令：**
 
 ```sh
 tiops version
@@ -491,7 +491,7 @@ tiops version
 
 #### 5.12 quickdeploy
 
-#### 命令：
+**命令：**
 
 快速部署一个集群。
 
@@ -499,7 +499,7 @@ tiops version
 tiops quickdeploy -c mai -d tidb -H 10.9.1.1,10.9.1.2,10.9.1.3 -T topology.yaml
 ```
 
-#### 参数说明：
+**参数说明：**
 
 ```sh
 -c | --cluster_name name 必选参数，集群名称
@@ -521,6 +521,7 @@ tiops quickdeploy -c mai -d tidb -H 10.9.1.1,10.9.1.2,10.9.1.3 -T topology.yaml
 -f | --forks 可选参数，并发执行数量，默认：5
 ```
 
-#### 6.其他
+### 6.其他
 
 TiOps 暂时不支持 TiSpark 和 TiFlash 的部署运维操作。
+
