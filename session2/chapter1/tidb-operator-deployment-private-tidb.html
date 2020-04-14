@@ -2840,12 +2840,10 @@
                                 
                                 <h5 id="12324-&#x90E8;&#x7F72;-tidb-&#x96C6;&#x7FA4;">1.2.3.2.4 &#x90E8;&#x7F72; TiDB &#x96C6;&#x7FA4;</h5>
 <p>(1) &#x4E0B;&#x8F7D; TiDB Cluster &#x7684; helm chart &#x6587;&#x4EF6;</p>
-<pre><code>
-    # mkdir -p /root/charts/
+<pre><code>    # mkdir -p /root/charts/
     &#x4ECE; https://github.com/pingcap/tidb-operator/releases &#x4E0B;&#x8F7D; tidb-cluster-chart-v1.0.6.tgz &#x6587;&#x4EF6;&#x653E;&#x5230; /root/charts/ &#x8DEF;&#x5F84;&#x4E0B;
 </code></pre><p>(2) &#x5B89;&#x88C5; TiDB Cluster</p>
-<pre><code>
-    # cd /root/charts/ &amp;&amp; tar xvf tidb-cluster-chart-v1.0.6.tgz
+<pre><code>    # cd /root/charts/ &amp;&amp; tar xvf tidb-cluster-chart-v1.0.6.tgz
     # helm install --namespace dba-test --name=test /root/charts/tidb-cluster -f /root/charts/tidb-cluster/values.yaml
     NAME:   test
     LAST DEPLOYED: Sat Mar  7 05:27:57 2020
@@ -2854,8 +2852,7 @@
     ...
 </code></pre><p>&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x663E;&#x793A; TiDB Cluster &#x90E8;&#x7F72;&#x6B63;&#x5E38;&#x3002;</p>
 <p>(3) &#x89C2;&#x5BDF; TiDB Cluster &#x6240;&#x6709; Pod &#x72B6;&#x6001;</p>
-<pre><code>
-    # kubectl get pods -n dba-test
+<pre><code>    # kubectl get pods -n dba-test
     NAME                              READY   STATUS    RESTARTS   AGE
     test-discovery-854fb5b46c-hbg4q   1/1     Running   0          4m41s
     test-monitor-66589f9748-q28lp     3/3     Running   0          4m41s
@@ -2869,8 +2866,7 @@
     test-tikv-2                       1/1     Running   0          2m45s
 </code></pre><p>&#x4EE5;&#x4E0A;&#x4FE1;&#x606F;&#x663E;&#x793A; TiDB Cluster &#x6240;&#x6709; Pod &#x5168;&#x90E8;&#x8FD0;&#x884C;&#x6B63;&#x5E38;&#x3002;</p>
 <p>(4) &#x8BBF;&#x95EE; TiDB Cluster</p>
-<pre><code>
-    # kubectl get svc -n dba-test
+<pre><code>    # kubectl get svc -n dba-test
     NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                          AGE
     test-discovery          ClusterIP   10.102.244.238   &lt;none&gt;        10261/TCP                        3m58s
     test-grafana            NodePort    10.104.130.193   &lt;none&gt;        3000:32326/TCP                   3m58s
@@ -2882,8 +2878,7 @@
     test-tidb-peer          ClusterIP   None             &lt;none&gt;        10080/TCP                        90s
     test-tikv-peer          ClusterIP   None             &lt;none&gt;        20160/TCP                        2m2s
 </code></pre><p>&#x627E;&#x5230; test-tidb &#x8FD9;&#x4E2A; Service &#x7684; CLUSTER-IP&#xFF0C;&#x901A;&#x8FC7;&#x5176;&#x8BBF;&#x95EE; TiDB Cluster&#xFF1A;</p>
-<pre><code>
-    # mysql -h 10.104.37.71 -uroot -P4000
+<pre><code>    # mysql -h 10.104.37.71 -uroot -P4000
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 1
     Server version: 5.7.25-TiDB-v3.0.5 MySQL Community Server (Apache License 2.0)
@@ -2940,7 +2935,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"next":{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},"previous":{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics","yahei"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"yahei":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","mtime":"2020-04-14T12:10:43.489Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-14T12:11:59.588Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1.2.3.2.4 部署 TiDB 集群","level":"3.1.2.3.2.4","depth":5,"next":{"title":"1.2.3.2.5 节点维护","level":"3.1.2.3.2.5","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-node.md","ref":"session2/chapter1/tidb-operator-deployment-private-node.md","articles":[]},"previous":{"title":"1.2.3.2.3 部署 TiDB Operator","level":"3.1.2.3.2.3","depth":5,"path":"session2/chapter1/tidb-operator-deployment-private-operator.md","ref":"session2/chapter1/tidb-operator-deployment-private-operator.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["analytics","yahei"],"pluginsConfig":{"analytics":{"google":"UA-160169257-1"},"yahei":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"session2/chapter1/tidb-operator-deployment-private-tidb.md","mtime":"2020-04-14T12:20:56.693Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-14T12:22:19.333Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
