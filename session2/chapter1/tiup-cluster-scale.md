@@ -27,7 +27,7 @@ tikv_servers:
 2. 执行扩容操作。TiUP cluster 根据 `scale.yaml` 文件中声明的端口、目录等信息在集群中添加相应的节点。
 
 ```
-$ tiops scale-out -c tidb-test -T scale.yaml
+$ tiup cluster scale-out tidb-test scale.yaml
 ```
 
 ```
