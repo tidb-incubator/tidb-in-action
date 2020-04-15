@@ -285,20 +285,20 @@ INL_MERGE_JOIN(t1_name [, tl_name]) 提示优化器使用 Index Nested Loop Merg
 
 ```
 mysql> explain select /*+ INL_MERGE_JOIN(t2@sel_2) */ * from t t1 where  t1.a  in ( select t2.a from t t2 where t2.b < t1.b);
-+---------------------------------+---------+-----------+-----------------------------------------------------------------------------------------------------------+
-| id                              | estRows | task      | operator info                                                                                             |
-+---------------------------------+---------+-----------+-----------------------------------------------------------------------------------------------------------+
-| IndexMergeJoin_23               | 6.39    | root      | semi join, inner:Projection_21, outer key:test.t.a, inner key:test.t.a, other cond:lt(test.t.b, test.t.b) |
-| ├─TableReader_28(Build)         | 7.98    | root      | data:Selection_27                                                                                         |
-| │ └─Selection_27                | 7.98    | cop[tikv] | not(isnull(test.t.a)), not(isnull(test.t.b))                                                              |
-| │   └─TableFullScan_26          | 8.00    | cop[tikv] | table:t1, keep order:false, stats:pseudo                                                                  |
-| └─Projection_21(Probe)          | 1.25    | root      | test.t.a, test.t.b                                                                                        |
-|   └─IndexLookUp_20              | 1.25    | root      |                                                                                                           |
-|     ├─Selection_18(Build)       | 1.25    | cop[tikv] | not(isnull(test.t.a))                                                                                     |
-|     │ └─IndexRangeScan_16       | 1.25    | cop[tikv] | table:t2, index:a, range: decided by [eq(test.t.a, test.t.a)], keep order:true, stats:pseudo              |
-|     └─Selection_19(Probe)       | 1.25    | cop[tikv] | not(isnull(test.t.b))                                                                                     |
-|       └─TableRowIDScan_17       | 1.25    | cop[tikv] | table:t2, keep order:false, stats:pseudo                                                                  |
-+---------------------------------+---------+-----------+-----------------------------------------------------------------------------------------------------------+
++---------------------------------+---------+-----------+--------------------------+-----------------------------------------------------------------------------------------------------------+
+| id                              | estRows | task      | access object            | operator info                                                                                             |
++---------------------------------+---------+-----------+--------------------------+-----------------------------------------------------------------------------------------------------------+
+| IndexMergeJoin_23               | 6.39    | root      |                          | semi join, inner:Projection_21, outer key:test.t.a, inner key:test.t.a, other cond:lt(test.t.b, test.t.b) |
+| ├─TableReader_28(Build)         | 7.98    | root      |                          | data:Selection_27                                                                                         |
+| │ └─Selection_27                | 7.98    | cop[tikv] |                          | not(isnull(test.t.a)), not(isnull(test.t.b))                                                              |
+| │   └─TableFullScan_26          | 8.00    | cop[tikv] | table:t1                 | keep order:false, stats:pseudo                                                                            |
+| └─Projection_21(Probe)          | 1.25    | root      |                          | test.t.a, test.t.b                                                                                        |
+|   └─IndexLookUp_20              | 1.25    | root      |                          |                                                                                                           |
+|     ├─Selection_18(Build)       | 1.25    | cop[tikv] |                          | not(isnull(test.t.a))                                                                                     |
+|     │ └─IndexRangeScan_16       | 1.25    | cop[tikv] | table:t2, index:idx_a(a) | range: decided by [eq(test.t.a, test.t.a)], keep order:true, stats:pseudo                                 |
+|     └─Selection_19(Probe)       | 1.25    | cop[tikv] |                          | not(isnull(test.t.b))                                                                                     |
+|       └─TableRowIDScan_17       | 1.25    | cop[tikv] | table:t2                 | keep order:false, stats:pseudo                                                                            |
++---------------------------------+---------+-----------+--------------------------+-----------------------------------------------------------------------------------------------------------+
 10 rows in set (0.01 sec)
 ```
 
