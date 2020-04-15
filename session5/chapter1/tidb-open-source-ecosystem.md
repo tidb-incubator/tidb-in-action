@@ -14,7 +14,7 @@ TiDB 是无状态节点，本身并不存储数据，数据全部存储在 TiKV 
 Parser 是由 [Yacc](http://dinosaur.compilertools.net/) 生成的解析器，并且与 MySQL 语法高度兼容。Parser 的功能是把 SQL 语句按照 SQL 语法规则进行解析，
 将文本转换成抽象语法树（AST）。
 
-#### 3. [TiSpark](https://github.com/pingcap/parser)
+#### 3. [TiSpark](https://github.com/pingcap/tispark)
 
 TiSpark 是 PingCAP 为解决用户复杂 OLAP 需求而推出的产品。它借助 [Spark](https://spark.apache.org/) 平台，
 同时融合 [TiKV](https://github.com/tikv/tikv) 分布式集群的优势，和 TiDB 一起为用户一站式解决 HTAP (Hybrid Transactional/Analytical Processing) 的需求。
