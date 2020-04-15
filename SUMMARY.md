@@ -1,6 +1,7 @@
 # Summary
 
 * [推荐序](PREFACE.md)
+* [作者名单](writer.md)
 
 ## 第一部分 TiDB 原理和特性
 
