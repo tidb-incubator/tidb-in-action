@@ -153,7 +153,7 @@ public StructType getStructType(){
 在这段代码中为顺利解析文件而定义了被解析文件的格式和字段属性，随后为数据集添加了一个标志入库时间的列，最后将数据集以追加的方式写入到目标表。
 关于写入 TiDB，有以下几点需要注意：
 
-1. 为了获得更好的写入效率并充分利用 Spark 集群资源，在写入之前最好使用 repartition 算子对数据进行再分区充分发挥 Spark 集群的计算能力，具体数值要根据任务数据量和集群资源来决定。
+1. 为了获得更好的写入效率并充分利用 Spark 集群资源，在写入之前最好使用 repartition 算子对数据进行再分区, 充分发挥 Spark 集群的计算能力，具体数值要根据任务数据量和集群资源来决定。
 2. 要想让数据进行批量写入，TiDB 连接串中需要跟上 rewriteBatchedStatements 参数并将其设置为 True，然后通过 JDBCOptions.JDBC_BATCH_INSERT_SIZE 参数去控制批量写入的大小，官方推荐的大小为 150 。
 3. 对于大量数据写入，推荐将事务隔离级别参数 isolationLevel 设置为 NONE。
 
