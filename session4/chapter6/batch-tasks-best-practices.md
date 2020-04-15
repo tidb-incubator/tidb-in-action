@@ -43,7 +43,7 @@ SPARK_WORKER_CORES=20
 spark.sql.extensions  org.apache.spark.sql.TiExtensions
 spark.tispark.pd.addresses  127.0.0.1:2379
 ```
-其中 PD 格式为地址:端口号，多个 PD 使用逗号间隔。
+其中 PD 格式为 `地址:端口号`，多个 PD 使用逗号间隔。
 
 ## (3) 部署 TiSpark
 将 TiSpark 组件部署到 Spark 集群有两种方式，如果不想重启现有集群，可以使用 Spark 的 --jars 参数将 TiSpark 作为依赖引入：
