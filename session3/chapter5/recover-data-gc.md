@@ -169,7 +169,8 @@ select * from t;
 update mysql.tidb set VARIABLE_VALUE="24h" where VARIABLE_NAME="tikv_gc_life_time";
 ```
 
-> **说明：**具体保留多长时间，需要结合业务进行评估
+> **说明：** 具体保留多长时间，需要结合业务进行评估
+
 
 2、创建一个与待恢复的数据表同结构的临时表，如：
 
@@ -195,4 +196,3 @@ update mysql.tidb set VARIABLE_VALUE="10m0s" where VARIABLE_NAME="tikv_gc_life_t
 ```
 
 7、根据需要删除临时表
-
