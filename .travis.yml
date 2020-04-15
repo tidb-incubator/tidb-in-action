@@ -5,8 +5,27 @@ node_js:
   - 12
 cache: npm
 
+addons:
+  apt:
+    packages:
+      - calibre
+      - libfontconfig
+      # Japanese
+      - language-pack-ja
+      - japan*
+      # Chinese
+      - language-pack-zh*
+      - chinese*
+      # Korean
+      - language-pack-ko
+      - korean*
+      # Fonts
+      - fonts-wqy-zenhei
+      - fonts-ipafont-mincho
+      - fonts-ipafont-gothic
+      - fonts-unfonts-core
+
 before_install:
-  - sudo apt-get install -y calibre libfontconfig
   - npm install -g gitbook-cli svgexport@0.3.2
 
 before_script:

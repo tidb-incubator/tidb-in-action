@@ -2,6 +2,8 @@
 
 Read it: [TiDB In Action: based on 4.0](https://book.tidb.io/)
 
+Download PDF: [TiDB In Action: based on 4.0](https://raw.githubusercontent.com/pingcap-incubator/tidb-in-action/gh-pages/book.pdf)
+
 ## 如何贡献
 ### 贡献指引：
 * 从 [Project](https://github.com/pingcap-incubator/tidb-in-action/projects) 找到感兴趣地模块
