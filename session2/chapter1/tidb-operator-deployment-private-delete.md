@@ -2,7 +2,7 @@
 
 本小节演示删除名为  “test” 的 TiDB 集群。
 
-## 1. 通过 helm 删除 TiDB Cluster
+### 1. 通过 helm 删除 TiDB Cluster
 
 ```
 # helm list
@@ -15,7 +15,7 @@ release "test" deleted
 
 > **请注意**： 删除操作非常危险，请删除指定 TiDB 集群 ，千万不要误删除。
 
-## 2. 删除 PVC
+### 2. 删除 PVC
 
 ```
 # kubectl delete pvc -n dba-test -l app.kubernetes.io/instance=test,app.kubernetes.io/managed-by=tidb-operator
@@ -30,7 +30,7 @@ persistentvolumeclaim "tikv-test-tikv-2" deleted
 
 > **请注意**： 删除操作非常危险，请删除指定 TiDB 集群的 PVC ，千万不要误删除。
 
-## 3. 删除 PV
+### 3. 删除 PV
 
 ```
 # kubectl get pv -l app.kubernetes.io/namespace=dba-test,app.kubernetes.io/managed-by=tidb-operator,app.kubernetes.io/instance=test -o name|xargs -I {} kubectl patch {} -p '{"spec":{"persistentVolumeReclaimPolicy":"Delete"}}'

@@ -76,18 +76,21 @@ MySQL [br_test]> select count(1) from br_table;
 ```sql
 # 设置 gc 时间，避免备份时间过长导致数据被回收，需要注意的是，备份完成后，需要改回来参数。
 
+#默认值
+
 SELECT VARIABLE_VALUE FROM mysql.tidb WHERE VARIABLE_NAME = 'tikv_gc_life_time';
 
-10m0s #默认值
-
-UPDATE mysql.tidb SET VARIABLE_VALUE = '720h' WHERE VARIABLE_NAME = 'tikv_gc_life_time';
+10m0s
 
 # 设置为720h
 
+UPDATE mysql.tidb SET VARIABLE_VALUE = '720h' WHERE VARIABLE_NAME = 'tikv_gc_life_time';
+
+# 验证修改确实成功
+
 SELECT * FROM mysql.tidb WHERE VARIABLE_NAME = 'tikv_gc_life_time';
 
-720h # 验证修改确实成功
-
+720h 
 ```
 
 2. 备份存储位置
@@ -100,7 +103,7 @@ SELECT * FROM mysql.tidb WHERE VARIABLE_NAME = 'tikv_gc_life_time';
 
 挂载 NFS：
 ```bash
-mount -t nfs //xxxx.1.8/:/data  /data_nfs1
+mount -t nfs //nfs_address/:/data  /data_nfs1
 ```
 
 ### 4. 备份执行
@@ -115,8 +118,6 @@ BR 命令包括备份，恢复两个操作，而备份，恢复又单独针对�
 
 --ca，--cert，--key 如果设置了TLS类连接安全认证，这些参数指定相关安全证书等。
 
---checksum 运行任务完成后，执行checksum，默认打开。
-
 --concurrency 每个节点执行任务的并行度，默认4。
 
 --log-file,--log-level设置日志输出位置以及级别。
@@ -124,8 +125,6 @@ BR 命令包括备份，恢复两个操作，而备份，恢复又单独针对�
 -u, --pd 链接 PD 地址，默认127.0.0.1:2379
 
 --ratelimit 限制每个节点的速度，单位是MB
-
--c, --send-credentials-to-tikv 是否将 credentials 发送给 TiKV, 默认打开
 
 -s, --storage 指定存储位置，比方"local:///data_nfs1"
 

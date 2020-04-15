@@ -2,20 +2,20 @@
 
 ### 3.1.1 背景
 
-TiDB 4.0 诊断功能为了提升 TiDB 问题定位效率，通过将系统各种维度信息以系统表的方式向上层提供统一的入口，让用户能够以 SQL 的方式查询各种集群信息。
+为了提升 TiDB 问题定位效率，TiDB 4.0 诊断功能以系统表为统一入口将各种维度的系统信息展现给用户，让用户能够以 SQL 的方式查询各种集群信息。
 
-由于整个集群的信息拉通之后，信息量会变大，所以需要进一步对信息进行归类和自动化整理和判断。基于此原则，TiDB 4.0 会按照信息的不同类型将信息组织到不同的系统表。
+整个集群的信息拉通之后，信息量会变大，所以需要对信息进行进一步归类和自动化整理和判断。基于此原则，TiDB 4.0 会按照信息的类型将信息组织到不同的系统表。
 
 ### 3.1.2 集群信息表总览
 
 TiDB 4.0 新增的集群信息表
 
-* 集群拓扑表 `information_schema.cluster_info` 主要是用于获取集群当前的拓扑信息，以及各个节点的版本、版本对应的 Git Hash、启动时间、运行时间信息
-* 集群配置表 `information_schema.cluster_config` 用于获取集群当前所有节点的配置，TiDB 4.0 之前的版本必须逐个访问各个节点的 HTTP API
+* 集群拓扑表 `information_schema.cluster_info` 主要用于获取集群当前的拓扑信息，以及各个节点的版本、版本对应的 Git Hash、启动时间、运行时间信息
+* 集群配置表 `information_schema.cluster_config` 用于获取集群当前所有节点的配置。TiDB 4.0 之前的版本必须逐个访问各个节点的 HTTP API
 * 集群硬件表 `information_schema.cluster_hardware` 主要用于快速查询集群硬件信息
 * 集群负载表 `information_schema.cluster_load` 主要用于查询集群不同节点的不同硬件类型的负载信息
 * 集群负载表 `information_schema.cluster_systeminfo` 主要用于查询集群不同节点的内核配置信息，目前支持查询 sysctl 的信息
-* 集群日志表 `information_schema.cluster_log` 表主要用于集群日志查询，通过将查询条件下推到各个节点，降低日志查询对集群的影响，性能影响小于等 grep 命令
+* 集群日志表 `information_schema.cluster_log` 主要用于集群日志查询。为了降低日志查询对集群的影响，诊断功能会将查询条件下推到各个节点。通过这个优化，日志查询对性能的影响小于等于 grep 命令
 
 TiDB 4.0 之前的以下系统表，只能查看当前节点，TiDB 4.0 实现了对应的集群表，可以在单个 TiDB 节点上拥有整个集群的全局视图。
 
@@ -48,7 +48,7 @@ mysql> select type, instance, status_address, uptime from cluster_info;
 
 * TYPE：节点类型，目前节点的类型为 pd/tikv/tidb，节点类型始终为小写
 * INSTANCE：实例地址，始终为 IP:PORT 格式的字符串
-* STATUS_ADDRESS：HTTP API 服务地址，部分 tikv-ctl / pd-ctl / tidb-ctl 命令会使用到 HTTP API，会使用这个地址，用户也可以通过这个地址获取一些额外的集群信息，具体 HTTP API 参考官方文档
+* STATUS_ADDRESS：HTTP API 服务地址，部分 tikv-ctl / pd-ctl / tidb-ctl 使用到 HTTP API 的命令会使用这个地址，用户也可以通过这个地址获取一些额外的集群信息，具体 HTTP API 参考官方文档
 * VERSION：对应节点的语义版本号，TiDB 版本为了兼容 MySQL 的版本号，以 ${mysql-version}-${tidb-version} 方式展示
 * GIT_HASH：对应节点版本编译时的 git commit hash，主要用于识别两个节点是否是绝对一致的版本
 * START_TIME：对应节点的启动时间
@@ -56,7 +56,7 @@ mysql> select type, instance, status_address, uptime from cluster_info;
 
 #### 2.集群配置表
 
-集群配置表 `information_schema.cluster_config` 用于获取集群当前所有节点的配置，TiDB 4.0 之前的版本必须通过访问逐个访问各个节点的 HTTP API，可以通过集群配置表查看当前集群任意实例当前生效配置。比如查询查询 TiKV 与 Coprocessor 相关的配置：
+集群配置表 `information_schema.cluster_config` 用于获取集群当前所有节点的配置，TiDB 4.0 之前的版本中，用户必须逐个访问各个节点的 HTTP API来获取这些信息。通过集群配置表可以查看当前集群任意实例当前生效配置。比如查询查询 TiKV 与 Coprocessor 相关的配置：
 
 ```
 mysql> select * from cluster_config where type='tikv' and `key`='coprocessor.batch-split-limit';
@@ -71,7 +71,7 @@ mysql> select * from cluster_config where type='tikv' and `key`='coprocessor.bat
 4 rows in set (2.98 sec)
 ```
 
-类似的可以通过查询这张表来查询是否所有 TiDB 的配置一致，比如以下 SQL 结果表示 `log.file.filename`/`port`/`status.status-port` 的配置在各个实例不一致：
+类似的，可以通过这张表来查询所有 TiDB 的配置是否一致，比如以下 SQL 结果表示 `log.file.filename`/`port`/`status.status-port` 的配置在各个实例不一致：
 
 ```
 mysql> select `key`,count(distinct value) as c from cluster_config where type='tidb' group by `key` having c > 1;
@@ -94,7 +94,7 @@ mysql> select `key`,count(distinct value) as c from cluster_config where type='t
 
 #### 3.集群硬件表
 
-集群硬件表 `information_schema.cluster_hardware` 主要用于快速查询集群硬件信息。可以通过此表查询集群 CPU、内存、网卡、磁盘信息，以下以查询集群各个节点的逻辑处理器数量为例：
+集群硬件表 `information_schema.cluster_hardware` 主要用于快速查询集群硬件信息。可以通过此表查询集群 CPU、内存、网卡、磁盘信息。下面以查询集群各个节点的逻辑处理器数量为例：
 
 ```
 mysql> select type, instance, name, value from cluster_hardware where name='cpu-logical-cores';
@@ -130,7 +130,7 @@ mysql> select type, instance, name, value from cluster_hardware where name='cpu-
 
 #### 4.集群负载表
 
-集群负载表 `information_schema.cluster_load` 主要用于查询集群不同节点的不同硬件类型的当前负载信息，比如以下查询所有节点最近一分钟的 CPU 平均负载：
+集群负载表 `information_schema.cluster_load` 主要用于查询集群不同节点的不同硬件类型的当前负载信息。比如以下 SQL 可以查询所有节点最近一分钟的 CPU 平均负载：
 
 ```
 mysql> select type, instance, name, value from cluster_load where device_type='cpu' and device_name='cpu' and name='load1';
@@ -166,7 +166,7 @@ mysql> select type, instance, name, value from cluster_load where device_type='c
 
 #### 5.集群内核配置
 
-集群内核配置表 `information_schema.cluster_systeminfo` 主要用于查询集群不同节点的内核配置信息，目前支持查询 sysctl 的信息，以下以查询 TiDB 实例所在机器内核 fd 相关配置：
+集群内核配置表 `information_schema.cluster_systeminfo` 主要用于查询集群不同节点的内核配置信息，目前支持查询 sysctl 的信息。下面以查询 TiDB 实例所在机器内核 fd 相关配置为例：
 
 ```
 mysql> select type, instance, name, value from cluster_systeminfo where type='tidb' and name like '%fd%';
@@ -197,7 +197,7 @@ mysql> select type, instance, name, value from cluster_systeminfo where type='ti
 
 #### 6.集群日志表
 
-集群日志表 `information_schema.cluster_log` 表是 TiDB 引入非常重要的一张系统内存表，主要解决集群日志查询问题，实现非常轻量，不需要依赖外部组件，同时不会有中央节点保存全局日志。而是通过将查询条件下推到各个节点，降低日志查询对集群的影响，性能影响小于 grep 命令。以下通过集群日志表查询集群的 warning 日志：
+集群日志表 `information_schema.cluster_log` 表是 TiDB 引入的一张非常重要的系统内存表，主要解决集群日志查询问题。它的实现非常轻量，不需要依赖外部组件，也不会有中央节点保存全局日志，通过将查询条件下推到各个节点，我们降低了日志查询对集群的影响，使其对性能影响小于 grep 命令。下面以通过集群日志表查询集群的 warning 日志为例：
 
 ```
 mysql> select * from cluster_log where level='warn'\G
@@ -234,4 +234,4 @@ INSTANCE: 127.0.0.1:2382
 >日志表的所有字段都会下推到对应节点执行，所以为了降低使用集群日志表的开销，需尽可能地指定更多的条件，比如 select * from cluter_log where instance='tikv-1' 只会在 tikv-1 执行日志搜索。
 >message 字段支持 like 和 regexp 正则表达式，对应的 pattern 会编译为 regexp，同时指定多个 message 条件，相当于 grep 命令的 pipeline 形式，例如：select * from cluster_log where message like 'coprocessor%' and message regexp '.*slow.*' 相当于在集群所有节点执行 grep 'coprocessor' xxx.log | grep -E '.*slow.*'。
 
-在TiDB 4.0 之前要获取集群的日志需要逐个登录各个节点汇总日志。TiDB 4.0 有了集群日志表后，可以更高效地提供一个全局时间有序的日志搜索结果，对于全链路事件跟踪提供便利的手段，比如按照某一个 region id 搜索日志，可以查询该 region 生命周期的所有日志，类似的通过慢日志的 txn id 搜索全链路日志，可以查询该事务在各个节点扫描的 key 数量以及流量等信息。
+在TiDB 4.0 之前，要获取集群的日志，需要逐个登录各个节点汇总日志。TiDB 4.0 有了集群日志表后，可以更高效地提供一个全局时间有序的日志搜索结果。这为全链路事件跟踪提供了便利的手段。比如按照某一个 region id 搜索日志，可以查询该 region 生命周期的所有日志。类似的，通过慢日志的 txn id 搜索全链路日志，可以查询该事务在各个节点扫描的 key 数量以及流量等信息。

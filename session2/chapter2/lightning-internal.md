@@ -1,117 +1,125 @@
-# 2.2.1 TiDB Lightning 简介
-TiDB Lightning 是一个将全量数据高速导入到 TiDB 集群的工具，速度可达到传统执行 SQL 导入方式的 3 倍以上、大约每小时 300 GB。Lightning 有以下两个主要的使用场景：一是大量新数据的快速导入、二是全量数据的备份恢复。目前，Lightning 支持 Mydumper 或 CSV 输出格式的数据源。
+# 2.2.1 Lightning 工作原理
+TiDB Lightning 工具支持高速导入 Mydumper 和 CSV 文件格式的数据文件到 TiDB 集群，导入速度可达每小时 300 GB，是传统 SQL 导入方式的 3 倍多。它有两个主要的目标使用场景：大量新数据的快速导入，以及全量数据恢复。
+
+本节将介绍 TiDB Lightning 工具的工作原理。
 
 ## 1. 整体架构
 
-### 架构组件
+### 组件概览
 
 ![架构图](/res/session2/chapter2/lightning-internal/1.png)
 
-TiDB Lightning 主要包含两个部分：
+如上图所示，TiDB Lightning 工具包含两个组件：
+* **tidb-lightning**（前端）：负责导入过程的管理和适配工作。读取数据文件，在目标 TiDB 集群上建表，并将数据文件转换成键值对发送到 tikv-importer。等 tikv-importer 的处理工作完成后，tidb-lightning 还需要执行数据校验等收尾工作。
+* **tikv-importer**（后端）：负责将数据导入到目标 TiKV 集群。从 tidb-lightning 接收到键值之后，tikv-importer 会执行缓存、排序和切分等操作，最后导入 TiKV 集群。
 
-* **TiDB Lightning**（“前端”）：主要完成适配工作，通过读取数据源，在下游 TiDB 集群建表、将数据转换成键值对发送到 tikv-importer、检查数据完整性等。
-* **tikv-importer**（“后端”）：主要完成将数据导入 TiKV 集群的工作，对 TiDB Lightning 写入的键值对进行缓存、排序、切分操作并导入到 TiKV 集群。
+那么，为什么要把一个流程拆分成两个组件呢？
+* tidb-lightning 与 TiDB 密不可分，tikv-importer 则与 TiKV 紧密相连。在实现上，tidb-lightning 复用了 TiDB 的代码，tikv-importer 则引用 TiKV 为库。这样一来，tidb-lightning 与 tikv-importer 之间就出现了编程语言冲突：TiDB 使用 Go 实现，而TiKV 则使用 Rust。拆分为各自独立的组件更方便开发，而双方都需要的键值对可以透过 gRPC 传递。
+* 分开 tidb-lightning 和 tikv-importer 也使得横向扩展更为灵活。例如，前端可以运行多个 tidb-lightning，传送键值对给同一个后端 tikv-importer。
 
-### 整体工作原理
+总体而言，TiDB Lightning 工具的设计思路是，绕过 SQL 层，在线下将数据文件转化为键值对，并生成排好序的 SST 文件，直接推送到 TiKV 层的 RocksDB 里。这种批处理方式可以绕过 TiDB 层复杂的 SQL 和 事务处理，省却 TiKV 层线上排序等耗时步骤，提升数据导入过程的整体效率。
+
+### 数据导入过程
 
 ![导入流程图](/res/session2/chapter2/lightning-internal/2.png)
 
-1. 在导数据之前，TiDB Lightning 会自动将 TiKV 集群切换为“导入模式”（import mode），优化写入效率。
-2. TiDB Lightning 会在目标数据库建立库和表，并获取其元数据。
-3. 每张表都会被分割为多个连续的批次，这样来自大表（200 GB+）的数据就可以平行导入。
-4. TiDB Lightning 会通过 gRPC 让 tikv-importer 为每一个批次准备一个“引擎文件（engine file）”来处理键值对。TiDB Lightning 会并发读取 SQL dump，将数据源转换成与 TiDB 相同编码的键值对，然后发送到 tikv-importer 里对应的引擎文件。
-5. 当一个引擎文件数据写入完毕时，tikv-importer 便开始对目标 TiKV 集群数据进行分裂和调度，然后导入数据到 TiKV 集群。引擎文件包含两种：数据引擎与索引引擎，各自又对应两种键值对：行数据和次级索引。通常行数据在数据源里是完全有序的，而次级索引是无序的。因此，数据引擎文件在对应区块写入完成后会被立即上传，而所有的索引引擎文件只有在整张表所有区块编码完成后才会执行导入。
-6. 整张表相关联的所有引擎文件完成导入后，TiDB Lightning 会对比本地数据源及下游集群的校验和（checksum），确保导入的数据无损，然后让 TiDB 分析（ANALYZE）这些新增的数据，以优化日后的操作。同时，TiDB Lightning 调整 AUTO_INCREMENT 值防止之后新增数据时发生冲突。表的自增 ID 是通过行数的上界估计值得到的，与表的数据文件总大小成正比。因此，最后的自增 ID 通常比实际行数大得多。这属于正常现象，因为在 TiDB 中自增 ID 不一定是连续分配的。
-7. 在所有步骤完毕后，TiDB Lightning 自动将 TiKV 切换回“普通模式”（normal mode），此后 TiDB 集群可以正常对外提供服务。
+1. 导入数据之前，tidb-lightning 会自动将 TiKV 集群切换为“导入模式”（import mode）以优化写入效率。
+2. tidb-lightning 会在目标 TiDB 集群上创建好空数据库和表。
+3. 每张表的数据文件都会被分割为多个连续的批次，这样就能实现大表（200 GB 以上）的并行数据导入了。
+4. tidb-lightning 会并发读取数据文件，转换成与目标 TiDB 集群相同编码的键值对，然后发送到 tikv-importer。tidb-lightning 通过 gRPC 传递键值对给 tikv-importer。tikv-importer 会为每一个批次的键值对准备一个“引擎文件”（engine file）。
+5. 当一个引擎文件数据写入完毕，tikv-importer 便开始对目标 TiKV 集群进行 Region 分裂和调度，然后执行数据导入。有两种引擎文件：数据引擎与索引引擎，它们分别对应两种键值对：行数据和次级索引。通常，行数据在数据文件里是完全有序的，而次级索引则是无序的。因此，数据引擎文件在对应 Region 写入完成后会被立即上传，而索引引擎文件只有在整张表所有 Region 编码完成后才会执行导入。
+6. 一张表的两种引擎文件都完成了导入之后，tidb-lightning 会对比本地数据文件及目标 TiDB 集群数据的 Checksum，确保数据完整性；然后，让 TiDB 运行 `ANALYZE TABLE` 命令更新表和索引的统计信息，为后续 TiDB 生成正确的 SQL 执行计划做好准备。同时，tidb-lightning 会调整表的 AUTO_INCREMENT 值防止后续新增数据时发生冲突。表的自增 ID 是通过行数的上界估计值得到的，与表的数据文件总大小成正比。因此，最后的自增 ID 通常比实际行数大得多。考虑到 TiDB 中自增 ID 不一定是连续分配的，这种状况是可接受的。
+7. 在所有步骤完毕后，tidb-lightning 会自动将 TiKV 切换回“普通模式”（normal mode），此后 TiDB 集群才可以正常对外提供服务。
 
 ### 导入模式
 
-Lightning 在导入阶段需要单独使用集群，设置集群来提高速度。在开始阶段切换“导入模式”，在此模式下，
+一旦目标 TiKV 集群切换到导入模式，整个数据导入阶段该集群将被 tidb-lightning 独占，无法对外提供正常服务。tidb-lightning 会修改下列集群配置以提高数据导入速度：
 
-* TiKV 的后台任务数会增加，以并行接收更多的 SST 文件。
-* write stall triggers 会被移除，使写速度优先于读速度。
+* 增加 TiKV 后台任务数，以并行接收更多的 SST 文件。
+* 移除 `write stall triggers`，使写速度优先于读速度。
 
-在导入数据完成后，Lightning 会自动切换集群回“普通模式”。
+数据导入完成后，tidb-lightning 会自动把 TiKV 集群切换回“普通模式”。
 
-## 2. Lightning 架构
+## 2. tidb-lightning 架构
 
 ![Lightning 架构图](/res/session2/chapter2/lightning-internal/3.png)
 
 ### 工作原理
 
-首先，Lightning 会扫描 SQL 备份，区分出结构文件（包含 CREATE TABLE 语句）和数据文件（包含 INSERT 语句）。结构文件的内容会直接发送到 TiDB，用以建立数据库构型。
+tidb-lightning 会扫描数据文件，区分出结构文件（包含 `CREATE TABLE` 语句）和数据文件（包含 `INSERT` 语句）。结构文件的内容会直接发送到 TiDB，用于建立数据库和表。然后，tidb-lightning 会并发处理数据文件。这里，我们来具体看一下一张表的导入处理过程。
 
-然后 Lightning 就会并发处理每一张表的数据。这里我们只集中看一张表的流程。每个数据文件的内容都是规律的 INSERT 语句，像是：
+每张表的数据文件内容都是规律的 `INSERT` 语句，如下所示：
 
-```sql
+``` sql
 INSERT INTO `tbl` VALUES (1, 2, 3), (4, 5, 6), (7, 8, 9);
 INSERT INTO `tbl` VALUES (10, 11, 12), (13, 14, 15), (16, 17, 18);
 INSERT INTO `tbl` VALUES (19, 20, 21), (22, 23, 24), (25, 26, 27);
 ```
 
-Lightning 会作初步分析，找出每行在文件的位置并分配一个行号，使得没有主键的表可以唯一的区分每一行。Lightning 会直接使用 TiDB 实例来把 SQL 转换为键值对，称为“键值编码器”（KV encoder）。与外部的 TiDB 集群不同，KV 编码器是寄存在 Lightning 进程内的，而且使用内存存储，所以每执行完一个 INSERT 之后，Lightning 可以直接读取内存获取转换后的键值对（这些键值对包含数据及索引），得到键值对之后便可以发送到 Importer。
+tidb-lightning 会找出每一行的位置，并分配一个行号，这样即使没有定义主键的表也能够区分每一行。tidb-lightning 会直接借助 TiDB 实例把 SQL 转换为键值对，称为“键值编码器”（KV encoder）。与外部的 TiDB 集群不同，键值编码器是寄存在 tidb-lightning 进程内的，并使用内存存储；每执行完一个 INSERT 之后，tidb-lightning 可以直接读取内存获取转换后的键值对（这些键值对包含数据及索引），并发送到 tikv-importer。
 
 ### 并发设置
 
-Lightning 把数据源分成多个能并发的小任务。这些并发度有几个可以调整的设置
+tidb-lightning 把数据文件拆分成多个能并发执行的小任务。下面的配置选项可以帮助调节这些任务的并发度：
 
 ![4.png](/res/session2/chapter2/lightning-internal/4.png)
 
-* `batch-size`：对于很大的单表，比如 5 TB+，如果一次过导入到一个引擎文件，可能会因为 Importer 磁盘空间不足，最终导致该表导入失败，所以 Lightning 会按照 `batch-size` 的配置大小对一个大表进行切分，导入过程中，一个批次使用一个引擎文件；`batch-size` 不应该小于 100 GiB，太小的 `batch-size` 会使region balance 和 leader balance 很高，导致 region 在 TiKV 之间频繁调度，占用网络资源；
+* `batch-size`：对于很大的表，比如超过 5 TB 的表，如果一次性导入，可能会因为 tikv-importer 磁盘空间不足导致失败。tidb-lightning 会按照 `batch-size` 的配置对一个大表进行切分，导入过程中每个批次使用单独的引擎文件。`batch-size` 不应该小于 100 GB，太小的话会使 region balance 和 leader balance 值升高，导致 Region 在 TiKV 不同节点之间频繁调度，浪费网络资源。
 
-* `table-concurrency`：控制多少个批次同时进行导入，每个表里面会按照 `batch-size` 配置切分成多个批次；
+* `table-concurrency`：同时导入的批次个数。如上所述，每个表会按照 `batch-size` 切分成多个批次。
 
-* `index-concurrency`：控制同时有多少个索引引擎。`table-concurrency` + `index-concurrency` 的总和必须小于 Importer 的 `max-open-engines` 配置；
+* `index-concurrency`：并行的索引引擎文件个数。`table-concurrency` + `index-concurrency` 的总和必须小于 tikv-importer 的 `max-open-engines` 配置。
 
-* `io-concurrency`：多个 IO 并发访问磁盘，随着并发度提高，磁盘内部缓存容量有限，会导致频繁 cache miss，导致 IO 的延迟加大，不建议调整太大；
+* `io-concurrency`：并发访问磁盘的 I/O 线程数。由于磁盘内部缓存容量有限，过高的并发度容易引发频繁的 cache miss，导致 I/O 延迟增大。因此，不建议将该值调整得太大。
 
-* `block-size`：Lightning 会一次性读取一个 block-size 的大小，然后进行编码。默认为 64 KiB；
+* `block-size`：默认值为 64 KB。tidb-lightning 会一次性读取一个 `block-size` 大小的数据文件，然后进行编码。
 
-* `region-concurrency`：每个批次内部线程数，每个线程要进行读文件 → 编码 → 发送到 Importer 的步骤；
+* `region-concurrency`：每个批次的内部线程数。每个线程要执行读文件、编码和发送到 tikv-importer 等步骤。
+    * 读文件会消耗 I/O 资源，需要调节 `io-concurrency` 控制并发读取。
+    * 编码过程的瓶颈主要在 CPU，需要适当调整 `region-conconcurrency` 配置。
+    * 举例来说，若一次编码处理耗时 50 毫秒，那么每秒只能进行 20 次编码。若 `block-size` 为 64 KB，则单一 CPU 核每秒最多完成 1.28 MB 数据的编码处理。当 `region-concurrency` 设置为 60，则整体编码处理的极限速度约为每秒 75 MB。
 
-读文件这步需要使用 I/O，使用 `io-concurrency` 控制并发读取。
-
-编码需要使用 CPU，主要跟 `region-conconcurrency` 配置有关，例如，若编码一次耗时 50 ms，那么每秒只能进行编码 20 次，若 `block-size` 为 64 KiB，则单核每秒只能编码 1.28 MB 的数据，若 `region-concurrency = 60`，那编码的总速度大约为 75 MB/s。
-
-## 3. Importer 架构
+## 3. tikv-importer 架构
 
 ### 工作原理
 
 ![Importer架构图](/res/session2/chapter2/lightning-internal/5.png)
 
-因异步操作的缘故，Importer 得到的原始键值对注定是无序的。所以，Importer 要做的第一件事就是要排序。这需要给每个表划定准备排序的储存空间，我们称之为引擎文件。
+因异步操作的缘故，tikv-importer 得到的原始键值对注定是无序的。所以，tikv-importer 要做的第一件事就是要排序。这需要给每个表划定准备排序的储存空间，我们称之为引擎文件。
 
-对大数据排序是个解决了很多遍的问题，我们在此使用现有的答案：直接使用 RocksDB。一个引擎文件就相等于本地的 RocksDB，并设置为优化大量写入操作。而「排序」就相等于将键值对全写入到引擎文件里，RocksDB 就会帮我们合并、排序，并得到 SST 格式的文件。
+对大数据排序是个解决了很多遍的问题，我们在此使用现有的答案：直接使用 RocksDB。一个引擎文件就相等于一个本地 RocksDB，并大量写入操作做了配置上的优化。排序就相当于将键值对全部写入到引擎文件里，然后 RocksDB 就会自动帮我们合并、排序，最终得到 SST 格式的文件。
 
-这个 SST 文件包含整个表的数据和索引，比起 TiKV 的储存单位 Regions 实在太大了。所以接下来就是要切分成合适的大小（默认为 96 MiB）。Importer 会根据要导入的数据范围预先把 Region 分裂好，然后让 PD 把这些分裂出来的 Region 分散调度到不同的 TiKV 实例上。
+SST 文件包含整个表的数据和索引，和 TiKV 的储存单位 Region 比起来实在太大了。所以接下来要切分成合适的大小（默认为 96 MB）。tikv-importer 会根据要导入的数据范围预先把 Region 分裂好，然后借助 PD 把这些分裂出来的 Region 分散调度到不同的 TiKV 实例上。
 
-最后，Importer 将 SST 上传到对应 Region 的每个副本上。然后通过 Leader 发起 Ingest 命令，把这个 SST 文件导入到 Raft group 里，完成一个 Region 的导入过程。
+最后，tikv-importer 将 SST 上传到对应 Region 的每个副本上，通过 Leader 发起 Ingest 命令，把 SST 文件导入到 Raft group 里。这样就完成了一个 Region 的导入过程。
 
 ### 并发设置
 
 ![6.png](/res/session2/chapter2/lightning-internal/6.png)
 
-* `max-open-engines`：表示 Lightning 可以在 Importer 同时打开引擎文件的数量，如果是单个 Lightning 实例，这个配置需要不小于 Lightning 中 `index-concurrency` + `table-concurreny` 的大小，如果是多个 Lightning 实例，则不能小于所有实例的 `index-concurrency` + `table-concurreny` 总和。引擎文件会消耗磁盘空间，数据引擎的磁盘空间大小为 Lightning 中 `batch-size` 的大小，索引引擎的大小参考下面第 7 段的估算方式，需要根据 Importer 机器的磁盘容量来合理配置本参数；
-* `num-import-jobs`: 一个 Lightning `batch-size` 的数据写入到一个引擎文件之后，会使用 Import 过程导入到 TiKV，这个参数控制同时进行导入的线程数量，通常使用默认配置即可；
-* `region-split-size`: 一个引擎文件会很大（如 100 GiB），不能一次性导入到 TiKV，所以会把引擎文件切分成多个更小的 SST 文件，SST 文件不会超过这个大小，不建议低于 96 MiB。SST 切分过小，会导致 Ingest 的吞吐量小。
+* `max-open-engines`：表示 tikv-importer 上可以同时打开的最大引擎文件数量。如果运行单个 tidb-lightning 实例，该配置不应小于 tidb-lightning 的 `index-concurrency` + `table-concurreny`；多个 Lightning 实例并行运行的状况下，不能小于所有实例的 `index-concurrency` + `table-concurreny` 总和。请注意，引擎文件会消耗磁盘空间，需要根据 tikv-importer 节点的磁盘容量合理配置本参数。一个数据引擎文件的磁盘空间占用等于 tidb-lightning 中 `batch-size` 大小；索引引擎文件的大小可参考后面”**量化指标**“一节提供的思路进行估算。
+* `num-import-jobs`：一个 `batch-size` 大小的数据写入到引擎文件后，会有若干个线程负责将其导入 TiKV。这个参数控制同时进行导入的线程数量，通常使用默认配置即可。
+* `region-split-size`：一个引擎文件可能会很大（比如 100 GB），很难一次性导入到 TiKV。需要把引擎文件切分成多个较小的 SST 文件，SST 文件不会超过`region-split-size` 值。通常，不建议低于 96 MB，因为SST 切分过小会导致 Ingest 的吞吐量小。
 
-## 4. 校验检查
+## 4. 数据校验
 
 ![7.png](/res/session2/chapter2/lightning-internal/7.png)
 
-我们传输大量数据时，需要自动检查数据完整，避免忽略掉错误。Lightning 会在整个表的 Region 全部导入后，对比传送到 Importer 之前这个表的 Checksum，以及在 TiKV 集群里面时的 Checksum。如果两者一样，我们就有信心说这个表的数据没有问题。
+完成数据导入后会自动执行数据校验以确保数据完整性。tidb-lightning 会在每个表完成导入后，对比导入前后的 Checksum 确认二者是否一致。
 
-一个表的 Checksum 是透过计算键值对的哈希值（Hash）产生的。因为键值对分布在不同的 TiKV 实例上，这个 Checksum 函数应该具备结合性；另外，Lightning 传送键值对之前它们是无序的，所以 Checksum 也不应该考虑顺序，即服从交换律。也就是说 Checksum 不是简单的把整个 SST 文件计算 SHA-256 这样就了事。
+一个表的 Checksum 是透过计算键值对的哈希值产生的。因为键值对分布在不同的 TiKV 实例上，这个 Checksum 函数应该具备结合性；另外，tidb-lightning 传送键值对之前它们是无序的，所以 Checksum 也不应该考虑顺序，即服从交换律。也就是说， Checksum 计算并不是简单地针对整个 SST 文件计算 SHA-256。
 
-我们的解决办法是这样的：先计算每个键值对的 CRC64，然后用 XOR 结合在一起，得出一个 64 位元的校验数字。为减低 Checksum 值冲突的概率，我们同时会计算键值对的数量和大小。在下面两个地方分别计算来比对表中 3 个指标的和：
+我们的解决办法是这样的：先计算每个键值对的 CRC64，然后用 XOR 结合在一起，得出一个 64 位元的校验数字。为降低 Checksum 值冲突的概率，我们同时会计算键值对的数量和大小。在下面两个地方分别计算来比对表中 3 个指标的和：
 
-  * 一次是在Lightning encode后
-  * 一次是在TiDB执行SQL命令：
-    * ADMIN CHECKSUM TABLE `xxxx`;
+  * 一次是导入前在 tidb-lightning 编码后。
+  * 一次是导入后在 TiDB 上执行如下 SQL 命令：
+      ``` sql
+      ADMIN CHECKSUM TABLE `xxxx`;
+      ```
 
 ## 5. 分析与更新自增值
 
-Lightning 在检查数据完整后会进行重新计算表的统计信息，支持查询计划优化，及更新表的自增值，即执行：
+数据校验结束后，tidb-lightning 会重新计算表的统计信息，并更新表的自增值：
 
 ```sql
 ANALYZE TABLE `xxxx`;
@@ -120,36 +128,36 @@ ALTER TABLE `xxxx` AUTO_INCREMENT=123456;
 
 ## 6. 使用限制
 
-Lightning 只适用于初次全量导入，导入开始前，请确保一下两点：
+数据导入开始前须确保以下两点：
 
-* 导入前相关的表需要清空
-* 导入过程中的表不能有其他业务写入
+* 清空目标表里的数据。
+* 不能有其他业务写入数据到目标表。
 
-一个表只能一个 Lightning 实例导入，不能多个 Lightning 实例导入同一张表；同一个数据源可以使用多个 Lightning 实例并行导入，具体方式是通过白名单配置，导入不同的表；
+一个表只能接受一个 tidb-lightning 实例导入，多个 tidb-lightning 实例不能同时导入数据到同一张表。同一个数据文件若需要使用多个 tidb-lightning 实例并行导入，应该修改白名单配置以确保一个表只接受一个 tidb-lightning 实例导入。
 
 ## 7. 机器配置要求
 
-* Lightning 和 Importer 均需要配备万兆网卡；对于万兆网卡，即使 Importer 网卡打满，因为 TiKV 三个副本需要上传，所以实际导入速度只有 ~300 MB/s，如果是千兆网卡只有 ~30 MB/s；
-* Lightning 对本地磁盘没有硬性要求，如果长时间运行，需要保证磁盘空间能保存日志即可；
-* Importer 磁盘有一定要求，比如有 20 张表，其中有一张 5 TB 的大表，因为这张表的索引键值对会在 Importer 上进行全排序，再上传到 TiKV 中，所以需要保证 Importer 的机器至少可以保存这个索引引擎文件。引擎文件在磁盘的大小主要由表结构中索引数量定，一个大致的参考值：一个包含 5 个索引大小为 4 TB 的单表，索引引擎文件大小约为 ~2 TB，如果索引中的字段是整数类型，索引引擎可能比较小；
-* TiKV 集群容量比较保守的估算可以按照 (数据源大小 × 4) 来配置，比如 5 TB 的 SQL 文件，可以要求集群至少 20 TB，但是这个值有一定弹性范围，如果表内的重复数据比较多，最终 TiKV 的压缩比会比较大，容量要求也相对比较小，如果客户的确有需要使用 Lightning，但是没有那么高的配置条件，可以做一些估算后进行尝试。
+* tidb-lightning 和 tikv-importer 均须配备万兆网卡。
+* tidb-lightning 对本地磁盘空间大小没有硬性要求。为保证长时间运行数据导入处理，须保证磁盘空间足够保存日志文件。
+* tikv-importer 对磁盘空间大小有一定要求。请参考后面”**量化指标**“一节提供的估算思路。
 
 ## 8. 量化指标
 
-* `io-concurrency` 不要太大，否则会导致磁盘内部缓存大量 cache miss，影响顺序读的效果
-* 如果整个 Lightning → Importer 过程是没有阻塞的，有下面的一些资源使用计算公式
+下面给出的一些公式和计算方法可以帮助我们计算数据导入过程中的资源使用量。 这里，我们假定 tidb-lightning 和 tikv-importer 之间的交互过程不是性能瓶颈所在。
 
-  * 万兆网卡 10 Gb/s，如果编码速度达到 300 MB/s，就会占用整个 Importer 的带宽。这也是 Lightning 导入速度的上限。
-
-    ```
-    max speed = bandwidth (1.2 GB/s) / replicas (3)
-    ```
-
-  * Lightning 内存占用很低，几乎可以忽略；Importer 占用跟引擎和导入线程数有关，
+* 假定 tikv-importer 节点使用万兆网卡（理论带宽上限为 10 gbps），则编码速度最高达到每秒 300 MB 时就会耗尽全部带宽。这就是使用 TiDB Lightning 工具导入数据的理论上限速度。
 
     ```
-    ram usage = (max-open-engines (8) × write-buffer-size (1 GB) × 2)
+    max-speed = bandwidth (1.2 GB/s) / replicas (3)
+    ```
+
+* tidb-lightning 的内存占用很低，几乎可以忽略；tikv-importer 的内存占用取决于引擎文件个数和导入线程数。
+
+    ```
+    ram-usage = (max-open-engines (8) × write-buffer-size (1 GB) × 2)
               + (num-import-jobs (24) × region-split-size (512 MB) × 2)
     ```
 
-  * Importer 硬盘占用 ≈ 最大的 N 个表, 其中 `N = max(index-concurrency, table-concurrency)`。实际占用量与索引数量和类型相关。
+* tikv-importer 的磁盘空间使用量基本上取决于最大的 N 个表, 其中 `N = max(index-concurrency, table-concurrency)`。实际的磁盘空间使用量还和这些表的索引数量以及索引字段构成相关。假定需要导入 20 张表，其中有一张 5 TB 的大表。考虑到该表的索引键值对需要在 tikv-importer 上先进行全量排序后再上传到 TiKV 中，所以需要保证 tikv-importer 的本地磁盘空间至少可以保存对应的索引引擎文件。索引引擎文件在磁盘上的大小主要由表结构里的索引数量决定；当然，如果索引中的字段以整数类型为主，则索引引擎文件会更小一些。这里提供一个经验值：一个包含 5 个索引、体积为 4 TB 的表，对应的索引引擎文件体积约为 2 TB。
+  
+* 一般而言，目标 TiKV 集群的磁盘容量可以按照数据文件体积的 4 倍来估算。例如，数据文件体积为 5 TB，则目标 TiKV 集群至少要预留 20 TB 可用空间。如果单表内重复数据较多，最终 TiKV 的压缩比也会较大，则相应地容量要求会降低。

@@ -1,28 +1,21 @@
 ## 3.2 监控表
-在前一章节，介绍了 TiDB 4.0 新增诊断功能的集群信息表，本章节主要介绍诊断功能的监控表。
+前一章节介绍了 TiDB 4.0 新增诊断功能中的集群信息表。本章节主要介绍诊断功能中的监控表。
 
-TiDB 4.0 诊断系统添加了集群监控系统表，所有表都在 `metrics_schema` 中，可以通过 SQL 的方式查询监控，SQL 查询监控的好处在于可以对整个集群的所有监控进行关联查询，并对比不同时间段的结果，迅速找出性能瓶颈。
+TiDB 4.0 诊断系统添加了集群监控系统表，所有表都在 `metrics_schema` 中，可以通过 SQL 的方式查询。通过 SQL 查询监控的好处在于可以对整个集群的所有监控进行关联查询，并对比不同时间段的结果，迅速找出性能瓶颈。
 
 ### 3.2.1 监控表示例
 
-`tidb_query_duration` 的表结构如下，从表的 `COMMENT` 中可以看出，这个表的是用来查询 TiDB query 执行的百分位时间，如 P999，P99，P90 的查询耗时，单位是秒。
+`tidb_query_duration` 表用来查询 TiDB query 执行的百分位时间，如 P999，P99，P90 的查询耗时，单位是秒。 其表结构如下：
 
-```sql
-metrics_schema> show create table tidb_query_duration;
-+---------------------+--------------------------------------------------------------------------------------------------------------------+
-| Table               | Create Table                                                                                                       |
-+---------------------+--------------------------------------------------------------------------------------------------------------------+
-| tidb_query_duration | CREATE TABLE `tidb_query_duration` (                                                                               |
-|                     |   `time` datetime unsigned DEFAULT NULL,                                                                           |
-|                     |   `instance` varchar(512) DEFAULT NULL,                                                                            |
-|                     |   `sql_type` varchar(512) DEFAULT NULL,                                                                            |
-|                     |   `quantile` double unsigned DEFAULT NULL,                                                                         |
-|                     |   `value` double unsigned DEFAULT NULL                                                                             |
-|                     | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='The quantile of TiDB query durations(second)' |
-+---------------------+--------------------------------------------------------------------------------------------------------------------+
-```
+| 字段名 | 类型 | 字段解释 |
+| :-----:| :----: | :----: |
+| TIME | unsigned | query 执行的具体时间 |
+| INSTANCE | varchar(512) | 运行 query 的 TiDB 实例地址， 以 `IP:PORT` 格式组织 |
+| SQL_TYPE | varchar(512) | query 的具体类型，比如 `Select`，`internal` |
+| QUANTILE | double unsigned| query 执行的时间百分位 |
+| VALUE | double unsigned| 与 `QUANTILE` 字段对应执行时间百分位的查询耗时，如上所述，单位为秒 |
 
-下面是查询当前时间的 P90 的 TiDB Query 耗时，可以看出，`Select` 类似的 Query 的 P90 耗时是 0.0384 秒，`internal` 类型的 P90 耗时是 0.00327。instance 字段是 TiDB 示例的地址。
+下面 SQL 查询当前时间的 P90 的 TiDB Query 耗时。可以看出，`Select` 类似的 Query 的 P90 耗时是 0.0384 秒，`internal` 类型的 P90 耗时是 0.00327。`instance` 字段是 TiDB 示例的地址。
 
 ```sql
 metrics_schema> select * from tidb_query_duration where value is not null and time=now() and quantile=0.90;
@@ -36,37 +29,23 @@ metrics_schema> select * from tidb_query_duration where value is not null and ti
 
 ### 3.2.2 监控表列表
 
-目前监控表非常多，本小节不会完全列举所有监控表列表，系统表 `information_schema.metrics_tables` 存储所有监控系统表的元数据信息，所有的监控表可以通过 SQL `select * from information_schema.metrics_tables` 查询。
+由于目前监控表非常多，本小节不会完全列举所有监控表。系统表 `information_schema.metrics_tables` 存储所有监控系统表的元数据信息，所有的监控表可以通过 SQL `select * from information_schema.metrics_tables` 查询。
 
 系统表表结构如下所示：
 
-```
-mysql> desc metrics_tables;
-+------------+-----------------+------+------+---------+-------+
-| Field      | Type            | Null | Key  | Default | Extra |
-+------------+-----------------+------+------+---------+-------+
-| TABLE_NAME | varchar(64)     | YES  |      | NULL    |       |
-| PROMQL     | varchar(64)     | YES  |      | NULL    |       |
-| LABELS     | varchar(64)     | YES  |      | NULL    |       |
-| QUANTILE   | double unsigned | YES  |      | NULL    |       |
-| COMMENT    | varchar(256)    | YES  |      | NULL    |       |
-+------------+-----------------+------+------+---------+-------+
-5 rows in set (0.00 sec)
-```
-
-字段解释:
-
-* TABLE_NAME：对应于 metrics_schema 中的表名
-* PROMQL：监控表的主要原理是将 SQL 映射成 PromQL，并将 prometheus 结果转换成 SQL 查询结果，这个字段是 PromQL 的表达式模板，获取监控表数据时使用查询条件改写模板中的变量，生成最终的查询表达式
-* LABELS：监控定义的 label，每一个 label 会对应监控表中的一列，SQL 中如果包含对应列的过滤，对应的 PromQL 也会改变
-* QUANTILE：百分位，对于直方图的监控数据，指定一个默认百分位，如果值为 0，表示该监控表对应的监控不是直方图
-* COMMENT：对该监控表的解释
+| 字段名 | 类型 | 字段解释 |
+| :-----:| :----: | :----: |
+| TABLE_NAME | varchar(64) | 对应于 metrics_schema 中的表名 |
+| PROMQL | varchar(64) | 监控表的主要原理是将 SQL 映射成 PromQL，并将 prometheus 结果转换成 SQL 查询结果，这个字段是 PromQL 的表达式模板，获取监控表数据时使用查询条件改写模板中的变量，生成最终的查询表达式 |
+| LABELS | varchar(64) | 监控定义的 label，每一个 label 会对应监控表中的一列，SQL 中如果包含对应列的过滤，对应的 PromQL 也会改变 |
+| QUANTILE | double unsigned | 百分位，对于直方图的监控数据，指定一个默认百分位，如果值为 0，表示该监控表对应的监控不是直方图 |
+| COMMENT | varchar(256)| 对该监控表的解释 |
 
 ### 3.2.3 监控表实现方式
 
-上一小节描述的表结构中有一列 `PROMQL`，TiDB 会根据 SQL 生成一条 `PromQL` 的查询，然后把查询请求发给 prometheus 查询监控信息。
+上一小节描述的表结构中有一列 `PROMQL`，TiDB 会根据 SQL 生成一条 `PromQL` 的查询，然后把查询请求发给 prometheus 查询相应的监控信息。
 
-通过以下 SQL 的执行计划，可以发现在 `MemTableScan` 中，有一个 `PromQL`，以及 `start_time` 和 `end_time`，表示查询监控的时间范围。`step` 是查询的分辨率步长，默认值是 1 分钟。这几个参数和 [prometheus 的 range query HTTP API](https://prometheus.io/docs/prometheus/latest/querying/api/#range-queries) 的参数是一样的。
+通过以下 SQL 的执行计划，可以发现在 `MemTableScan` 中，有一个 `PromQL`，其中 `start_time` 和 `end_time`分别表示查询监控的时间范围的起止，`step` 表示查询的分辨率步长，默认值是 1 分钟。这几个参数和 [prometheus 的 range query HTTP API](https://prometheus.io/docs/prometheus/latest/querying/api/#range-queries) 的参数是一样的。
 
 ```sql
 metrics_schema> desc select * from tidb_query_duration where value is not null and time=now() and quantile=0.90;
@@ -82,7 +61,7 @@ metrics_schema> desc select * from tidb_query_duration where value is not null a
 
 ### 3.2.4 监控表 session 变量
 
-和监控表查询相关的 2 个 session 变量，可以通过修改 session 的变量来调整监控查询的默认行为，相关参数如下：
+和监控表查询相关的 2 个 session 变量，可以通过修改 session 的变量来调整监控查询的默认行为。相关参数如下：
 
 * `tidb_metric_query_step`：查询的分辨率步长。从 prometheus 的 query_range 数据时需要指定 start，end，step，其中 step 会使用该变量的值
 * `tidb_metric_query_range_duration`：生成 PromQL 语句时，会将 PromQL 中的 $RANGE_DURATION 替换成该变量的值，默认值是 60 秒
@@ -107,7 +86,7 @@ metrics_schema> desc select * from tidb_query_duration where value is not null a
 set @@session.tidb_metric_query_step=60
 ```
 
-目前 TiDB 会从 PD 中查询 `prometheus` 的地址，然后将查询请求发给 `prometheus`，后续 PD 会考虑内置监控组件，就不用再部署 `prometheus` 组件了。下面是按照 `instance` 和 `sql_type` 聚合后，查询 `['2020-03-08 13:23:00', '2020-03-08 13:33:00')`  范围内的 P99 耗时的 avg, max, min 值。
+目前 TiDB 会从 PD 中查询 `prometheus` 的地址，然后将查询请求发给 `prometheus`，后续 PD 会考虑内置监控组件，就不用再部署 `prometheus` 组件了。下面例子按照 `instance` 和 `sql_type` 聚合后，查询 `['2020-03-08 13:23:00', '2020-03-08 13:33:00')`  范围内的 P99 耗时的 avg, max, min 值。
 
 ```sql
 metrics_schema> select instance,sql_type, avg(value),max(value),min(value) from tidb_query_duration where time >= '2020-03-08 13:23:00' and time < '2020-03-08 13:33:00' and value is not null and quantile=0.99 group by instance,sql_type;

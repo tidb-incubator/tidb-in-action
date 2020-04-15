@@ -1,6 +1,7 @@
 # Summary
 
 * [推荐序](PREFACE.md)
+* [作者名单](writer.md)
 
 ## 第一部分 TiDB 原理和特性
 
@@ -13,7 +14,7 @@
 * [4 讲调度](session1/chapter4/tidb-scheduling.md)
     * [4.1 调度概述](session1/chapter4/scheduling-overview.md) @陈书宁
     * [4.2 弹性调度](session1/chapter4/elastic-scheduling.md) @[季朋](https://github.com/pengji)
-* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董洪亮 @王军 @王聪
+* [5 TiDB 和 MySQL 的区别](session1/chapter5/mysql-compatibility.md) @董红亮 @王军 @王聪
         <!--
         与 MySQL 兼容性对比
         TiDB 与 MySQL 的语句兼容性说明
@@ -47,11 +48,11 @@
 ## 第二部分 系统安装部署与管理
 
 * [1 部署安装 & 常规运维](session2/chapter1/deployment-management.md)
-    * [1.1 TiUP & TiOps](session2/chapter1/tiup-tiops.md)
+    * [1.1 TiUP](session2/chapter1/tiup-tiops.md)
         * [1.1.1 TiUP 简介](session2/chapter1/tiup-intro.md) @罗瑞星 @周帅
         * [1.1.2 用 TiUP 部署本地测试环境](session2/chapter1/tiup-playground.md) @罗瑞星
-        * [1.1.3 TiOps 简介](session2/chapter1/tiops-intro.md) @杨文
-        * [1.1.4 TiOps 部署生产环境集群](session2/chapter1/tiops-deployment.md) @杨文
+        * [1.1.3 TiUP cluster 简介](session2/chapter1/tiup-cluster.md) @杨文
+        * [1.1.4 TiUP cluster 部署生产环境集群](session2/chapter1/tiup-cluster-deployment.md) @杨文
     * [1.2 TiDB on Kubernetes](session2/chapter1/tidb-on-k8s.md)
         * [1.2.1 TiDB-Operator 简介及原理](session2/chapter1/tidb-operator-intro.md) @[宋歌](https://github.com/shonge)
         * [1.2.2 TIDB-Operator 部署本地测试集群（基于 Kind）](session2/chapter1/tidb-operator-local-deployment.md) @李银龙
@@ -74,10 +75,10 @@
         * [1.2.7 在 Kubernetes 集群上使用 TiDB 工具指南](session2/chapter1/tidb-operator-tools.md) @[程威](https://github.com/mikechengwei)
         * [1.2.8 TiDB-Operator 升级](session2/chapter1/tidb-operator-upgrade.md) @[程威](https://github.com/mikechengwei)
     * [1.3 集群扩容缩容](session2/chapter1/tidb-scale.md)
-        * [1.3.1 基于 TiOps 的集群扩缩容](session2/chapter1/tiops-scale.md) @[黄靓](https://github.com/vincent178)
+        * [1.3.1 基于 TiUP cluster 的集群扩缩容](session2/chapter1/tiup-cluster-scale.md) @[黄靓](https://github.com/vincent178)
         * [1.3.2 基于 TiDB-Operator 的集群扩缩容](session2/chapter1/tidb-operator-scale.md) @[曹贺](https://github.com/caohe)
     * [1.4 集群版本升级](session2/chapter1/tidb-upgrade.md)
-        * [1.4.1 基于 TiOps 的集群滚动更新](session2/chapter1/tiops-rolling-upgrade.md) @[黄靓](https://github.com/vincent178)
+        * [1.4.1 基于 TiUp cluster 的集群滚动更新](session2/chapter1/tiup-cluster-upgrade.md) @[黄靓](https://github.com/vincent178)
         * [1.4.2 基于 TiDB-Operator 的集群滚动更新](session2/chapter1/tidb-operator-rolling-upgrade.md) @[宋歌](https://github.com/shonge)
     * [1.5 如何做动态配置修改](session2/chapter1/online-changing-config.md) @[宋歌](https://github.com/shonge)
 
@@ -189,6 +190,7 @@
     * [7.2 热点问题处理思路](session4/chapter7/hotspot-resolved.md) @黄潇 @谭仁刚
     * [7.3 TiKV is busy 处理思路](session4/chapter7/tikv-is-busy.md) @冀浩东
     * [7.4 TiDB OOM 的常见原因](session4/chapter7/tidb-oom.md) @吕磊 @谭仁刚 @于沛涛
+    * [7.5 TiKV 磁盘空间占用与回收常见问题](session4/chapter7/compact.md)
 * [8 TiDB 调优指南](session4/chapter8/optimization-guide.md)
     * [8.1 TiDB 常见配置优化](session4/chapter8/tidb-common-config-optimize.md) @胡盼盼
     * [8.2 TiKV 常见配置优化](session4/chapter8/tikv-common-config-optimize.md)

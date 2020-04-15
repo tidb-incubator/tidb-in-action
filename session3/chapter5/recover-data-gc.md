@@ -4,9 +4,10 @@
 
 ## 5.1.1 历史数据保留策略
 
-TiDB 的事务的实现采用了 MVCC（多版本并发控制）机制，当更新/删除数据时，不会做真正的数据删除，只会添加一个新版本数据，并以时间戳来区分版本。当然历史数据不会全部保留，超过一定时间的历史数据将会被彻底删除，以减小空间占用同时避免因历史版本过多引起的性能开销。
+TiDB 事务的实现采用了 MVCC（多版本并发控制）机制，当更新/删除数据时，不会做真正的数据删除，只会添加一个新版本数据，并以时间戳来区分版本。当然历史数据不会永久保留，超过一定时间的历史数据将会被彻底删除，以减小空间占用，同时避免因历史版本过多引起的性能开销。
 
-TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为当前时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照全部拥有正确数据的前提下，删除更早的过期数据。
+
+TiDB 使用周期性运行的 GC（Garbage Collection，垃圾回收）来进行清理，默认情况下每 10 分钟一次。每次 GC 时，TiDB 会计算一个称为 safe point 的时间戳（默认为上次运行 GC 的时间减去 10 分钟），接下来 TiDB 会在保证在 safe point 之后的快照都能够读取到正确数据的前提下，删除更早的过期数据。
 
 TiDB 的 GC 相关的配置存储于 mysql.tidb 系统表中，可以通过 SQL 语句对这些参数进行查询和更改：
 
@@ -36,7 +37,7 @@ select VARIABLE_NAME, VARIABLE_VALUE from mysql.tidb where VARIABLE_NAME like 't
 update mysql.tidb set VARIABLE_VALUE="24h" where VARIABLE_NAME="tikv_gc_life_time";
 ```
 
-> **注意：** mysql.tidb系统表中除了下文将要列出的GC的配置外，还包含一些TiDB用于储存部分集群状态（包括 GC 状态）的记录。请勿手动更改这些记录。其中，与 GC 有关的记录如下：
+> **注意：** mysql.tidb系统表中除了下文将要列出的 GC 的配置外，还包含一些 TiDB 用于储存部分集群状态（包括 GC 状态）的记录。请勿手动更改这些记录。其中，与 GC 有关的记录如下：
 >
 > **.** tikv_gc_leader_uuid，tikv_gc_leader_desc 和 tikv_gc_leader_lease 用于记录 GC leader 的状态
 >
@@ -46,11 +47,11 @@ update mysql.tidb set VARIABLE_VALUE="24h" where VARIABLE_NAME="tikv_gc_life_tim
 >
 > **.** tikv_gc_life_time: 用于配置历史版本保留时间，可以手动修改
 >
-> **.** tikv_gc_safe_point: 记录了当前的 safePoint，用户可以安全地使用大于 safePoint 的时间戳创建 snapshot 读取历史版本。safePoint 在每次 GC 开始运行时自动更新。
+> **.** tikv_gc_safe_point: 记录了当前的 safe point，用户可以安全地使用大于 safe point 的时间戳创建 Snapshot 读取历史版本。safe point 在每次 GC 开始运行时自动更新。
 
 ## 5.1.2 查询历史数据
 
-读取历史版本数据前，需设定一个系统变量: tidb_snapshot ，这个变量是 Session 范围有效级别，可以通过标准的 Set 语句修改其值。其值为可以是TSO或日期时间。TSO是全局授时的时间戳，是从 PD 端获取的; 日期时间的格式可以为： “2016-10-08 16:45:26.999”，一般来说可以只写到秒，比如”2016-10-08 16:45:26”。 当这个变量被设置后，TiDB 会用这个时间戳建立 Snapshot（没有开销，只是创建数据结构），之后所有的查询操作都会在这个 Snapshot 上读取数据。
+读取历史版本数据前，需设定一个系统变量: tidb_snapshot ，这个变量是 Session 范围有效级别，可以通过标准的 Set 语句修改其值。其值可以是 TSO 或日期时间。TSO 是全局授时的时间戳，是从 PD 端获取的; 日期时间的格式可以为： “2016-10-08 16:45:26.999”，一般来说可以只写到秒，比如”2016-10-08 16:45:26”。 当这个变量被设置后，TiDB 会用这个时间戳建立 Snapshot（没有开销，只是创建数据结构），之后所有的查询操作都会在这个 Snapshot 上读取数据。
 
 > **注意:** TiDB 的事务是通过 PD 进行全局授时，所以存储的数据版本也是以 PD 所授时间戳作为版本号。在生成 Snapshot 时，是以 tidb_snapshot 变量的值作为版本号，如果 TiDB Server 所在机器和 PD Server 所在机器的本地时间相差较大，需要以 PD 的时间为准。
 
@@ -157,21 +158,23 @@ select * from t;
 
 > **注意：** 在 tidb_snapshot 前须使用 @@ 而非 @，因为 @@ 表示系统变量，@ 表示用户变量。
 
-## 5.1.4 恢复更新/删除的数据
+## 5.1.4 恢复被更新/删除的数据
 
-通过读取历史数据可以快速恢复更新/删除的数据，大致步骤如下：
+通过读取历史数据可以快速恢复被更新/删除的数据，大致步骤如下：
 
-> **注意：**此方法仅适用变化的数据量少的情况，进行恢复时需要调整gc的生命周期。
+> **注意：** 此方法仅适用变化的数据量较少的情况，进行恢复时需要调整gc的生命周期。
 
-1、调整GC保留时间，如将 GC 调整为保留最近一天以内的数据。
+
+1、调整 GC 保留时间，如将 GC 调整为保留最近一天以内的数据。
 
 ```
 update mysql.tidb set VARIABLE_VALUE="24h" where VARIABLE_NAME="tikv_gc_life_time";
 ```
 
-> **说明：**具体保留多长时间，需要结合业务进行评估保留时长
+> **说明：** 具体保留多长时间，需要结合业务进行评估
 
-2、创建一个和当前会话中同结构的临时表，如：
+
+2、创建一个与待恢复的数据表同结构的临时表，如：
 
 ```
 set @@tidb_snapshot="2016-10-08 16:45:26";
@@ -188,11 +191,10 @@ insert into t_20161008 select * from t where c=2;
 
 5、按照业务逻辑校验数据
 
-6、将GC保留时长调整为恢复之前的设置
+6、将 GC 保留时长调整为恢复之前的设置
 
 ```
 update mysql.tidb set VARIABLE_VALUE="10m0s" where VARIABLE_NAME="tikv_gc_life_time"
 ```
 
 7、根据需要删除临时表
-
