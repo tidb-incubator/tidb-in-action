@@ -4,7 +4,7 @@
 
 ### 5.2.1 Recover 实现原理
 
-TiDB 在删除表时，实际上只删除了表的元信息，并将需要删除的表数据（行数据和索引数据）写一条数据到 mysql.gc_delete_range 表。TiDB 后台的 GC Worker 会定期从 mysql.gc_delete_range 表中取出超过 GC lifetime 相关范围的 key 进行删除。
+TiDB 在删除表时，实际上只删除了表的元信息，并将需要删除的表数据范围（行数据和索引数据）写一条数据到 mysql.gc_delete_range 表。TiDB 后台的 GC Worker 会定期从 mysql.gc_delete_range 表中取出超过 GC lifetime 相关范围的 key 进行删除。
 
 所以，RECOVER TABLE 只需要在 GC Worker 还没删除表数据前，恢复表的元信息并删除 mysql.gc_delete_range 表中相应的行记录就可以了。恢复表的元信息可以用 TiDB 的快照读实现，TiDB 中表的恢复是通过快照读获取表的元信息后，再走一次类似于 CREATE TABLE 的建表流程，所以 RECOVER TABLE 实际上也是一种 DDL。
 
@@ -45,7 +45,7 @@ MySQL [test]> show tables;
 **3 rows in set (0.00 sec)**
 ```
 
-我们执行 DDL 删除 t2 表。
+执行 DDL 删除 t2 表。
 ```
 
 MySQL [test]> drop table t2;
@@ -135,7 +135,7 @@ recover table 的一些使用限制：
 
 * 只能用来恢复误删除表的 DDL 操作，例如 truncate table，delete 操作没有办法恢复。
 * 只能在 GC 回收数据之前完成，超过 GC 时间后会报错无法成功恢复。
-* 如果在使用 binlog 的情况下，上游执行 recover table 可能会造成非预期的结果，例如下游是 MySQL 数据库，对于这个语法不兼容。上下游的 GC 策略配置不同，再加上复制延迟可能会引起下游的数据在 apply recover table 的时候已经被 GC 了从而导致语句执行失败。
+* 如果在使用 binlog 的情况下，上游执行 recover table 可能会出现一些非预期的结果。例如下游是 MySQL 数据库，对于这个语法不兼容。上下游的 GC 策略配置不同，再加上复制延迟可能会引起下游的数据在 apply recover table 的时候已经被 GC 了从而导致语句执行失败。
 
 ### 5.2.4 Flashback 介绍
 
