@@ -20,8 +20,7 @@ addons:
       - language-pack-ko
       - korean*
       # Fonts
-      - fonts-arphic-ukai
-      - fonts-arphic-uming
+      - fonts-wqy-zenhei/bioni
       - fonts-ipafont-mincho
       - fonts-ipafont-gothic
       - fonts-unfonts-core
