@@ -305,7 +305,7 @@ mysql> explain select /*+ INL_MERGE_JOIN(t2@sel_2) */ * from t t1 where  t1.a  i
 **Apply 示例：**
 
 ```
-mysql> explain select /*+ INL_MERGE_JOIN(t1) */ * from t t1 where  t1.a  in ( select avg(t2.a) from t2 where t2.b < t1.b);
+mysql> explain select * from t t1 where  t1.a  in ( select avg(t2.a) from t2 where t2.b < t1.b);
 +----------------------------------+----------+-----------+---------------+-------------------------------------------------------------------------------+
 | id                               | estRows  | task      | access object | operator info                                                                 |
 +----------------------------------+----------+-----------+---------------+-------------------------------------------------------------------------------+
