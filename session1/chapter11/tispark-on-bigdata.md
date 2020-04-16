@@ -22,7 +22,7 @@ export HIVE_HOME=/usr/local/share/apache-Hive-3.1.1-bin
 /usr/local/share/apache-Hive-3.1.1-bin/bin/beeline -n hdfs_user_name -p hdfs_user_pwd --verbose=false --color=false \  
      -u "jdbc:Hive2://bj0000,bj0001,bj0002:2222/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=mix-livy" \  
      --Hiveconf livy.session.conf.spark.sql.extensions=org.apache.spark.sql.TiExtensions \  
-     --Hiveconf livy.session.conf.spark.tispark.pd.addresses=10.10.10.10:2379,10.10.10.10:2379,10.10.10.10:2379 \  
+     --Hiveconf livy.session.conf.spark.tispark.pd.addresses=10.10.10.11:2379,10.10.10.12:2379,10.10.10.13:2379 \  
      --Hiveconf livy.session.conf.spark.jars=hdfs://com-hdfs/user/spark/tispark-core-2.1.4-spark_2.4-jar-with-dependencies.jar \  
      --Hiveconf livy.session.name=session_name_${RANDOM}_$2 \  
      --Hiveconf livy.session.queue=your_yarn_queue_name \  
@@ -81,7 +81,7 @@ RSC client is executing SQL query: select count(1) from sales_db.mdms_tsqa_syyt,
 +------------+    
 1 row selected (25.169 seconds) 
 ```
-(4) 混全查询并写入 Hive 表: 
+(4) 混和查询并写入 Hive 表: 
 ```
 0: jdbc:Hive2://bj0000,bj0001,bj0002:2222/> insert into dc_tmp.test_for_mix  select count(1) as cnt from sales_db.mdms_tsqa_syyt union select count(1) as cnt from db_em.app_war_room_fpyr_rt;    
 RSC client is executing SQL query: insert into dc_tmp.test_for_mix  select count(1) as cnt from sales_db.mdms_tsqa_syyt union select count(1) as cnt from db_em.app_war_room_fpyr_rt, statementId = 7e87c512-d5c5-4ba1-bd62-d013ff16a4e7, session = SessionHandle [b6933d96-8ec0-47b9-a767-ff2da5c5b2b2]    
