@@ -284,21 +284,6 @@ mysql> explain select /*+ INL_HASH_JOIN(t1) */ * from t t1 join t t2 on t1.a = t
 INL_MERGE_JOIN(t1_name [, tl_name]) 提示优化器使用 Index Nested Loop Merge Join 算法。该算法相比于 INL_JOIN 会更节省内存。该算法使用条件包含 INL_JOIN 的所有使用条件，但还需要添加一条：join keys 中的内表列集合是内表使用的 index 的前缀，或内表使用的 index 是 join keys 中的内表列集合的前缀。
 
 ```
-<<<<<<< HEAD
-mysql> explain select /*+ INL_MERGE_JOIN(t1) */ * from t t1 where  t1.a  in ( select t2.a from t2 where t2.b < t1.b);
-+------------------------------+----------+-----------+---------------+------------------------------------------------------------------------------------------------------+
-| id                           | estRows  | task      | access object | operator info                                                                                        |
-+------------------------------+----------+-----------+---------------+------------------------------------------------------------------------------------------------------+
-| HashJoin_26                  | 8000.00  | root      |               | semi join, inner:TableReader_49, equal:[eq(test.t.a, test.t2.a)], other cond:lt(test.t2.b, test.t.b) |
-| ├─TableReader_49(Build)      | 10000.00 | root      |               | data:Selection_48                                                                                    |
-| │ └─Selection_48             | 10000.00 | cop[tikv] |               | not(isnull(test.t2.a)), not(isnull(test.t2.b))                                                       |
-| │   └─TableFullScan_47       | 10000.00 | cop[tikv] | table:t2      | keep order:false                                                                                     |
-| └─TableReader_38(Probe)      | 10000.00 | root      |               | data:Selection_37                                                                                    |
-|   └─Selection_37             | 10000.00 | cop[tikv] |               | not(isnull(test.t.a)), not(isnull(test.t.b))                                                         |
-|     └─TableFullScan_36       | 10000.00 | cop[tikv] | table:t1      | keep order:false                                                                                     |
-+------------------------------+----------+-----------+---------------+------------------------------------------------------------------------------------------------------+
-7 rows in set, 1 warning (0.01 sec)
-=======
 mysql> explain select /*+ INL_MERGE_JOIN(t2@sel_2) */ * from t t1 where  t1.a  in ( select t2.a from t t2 where t2.b < t1.b);
 +---------------------------------+---------+-----------+--------------------------+-----------------------------------------------------------------------------------------------------------+
 | id                              | estRows | task      | access object            | operator info                                                                                             |
@@ -315,13 +300,12 @@ mysql> explain select /*+ INL_MERGE_JOIN(t2@sel_2) */ * from t t1 where  t1.a  i
 |       └─TableRowIDScan_17       | 1.25    | cop[tikv] | table:t2                 | keep order:false, stats:pseudo                                                                            |
 +---------------------------------+---------+-----------+--------------------------+-----------------------------------------------------------------------------------------------------------+
 10 rows in set (0.01 sec)
->>>>>>> c4b70cc89... update examples of sql execution plan with new format
 ```
 
 **Apply 示例：**
 
 ```
-mysql> explain select /*+ INL_MERGE_JOIN(t1) */ * from t t1 where  t1.a  in ( select avg(t2.a) from t2 where t2.b < t1.b);
+mysql> explain select * from t t1 where  t1.a  in ( select avg(t2.a) from t2 where t2.b < t1.b);
 +----------------------------------+----------+-----------+---------------+-------------------------------------------------------------------------------+
 | id                               | estRows  | task      | access object | operator info                                                                 |
 +----------------------------------+----------+-----------+---------------+-------------------------------------------------------------------------------+
