@@ -146,11 +146,6 @@ Success!
 ## 4.4.3 性能波动
 ### 1. 报警
 
-Adjust the alerts if you know for sure that triggered alerts are false alarms due to AWS hardware. For our deployment on AWS, alerts related to disk latency had to be adjusted in 2 ways:
-
-* Increase “for” duration from 1m to 5m so that intermittent performance degradations for short period are ignored
-* Increase the threshold so that lower hardware performance compared to the on-prem deployment is accounted for
-
 如果你确定触发的报警是由于 AWS 硬件引起的错误报警，建议调整报警项。对于我们在 AWS 上的部署，与磁盘延迟有关的报警项必须通过两种方式进行调整：
 
 
