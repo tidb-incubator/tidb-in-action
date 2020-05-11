@@ -5,15 +5,16 @@
 1. 对业务 SQL 来讲，不能有 Hive/TiDB 表的区分，都按库名+表名进行访问，不要有多余操作。
 2. 由于访问 Hive 表可能需要消耗巨大资源，因此最好可以使用与之配套的计算集群资源。
 3. 确保 hive-site.xml 能够被 Spark 访问到，例如 hive-site.xml 复制到 SPARK_HOME/conf 下。hive-site.xml 中包含了 Hive Metastore 相关信息，只有 Spark 可以读取它，才能访问 Hive 中的数据。
+
 下节将用一个具体的例子进行阐述。   
 
 ### 11.4.2 使用 beeline + Livy + Spark + Tispark 实现混访    
 1. 软件环境清单：     
-	* Livy 服务，版本：基于 0.6 版本的改动版，作用：提交原始任务到 Spark 客户端；
+	* Livy 服务，版本：基于 0.6 版本的改动版，作用：提交Spark任务到yarn集群；
 	* beeline 客户端，版本：3.1.1，作用：连接 Livy 服务的客户端；
-	* Spark 客户端，版本：2.4.0，作用：向 yarn 集群提交 Spark 作业；     
+	* Spark 客户端，版本：2.4.0，作用：提供Spark引擎相关能力；     
 	* Tispark Jar 包，版本：2.1.8，作用：提供与 TiKV 交互的能力；    
-	* YARN 集群，作用：提供计算资源。     
+	* YARN 集群，作用：提供计算资源并执行任务。     
 
 2. 函数封装代码：   
 ``` 
