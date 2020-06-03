@@ -30,7 +30,7 @@ Index 这种主要面向点查的结构对于 TiFlash 的列式存储是没有�
 TiDB 的事务实现是基于 Percolator 模型的，映射到 TiKV 中则是对 3 个 CF（Column Family） 数据的读写：Write、Default、Lock。TiFlash 也在每个 Region 内部对此做了抽象，不同的是对于 TiFlash 而言，数据写入 CF 只能作为中间过程，最终持久化到存储层需要找到 Region 对应的 Table 再根据 Schema 进行行列结构转换。
 
 #### 3. Schema Syncer
-每个 TiFlash 节点会依据特定的数据范围异步地向 TiKV 获取集群中 Table 的 Schema 信息，然后检测相关改动并应用变更到存储层。由于行存和列存的格式差异巨大，列存在应用 TiDB 的 Schema 改动时很难做到实时在线处理，对于复杂操作则需要锁表来保证正确性。
+每个 TiFlash 节点都会实时同步 TiDB 的最新的表 Schema 信息。TiFlash 兼容 TiDB 体系的在线 DDL，对经常需要做表结构修改的业务非常友好，例如增、删、改字段等操作都不影响在线业务。
 
 #### 4. Learner Read / Coprocessor
 ![4.png](/res/session1/chapter9/tiflash-architecture/4.png)
