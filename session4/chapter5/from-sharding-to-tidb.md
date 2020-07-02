@@ -456,7 +456,7 @@ shard_db02-schema-create.sql
 [tidb@dmmaster dm-ansible]$ dmctl -master-addr 192.168.128.132:8261
 #停止 shard_to_tidb.yaml 配置文件中的所有 dm-worker 数据写入下游库任务
 #也可使用-w 参数停止某个指定的任务[可选 -w IP:PORT]
-»start-task shard_to_tidb
+»stop-task shard_to_tidb
 ```
 **query-status 命令查看任务状态，默认显示所有任务状态，可指定任务名查看**
 
