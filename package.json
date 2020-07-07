@@ -17,6 +17,6 @@
   "homepage": "https://pingcap-incubator.github.io/tidb-in-action",
   "devDependencies": {
     "gitbook-plugin-analytics": "git+https://git@github.com/you06/gitbook-plugin-analytics.git",
-    "npm": ">=6.13.4"
+    "npm": ">=6.14.6"
   }
 }
