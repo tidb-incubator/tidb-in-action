@@ -1,4 +1,4 @@
-# 1.1 TiUP & TiOps
+# 1.1 TiUP
 
 在单机部署一个 TiDB 集群要多久？
 
