@@ -221,10 +221,6 @@ CREATE TABLE `t1` (
 
 官方提供内部 Batch 的方法来绕过大事务的限制，分别由三个参数来控制：
 
-- tidb_batch_insert
-
-> 作用域: SESSION 默认值: 0 这个变量用来设置是否自动切分插入数据。仅在 Autocommit 开启时有效。 当插入大量数据时，可以将其设置为 True，这样插入数据会被自动切分为多个 Batch，每个 Batch 使用一个单独的事务进行插入。
-
 - tidb_batch_delete
 
 > 作用域: SESSION 默认值: 0 这个变量用来设置是否自动切分待删除的数据。仅在 Autocommit 开启时有效。 当删除大量数据时，可以将其设置为 True，这样待删除数据会被自动切分为多个 Batch，每个 Batch 使用一个单独的事务进行删除。
