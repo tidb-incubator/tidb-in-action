@@ -90,6 +90,13 @@ TiKV 4.0 中 Titan 提供新的算法提升范围查询性能并降低 Titan GC 
 level-merge = true
 ```
 
+由于 level merge 是通过重写 Blob 文件来提高有序性的，所以也顺便起到了 GC 的作用，在开启 level-merge 时可以关闭 GC:
+
+```toml
+[rocksdb.titan]
+disable-background-gc = true
+```
+
 开启 level merge 的好处包括：
 
 - 大幅提升 Titan 的范围查询性能。
@@ -99,5 +106,3 @@ level-merge = true
 - 减少 Titan 空间放大，减少磁盘空间占用（默认配置下的比较）。
 
 相应地，level mege 写放大会比 Titan 稍高，但依然低于原生的 RocksDB。
-
-Level merge 与 Titan 原有的算法目前并不兼容，已经打开 Titan 的 TiKV 实例不可以更改是否使用 Level merge 的设置。
