@@ -30,7 +30,7 @@ TPC-C 使用 tpmC 值（Transactions per Minute）来衡量系统最大有效吞
 
 ## 3. TIDB测试环境部署
 
-对于 1000 warehous 我们将在 3 台服务器上部署集群。
+对于 1000 warehouse 我们将在 3 台服务器上部署集群。
 
 在 3 台服务器的条件下，建议每台机器部署 1 个 TiDB，1 个 PD 和 1 个 TiKV 实例。
 
