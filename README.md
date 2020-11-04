@@ -4,6 +4,10 @@ Read it: [TiDB In Action: based on 4.0](https://book.tidb.io/)
 
 Download PDF: [TiDB In Action: based on 4.0](https://raw.githubusercontent.com/pingcap-incubator/tidb-in-action/gh-pages/book.pdf)
 
+## 如何阅读此书
+
+本书由来自 TiDB Community 的贡献者共同完成。深入介绍了 TiDB 的基本原理和操作，它是基于 v4.0 版本编写的。如果需要了解 TiDB 最新版本的信息请关注 PingCAP [官方文档](https://docs.pingcap.com/zh/tidb/stable)
+
 ## 如何贡献
 ### 贡献指引：
 * 从 [Project](https://github.com/pingcap-incubator/tidb-in-action/projects) 找到感兴趣地模块
