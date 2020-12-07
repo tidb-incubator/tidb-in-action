@@ -7,7 +7,7 @@
 
 max_execution_time
 
-* 作用域：GlOBAL | SESSION | SQL HINT
+* 作用域：GLOBAL | SESSION | SQL HINT
 * 默认值：0
 * 含义：该变量会限制语句的执行时间不能超过 N 毫秒，否则服务器会终止这条语句的执行，SQL Hint 方式具体示例如下：
 
