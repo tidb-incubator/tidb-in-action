@@ -17,7 +17,7 @@ Statement，即 SQL 语句。
 TiDB 已支持多种性能排查工具。但在多种应用场景需求下，仍有不足，例如：
 
 1. Grafana 不能排查单条 SQL 的性能问题
-2. Slow log 只记录超过慢日志阀值的 SQL
+2. Slow log 只记录超过慢日志阈值的 SQL
 3. General log 本身对性能有一定影响
 4. Explain analyze 只能查看可以复现的问题
 5. Profile 只能查看整个实例的瓶颈
