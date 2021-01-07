@@ -10,7 +10,7 @@ Download PDF: [TiDB In Action: based on 4.0](https://raw.githubusercontent.com/p
 
 ## 如何贡献
 ### 贡献指引：
-* 从 [Project](https://github.com/pingcap-incubator/tidb-in-action/projects) 找到感兴趣地模块
+* 从 [Project](https://github.com/pingcap-incubator/tidb-in-action/projects) 找到感兴趣的模块
 * 在具体模块的 TODO 列表中选择一个感兴趣的任务。
 * 阅读并更新内容
 * 将内容提交 Pull Request
