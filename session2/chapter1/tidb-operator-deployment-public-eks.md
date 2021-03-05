@@ -201,7 +201,7 @@ default_cluster_tidb_count = 4
 
 ### 自定义 AWS 相关的资源
 
-由于 TiDB 服务通过 [Internal Elastic Load Balancer](https://aws.amazon.com/blogs/aws/internal-elastic-load-balancers/) 暴露，默认情况下，会创建一个 Amazon EC2 实例作为堡垒机，访问创建的 TiDB 集群。堡垒机上预装了 MySQL 和 Sysbench，所以可以通过 SSH 方式登陆到堡垒机后通过 ELB 访问 TiDB。如果的 VPC 中已经有了类似的 EC2 实例，可以通过设置 `create_bastion` 为 `false` 禁掉堡垒机的创建。
+由于 TiDB 服务通过 [Internal Elastic Load Balancer](https://aws.amazon.com/blogs/aws/internal-elastic-load-balancers/) 暴露，默认情况下，会创建一个 Amazon EC2 实例作为堡垒机，访问创建的 TiDB 集群。堡垒机上预装了 MySQL 和 Sysbench，所以可以通过 SSH 方式登录到堡垒机后通过 ELB 访问 TiDB。如果的 VPC 中已经有了类似的 EC2 实例，可以通过设置 `create_bastion` 为 `false` 禁掉堡垒机的创建。
 
 TiDB 版本和组件数量也可以在 `terraform.tfvars` 中修改，可以按照自己的需求配置。
 
@@ -257,14 +257,14 @@ operator_values = "./operator_values.yaml"
 ```hcl
 module example-cluster {
   source = "../modules/aws/tidb-cluster"
-  
+
   # The target EKS, required
   eks = local.eks
   # The subnets of node pools of this TiDB cluster, required
   subnets = local.subnets
   # TiDB cluster name, required
   cluster_name    = "example-cluster"
-  
+
   # Helm values file
   override_values = file("example-cluster.yaml")
   # TiDB cluster version
@@ -431,7 +431,7 @@ module "tidb-cluster-b" {
   providers = {
     helm = "helm.eks"
   }
-  
+
   cluster_name = "tidb-cluster-b"
   eks          = module.tidb-operator.eks
   ssh_key_name = module.key-pair.key_name

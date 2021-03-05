@@ -90,7 +90,7 @@ UPDATE mysql.tidb SET VARIABLE_VALUE = '720h' WHERE VARIABLE_NAME = 'tikv_gc_lif
 
 SELECT * FROM mysql.tidb WHERE VARIABLE_NAME = 'tikv_gc_life_time';
 
-720h 
+720h
 ```
 
 2. 备份存储位置
@@ -144,7 +144,7 @@ bin/br backup full  --pd "192.168.122.101:2379" --storage "local:///data_nfs1/ba
 	* 查询 infoSchema 获取元数据。
 	* 发送备份请求：{"cluster_id":6801677637806839235,"start_key":"dIAAAAAAAAAvX3IAAAAAAAAAAA==","end_key":"dIAAAAAAAAAvX3L//////////wA=","end_version":415142848617512967,"concurrency":4,"storage_backend":{Backend":{"Local":{"path":"/data_nfs1/backup"}}}}"
 	* 各个 TiKV 节点开始执行备份，执行命令完成后，返回到 BR 进行统计。
-	* 执行表的checksum [table=`br_test`.`br_table`] [Crc64Xor=12896770389982935753] [TotalKvs=100000] [TotalBytes=4788890] 
+	* 执行表的checksum [table=`br_test`.`br_table`] [Crc64Xor=12896770389982935753] [TotalKvs=100000] [TotalBytes=4788890]
 	* 保存备份的元数据。
 	* 完成备份。
 
@@ -217,4 +217,4 @@ bin/br backup table --db "br_test"  --table "br_table"  --pd "192.168.122.101:23
 bin/br restore table --db "br_test" --table "br_table" --pd "192.168.122.101:2379" --storage "local:///data_nfs1/backup"
 ```
 
-通过上述实践，我们了解了 BR 基本用法，想要了解具体代码实现可以登陆 BR 项目主页(https://github.com/pingcap/br), 欢迎提供更多的使用建议，帮助我们改进。
+通过上述实践，我们了解了 BR 基本用法，想要了解具体代码实现可以登录 BR 项目主页(https://github.com/pingcap/br), 欢迎提供更多的使用建议，帮助我们改进。

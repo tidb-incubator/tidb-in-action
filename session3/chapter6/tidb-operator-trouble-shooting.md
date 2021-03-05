@@ -81,7 +81,7 @@ kubectl  get pods -n kube-system | grep core
 coredns-9d85f5447-642rs          1/1     Running   1          13h
 coredns-9d85f5447-8swr2          1/1     Running   1          13h
 # 若 CoreDNS 正常运行仍不能成功解析 DNS
-# 登陆 pd pod，检查 /etc/resov 中的 nameserver 是否配置正确
+# 登录 pd pod，检查 /etc/resov 中的 nameserver 是否配置正确
 kubectl exec -it tidb-cluster-pd-0 -n=tidb  -- cat /etc/resolv.conf
 ```
 
