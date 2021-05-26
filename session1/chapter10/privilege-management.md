@@ -144,7 +144,7 @@ developer> INSERT INTO write_table VALUES (1),(2),(3);
 Query OK, 3 rows affected (0.00 sec)
 Records: 3  Duplicates: 0  Warnings: 0
 ```
-假如用 developer 试图对 write_table 进行写操作，TiDB 会提示限检查未通过。
+假如用 developer 试图对 read_table 进行写操作，TiDB 会提示限检查未通过。
 ```
 developer> INSERT INTO read_table VALUES (1),(2),(3);
 ERROR 1142 (42000): INSERT command denied to user 'developer'@'192.168.0.%' for table 'read_table'
