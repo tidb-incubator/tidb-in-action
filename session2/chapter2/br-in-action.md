@@ -130,6 +130,11 @@ BR 命令包括备份，恢复两个操作，而备份，恢复又单独针对�
 
 ### 6. 全库备份与恢复
 
+```br backup (full | db | table) \
+  -s $BACKUP_PATH --pd $PD_ADDR \
+  [--db $DB] [--table $TABLE]
+```
+
 参考命令：
 
 ```bash
@@ -163,6 +168,11 @@ MySQL [br_test]> drop table br_table;
 ```
 
 > 注意：恢复时候，每个 TiKV 节点都需要访问到所有备份文件，如果不是共享存储，需要手动复制所有备份文件到所有节点
+
+```br restore (full | db | table) \
+  -s $BACKUP_PATH --pd $PD_ADDR \
+  [--db $DB] [--table $TABLE]
+```
 
 ```
  bin/br restore full  --pd "192.168.122.101:2379" --storage "local:///data_nfs1/backup"
