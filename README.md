@@ -2,7 +2,6 @@
 
 Read it: [TiDB In Action: based on 4.0](https://book.tidb.io/)
 
-Download PDF: [TiDB In Action: based on 4.0](https://raw.githubusercontent.com/pingcap-incubator/tidb-in-action/gh-pages/book.pdf)
 
 ## 如何阅读此书
 
