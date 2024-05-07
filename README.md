@@ -2,7 +2,6 @@
 
 Read it: [TiDB In Action: based on 4.0](https://book.tidb.io/)
 
-
 ## 如何阅读此书
 
 本书由来自 TiDB Community 的贡献者共同完成。深入介绍了 TiDB 的基本原理和操作，它是基于 v4.0 版本编写的。如果需要了解 TiDB 最新版本的信息请关注 PingCAP [官方文档](https://docs.pingcap.com/zh/tidb/stable)
